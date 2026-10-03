@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Node.js va npm — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a class="active" href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🟢</div><div><div class="crumb">08-dars · 14 tadan</div><h1>Node.js va npm</h1><p class="lead">Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.</p></div></div>
+
+<p>Shu paytgacha JavaScript faqat brauzerda ishladi. <b>Node.js</b> — JavaScript'ni brauzerdan tashqarida, ya'ni
+kompyuter yoki serverda ishga tushiruvchi muhit (runtime). U tufayli siz bilgan til bilan web-serverlar, API'lar,
+CLI dasturlar va avtomatlashtirish skriptlarini yoza olasiz. Bu dars — backend olamiga kirish eshigi.</p>
+
+<h2 id="node-js-nima-va-qanday-ishlaydi"><a class="anchor" href="#node-js-nima-va-qanday-ishlaydi">#</a>Node.js nima va qanday ishlaydi?</h2>
+<ul>
+  <li>2009-yilda Ryan Dahl yaratgan. Ichida Google Chrome'ning <b>V8</b> JavaScript dvigateli ishlaydi.</li>
+  <li><b>libuv</b> kutubxonasi orqali fayl tizimi, tarmoq, taymerlar bilan <b>bloklanmaydigan (non-blocking)</b> tarzda ishlaydi.</li>
+  <li>Brauzerdagi kabi <b>event loop</b> modeliga asoslangan (6-dars): bitta oqim minglab ulanishlarga xizmat qiladi,
+  chunki kutish paytida (bazadan javob, fayl o'qish) boshqa so'rovlarni qayta ishlaydi.</li>
+</ul>
+<h3>Brauzer va Node.js farqi</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Brauzer</th><th>Node.js</th></tr>
+<tr><td>Global obyekt</td><td><code>window</code></td><td><code>global</code> (umumiy: <code>globalThis</code>)</td></tr>
+<tr><td>DOM (<code>document</code>)</td><td>Bor</td><td>Yo'q</td></tr>
+<tr><td>Fayl tizimi</td><td>Yo'q (xavfsizlik)</td><td>To'liq kirish (<code>fs</code>)</td></tr>
+<tr><td>Tarmoq</td><td><code>fetch</code>, WebSocket</td><td><code>fetch</code>, <code>http</code>, TCP/UDP serverlar</td></tr>
+<tr><td>Muhit</td><td>Har xil brauzer, versiyani tanlay olmaysiz</td><td>Versiyani o'zingiz boshqarasiz</td></tr>
+</table></div>
+<div class="callout info"><span class="t">Node.js qachon yaxshi tanlov?</span>
+I/O ko'p bo'lgan ilovalar: REST API, real vaqtli chat (WebSocket), streaming, mikroservislar. Og'ir CPU hisoblari
+(video kodlash, katta ML modellari) uchun esa boshqa tillar yoki worker'lar mos.</div>
+
+<h2 id="ornatish-va-birinchi-dastur"><a class="anchor" href="#ornatish-va-birinchi-dastur">#</a>O'rnatish va birinchi dastur</h2>
+<p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> dan <b>LTS</b> versiyani o'rnating. Bir nechta versiya bilan ishlash uchun <code>nvm</code> (Node Version Manager) qulay.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node --version     # v22.x.x
+npm --version      # 10.x.x
+
+node               # REPL — interaktiv rejim (chiqish: .exit yoki Ctrl+C ikki marta)
+&gt; 2 + 2
+4
+
+node app.js        # faylni bajarish
+node --watch app.js  # fayl o&#x27;zgarganda avtomatik qayta ishga tushirish (Node 18.11+)</code></pre></div>
+<div class="code"><div class="code-head"><span>app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">console.log(&#x27;Salom, Node.js!&#x27;);
+console.log(&#x27;Node versiyasi:&#x27;, process.version);
+console.log(&#x27;Operatsion tizim:&#x27;, process.platform);
+console.log(&#x27;Joriy papka:&#x27;, process.cwd());
+console.log(&#x27;Buyruq argumentlari:&#x27;, process.argv.slice(2));   // node app.js ali 25 → [&#x27;ali&#x27;, &#x27;25&#x27;]</code></pre></div>
+
+<h2 id="modullar-tizimi"><a class="anchor" href="#modullar-tizimi">#</a>Modullar tizimi</h2>
+<p>Node.js'da har bir fayl — alohida modul. Ikki tizim mavjud:</p>
+<h3>CommonJS (an'anaviy)</h3>
+<div class="code"><div class="code-head"><span>math.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function qoshish(a, b) { return a + b; }
+const PI = 3.14159;
+
+module.exports = { qoshish, PI };</code></pre></div>
+<div class="code"><div class="code-head"><span>index.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const { qoshish, PI } = require(&#x27;./math&#x27;);   // .js kengaytmasi ixtiyoriy
+const fs = require(&#x27;fs&#x27;);                     // o&#x27;rnatilgan modul
+const express = require(&#x27;express&#x27;);           // npm paketi
+console.log(qoshish(2, 3));</code></pre></div>
+<h3>ES Modules (zamonaviy, tavsiya etiladi)</h3>
+<div class="code"><div class="code-head"><span>package.json</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+  &quot;type&quot;: &quot;module&quot;
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>math.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export const qoshish = (a, b) =&gt; a + b;
+export default class Kalkulyator { /* ... */ }</code></pre></div>
+<div class="code"><div class="code-head"><span>index.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import Kalkulyator, { qoshish } from &#x27;./math.js&#x27;;   // ESM&#x27;da kengaytma MAJBURIY
+import fs from &#x27;node:fs/promises&#x27;;                    // &quot;node:&quot; prefiksi — o&#x27;rnatilgan modul ekanini aniq ko&#x27;rsatadi
+import express from &#x27;express&#x27;;
+
+const config = JSON.parse(await fs.readFile(&#x27;./config.json&#x27;, &#x27;utf8&#x27;)); // top-level await</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>CommonJS</th><th>ES Modules</th></tr>
+<tr><td>Import</td><td><code>require()</code></td><td><code>import</code></td></tr>
+<tr><td>Eksport</td><td><code>module.exports</code></td><td><code>export</code></td></tr>
+<tr><td>Yuklanishi</td><td>Sinxron</td><td>Asinxron</td></tr>
+<tr><td>Top-level await</td><td>Yo'q</td><td>Bor</td></tr>
+<tr><td><code>__dirname</code></td><td>Bor</td><td><code>import.meta.dirname</code> (Node 20.11+)</td></tr>
+</table></div>
+<p>Ushbu qo'llanmaning qolgan qismida <b>ES Modules</b> ishlatamiz.</p>
+
+<h2 id="npm-va-package-json"><a class="anchor" href="#npm-va-package-json">#</a>npm va package.json</h2>
+<p><b>npm (Node Package Manager)</b> — dunyodagi eng katta dasturiy kutubxonalar ombori (2 milliondan ortiq paket) va ularni boshqaruvchi vosita.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm init -y                     # package.json yaratish
+
+npm install express             # dependency (ilova ishlashi uchun kerak)
+npm i express                   # qisqa yozuv
+npm install -D nodemon eslint   # devDependency (faqat ishlab chiqishda)
+npm install -g npm-check-updates  # global (buyruq sifatida)
+
+npm install                     # package.json dagi barcha paketlarni o&#x27;rnatish (clone&#x27;dan keyin)
+npm ci                          # lock-fayl bo&#x27;yicha aniq o&#x27;rnatish (CI/server uchun)
+npm uninstall lodash
+npm outdated                    # eskirgan paketlar
+npm audit                       # xavfsizlik zaifliklari
+npx create-vite@latest          # paketni o&#x27;rnatmasdan bir martalik bajarish</code></pre></div>
+<div class="code"><div class="code-head"><span>package.json</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+  &quot;name&quot;: &quot;kitob-api&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;Kitoblar do&#x27;koni uchun REST API&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;main&quot;: &quot;src/server.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node src/server.js&quot;,
+    &quot;dev&quot;: &quot;node --watch src/server.js&quot;,
+    &quot;test&quot;: &quot;node --test&quot;,
+    &quot;lint&quot;: &quot;eslint src&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^5.1.0&quot;,
+    &quot;pg&quot;: &quot;^8.13.0&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;eslint&quot;: &quot;^9.0.0&quot;
+  },
+  &quot;engines&quot;: {
+    &quot;node&quot;: &quot;&gt;=20&quot;
+  }
+}</code></pre></div>
+<ul>
+  <li><b>scripts</b> — <code>npm run dev</code>, <code>npm test</code>, <code>npm start</code> orqali ishga tushiriladigan buyruqlar.</li>
+  <li><b>Semantik versiyalash (SemVer)</b> — <code>MAJOR.MINOR.PATCH</code>: <code>5.1.0</code>. MAJOR — mos kelmaydigan o'zgarishlar, MINOR — yangi funksiyalar, PATCH — xato tuzatishlar.</li>
+  <li><code>^5.1.0</code> — 5.x.x ichida yangilanishga ruxsat; <code>~5.1.0</code> — faqat 5.1.x; <code>5.1.0</code> — aynan shu versiya.</li>
+  <li><b>package-lock.json</b> — har bir paketning aniq o'rnatilgan versiyasini qayd qiladi. <b>Git'ga commit qiling</b> — jamoadagi hamma bir xil versiyalarni oladi.</li>
+  <li><b>node_modules/</b> — o'rnatilgan paketlar. <b>Hech qachon commit qilmang</b> (<code>.gitignore</code>).</li>
+</ul>
+<div class="callout warn"><span class="t">Paket tanlashda ehtiyot bo'ling</span>
+Har bir paket — boshqa birovning kodi serveringizda ishlashi demak. Haftalik yuklanishlar soni, oxirgi yangilanish sanasi,
+GitHub'dagi faollik va <code>npm audit</code> natijasiga qarang. Nomi o'xshash soxta paketlardan (typosquatting: <code>expres</code>, <code>loadsh</code>) saqlaning.</div>
+
+<h2 id="ornatilgan-asosiy-modullar"><a class="anchor" href="#ornatilgan-asosiy-modullar">#</a>O'rnatilgan asosiy modullar</h2>
+<h3>fs — fayl tizimi</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
+import { existsSync, createReadStream } from &#x27;node:fs&#x27;;
+
+// O&#x27;qish va yozish
+const matn = await fs.readFile(&#x27;eslatma.txt&#x27;, &#x27;utf8&#x27;);
+await fs.writeFile(&#x27;chiqish.txt&#x27;, &#x27;Salom\n&#x27;);               // yaratadi yoki ustidan yozadi
+await fs.appendFile(&#x27;log.txt&#x27;, `${new Date().toISOString()} — kirish\n`);
+
+// JSON fayl
+const data = JSON.parse(await fs.readFile(&#x27;data.json&#x27;, &#x27;utf8&#x27;));
+await fs.writeFile(&#x27;data.json&#x27;, JSON.stringify(data, null, 2));
+
+// Papkalar
+await fs.mkdir(&#x27;uploads/2026&#x27;, { recursive: true });
+const fayllar = await fs.readdir(&#x27;uploads&#x27;);
+const info = await fs.stat(&#x27;data.json&#x27;);   // info.size, info.mtime, info.isDirectory()
+await fs.rename(&#x27;eski.txt&#x27;, &#x27;yangi.txt&#x27;);
+await fs.rm(&#x27;temp&#x27;, { recursive: true, force: true });
+
+if (!existsSync(&#x27;config.json&#x27;)) console.log(&#x27;Config topilmadi&#x27;);</code></pre></div>
+<div class="callout tip"><code>fs.readFileSync</code> kabi sinxron funksiyalar event loop'ni bloklaydi. Ularni faqat dastur ishga tushayotganda
+(konfiguratsiya o'qish) yoki CLI skriptlarda ishlating; server so'rovlarini qayta ishlashda — doim asinxron versiyalar.</div>
+
+<h3>path — fayl yo'llari</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
+
+path.join(&#x27;uploads&#x27;, &#x27;2026&#x27;, &#x27;rasm.png&#x27;);   // &#x27;uploads/2026/rasm.png&#x27; (Windows&#x27;da &#x27;\&#x27;)
+path.resolve(&#x27;src&#x27;, &#x27;app.js&#x27;);              // to&#x27;liq absolyut yo&#x27;l
+path.extname(&#x27;rasm.final.png&#x27;);             // &#x27;.png&#x27;
+path.basename(&#x27;/a/b/rasm.png&#x27;);             // &#x27;rasm.png&#x27;
+path.basename(&#x27;/a/b/rasm.png&#x27;, &#x27;.png&#x27;);     // &#x27;rasm&#x27;
+path.dirname(&#x27;/a/b/rasm.png&#x27;);              // &#x27;/a/b&#x27;
+
+// Joriy fayl papkasi (ESM)
+const __dirname = import.meta.dirname;
+const publicDir = path.join(__dirname, &#x27;public&#x27;);</code></pre></div>
+<p>Yo'llarni hech qachon satr qo'shish bilan (<code>'uploads/' + name</code>) yasamang — <code>path.join</code> Windows/Linux farqini va ortiqcha <code>/</code> larni o'zi hal qiladi.</p>
+
+<h3>events — hodisalar</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { EventEmitter } from &#x27;node:events&#x27;;
+
+class Buyurtmalar extends EventEmitter {
+  yarat(buyurtma) {
+    // ... bazaga saqlash ...
+    this.emit(&#x27;yaratildi&#x27;, buyurtma);
+  }
+}
+
+const orders = new Buyurtmalar();
+orders.on(&#x27;yaratildi&#x27;, (b) =&gt; console.log(`📧 ${b.email} ga tasdiq xati yuborildi`));
+orders.on(&#x27;yaratildi&#x27;, (b) =&gt; console.log(`📦 Omborga xabar: ${b.mahsulot}`));
+orders.once(&#x27;yaratildi&#x27;, () =&gt; console.log(&#x27;🎉 Birinchi buyurtma!&#x27;));
+
+orders.yarat({ email: &#x27;ali@mail.uz&#x27;, mahsulot: &#x27;Noutbuk&#x27; });</code></pre></div>
+<p>Node.js'ning ko'plab qismlari (server, oqimlar) <code>EventEmitter</code> ustiga qurilgan. Bu usul kodni bir-biridan mustaqil qismlarga ajratadi.</p>
+
+<h3>Streams — oqimlar</h3>
+<p>1 GB faylni <code>readFile</code> bilan o'qish 1 GB xotira talab qiladi. <b>Stream</b> esa ma'lumotni kichik bo'laklarda (chunk) qayta ishlaydi:</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { createReadStream, createWriteStream } from &#x27;node:fs&#x27;;
+import { createGzip } from &#x27;node:zlib&#x27;;
+import { pipeline } from &#x27;node:stream/promises&#x27;;
+
+// Katta log faylni siqish — xotira sarfi bir necha KB
+await pipeline(
+  createReadStream(&#x27;access.log&#x27;),
+  createGzip(),
+  createWriteStream(&#x27;access.log.gz&#x27;),
+);</code></pre></div>
+
+<h3>process va muhit o'zgaruvchilari</h3>
+<p>Parollar, API kalitlari, port raqami kabi sozlamalar kodda emas, <b>muhit o'zgaruvchilarida (environment variables)</b> saqlanadi.</p>
+<div class="code"><div class="code-head"><span>.env</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-ini">PORT=3000
+DATABASE_URL=postgres://user:parol@localhost:5432/kitoblar
+JWT_SECRET=juda-uzun-va-tasodifiy-maxfiy-kalit
+NODE_ENV=development</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Node 20.6+ da .env faylni o&#x27;rnatilgan holda yuklash:
+//   node --env-file=.env src/server.js
+// (eski versiyalarda: npm i dotenv  →  import &#x27;dotenv/config&#x27;;)
+
+const PORT = Number(process.env.PORT) || 3000;
+const isProd = process.env.NODE_ENV === &#x27;production&#x27;;
+
+if (!process.env.JWT_SECRET) {
+  console.error(&#x27;❌ JWT_SECRET o\&#x27;rnatilmagan&#x27;);
+  process.exit(1);           // xato kodi bilan chiqish
+}
+
+process.on(&#x27;SIGINT&#x27;, () =&gt; {          // Ctrl+C
+  console.log(&#x27;Server to\&#x27;xtatilmoqda...&#x27;);
+  process.exit(0);
+});</code></pre></div>
+<p>Repozitoriyaga <code>.env</code> emas, uning namunasini — <code>.env.example</code> ni (qiymatlarsiz) commit qiling.</p>
+
+<h2 id="http-moduli-freymvorksiz-server"><a class="anchor" href="#http-moduli-freymvorksiz-server">#</a>http moduli — freymvorksiz server</h2>
+<p>Express'ga o'tishdan oldin, uning ostida nima borligini ko'raylik:</p>
+<div class="code"><div class="code-head"><span>server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
+
+const server = http.createServer(async (req, res) =&gt; {
+  const url = new URL(req.url, `http://${req.headers.host}`);
+
+  // So&#x27;rov tanasini o&#x27;qish — stream bo&#x27;laklarini yig&#x27;amiz
+  let body = &#x27;&#x27;;
+  for await (const chunk of req) body += chunk;
+
+  console.log(req.method, url.pathname, url.searchParams.toString(), body);
+
+  res.setHeader(&#x27;Content-Type&#x27;, &#x27;application/json; charset=utf-8&#x27;);
+
+  if (req.method === &#x27;GET&#x27; &amp;&amp; url.pathname === &#x27;/api/salom&#x27;) {
+    const ism = url.searchParams.get(&#x27;ism&#x27;) ?? &#x27;Mehmon&#x27;;
+    res.end(JSON.stringify({ xabar: `Salom, ${ism}!` }));
+  } else if (req.method === &#x27;POST&#x27; &amp;&amp; url.pathname === &#x27;/api/echo&#x27;) {
+    try {
+      const data = JSON.parse(body);
+      res.statusCode = 201;
+      res.end(JSON.stringify({ olindi: data }));
+    } catch {
+      res.statusCode = 400;
+      res.end(JSON.stringify({ xato: &#x27;JSON noto\&#x27;g\&#x27;ri&#x27; }));
+    }
+  } else {
+    res.statusCode = 404;
+    res.end(JSON.stringify({ xato: &#x27;Topilmadi&#x27; }));
+  }
+});
+
+server.listen(3000, () =&gt; console.log(&#x27;http://localhost:3000&#x27;));</code></pre></div>
+<p>Ko'rib turganingizdek: marshrutlash (<code>if/else</code>), tanani o'qish, JSON'ni parse qilish, xatolar — hammasi qo'lda.
+Marshrutlar 50 taga yetsa, bu kod boshqarib bo'lmaydigan bo'ladi. Aynan shu muammoni <b>Express</b> hal qiladi (9-dars).</p>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Yuklamalar papkasini tartiblovchi CLI dastur</h3></div><div class="ex-body">
+<p>"Downloads" papkasidagi yuzlab fayllarni turiga qarab papkalarga ajratadigan foydali skript.</p>
+<div class="code"><div class="code-head"><span>organize.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">#!/usr/bin/env node
+import fs from &#x27;node:fs/promises&#x27;;
+import path from &#x27;node:path&#x27;;
+
+const TOIFALAR = {
+  Rasmlar: [&#x27;.jpg&#x27;, &#x27;.jpeg&#x27;, &#x27;.png&#x27;, &#x27;.gif&#x27;, &#x27;.webp&#x27;, &#x27;.svg&#x27;],
+  Hujjatlar: [&#x27;.pdf&#x27;, &#x27;.doc&#x27;, &#x27;.docx&#x27;, &#x27;.xls&#x27;, &#x27;.xlsx&#x27;, &#x27;.ppt&#x27;, &#x27;.pptx&#x27;, &#x27;.txt&#x27;],
+  Videolar: [&#x27;.mp4&#x27;, &#x27;.mkv&#x27;, &#x27;.avi&#x27;, &#x27;.mov&#x27;],
+  Musiqa: [&#x27;.mp3&#x27;, &#x27;.wav&#x27;, &#x27;.flac&#x27;],
+  Arxivlar: [&#x27;.zip&#x27;, &#x27;.rar&#x27;, &#x27;.7z&#x27;, &#x27;.tar&#x27;, &#x27;.gz&#x27;],
+  Dasturlar: [&#x27;.exe&#x27;, &#x27;.msi&#x27;, &#x27;.dmg&#x27;, &#x27;.deb&#x27;],
+};
+
+// Kengaytma → toifa (tez qidirish uchun teskari jadval)
+const kengaytmaToifa = Object.fromEntries(
+  Object.entries(TOIFALAR).flatMap(([toifa, exts]) =&gt; exts.map(e =&gt; [e, toifa]))
+);
+
+const [, , papka = &#x27;.&#x27;, ...flags] = process.argv;
+const sinov = flags.includes(&#x27;--dry-run&#x27;);   // faqat ko&#x27;rsatish, ko&#x27;chirmaslik
+
+async function tartibla(dir) {
+  const elementlar = await fs.readdir(dir, { withFileTypes: true });
+  const hisobot = {};
+
+  for (const el of elementlar) {
+    if (!el.isFile() || el.name.startsWith(&#x27;.&#x27;)) continue;
+
+    const toifa = kengaytmaToifa[path.extname(el.name).toLowerCase()] ?? &#x27;Boshqalar&#x27;;
+    const manzilPapka = path.join(dir, toifa);
+    let manzil = path.join(manzilPapka, el.name);
+
+    // Bir xil nomli fayl bo&#x27;lsa: rasm.png → rasm (1).png
+    for (let i = 1; await mavjudmi(manzil); i++) {
+      const { name, ext } = path.parse(el.name);
+      manzil = path.join(manzilPapka, `${name} (${i})${ext}`);
+    }
+
+    if (!sinov) {
+      await fs.mkdir(manzilPapka, { recursive: true });
+      await fs.rename(path.join(dir, el.name), manzil);
+    }
+    hisobot[toifa] = (hisobot[toifa] ?? 0) + 1;
+    console.log(`${sinov ? &#x27;[sinov] &#x27; : &#x27;&#x27;}${el.name} → ${toifa}/`);
+  }
+  return hisobot;
+}
+
+async function mavjudmi(p) {
+  try { await fs.access(p); return true; } catch { return false; }
+}
+
+try {
+  const natija = await tartibla(path.resolve(papka));
+  console.log(&#x27;\n📊 Natija:&#x27;);
+  console.table(natija);
+} catch (err) {
+  console.error(`❌ Xato: ${err.code === &#x27;ENOENT&#x27; ? &#x27;papka topilmadi&#x27; : err.message}`);
+  process.exit(1);
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node organize.js ~/Downloads --dry-run   # avval nima bo&#x27;lishini ko&#x27;ramiz
+node organize.js ~/Downloads             # haqiqiy ko&#x27;chirish</code></pre></div>
+<p><code>--dry-run</code> rejimi — xavfli amallarni bajaruvchi har qanday skriptda bo'lishi kerak bo'lgan yaxshi odat.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Statik fayl serveri (http + fs + path)</h3></div><div class="ex-body">
+<p>Shaxsiy saytingizni (2–3-darslar) brauzerda <code>http://localhost:8080</code> orqali ochadigan server. Unda real
+serverlar duch keladigan muammolar — MIME turlari, 404 va xavfsizlik — hal qilingan.</p>
+<div class="code"><div class="code-head"><span>static-server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
+import fs from &#x27;node:fs/promises&#x27;;
+import { createReadStream } from &#x27;node:fs&#x27;;
+import path from &#x27;node:path&#x27;;
+
+const ROOT = path.resolve(process.argv[2] ?? &#x27;public&#x27;);
+const PORT = Number(process.env.PORT) || 8080;
+
+const MIME = {
+  &#x27;.html&#x27;: &#x27;text/html; charset=utf-8&#x27;,
+  &#x27;.css&#x27;: &#x27;text/css; charset=utf-8&#x27;,
+  &#x27;.js&#x27;: &#x27;text/javascript; charset=utf-8&#x27;,
+  &#x27;.json&#x27;: &#x27;application/json&#x27;,
+  &#x27;.png&#x27;: &#x27;image/png&#x27;,
+  &#x27;.jpg&#x27;: &#x27;image/jpeg&#x27;,
+  &#x27;.svg&#x27;: &#x27;image/svg+xml&#x27;,
+  &#x27;.ico&#x27;: &#x27;image/x-icon&#x27;,
+  &#x27;.woff2&#x27;: &#x27;font/woff2&#x27;,
+};
+
+const server = http.createServer(async (req, res) =&gt; {
+  const started = Date.now();
+  res.on(&#x27;finish&#x27;, () =&gt;
+    console.log(`${req.method} ${req.url} → ${res.statusCode} (${Date.now() - started}ms)`)
+  );
+  try {
+    const { pathname } = new URL(req.url, &#x27;http://localhost&#x27;);
+    let filePath = path.join(ROOT, decodeURIComponent(pathname));
+
+    // 🔒 Path traversal hujumidan himoya: /../../etc/passwd
+    if (filePath !== ROOT &amp;&amp; !filePath.startsWith(ROOT + path.sep)) {
+      res.writeHead(403).end(&#x27;Forbidden&#x27;);
+      return;
+    }
+
+    let stat = await fs.stat(filePath).catch(() =&gt; null);
+    if (stat?.isDirectory()) {
+      filePath = path.join(filePath, &#x27;index.html&#x27;);
+      stat = await fs.stat(filePath).catch(() =&gt; null);
+    }
+
+    if (!stat) {
+      res.writeHead(404, { &#x27;Content-Type&#x27;: &#x27;text/html; charset=utf-8&#x27; });
+      res.end(&#x27;&lt;h1&gt;404&lt;/h1&gt;&lt;p&gt;Sahifa topilmadi&lt;/p&gt;&#x27;);
+      return;
+    }
+
+    res.writeHead(200, {
+      &#x27;Content-Type&#x27;: MIME[path.extname(filePath)] ?? &#x27;application/octet-stream&#x27;,
+      &#x27;Content-Length&#x27;: stat.size,
+      &#x27;Cache-Control&#x27;: &#x27;public, max-age=3600&#x27;,
+    });
+    createReadStream(filePath).pipe(res);   // stream — katta fayllar ham xotirani to&#x27;ldirmaydi
+  } catch (err) {
+    console.error(err);
+    res.writeHead(500).end(&#x27;Server xatosi&#x27;);
+  }
+});
+
+server.listen(PORT, () =&gt; console.log(`📂 ${ROOT} → http://localhost:${PORT}`));</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node static-server.js ./portfolio
+curl -i http://localhost:8080/
+curl -i --path-as-is http://localhost:8080/../../etc/passwd   # 403 qaytishi kerak</code></pre></div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>JSON faylga asoslangan "mini ma'lumotlar bazasi" moduli</h3></div><div class="ex-body">
+<p>Haqiqiy bazaga (10-dars) o'tishdan oldin, ma'lumotni JSON faylda saqlovchi qayta ishlatiladigan modul yozamiz. U 9-darsdagi
+Express API'da ishlatiladi.</p>
+<div class="code"><div class="code-head"><span>src/db/jsonStore.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
+import path from &#x27;node:path&#x27;;
+import { randomUUID } from &#x27;node:crypto&#x27;;
+
+export class JsonStore {
+  #file;
+  #queue = Promise.resolve();     // yozuvlarni navbatga qo&#x27;yish uchun
+
+  constructor(file) {
+    this.#file = path.resolve(file);
+  }
+
+  async #read() {
+    try {
+      return JSON.parse(await fs.readFile(this.#file, &#x27;utf8&#x27;));
+    } catch (err) {
+      if (err.code === &#x27;ENOENT&#x27;) return [];   // fayl hali yo&#x27;q
+      throw err;
+    }
+  }
+
+  // Bir vaqtdagi ikki yozuv bir-birini o&#x27;chirib yubormasligi uchun — ketma-ket bajaramiz
+  #write(mutator) {
+    this.#queue = this.#queue.then(async () =&gt; {
+      const items = await this.#read();
+      const result = mutator(items);
+      const tmp = `${this.#file}.tmp`;
+      await fs.mkdir(path.dirname(this.#file), { recursive: true });
+      await fs.writeFile(tmp, JSON.stringify(items, null, 2));
+      await fs.rename(tmp, this.#file);        // atomar almashtirish — fayl hech qachon yarim yozilmaydi
+      return result;
+    });
+    return this.#queue;
+  }
+
+  async all({ filter = () =&gt; true, sort } = {}) {
+    const items = (await this.#read()).filter(filter);
+    return sort ? items.sort(sort) : items;
+  }
+
+  async get(id) {
+    return (await this.#read()).find(i =&gt; i.id === id) ?? null;
+  }
+
+  create(data) {
+    return this.#write(items =&gt; {
+      const item = { id: randomUUID(), ...data, createdAt: new Date().toISOString() };
+      items.push(item);
+      return item;
+    });
+  }
+
+  update(id, patch) {
+    return this.#write(items =&gt; {
+      const i = items.findIndex(x =&gt; x.id === id);
+      if (i === -1) return null;
+      items[i] = { ...items[i], ...patch, id, updatedAt: new Date().toISOString() };
+      return items[i];
+    });
+  }
+
+  remove(id) {
+    return this.#write(items =&gt; {
+      const i = items.findIndex(x =&gt; x.id === id);
+      if (i === -1) return false;
+      items.splice(i, 1);
+      return true;
+    });
+  }
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>try.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { JsonStore } from &#x27;./src/db/jsonStore.js&#x27;;
+
+const books = new JsonStore(&#x27;data/books.json&#x27;);
+const b = await books.create({ title: &#x27;Clean Code&#x27;, author: &#x27;Robert Martin&#x27;, price: 180000 });
+await books.update(b.id, { price: 165000 });
+console.log(await books.all({ sort: (a, b) =&gt; a.price - b.price }));
+
+// Bir vaqtda 10 ta yozuv — navbat tufayli birortasi ham yo&#x27;qolmaydi
+await Promise.all(Array.from({ length: 10 }, (_, i) =&gt; books.create({ title: `Kitob ${i}` })));
+console.log((await books.all()).length);  // 11</code></pre></div>
+<div class="callout info">Navbatsiz versiyada parallel <code>create</code> chaqiruvlari bir xil eski faylni o'qib, bir-birining natijasini
+ustidan yozib yuborardi — klassik <b>race condition</b>. Haqiqiy ma'lumotlar bazalari bu muammoni tranzaksiyalar bilan hal qiladi (10-dars).</div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Valyuta kursi CLI: tashqi API, argumentlar va kesh</h3></div><div class="ex-body">
+<p>O'zbekiston Markaziy banki ochiq API'sidan kurslarni olib, summani konvertatsiya qiladi. Natija 1 soat keshlanadi.</p>
+<div class="code"><div class="code-head"><span>kurs.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">#!/usr/bin/env node
+import fs from &#x27;node:fs/promises&#x27;;
+import os from &#x27;node:os&#x27;;
+import path from &#x27;node:path&#x27;;
+import { parseArgs } from &#x27;node:util&#x27;;
+
+const { values, positionals } = parseArgs({
+  allowPositionals: true,
+  options: {
+    to: { type: &#x27;string&#x27;, short: &#x27;t&#x27;, default: &#x27;UZS&#x27; },
+    fresh: { type: &#x27;boolean&#x27;, default: false },
+    help: { type: &#x27;boolean&#x27;, short: &#x27;h&#x27; },
+  },
+});
+
+if (values.help || positionals.length &lt; 2) {
+  console.log(`Foydalanish: kurs &lt;summa&gt; &lt;valyuta&gt; [--to UZS] [--fresh]
+Misollar:
+  node kurs.js 100 USD
+  node kurs.js 1000000 UZS --to EUR`);
+  process.exit(0);
+}
+
+const [summaStr, from] = positionals;
+const summa = Number(summaStr);
+const CACHE = path.join(os.tmpdir(), &#x27;cbu-rates.json&#x27;);
+const TTL = 60 * 60 * 1000;
+
+async function kurslarniOl() {
+  if (!values.fresh) {
+    try {
+      const { savedAt, rates } = JSON.parse(await fs.readFile(CACHE, &#x27;utf8&#x27;));
+      if (Date.now() - savedAt &lt; TTL) return rates;
+    } catch { /* kesh yo&#x27;q — davom etamiz */ }
+  }
+  const res = await fetch(&#x27;https://cbu.uz/uz/arkhiv-kursov-valyut/json/&#x27;, {
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (!res.ok) throw new Error(`CBU API: ${res.status}`);
+  const list = await res.json();
+  // [{ Ccy: &#x27;USD&#x27;, Rate: &#x27;12650.15&#x27;, Nominal: &#x27;1&#x27;, Date: &#x27;03.10.2026&#x27;, ... }]
+  const rates = { UZS: 1 };
+  for (const r of list) rates[r.Ccy] = Number(r.Rate) / Number(r.Nominal);
+  await fs.writeFile(CACHE, JSON.stringify({ savedAt: Date.now(), rates }));
+  return rates;
+}
+
+try {
+  if (!Number.isFinite(summa) || summa &lt; 0) throw new Error(&#x27;Summa noto\&#x27;g\&#x27;ri&#x27;);
+  const rates = await kurslarniOl();
+  const a = from.toUpperCase(), b = values.to.toUpperCase();
+  if (!rates[a] || !rates[b]) throw new Error(`Noma&#x27;lum valyuta: ${!rates[a] ? a : b}`);
+
+  const natija = (summa * rates[a]) / rates[b];
+  const f = (n, c) =&gt; new Intl.NumberFormat(&#x27;uz-UZ&#x27;, { maximumFractionDigits: 2 }).format(n) + &#x27; &#x27; + c;
+  console.log(`💱 ${f(summa, a)} = ${f(natija, b)}`);
+  console.log(`   1 ${a} = ${f(rates[a] / rates[b], b)}`);
+} catch (err) {
+  console.error(&#x27;❌&#x27;, err.message);
+  process.exitCode = 1;
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node kurs.js 100 USD
+node kurs.js 5000000 UZS --to EUR
+node kurs.js 50 EUR -t USD --fresh</code></pre></div>
+<p><code>package.json</code> ga <code>"bin": { "kurs": "./kurs.js" }</code> qo'shib, <code>npm link</code> qilsangiz, buyruq butun tizimda <code>kurs 100 USD</code> ko'rinishida ishlaydi.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><code>wc.js</code> yozing: berilgan fayldagi qatorlar, so'zlar va belgilar sonini chiqarsin (<code>node wc.js matn.txt</code>).</li>
+  <li>Papkadagi barcha <code>.jpg</code> fayllar nomini <code>2026-10-03_001.jpg</code> formatiga o'zgartiruvchi skript (fayl yaratilgan sana bo'yicha).</li>
+  <li>8-darsdagi <code>http</code> serveriga <code>GET /api/notes</code> va <code>POST /api/notes</code> marshrutlarini qo'shing, ma'lumot 3-misoldagi <code>JsonStore</code> da saqlansin.</li>
+  <li><code>EventEmitter</code> asosida oddiy "Pomodoro taymer" yozing: <code>start</code>, <code>tick</code>, <code>break</code>, <code>done</code> hodisalari bilan.</li>
+  <li>Loyihangizga <code>.env</code> va <code>.env.example</code> qo'shing; PORT o'rnatilmagan bo'lsa ogohlantirish chiqaring.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Node.js = V8 + libuv: JavaScript serverda, bloklanmaydigan I/O bilan.</li>
+  <li>ES Modules (<code>"type": "module"</code>, <code>import/export</code>) — zamonaviy standart.</li>
+  <li><code>package.json</code> — loyiha pasporti; <code>package-lock.json</code> ni commit qiling, <code>node_modules</code> ni — yo'q.</li>
+  <li><code>fs/promises</code>, <code>path</code>, <code>events</code>, streams — eng ko'p ishlatiladigan modullar.</li>
+  <li>Maxfiy sozlamalar — <code>.env</code> va <code>process.env</code> da.</li>
+  <li>Sof <code>http</code> bilan server yozish mumkin, lekin katta ilovalar uchun freymvork kerak — keyingi dars Express.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="07-git-va-github.html"><small>← Oldingi dars</small>Git va GitHub</a><a class="next" href="09-express-rest-api.html"><small>Keyingi dars →</small>Express.js va REST API</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#node-js-nima-va-qanday-ishlaydi">Node.js nima va qanday ishlaydi?</a></li><li><a href="#ornatish-va-birinchi-dastur">O&#x27;rnatish va birinchi dastur</a></li><li><a href="#modullar-tizimi">Modullar tizimi</a></li><li><a href="#npm-va-package-json">npm va package.json</a></li><li><a href="#ornatilgan-asosiy-modullar">O&#x27;rnatilgan asosiy modullar</a></li><li><a href="#http-moduli-freymvorksiz-server">http moduli — freymvorksiz server</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

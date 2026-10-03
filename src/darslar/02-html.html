@@ -1,0 +1,593 @@
+<!-- title: HTML — sahifa tuzilishi | desc: Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar. | icon: 🧱 | level: Boshlang'ich · ~90 daqiqa -->
+
+<p><b>HTML (HyperText Markup Language)</b> — veb-sahifaning skeleti. U dasturlash tili emas, balki <b>belgilash
+(markup) tili</b>: biz matnning qaysi qismi sarlavha, qaysisi paragraf, qaysisi havola yoki tugma ekanini
+brauzerga tushuntiramiz. Yaxshi yozilgan HTML — tez ishlaydigan, qidiruv tizimlarida yuqorida chiqadigan va
+ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
+
+<h2>Element, teg va atribut</h2>
+<p>HTML hujjati <b>elementlardan</b> tashkil topadi. Element odatda ochuvchi teg, mazmun va yopuvchi tegdan iborat:</p>
+<pre data-lang="html"><a href="https://kun.uz" target="_blank" title="Yangiliklar">Kun.uz saytiga o'tish</a>
+<!-- └ochuvchi teg ┘ └──── atributlar ────────────────┘ └─── mazmun ──────┘└yopuvchi┘ --></pre>
+<ul>
+  <li><b>Teg</b> — burchak qavslar ichidagi nom: <code>&lt;p&gt;</code>, <code>&lt;/p&gt;</code>.</li>
+  <li><b>Atribut</b> — elementga qo'shimcha ma'lumot: <code>nom="qiymat"</code>. Har doim ochuvchi tegda yoziladi.</li>
+  <li><b>Bo'sh (void) elementlar</b> — mazmuni bo'lmaydi va yopilmaydi: <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;hr&gt;</code>.</li>
+  <li><b>Ichma-ich joylashish (nesting)</b> — elementlar to'g'ri tartibda yopilishi kerak: <code>&lt;p&gt;&lt;b&gt;matn&lt;/b&gt;&lt;/p&gt;</code> ✅, <code>&lt;p&gt;&lt;b&gt;matn&lt;/p&gt;&lt;/b&gt;</code> ❌.</li>
+</ul>
+<h3>Global atributlar</h3>
+<p>Istalgan elementda ishlatiladigan atributlar:</p>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>id</code></td><td>Sahifada <b>yagona</b> identifikator. CSS, JS va <code>#havola</code> uchun</td></tr>
+<tr><td><code>class</code></td><td>Bir yoki bir nechta sinf nomi (bo'sh joy bilan). CSS uslublari uchun asosiy vosita</td></tr>
+<tr><td><code>style</code></td><td>Inline CSS (kamdan-kam ishlating)</td></tr>
+<tr><td><code>title</code></td><td>Sichqoncha ustiga olib borilganda chiqadigan izoh</td></tr>
+<tr><td><code>hidden</code></td><td>Elementni yashiradi</td></tr>
+<tr><td><code>data-*</code></td><td>O'z ma'lumotingizni saqlash: <code>data-product-id="42"</code> → JS'da <code>el.dataset.productId</code></td></tr>
+<tr><td><code>lang</code></td><td>Mazmun tili: <code>lang="uz"</code></td></tr>
+<tr><td><code>tabindex</code></td><td>Klaviatura (<kbd>Tab</kbd>) bilan fokus tartibi</td></tr>
+</table></div>
+
+<h2>HTML hujjatining asosiy tuzilishi</h2>
+<p>Har bir HTML sahifa quyidagi skeletdan boshlanadi. VS Code'da bo'sh <code>.html</code> faylga <code>!</code> yozib <kbd>Tab</kbd> bossangiz, u avtomatik yaratiladi.</p>
+<pre data-lang="html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sahifa haqida 150–160 belgili qisqa tavsif (Google natijalarida chiqadi)">
+  <title>Sahifa sarlavhasi — Sayt nomi</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- Foydalanuvchi ko'radigan barcha narsa shu yerda -->
+</body>
+</html></pre>
+<ul>
+  <li><code>&lt;!DOCTYPE html&gt;</code> — brauzerga "bu zamonaviy HTML5 hujjat" deydi. Usiz brauzer eski "quirks mode"ga o'tadi va CSS g'alati ishlaydi.</li>
+  <li><code>&lt;html lang="uz"&gt;</code> — ildiz element; <code>lang</code> ekran o'quvchilar va tarjimonlar uchun muhim.</li>
+  <li><code>&lt;head&gt;</code> — ko'rinmaydigan meta-ma'lumotlar: kodlash, sarlavha, CSS, skriptlar.</li>
+  <li><code>&lt;meta charset="UTF-8"&gt;</code> — o'zbekcha <code>o'</code>, <code>g'</code>, kirill harflari va emoji to'g'ri chiqishi uchun. Har doim birinchi qatorlarda.</li>
+  <li><code>&lt;meta name="viewport"&gt;</code> — telefonlarda sahifa kichraytirilmasdan, ekran kengligida ko'rsatilishi uchun. Usiz responsiv dizayn ishlamaydi.</li>
+  <li><code>defer</code> — skript HTML to'liq o'qilgandan keyin bajariladi va parsing'ni bloklamaydi.</li>
+</ul>
+
+<h2>Matn bilan ishlash</h2>
+<h3>Sarlavhalar</h3>
+<p><code>&lt;h1&gt;</code> dan <code>&lt;h6&gt;</code> gacha. Ular hujjatning <b>mazmun tuzilishini</b> (kitobning mundarijasi kabi) bildiradi, shrift o'lchamini emas.</p>
+<ul>
+  <li>Sahifada odatda <b>bitta</b> <code>&lt;h1&gt;</code> bo'ladi — sahifaning asosiy mavzusi.</li>
+  <li>Darajalarni sakrab o'tmang: <code>h2</code> dan keyin to'g'ridan-to'g'ri <code>h4</code> emas.</li>
+  <li>Matnni katta qilish uchun sarlavha tegi ishlatmang — buning uchun CSS bor.</li>
+</ul>
+<h3>Matn elementlari</h3>
+<pre data-lang="html"><p>Paragraf — matnning asosiy bloki.</p>
+
+<p>
+  <strong>Muhim matn</strong> (semantik qalin) va <b>shunchaki qalin</b>.<br>
+  <em>Urg'u berilgan matn</em> (semantik kursiv) va <i>atama yoki chet so'z</i>.<br>
+  <mark>Belgilangan</mark>, <small>mayda izoh</small>, <del>o'chirilgan</del>, <ins>qo'shilgan</ins>.<br>
+  H<sub>2</sub>O va E = mc<sup>2</sup><br>
+  <code>console.log()</code> — kod, <kbd>Ctrl</kbd> + <kbd>C</kbd> — klaviatura.<br>
+  <abbr title="HyperText Markup Language">HTML</abbr> — qisqartma.
+</p>
+
+<blockquote cite="https://example.uz/manba">
+  <p>Dasturlash — bu fikrlashni o'rgatadigan san'at.</p>
+  <footer>— <cite>Noma'lum muallif</cite></footer>
+</blockquote>
+
+<pre>
+  Formatlangan matn:
+    bo'sh joylar    saqlanadi
+</pre>
+
+<hr> <!-- mavzu almashuvi --></pre>
+<div class="callout info"><span class="t">strong va b farqi</span>
+<code>&lt;strong&gt;</code> — "bu matn muhim" degan <i>ma'no</i> beradi (ekran o'quvchi ovozini o'zgartiradi).
+<code>&lt;b&gt;</code> — faqat vizual qalinlik. Xuddi shunday <code>&lt;em&gt;</code> (urg'u) va <code>&lt;i&gt;</code> (stil).</div>
+
+<h3>Ro'yxatlar</h3>
+<pre data-lang="html"><!-- Tartibsiz ro'yxat -->
+<ul>
+  <li>Non</li>
+  <li>Sut</li>
+</ul>
+
+<!-- Tartibli ro'yxat: type="1|a|A|i|I", start, reversed -->
+<ol start="3">
+  <li>Uchinchi qadam</li>
+  <li>To'rtinchi qadam
+    <ul>
+      <li>Ichki ro'yxat</li>
+    </ul>
+  </li>
+</ol>
+
+<!-- Ta'riflar ro'yxati -->
+<dl>
+  <dt>HTML</dt>
+  <dd>Sahifa tuzilishi</dd>
+  <dt>CSS</dt>
+  <dd>Sahifa ko'rinishi</dd>
+</dl></pre>
+
+<h3>Havolalar</h3>
+<pre data-lang="html"><a href="https://developer.mozilla.org">Tashqi havola (absolyut URL)</a>
+<a href="/about.html">Saytning ildizidan (root-relative)</a>
+<a href="../index.html">Joriy papkadan bir yuqoriga (relative)</a>
+<a href="#aloqa">Sahifadagi id="aloqa" elementiga</a>
+<a href="mailto:info@example.uz?subject=Savol">Email yozish</a>
+<a href="tel:+998901234567">Qo'ng'iroq qilish</a>
+<a href="/files/narxlar.pdf" download>PDF ni yuklab olish</a>
+
+<!-- Yangi oynada ochish: rel="noopener noreferrer" xavfsizlik uchun -->
+<a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></pre>
+
+<h2>Rasmlar va media</h2>
+<pre data-lang="html"><img src="images/samarqand.jpg"
+     alt="Samarqanddagi Registon maydoni kechqurun"
+     width="800" height="533"
+     loading="lazy">
+
+<!-- Rasm + izoh -->
+<figure>
+  <img src="chart.png" alt="2025-yil savdo grafigi: dekabrda eng yuqori">
+  <figcaption>1-rasm. Oylik savdo hajmi</figcaption>
+</figure>
+
+<!-- Ekran o'lchamiga qarab turli rasm (responsive images) -->
+<img src="photo-800.jpg"
+     srcset="photo-400.jpg 400w, photo-800.jpg 800w, photo-1600.jpg 1600w"
+     sizes="(max-width: 600px) 100vw, 800px"
+     alt="Tog' manzarasi">
+
+<!-- Zamonaviy format + zaxira -->
+<picture>
+  <source srcset="hero.avif" type="image/avif">
+  <source srcset="hero.webp" type="image/webp">
+  <img src="hero.jpg" alt="Bosh sahifa banneri">
+</picture>
+
+<video src="intro.mp4" controls poster="poster.jpg" width="640" muted>
+  Brauzeringiz video tegini qo'llab-quvvatlamaydi.
+</video>
+
+<audio src="podcast.mp3" controls></audio>
+
+<iframe src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video"
+        width="560" height="315" allowfullscreen loading="lazy"></iframe></pre>
+<div class="callout warn"><span class="t">alt atributi majburiy</span>
+<code>alt</code> — rasm yuklanmasa yoki foydalanuvchi ko'ra olmasa (ekran o'quvchi) o'qiladigan matn. U rasmda <i>nima
+borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatilgan rasmlarga <code>alt=""</code> (bo'sh) qo'ying.
+<code>width</code> va <code>height</code> berilsa, rasm yuklanguncha joy band qilinadi va sahifa "sakramaydi".</div>
+
+<h2>Semantik HTML</h2>
+<p><b>Semantik</b> — "ma'noli" degani. 2000-yillarda saytlar faqat <code>&lt;div&gt;</code> lardan qurilgan
+("div sho'rva"). HTML5 sahifa qismlarining <i>vazifasini</i> bildiruvchi teglar qo'shdi:</p>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Ma'nosi</th></tr>
+<tr><td><code>&lt;header&gt;</code></td><td>Sahifa yoki bo'limning kirish qismi: logo, sarlavha, navigatsiya</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>Asosiy navigatsiya havolalari bloki</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>Sahifaning asosiy, noyob mazmuni (sahifada bitta)</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>Mustaqil, alohida tarqatsa bo'ladigan mazmun: maqola, post, mahsulot kartasi, izoh</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>Mavzu bo'yicha guruhlangan qism (odatda sarlavhasi bilan)</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>Asosiy mazmunga bilvosita aloqador: yon panel, reklama, "o'xshash maqolalar"</td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>Pastki qism: mualliflik, aloqa, havolalar</td></tr>
+<tr><td><code>&lt;time&gt;</code></td><td>Sana/vaqt: <code>&lt;time datetime="2026-10-03"&gt;3-oktabr&lt;/time&gt;</code></td></tr>
+<tr><td><code>&lt;address&gt;</code></td><td>Aloqa ma'lumotlari</td></tr>
+<tr><td><code>&lt;div&gt;</code>, <code>&lt;span&gt;</code></td><td>Ma'nosiz konteynerlar — faqat uslub berish uchun (blok va qator ichi)</td></tr>
+</table></div>
+<p><b>Nega semantika muhim?</b></p>
+<ol>
+  <li><b>SEO</b> — Google sahifaning qaysi qismi asosiy mazmun ekanini tushunadi.</li>
+  <li><b>Accessibility (a11y)</b> — ekran o'quvchi dasturlar "navigatsiyaga o'tish", "asosiy mazmunga o'tish" imkonini beradi.</li>
+  <li><b>O'qilishi</b> — kodni ko'rgan dasturchi tuzilmani darhol tushunadi.</li>
+</ol>
+
+<h3>Blok va qator ichi (inline) elementlar</h3>
+<ul>
+  <li><b>Blok</b> elementlar (<code>div, p, h1–h6, ul, section, article, form</code>) yangi qatordan boshlanadi va butun kenglikni egallaydi.</li>
+  <li><b>Inline</b> elementlar (<code>span, a, strong, em, img, code</code>) matn oqimida qatorda turadi va faqat kerakli kenglikni egallaydi.</li>
+</ul>
+<p>Bu xatti-harakatni CSS'dagi <code>display</code> xususiyati bilan o'zgartirish mumkin (3-dars).</p>
+
+<h2>Jadvallar</h2>
+<p>Jadvallar faqat <b>jadval ko'rinishidagi ma'lumotlar</b> uchun (narxlar, dars jadvali, statistika). Sahifa maketini jadval bilan qurish — 1990-yillar usuli, hozir CSS Grid/Flexbox ishlatiladi.</p>
+<pre data-lang="html"><table>
+  <caption>2026-yil 1-chorak savdo hisoboti</caption>
+  <thead>
+    <tr>
+      <th scope="col">Oy</th>
+      <th scope="col">Buyurtmalar</th>
+      <th scope="col">Daromad (so'm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Yanvar</th><td>120</td><td>36 000 000</td></tr>
+    <tr><th scope="row">Fevral</th><td>145</td><td>43 500 000</td></tr>
+    <tr><th scope="row">Mart</th><td>190</td><td>57 000 000</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><th scope="row">Jami</th><td>455</td><td>136 500 000</td></tr>
+  </tfoot>
+</table>
+
+<!-- Kataklarni birlashtirish -->
+<table>
+  <tr><th colspan="2">Ism va familiya</th><th rowspan="2">Yosh</th></tr>
+  <tr><td>Ali</td><td>Valiyev</td></tr>
+</table></pre>
+
+<h2>Formalar — foydalanuvchidan ma'lumot olish</h2>
+<p>Formalar — frontend va backend o'rtasidagi ko'prik. Ro'yxatdan o'tish, qidiruv, buyurtma — barchasi forma orqali.</p>
+<pre data-lang="html"><form action="/api/register" method="POST">
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required placeholder="siz@mail.uz">
+
+  <label for="password">Parol</label>
+  <input type="password" id="password" name="password" required minlength="8">
+
+  <button type="submit">Ro'yxatdan o'tish</button>
+</form></pre>
+<ul>
+  <li><code>action</code> — ma'lumot yuboriladigan URL. <code>method</code> — <code>GET</code> (ma'lumot URL'ga qo'shiladi, qidiruv uchun) yoki <code>POST</code> (tanada yuboriladi, maxfiy ma'lumotlar uchun).</li>
+  <li><code>name</code> — <b>eng muhim atribut</b>: serverga <code>name=qiymat</code> ko'rinishida yuboriladi. <code>name</code>siz maydon yuborilmaydi!</li>
+  <li><code>&lt;label for="id"&gt;</code> — yozuvni maydonga bog'laydi: yozuv bosilganda maydon fokuslanadi va ekran o'quvchi uni o'qiydi.</li>
+</ul>
+
+<h3>Input turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>type</th><th>Ko'rinishi / vazifasi</th></tr>
+<tr><td><code>text</code></td><td>Oddiy matn</td></tr>
+<tr><td><code>email</code></td><td>Email formatini tekshiradi; telefonda <code>@</code> bor klaviatura chiqadi</td></tr>
+<tr><td><code>password</code></td><td>Belgilar yashiriladi</td></tr>
+<tr><td><code>number</code></td><td>Raqam; <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+<tr><td><code>tel</code>, <code>url</code>, <code>search</code></td><td>Telefon, manzil, qidiruv</td></tr>
+<tr><td><code>date</code>, <code>time</code>, <code>datetime-local</code></td><td>Sana/vaqt tanlagich</td></tr>
+<tr><td><code>checkbox</code></td><td>Bir nechtasini belgilash mumkin</td></tr>
+<tr><td><code>radio</code></td><td>Bir guruhdan (bir xil <code>name</code>) faqat bittasi</td></tr>
+<tr><td><code>file</code></td><td>Fayl tanlash; <code>accept="image/*"</code>, <code>multiple</code></td></tr>
+<tr><td><code>range</code>, <code>color</code></td><td>Slayder, rang tanlagich</td></tr>
+<tr><td><code>hidden</code></td><td>Ko'rinmas maydon (masalan, mahsulot id)</td></tr>
+</table></div>
+
+<h3>Brauzerning o'rnatilgan validatsiyasi</h3>
+<ul>
+  <li><code>required</code> — majburiy maydon</li>
+  <li><code>minlength</code>, <code>maxlength</code> — matn uzunligi</li>
+  <li><code>min</code>, <code>max</code> — son/sana chegarasi</li>
+  <li><code>pattern="[0-9]{9}"</code> — regex bo'yicha tekshirish</li>
+</ul>
+<div class="callout danger">Brauzer validatsiyasi faqat foydalanuvchiga qulaylik uchun. Uni DevTools orqali osongina o'chirish mumkin.
+<b>Server tomonda albatta qayta tekshiring</b> (9-dars).</div>
+
+<h2>Accessibility (a11y) va SEO asoslari</h2>
+<h3>Accessibility — hamma uchun qulay sayt</h3>
+<ul>
+  <li>Semantik teglardan foydalaning; tugma uchun <code>&lt;button&gt;</code>, havola uchun <code>&lt;a&gt;</code> (<code>&lt;div onclick&gt;</code> emas — u klaviaturadan ishlamaydi).</li>
+  <li>Har bir rasmda mazmunli <code>alt</code>, har bir input'da <code>&lt;label&gt;</code>.</li>
+  <li>Sarlavhalar ierarxiyasini buzmang.</li>
+  <li>Faqat ikonkadan iborat tugmalarga <code>aria-label</code> qo'shing: <code>&lt;button aria-label="Yopish"&gt;✕&lt;/button&gt;</code>.</li>
+  <li>Saytni sichqonchasiz, faqat <kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd> bilan ishlatib ko'ring.</li>
+</ul>
+<h3>SEO va ijtimoiy tarmoqlar uchun meta-teglar</h3>
+<pre data-lang="html"><head>
+  <title>iPhone 16 Pro — narxi va xususiyatlari | TexnoShop</title>
+  <meta name="description" content="iPhone 16 Pro: 256 GB, kafolat 1 yil, Toshkent bo'ylab bepul yetkazib berish.">
+  <link rel="canonical" href="https://texnoshop.uz/iphone-16-pro">
+
+  <!-- Telegram, Facebook va boshqalarda havola "kartochkasi" uchun (Open Graph) -->
+  <meta property="og:title" content="iPhone 16 Pro — TexnoShop">
+  <meta property="og:description" content="Kafolat bilan, bepul yetkazib berish">
+  <meta property="og:image" content="https://texnoshop.uz/img/iphone-og.jpg">
+  <meta property="og:url" content="https://texnoshop.uz/iphone-16-pro">
+  <meta property="og:type" content="product">
+</head></pre>
+
+<h2>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Shaxsiy portfolio sahifasi (to'liq semantik tuzilma)</h3></div><div class="ex-body">
+<p>Dasturchi rezyumesi o'rnida ishlatiladigan bir sahifali sayt. Faqat HTML — dizaynni keyingi darsda qo'shamiz.</p>
+<pre data-lang="html" data-title="portfolio/index.html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dilnoza Karimova — Full-stack dasturchi portfoliosi">
+  <title>Dilnoza Karimova — Full-stack dasturchi</title>
+</head>
+<body>
+  <header>
+    <a href="/" aria-label="Bosh sahifa">DK</a>
+    <nav>
+      <ul>
+        <li><a href="#haqida">Men haqimda</a></li>
+        <li><a href="#loyihalar">Loyihalar</a></li>
+        <li><a href="#tajriba">Tajriba</a></li>
+        <li><a href="#aloqa">Aloqa</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="haqida">
+      <img src="avatar.jpg" alt="Dilnoza Karimovaning portreti" width="160" height="160">
+      <h1>Dilnoza Karimova</h1>
+      <p>Toshkentlik <strong>full-stack dasturchi</strong>. React va Node.js bilan
+         tez va qulay veb-ilovalar yarataman.</p>
+      <a href="cv.pdf" download>Rezyumeni yuklab olish (PDF)</a>
+    </section>
+
+    <section id="loyihalar">
+      <h2>Loyihalar</h2>
+
+      <article>
+        <h3>Kitob do'koni</h3>
+        <img src="projects/bookshop.png" alt="Kitob do'koni ilovasining bosh sahifasi" loading="lazy">
+        <p>Onlayn kitob do'koni: savat, to'lov va admin panel.</p>
+        <ul>
+          <li>React</li><li>Express</li><li>PostgreSQL</li>
+        </ul>
+        <a href="https://github.com/dilnoza/bookshop" target="_blank" rel="noopener">Kod</a>
+        <a href="https://bookshop.example.uz" target="_blank" rel="noopener">Demo</a>
+      </article>
+
+      <article>
+        <h3>Ob-havo ilovasi</h3>
+        <p>Shahar bo'yicha 7 kunlik ob-havo prognozi (ochiq API asosida).</p>
+      </article>
+    </section>
+
+    <section id="tajriba">
+      <h2>Ish tajribasi</h2>
+      <ol reversed>
+        <li>
+          <h3>Junior Full-stack dasturchi — <span>IT Park rezidenti</span></h3>
+          <p><time datetime="2025-03">2025-mart</time> — hozirgacha</p>
+        </li>
+        <li>
+          <h3>Frontend stajyor — <span>Startap</span></h3>
+          <p><time datetime="2024-06">2024-iyun</time> — <time datetime="2025-02">2025-fevral</time></p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer id="aloqa">
+    <address>
+      <a href="mailto:dilnoza@example.uz">dilnoza@example.uz</a> ·
+      <a href="https://t.me/dilnoza_dev">Telegram</a> ·
+      <a href="https://github.com/dilnoza">GitHub</a>
+    </address>
+    <p><small>&copy; 2026 Dilnoza Karimova</small></p>
+  </footer>
+</body>
+</html></pre>
+<p><b>Tahlil:</b> navigatsiya havolalari <code>#id</code> orqali sahifa ichidagi bo'limlarga olib boradi; har bir loyiha
+alohida <code>&lt;article&gt;</code>; tajriba teskari tartibli ro'yxat (<code>reversed</code>); aloqa ma'lumotlari
+<code>&lt;address&gt;</code> ichida. Sahifani CSS'siz ochsangiz ham u mantiqan to'liq o'qiladi — bu yaxshi HTML belgisi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Kursga ro'yxatdan o'tish formasi (barcha maydon turlari)</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="register.html"><form action="/api/enroll" method="POST" enctype="multipart/form-data">
+  <fieldset>
+    <legend>Shaxsiy ma'lumotlar</legend>
+
+    <label for="fullname">To'liq ism *</label>
+    <input id="fullname" name="fullname" type="text" required minlength="3"
+           autocomplete="name" placeholder="Masalan: Jasur Toshmatov">
+
+    <label for="phone">Telefon *</label>
+    <input id="phone" name="phone" type="tel" required
+           pattern="\+998[0-9]{9}" placeholder="+998901234567"
+           title="Format: +998 va 9 ta raqam">
+
+    <label for="birth">Tug'ilgan sana</label>
+    <input id="birth" name="birth" type="date" min="1960-01-01" max="2015-12-31">
+
+    <label for="avatar">Rasm (ixtiyoriy)</label>
+    <input id="avatar" name="avatar" type="file" accept="image/png, image/jpeg">
+  </fieldset>
+
+  <fieldset>
+    <legend>Kurs tanlovi</legend>
+
+    <label for="course">Yo'nalish *</label>
+    <select id="course" name="course" required>
+      <option value="">— Tanlang —</option>
+      <optgroup label="Dasturlash">
+        <option value="frontend">Frontend</option>
+        <option value="backend">Backend</option>
+        <option value="fullstack" selected>Full-stack</option>
+      </optgroup>
+      <optgroup label="Dizayn">
+        <option value="uiux">UI/UX</option>
+      </optgroup>
+    </select>
+
+    <p>O'qish shakli *</p>
+    <label><input type="radio" name="format" value="offline" required> Oflayn</label>
+    <label><input type="radio" name="format" value="online"> Onlayn</label>
+
+    <p>Qaysi kunlar qulay?</p>
+    <label><input type="checkbox" name="days" value="du-chor-ju"> Du / Chor / Ju</label>
+    <label><input type="checkbox" name="days" value="se-pay-shan"> Se / Pay / Shan</label>
+
+    <label for="level">Hozirgi bilim darajangiz: <output id="levelOut">3</output>/10</label>
+    <input id="level" name="level" type="range" min="0" max="10" value="3"
+           oninput="levelOut.value = this.value">
+
+    <label for="about">O'zingiz haqingizda</label>
+    <textarea id="about" name="about" rows="4" maxlength="500"
+              placeholder="Nima uchun dasturlashni o'rganmoqchisiz?"></textarea>
+  </fieldset>
+
+  <label>
+    <input type="checkbox" name="agree" required>
+    <a href="/oferta" target="_blank">Ommaviy oferta</a> shartlariga roziman
+  </label>
+
+  <input type="hidden" name="source" value="landing-oktabr">
+
+  <button type="submit">Yuborish</button>
+  <button type="reset">Tozalash</button>
+</form></pre>
+<p><b>Muhim jihatlar:</b></p>
+<ul>
+  <li><code>enctype="multipart/form-data"</code> — fayl yuborilayotgan bo'lsa majburiy.</li>
+  <li><code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code> — maydonlarni mantiqiy guruhlaydi.</li>
+  <li>Radio tugmalar bir xil <code>name="format"</code> ga ega — shuning uchun faqat bittasi tanlanadi.</li>
+  <li><code>autocomplete="name"</code> — brauzer saqlangan ma'lumotni avtomatik taklif qiladi.</li>
+  <li>Bo'sh <code>value=""</code> li birinchi <code>&lt;option&gt;</code> + <code>required</code> = foydalanuvchi albatta tanlashi kerak.</li>
+</ul>
+<p>Forma yuborilganda server quyidagi kabi ma'lumot oladi: <code>fullname=Jasur...&amp;phone=%2B998...&amp;course=fullstack&amp;format=online&amp;days=du-chor-ju&amp;...</code></p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Blog maqolasi sahifasi (SEO va semantika)</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="blog/js-closure.html"><body>
+  <header>...</header>
+
+  <main>
+    <nav aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Bosh sahifa</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li aria-current="page">Closure nima?</li>
+      </ol>
+    </nav>
+
+    <article>
+      <header>
+        <h1>JavaScript'da closure nima va u nima uchun kerak?</h1>
+        <p>
+          Muallif: <a href="/authors/sardor" rel="author">Sardor Aliyev</a> ·
+          <time datetime="2026-09-28T14:30">28-sentabr, 2026</time> ·
+          8 daqiqa o'qish
+        </p>
+      </header>
+
+      <section>
+        <h2>Kirish</h2>
+        <p>Closure — funksiyaning o'zi yaratilgan muhitni <em>eslab qolishi</em>...</p>
+      </section>
+
+      <section>
+        <h2>Misol</h2>
+        <pre><code>function counter() {
+  let n = 0;
+  return () => ++n;
+}</code></pre>
+        <figure>
+          <img src="closure-diagram.png" alt="Ichki funksiya tashqi funksiya o'zgaruvchisiga havola saqlashini ko'rsatuvchi sxema">
+          <figcaption>Closure sxemasi</figcaption>
+        </figure>
+      </section>
+
+      <footer>
+        <p>Teglar: <a href="/tag/javascript" rel="tag">javascript</a>, <a href="/tag/funksiyalar" rel="tag">funksiyalar</a></p>
+      </footer>
+    </article>
+
+    <section aria-labelledby="comments-title">
+      <h2 id="comments-title">Izohlar (2)</h2>
+      <article>
+        <h3>Bekzod</h3>
+        <time datetime="2026-09-29">29-sentabr</time>
+        <p>Juda tushunarli yozilgan, rahmat!</p>
+      </article>
+    </section>
+  </main>
+
+  <aside>
+    <h2>O'xshash maqolalar</h2>
+    <ul>
+      <li><a href="/blog/scope">Scope va hoisting</a></li>
+      <li><a href="/blog/this">this kalit so'zi</a></li>
+    </ul>
+  </aside>
+
+  <footer>...</footer>
+</body></pre>
+<p>Izohlar ham <code>&lt;article&gt;</code> — chunki har bir izoh mustaqil mazmun birligi. <code>aria-current="page"</code>
+ekran o'quvchiga "hozir shu sahifadasiz" deydi. <code>&lt;time datetime&gt;</code> esa qidiruv tizimlariga maqola sanasini
+mashina o'qiy oladigan formatda beradi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Restoran menyusi: jadval, rasm va ichki havolalar</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="menu.html"><main>
+  <h1>"Bahor" milliy taomlar restorani — Menyu</h1>
+
+  <nav aria-label="Menyu bo'limlari">
+    <a href="#birinchi">Birinchi taomlar</a> |
+    <a href="#ikkinchi">Ikkinchi taomlar</a> |
+    <a href="#ichimliklar">Ichimliklar</a>
+  </nav>
+
+  <section id="birinchi">
+    <h2>Birinchi taomlar</h2>
+    <table>
+      <thead>
+        <tr><th scope="col">Taom</th><th scope="col">Hajm</th><th scope="col">Narx</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">
+            <figure>
+              <img src="img/shurva.jpg" alt="Qo'y go'shtli sho'rva kosada" width="120" height="80" loading="lazy">
+              <figcaption>Sho'rva</figcaption>
+            </figure>
+          </th>
+          <td>400 ml</td>
+          <td><data value="28000">28 000 so'm</data></td>
+        </tr>
+        <tr>
+          <th scope="row">Mastava</th>
+          <td>400 ml</td>
+          <td><data value="25000">25 000 so'm</data></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="ikkinchi">
+    <h2>Ikkinchi taomlar</h2>
+    <dl>
+      <dt>Toshkent oshi <mark>Xit!</mark></dt>
+      <dd>Devzira guruch, qo'y go'shti, sariq sabzi, bedana tuxumi — <data value="45000">45 000 so'm</data></dd>
+      <dt>Manti (5 dona)</dt>
+      <dd>Qo'y go'shti va piyoz — <data value="35000">35 000 so'm</data></dd>
+    </dl>
+  </section>
+
+  <p><a href="#">↑ Yuqoriga qaytish</a></p>
+</main></pre>
+<p><code>&lt;data value&gt;</code> — narxni odamlar uchun chiroyli, dasturlar uchun esa toza raqam ko'rinishida saqlaydi.
+Bu JavaScript bilan savatcha summasini hisoblashda qulay.</p>
+</div></div>
+
+<h2>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>O'zingiz uchun 1-misoldagi kabi portfolio sahifasi yarating — kamida 3 ta loyiha, ko'nikmalar ro'yxati va aloqa bo'limi bilan.</li>
+  <li>Kitob do'koni uchun "Buyurtma berish" formasini yarating: kitob tanlash (<code>select</code>), soni (<code>number</code>, 1–10), yetkazish usuli (<code>radio</code>), manzil (<code>textarea</code>), yetkazish sanasi (<code>date</code>).</li>
+  <li>O'z dars jadvalingizni <code>&lt;table&gt;</code> bilan yozing, katta tanaffusni <code>colspan</code> bilan birlashtiring.</li>
+  <li>Sahifangizni <a href="https://validator.w3.org/" target="_blank" rel="noopener">validator.w3.org</a> orqali tekshiring va barcha xatolarni tuzating.</li>
+  <li>Chrome DevTools → <b>Lighthouse</b> → "Accessibility" va "SEO" bo'yicha audit o'tkazing. 90+ ball olishga harakat qiling.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>HTML — mazmun va tuzilma; ko'rinish CSS'ga, xatti-harakat JS'ga tegishli.</li>
+  <li><code>&lt;!DOCTYPE&gt;</code>, <code>charset</code>, <code>viewport</code> — har bir sahifada majburiy.</li>
+  <li>Semantik teglar (<code>header, nav, main, article, section, aside, footer</code>) SEO va accessibility uchun muhim.</li>
+  <li>Formalarda <code>name</code>, <code>label</code>, to'g'ri <code>type</code> va validatsiya atributlarini ishlating; serverda baribir qayta tekshiring.</li>
+  <li>Rasmlarda doim <code>alt</code>, <code>width/height</code> va kerak bo'lsa <code>loading="lazy"</code>.</li>
+</ul>
+</div>

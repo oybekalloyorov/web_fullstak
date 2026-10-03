@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOM va hodisalar — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a class="active" href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖱️</div><div><div class="crumb">05-dars · 14 tadan</div><h1>DOM va hodisalar</h1><p class="lead">DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.</p></div></div>
+
+<p>Oldingi darsda JavaScript tilini o'rgandik. Endi uni sahifa bilan bog'laymiz. <b>DOM (Document Object Model)</b> —
+brauzer HTML'dan quradigan va JavaScript orqali boshqarish mumkin bo'lgan <b>obyektlar daraxti</b>. Tugma bosilganda
+oyna ochilishi, forma tekshirilishi, ro'yxatga element qo'shilishi — barchasi DOM bilan ishlash.</p>
+
+<h2 id="dom-daraxti"><a class="anchor" href="#dom-daraxti">#</a>DOM daraxti</h2>
+<p>Quyidagi HTML:</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;body&gt;
+  &lt;h1 id=&quot;title&quot;&gt;Vazifalar&lt;/h1&gt;
+  &lt;ul class=&quot;list&quot;&gt;
+    &lt;li&gt;Non olish&lt;/li&gt;
+    &lt;li&gt;Dars qilish&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;</code></pre></div>
+<p>brauzerda shunday daraxtga aylanadi:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">document
+└── html
+    ├── head
+    └── body
+        ├── h1#title
+        │   └── &quot;Vazifalar&quot;          (matn tuguni)
+        └── ul.list
+            ├── li
+            │   └── &quot;Non olish&quot;
+            └── li
+                └── &quot;Dars qilish&quot;</code></pre></div>
+<ul>
+  <li>Daraxtdagi har bir narsa — <b>tugun (node)</b>: element tugunlari, matn tugunlari, izoh tugunlari.</li>
+  <li><code>document</code> — daraxtning ildizi va DOM bilan ishlashning kirish nuqtasi.</li>
+  <li>Elementlar o'rtasida oilaviy munosabatlar bor: ota (parent), farzand (child), aka-uka (sibling).</li>
+</ul>
+<div class="callout info"><span class="t">DOM ≠ HTML manba kodi</span>
+DOM — "jonli" tuzilma. JavaScript uni o'zgartirsa, sahifa darhol yangilanadi, lekin serverdagi HTML fayl o'zgarmaydi.
+DevTools'dagi <b>Elements</b> paneli manba kodni emas, aynan joriy DOM'ni ko'rsatadi.</div>
+
+<h2 id="elementlarni-topish"><a class="anchor" href="#elementlarni-topish">#</a>Elementlarni topish</h2>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Zamonaviy va universal usul — CSS selektorlari bilan
+const title = document.querySelector(&#x27;#title&#x27;);          // birinchi mos element yoki null
+const firstItem = document.querySelector(&#x27;.list li&#x27;);
+const items = document.querySelectorAll(&#x27;.list li&#x27;);     // NodeList (barcha moslar)
+items.forEach(li =&gt; console.log(li.textContent));
+const arr = [...items];                                  // haqiqiy massivga aylantirish
+
+// Klassik usullar
+document.getElementById(&#x27;title&#x27;);
+document.getElementsByClassName(&#x27;list&#x27;);   // &quot;jonli&quot; HTMLCollection
+document.getElementsByTagName(&#x27;li&#x27;);
+
+// Element ichidan qidirish
+const list = document.querySelector(&#x27;.list&#x27;);
+list.querySelectorAll(&#x27;li&#x27;);
+
+// Daraxt bo&#x27;ylab harakatlanish
+const li = list.firstElementChild;
+li.parentElement;              // ul
+li.nextElementSibling;         // ikkinchi li
+li.closest(&#x27;.list&#x27;);           // eng yaqin mos ajdod (o&#x27;zi ham kiradi) — juda foydali!
+list.children;                 // farzand elementlar</code></pre></div>
+
+<h2 id="elementlarni-ozgartirish"><a class="anchor" href="#elementlarni-ozgartirish">#</a>Elementlarni o'zgartirish</h2>
+<h3>Mazmun</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const el = document.querySelector(&#x27;#title&#x27;);
+
+el.textContent = &#x27;Yangi sarlavha&#x27;;             // faqat matn — XAVFSIZ
+el.innerHTML = &#x27;Bugungi &lt;em&gt;vazifalar&lt;/em&gt;&#x27;;   // HTML sifatida talqin qilinadi — EHTIYOT BO&#x27;LING
+
+// ❌ Hech qachon foydalanuvchi kiritgan ma&#x27;lumotni innerHTML ga qo&#x27;ymang:
+const izoh = &#x27;&lt;img src=x onerror=&quot;alert(document.cookie)&quot;&gt;&#x27;;
+// el.innerHTML = izoh;   // XSS hujumi! Skript bajariladi
+el.textContent = izoh;    // ✅ shunchaki matn sifatida ko&#x27;rinadi</code></pre></div>
+<div class="callout danger"><span class="t">XSS (Cross-Site Scripting)</span>
+<code>innerHTML</code> ga tekshirilmagan ma'lumot qo'yish — webdagi eng keng tarqalgan zaifliklardan biri. Hujumchi
+izoh, ism yoki qidiruv so'zi orqali o'z skriptini boshqa foydalanuvchilar brauzerida bajarishi mumkin.
+Foydalanuvchi ma'lumoti uchun doim <code>textContent</code> dan foydalaning (14-darsda batafsil).</div>
+
+<h3>Atributlar va sinflar</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const img = document.querySelector(&#x27;img&#x27;);
+img.src = &#x27;yangi.jpg&#x27;;                         // standart atributlar xususiyat sifatida
+img.alt = &#x27;Tavsif&#x27;;
+img.setAttribute(&#x27;loading&#x27;, &#x27;lazy&#x27;);
+img.getAttribute(&#x27;width&#x27;);
+img.removeAttribute(&#x27;title&#x27;);
+img.hasAttribute(&#x27;alt&#x27;);
+
+// data-* atributlar → dataset
+// &lt;button data-product-id=&quot;42&quot; data-price=&quot;15000&quot;&gt;
+btn.dataset.productId;    // &#x27;42&#x27; (har doim satr!)
+Number(btn.dataset.price); // 15000
+
+// Sinflar — uslubni o&#x27;zgartirishning to&#x27;g&#x27;ri usuli
+el.classList.add(&#x27;active&#x27;);
+el.classList.remove(&#x27;hidden&#x27;);
+el.classList.toggle(&#x27;open&#x27;);               // bor bo&#x27;lsa olib tashlaydi, yo&#x27;q bo&#x27;lsa qo&#x27;shadi
+el.classList.toggle(&#x27;dark&#x27;, isDark);       // ikkinchi argument: majburan qo&#x27;shish/olib tashlash
+el.classList.contains(&#x27;active&#x27;);
+
+// Inline uslublar (kamdan-kam — asosan dinamik qiymatlar uchun)
+el.style.width = `${progress}%`;
+el.style.setProperty(&#x27;--accent&#x27;, &#x27;#e11d48&#x27;);  // CSS o&#x27;zgaruvchisi
+getComputedStyle(el).fontSize;               // haqiqiy hisoblangan uslub</code></pre></div>
+
+<h3>Element yaratish, qo'shish va o'chirish</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const li = document.createElement(&#x27;li&#x27;);
+li.textContent = &#x27;Yangi vazifa&#x27;;
+li.className = &#x27;task&#x27;;
+li.dataset.id = crypto.randomUUID();
+
+const list = document.querySelector(&#x27;.list&#x27;);
+list.append(li);              // oxiriga (bir nechta tugun va satr qabul qiladi)
+list.prepend(li);             // boshiga
+list.before(el); list.after(el);  // ro&#x27;yxatdan oldin/keyin
+li.replaceWith(boshqaEl);
+li.remove();                  // o&#x27;chirish
+
+// HTML satrdan joylash (ishonchli, statik shablon uchun)
+list.insertAdjacentHTML(&#x27;beforeend&#x27;, &#x27;&lt;li class=&quot;task&quot;&gt;Statik matn&lt;/li&gt;&#x27;);
+
+// &lt;template&gt; — HTML&#x27;da tayyor shablon
+// &lt;template id=&quot;card-tpl&quot;&gt;&lt;article class=&quot;card&quot;&gt;&lt;h3&gt;&lt;/h3&gt;&lt;p&gt;&lt;/p&gt;&lt;/article&gt;&lt;/template&gt;
+const tpl = document.querySelector(&#x27;#card-tpl&#x27;);
+const card = tpl.content.cloneNode(true);
+card.querySelector(&#x27;h3&#x27;).textContent = &#x27;Sarlavha&#x27;;
+document.body.append(card);</code></pre></div>
+<div class="callout tip"><span class="t">Unumdorlik: ko'p elementni bir yo'la qo'shing</span>
+Siklda har bir elementni alohida DOM'ga qo'shish har safar Layout'ni qayta hisoblashi mumkin. 1000 ta elementni avval
+<code>DocumentFragment</code> ga yoki massivga yig'ib, keyin bir marta qo'shing: <code>list.append(...elements)</code> yoki
+<code>list.replaceChildren(...elements)</code>.</div>
+
+<h2 id="hodisalar-events"><a class="anchor" href="#hodisalar-events">#</a>Hodisalar (Events)</h2>
+<p><b>Hodisa</b> — brauzerda sodir bo'lgan narsa: bosish, klavish bosilishi, forma yuborilishi, sahifa yuklanishi, scroll.
+Biz hodisaga <b>tinglovchi (listener)</b> — funksiya biriktiramiz.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const btn = document.querySelector(&#x27;#save&#x27;);
+
+function saqlash(event) {
+  console.log(&#x27;Hodisa turi:&#x27;, event.type);          // &#x27;click&#x27;
+  console.log(&#x27;Bosilgan element:&#x27;, event.target);
+  console.log(&#x27;Koordinatalar:&#x27;, event.clientX, event.clientY);
+}
+
+btn.addEventListener(&#x27;click&#x27;, saqlash);
+btn.removeEventListener(&#x27;click&#x27;, saqlash);   // olib tashlash uchun AYNI funksiya kerak
+
+// Variantlar
+btn.addEventListener(&#x27;click&#x27;, saqlash, { once: true });   // faqat bir marta
+window.addEventListener(&#x27;scroll&#x27;, onScroll, { passive: true }); // scroll unumdorligi uchun
+
+// ❌ Eskicha usul (bitta hodisaga faqat bitta ishlovchi):
+// btn.onclick = saqlash;
+// &lt;button onclick=&quot;saqlash()&quot;&gt;  — HTML va JS aralashib ketadi</code></pre></div>
+<h3>Ko'p ishlatiladigan hodisalar</h3>
+<div class="table-wrap"><table>
+<tr><th>Toifa</th><th>Hodisalar</th></tr>
+<tr><td>Sichqoncha</td><td><code>click</code>, <code>dblclick</code>, <code>contextmenu</code>, <code>mouseenter</code>/<code>mouseleave</code>, <code>mousemove</code></td></tr>
+<tr><td>Pointer (sichqoncha + sensor)</td><td><code>pointerdown</code>, <code>pointermove</code>, <code>pointerup</code></td></tr>
+<tr><td>Klaviatura</td><td><code>keydown</code>, <code>keyup</code> (<code>event.key</code>: <code>'Enter'</code>, <code>'Escape'</code>, <code>'a'</code>)</td></tr>
+<tr><td>Forma</td><td><code>submit</code>, <code>input</code> (har o'zgarishda), <code>change</code> (yakunlanganda), <code>focus</code>, <code>blur</code>, <code>reset</code></td></tr>
+<tr><td>Hujjat/oyna</td><td><code>DOMContentLoaded</code>, <code>load</code>, <code>resize</code>, <code>scroll</code>, <code>beforeunload</code></td></tr>
+<tr><td>Boshqalar</td><td><code>dragstart</code>/<code>drop</code>, <code>copy</code>/<code>paste</code>, <code>animationend</code>, <code>transitionend</code></td></tr>
+</table></div>
+
+<h3>Standart xatti-harakatni to'xtatish</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+  e.preventDefault();       // sahifa qayta yuklanmasin — ma&#x27;lumotni JS orqali yuboramiz
+});
+
+link.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+  e.preventDefault();       // havolaga o&#x27;tmasin
+});
+
+document.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
+  if ((e.ctrlKey || e.metaKey) &amp;&amp; e.key === &#x27;s&#x27;) {
+    e.preventDefault();     // brauzerning &quot;Saqlash&quot; oynasi o&#x27;rniga o&#x27;z funksiyamiz
+    saqlash();
+  }
+});</code></pre></div>
+
+<h2 id="hodisa-tarqalishi-capturing-va-bubbling"><a class="anchor" href="#hodisa-tarqalishi-capturing-va-bubbling">#</a>Hodisa tarqalishi: capturing va bubbling</h2>
+<p>Ichma-ich elementlardan biri bosilganda hodisa uch bosqichdan o'tadi:</p>
+<ol>
+  <li><b>Capturing</b> — <code>window</code> dan maqsad elementga qarab pastga tushadi;</li>
+  <li><b>Target</b> — maqsad elementga yetadi;</li>
+  <li><b>Bubbling</b> — maqsad elementdan <code>window</code> gacha yuqoriga "ko'tariladi" (pufakchadek).</li>
+</ol>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;div id=&quot;karta&quot;&gt;
+  &lt;button id=&quot;tugma&quot;&gt;Bos&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  karta.addEventListener(&#x27;click&#x27;, () =&gt; console.log(&#x27;2. karta&#x27;));
+  tugma.addEventListener(&#x27;click&#x27;, () =&gt; console.log(&#x27;1. tugma&#x27;));
+  document.body.addEventListener(&#x27;click&#x27;, () =&gt; console.log(&#x27;3. body&#x27;));
+  // Tugma bosilsa: 1. tugma → 2. karta → 3. body
+&lt;/script&gt;</code></pre></div>
+<ul>
+  <li><code>event.target</code> — hodisa <b>haqiqatda</b> sodir bo'lgan element (bosilgan tugma).</li>
+  <li><code>event.currentTarget</code> — tinglovchi <b>biriktirilgan</b> element.</li>
+  <li><code>event.stopPropagation()</code> — ko'tarilishni to'xtatadi (kamdan-kam va ehtiyotkorlik bilan ishlating).</li>
+</ul>
+
+<h3>Hodisa delegatsiyasi (event delegation)</h3>
+<p>Bubbling tufayli 100 ta tugmaning har biriga tinglovchi qo'yish shart emas — <b>ularning umumiy otasiga bittasini</b>
+qo'yish yetarli. Bu usul dinamik qo'shilgan elementlar uchun ham avtomatik ishlaydi.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ❌ Har bir tugmaga alohida — yangi qo&#x27;shilgan elementlar ishlamaydi
+document.querySelectorAll(&#x27;.delete-btn&#x27;).forEach(btn =&gt;
+  btn.addEventListener(&#x27;click&#x27;, ...)
+);
+
+// ✅ Delegatsiya — bitta tinglovchi
+document.querySelector(&#x27;#todo-list&#x27;).addEventListener(&#x27;click&#x27;, (e) =&gt; {
+  const btn = e.target.closest(&#x27;button[data-action]&#x27;);
+  if (!btn) return;                                  // tugmadan boshqa joy bosildi
+  const item = btn.closest(&#x27;li&#x27;);
+  const id = item.dataset.id;
+
+  if (btn.dataset.action === &#x27;delete&#x27;) deleteTodo(id);
+  if (btn.dataset.action === &#x27;edit&#x27;) editTodo(id);
+});</code></pre></div>
+
+<h2 id="formalar-bilan-ishlash"><a class="anchor" href="#formalar-bilan-ishlash">#</a>Formalar bilan ishlash</h2>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const form = document.querySelector(&#x27;#signup&#x27;);
+
+form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+  e.preventDefault();
+
+  // 1-usul: alohida maydonlar
+  const email = form.elements.email.value.trim();
+
+  // 2-usul: FormData — barcha maydonlarni bir yo&#x27;la
+  const data = Object.fromEntries(new FormData(form));
+  // { email: &#x27;...&#x27;, password: &#x27;...&#x27;, course: &#x27;fullstack&#x27; }
+
+  // Bir xil name&#x27;li checkbox&#x27;lar uchun
+  const days = new FormData(form).getAll(&#x27;days&#x27;);
+
+  console.log(data, days);
+  form.reset();
+});
+
+// Real vaqtda kuzatish
+form.elements.password.addEventListener(&#x27;input&#x27;, (e) =&gt; {
+  const len = e.target.value.length;
+  hint.textContent = len &lt; 8 ? `Yana ${8 - len} ta belgi kerak` : &#x27;✅ Yaxshi&#x27;;
+});
+
+// checkbox va select
+checkbox.checked;              // true / false
+select.value;                  // tanlangan option value
+select.selectedOptions[0].text;</code></pre></div>
+
+<h2 id="brauzer-xotirasi-localstorage-va-sessionstorage"><a class="anchor" href="#brauzer-xotirasi-localstorage-va-sessionstorage">#</a>Brauzer xotirasi: localStorage va sessionStorage</h2>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Faqat SATR saqlaydi — obyektlar uchun JSON kerak
+localStorage.setItem(&#x27;theme&#x27;, &#x27;dark&#x27;);
+localStorage.getItem(&#x27;theme&#x27;);          // &#x27;dark&#x27; (yoki yo&#x27;q bo&#x27;lsa null)
+localStorage.removeItem(&#x27;theme&#x27;);
+localStorage.clear();
+
+const todos = [{ id: 1, text: &#x27;Dars&#x27;, done: false }];
+localStorage.setItem(&#x27;todos&#x27;, JSON.stringify(todos));
+const saved = JSON.parse(localStorage.getItem(&#x27;todos&#x27;) ?? &#x27;[]&#x27;);
+
+// sessionStorage — xuddi shunday, lekin brauzer yorlig&#x27;i yopilganda o&#x27;chadi</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>localStorage</th><th>sessionStorage</th><th>Cookie</th></tr>
+<tr><td>Hajm</td><td>~5–10 MB</td><td>~5 MB</td><td>~4 KB</td></tr>
+<tr><td>Muddati</td><td>Abadiy (o'chirilguncha)</td><td>Yorliq yopilguncha</td><td>Belgilangan muddat</td></tr>
+<tr><td>Serverga yuboriladimi</td><td>Yo'q</td><td>Yo'q</td><td>Ha, har so'rovda</td></tr>
+<tr><td>JS'dan o'qish</td><td>Ha</td><td>Ha</td><td>Ha (<code>HttpOnly</code> bo'lmasa)</td></tr>
+</table></div>
+<div class="callout warn">localStorage'ga maxfiy ma'lumot (parol, karta raqami) saqlamang — sahifadagi har qanday skript (shu jumladan XSS orqali kiritilgan) uni o'qiy oladi.</div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>To'liq Todo ilovasi (CRUD, filtr, localStorage)</h3></div><div class="ex-body">
+<p>Klassik, lekin DOM'ning deyarli barcha tushunchalarini qamrab oladigan loyiha. Arxitektura muhim: <b>holat (state)</b>
+alohida massivda saqlanadi, DOM esa har doim shu holatdan <b>chiziladi (render)</b>. Bu React'ning asosiy g'oyasi (12-dars).</p>
+<div class="code"><div class="code-head"><span>todo/index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Vazifalar&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;app&quot;&gt;
+    &lt;h1&gt;📝 Vazifalar&lt;/h1&gt;
+    &lt;form id=&quot;todo-form&quot; autocomplete=&quot;off&quot;&gt;
+      &lt;input name=&quot;text&quot; placeholder=&quot;Yangi vazifa...&quot; required maxlength=&quot;120&quot;&gt;
+      &lt;button&gt;Qo&#x27;shish&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;div class=&quot;filters&quot; role=&quot;tablist&quot;&gt;
+      &lt;button data-filter=&quot;all&quot; class=&quot;active&quot;&gt;Barchasi&lt;/button&gt;
+      &lt;button data-filter=&quot;active&quot;&gt;Faol&lt;/button&gt;
+      &lt;button data-filter=&quot;done&quot;&gt;Bajarilgan&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;ul id=&quot;todo-list&quot;&gt;&lt;/ul&gt;
+
+    &lt;footer class=&quot;footer&quot;&gt;
+      &lt;span id=&quot;counter&quot;&gt;&lt;/span&gt;
+      &lt;button id=&quot;clear-done&quot;&gt;Bajarilganlarni tozalash&lt;/button&gt;
+    &lt;/footer&gt;
+  &lt;/main&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>todo/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ===== Holat (state) =====
+const STORAGE_KEY = &#x27;todos-v1&#x27;;
+let todos = load();
+let filter = &#x27;all&#x27;;
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? []; }
+  catch { return []; }
+}
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+}
+
+// ===== Amallar: holatni o&#x27;zgartirib, keyin render =====
+function addTodo(text) {
+  todos.unshift({ id: crypto.randomUUID(), text, done: false, createdAt: Date.now() });
+  update();
+}
+function toggleTodo(id) {
+  todos = todos.map(t =&gt; (t.id === id ? { ...t, done: !t.done } : t));
+  update();
+}
+function deleteTodo(id) {
+  todos = todos.filter(t =&gt; t.id !== id);
+  update();
+}
+function editTodo(id, text) {
+  todos = todos.map(t =&gt; (t.id === id ? { ...t, text } : t));
+  update();
+}
+function update() { save(); render(); }
+
+// ===== Render: holatdan DOM chizish =====
+const list = document.querySelector(&#x27;#todo-list&#x27;);
+const counter = document.querySelector(&#x27;#counter&#x27;);
+
+function render() {
+  const visible = todos.filter(t =&gt;
+    filter === &#x27;all&#x27; ? true : filter === &#x27;done&#x27; ? t.done : !t.done
+  );
+
+  list.replaceChildren(...visible.map(createItem));
+
+  if (visible.length === 0) {
+    const empty = document.createElement(&#x27;li&#x27;);
+    empty.className = &#x27;empty&#x27;;
+    empty.textContent = &#x27;Hozircha vazifa yo\&#x27;q 🎉&#x27;;
+    list.append(empty);
+  }
+
+  const left = todos.filter(t =&gt; !t.done).length;
+  counter.textContent = `${left} ta faol vazifa`;
+
+  document.querySelectorAll(&#x27;[data-filter]&#x27;).forEach(b =&gt;
+    b.classList.toggle(&#x27;active&#x27;, b.dataset.filter === filter)
+  );
+}
+
+function createItem(todo) {
+  const li = document.createElement(&#x27;li&#x27;);
+  li.dataset.id = todo.id;
+  li.classList.toggle(&#x27;done&#x27;, todo.done);
+
+  const checkbox = document.createElement(&#x27;input&#x27;);
+  checkbox.type = &#x27;checkbox&#x27;;
+  checkbox.checked = todo.done;
+  checkbox.dataset.action = &#x27;toggle&#x27;;
+
+  const span = document.createElement(&#x27;span&#x27;);
+  span.className = &#x27;text&#x27;;
+  span.textContent = todo.text;           // ✅ textContent — XSS&#x27;dan himoya
+  span.title = &#x27;Tahrirlash uchun ikki marta bosing&#x27;;
+
+  const del = document.createElement(&#x27;button&#x27;);
+  del.dataset.action = &#x27;delete&#x27;;
+  del.setAttribute(&#x27;aria-label&#x27;, &#x27;O\&#x27;chirish&#x27;);
+  del.textContent = &#x27;✕&#x27;;
+
+  li.append(checkbox, span, del);
+  return li;
+}
+
+// ===== Hodisalar =====
+document.querySelector(&#x27;#todo-form&#x27;).addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+  e.preventDefault();
+  const input = e.target.elements.text;
+  const text = input.value.trim();
+  if (!text) return;
+  addTodo(text);
+  input.value = &#x27;&#x27;;
+  input.focus();
+});
+
+// Delegatsiya: bitta tinglovchi barcha elementlar uchun
+list.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+  const li = e.target.closest(&#x27;li[data-id]&#x27;);
+  if (!li) return;
+  const action = e.target.dataset.action;
+  if (action === &#x27;toggle&#x27;) toggleTodo(li.dataset.id);
+  if (action === &#x27;delete&#x27;) deleteTodo(li.dataset.id);
+});
+
+// Ikki marta bosib tahrirlash
+list.addEventListener(&#x27;dblclick&#x27;, (e) =&gt; {
+  const span = e.target.closest(&#x27;.text&#x27;);
+  if (!span) return;
+  const li = span.closest(&#x27;li&#x27;);
+  const input = document.createElement(&#x27;input&#x27;);
+  input.value = span.textContent;
+  input.className = &#x27;edit&#x27;;
+  span.replaceWith(input);
+  input.focus();
+
+  const finish = (saveIt) =&gt; {
+    const value = input.value.trim();
+    if (saveIt &amp;&amp; value) editTodo(li.dataset.id, value);
+    else render();
+  };
+  input.addEventListener(&#x27;keydown&#x27;, (ev) =&gt; {
+    if (ev.key === &#x27;Enter&#x27;) finish(true);
+    if (ev.key === &#x27;Escape&#x27;) finish(false);
+  });
+  input.addEventListener(&#x27;blur&#x27;, () =&gt; finish(true), { once: true });
+});
+
+document.querySelector(&#x27;.filters&#x27;).addEventListener(&#x27;click&#x27;, (e) =&gt; {
+  const btn = e.target.closest(&#x27;[data-filter]&#x27;);
+  if (!btn) return;
+  filter = btn.dataset.filter;
+  render();
+});
+
+document.querySelector(&#x27;#clear-done&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+  todos = todos.filter(t =&gt; !t.done);
+  update();
+});
+
+render();</code></pre></div>
+<div class="code"><div class="code-head"><span>todo/style.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">body { font-family: system-ui, sans-serif; background: #f1f5f9; margin: 0; }
+.app { max-width: 520px; margin: 48px auto; background: #fff; padding: 28px; border-radius: 16px; box-shadow: 0 10px 30px rgb(0 0 0 / .06); }
+#todo-form { display: flex; gap: 8px; }
+#todo-form input { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font: inherit; }
+button { font: inherit; cursor: pointer; }
+#todo-form button { padding: 0 18px; border: 0; border-radius: 10px; background: #4f46e5; color: #fff; }
+.filters { display: flex; gap: 6px; margin: 16px 0; }
+.filters button { border: 1px solid #e2e8f0; background: #fff; padding: 6px 12px; border-radius: 999px; }
+.filters button.active { background: #eef2ff; border-color: #4f46e5; color: #4f46e5; }
+#todo-list { list-style: none; padding: 0; margin: 0; }
+#todo-list li { display: flex; align-items: center; gap: 10px; padding: 12px 4px; border-bottom: 1px solid #f1f5f9; }
+#todo-list li .text { flex: 1; }
+#todo-list li.done .text { text-decoration: line-through; color: #94a3b8; }
+#todo-list li button { border: 0; background: none; color: #ef4444; opacity: .5; }
+#todo-list li:hover button { opacity: 1; }
+.edit { flex: 1; padding: 6px; font: inherit; }
+.empty { justify-content: center; color: #94a3b8; }
+.footer { display: flex; justify-content: space-between; margin-top: 16px; color: #64748b; font-size: 14px; }
+.footer button { border: 0; background: none; color: #64748b; text-decoration: underline; }</code></pre></div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Modal oyna (accessibility bilan)</h3></div><div class="ex-body">
+<p>HTML'ning o'rnatilgan <code>&lt;dialog&gt;</code> elementi fokusni boshqarish va <kbd>Esc</kbd> bilan yopishni o'zi bajaradi.</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;button id=&quot;open-modal&quot;&gt;Buyurtmani tasdiqlash&lt;/button&gt;
+
+&lt;dialog id=&quot;confirm-modal&quot; aria-labelledby=&quot;modal-title&quot;&gt;
+  &lt;form method=&quot;dialog&quot;&gt;
+    &lt;h2 id=&quot;modal-title&quot;&gt;Buyurtmani tasdiqlaysizmi?&lt;/h2&gt;
+    &lt;p&gt;Jami: &lt;b&gt;1 105 200 so&#x27;m&lt;/b&gt;. Buyurtma 2 kun ichida yetkaziladi.&lt;/p&gt;
+    &lt;menu&gt;
+      &lt;button value=&quot;cancel&quot;&gt;Bekor qilish&lt;/button&gt;
+      &lt;button value=&quot;confirm&quot; class=&quot;primary&quot;&gt;Tasdiqlash&lt;/button&gt;
+    &lt;/menu&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;
+
+&lt;p id=&quot;status&quot;&gt;&lt;/p&gt;
+
+&lt;style&gt;
+  dialog { border: 0; border-radius: 16px; padding: 28px; max-width: 420px; box-shadow: 0 20px 60px rgb(0 0 0 / .25); }
+  dialog::backdrop { background: rgb(15 23 42 / .55); backdrop-filter: blur(3px); }
+  dialog[open] { animation: pop .2s ease; }
+  @keyframes pop { from { opacity: 0; transform: scale(.95); } }
+  menu { display: flex; justify-content: flex-end; gap: 8px; padding: 0; }
+  .primary { background: #4f46e5; color: #fff; border: 0; padding: 8px 16px; border-radius: 8px; }
+&lt;/style&gt;
+
+&lt;script&gt;
+  const modal = document.querySelector(&#x27;#confirm-modal&#x27;);
+  const status = document.querySelector(&#x27;#status&#x27;);
+
+  document.querySelector(&#x27;#open-modal&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; modal.showModal());
+
+  // Fon (backdrop) bosilganda yopish
+  modal.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+    if (e.target === modal) modal.close(&#x27;cancel&#x27;);
+  });
+
+  // Qaysi tugma bilan yopilganini bilish
+  modal.addEventListener(&#x27;close&#x27;, () =&gt; {
+    status.textContent = modal.returnValue === &#x27;confirm&#x27;
+      ? &#x27;✅ Buyurtma qabul qilindi!&#x27;
+      : &#x27;Buyurtma bekor qilindi.&#x27;;
+  });
+&lt;/script&gt;</code></pre></div>
+<p><code>&lt;form method="dialog"&gt;</code> ichidagi tugma bosilganda dialog avtomatik yopiladi va tugmaning <code>value</code>si
+<code>modal.returnValue</code> ga yoziladi. <code>showModal()</code> orqa fondagi sahifani "faolsizlantiradi" — klaviatura fokusi oynadan tashqariga chiqmaydi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Real vaqtda forma validatsiyasi</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form id=&quot;register&quot; novalidate&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;username&quot;&gt;Foydalanuvchi nomi&lt;/label&gt;
+    &lt;input id=&quot;username&quot; name=&quot;username&quot;&gt;
+    &lt;small class=&quot;error&quot;&gt;&lt;/small&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+    &lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot;&gt;
+    &lt;small class=&quot;error&quot;&gt;&lt;/small&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;password&quot;&gt;Parol&lt;/label&gt;
+    &lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot;&gt;
+    &lt;div class=&quot;meter&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;small class=&quot;error&quot;&gt;&lt;/small&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;confirm&quot;&gt;Parolni tasdiqlang&lt;/label&gt;
+    &lt;input id=&quot;confirm&quot; name=&quot;confirm&quot; type=&quot;password&quot;&gt;
+    &lt;small class=&quot;error&quot;&gt;&lt;/small&gt;
+  &lt;/div&gt;
+  &lt;button type=&quot;submit&quot;&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;style&gt;
+  .field { margin-bottom: 14px; display: grid; gap: 4px; }
+  input { padding: 10px; border: 2px solid #cbd5e1; border-radius: 8px; }
+  .field.invalid input { border-color: #ef4444; }
+  .field.valid input { border-color: #22c55e; }
+  .error { color: #ef4444; min-height: 1.2em; }
+  .meter { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
+  .meter span { display: block; height: 100%; width: 0; transition: width .3s, background .3s; }
+&lt;/style&gt;
+
+&lt;script&gt;
+  const form = document.querySelector(&#x27;#register&#x27;);
+
+  // Har bir maydon uchun qoidalar: xato matnini yoki null qaytaradi
+  const rules = {
+    username: (v) =&gt;
+      !v ? &#x27;Majburiy maydon&#x27; :
+      !/^[a-z0-9_]{3,20}$/i.test(v) ? &#x27;3–20 ta lotin harf, raqam yoki _&#x27; : null,
+    email: (v) =&gt;
+      !v ? &#x27;Majburiy maydon&#x27; :
+      !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? &#x27;Email noto\&#x27;g\&#x27;ri&#x27; : null,
+    password: (v) =&gt;
+      v.length &lt; 8 ? &#x27;Kamida 8 ta belgi&#x27; :
+      !/\d/.test(v) || !/[A-Za-z]/.test(v) ? &#x27;Harf va raqam bo\&#x27;lishi shart&#x27; : null,
+    confirm: (v, all) =&gt; v !== all.password ? &#x27;Parollar mos emas&#x27; : null,
+  };
+
+  function validateField(name) {
+    const values = Object.fromEntries(new FormData(form));
+    const error = rules[name](values[name] ?? &#x27;&#x27;, values);
+    const field = form.elements[name].closest(&#x27;.field&#x27;);
+    field.querySelector(&#x27;.error&#x27;).textContent = error ?? &#x27;&#x27;;
+    field.classList.toggle(&#x27;invalid&#x27;, !!error);
+    field.classList.toggle(&#x27;valid&#x27;, !error);
+    return !error;
+  }
+
+  function passwordStrength(p) {
+    let score = 0;
+    if (p.length &gt;= 8) score++;
+    if (p.length &gt;= 12) score++;
+    if (/[A-Z]/.test(p) &amp;&amp; /[a-z]/.test(p)) score++;
+    if (/\d/.test(p)) score++;
+    if (/[^A-Za-z0-9]/.test(p)) score++;
+    return score; // 0..5
+  }
+
+  form.addEventListener(&#x27;input&#x27;, (e) =&gt; {
+    const name = e.target.name;
+    validateField(name);
+    if (name === &#x27;password&#x27;) {
+      if (form.elements.confirm.value) validateField(&#x27;confirm&#x27;);
+      const s = passwordStrength(e.target.value);
+      const bar = form.querySelector(&#x27;.meter span&#x27;);
+      bar.style.width = `${s * 20}%`;
+      bar.style.background = [&#x27;#ef4444&#x27;, &#x27;#ef4444&#x27;, &#x27;#f59e0b&#x27;, &#x27;#eab308&#x27;, &#x27;#22c55e&#x27;, &#x27;#16a34a&#x27;][s];
+    }
+  });
+
+  form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+    e.preventDefault();
+    const ok = Object.keys(rules).map(validateField).every(Boolean);
+    if (!ok) {
+      form.querySelector(&#x27;.invalid input&#x27;).focus();
+      return;
+    }
+    const { confirm, ...data } = Object.fromEntries(new FormData(form));
+    console.log(&#x27;Serverga yuboriladi:&#x27;, data);   // 6-darsda fetch() bilan yuboramiz
+  });
+&lt;/script&gt;</code></pre></div>
+<p>Diqqat qiling: barcha maydonlar uchun <b>bitta</b> <code>input</code> tinglovchisi (delegatsiya); qoidalar ma'lumot sifatida
+(<code>rules</code> obyekti) saqlangan — yangi maydon qo'shish uchun faqat bitta qoida yozish kifoya. <code>novalidate</code> esa
+brauzerning standart xabarlarini o'chirib, o'zimiznikini ko'rsatishga imkon beradi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Tablar va akkordeon (FAQ) komponentlari</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;div class=&quot;tabs&quot; data-tabs&gt;
+  &lt;div role=&quot;tablist&quot;&gt;
+    &lt;button role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;p1&quot; id=&quot;t1&quot;&gt;Tavsif&lt;/button&gt;
+    &lt;button role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;p2&quot; id=&quot;t2&quot; tabindex=&quot;-1&quot;&gt;Xususiyatlar&lt;/button&gt;
+    &lt;button role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;p3&quot; id=&quot;t3&quot; tabindex=&quot;-1&quot;&gt;Sharhlar (12)&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;section role=&quot;tabpanel&quot; id=&quot;p1&quot; aria-labelledby=&quot;t1&quot;&gt;Mahsulot tavsifi...&lt;/section&gt;
+  &lt;section role=&quot;tabpanel&quot; id=&quot;p2&quot; aria-labelledby=&quot;t2&quot; hidden&gt;Texnik xususiyatlar...&lt;/section&gt;
+  &lt;section role=&quot;tabpanel&quot; id=&quot;p3&quot; aria-labelledby=&quot;t3&quot; hidden&gt;Xaridorlar sharhlari...&lt;/section&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Ko&#x27;p beriladigan savollar&lt;/h2&gt;
+&lt;div class=&quot;faq&quot;&gt;
+  &lt;details&gt;&lt;summary&gt;Yetkazib berish qancha vaqt oladi?&lt;/summary&gt;&lt;p&gt;Toshkent bo&#x27;ylab 1 kun, viloyatlarga 2–4 kun.&lt;/p&gt;&lt;/details&gt;
+  &lt;details&gt;&lt;summary&gt;Mahsulotni qaytarish mumkinmi?&lt;/summary&gt;&lt;p&gt;Ha, 10 kun ichida, qadoq buzilmagan bo&#x27;lsa.&lt;/p&gt;&lt;/details&gt;
+  &lt;details&gt;&lt;summary&gt;Qanday to&#x27;lov usullari bor?&lt;/summary&gt;&lt;p&gt;Click, Payme, Uzum, naqd pul.&lt;/p&gt;&lt;/details&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  // Tablar: sichqoncha va klaviatura (← →) bilan
+  document.querySelectorAll(&#x27;[data-tabs]&#x27;).forEach((root) =&gt; {
+    const tabs = [...root.querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)];
+
+    function select(tab) {
+      tabs.forEach((t) =&gt; {
+        const active = t === tab;
+        t.setAttribute(&#x27;aria-selected&#x27;, active);
+        t.tabIndex = active ? 0 : -1;
+        root.querySelector(&#x27;#&#x27; + t.getAttribute(&#x27;aria-controls&#x27;)).hidden = !active;
+      });
+      tab.focus();
+    }
+
+    root.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+      const tab = e.target.closest(&#x27;[role=&quot;tab&quot;]&#x27;);
+      if (tab) select(tab);
+    });
+
+    root.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
+      const i = tabs.indexOf(document.activeElement);
+      if (i === -1) return;
+      if (e.key === &#x27;ArrowRight&#x27;) select(tabs[(i + 1) % tabs.length]);
+      if (e.key === &#x27;ArrowLeft&#x27;) select(tabs[(i - 1 + tabs.length) % tabs.length]);
+    });
+  });
+
+  // Akkordeon: bir vaqtda faqat bitta savol ochiq bo&#x27;lsin
+  const faq = document.querySelector(&#x27;.faq&#x27;);
+  faq.addEventListener(&#x27;toggle&#x27;, (e) =&gt; {
+    if (!e.target.open) return;
+    faq.querySelectorAll(&#x27;details[open]&#x27;).forEach((d) =&gt; {
+      if (d !== e.target) d.open = false;
+    });
+  }, true);   // toggle hodisasi bubbling qilmaydi — capturing bosqichida ushlaymiz
+&lt;/script&gt;</code></pre></div>
+<p>Bu yerda ARIA atributlari (<code>role</code>, <code>aria-selected</code>, <code>aria-controls</code>) ekran o'quvchilarga
+komponent tuzilishini tushuntiradi, <code>tabIndex</code> esa "roving tabindex" usuli bilan klaviatura navigatsiyasini
+to'g'ri qiladi. Akkordeonda <code>toggle</code> hodisasi ko'tarilmagani uchun <code>addEventListener</code> ning uchinchi
+argumenti <code>true</code> (capturing) ishlatilgan.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>Todo ilovasiga quyidagilarni qo'shing: muddat (<code>date</code>), muhimlik darajasi (rangli belgi), drag &amp; drop bilan tartiblash.</li>
+  <li>Rasm galereyasi: kichik rasmlar bosilganda katta ko'rinishda (lightbox) ochilsin, <kbd>←</kbd> <kbd>→</kbd> bilan almashsin, <kbd>Esc</kbd> bilan yopilsin.</li>
+  <li>"Xarid kalkulyatori": mahsulotlar ro'yxati, har birida +/− tugmalari, jami summa real vaqtda yangilansin (4-dars 1-misol funksiyalaridan foydalaning).</li>
+  <li>Sahifa pastga scroll qilinganda paydo bo'ladigan "↑ Yuqoriga" tugmasini yasang.</li>
+  <li>Kalit so'z bo'yicha jadval qatorlarini filtrlaydigan qidiruv maydonini yarating; mos kelgan qism <code>&lt;mark&gt;</code> bilan belgilansin (XSS'dan ehtiyot bo'ling!).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>DOM — HTML'dan qurilgan jonli obyektlar daraxti; <code>querySelector</code>/<code>closest</code> bilan topiladi.</li>
+  <li>Foydalanuvchi ma'lumoti uchun <code>textContent</code>; <code>innerHTML</code> — XSS xavfi.</li>
+  <li>Uslubni <code>classList</code> orqali o'zgartiring; ma'lumotni <code>data-*</code> va <code>dataset</code> da saqlang.</li>
+  <li>Hodisalar bubbling qiladi — delegatsiya bilan bitta tinglovchi ko'plab elementga xizmat qiladi.</li>
+  <li>Formalarda <code>preventDefault()</code> + <code>FormData</code>.</li>
+  <li>Holat (state) → render arxitekturasi kodni tartibli qiladi va React'ga tayyorlaydi.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="04-javascript-asoslari.html"><small>← Oldingi dars</small>JavaScript asoslari</a><a class="next" href="06-asinxron-javascript.html"><small>Keyingi dars →</small>Asinxron JavaScript va Fetch API</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#dom-daraxti">DOM daraxti</a></li><li><a href="#elementlarni-topish">Elementlarni topish</a></li><li><a href="#elementlarni-ozgartirish">Elementlarni o&#x27;zgartirish</a></li><li><a href="#hodisalar-events">Hodisalar (Events)</a></li><li><a href="#hodisa-tarqalishi-capturing-va-bubbling">Hodisa tarqalishi: capturing va bubbling</a></li><li><a href="#formalar-bilan-ishlash">Formalar bilan ishlash</a></li><li><a href="#brauzer-xotirasi-localstorage-va-sessionstorage">Brauzer xotirasi: localStorage va sessionStorage</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

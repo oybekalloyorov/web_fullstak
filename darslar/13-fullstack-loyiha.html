@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a class="active" href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🏗️</div><div><div class="crumb">13-dars · 14 tadan</div><h1>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</h1><p class="lead">Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.</p></div></div>
+
+<p>Endi barcha bo'laklarni bitta haqiqiy ilovaga yig'amiz. <b>"Eslatmalar" (Notes)</b> — foydalanuvchilar ro'yxatdan o'tadi, shaxsiy
+eslatmalar yaratadi, ularni teglar bilan belgilaydi, qidiradi, mahkamlaydi (pin) va arxivlaydi. Loyiha kichik ko'rinadi, lekin unda
+real ishdagi barcha muammolar bor: sxema dizayni, API, autentifikatsiya, egalik, validatsiya, frontend holati, xatolar, CORS va proksi.</p>
+
+<div class="callout tip"><span class="t">Qanday o'qish kerak</span>
+Bu dars — qo'llanma emas, <b>amaliy ish</b>. Har bir faylni o'zingiz yarating va har bosqich oxirida ilovani ishga tushirib tekshiring.
+Tushunmagan joyingiz bo'lsa — tegishli darsga qayting (havolalar matnda).</div>
+
+<h2 id="1-bosqich-loyihalash"><a class="anchor" href="#1-bosqich-loyihalash">#</a>1-bosqich: Loyihalash</h2>
+<h3>Funksional talablar</h3>
+<ul>
+  <li>Ro'yxatdan o'tish, kirish, chiqish; sessiya sahifa yangilanganda saqlanadi.</li>
+  <li>Eslatma: sarlavha, matn, rang, teglar, "mahkamlangan" va "arxivlangan" belgilari.</li>
+  <li>Eslatmalarni yaratish, tahrirlash, o'chirish (CRUD); faqat <b>o'z</b> eslatmalarini ko'rish.</li>
+  <li>Matn bo'yicha qidiruv, teg bo'yicha filtr, arxiv bo'limi; mahkamlanganlar tepada.</li>
+</ul>
+<h3>Arxitektura</h3>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">⚛️ React (Vite)<small>localhost:5173</small></div>
+    <div class="arrow">→ /api (Vite proksi) →</div>
+    <div class="node">🚂 Express API<small>localhost:3000</small></div>
+    <div class="arrow">→ pg →</div>
+    <div class="node">🐘 PostgreSQL<small>localhost:5432</small></div>
+  </div>
+  <div class="diagram-caption">Vite proksi tufayli brauzer uchun frontend va API bitta origin'da — CORS va cookie muammolari yo'q</div>
+</div>
+<h3>API shartnomasi (contract)</h3>
+<p>Frontend va backend o'rtasidagi "kelishuv"ni oldindan yozib qo'yish — ikki tomonni parallel ishlab chiqish imkonini beradi.</p>
+<div class="table-wrap"><table>
+<tr><th>Metod va yo'l</th><th>Tana / query</th><th>Javob</th></tr>
+<tr><td><code>POST /api/auth/register</code></td><td><code>{ name, email, password }</code></td><td><code>201 { user }</code> + cookie</td></tr>
+<tr><td><code>POST /api/auth/login</code></td><td><code>{ email, password }</code></td><td><code>200 { user }</code> + cookie</td></tr>
+<tr><td><code>POST /api/auth/logout</code></td><td>—</td><td><code>204</code></td></tr>
+<tr><td><code>GET /api/auth/me</code></td><td>—</td><td><code>200 { user }</code> / <code>401</code></td></tr>
+<tr><td><code>GET /api/notes</code></td><td><code>?q=&amp;tag=&amp;archived=false</code></td><td><code>200 { data: Note[] }</code></td></tr>
+<tr><td><code>POST /api/notes</code></td><td><code>{ title, body, color, tags[] }</code></td><td><code>201 Note</code></td></tr>
+<tr><td><code>PATCH /api/notes/:id</code></td><td>istalgan maydonlar</td><td><code>200 Note</code> / <code>404</code></td></tr>
+<tr><td><code>DELETE /api/notes/:id</code></td><td>—</td><td><code>204</code> / <code>404</code></td></tr>
+<tr><td><code>GET /api/tags</code></td><td>—</td><td><code>200 [{ name, count }]</code></td></tr>
+</table></div>
+<h3>Papka tuzilmasi</h3>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">notes-app/
+├── server/
+│   ├── package.json
+│   ├── .env / .env.example
+│   ├── db/schema.sql
+│   └── src/
+│       ├── server.js  app.js  config.js  db.js
+│       ├── middleware/   auth.js  validate.js  errors.js
+│       └── routes/       auth.routes.js  notes.routes.js
+└── client/
+    ├── package.json  vite.config.js  index.html
+    └── src/
+        ├── main.jsx  App.jsx  api.js  index.css
+        ├── context/AuthContext.jsx
+        ├── pages/    LoginPage.jsx  NotesPage.jsx
+        └── components/  NoteCard.jsx  NoteEditor.jsx  TagFilter.jsx</code></pre></div>
+
+<h2 id="2-bosqich-malumotlar-bazasi"><a class="anchor" href="#2-bosqich-malumotlar-bazasi">#</a>2-bosqich: Ma'lumotlar bazasi</h2>
+<div class="code"><div class="code-head"><span>server/db/schema.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pgcrypto;   -- gen_random_uuid() uchun (PG 13+ da o&#x27;rnatilgan)
+
+CREATE TABLE IF NOT EXISTS users (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name          TEXT NOT NULL CHECK (length(name) BETWEEN 2 AND 60),
+  email         TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS users_email_uq ON users (lower(email));
+
+CREATE TABLE IF NOT EXISTS notes (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  title       TEXT NOT NULL DEFAULT &#x27;&#x27; CHECK (length(title) &lt;= 200),
+  body        TEXT NOT NULL DEFAULT &#x27;&#x27; CHECK (length(body) &lt;= 20000),
+  color       TEXT NOT NULL DEFAULT &#x27;default&#x27;,
+  tags        TEXT[] NOT NULL DEFAULT &#x27;{}&#x27;,
+  pinned      BOOLEAN NOT NULL DEFAULT false,
+  archived    BOOLEAN NOT NULL DEFAULT false,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+-- Eng ko&#x27;p so&#x27;rov: &quot;foydalanuvchining arxivlanmagan eslatmalari, mahkamlanganlar va yangilari tepada&quot;
+CREATE INDEX IF NOT EXISTS notes_user_list_idx ON notes (user_id, archived, pinned DESC, updated_at DESC);
+CREATE INDEX IF NOT EXISTS notes_tags_idx ON notes USING GIN (tags);   -- massiv ichida qidiruv uchun</code></pre></div>
+<p>Teglar uchun alohida N:M jadval o'rniga PostgreSQL massivi (<code>TEXT[]</code>) tanlandi: teglar faqat bitta foydalanuvchiga tegishli, alohida
+xususiyatlari yo'q, va GIN indeksi <code>tags @&gt; ARRAY['ish']</code> so'rovini tezlashtiradi. Bu — loyihaning ehtiyojiga qarab qilingan ongli tanlov (10-dars).</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">docker run -d --name notes-db -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=notes -p 5432:5432 postgres:17
+psql postgres://postgres:secret@localhost:5432/notes -f server/db/schema.sql</code></pre></div>
+
+<h2 id="3-bosqich-backend-express-api"><a class="anchor" href="#3-bosqich-backend-express-api">#</a>3-bosqich: Backend (Express API)</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">mkdir -p notes-app/server &amp;&amp; cd notes-app/server
+npm init -y &amp;&amp; npm pkg set type=module
+npm install express pg bcrypt jsonwebtoken cookie-parser zod helmet morgan
+npm pkg set scripts.dev=&quot;node --watch --env-file=.env src/server.js&quot;
+npm pkg set scripts.start=&quot;node src/server.js&quot;</code></pre></div>
+<div class="code"><div class="code-head"><span>server/.env.example</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-ini">PORT=3000
+DATABASE_URL=postgres://postgres:secret@localhost:5432/notes
+JWT_SECRET=bu-yerga-48-baytlik-tasodifiy-kalit
+NODE_ENV=development</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const required = (name) =&gt; {
+  if (!process.env[name]) throw new Error(`.env da ${name} yo&#x27;q`);
+  return process.env[name];
+};
+
+export const config = {
+  port: Number(process.env.PORT) || 3000,
+  databaseUrl: required(&#x27;DATABASE_URL&#x27;),
+  jwtSecret: required(&#x27;JWT_SECRET&#x27;),
+  isProd: process.env.NODE_ENV === &#x27;production&#x27;,
+};</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/db.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
+import { config } from &#x27;./config.js&#x27;;
+
+export const pool = new pg.Pool({ connectionString: config.databaseUrl });
+export const query = (text, params) =&gt; pool.query(text, params);</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/middleware/errors.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class HttpError extends Error {
+  constructor(status, message, details) {
+    super(message);
+    this.status = status;
+    this.details = details;
+  }
+}
+
+export function notFound(req, res, next) {
+  next(new HttpError(404, `Topilmadi: ${req.method} ${req.originalUrl}`));
+}
+
+export function errorHandler(err, req, res, _next) {
+  if (err.type === &#x27;entity.parse.failed&#x27;) err = new HttpError(400, &#x27;JSON noto\&#x27;g\&#x27;ri&#x27;);
+  if (err.code === &#x27;22P02&#x27;) err = new HttpError(404, &#x27;Topilmadi&#x27;);          // noto&#x27;g&#x27;ri UUID
+  const status = err.status ?? 500;
+  if (status &gt;= 500) console.error(err);
+  res.status(status).json({
+    error: {
+      message: status &gt;= 500 &amp;&amp; process.env.NODE_ENV === &#x27;production&#x27; ? &#x27;Server xatosi&#x27; : err.message,
+      ...(err.details &amp;&amp; { details: err.details }),
+    },
+  });
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/middleware/validate.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { HttpError } from &#x27;./errors.js&#x27;;
+
+export const validate = (schema, source = &#x27;body&#x27;) =&gt; (req, res, next) =&gt; {
+  const r = schema.safeParse(req[source]);
+  if (!r.success) {
+    return next(new HttpError(400, &#x27;Validatsiya xatosi&#x27;,
+      r.error.issues.map(i =&gt; ({ field: i.path.join(&#x27;.&#x27;), message: i.message }))));
+  }
+  req.valid = r.data;
+  next();
+};</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/middleware/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
+import { config } from &#x27;../config.js&#x27;;
+import { HttpError } from &#x27;./errors.js&#x27;;
+
+export const COOKIE = &#x27;notes_token&#x27;;
+
+export const cookieOptions = {
+  httpOnly: true,
+  secure: config.isProd,
+  sameSite: &#x27;lax&#x27;,
+  maxAge: 7 * 24 * 60 * 60 * 1000,      // 7 kun (soddalik uchun refresh token&#x27;siz)
+  path: &#x27;/&#x27;,
+};
+
+export const signToken = (user) =&gt;
+  jwt.sign({ sub: user.id, name: user.name }, config.jwtSecret, { expiresIn: &#x27;7d&#x27;, algorithm: &#x27;HS256&#x27; });
+
+export function requireAuth(req, res, next) {
+  const token = req.cookies[COOKIE];
+  if (!token) return next(new HttpError(401, &#x27;Tizimga kiring&#x27;));
+  try {
+    const payload = jwt.verify(token, config.jwtSecret, { algorithms: [&#x27;HS256&#x27;] });
+    req.userId = payload.sub;
+    next();
+  } catch {
+    next(new HttpError(401, &#x27;Sessiya muddati tugagan&#x27;));
+  }
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/routes/auth.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+import bcrypt from &#x27;bcrypt&#x27;;
+import { z } from &#x27;zod&#x27;;
+import { query } from &#x27;../db.js&#x27;;
+import { validate } from &#x27;../middleware/validate.js&#x27;;
+import { HttpError } from &#x27;../middleware/errors.js&#x27;;
+import { COOKIE, cookieOptions, signToken, requireAuth } from &#x27;../middleware/auth.js&#x27;;
+
+const router = Router();
+const DUMMY = await bcrypt.hash(&#x27;dummy&#x27;, 12);
+
+const registerSchema = z.object({
+  name: z.string().trim().min(2, &#x27;Ism kamida 2 harf&#x27;).max(60),
+  email: z.string().trim().toLowerCase().email(&#x27;Email noto\&#x27;g\&#x27;ri&#x27;),
+  password: z.string().min(8, &#x27;Parol kamida 8 belgi&#x27;).max(72),
+});
+const loginSchema = z.object({
+  email: z.string().trim().toLowerCase().email(),
+  password: z.string().min(1),
+});
+
+const login = (res, user, status = 200) =&gt; {
+  res.cookie(COOKIE, signToken(user), cookieOptions);
+  res.status(status).json({ user: { id: user.id, name: user.name, email: user.email } });
+};
+
+router.post(&#x27;/register&#x27;, validate(registerSchema), async (req, res) =&gt; {
+  const { name, email, password } = req.valid;
+  const hash = await bcrypt.hash(password, 12);
+  try {
+    const { rows: [user] } = await query(
+      &#x27;INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, name, email&#x27;,
+      [name, email, hash]
+    );
+    login(res, user, 201);
+  } catch (err) {
+    if (err.code === &#x27;23505&#x27;) throw new HttpError(409, &#x27;Bu email band&#x27;);
+    throw err;
+  }
+});
+
+router.post(&#x27;/login&#x27;, validate(loginSchema), async (req, res) =&gt; {
+  const { email, password } = req.valid;
+  const { rows: [user] } = await query(&#x27;SELECT * FROM users WHERE lower(email) = $1&#x27;, [email]);
+  const ok = await bcrypt.compare(password, user?.password_hash ?? DUMMY);
+  if (!user || !ok) throw new HttpError(401, &#x27;Email yoki parol noto\&#x27;g\&#x27;ri&#x27;);
+  login(res, user);
+});
+
+router.post(&#x27;/logout&#x27;, (req, res) =&gt; {
+  const { maxAge, ...opts } = cookieOptions;
+  res.clearCookie(COOKIE, opts).status(204).end();
+});
+
+router.get(&#x27;/me&#x27;, requireAuth, async (req, res) =&gt; {
+  const { rows: [user] } = await query(&#x27;SELECT id, name, email FROM users WHERE id = $1&#x27;, [req.userId]);
+  if (!user) throw new HttpError(401, &#x27;Foydalanuvchi topilmadi&#x27;);
+  res.json({ user });
+});
+
+export default router;</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/routes/notes.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+import { z } from &#x27;zod&#x27;;
+import { query } from &#x27;../db.js&#x27;;
+import { validate } from &#x27;../middleware/validate.js&#x27;;
+import { HttpError } from &#x27;../middleware/errors.js&#x27;;
+import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
+
+const router = Router();
+router.use(requireAuth);                         // ⬅ bu router&#x27;dagi BARCHA marshrutlar himoyalangan
+
+const COLORS = [&#x27;default&#x27;, &#x27;yellow&#x27;, &#x27;green&#x27;, &#x27;blue&#x27;, &#x27;pink&#x27;, &#x27;purple&#x27;];
+const tag = z.string().trim().toLowerCase().min(1).max(30).regex(/^[\p{L}\p{N}_-]+$/u, &#x27;Teg: harf, raqam, _ yoki -&#x27;);
+
+const noteSchema = z.object({
+  title: z.string().trim().max(200).default(&#x27;&#x27;),
+  body: z.string().max(20000).default(&#x27;&#x27;),
+  color: z.enum(COLORS).default(&#x27;default&#x27;),
+  tags: z.array(tag).max(10).default([]).transform(t =&gt; [...new Set(t)]),   // takrorlarni olib tashlash
+  pinned: z.boolean().default(false),
+  archived: z.boolean().default(false),
+}).refine(n =&gt; n.title || n.body, { message: &#x27;Sarlavha yoki matn bo\&#x27;lishi kerak&#x27; });
+
+const patchSchema = z.object({
+  title: z.string().trim().max(200),
+  body: z.string().max(20000),
+  color: z.enum(COLORS),
+  tags: z.array(tag).max(10).transform(t =&gt; [...new Set(t)]),
+  pinned: z.boolean(),
+  archived: z.boolean(),
+}).partial().strict();          // strict — noma&#x27;lum maydon (masalan user_id) yuborilsa xato
+
+const listSchema = z.object({
+  q: z.string().trim().max(100).optional(),
+  tag: tag.optional(),
+  archived: z.enum([&#x27;true&#x27;, &#x27;false&#x27;]).default(&#x27;false&#x27;).transform(v =&gt; v === &#x27;true&#x27;),
+});
+
+const COLS = `id, title, body, color, tags, pinned, archived,
+              created_at AS &quot;createdAt&quot;, updated_at AS &quot;updatedAt&quot;`;
+
+// GET /api/notes?q=&amp;tag=&amp;archived=
+router.get(&#x27;/&#x27;, validate(listSchema, &#x27;query&#x27;), async (req, res) =&gt; {
+  const { q, tag, archived } = req.valid;
+  const params = [req.userId, archived];
+  let sql = `SELECT ${COLS} FROM notes WHERE user_id = $1 AND archived = $2`;
+
+  if (q) {
+    params.push(`%${q}%`);
+    sql += ` AND (title ILIKE $${params.length} OR body ILIKE $${params.length})`;
+  }
+  if (tag) {
+    params.push([tag]);
+    sql += ` AND tags @&gt; $${params.length}`;
+  }
+  sql += &#x27; ORDER BY pinned DESC, updated_at DESC LIMIT 500&#x27;;
+
+  const { rows } = await query(sql, params);
+  res.json({ data: rows });
+});
+
+router.post(&#x27;/&#x27;, validate(noteSchema), async (req, res) =&gt; {
+  const n = req.valid;
+  const { rows: [note] } = await query(
+    `INSERT INTO notes (user_id, title, body, color, tags, pinned, archived)
+     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING ${COLS}`,
+    [req.userId, n.title, n.body, n.color, n.tags, n.pinned, n.archived]
+  );
+  res.status(201).json(note);
+});
+
+router.patch(&#x27;/:id&#x27;, validate(patchSchema), async (req, res) =&gt; {
+  const entries = Object.entries(req.valid);
+  if (!entries.length) throw new HttpError(400, &#x27;O\&#x27;zgartirish uchun maydon yo\&#x27;q&#x27;);
+
+  // Ustun nomlari — faqat sxema ruxsat bergan kalitlar (strict), qiymatlar — parametrlar
+  const set = entries.map(([k], i) =&gt; `${k} = $${i + 3}`).join(&#x27;, &#x27;);
+  const { rows: [note] } = await query(
+    `UPDATE notes SET ${set}, updated_at = now()
+     WHERE id = $1 AND user_id = $2                -- 🔒 egalik tekshiruvi (IDOR&#x27;ga qarshi)
+     RETURNING ${COLS}`,
+    [req.params.id, req.userId, ...entries.map(([, v]) =&gt; v)]
+  );
+  if (!note) throw new HttpError(404, &#x27;Eslatma topilmadi&#x27;);
+  res.json(note);
+});
+
+router.delete(&#x27;/:id&#x27;, async (req, res) =&gt; {
+  const { rowCount } = await query(&#x27;DELETE FROM notes WHERE id = $1 AND user_id = $2&#x27;, [req.params.id, req.userId]);
+  if (!rowCount) throw new HttpError(404, &#x27;Eslatma topilmadi&#x27;);
+  res.status(204).end();
+});
+
+export default router;
+
+// Teglar statistikasi alohida router&#x27;da
+export const tagsRouter = Router().get(&#x27;/&#x27;, requireAuth, async (req, res) =&gt; {
+  const { rows } = await query(
+    `SELECT t AS name, COUNT(*)::int AS count
+     FROM notes, unnest(tags) AS t
+     WHERE user_id = $1 AND NOT archived
+     GROUP BY t ORDER BY count DESC, t`,
+    [req.userId]
+  );
+  res.json(rows);
+});</code></pre></div>
+<p>Diqqat: <code>WHERE id = $1 AND user_id = $2</code> — boshqa foydalanuvchining eslatmasini tahrirlashga urinish <code>403</code> emas, <code>404</code> qaytaradi.
+Bu ataylab: hujumchiga hatto "bunday ID mavjud" degan ma'lumotni ham bermaymiz.</p>
+<div class="code"><div class="code-head"><span>server/src/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import express from &#x27;express&#x27;;
+import helmet from &#x27;helmet&#x27;;
+import morgan from &#x27;morgan&#x27;;
+import cookieParser from &#x27;cookie-parser&#x27;;
+import authRouter from &#x27;./routes/auth.routes.js&#x27;;
+import notesRouter, { tagsRouter } from &#x27;./routes/notes.routes.js&#x27;;
+import { notFound, errorHandler } from &#x27;./middleware/errors.js&#x27;;
+
+export const app = express();
+
+app.set(&#x27;trust proxy&#x27;, 1);                     // Nginx/hosting proksisi ortida to&#x27;g&#x27;ri IP va HTTPS uchun
+app.use(helmet());
+app.use(morgan(&#x27;dev&#x27;));
+app.use(express.json({ limit: &#x27;100kb&#x27; }));
+app.use(cookieParser());
+
+app.get(&#x27;/api/health&#x27;, (req, res) =&gt; res.json({ ok: true }));
+app.use(&#x27;/api/auth&#x27;, authRouter);
+app.use(&#x27;/api/notes&#x27;, notesRouter);
+app.use(&#x27;/api/tags&#x27;, tagsRouter);
+
+app.use(&#x27;/api&#x27;, notFound);
+app.use(errorHandler);</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { app } from &#x27;./app.js&#x27;;
+import { config } from &#x27;./config.js&#x27;;
+import { pool } from &#x27;./db.js&#x27;;
+
+await pool.query(&#x27;SELECT 1&#x27;);                  // bazaga ulanishni ishga tushishda tekshiramiz
+const server = app.listen(config.port, () =&gt; console.log(`🚀 API: http://localhost:${config.port}`));
+
+// To&#x27;g&#x27;ri to&#x27;xtash (graceful shutdown) — joriy so&#x27;rovlar tugashini kutamiz
+for (const signal of [&#x27;SIGINT&#x27;, &#x27;SIGTERM&#x27;]) {
+  process.on(signal, () =&gt; {
+    console.log(`${signal} — to&#x27;xtatilmoqda...`);
+    server.close(() =&gt; pool.end().then(() =&gt; process.exit(0)));
+  });
+}</code></pre></div>
+<h3>Backend'ni tekshirish</h3>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cp .env.example .env    # va JWT_SECRET ni to&#x27;ldiring
+npm run dev
+
+# -c / -b : cookie&#x27;ni faylga saqlash va yuborish (brauzer kabi)
+curl -c jar.txt -X POST localhost:3000/api/auth/register -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;name&quot;:&quot;Sardor&quot;,&quot;email&quot;:&quot;sardor@mail.uz&quot;,&quot;password&quot;:&quot;parol12345&quot;}&#x27;
+
+curl -b jar.txt -X POST localhost:3000/api/notes -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;title&quot;:&quot;Xaridlar&quot;,&quot;body&quot;:&quot;Non, sut, tuxum&quot;,&quot;tags&quot;:[&quot;uy&quot;,&quot;bozor&quot;],&quot;color&quot;:&quot;yellow&quot;}&#x27;
+
+curl -b jar.txt &quot;localhost:3000/api/notes?q=sut&quot;
+curl -b jar.txt localhost:3000/api/tags
+curl -i localhost:3000/api/notes            # cookie&#x27;siz → 401</code></pre></div>
+
+<h2 id="4-bosqich-frontend-react"><a class="anchor" href="#4-bosqich-frontend-react">#</a>4-bosqich: Frontend (React)</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cd ..   # notes-app/
+npm create vite@latest client -- --template react
+cd client &amp;&amp; npm install &amp;&amp; npm install react-router</code></pre></div>
+<div class="code"><div class="code-head"><span>client/vite.config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { defineConfig } from &#x27;vite&#x27;;
+import react from &#x27;@vitejs/plugin-react&#x27;;
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    // /api bilan boshlanadigan so&#x27;rovlar Express&#x27;ga uzatiladi:
+    // brauzer uchun hammasi localhost:5173 — CORS ham, cookie muammosi ham yo&#x27;q
+    proxy: { &#x27;/api&#x27;: &#x27;http://localhost:3000&#x27; },
+  },
+});</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/api.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class ApiError extends Error {
+  constructor(status, message, details) {
+    super(message);
+    this.status = status;
+    this.details = details;
+  }
+}
+
+export async function api(path, { method = &#x27;GET&#x27;, body, signal } = {}) {
+  const res = await fetch(&#x27;/api&#x27; + path, {
+    method,
+    signal,
+    credentials: &#x27;same-origin&#x27;,
+    headers: body ? { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 204) return null;
+  const data = await res.json().catch(() =&gt; ({}));
+  if (!res.ok) throw new ApiError(res.status, data.error?.message ?? &#x27;Tarmoq xatosi&#x27;, data.error?.details);
+  return data;
+}
+
+export const authApi = {
+  me: () =&gt; api(&#x27;/auth/me&#x27;),
+  login: (body) =&gt; api(&#x27;/auth/login&#x27;, { method: &#x27;POST&#x27;, body }),
+  register: (body) =&gt; api(&#x27;/auth/register&#x27;, { method: &#x27;POST&#x27;, body }),
+  logout: () =&gt; api(&#x27;/auth/logout&#x27;, { method: &#x27;POST&#x27; }),
+};
+
+export const notesApi = {
+  list: (params, signal) =&gt; api(&#x27;/notes?&#x27; + new URLSearchParams(params), { signal }),
+  create: (note) =&gt; api(&#x27;/notes&#x27;, { method: &#x27;POST&#x27;, body: note }),
+  update: (id, patch) =&gt; api(`/notes/${id}`, { method: &#x27;PATCH&#x27;, body: patch }),
+  remove: (id) =&gt; api(`/notes/${id}`, { method: &#x27;DELETE&#x27; }),
+  tags: () =&gt; api(&#x27;/tags&#x27;),
+};</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/context/AuthContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
+import { authApi } from &#x27;../api&#x27;;
+
+const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [checking, setChecking] = useState(true);   // sahifa ochilganda sessiyani tekshirish
+
+  useEffect(() =&gt; {
+    authApi.me()
+      .then(d =&gt; setUser(d.user))
+      .catch(() =&gt; setUser(null))
+      .finally(() =&gt; setChecking(false));
+  }, []);
+
+  const value = {
+    user,
+    checking,
+    login: async (creds) =&gt; setUser((await authApi.login(creds)).user),
+    register: async (data) =&gt; setUser((await authApi.register(data)).user),
+    logout: async () =&gt; { await authApi.logout(); setUser(null); },
+  };
+
+  return &lt;AuthContext.Provider value={value}&gt;{children}&lt;/AuthContext.Provider&gt;;
+}
+
+export const useAuth = () =&gt; useContext(AuthContext);</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Navigate } from &#x27;react-router&#x27;;
+import { AuthProvider, useAuth } from &#x27;./context/AuthContext&#x27;;
+import LoginPage from &#x27;./pages/LoginPage&#x27;;
+import NotesPage from &#x27;./pages/NotesPage&#x27;;
+
+function Protected({ children }) {
+  const { user, checking } = useAuth();
+  if (checking) return &lt;div className=&quot;center&quot;&gt;⏳&lt;/div&gt;;
+  return user ? children : &lt;Navigate to=&quot;/login&quot; replace /&gt;;
+}
+
+function GuestOnly({ children }) {
+  const { user, checking } = useAuth();
+  if (checking) return null;
+  return user ? &lt;Navigate to=&quot;/&quot; replace /&gt; : children;
+}
+
+export default function App() {
+  return (
+    &lt;AuthProvider&gt;
+      &lt;BrowserRouter&gt;
+        &lt;Routes&gt;
+          &lt;Route path=&quot;/login&quot; element={&lt;GuestOnly&gt;&lt;LoginPage /&gt;&lt;/GuestOnly&gt;} /&gt;
+          &lt;Route path=&quot;/&quot; element={&lt;Protected&gt;&lt;NotesPage /&gt;&lt;/Protected&gt;} /&gt;
+          &lt;Route path=&quot;/archive&quot; element={&lt;Protected&gt;&lt;NotesPage archived /&gt;&lt;/Protected&gt;} /&gt;
+          &lt;Route path=&quot;*&quot; element={&lt;Navigate to=&quot;/&quot; replace /&gt;} /&gt;
+        &lt;/Routes&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/AuthProvider&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/pages/LoginPage.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+import { useAuth } from &#x27;../context/AuthContext&#x27;;
+
+export default function LoginPage() {
+  const { login, register } = useAuth();
+  const [mode, setMode] = useState(&#x27;login&#x27;);            // &#x27;login&#x27; | &#x27;register&#x27;
+  const [form, setForm] = useState({ name: &#x27;&#x27;, email: &#x27;&#x27;, password: &#x27;&#x27; });
+  const [error, setError] = useState(null);
+  const [busy, setBusy] = useState(false);
+
+  const onChange = (e) =&gt; setForm(f =&gt; ({ ...f, [e.target.name]: e.target.value }));
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    try {
+      mode === &#x27;login&#x27;
+        ? await login({ email: form.email, password: form.password })
+        : await register(form);
+      // muvaffaqiyatli — GuestOnly avtomatik &quot;/&quot; ga yo&#x27;naltiradi
+    } catch (err) {
+      setError(err.details?.map(d =&gt; d.message).join(&#x27;. &#x27;) || err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    &lt;main className=&quot;auth&quot;&gt;
+      &lt;form onSubmit={onSubmit} className=&quot;auth-card&quot;&gt;
+        &lt;h1&gt;🗒️ Eslatmalar&lt;/h1&gt;
+        &lt;div className=&quot;tabs&quot;&gt;
+          &lt;button type=&quot;button&quot; className={mode === &#x27;login&#x27; ? &#x27;active&#x27; : &#x27;&#x27;} onClick={() =&gt; setMode(&#x27;login&#x27;)}&gt;Kirish&lt;/button&gt;
+          &lt;button type=&quot;button&quot; className={mode === &#x27;register&#x27; ? &#x27;active&#x27; : &#x27;&#x27;} onClick={() =&gt; setMode(&#x27;register&#x27;)}&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/button&gt;
+        &lt;/div&gt;
+
+        {mode === &#x27;register&#x27; &amp;&amp; (
+          &lt;input name=&quot;name&quot; placeholder=&quot;Ismingiz&quot; value={form.name} onChange={onChange} required autoComplete=&quot;name&quot; /&gt;
+        )}
+        &lt;input name=&quot;email&quot; type=&quot;email&quot; placeholder=&quot;Email&quot; value={form.email} onChange={onChange} required autoComplete=&quot;email&quot; /&gt;
+        &lt;input name=&quot;password&quot; type=&quot;password&quot; placeholder=&quot;Parol (kamida 8 belgi)&quot; value={form.password} onChange={onChange}
+               required minLength={mode === &#x27;register&#x27; ? 8 : undefined}
+               autoComplete={mode === &#x27;login&#x27; ? &#x27;current-password&#x27; : &#x27;new-password&#x27;} /&gt;
+
+        {error &amp;&amp; &lt;p className=&quot;error&quot; role=&quot;alert&quot;&gt;{error}&lt;/p&gt;}
+        &lt;button className=&quot;primary&quot; disabled={busy}&gt;
+          {busy ? &#x27;...&#x27; : mode === &#x27;login&#x27; ? &#x27;Kirish&#x27; : &#x27;Hisob yaratish&#x27;}
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/main&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/components/NoteEditor.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+
+export const COLORS = [&#x27;default&#x27;, &#x27;yellow&#x27;, &#x27;green&#x27;, &#x27;blue&#x27;, &#x27;pink&#x27;, &#x27;purple&#x27;];
+
+// Yangi eslatma yaratish va mavjudini tahrirlash uchun bitta komponent
+export default function NoteEditor({ initial, onSave, onCancel }) {
+  const [title, setTitle] = useState(initial?.title ?? &#x27;&#x27;);
+  const [body, setBody] = useState(initial?.body ?? &#x27;&#x27;);
+  const [color, setColor] = useState(initial?.color ?? &#x27;default&#x27;);
+  const [tagsText, setTagsText] = useState(initial?.tags?.join(&#x27;, &#x27;) ?? &#x27;&#x27;);
+  const [error, setError] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!title.trim() &amp;&amp; !body.trim()) return setError(&#x27;Sarlavha yoki matn yozing&#x27;);
+    const tags = tagsText.split(&#x27;,&#x27;).map(t =&gt; t.trim().toLowerCase()).filter(Boolean);
+    setSaving(true);
+    try {
+      await onSave({ title, body, color, tags });
+      if (!initial) { setTitle(&#x27;&#x27;); setBody(&#x27;&#x27;); setTagsText(&#x27;&#x27;); setColor(&#x27;default&#x27;); }
+      setError(null);
+    } catch (err) {
+      setError(err.details?.map(d =&gt; `${d.field}: ${d.message}`).join(&#x27;; &#x27;) || err.message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    &lt;form className={`editor note-${color}`} onSubmit={submit}&gt;
+      &lt;input placeholder=&quot;Sarlavha&quot; value={title} onChange={e =&gt; setTitle(e.target.value)} maxLength={200} /&gt;
+      &lt;textarea placeholder=&quot;Eslatma matni...&quot; rows={initial ? 8 : 3} value={body} onChange={e =&gt; setBody(e.target.value)} /&gt;
+      &lt;input placeholder=&quot;Teglar: ish, g&#x27;oyalar&quot; value={tagsText} onChange={e =&gt; setTagsText(e.target.value)} /&gt;
+      &lt;div className=&quot;editor-bar&quot;&gt;
+        &lt;div className=&quot;colors&quot; role=&quot;radiogroup&quot; aria-label=&quot;Rang&quot;&gt;
+          {COLORS.map(c =&gt; (
+            &lt;button key={c} type=&quot;button&quot; role=&quot;radio&quot; aria-checked={c === color} aria-label={c}
+                    className={`swatch note-${c} ${c === color ? &#x27;selected&#x27; : &#x27;&#x27;}`} onClick={() =&gt; setColor(c)} /&gt;
+          ))}
+        &lt;/div&gt;
+        {onCancel &amp;&amp; &lt;button type=&quot;button&quot; onClick={onCancel}&gt;Bekor&lt;/button&gt;}
+        &lt;button className=&quot;primary&quot; disabled={saving}&gt;{saving ? &#x27;Saqlanmoqda…&#x27; : &#x27;Saqlash&#x27;}&lt;/button&gt;
+      &lt;/div&gt;
+      {error &amp;&amp; &lt;p className=&quot;error&quot;&gt;{error}&lt;/p&gt;}
+    &lt;/form&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/components/NoteCard.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">export default function NoteCard({ note, onEdit, onUpdate, onDelete, onTagClick }) {
+  const date = new Date(note.updatedAt).toLocaleString(&#x27;uz-UZ&#x27;, { dateStyle: &#x27;medium&#x27;, timeStyle: &#x27;short&#x27; });
+  return (
+    &lt;article className={`note note-${note.color}`}&gt;
+      &lt;button className=&quot;pin&quot; title={note.pinned ? &#x27;Bo\&#x27;shatish&#x27; : &#x27;Mahkamlash&#x27;} aria-pressed={note.pinned}
+              onClick={() =&gt; onUpdate(note.id, { pinned: !note.pinned })}&gt;
+        {note.pinned ? &#x27;📌&#x27; : &#x27;📍&#x27;}
+      &lt;/button&gt;
+      &lt;div className=&quot;note-content&quot; onClick={() =&gt; onEdit(note)} role=&quot;button&quot; tabIndex={0}
+           onKeyDown={e =&gt; e.key === &#x27;Enter&#x27; &amp;&amp; onEdit(note)}&gt;
+        {note.title &amp;&amp; &lt;h3&gt;{note.title}&lt;/h3&gt;}
+        &lt;p&gt;{note.body}&lt;/p&gt;
+      &lt;/div&gt;
+      {note.tags.length &gt; 0 &amp;&amp; (
+        &lt;div className=&quot;tags&quot;&gt;
+          {note.tags.map(t =&gt; &lt;button key={t} className=&quot;tag&quot; onClick={() =&gt; onTagClick(t)}&gt;#{t}&lt;/button&gt;)}
+        &lt;/div&gt;
+      )}
+      &lt;footer&gt;
+        &lt;small&gt;{date}&lt;/small&gt;
+        &lt;span&gt;
+          &lt;button onClick={() =&gt; onUpdate(note.id, { archived: !note.archived })} title={note.archived ? &#x27;Arxivdan chiqarish&#x27; : &#x27;Arxivlash&#x27;}&gt;
+            {note.archived ? &#x27;📤&#x27; : &#x27;🗃️&#x27;}
+          &lt;/button&gt;
+          &lt;button onClick={() =&gt; onDelete(note)} title=&quot;O&#x27;chirish&quot;&gt;🗑️&lt;/button&gt;
+        &lt;/span&gt;
+      &lt;/footer&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/pages/NotesPage.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useCallback, useEffect, useState } from &#x27;react&#x27;;
+import { NavLink } from &#x27;react-router&#x27;;
+import { useAuth } from &#x27;../context/AuthContext&#x27;;
+import { notesApi } from &#x27;../api&#x27;;
+import NoteCard from &#x27;../components/NoteCard&#x27;;
+import NoteEditor from &#x27;../components/NoteEditor&#x27;;
+
+function useDebounce(value, ms = 300) {
+  const [v, setV] = useState(value);
+  useEffect(() =&gt; { const t = setTimeout(() =&gt; setV(value), ms); return () =&gt; clearTimeout(t); }, [value, ms]);
+  return v;
+}
+
+export default function NotesPage({ archived = false }) {
+  const { user, logout } = useAuth();
+  const [notes, setNotes] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [status, setStatus] = useState(&#x27;loading&#x27;);      // &#x27;loading&#x27; | &#x27;ready&#x27; | &#x27;error&#x27;
+  const [q, setQ] = useState(&#x27;&#x27;);
+  const [tag, setTag] = useState(null);
+  const [editing, setEditing] = useState(null);
+  const query = useDebounce(q);
+
+  const loadTags = useCallback(() =&gt; notesApi.tags().then(setTags).catch(() =&gt; {}), []);
+
+  // Filtr o&#x27;zgarganda ro&#x27;yxatni qayta yuklash; eski so&#x27;rovni bekor qilish
+  useEffect(() =&gt; {
+    const ctrl = new AbortController();
+    setStatus(&#x27;loading&#x27;);
+    const params = { archived: String(archived) };
+    if (query) params.q = query;
+    if (tag) params.tag = tag;
+    notesApi.list(params, ctrl.signal)
+      .then(({ data }) =&gt; { setNotes(data); setStatus(&#x27;ready&#x27;); })
+      .catch(err =&gt; { if (err.name !== &#x27;AbortError&#x27;) setStatus(&#x27;error&#x27;); });
+    return () =&gt; ctrl.abort();
+  }, [archived, query, tag]);
+
+  useEffect(() =&gt; { loadTags(); }, [loadTags]);
+
+  const sortNotes = (list) =&gt;
+    [...list].sort((a, b) =&gt; (b.pinned - a.pinned) || b.updatedAt.localeCompare(a.updatedAt));
+
+  async function create(data) {
+    const note = await notesApi.create(data);
+    setNotes(n =&gt; sortNotes([note, ...n]));
+    loadTags();
+  }
+
+  // Optimistik yangilash: interfeys darhol o&#x27;zgaradi, xato bo&#x27;lsa — orqaga qaytariladi
+  async function update(id, patch) {
+    const prev = notes;
+    setNotes(n =&gt; n.map(x =&gt; (x.id === id ? { ...x, ...patch } : x)));
+    try {
+      const saved = await notesApi.update(id, patch);
+      setNotes(n =&gt; {
+        const next = n.map(x =&gt; (x.id === id ? saved : x));
+        // arxiv holati o&#x27;zgargan bo&#x27;lsa — joriy ro&#x27;yxatdan chiqaramiz
+        return sortNotes(next.filter(x =&gt; x.archived === archived));
+      });
+      if (&#x27;tags&#x27; in patch || &#x27;archived&#x27; in patch) loadTags();
+    } catch (err) {
+      setNotes(prev);
+      alert(`Saqlanmadi: ${err.message}`);
+    }
+  }
+
+  async function remove(note) {
+    if (!confirm(`&quot;${note.title || &#x27;Sarlavhasiz&#x27;}&quot; eslatmasi o&#x27;chirilsinmi?`)) return;
+    const prev = notes;
+    setNotes(n =&gt; n.filter(x =&gt; x.id !== note.id));
+    try {
+      await notesApi.remove(note.id);
+      loadTags();
+    } catch (err) {
+      setNotes(prev);
+      alert(err.message);
+    }
+  }
+
+  async function saveEdit(data) {
+    await update(editing.id, data);
+    setEditing(null);
+  }
+
+  return (
+    &lt;div className=&quot;layout&quot;&gt;
+      &lt;header className=&quot;topbar&quot;&gt;
+        &lt;h1&gt;🗒️ Eslatmalar&lt;/h1&gt;
+        &lt;input type=&quot;search&quot; placeholder=&quot;Qidirish...&quot; value={q} onChange={e =&gt; setQ(e.target.value)} /&gt;
+        &lt;span className=&quot;user&quot;&gt;{user.name}&lt;/span&gt;
+        &lt;button onClick={logout}&gt;Chiqish&lt;/button&gt;
+      &lt;/header&gt;
+
+      &lt;aside className=&quot;sidebar&quot;&gt;
+        &lt;NavLink to=&quot;/&quot; end&gt;📝 Eslatmalar&lt;/NavLink&gt;
+        &lt;NavLink to=&quot;/archive&quot;&gt;🗃️ Arxiv&lt;/NavLink&gt;
+        &lt;h4&gt;Teglar&lt;/h4&gt;
+        {tags.length === 0 &amp;&amp; &lt;small&gt;Teg yo&#x27;q&lt;/small&gt;}
+        {tags.map(t =&gt; (
+          &lt;button key={t.name} className={t.name === tag ? &#x27;active&#x27; : &#x27;&#x27;} onClick={() =&gt; setTag(t.name === tag ? null : t.name)}&gt;
+            #{t.name} &lt;small&gt;{t.count}&lt;/small&gt;
+          &lt;/button&gt;
+        ))}
+      &lt;/aside&gt;
+
+      &lt;main className=&quot;main&quot;&gt;
+        {!archived &amp;&amp; &lt;NoteEditor onSave={create} /&gt;}
+
+        {tag &amp;&amp; &lt;p className=&quot;filter-info&quot;&gt;Filtr: &lt;b&gt;#{tag}&lt;/b&gt; &lt;button onClick={() =&gt; setTag(null)}&gt;✕&lt;/button&gt;&lt;/p&gt;}
+        {status === &#x27;loading&#x27; &amp;&amp; notes.length === 0 &amp;&amp; &lt;p className=&quot;muted&quot;&gt;Yuklanmoqda...&lt;/p&gt;}
+        {status === &#x27;error&#x27; &amp;&amp; &lt;p className=&quot;error&quot;&gt;Eslatmalarni yuklab bo&#x27;lmadi. Sahifani yangilang.&lt;/p&gt;}
+        {status === &#x27;ready&#x27; &amp;&amp; notes.length === 0 &amp;&amp; (
+          &lt;p className=&quot;muted&quot;&gt;{query || tag ? &#x27;Hech narsa topilmadi.&#x27; : archived ? &#x27;Arxiv bo\&#x27;sh.&#x27; : &#x27;Birinchi eslatmangizni yozing ✍️&#x27;}&lt;/p&gt;
+        )}
+
+        &lt;section className=&quot;grid&quot;&gt;
+          {notes.map(note =&gt; (
+            &lt;NoteCard key={note.id} note={note} onEdit={setEditing} onUpdate={update} onDelete={remove} onTagClick={setTag} /&gt;
+          ))}
+        &lt;/section&gt;
+      &lt;/main&gt;
+
+      {editing &amp;&amp; (
+        &lt;dialog open className=&quot;modal&quot; onKeyDown={e =&gt; e.key === &#x27;Escape&#x27; &amp;&amp; setEditing(null)}&gt;
+          &lt;NoteEditor initial={editing} onSave={saveEdit} onCancel={() =&gt; setEditing(null)} /&gt;
+        &lt;/dialog&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>client/src/index.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">:root { --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --primary: #4f46e5; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+button { font: inherit; cursor: pointer; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 6px 10px; }
+button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+input, textarea { font: inherit; width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent; }
+.error { color: #b91c1c; } .muted { color: var(--muted); } .center { display: grid; place-items: center; height: 100vh; }
+
+/* Auth */
+.auth { min-height: 100vh; display: grid; place-items: center; }
+.auth-card { width: min(380px, 92vw); display: grid; gap: 12px; background: var(--card); padding: 28px; border-radius: 16px; box-shadow: 0 10px 40px rgb(0 0 0 / .06); }
+.tabs { display: flex; gap: 6px; } .tabs button { flex: 1; } .tabs .active { border-color: var(--primary); color: var(--primary); }
+
+/* Layout */
+.layout { display: grid; grid-template: &quot;top top&quot; auto &quot;side main&quot; 1fr / 220px 1fr; min-height: 100vh; }
+.topbar { grid-area: top; display: flex; gap: 12px; align-items: center; padding: 10px 20px; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 5; }
+.topbar h1 { font-size: 1.2rem; margin: 0; white-space: nowrap; } .topbar input { max-width: 480px; }
+.user { margin-left: auto; color: var(--muted); white-space: nowrap; }
+.sidebar { grid-area: side; display: flex; flex-direction: column; gap: 4px; padding: 16px; }
+.sidebar a { padding: 8px 10px; border-radius: 8px; color: inherit; text-decoration: none; }
+.sidebar a.active, .sidebar button.active { background: #eef2ff; color: var(--primary); }
+.sidebar button { text-align: left; border: 0; background: none; display: flex; justify-content: space-between; }
+.main { grid-area: main; padding: 20px; }
+
+/* Notes */
+.editor { display: grid; gap: 8px; max-width: 600px; margin: 0 auto 24px; padding: 14px; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 2px 10px rgb(0 0 0 / .04); }
+.editor input, .editor textarea { border: 0; } .editor textarea { resize: vertical; }
+.editor-bar { display: flex; gap: 8px; align-items: center; } .colors { display: flex; gap: 4px; margin-right: auto; }
+.swatch { width: 24px; height: 24px; border-radius: 50%; padding: 0; } .swatch.selected { outline: 2px solid var(--text); }
+.grid { columns: 260px; column-gap: 16px; }        /* &quot;masonry&quot; uslubidagi ustunlar */
+.note { break-inside: avoid; margin-bottom: 16px; padding: 14px; border-radius: 14px; border: 1px solid var(--border); position: relative; }
+.note h3 { margin: 0 0 6px; padding-right: 28px; } .note p { white-space: pre-wrap; margin: 0; max-height: 240px; overflow: hidden; }
+.note-content { cursor: pointer; }
+.pin { position: absolute; top: 8px; right: 8px; border: 0; background: none; }
+.note footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: var(--muted); }
+.note footer button { border: 0; background: none; opacity: .6; } .note:hover footer button { opacity: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.tag { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: rgb(0 0 0 / .06); border: 0; }
+.note-default { background: var(--card); } .note-yellow { background: #fef9c3; } .note-green { background: #dcfce7; }
+.note-blue { background: #dbeafe; } .note-pink { background: #fce7f3; } .note-purple { background: #ede9fe; }
+.modal { position: fixed; inset: 0; margin: auto; border: 0; border-radius: 16px; padding: 0; width: min(640px, 94vw); box-shadow: 0 20px 80px rgb(0 0 0 / .3); }
+.modal .editor { margin: 0; border: 0; }
+@media (max-width: 760px) {
+  .layout { grid-template: &quot;top&quot; auto &quot;side&quot; auto &quot;main&quot; 1fr / 1fr; }
+  .sidebar { flex-direction: row; overflow-x: auto; } .sidebar h4 { display: none; }
+  .topbar { flex-wrap: wrap; } .topbar input { order: 3; max-width: none; }
+}</code></pre></div>
+
+<h2 id="5-bosqich-ishga-tushirish-va-tekshirish"><a class="anchor" href="#5-bosqich-ishga-tushirish-va-tekshirish">#</a>5-bosqich: Ishga tushirish va tekshirish</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1-terminal — baza (agar ishlamayotgan bo&#x27;lsa)
+docker start notes-db
+
+# 2-terminal — backend
+cd notes-app/server &amp;&amp; npm run dev
+
+# 3-terminal — frontend
+cd notes-app/client &amp;&amp; npm run dev
+# → http://localhost:5173</code></pre></div>
+<h3>Qo'lda test ssenariysi</h3>
+<ol>
+  <li>Ro'yxatdan o'ting → eslatmalar sahifasiga avtomatik o'tasiz.</li>
+  <li>Teglar bilan 3–4 eslatma yarating; bittasini mahkamlang — u tepaga chiqadi.</li>
+  <li>Qidiruvga yozing — 300ms dan keyin natija filtrlanadi (Network panelida so'rovlar sonini kuzating).</li>
+  <li>Teg ustiga bosing — filtr; arxivlang — "Arxiv" bo'limida paydo bo'ladi.</li>
+  <li>Sahifani yangilang — tizimda qolasiz (httpOnly cookie). DevTools → Application → Cookies: <code>notes_token</code> bor, lekin konsolda <code>document.cookie</code> uni ko'rsatmaydi.</li>
+  <li>Boshqa brauzerda ikkinchi foydalanuvchi bilan kiring — birinchisining eslatmalari ko'rinmaydi.</li>
+  <li>Backend'ni o'chirib, eslatmani mahkamlashga urining — optimistik o'zgarish orqaga qaytadi va xato chiqadi.</li>
+</ol>
+
+<h2 id="6-bosqich-production-uchun-yigish"><a class="anchor" href="#6-bosqich-production-uchun-yigish">#</a>6-bosqich: Production uchun yig'ish</h2>
+<p>Production'da ikkita alohida server shart emas: Express React'ning build qilingan statik fayllarini o'zi bera oladi.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cd client &amp;&amp; npm run build      # → client/dist/ (minifikatsiya qilingan HTML, JS, CSS)</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/app.js (qo&#x27;shimcha, errorHandler&#x27;dan oldin)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
+
+const dist = path.resolve(import.meta.dirname, &#x27;../../client/dist&#x27;);
+app.use(express.static(dist, { maxAge: &#x27;1y&#x27;, index: false }));
+// SPA: /api&#x27;dan tashqari barcha GET so&#x27;rovlarga index.html (React Router o&#x27;zi hal qiladi)
+app.get(/^(?!\/api).*/, (req, res) =&gt; res.sendFile(path.join(dist, &#x27;index.html&#x27;)));</code></pre></div>
+<p>Endi <code>NODE_ENV=production npm start</code> — bitta port, bitta origin, bitta deploy. Keyingi darsda uni internetga chiqaramiz.</p>
+
+<h2 id="loyihani-kengaytirish-goyalari"><a class="anchor" href="#loyihani-kengaytirish-goyalari">#</a>Loyihani kengaytirish g'oyalari</h2>
+<div class="exercise">
+<h3>🚀 Keyingi qadamlar (portfolio uchun)</h3>
+<ol>
+  <li><b>Markdown</b>: eslatma matnini <code>marked</code> + <code>DOMPurify</code> bilan formatlangan ko'rsatish (XSS'dan himoyani unutmang!).</li>
+  <li><b>Sahifalash</b>: 500 ta limit o'rniga kursor asosida (<code>?before=updatedAt</code>) cheksiz scroll.</li>
+  <li><b>Ulashish</b>: eslatmani boshqa foydalanuvchi bilan "faqat o'qish" huquqi bilan bo'lishish (<code>note_shares</code> jadvali, N:M).</li>
+  <li><b>Rasm biriktirish</b>: multer + S3 (9-dars, 3-misol).</li>
+  <li><b>Real vaqt</b>: bir xil akkaunt ikki qurilmada ochiq bo'lsa, o'zgarish WebSocket (socket.io) orqali darhol ko'rinsin.</li>
+  <li><b>Testlar</b>: API uchun supertest, komponentlar uchun Vitest + Testing Library (14-dars).</li>
+  <li><b>TypeScript</b>: server va klientga turlarni qo'shing — umumiy <code>Note</code> turi ikkala tomonda.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Avval loyihalash: talablar, arxitektura, API shartnomasi, sxema — keyin kod.</li>
+  <li>Backend: config → db → middleware (auth, validate, errors) → routes; har bir so'rovda egalik (<code>user_id = $2</code>).</li>
+  <li>Frontend: api qatlami → AuthContext → himoyalangan marshrutlar → sahifalar → komponentlar.</li>
+  <li>Vite proksi ishlab chiqishda, Express static production'da — bitta origin, oddiy cookie autentifikatsiyasi.</li>
+  <li>Optimistik yangilash, debounce, AbortController — tez va ishonchli interfeys uchun.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="12-react.html"><small>← Oldingi dars</small>React asoslari</a><a class="next" href="14-deploy-xavfsizlik-test.html"><small>Keyingi dars →</small>Deploy, xavfsizlik va testlash</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#1-bosqich-loyihalash">1-bosqich: Loyihalash</a></li><li><a href="#2-bosqich-malumotlar-bazasi">2-bosqich: Ma&#x27;lumotlar bazasi</a></li><li><a href="#3-bosqich-backend-express-api">3-bosqich: Backend (Express API)</a></li><li><a href="#4-bosqich-frontend-react">4-bosqich: Frontend (React)</a></li><li><a href="#5-bosqich-ishga-tushirish-va-tekshirish">5-bosqich: Ishga tushirish va tekshirish</a></li><li><a href="#6-bosqich-production-uchun-yigish">6-bosqich: Production uchun yig&#x27;ish</a></li><li><a href="#loyihani-kengaytirish-goyalari">Loyihani kengaytirish g&#x27;oyalari</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

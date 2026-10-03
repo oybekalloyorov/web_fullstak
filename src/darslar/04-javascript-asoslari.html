@@ -1,0 +1,768 @@
+<!-- title: JavaScript asoslari | desc: O'zgaruvchilar, ma'lumot turlari, operatorlar, shartlar, sikllar, funksiyalar, scope va closure, massiv va obyekt metodlari, sinflar, modullar va xatolar bilan ishlash. | icon: ⚡ | level: Boshlang'ich–O'rta · ~150 daqiqa -->
+
+<p><b>JavaScript</b> — webning yagona dasturlash tili: u brauzerda ishlaydi va sahifani "jonlantiradi". Node.js
+tufayli esa serverda ham ishlaydi — ya'ni full-stack dasturchi <b>bitta til</b> bilan frontend va backendni yoza oladi.
+Bu dars eng uzun va eng muhim darslardan biri: keyingi barcha mavzular shu yerdagi tushunchalarga tayanadi.</p>
+
+<h2>JavaScript'ni ishga tushirish</h2>
+<ul>
+  <li><b>Brauzer konsoli</b>: <kbd>F12</kbd> → Console. Tez tajribalar uchun ideal.</li>
+  <li><b>HTML ichida</b>: <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code></li>
+  <li><b>Node.js</b>: <code>node app.js</code> (terminalda)</li>
+</ul>
+<pre data-lang="js">console.log('Salom, dunyo!');       // oddiy chiqarish
+console.table([{ ism: 'Ali', yosh: 20 }, { ism: 'Vali', yosh: 22 }]); // jadval ko'rinishida
+console.error('Xato xabari');        // qizil rangda</pre>
+
+<h2>O'zgaruvchilar: let, const, var</h2>
+<pre data-lang="js">const PI = 3.14159;      // qayta tayinlab bo'lmaydi
+let yosh = 25;           // qayta tayinlash mumkin
+yosh = 26;               // ✅
+// PI = 3;               // ❌ TypeError: Assignment to constant variable
+
+const user = { ism: 'Aziz' };
+user.ism = 'Anvar';      // ✅ const — havolani qotiradi, obyekt ichini emas!
+// user = {};            // ❌</pre>
+<div class="table-wrap"><table>
+<tr><th></th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr>
+<tr><td>Ko'rinish doirasi</td><td>Funksiya</td><td>Blok <code>{ }</code></td><td>Blok <code>{ }</code></td></tr>
+<tr><td>Qayta tayinlash</td><td>Ha</td><td>Ha</td><td>Yo'q</td></tr>
+<tr><td>Hoisting</td><td>Ha, <code>undefined</code> bilan</td><td>Ha, lekin TDZ (e'londan oldin ishlatib bo'lmaydi)</td><td>Ha, TDZ</td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Qoida</span>
+Doim <code>const</code> dan boshlang. Qiymat o'zgarishi kerak bo'lsagina <code>let</code> ga almashtiring. <code>var</code> ni
+umuman ishlatmang — u eski kodlarda uchraydi va kutilmagan xatolarga sabab bo'ladi.</div>
+<p>Nomlash: <code>camelCase</code> (<code>userName</code>, <code>totalPrice</code>), konstantalar uchun ba'zan <code>UPPER_CASE</code>,
+sinflar uchun <code>PascalCase</code>. Nom ma'noli bo'lsin: <code>x</code> emas, <code>kunlikDaromad</code>.</p>
+
+<h2>Ma'lumot turlari</h2>
+<p>JavaScript'da 8 ta tur bor: 7 ta <b>primitiv</b> va <b>obyekt</b>.</p>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Misol</th><th><code>typeof</code></th></tr>
+<tr><td>String (satr)</td><td><code>'salom'</code>, <code>"dunyo"</code>, <code>`shablon ${x}`</code></td><td><code>"string"</code></td></tr>
+<tr><td>Number (son)</td><td><code>42</code>, <code>3.14</code>, <code>-7</code>, <code>NaN</code>, <code>Infinity</code></td><td><code>"number"</code></td></tr>
+<tr><td>BigInt</td><td><code>9007199254740993n</code></td><td><code>"bigint"</code></td></tr>
+<tr><td>Boolean</td><td><code>true</code>, <code>false</code></td><td><code>"boolean"</code></td></tr>
+<tr><td>undefined</td><td>qiymat berilmagan o'zgaruvchi</td><td><code>"undefined"</code></td></tr>
+<tr><td>null</td><td>"ataylab bo'sh" qiymat</td><td><code>"object"</code> (tarixiy xato!)</td></tr>
+<tr><td>Symbol</td><td><code>Symbol('id')</code> — noyob kalit</td><td><code>"symbol"</code></td></tr>
+<tr><td>Object</td><td><code>{}</code>, <code>[]</code>, funksiyalar, <code>Date</code>, <code>Map</code>...</td><td><code>"object"</code> / <code>"function"</code></td></tr>
+</table></div>
+<h3>Primitiv va havola (reference) turlar</h3>
+<p>Bu farqni tushunish ko'plab xatolarning oldini oladi:</p>
+<pre data-lang="js">// Primitivlar QIYMAT bo'yicha nusxalanadi
+let a = 10;
+let b = a;
+b = 20;
+console.log(a); // 10 — o'zgarmadi
+
+// Obyektlar HAVOLA bo'yicha nusxalanadi
+const user1 = { ism: 'Ali' };
+const user2 = user1;      // ikkalasi BITTA obyektga ishora qiladi
+user2.ism = 'Vali';
+console.log(user1.ism);   // 'Vali' — o'zgardi!
+
+// Haqiqiy nusxa olish
+const copy = { ...user1 };                 // sayoz (shallow) nusxa
+const deep = structuredClone(user1);       // chuqur (deep) nusxa
+
+// Taqqoslash ham havola bo'yicha
+console.log({ a: 1 } === { a: 1 }); // false — ikki xil obyekt</pre>
+
+<h3>Satrlar bilan ishlash</h3>
+<pre data-lang="js">const ism = 'Malika';
+const salom = `Salom, ${ism}! Bugun ${new Date().getFullYear()}-yil.`; // template literal
+
+const s = '  JavaScript Dasturlash  ';
+s.length;                  // 25
+s.trim();                  // 'JavaScript Dasturlash'
+s.toUpperCase();           // '  JAVASCRIPT DASTURLASH  '
+s.includes('Script');      // true
+s.trim().startsWith('Java'); // true
+s.indexOf('a');            // 3
+s.trim().slice(0, 10);     // 'JavaScript'
+'a,b,c'.split(',');        // ['a', 'b', 'c']
+'ha'.repeat(3);            // 'hahaha'
+'5'.padStart(3, '0');      // '005'
+'salom dunyo'.replaceAll('o', '0'); // 'sal0m duny0'</pre>
+
+<h3>Sonlar va Math</h3>
+<pre data-lang="js">0.1 + 0.2;                 // 0.30000000000000004 (!) — kasr sonlar ikkilik tizimda aniq emas
+(0.1 + 0.2).toFixed(2);    // '0.30'
+Number('42');              // 42
+Number('42px');            // NaN
+parseInt('42px');          // 42
+parseFloat('3.5kg');       // 3.5
+Number.isNaN(NaN);         // true
+Math.round(4.5);           // 5
+Math.floor(4.9);           // 4
+Math.ceil(4.1);            // 5
+Math.max(3, 7, 2);         // 7
+Math.floor(Math.random() * 10) + 1; // 1..10 oralig'ida tasodifiy butun son
+(1234567.891).toLocaleString('uz-UZ'); // '1 234 567,891'</pre>
+<div class="callout warn">Pul bilan ishlaganda kasr sonlardan saqlaning: summani <b>tiyinlarda (butun son)</b> saqlang
+(<code>1999 so'm 50 tiyin → 199950</code>) yoki serverda aniq o'nlik turlaridan (SQL'dagi <code>NUMERIC</code>) foydalaning.</div>
+
+<h3>Turlarni o'zgartirish (type coercion)</h3>
+<pre data-lang="js">'5' + 3;      // '53'  — + operatori satr bo'lsa birlashtiradi
+'5' - 3;      // 2     — boshqa operatorlar songa aylantiradi
+'5' * '2';    // 10
+true + 1;     // 2
+
+// Falsy qiymatlar (shartda false deb hisoblanadi) — atigi 8 ta:
+// false, 0, -0, 0n, '', null, undefined, NaN
+// Qolgan HAMMASI truthy: '0', 'false', [], {}, ' '
+
+// == va ===
+0 == '';      // true  😱 (tur o'zgartiriladi)
+0 === '';     // false ✅ (tur ham tekshiriladi)
+null == undefined;  // true
+null === undefined; // false</pre>
+<div class="callout danger">Har doim <b><code>===</code></b> va <b><code>!==</code></b> dan foydalaning. <code>==</code> ning tur o'zgartirish qoidalari chalkash va xatolarga olib keladi.</div>
+
+<h2>Operatorlar</h2>
+<pre data-lang="js">// Arifmetik: + - * / % (qoldiq) ** (daraja)
+10 % 3;     // 1
+2 ** 10;    // 1024
+
+// Qisqa tayinlash
+let x = 5;
+x += 2; x *= 3; x++; // 22
+
+// Mantiqiy
+true && false;  // false (VA)
+true || false;  // true  (YOKI)
+!true;          // false (EMAS)
+
+// Qisqa tutashuv (short-circuit) — real kodda juda ko'p ishlatiladi
+const ism = kiritilganIsm || 'Mehmon';      // chap tomon falsy bo'lsa — o'ng
+const soni = kiritilganSon ?? 10;           // FAQAT null/undefined bo'lsa — o'ng (0 ni saqlaydi!)
+isLoggedIn && showDashboard();              // chap true bo'lsa bajaradi
+
+// Ixtiyoriy zanjir (optional chaining)
+const shahar = user?.address?.city;         // address yo'q bo'lsa xato emas, undefined
+user.sayHi?.();                             // metod bo'lsa chaqiradi
+
+// Uchlik (ternary) operator
+const status = yosh >= 18 ? 'katta' : 'voyaga yetmagan';</pre>
+
+<h2>Shartlar va sikllar</h2>
+<pre data-lang="js">// if / else if / else
+const ball = 78;
+if (ball >= 86) {
+  console.log("A'lo");
+} else if (ball >= 71) {
+  console.log('Yaxshi');
+} else if (ball >= 56) {
+  console.log('Qoniqarli');
+} else {
+  console.log('Qoniqarsiz');
+}
+
+// switch — bitta qiymatni ko'p variantga solishtirish
+switch (kun) {
+  case 'shanba':
+  case 'yakshanba':
+    console.log('Dam olish kuni');
+    break;               // break unutilsa, keyingi case ham bajariladi!
+  default:
+    console.log('Ish kuni');
+}
+
+// Sikllar
+for (let i = 1; i <= 5; i++) console.log(i);
+
+const mevalar = ['olma', 'nok', 'uzum'];
+for (const meva of mevalar) console.log(meva);           // massiv QIYMATLARI
+
+const narxlar = { olma: 12000, nok: 15000 };
+for (const kalit in narxlar) console.log(kalit, narxlar[kalit]); // obyekt KALITLARI
+
+let n = 3;
+while (n > 0) { console.log(n); n--; }
+
+// break — siklni to'xtatish, continue — keyingi iteratsiyaga o'tish
+for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) continue;
+  if (i > 7) break;
+  console.log(i);  // 1, 3, 5, 7
+}</pre>
+
+<h2>Funksiyalar</h2>
+<p>Funksiya — nomlangan, qayta ishlatiladigan kod bloki. JavaScript'da funksiyalar <b>birinchi darajali qiymatlar</b>
+(first-class): ularni o'zgaruvchiga saqlash, argument sifatida berish va funksiyadan qaytarish mumkin.</p>
+<pre data-lang="js">// 1. Function declaration — hoisting tufayli e'londan oldin ham chaqirish mumkin
+function qoshish(a, b) {
+  return a + b;
+}
+
+// 2. Function expression
+const ayirish = function (a, b) {
+  return a - b;
+};
+
+// 3. Arrow function (strelkali)
+const kopaytirish = (a, b) => a * b;          // bitta ifoda — return avtomatik
+const kvadrat = x => x * x;                    // bitta parametr — qavs ixtiyoriy
+const yaratish = (ism) => ({ ism, sana: Date.now() }); // obyekt qaytarish — qavsga o'rang
+
+// Standart parametrlar va rest parametrlar
+function salomlash(ism = 'Mehmon', ...qolganlar) {
+  return `Salom, ${ism}! Yana ${qolganlar.length} kishi bor.`;
+}
+salomlash();                        // 'Salom, Mehmon! Yana 0 kishi bor.'
+salomlash('Ali', 'Vali', 'Gani');   // 'Salom, Ali! Yana 2 kishi bor.'
+
+// Callback — funksiyani argument sifatida berish
+function takrorla(n, amal) {
+  for (let i = 0; i < n; i++) amal(i);
+}
+takrorla(3, i => console.log(`${i}-qadam`));</pre>
+<div class="callout info"><span class="t">Arrow funksiyaning farqi</span>
+Arrow funksiyalarda o'zining <code>this</code>, <code>arguments</code> yo'q — ular tashqi muhitnikini oladi. Shuning uchun obyekt
+metodlari uchun oddiy funksiya, callback'lar uchun arrow funksiya qulay.</div>
+
+<h2>Scope, hoisting va closure</h2>
+<h3>Scope — ko'rinish doirasi</h3>
+<pre data-lang="js">const global = 'hamma joyda ko\'rinadi';
+
+function tashqi() {
+  const tashqiOzgaruvchi = 'tashqi funksiyada';
+
+  function ichki() {
+    const ichkiOzgaruvchi = 'faqat ichkida';
+    console.log(global, tashqiOzgaruvchi, ichkiOzgaruvchi); // ✅ hammasi ko'rinadi
+  }
+  ichki();
+  // console.log(ichkiOzgaruvchi); // ❌ ReferenceError
+}
+
+if (true) {
+  let blokda = 1;
+  var funksiyada = 2;
+}
+// console.log(blokda);  // ❌ — let blok bilan cheklangan
+console.log(funksiyada); // 2 — var blokni "teshib" chiqadi</pre>
+<p>Ichki doira tashqi doiradagi o'zgaruvchilarni ko'radi, aksincha emas. Bu <b>leksik scope</b> deyiladi: o'zgaruvchining
+ko'rinishi kod <i>qayerda yozilganiga</i> bog'liq, qayerda chaqirilganiga emas.</p>
+<h3>Closure (yopilish)</h3>
+<p><b>Closure</b> — funksiya o'zi yaratilgan muhitdagi o'zgaruvchilarni, hatto o'sha muhit tugaganidan keyin ham <i>eslab qolishi</i>.</p>
+<pre data-lang="js">function hisoblagichYarat() {
+  let son = 0;                 // tashqaridan to'g'ridan-to'g'ri o'zgartirib bo'lmaydi (xususiy)
+  return {
+    oshir: () => ++son,
+    kamaytir: () => --son,
+    qiymat: () => son,
+  };
+}
+
+const h1 = hisoblagichYarat();
+h1.oshir(); h1.oshir();
+console.log(h1.qiymat()); // 2
+
+const h2 = hisoblagichYarat(); // yangi, mustaqil "son"
+console.log(h2.qiymat()); // 0</pre>
+<p>Closure'lar hamma joyda: hodisa ishlovchilari, <code>setTimeout</code>, React hook'lari, middleware'lar. Ularni tushunish — JavaScript'ni tushunish demak.</p>
+
+<h2>Massivlar va ularning metodlari</h2>
+<pre data-lang="js">const arr = [10, 20, 30];
+arr.push(40);        // oxiriga qo'shish → [10,20,30,40]
+arr.pop();           // oxiridan olish
+arr.unshift(5);      // boshiga qo'shish
+arr.shift();         // boshidan olish
+arr.includes(20);    // true
+arr.indexOf(30);     // 2
+arr.slice(0, 2);     // [10, 20] — nusxa, asl massiv o'zgarmaydi
+arr.splice(1, 1);    // 1-indeksdan 1 ta elementni O'CHIRADI (asl massivni o'zgartiradi)
+arr.join(' - ');     // '10 - 30'
+[...arr, 50];        // spread bilan yangi massiv
+Array.from({ length: 5 }, (_, i) => i * 2); // [0, 2, 4, 6, 8]</pre>
+<h3>Yuqori tartibli (higher-order) metodlar — eng muhimlari</h3>
+<p>Bu metodlar asl massivni o'zgartirmaydi va real loyihalarda <code>for</code> sikllarining o'rnini deyarli to'liq egallaydi.</p>
+<pre data-lang="js">const mahsulotlar = [
+  { nomi: 'Noutbuk', narx: 9_500_000, toifa: 'texnika', soni: 3 },
+  { nomi: 'Sichqoncha', narx: 150_000, toifa: 'texnika', soni: 0 },
+  { nomi: 'Kitob', narx: 85_000, toifa: 'kitob', soni: 12 },
+  { nomi: 'Monitor', narx: 2_800_000, toifa: 'texnika', soni: 5 },
+];
+
+// map — har bir elementni o'zgartirib YANGI massiv qaytaradi (uzunlik bir xil)
+const nomlar = mahsulotlar.map(m => m.nomi);
+// ['Noutbuk', 'Sichqoncha', 'Kitob', 'Monitor']
+
+// filter — shartga mos elementlar
+const mavjud = mahsulotlar.filter(m => m.soni > 0);
+
+// find / findIndex — birinchi mos element (yoki undefined / -1)
+const kitob = mahsulotlar.find(m => m.toifa === 'kitob');
+
+// some / every — kamida bittasi / hammasi shartga mosmi
+mahsulotlar.some(m => m.soni === 0);   // true
+mahsulotlar.every(m => m.narx > 0);    // true
+
+// reduce — massivni BITTA qiymatga "yig'ish"
+const omborQiymati = mahsulotlar.reduce((jami, m) => jami + m.narx * m.soni, 0);
+// 9_500_000*3 + 0 + 85_000*12 + 2_800_000*5 = 43_520_000
+
+// Toifalar bo'yicha guruhlash (reduce bilan)
+const guruhlar = mahsulotlar.reduce((acc, m) => {
+  (acc[m.toifa] ??= []).push(m.nomi);
+  return acc;
+}, {});
+// { texnika: ['Noutbuk','Sichqoncha','Monitor'], kitob: ['Kitob'] }
+
+// sort — DIQQAT: asl massivni o'zgartiradi. toSorted() — nusxa qaytaradi
+const arzondan = [...mahsulotlar].sort((a, b) => a.narx - b.narx);
+const alifbo = mahsulotlar.toSorted((a, b) => a.nomi.localeCompare(b.nomi));
+
+// Zanjir (chaining)
+const texnikaNomlari = mahsulotlar
+  .filter(m => m.toifa === 'texnika' && m.soni > 0)
+  .sort((a, b) => b.narx - a.narx)
+  .map(m => `${m.nomi} — ${m.narx.toLocaleString()} so'm`);</pre>
+
+<h2>Obyektlar</h2>
+<pre data-lang="js">const talaba = {
+  ism: 'Nodira',
+  yosh: 21,
+  'sevimli fan': 'Matematika',     // bo'sh joyli kalit — qo'shtirnoqda
+  manzil: { shahar: 'Buxoro', kocha: 'Mustaqillik 5' },
+  tanishtir() {                    // metod
+    return `Men ${this.ism}, ${this.yosh} yoshdaman`;
+  },
+};
+
+talaba.ism;                 // nuqta orqali
+talaba['sevimli fan'];      // qavs orqali
+const kalit = 'yosh';
+talaba[kalit];              // dinamik kalit
+talaba.kurs = 3;            // yangi xususiyat qo'shish
+delete talaba.kurs;         // o'chirish
+'ism' in talaba;            // true
+
+Object.keys(talaba);        // ['ism', 'yosh', 'sevimli fan', 'manzil', 'tanishtir']
+Object.values({ a: 1, b: 2 });   // [1, 2]
+Object.entries({ a: 1, b: 2 });  // [['a', 1], ['b', 2]]
+Object.fromEntries([['a', 1]]);  // { a: 1 }
+
+// Qisqa yozuv
+const ism = 'Jamshid', yosh = 30;
+const odam = { ism, yosh };      // { ism: 'Jamshid', yosh: 30 }
+
+// Spread bilan birlashtirish / yangilash (immutable usul)
+const yangilangan = { ...talaba, yosh: 22, manzil: { ...talaba.manzil, shahar: 'Toshkent' } };</pre>
+<h3>Destructuring</h3>
+<pre data-lang="js">const { ism, yosh, manzil: { shahar }, kurs = 1 } = talaba;   // standart qiymat bilan
+const { ism: talabaIsmi } = talaba;                              // boshqa nomga
+
+const [birinchi, ikkinchi, ...qolgan] = [10, 20, 30, 40];
+let p = 1, q = 2;
+[p, q] = [q, p];   // qiymatlarni almashtirish
+
+// Funksiya parametrlarida — juda ko'p ishlatiladi (ayniqsa React'da)
+function kartaChiz({ nomi, narx, chegirma = 0 }) {
+  return `${nomi}: ${narx * (1 - chegirma)} so'm`;
+}
+kartaChiz({ nomi: 'Kitob', narx: 50000, chegirma: 0.1 });</pre>
+<h3>JSON</h3>
+<p><b>JSON</b> — obyektlarni matn ko'rinishida uzatish formati. Frontend va backend aynan JSON orqali "gaplashadi".</p>
+<pre data-lang="js">const obj = { ism: 'Ali', ballar: [90, 85], faol: true };
+const matn = JSON.stringify(obj);           // '{"ism":"Ali","ballar":[90,85],"faol":true}'
+const chiroyli = JSON.stringify(obj, null, 2); // 2 bo'shliq bilan formatlangan
+const qaytaObj = JSON.parse(matn);          // yana obyekt
+// JSON'da: kalitlar faqat qo'shtirnoqda, funksiya va undefined bo'lmaydi, izoh yozib bo'lmaydi</pre>
+
+<h2>Sinflar (class) va OOP</h2>
+<pre data-lang="js">class Hisob {
+  #balans = 0;                      // # — haqiqiy xususiy (private) maydon
+  static bankNomi = 'Ishonch Bank'; // sinfga tegishli, obyektga emas
+
+  constructor(egasi, boshlangich = 0) {
+    this.egasi = egasi;
+    this.#balans = boshlangich;
+    this.tarix = [];
+  }
+
+  get balans() {                    // getter — xususiyat kabi o'qiladi: hisob.balans
+    return this.#balans;
+  }
+
+  toldirish(summa) {
+    if (summa <= 0) throw new Error('Summa musbat bo\'lishi kerak');
+    this.#balans += summa;
+    this.tarix.push({ tur: 'kirim', summa, sana: new Date() });
+    return this;                    // zanjir uchun
+  }
+
+  yechish(summa) {
+    if (summa > this.#balans) throw new Error('Mablag\' yetarli emas');
+    this.#balans -= summa;
+    this.tarix.push({ tur: 'chiqim', summa, sana: new Date() });
+    return this;
+  }
+}
+
+// Meros (inheritance)
+class JamgarmaHisob extends Hisob {
+  constructor(egasi, foiz) {
+    super(egasi);                   // ota konstruktorini chaqirish majburiy
+    this.foiz = foiz;
+  }
+  foizQosh() {
+    return this.toldirish(this.balans * this.foiz / 100);
+  }
+}
+
+const h = new JamgarmaHisob('Laylo', 12);
+h.toldirish(1_000_000).foizQosh();
+console.log(h.balans);        // 1120000
+// console.log(h.#balans);    // ❌ SyntaxError — tashqaridan kirib bo'lmaydi
+h instanceof Hisob;           // true</pre>
+
+<h2>Xatolar bilan ishlash</h2>
+<pre data-lang="js">function yoshniTekshir(yosh) {
+  if (typeof yosh !== 'number' || Number.isNaN(yosh)) {
+    throw new TypeError('Yosh son bo\'lishi kerak');
+  }
+  if (yosh < 0 || yosh > 150) {
+    throw new RangeError('Yosh 0 va 150 oralig\'ida bo\'lishi kerak');
+  }
+  return true;
+}
+
+try {
+  yoshniTekshir(-5);
+} catch (err) {
+  console.error(err.name, err.message);   // RangeError Yosh 0 va 150 oralig'ida...
+} finally {
+  console.log('Bu blok har doim bajariladi (resurslarni tozalash uchun)');
+}
+
+// O'z xato sinfingiz
+class ValidationError extends Error {
+  constructor(field, message) {
+    super(message);
+    this.name = 'ValidationError';
+    this.field = field;
+  }
+}</pre>
+
+<h2>Modullar (ES Modules)</h2>
+<p>Katta dasturni fayllarga bo'lish uchun modullar ishlatiladi.</p>
+<pre data-lang="js" data-title="utils/format.js">// Nomli eksport (bir nechta bo'lishi mumkin)
+export const valyuta = (son) => `${son.toLocaleString('uz-UZ')} so'm`;
+export function sanaFormat(d) {
+  return new Date(d).toLocaleDateString('uz-UZ');
+}
+
+// Standart eksport (faylda bitta)
+export default function slugify(matn) {
+  return matn.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+}</pre>
+<pre data-lang="js" data-title="main.js">import slugify, { valyuta, sanaFormat as sana } from './utils/format.js';
+import * as fmt from './utils/format.js';
+
+console.log(valyuta(150000));    // '150 000 so'm'
+console.log(slugify('Salom Dunyo')); // 'salom-dunyo'</pre>
+<p>Brauzerda modullarni ishlatish: <code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code>. Node.js'da esa <code>package.json</code> ga <code>"type": "module"</code> qo'shiladi (8-dars).</p>
+
+<h2>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Internet-do'kon savatchasi hisob-kitobi</h3></div><div class="ex-body">
+<p>Real e-commerce mantiq: chegirmalar, promokod, yetkazib berish narxi va QQS.</p>
+<pre data-lang="js" data-title="cart.js">const savat = [
+  { id: 1, nomi: 'Simsiz quloqchin', narx: 450_000, soni: 2, chegirma: 0.1 },
+  { id: 2, nomi: 'Telefon g\'ilofi', narx: 60_000, soni: 3, chegirma: 0 },
+  { id: 3, nomi: 'Quvvatlagich 65W', narx: 280_000, soni: 1, chegirma: 0.15 },
+];
+
+const PROMOKODLAR = {
+  BAHOR10: { tur: 'foiz', qiymat: 10 },
+  MINUS50K: { tur: 'summa', qiymat: 50_000, minSumma: 500_000 },
+};
+
+const BEPUL_YETKAZISH_CHEGARASI = 1_000_000;
+const YETKAZISH_NARXI = 25_000;
+
+function qatorSummasi({ narx, soni, chegirma = 0 }) {
+  return Math.round(narx * (1 - chegirma)) * soni;
+}
+
+function promokodQoll(summa, kod) {
+  if (!kod) return { summa, xabar: null };
+  const promo = PROMOKODLAR[kod.trim().toUpperCase()];
+  if (!promo) return { summa, xabar: 'Promokod topilmadi' };
+  if (promo.minSumma && summa < promo.minSumma) {
+    return { summa, xabar: `Promokod ${promo.minSumma.toLocaleString()} so'mdan yuqori xaridga amal qiladi` };
+  }
+  const yangi = promo.tur === 'foiz'
+    ? Math.round(summa * (1 - promo.qiymat / 100))
+    : summa - promo.qiymat;
+  return { summa: Math.max(yangi, 0), xabar: 'Promokod qo\'llandi ✅' };
+}
+
+function hisobla(savat, promokod) {
+  const qatorlar = savat.map(m => ({ ...m, jami: qatorSummasi(m) }));
+  const oraliq = qatorlar.reduce((s, q) => s + q.jami, 0);
+  const tejaldi = savat.reduce((s, m) => s + m.narx * m.soni, 0) - oraliq;
+  const { summa: promodan, xabar } = promokodQoll(oraliq, promokod);
+  const yetkazish = promodan >= BEPUL_YETKAZISH_CHEGARASI ? 0 : YETKAZISH_NARXI;
+  const jami = promodan + yetkazish;
+  const mahsulotSoni = savat.reduce((s, m) => s + m.soni, 0);
+
+  return { qatorlar, oraliq, tejaldi, promokodXabari: xabar, yetkazish, jami, mahsulotSoni };
+}
+
+const f = (n) => `${n.toLocaleString('uz-UZ')} so'm`;
+const natija = hisobla(savat, 'bahor10');
+
+console.table(natija.qatorlar.map(({ nomi, soni, jami }) => ({ nomi, soni, jami: f(jami) })));
+console.log(`Mahsulotlar: ${natija.mahsulotSoni} ta`);
+console.log(`Oraliq summa: ${f(natija.oraliq)} (chegirmalar: -${f(natija.tejaldi)})`);
+console.log(natija.promokodXabari);
+console.log(`Yetkazish: ${natija.yetkazish ? f(natija.yetkazish) : 'BEPUL'}`);
+console.log(`To'lovga: ${f(natija.jami)}`);</pre>
+<p><b>Nimani o'rgandik:</b> <code>map</code>/<code>reduce</code> bilan hisob-kitob, destructuring, standart parametrlar, obyektdan
+qidiruv-jadval (lookup table) sifatida foydalanish, sof funksiyalar (bir xil kirish → bir xil chiqish), raqamli
+ajratgich (<code>450_000</code>). Bu kod 13-darsda React interfeysiga ulanadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Guruh baholari statistikasi</h3></div><div class="ex-body">
+<pre data-lang="js" data-title="grades.js">const talabalar = [
+  { ism: 'Akmal', baholar: { matematika: 92, fizika: 78, ingliz: 85 } },
+  { ism: 'Barno', baholar: { matematika: 67, fizika: 88, ingliz: 95 } },
+  { ism: 'Davron', baholar: { matematika: 45, fizika: 52, ingliz: 60 } },
+  { ism: 'Gulnoza', baholar: { matematika: 98, fizika: 94, ingliz: 91 } },
+  { ism: 'Erkin', baholar: { matematika: 73, fizika: 39, ingliz: 70 } },
+];
+
+const ortacha = (sonlar) => sonlar.reduce((a, b) => a + b, 0) / sonlar.length;
+const yaxlitla = (n) => Math.round(n * 10) / 10;
+
+function daraja(ball) {
+  if (ball >= 86) return "A'lo";
+  if (ball >= 71) return 'Yaxshi';
+  if (ball >= 56) return 'Qoniqarli';
+  return 'Qoniqarsiz';
+}
+
+// 1. Har bir talabaning o'rtacha bahosi va darajasi
+const reyting = talabalar
+  .map(({ ism, baholar }) => {
+    const ort = yaxlitla(ortacha(Object.values(baholar)));
+    return { ism, ortacha: ort, daraja: daraja(ort) };
+  })
+  .sort((a, b) => b.ortacha - a.ortacha)
+  .map((t, i) => ({ orin: i + 1, ...t }));
+
+console.table(reyting);
+
+// 2. Fanlar bo'yicha statistika
+const fanlar = Object.keys(talabalar[0].baholar);
+const fanStatistika = fanlar.map(fan => {
+  const ballar = talabalar.map(t => t.baholar[fan]);
+  const eng = talabalar.reduce((best, t) => (t.baholar[fan] > best.baholar[fan] ? t : best));
+  return {
+    fan,
+    ortacha: yaxlitla(ortacha(ballar)),
+    max: Math.max(...ballar),
+    min: Math.min(...ballar),
+    eng_yaxshi: eng.ism,
+    yiqilganlar: talabalar.filter(t => t.baholar[fan] < 56).map(t => t.ism).join(', ') || '—',
+  };
+});
+console.table(fanStatistika);
+
+// 3. Darajalar bo'yicha taqsimot: { "A'lo": 1, Yaxshi: 2, ... }
+const taqsimot = reyting.reduce((acc, { daraja }) => {
+  acc[daraja] = (acc[daraja] || 0) + 1;
+  return acc;
+}, {});
+console.log(taqsimot);
+
+// 4. Stipendiya oladiganlar: barcha fanlardan 71+
+const stipendiya = talabalar
+  .filter(t => Object.values(t.baholar).every(b => b >= 71))
+  .map(t => t.ism);
+console.log('Stipendiya:', stipendiya); // ['Akmal', 'Gulnoza']</pre>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Closure bilan amaliy vositalar: memoize, once va debounce</h3></div><div class="ex-body">
+<p>Professional kodda tez-tez uchraydigan uchta yordamchi funksiya — barchasi closure asosida.</p>
+<pre data-lang="js" data-title="helpers.js">// 1. memoize — og'ir hisob natijasini keshlash
+function memoize(fn) {
+  const kesh = new Map();                 // closure ichida saqlanadi
+  return function (...args) {
+    const kalit = JSON.stringify(args);
+    if (kesh.has(kalit)) return kesh.get(kalit);
+    const natija = fn(...args);
+    kesh.set(kalit, natija);
+    return natija;
+  };
+}
+
+const fib = memoize(n => (n < 2 ? n : fib(n - 1) + fib(n - 2)));
+console.time('fib');
+console.log(fib(90));   // 2880067194370816000 — bir zumda (keshsiz yillab hisoblanardi)
+console.timeEnd('fib');
+
+// 2. once — funksiyani faqat bir marta bajarish (masalan "To'lash" tugmasi)
+function once(fn) {
+  let bajarildi = false, natija;
+  return (...args) => {
+    if (!bajarildi) {
+      bajarildi = true;
+      natija = fn(...args);
+    }
+    return natija;
+  };
+}
+const tolash = once((summa) => { console.log(`${summa} so'm to'landi`); return 'OK'; });
+tolash(100000);  // "100000 so'm to'landi"
+tolash(100000);  // hech narsa — ikkinchi marta bajarilmaydi
+
+// 3. debounce — ketma-ket chaqiruvlarda faqat oxirgisini bajarish
+//    (qidiruv maydoniga yozilganda har harf uchun emas, yozib bo'lgach so'rov yuborish)
+function debounce(fn, kutish = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), kutish);
+  };
+}
+const qidir = debounce((soz) => console.log('Serverga so\'rov:', soz), 500);
+qidir('j'); qidir('ja'); qidir('jav'); qidir('java');
+// 500ms dan keyin faqat bitta: "Serverga so'rov: java"</pre>
+<p>Uchala funksiya ham ichki holatni (<code>kesh</code>, <code>bajarildi</code>, <code>timer</code>) closure orqali saqlaydi.
+<code>debounce</code> ni 6-darsda real qidiruv bilan ishlatamiz.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Kutubxona boshqaruv tizimi (sinflar, xatolar, Map)</h3></div><div class="ex-body">
+<pre data-lang="js" data-title="library.js">class KitobMavjudEmasError extends Error {
+  constructor(isbn) {
+    super(`ISBN ${isbn} bo'yicha bo'sh nusxa yo'q`);
+    this.name = 'KitobMavjudEmasError';
+  }
+}
+
+class Kitob {
+  constructor({ isbn, nomi, muallif, nusxalar = 1 }) {
+    Object.assign(this, { isbn, nomi, muallif });
+    this.jami = nusxalar;
+    this.bosh = nusxalar;
+  }
+  get mavjudmi() { return this.bosh > 0; }
+  toString() { return `"${this.nomi}" — ${this.muallif} (${this.bosh}/${this.jami})`; }
+}
+
+class Kutubxona {
+  #kitoblar = new Map();      // isbn → Kitob
+  #ijaralar = [];             // { isbn, oquvchi, berilgan, muddat }
+  static IJARA_KUNI = 14;
+  static JARIMA_KUNIGA = 2000;
+
+  qoshish(malumot) {
+    const mavjud = this.#kitoblar.get(malumot.isbn);
+    if (mavjud) {
+      mavjud.jami += malumot.nusxalar ?? 1;
+      mavjud.bosh += malumot.nusxalar ?? 1;
+    } else {
+      this.#kitoblar.set(malumot.isbn, new Kitob(malumot));
+    }
+    return this;
+  }
+
+  qidirish(soz) {
+    const q = soz.toLowerCase();
+    return [...this.#kitoblar.values()].filter(
+      k => k.nomi.toLowerCase().includes(q) || k.muallif.toLowerCase().includes(q)
+    );
+  }
+
+  berish(isbn, oquvchi, sana = new Date()) {
+    const kitob = this.#kitoblar.get(isbn);
+    if (!kitob) throw new Error(`Bunday kitob yo'q: ${isbn}`);
+    if (!kitob.mavjudmi) throw new KitobMavjudEmasError(isbn);
+    kitob.bosh--;
+    const muddat = new Date(sana);
+    muddat.setDate(muddat.getDate() + Kutubxona.IJARA_KUNI);
+    this.#ijaralar.push({ isbn, oquvchi, berilgan: sana, muddat });
+    return muddat;
+  }
+
+  qaytarish(isbn, oquvchi, sana = new Date()) {
+    const i = this.#ijaralar.findIndex(r => r.isbn === isbn && r.oquvchi === oquvchi);
+    if (i === -1) throw new Error('Bunday ijara topilmadi');
+    const [ijara] = this.#ijaralar.splice(i, 1);
+    this.#kitoblar.get(isbn).bosh++;
+    const kechikish = Math.ceil((sana - ijara.muddat) / 86_400_000);
+    return kechikish > 0 ? kechikish * Kutubxona.JARIMA_KUNIGA : 0;
+  }
+
+  get hisobot() {
+    const kitoblar = [...this.#kitoblar.values()];
+    return {
+      nomlar: kitoblar.length,
+      jamiNusxa: kitoblar.reduce((s, k) => s + k.jami, 0),
+      ijarada: this.#ijaralar.length,
+      tugaganlar: kitoblar.filter(k => !k.mavjudmi).map(String),
+    };
+  }
+}
+
+// Foydalanish
+const lib = new Kutubxona()
+  .qoshish({ isbn: '978-1', nomi: "O'tkan kunlar", muallif: 'Abdulla Qodiriy', nusxalar: 2 })
+  .qoshish({ isbn: '978-2', nomi: 'Sariq devni minib', muallif: "Xudoyberdi To'xtaboyev" })
+  .qoshish({ isbn: '978-3', nomi: 'Clean Code', muallif: 'Robert Martin' });
+
+lib.berish('978-2', 'Sherzod', new Date('2026-09-01'));
+try {
+  lib.berish('978-2', 'Madina');
+} catch (e) {
+  if (e instanceof KitobMavjudEmasError) console.warn('⚠️', e.message);
+  else throw e;                     // kutilmagan xatoni yashirmaymiz
+}
+
+const jarima = lib.qaytarish('978-2', 'Sherzod', new Date('2026-09-20'));
+console.log(`Jarima: ${jarima} so'm`); // 5 kun kechikish → 10000 so'm
+console.log(lib.qidirish('qodiriy').map(String));
+console.log(lib.hisobot);</pre>
+<p><b>Ko'rib chiqilgan tushunchalar:</b> xususiy maydonlar (<code>#</code>), statik konstantalar, getter, o'z xato sinfi va
+<code>instanceof</code> bilan tekshirish, <code>Map</code>, sanalar bilan hisob, metodlar zanjiri. 10-darsda xuddi shu
+mantiqni ma'lumotlar bazasiga o'tkazamiz.</p>
+</div></div>
+
+<h2>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><code>sozlarSoni(matn)</code> funksiyasini yozing: matndagi har bir so'z necha marta uchrashini obyekt ko'rinishida qaytarsin (katta-kichik harf farqsiz, tinish belgilarisiz).</li>
+  <li>Massivdagi takroriy elementlarni olib tashlang — ikki usulda: <code>filter + indexOf</code> va <code>new Set()</code>.</li>
+  <li>1-misolga "bir nechta promokod qo'llab bo'lmaydi" va "chegirmali mahsulotga promokod amal qilmaydi" qoidalarini qo'shing.</li>
+  <li><code>throttle(fn, ms)</code> funksiyasini yozing: <code>fn</code> har <code>ms</code> millisoniyada ko'pi bilan bir marta bajarilsin. U <code>debounce</code> dan nimasi bilan farq qiladi?</li>
+  <li><code>TodoList</code> sinfini yozing: <code>add</code>, <code>toggle(id)</code>, <code>remove(id)</code>, <code>filter('all'|'done'|'active')</code> metodlari va <code>stats</code> getteri bilan.</li>
+</ol>
+<details><summary>1-mashq yechimi</summary>
+<pre data-lang="js">const sozlarSoni = (matn) =>
+  matn.toLowerCase()
+      .replace(/[^\p{L}\p{N}\s'-]/gu, '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .reduce((acc, soz) => ({ ...acc, [soz]: (acc[soz] || 0) + 1 }), {});
+
+sozlarSoni('Bir, ikki. Bir uch! bir'); // { bir: 3, ikki: 1, uch: 1 }</pre>
+</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li><code>const</code> > <code>let</code>; <code>var</code> ishlatmang. Har doim <code>===</code>.</li>
+  <li>Primitivlar qiymat bo'yicha, obyektlar havola bo'yicha nusxalanadi.</li>
+  <li><code>??</code>, <code>?.</code>, destructuring va spread — zamonaviy JS'ning kundalik vositalari.</li>
+  <li><code>map</code>, <code>filter</code>, <code>reduce</code>, <code>find</code>, <code>some</code>/<code>every</code> — ma'lumotlar bilan ishlashning asosi.</li>
+  <li>Closure — funksiya o'z muhitini eslab qoladi; xususiy holat va yordamchi funksiyalar uchun ishlatiladi.</li>
+  <li>Sinflar, <code>#private</code> maydonlar, <code>extends</code>; xatolarni <code>throw</code>/<code>try...catch</code> bilan boshqaring.</li>
+</ul>
+</div>

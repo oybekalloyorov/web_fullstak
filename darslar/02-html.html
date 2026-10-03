@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML — sahifa tuzilishi — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a class="active" href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧱</div><div><div class="crumb">02-dars · 14 tadan</div><h1>HTML — sahifa tuzilishi</h1><p class="lead">Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.</p></div></div>
+
+<p><b>HTML (HyperText Markup Language)</b> — veb-sahifaning skeleti. U dasturlash tili emas, balki <b>belgilash
+(markup) tili</b>: biz matnning qaysi qismi sarlavha, qaysisi paragraf, qaysisi havola yoki tugma ekanini
+brauzerga tushuntiramiz. Yaxshi yozilgan HTML — tez ishlaydigan, qidiruv tizimlarida yuqorida chiqadigan va
+ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
+
+<h2 id="element-teg-va-atribut"><a class="anchor" href="#element-teg-va-atribut">#</a>Element, teg va atribut</h2>
+<p>HTML hujjati <b>elementlardan</b> tashkil topadi. Element odatda ochuvchi teg, mazmun va yopuvchi tegdan iborat:</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;a href=&quot;https://kun.uz&quot; target=&quot;_blank&quot; title=&quot;Yangiliklar&quot;&gt;Kun.uz saytiga o&#x27;tish&lt;/a&gt;
+&lt;!-- └ochuvchi teg ┘ └──── atributlar ────────────────┘ └─── mazmun ──────┘└yopuvchi┘ --&gt;</code></pre></div>
+<ul>
+  <li><b>Teg</b> — burchak qavslar ichidagi nom: <code>&lt;p&gt;</code>, <code>&lt;/p&gt;</code>.</li>
+  <li><b>Atribut</b> — elementga qo'shimcha ma'lumot: <code>nom="qiymat"</code>. Har doim ochuvchi tegda yoziladi.</li>
+  <li><b>Bo'sh (void) elementlar</b> — mazmuni bo'lmaydi va yopilmaydi: <code>&lt;img&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;hr&gt;</code>.</li>
+  <li><b>Ichma-ich joylashish (nesting)</b> — elementlar to'g'ri tartibda yopilishi kerak: <code>&lt;p&gt;&lt;b&gt;matn&lt;/b&gt;&lt;/p&gt;</code> ✅, <code>&lt;p&gt;&lt;b&gt;matn&lt;/p&gt;&lt;/b&gt;</code> ❌.</li>
+</ul>
+<h3>Global atributlar</h3>
+<p>Istalgan elementda ishlatiladigan atributlar:</p>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>id</code></td><td>Sahifada <b>yagona</b> identifikator. CSS, JS va <code>#havola</code> uchun</td></tr>
+<tr><td><code>class</code></td><td>Bir yoki bir nechta sinf nomi (bo'sh joy bilan). CSS uslublari uchun asosiy vosita</td></tr>
+<tr><td><code>style</code></td><td>Inline CSS (kamdan-kam ishlating)</td></tr>
+<tr><td><code>title</code></td><td>Sichqoncha ustiga olib borilganda chiqadigan izoh</td></tr>
+<tr><td><code>hidden</code></td><td>Elementni yashiradi</td></tr>
+<tr><td><code>data-*</code></td><td>O'z ma'lumotingizni saqlash: <code>data-product-id="42"</code> → JS'da <code>el.dataset.productId</code></td></tr>
+<tr><td><code>lang</code></td><td>Mazmun tili: <code>lang="uz"</code></td></tr>
+<tr><td><code>tabindex</code></td><td>Klaviatura (<kbd>Tab</kbd>) bilan fokus tartibi</td></tr>
+</table></div>
+
+<h2 id="html-hujjatining-asosiy-tuzilishi"><a class="anchor" href="#html-hujjatining-asosiy-tuzilishi">#</a>HTML hujjatining asosiy tuzilishi</h2>
+<p>Har bir HTML sahifa quyidagi skeletdan boshlanadi. VS Code'da bo'sh <code>.html</code> faylga <code>!</code> yozib <kbd>Tab</kbd> bossangiz, u avtomatik yaratiladi.</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;Sahifa haqida 150–160 belgili qisqa tavsif (Google natijalarida chiqadi)&quot;&gt;
+  &lt;title&gt;Sahifa sarlavhasi — Sayt nomi&lt;/title&gt;
+  &lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;
+  &lt;script src=&quot;js/app.js&quot; defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Foydalanuvchi ko&#x27;radigan barcha narsa shu yerda --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<ul>
+  <li><code>&lt;!DOCTYPE html&gt;</code> — brauzerga "bu zamonaviy HTML5 hujjat" deydi. Usiz brauzer eski "quirks mode"ga o'tadi va CSS g'alati ishlaydi.</li>
+  <li><code>&lt;html lang="uz"&gt;</code> — ildiz element; <code>lang</code> ekran o'quvchilar va tarjimonlar uchun muhim.</li>
+  <li><code>&lt;head&gt;</code> — ko'rinmaydigan meta-ma'lumotlar: kodlash, sarlavha, CSS, skriptlar.</li>
+  <li><code>&lt;meta charset="UTF-8"&gt;</code> — o'zbekcha <code>o'</code>, <code>g'</code>, kirill harflari va emoji to'g'ri chiqishi uchun. Har doim birinchi qatorlarda.</li>
+  <li><code>&lt;meta name="viewport"&gt;</code> — telefonlarda sahifa kichraytirilmasdan, ekran kengligida ko'rsatilishi uchun. Usiz responsiv dizayn ishlamaydi.</li>
+  <li><code>defer</code> — skript HTML to'liq o'qilgandan keyin bajariladi va parsing'ni bloklamaydi.</li>
+</ul>
+
+<h2 id="matn-bilan-ishlash"><a class="anchor" href="#matn-bilan-ishlash">#</a>Matn bilan ishlash</h2>
+<h3>Sarlavhalar</h3>
+<p><code>&lt;h1&gt;</code> dan <code>&lt;h6&gt;</code> gacha. Ular hujjatning <b>mazmun tuzilishini</b> (kitobning mundarijasi kabi) bildiradi, shrift o'lchamini emas.</p>
+<ul>
+  <li>Sahifada odatda <b>bitta</b> <code>&lt;h1&gt;</code> bo'ladi — sahifaning asosiy mavzusi.</li>
+  <li>Darajalarni sakrab o'tmang: <code>h2</code> dan keyin to'g'ridan-to'g'ri <code>h4</code> emas.</li>
+  <li>Matnni katta qilish uchun sarlavha tegi ishlatmang — buning uchun CSS bor.</li>
+</ul>
+<h3>Matn elementlari</h3>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;p&gt;Paragraf — matnning asosiy bloki.&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;strong&gt;Muhim matn&lt;/strong&gt; (semantik qalin) va &lt;b&gt;shunchaki qalin&lt;/b&gt;.&lt;br&gt;
+  &lt;em&gt;Urg&#x27;u berilgan matn&lt;/em&gt; (semantik kursiv) va &lt;i&gt;atama yoki chet so&#x27;z&lt;/i&gt;.&lt;br&gt;
+  &lt;mark&gt;Belgilangan&lt;/mark&gt;, &lt;small&gt;mayda izoh&lt;/small&gt;, &lt;del&gt;o&#x27;chirilgan&lt;/del&gt;, &lt;ins&gt;qo&#x27;shilgan&lt;/ins&gt;.&lt;br&gt;
+  H&lt;sub&gt;2&lt;/sub&gt;O va E = mc&lt;sup&gt;2&lt;/sup&gt;&lt;br&gt;
+  &lt;code&gt;console.log()&lt;/code&gt; — kod, &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; — klaviatura.&lt;br&gt;
+  &lt;abbr title=&quot;HyperText Markup Language&quot;&gt;HTML&lt;/abbr&gt; — qisqartma.
+&lt;/p&gt;
+
+&lt;blockquote cite=&quot;https://example.uz/manba&quot;&gt;
+  &lt;p&gt;Dasturlash — bu fikrlashni o&#x27;rgatadigan san&#x27;at.&lt;/p&gt;
+  &lt;footer&gt;— &lt;cite&gt;Noma&#x27;lum muallif&lt;/cite&gt;&lt;/footer&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;
+  Formatlangan matn:
+    bo&#x27;sh joylar    saqlanadi
+&lt;/pre&gt;
+
+&lt;hr&gt; &lt;!-- mavzu almashuvi --&gt;</code></pre></div>
+<div class="callout info"><span class="t">strong va b farqi</span>
+<code>&lt;strong&gt;</code> — "bu matn muhim" degan <i>ma'no</i> beradi (ekran o'quvchi ovozini o'zgartiradi).
+<code>&lt;b&gt;</code> — faqat vizual qalinlik. Xuddi shunday <code>&lt;em&gt;</code> (urg'u) va <code>&lt;i&gt;</code> (stil).</div>
+
+<h3>Ro'yxatlar</h3>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!-- Tartibsiz ro&#x27;yxat --&gt;
+&lt;ul&gt;
+  &lt;li&gt;Non&lt;/li&gt;
+  &lt;li&gt;Sut&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Tartibli ro&#x27;yxat: type=&quot;1|a|A|i|I&quot;, start, reversed --&gt;
+&lt;ol start=&quot;3&quot;&gt;
+  &lt;li&gt;Uchinchi qadam&lt;/li&gt;
+  &lt;li&gt;To&#x27;rtinchi qadam
+    &lt;ul&gt;
+      &lt;li&gt;Ichki ro&#x27;yxat&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Ta&#x27;riflar ro&#x27;yxati --&gt;
+&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;Sahifa tuzilishi&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Sahifa ko&#x27;rinishi&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+<h3>Havolalar</h3>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;a href=&quot;https://developer.mozilla.org&quot;&gt;Tashqi havola (absolyut URL)&lt;/a&gt;
+&lt;a href=&quot;/about.html&quot;&gt;Saytning ildizidan (root-relative)&lt;/a&gt;
+&lt;a href=&quot;../index.html&quot;&gt;Joriy papkadan bir yuqoriga (relative)&lt;/a&gt;
+&lt;a href=&quot;#aloqa&quot;&gt;Sahifadagi id=&quot;aloqa&quot; elementiga&lt;/a&gt;
+&lt;a href=&quot;mailto:info@example.uz?subject=Savol&quot;&gt;Email yozish&lt;/a&gt;
+&lt;a href=&quot;tel:+998901234567&quot;&gt;Qo&#x27;ng&#x27;iroq qilish&lt;/a&gt;
+&lt;a href=&quot;/files/narxlar.pdf&quot; download&gt;PDF ni yuklab olish&lt;/a&gt;
+
+&lt;!-- Yangi oynada ochish: rel=&quot;noopener noreferrer&quot; xavfsizlik uchun --&gt;
+&lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;GitHub&lt;/a&gt;</code></pre></div>
+
+<h2 id="rasmlar-va-media"><a class="anchor" href="#rasmlar-va-media">#</a>Rasmlar va media</h2>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;img src=&quot;images/samarqand.jpg&quot;
+     alt=&quot;Samarqanddagi Registon maydoni kechqurun&quot;
+     width=&quot;800&quot; height=&quot;533&quot;
+     loading=&quot;lazy&quot;&gt;
+
+&lt;!-- Rasm + izoh --&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;chart.png&quot; alt=&quot;2025-yil savdo grafigi: dekabrda eng yuqori&quot;&gt;
+  &lt;figcaption&gt;1-rasm. Oylik savdo hajmi&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- Ekran o&#x27;lchamiga qarab turli rasm (responsive images) --&gt;
+&lt;img src=&quot;photo-800.jpg&quot;
+     srcset=&quot;photo-400.jpg 400w, photo-800.jpg 800w, photo-1600.jpg 1600w&quot;
+     sizes=&quot;(max-width: 600px) 100vw, 800px&quot;
+     alt=&quot;Tog&#x27; manzarasi&quot;&gt;
+
+&lt;!-- Zamonaviy format + zaxira --&gt;
+&lt;picture&gt;
+  &lt;source srcset=&quot;hero.avif&quot; type=&quot;image/avif&quot;&gt;
+  &lt;source srcset=&quot;hero.webp&quot; type=&quot;image/webp&quot;&gt;
+  &lt;img src=&quot;hero.jpg&quot; alt=&quot;Bosh sahifa banneri&quot;&gt;
+&lt;/picture&gt;
+
+&lt;video src=&quot;intro.mp4&quot; controls poster=&quot;poster.jpg&quot; width=&quot;640&quot; muted&gt;
+  Brauzeringiz video tegini qo&#x27;llab-quvvatlamaydi.
+&lt;/video&gt;
+
+&lt;audio src=&quot;podcast.mp3&quot; controls&gt;&lt;/audio&gt;
+
+&lt;iframe src=&quot;https://www.youtube.com/embed/VIDEO_ID&quot; title=&quot;YouTube video&quot;
+        width=&quot;560&quot; height=&quot;315&quot; allowfullscreen loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</code></pre></div>
+<div class="callout warn"><span class="t">alt atributi majburiy</span>
+<code>alt</code> — rasm yuklanmasa yoki foydalanuvchi ko'ra olmasa (ekran o'quvchi) o'qiladigan matn. U rasmda <i>nima
+borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatilgan rasmlarga <code>alt=""</code> (bo'sh) qo'ying.
+<code>width</code> va <code>height</code> berilsa, rasm yuklanguncha joy band qilinadi va sahifa "sakramaydi".</div>
+
+<h2 id="semantik-html"><a class="anchor" href="#semantik-html">#</a>Semantik HTML</h2>
+<p><b>Semantik</b> — "ma'noli" degani. 2000-yillarda saytlar faqat <code>&lt;div&gt;</code> lardan qurilgan
+("div sho'rva"). HTML5 sahifa qismlarining <i>vazifasini</i> bildiruvchi teglar qo'shdi:</p>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Ma'nosi</th></tr>
+<tr><td><code>&lt;header&gt;</code></td><td>Sahifa yoki bo'limning kirish qismi: logo, sarlavha, navigatsiya</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>Asosiy navigatsiya havolalari bloki</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>Sahifaning asosiy, noyob mazmuni (sahifada bitta)</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>Mustaqil, alohida tarqatsa bo'ladigan mazmun: maqola, post, mahsulot kartasi, izoh</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>Mavzu bo'yicha guruhlangan qism (odatda sarlavhasi bilan)</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>Asosiy mazmunga bilvosita aloqador: yon panel, reklama, "o'xshash maqolalar"</td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>Pastki qism: mualliflik, aloqa, havolalar</td></tr>
+<tr><td><code>&lt;time&gt;</code></td><td>Sana/vaqt: <code>&lt;time datetime="2026-10-03"&gt;3-oktabr&lt;/time&gt;</code></td></tr>
+<tr><td><code>&lt;address&gt;</code></td><td>Aloqa ma'lumotlari</td></tr>
+<tr><td><code>&lt;div&gt;</code>, <code>&lt;span&gt;</code></td><td>Ma'nosiz konteynerlar — faqat uslub berish uchun (blok va qator ichi)</td></tr>
+</table></div>
+<p><b>Nega semantika muhim?</b></p>
+<ol>
+  <li><b>SEO</b> — Google sahifaning qaysi qismi asosiy mazmun ekanini tushunadi.</li>
+  <li><b>Accessibility (a11y)</b> — ekran o'quvchi dasturlar "navigatsiyaga o'tish", "asosiy mazmunga o'tish" imkonini beradi.</li>
+  <li><b>O'qilishi</b> — kodni ko'rgan dasturchi tuzilmani darhol tushunadi.</li>
+</ol>
+
+<h3>Blok va qator ichi (inline) elementlar</h3>
+<ul>
+  <li><b>Blok</b> elementlar (<code>div, p, h1–h6, ul, section, article, form</code>) yangi qatordan boshlanadi va butun kenglikni egallaydi.</li>
+  <li><b>Inline</b> elementlar (<code>span, a, strong, em, img, code</code>) matn oqimida qatorda turadi va faqat kerakli kenglikni egallaydi.</li>
+</ul>
+<p>Bu xatti-harakatni CSS'dagi <code>display</code> xususiyati bilan o'zgartirish mumkin (3-dars).</p>
+
+<h2 id="jadvallar"><a class="anchor" href="#jadvallar">#</a>Jadvallar</h2>
+<p>Jadvallar faqat <b>jadval ko'rinishidagi ma'lumotlar</b> uchun (narxlar, dars jadvali, statistika). Sahifa maketini jadval bilan qurish — 1990-yillar usuli, hozir CSS Grid/Flexbox ishlatiladi.</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;2026-yil 1-chorak savdo hisoboti&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope=&quot;col&quot;&gt;Oy&lt;/th&gt;
+      &lt;th scope=&quot;col&quot;&gt;Buyurtmalar&lt;/th&gt;
+      &lt;th scope=&quot;col&quot;&gt;Daromad (so&#x27;m)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Yanvar&lt;/th&gt;&lt;td&gt;120&lt;/td&gt;&lt;td&gt;36 000 000&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Fevral&lt;/th&gt;&lt;td&gt;145&lt;/td&gt;&lt;td&gt;43 500 000&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Mart&lt;/th&gt;&lt;td&gt;190&lt;/td&gt;&lt;td&gt;57 000 000&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Jami&lt;/th&gt;&lt;td&gt;455&lt;/td&gt;&lt;td&gt;136 500 000&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+
+&lt;!-- Kataklarni birlashtirish --&gt;
+&lt;table&gt;
+  &lt;tr&gt;&lt;th colspan=&quot;2&quot;&gt;Ism va familiya&lt;/th&gt;&lt;th rowspan=&quot;2&quot;&gt;Yosh&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Ali&lt;/td&gt;&lt;td&gt;Valiyev&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</code></pre></div>
+
+<h2 id="formalar-foydalanuvchidan-malumot-olish"><a class="anchor" href="#formalar-foydalanuvchidan-malumot-olish">#</a>Formalar — foydalanuvchidan ma'lumot olish</h2>
+<p>Formalar — frontend va backend o'rtasidagi ko'prik. Ro'yxatdan o'tish, qidiruv, buyurtma — barchasi forma orqali.</p>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form action=&quot;/api/register&quot; method=&quot;POST&quot;&gt;
+  &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+  &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required placeholder=&quot;siz@mail.uz&quot;&gt;
+
+  &lt;label for=&quot;password&quot;&gt;Parol&lt;/label&gt;
+  &lt;input type=&quot;password&quot; id=&quot;password&quot; name=&quot;password&quot; required minlength=&quot;8&quot;&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+<ul>
+  <li><code>action</code> — ma'lumot yuboriladigan URL. <code>method</code> — <code>GET</code> (ma'lumot URL'ga qo'shiladi, qidiruv uchun) yoki <code>POST</code> (tanada yuboriladi, maxfiy ma'lumotlar uchun).</li>
+  <li><code>name</code> — <b>eng muhim atribut</b>: serverga <code>name=qiymat</code> ko'rinishida yuboriladi. <code>name</code>siz maydon yuborilmaydi!</li>
+  <li><code>&lt;label for="id"&gt;</code> — yozuvni maydonga bog'laydi: yozuv bosilganda maydon fokuslanadi va ekran o'quvchi uni o'qiydi.</li>
+</ul>
+
+<h3>Input turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>type</th><th>Ko'rinishi / vazifasi</th></tr>
+<tr><td><code>text</code></td><td>Oddiy matn</td></tr>
+<tr><td><code>email</code></td><td>Email formatini tekshiradi; telefonda <code>@</code> bor klaviatura chiqadi</td></tr>
+<tr><td><code>password</code></td><td>Belgilar yashiriladi</td></tr>
+<tr><td><code>number</code></td><td>Raqam; <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+<tr><td><code>tel</code>, <code>url</code>, <code>search</code></td><td>Telefon, manzil, qidiruv</td></tr>
+<tr><td><code>date</code>, <code>time</code>, <code>datetime-local</code></td><td>Sana/vaqt tanlagich</td></tr>
+<tr><td><code>checkbox</code></td><td>Bir nechtasini belgilash mumkin</td></tr>
+<tr><td><code>radio</code></td><td>Bir guruhdan (bir xil <code>name</code>) faqat bittasi</td></tr>
+<tr><td><code>file</code></td><td>Fayl tanlash; <code>accept="image/*"</code>, <code>multiple</code></td></tr>
+<tr><td><code>range</code>, <code>color</code></td><td>Slayder, rang tanlagich</td></tr>
+<tr><td><code>hidden</code></td><td>Ko'rinmas maydon (masalan, mahsulot id)</td></tr>
+</table></div>
+
+<h3>Brauzerning o'rnatilgan validatsiyasi</h3>
+<ul>
+  <li><code>required</code> — majburiy maydon</li>
+  <li><code>minlength</code>, <code>maxlength</code> — matn uzunligi</li>
+  <li><code>min</code>, <code>max</code> — son/sana chegarasi</li>
+  <li><code>pattern="[0-9]{9}"</code> — regex bo'yicha tekshirish</li>
+</ul>
+<div class="callout danger">Brauzer validatsiyasi faqat foydalanuvchiga qulaylik uchun. Uni DevTools orqali osongina o'chirish mumkin.
+<b>Server tomonda albatta qayta tekshiring</b> (9-dars).</div>
+
+<h2 id="accessibility-a11y-va-seo-asoslari"><a class="anchor" href="#accessibility-a11y-va-seo-asoslari">#</a>Accessibility (a11y) va SEO asoslari</h2>
+<h3>Accessibility — hamma uchun qulay sayt</h3>
+<ul>
+  <li>Semantik teglardan foydalaning; tugma uchun <code>&lt;button&gt;</code>, havola uchun <code>&lt;a&gt;</code> (<code>&lt;div onclick&gt;</code> emas — u klaviaturadan ishlamaydi).</li>
+  <li>Har bir rasmda mazmunli <code>alt</code>, har bir input'da <code>&lt;label&gt;</code>.</li>
+  <li>Sarlavhalar ierarxiyasini buzmang.</li>
+  <li>Faqat ikonkadan iborat tugmalarga <code>aria-label</code> qo'shing: <code>&lt;button aria-label="Yopish"&gt;✕&lt;/button&gt;</code>.</li>
+  <li>Saytni sichqonchasiz, faqat <kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd> bilan ishlatib ko'ring.</li>
+</ul>
+<h3>SEO va ijtimoiy tarmoqlar uchun meta-teglar</h3>
+<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;head&gt;
+  &lt;title&gt;iPhone 16 Pro — narxi va xususiyatlari | TexnoShop&lt;/title&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;iPhone 16 Pro: 256 GB, kafolat 1 yil, Toshkent bo&#x27;ylab bepul yetkazib berish.&quot;&gt;
+  &lt;link rel=&quot;canonical&quot; href=&quot;https://texnoshop.uz/iphone-16-pro&quot;&gt;
+
+  &lt;!-- Telegram, Facebook va boshqalarda havola &quot;kartochkasi&quot; uchun (Open Graph) --&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;iPhone 16 Pro — TexnoShop&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;Kafolat bilan, bepul yetkazib berish&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://texnoshop.uz/img/iphone-og.jpg&quot;&gt;
+  &lt;meta property=&quot;og:url&quot; content=&quot;https://texnoshop.uz/iphone-16-pro&quot;&gt;
+  &lt;meta property=&quot;og:type&quot; content=&quot;product&quot;&gt;
+&lt;/head&gt;</code></pre></div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Shaxsiy portfolio sahifasi (to'liq semantik tuzilma)</h3></div><div class="ex-body">
+<p>Dasturchi rezyumesi o'rnida ishlatiladigan bir sahifali sayt. Faqat HTML — dizaynni keyingi darsda qo'shamiz.</p>
+<div class="code"><div class="code-head"><span>portfolio/index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;Dilnoza Karimova — Full-stack dasturchi portfoliosi&quot;&gt;
+  &lt;title&gt;Dilnoza Karimova — Full-stack dasturchi&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;a href=&quot;/&quot; aria-label=&quot;Bosh sahifa&quot;&gt;DK&lt;/a&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;#haqida&quot;&gt;Men haqimda&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#loyihalar&quot;&gt;Loyihalar&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#tajriba&quot;&gt;Tajriba&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#aloqa&quot;&gt;Aloqa&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section id=&quot;haqida&quot;&gt;
+      &lt;img src=&quot;avatar.jpg&quot; alt=&quot;Dilnoza Karimovaning portreti&quot; width=&quot;160&quot; height=&quot;160&quot;&gt;
+      &lt;h1&gt;Dilnoza Karimova&lt;/h1&gt;
+      &lt;p&gt;Toshkentlik &lt;strong&gt;full-stack dasturchi&lt;/strong&gt;. React va Node.js bilan
+         tez va qulay veb-ilovalar yarataman.&lt;/p&gt;
+      &lt;a href=&quot;cv.pdf&quot; download&gt;Rezyumeni yuklab olish (PDF)&lt;/a&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;loyihalar&quot;&gt;
+      &lt;h2&gt;Loyihalar&lt;/h2&gt;
+
+      &lt;article&gt;
+        &lt;h3&gt;Kitob do&#x27;koni&lt;/h3&gt;
+        &lt;img src=&quot;projects/bookshop.png&quot; alt=&quot;Kitob do&#x27;koni ilovasining bosh sahifasi&quot; loading=&quot;lazy&quot;&gt;
+        &lt;p&gt;Onlayn kitob do&#x27;koni: savat, to&#x27;lov va admin panel.&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;React&lt;/li&gt;&lt;li&gt;Express&lt;/li&gt;&lt;li&gt;PostgreSQL&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;a href=&quot;https://github.com/dilnoza/bookshop&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Kod&lt;/a&gt;
+        &lt;a href=&quot;https://bookshop.example.uz&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Demo&lt;/a&gt;
+      &lt;/article&gt;
+
+      &lt;article&gt;
+        &lt;h3&gt;Ob-havo ilovasi&lt;/h3&gt;
+        &lt;p&gt;Shahar bo&#x27;yicha 7 kunlik ob-havo prognozi (ochiq API asosida).&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;tajriba&quot;&gt;
+      &lt;h2&gt;Ish tajribasi&lt;/h2&gt;
+      &lt;ol reversed&gt;
+        &lt;li&gt;
+          &lt;h3&gt;Junior Full-stack dasturchi — &lt;span&gt;IT Park rezidenti&lt;/span&gt;&lt;/h3&gt;
+          &lt;p&gt;&lt;time datetime=&quot;2025-03&quot;&gt;2025-mart&lt;/time&gt; — hozirgacha&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;h3&gt;Frontend stajyor — &lt;span&gt;Startap&lt;/span&gt;&lt;/h3&gt;
+          &lt;p&gt;&lt;time datetime=&quot;2024-06&quot;&gt;2024-iyun&lt;/time&gt; — &lt;time datetime=&quot;2025-02&quot;&gt;2025-fevral&lt;/time&gt;&lt;/p&gt;
+        &lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer id=&quot;aloqa&quot;&gt;
+    &lt;address&gt;
+      &lt;a href=&quot;mailto:dilnoza@example.uz&quot;&gt;dilnoza@example.uz&lt;/a&gt; ·
+      &lt;a href=&quot;https://t.me/dilnoza_dev&quot;&gt;Telegram&lt;/a&gt; ·
+      &lt;a href=&quot;https://github.com/dilnoza&quot;&gt;GitHub&lt;/a&gt;
+    &lt;/address&gt;
+    &lt;p&gt;&lt;small&gt;&amp;copy; 2026 Dilnoza Karimova&lt;/small&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<p><b>Tahlil:</b> navigatsiya havolalari <code>#id</code> orqali sahifa ichidagi bo'limlarga olib boradi; har bir loyiha
+alohida <code>&lt;article&gt;</code>; tajriba teskari tartibli ro'yxat (<code>reversed</code>); aloqa ma'lumotlari
+<code>&lt;address&gt;</code> ichida. Sahifani CSS'siz ochsangiz ham u mantiqan to'liq o'qiladi — bu yaxshi HTML belgisi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Kursga ro'yxatdan o'tish formasi (barcha maydon turlari)</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>register.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form action=&quot;/api/enroll&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Shaxsiy ma&#x27;lumotlar&lt;/legend&gt;
+
+    &lt;label for=&quot;fullname&quot;&gt;To&#x27;liq ism *&lt;/label&gt;
+    &lt;input id=&quot;fullname&quot; name=&quot;fullname&quot; type=&quot;text&quot; required minlength=&quot;3&quot;
+           autocomplete=&quot;name&quot; placeholder=&quot;Masalan: Jasur Toshmatov&quot;&gt;
+
+    &lt;label for=&quot;phone&quot;&gt;Telefon *&lt;/label&gt;
+    &lt;input id=&quot;phone&quot; name=&quot;phone&quot; type=&quot;tel&quot; required
+           pattern=&quot;\+998[0-9]{9}&quot; placeholder=&quot;+998901234567&quot;
+           title=&quot;Format: +998 va 9 ta raqam&quot;&gt;
+
+    &lt;label for=&quot;birth&quot;&gt;Tug&#x27;ilgan sana&lt;/label&gt;
+    &lt;input id=&quot;birth&quot; name=&quot;birth&quot; type=&quot;date&quot; min=&quot;1960-01-01&quot; max=&quot;2015-12-31&quot;&gt;
+
+    &lt;label for=&quot;avatar&quot;&gt;Rasm (ixtiyoriy)&lt;/label&gt;
+    &lt;input id=&quot;avatar&quot; name=&quot;avatar&quot; type=&quot;file&quot; accept=&quot;image/png, image/jpeg&quot;&gt;
+  &lt;/fieldset&gt;
+
+  &lt;fieldset&gt;
+    &lt;legend&gt;Kurs tanlovi&lt;/legend&gt;
+
+    &lt;label for=&quot;course&quot;&gt;Yo&#x27;nalish *&lt;/label&gt;
+    &lt;select id=&quot;course&quot; name=&quot;course&quot; required&gt;
+      &lt;option value=&quot;&quot;&gt;— Tanlang —&lt;/option&gt;
+      &lt;optgroup label=&quot;Dasturlash&quot;&gt;
+        &lt;option value=&quot;frontend&quot;&gt;Frontend&lt;/option&gt;
+        &lt;option value=&quot;backend&quot;&gt;Backend&lt;/option&gt;
+        &lt;option value=&quot;fullstack&quot; selected&gt;Full-stack&lt;/option&gt;
+      &lt;/optgroup&gt;
+      &lt;optgroup label=&quot;Dizayn&quot;&gt;
+        &lt;option value=&quot;uiux&quot;&gt;UI/UX&lt;/option&gt;
+      &lt;/optgroup&gt;
+    &lt;/select&gt;
+
+    &lt;p&gt;O&#x27;qish shakli *&lt;/p&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;format&quot; value=&quot;offline&quot; required&gt; Oflayn&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;format&quot; value=&quot;online&quot;&gt; Onlayn&lt;/label&gt;
+
+    &lt;p&gt;Qaysi kunlar qulay?&lt;/p&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;days&quot; value=&quot;du-chor-ju&quot;&gt; Du / Chor / Ju&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;days&quot; value=&quot;se-pay-shan&quot;&gt; Se / Pay / Shan&lt;/label&gt;
+
+    &lt;label for=&quot;level&quot;&gt;Hozirgi bilim darajangiz: &lt;output id=&quot;levelOut&quot;&gt;3&lt;/output&gt;/10&lt;/label&gt;
+    &lt;input id=&quot;level&quot; name=&quot;level&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;10&quot; value=&quot;3&quot;
+           oninput=&quot;levelOut.value = this.value&quot;&gt;
+
+    &lt;label for=&quot;about&quot;&gt;O&#x27;zingiz haqingizda&lt;/label&gt;
+    &lt;textarea id=&quot;about&quot; name=&quot;about&quot; rows=&quot;4&quot; maxlength=&quot;500&quot;
+              placeholder=&quot;Nima uchun dasturlashni o&#x27;rganmoqchisiz?&quot;&gt;&lt;/textarea&gt;
+  &lt;/fieldset&gt;
+
+  &lt;label&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;agree&quot; required&gt;
+    &lt;a href=&quot;/oferta&quot; target=&quot;_blank&quot;&gt;Ommaviy oferta&lt;/a&gt; shartlariga roziman
+  &lt;/label&gt;
+
+  &lt;input type=&quot;hidden&quot; name=&quot;source&quot; value=&quot;landing-oktabr&quot;&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Yuborish&lt;/button&gt;
+  &lt;button type=&quot;reset&quot;&gt;Tozalash&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+<p><b>Muhim jihatlar:</b></p>
+<ul>
+  <li><code>enctype="multipart/form-data"</code> — fayl yuborilayotgan bo'lsa majburiy.</li>
+  <li><code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code> — maydonlarni mantiqiy guruhlaydi.</li>
+  <li>Radio tugmalar bir xil <code>name="format"</code> ga ega — shuning uchun faqat bittasi tanlanadi.</li>
+  <li><code>autocomplete="name"</code> — brauzer saqlangan ma'lumotni avtomatik taklif qiladi.</li>
+  <li>Bo'sh <code>value=""</code> li birinchi <code>&lt;option&gt;</code> + <code>required</code> = foydalanuvchi albatta tanlashi kerak.</li>
+</ul>
+<p>Forma yuborilganda server quyidagi kabi ma'lumot oladi: <code>fullname=Jasur...&amp;phone=%2B998...&amp;course=fullstack&amp;format=online&amp;days=du-chor-ju&amp;...</code></p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Blog maqolasi sahifasi (SEO va semantika)</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>blog/js-closure.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;body&gt;
+  &lt;header&gt;...&lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;nav aria-label=&quot;Breadcrumb&quot;&gt;
+      &lt;ol&gt;
+        &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Bosh sahifa&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+        &lt;li aria-current=&quot;page&quot;&gt;Closure nima?&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/nav&gt;
+
+    &lt;article&gt;
+      &lt;header&gt;
+        &lt;h1&gt;JavaScript&#x27;da closure nima va u nima uchun kerak?&lt;/h1&gt;
+        &lt;p&gt;
+          Muallif: &lt;a href=&quot;/authors/sardor&quot; rel=&quot;author&quot;&gt;Sardor Aliyev&lt;/a&gt; ·
+          &lt;time datetime=&quot;2026-09-28T14:30&quot;&gt;28-sentabr, 2026&lt;/time&gt; ·
+          8 daqiqa o&#x27;qish
+        &lt;/p&gt;
+      &lt;/header&gt;
+
+      &lt;section&gt;
+        &lt;h2&gt;Kirish&lt;/h2&gt;
+        &lt;p&gt;Closure — funksiyaning o&#x27;zi yaratilgan muhitni &lt;em&gt;eslab qolishi&lt;/em&gt;...&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section&gt;
+        &lt;h2&gt;Misol&lt;/h2&gt;
+        &lt;pre&gt;&lt;code&gt;function counter() {
+  let n = 0;
+  return () =&gt; ++n;
+}&lt;/code&gt;&lt;/pre&gt;
+        &lt;figure&gt;
+          &lt;img src=&quot;closure-diagram.png&quot; alt=&quot;Ichki funksiya tashqi funksiya o&#x27;zgaruvchisiga havola saqlashini ko&#x27;rsatuvchi sxema&quot;&gt;
+          &lt;figcaption&gt;Closure sxemasi&lt;/figcaption&gt;
+        &lt;/figure&gt;
+      &lt;/section&gt;
+
+      &lt;footer&gt;
+        &lt;p&gt;Teglar: &lt;a href=&quot;/tag/javascript&quot; rel=&quot;tag&quot;&gt;javascript&lt;/a&gt;, &lt;a href=&quot;/tag/funksiyalar&quot; rel=&quot;tag&quot;&gt;funksiyalar&lt;/a&gt;&lt;/p&gt;
+      &lt;/footer&gt;
+    &lt;/article&gt;
+
+    &lt;section aria-labelledby=&quot;comments-title&quot;&gt;
+      &lt;h2 id=&quot;comments-title&quot;&gt;Izohlar (2)&lt;/h2&gt;
+      &lt;article&gt;
+        &lt;h3&gt;Bekzod&lt;/h3&gt;
+        &lt;time datetime=&quot;2026-09-29&quot;&gt;29-sentabr&lt;/time&gt;
+        &lt;p&gt;Juda tushunarli yozilgan, rahmat!&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;aside&gt;
+    &lt;h2&gt;O&#x27;xshash maqolalar&lt;/h2&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;/blog/scope&quot;&gt;Scope va hoisting&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;/blog/this&quot;&gt;this kalit so&#x27;zi&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/aside&gt;
+
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;</code></pre></div>
+<p>Izohlar ham <code>&lt;article&gt;</code> — chunki har bir izoh mustaqil mazmun birligi. <code>aria-current="page"</code>
+ekran o'quvchiga "hozir shu sahifadasiz" deydi. <code>&lt;time datetime&gt;</code> esa qidiruv tizimlariga maqola sanasini
+mashina o'qiy oladigan formatda beradi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Restoran menyusi: jadval, rasm va ichki havolalar</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>menu.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;main&gt;
+  &lt;h1&gt;&quot;Bahor&quot; milliy taomlar restorani — Menyu&lt;/h1&gt;
+
+  &lt;nav aria-label=&quot;Menyu bo&#x27;limlari&quot;&gt;
+    &lt;a href=&quot;#birinchi&quot;&gt;Birinchi taomlar&lt;/a&gt; |
+    &lt;a href=&quot;#ikkinchi&quot;&gt;Ikkinchi taomlar&lt;/a&gt; |
+    &lt;a href=&quot;#ichimliklar&quot;&gt;Ichimliklar&lt;/a&gt;
+  &lt;/nav&gt;
+
+  &lt;section id=&quot;birinchi&quot;&gt;
+    &lt;h2&gt;Birinchi taomlar&lt;/h2&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Taom&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Hajm&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Narx&lt;/th&gt;&lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;th scope=&quot;row&quot;&gt;
+            &lt;figure&gt;
+              &lt;img src=&quot;img/shurva.jpg&quot; alt=&quot;Qo&#x27;y go&#x27;shtli sho&#x27;rva kosada&quot; width=&quot;120&quot; height=&quot;80&quot; loading=&quot;lazy&quot;&gt;
+              &lt;figcaption&gt;Sho&#x27;rva&lt;/figcaption&gt;
+            &lt;/figure&gt;
+          &lt;/th&gt;
+          &lt;td&gt;400 ml&lt;/td&gt;
+          &lt;td&gt;&lt;data value=&quot;28000&quot;&gt;28 000 so&#x27;m&lt;/data&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;th scope=&quot;row&quot;&gt;Mastava&lt;/th&gt;
+          &lt;td&gt;400 ml&lt;/td&gt;
+          &lt;td&gt;&lt;data value=&quot;25000&quot;&gt;25 000 so&#x27;m&lt;/data&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/section&gt;
+
+  &lt;section id=&quot;ikkinchi&quot;&gt;
+    &lt;h2&gt;Ikkinchi taomlar&lt;/h2&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;Toshkent oshi &lt;mark&gt;Xit!&lt;/mark&gt;&lt;/dt&gt;
+      &lt;dd&gt;Devzira guruch, qo&#x27;y go&#x27;shti, sariq sabzi, bedana tuxumi — &lt;data value=&quot;45000&quot;&gt;45 000 so&#x27;m&lt;/data&gt;&lt;/dd&gt;
+      &lt;dt&gt;Manti (5 dona)&lt;/dt&gt;
+      &lt;dd&gt;Qo&#x27;y go&#x27;shti va piyoz — &lt;data value=&quot;35000&quot;&gt;35 000 so&#x27;m&lt;/data&gt;&lt;/dd&gt;
+    &lt;/dl&gt;
+  &lt;/section&gt;
+
+  &lt;p&gt;&lt;a href=&quot;#&quot;&gt;↑ Yuqoriga qaytish&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;</code></pre></div>
+<p><code>&lt;data value&gt;</code> — narxni odamlar uchun chiroyli, dasturlar uchun esa toza raqam ko'rinishida saqlaydi.
+Bu JavaScript bilan savatcha summasini hisoblashda qulay.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>O'zingiz uchun 1-misoldagi kabi portfolio sahifasi yarating — kamida 3 ta loyiha, ko'nikmalar ro'yxati va aloqa bo'limi bilan.</li>
+  <li>Kitob do'koni uchun "Buyurtma berish" formasini yarating: kitob tanlash (<code>select</code>), soni (<code>number</code>, 1–10), yetkazish usuli (<code>radio</code>), manzil (<code>textarea</code>), yetkazish sanasi (<code>date</code>).</li>
+  <li>O'z dars jadvalingizni <code>&lt;table&gt;</code> bilan yozing, katta tanaffusni <code>colspan</code> bilan birlashtiring.</li>
+  <li>Sahifangizni <a href="https://validator.w3.org/" target="_blank" rel="noopener">validator.w3.org</a> orqali tekshiring va barcha xatolarni tuzating.</li>
+  <li>Chrome DevTools → <b>Lighthouse</b> → "Accessibility" va "SEO" bo'yicha audit o'tkazing. 90+ ball olishga harakat qiling.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>HTML — mazmun va tuzilma; ko'rinish CSS'ga, xatti-harakat JS'ga tegishli.</li>
+  <li><code>&lt;!DOCTYPE&gt;</code>, <code>charset</code>, <code>viewport</code> — har bir sahifada majburiy.</li>
+  <li>Semantik teglar (<code>header, nav, main, article, section, aside, footer</code>) SEO va accessibility uchun muhim.</li>
+  <li>Formalarda <code>name</code>, <code>label</code>, to'g'ri <code>type</code> va validatsiya atributlarini ishlating; serverda baribir qayta tekshiring.</li>
+  <li>Rasmlarda doim <code>alt</code>, <code>width/height</code> va kerak bo'lsa <code>loading="lazy"</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="01-web-qanday-ishlaydi.html"><small>← Oldingi dars</small>Web qanday ishlaydi</a><a class="next" href="03-css.html"><small>Keyingi dars →</small>CSS — dizayn va maket</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#element-teg-va-atribut">Element, teg va atribut</a></li><li><a href="#html-hujjatining-asosiy-tuzilishi">HTML hujjatining asosiy tuzilishi</a></li><li><a href="#matn-bilan-ishlash">Matn bilan ishlash</a></li><li><a href="#rasmlar-va-media">Rasmlar va media</a></li><li><a href="#semantik-html">Semantik HTML</a></li><li><a href="#jadvallar">Jadvallar</a></li><li><a href="#formalar-foydalanuvchidan-malumot-olish">Formalar — foydalanuvchidan ma&#x27;lumot olish</a></li><li><a href="#accessibility-a11y-va-seo-asoslari">Accessibility (a11y) va SEO asoslari</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

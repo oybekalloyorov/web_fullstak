@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a class="active" href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🗄️</div><div><div class="crumb">10-dars · 14 tadan</div><h1>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</h1><p class="lead">Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.</p></div></div>
+
+<p>Oldingi darsda ma'lumotlarni JSON faylda saqladik. Bu yondashuv ming foydalanuvchida "yiqiladi": qidiruv sekin,
+bir vaqtdagi yozuvlar to'qnashadi, "shu muallifning 2020-yildan keyingi, narxi 50 mingdan arzon kitoblari"
+kabi so'rovlarni har safar qo'lda yozish kerak. <b>Ma'lumotlar bazasi boshqaruv tizimi (DBMS)</b> bu muammolarni
+o'nlab yillik muhandislik tajribasi bilan hal qiladi. Bu darsda eng mashhur ochiq manbali relyatsion baza —
+<b>PostgreSQL</b> bilan ishlaymiz.</p>
+
+<h2 id="relyatsion-va-nosql-bazalar"><a class="anchor" href="#relyatsion-va-nosql-bazalar">#</a>Relyatsion va NoSQL bazalar</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>Relyatsion (SQL)</th><th>NoSQL (hujjatli)</th></tr>
+<tr><td>Misollar</td><td>PostgreSQL, MySQL, SQLite, SQL Server</td><td>MongoDB, Firestore, CouchDB</td></tr>
+<tr><td>Tuzilma</td><td>Jadvallar, qat'iy sxema (ustunlar va turlar)</td><td>JSON'ga o'xshash hujjatlar, moslashuvchan sxema</td></tr>
+<tr><td>Bog'lanishlar</td><td>Kalitlar va <code>JOIN</code> — kuchli</td><td>Hujjat ichiga joylash yoki havola — cheklangan</td></tr>
+<tr><td>Tranzaksiyalar</td><td>To'liq ACID</td><td>Cheklangan/qo'shimcha</td></tr>
+<tr><td>Qachon tanlash</td><td>Aksariyat ilovalar: e-commerce, moliya, CRM, ijtimoiy tarmoqlar</td><td>Tuzilmasi tez o'zgaradigan ma'lumot, loglar, kontent katalogi</td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Tavsiya</span>
+Qaysi birini tanlashni bilmasangiz — <b>PostgreSQL</b> ni tanlang. U relyatsion ma'lumotlar bilan birga <code>JSONB</code> ustunlari
+orqali hujjatli ma'lumotlarni ham juda yaxshi saqlaydi.</div>
+
+<h2 id="asosiy-tushunchalar"><a class="anchor" href="#asosiy-tushunchalar">#</a>Asosiy tushunchalar</h2>
+<ul>
+  <li><b>Jadval (table)</b> — bir turdagi obyektlar to'plami: <code>users</code>, <code>books</code>.</li>
+  <li><b>Qator (row, yozuv)</b> — bitta obyekt: bitta kitob.</li>
+  <li><b>Ustun (column)</b> — xususiyat va uning turi: <code>title TEXT</code>, <code>price INTEGER</code>.</li>
+  <li><b>Birlamchi kalit (PRIMARY KEY)</b> — har bir qatorni noyob aniqlovchi ustun (odatda <code>id</code>).</li>
+  <li><b>Tashqi kalit (FOREIGN KEY)</b> — boshqa jadvalning birlamchi kalitiga havola. Bog'lanishlarni yaratadi va yaxlitlikni kafolatlaydi (mavjud bo'lmagan muallifga kitob yozib bo'lmaydi).</li>
+  <li><b>Sxema (schema)</b> — jadvallar, ustunlar, turlar va cheklovlarning umumiy tuzilmasi.</li>
+</ul>
+<h3>Bog'lanish turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Misol</th><th>Qanday amalga oshiriladi</th></tr>
+<tr><td>Birga-bir (1:1)</td><td>Foydalanuvchi ↔ profil</td><td>Ikkinchi jadvalda <code>UNIQUE</code> tashqi kalit</td></tr>
+<tr><td>Birga-ko'p (1:N)</td><td>Muallif → kitoblar</td><td>"Ko'p" tomonda tashqi kalit: <code>books.author_id</code></td></tr>
+<tr><td>Ko'pga-ko'p (N:M)</td><td>Kitoblar ↔ janrlar, talabalar ↔ kurslar</td><td>Oraliq (bog'lovchi) jadval: <code>book_genres(book_id, genre_id)</code></td></tr>
+</table></div>
+
+<h2 id="postgresqlni-ornatish"><a class="anchor" href="#postgresqlni-ornatish">#</a>PostgreSQL'ni o'rnatish</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Eng oson usul — Docker (14-dars):
+docker run --name pg -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=kitoblar -p 5432:5432 -d postgres:17
+
+# Yoki: postgresql.org/download dan o&#x27;rnatuvchi; macOS: brew install postgresql@17
+
+# Konsol mijozi
+psql -h localhost -U postgres -d kitoblar
+# \l  — bazalar   \dt — jadvallar   \d books — jadval tuzilmasi   \q — chiqish</code></pre></div>
+<p>Grafik interfeys afzal bo'lsa: <b>pgAdmin</b>, <b>DBeaver</b>, <b>TablePlus</b> yoki VS Code kengaytmalari. Bulutda bepul PostgreSQL: Neon, Supabase.</p>
+
+<h2 id="sql-jadval-yaratish-ddl"><a class="anchor" href="#sql-jadval-yaratish-ddl">#</a>SQL: jadval yaratish (DDL)</h2>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE authors (
+  id          SERIAL PRIMARY KEY,                -- avtomatik o&#x27;suvchi butun son (1, 2, 3...)
+  name        TEXT NOT NULL,
+  country     TEXT DEFAULT &#x27;O&#x27;&#x27;zbekiston&#x27;,       -- satr ichidagi &#x27; ikkilantiriladi
+  born_year   INTEGER CHECK (born_year &gt; 0),
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE books (
+  id          SERIAL PRIMARY KEY,
+  title       TEXT NOT NULL,
+  author_id   INTEGER NOT NULL REFERENCES authors(id) ON DELETE RESTRICT,
+  price       INTEGER NOT NULL CHECK (price &gt;= 0),   -- so&#x27;mda, butun son
+  stock       INTEGER NOT NULL DEFAULT 0 CHECK (stock &gt;= 0),
+  isbn        TEXT UNIQUE,
+  published   DATE,
+  meta        JSONB DEFAULT &#x27;{}&#x27;::jsonb,             -- moslashuvchan qo&#x27;shimcha ma&#x27;lumot
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE books ADD COLUMN pages INTEGER;
+ALTER TABLE books RENAME COLUMN pages TO page_count;
+DROP TABLE IF EXISTS temp_data;</code></pre></div>
+<h3>Asosiy ma'lumot turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Ishlatilishi</th></tr>
+<tr><td><code>INTEGER</code>, <code>BIGINT</code></td><td>Butun sonlar; <code>SERIAL</code>/<code>BIGSERIAL</code> yoki <code>GENERATED ALWAYS AS IDENTITY</code> — avto-ID</td></tr>
+<tr><td><code>NUMERIC(12,2)</code></td><td>Aniq o'nlik sonlar — pul uchun (<code>FLOAT</code> emas!)</td></tr>
+<tr><td><code>TEXT</code>, <code>VARCHAR(n)</code></td><td>Matn</td></tr>
+<tr><td><code>BOOLEAN</code></td><td>true/false</td></tr>
+<tr><td><code>DATE</code>, <code>TIMESTAMPTZ</code></td><td>Sana; vaqt zonasi bilan sana-vaqt (doim <code>TIMESTAMPTZ</code> ni tanlang)</td></tr>
+<tr><td><code>UUID</code></td><td>Global noyob ID: <code>gen_random_uuid()</code></td></tr>
+<tr><td><code>JSONB</code></td><td>JSON hujjat, indekslash va so'rov bilan</td></tr>
+<tr><td><code>TEXT[]</code></td><td>Massiv</td></tr>
+</table></div>
+<h3>Cheklovlar (constraints)</h3>
+<p><code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code>, <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code> — bu baza darajasidagi
+<b>oxirgi himoya chizig'i</b>. Ilova kodida xato bo'lsa ham, baza manfiy narx yoki mavjud bo'lmagan muallifni saqlashga yo'l qo'ymaydi.</p>
+
+<h2 id="sql-malumot-bilan-ishlash-crud"><a class="anchor" href="#sql-malumot-bilan-ishlash-crud">#</a>SQL: ma'lumot bilan ishlash (CRUD)</h2>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- CREATE: qo&#x27;shish
+INSERT INTO authors (name, born_year) VALUES
+  (&#x27;Abdulla Qodiriy&#x27;, 1894),
+  (&#x27;Cho&#x27;&#x27;lpon&#x27;, 1897),
+  (&#x27;Robert Martin&#x27;, 1952);
+
+INSERT INTO books (title, author_id, price, stock, published)
+VALUES (&#x27;O&#x27;&#x27;tkan kunlar&#x27;, 1, 65000, 12, &#x27;1926-01-01&#x27;)
+RETURNING id, title;                       -- yaratilgan qatorni darhol qaytaradi
+
+-- READ: o&#x27;qish
+SELECT * FROM books;
+SELECT title, price FROM books WHERE price &lt; 100000 ORDER BY price DESC LIMIT 10;
+SELECT * FROM books WHERE title ILIKE &#x27;%kun%&#x27;;          -- katta-kichik harfsiz qidiruv
+SELECT * FROM books WHERE author_id IN (1, 2) AND stock &gt; 0;
+SELECT * FROM books WHERE published BETWEEN &#x27;1920-01-01&#x27; AND &#x27;1940-12-31&#x27;;
+SELECT * FROM books WHERE isbn IS NULL;
+SELECT DISTINCT country FROM authors;
+
+-- Sahifalash: 3-sahifa, har sahifada 20 ta
+SELECT * FROM books ORDER BY id LIMIT 20 OFFSET 40;
+
+-- UPDATE: yangilash (WHERE ni UNUTMANG — aks holda BARCHA qatorlar o&#x27;zgaradi!)
+UPDATE books SET price = 59000, stock = stock - 1 WHERE id = 1 RETURNING *;
+
+-- DELETE: o&#x27;chirish (WHERE ni UNUTMANG!)
+DELETE FROM books WHERE stock = 0 AND published &lt; &#x27;1900-01-01&#x27;;</code></pre></div>
+
+<h2 id="join-jadvallarni-birlashtirish"><a class="anchor" href="#join-jadvallarni-birlashtirish">#</a>JOIN — jadvallarni birlashtirish</h2>
+<p>Relyatsion bazalarning asosiy kuchi. Kitob va muallif nomini birga olish:</p>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- INNER JOIN: faqat ikkala jadvalda mos keladigan qatorlar
+SELECT b.title, a.name AS author, b.price
+FROM books b
+JOIN authors a ON a.id = b.author_id
+ORDER BY a.name;
+
+-- LEFT JOIN: chap jadvalning HAMMA qatorlari (o&#x27;ng tomonda mos bo&#x27;lmasa — NULL)
+-- &quot;Barcha mualliflar va kitoblari, kitobi yo&#x27;qlari ham&quot;
+SELECT a.name, b.title
+FROM authors a
+LEFT JOIN books b ON b.author_id = a.id;
+
+-- Kitobi yo&#x27;q mualliflar
+SELECT a.name
+FROM authors a
+LEFT JOIN books b ON b.author_id = a.id
+WHERE b.id IS NULL;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>JOIN turi</th><th>Natija</th></tr>
+<tr><td><code>INNER JOIN</code></td><td>Faqat ikkala tomonda mos kelganlar (kesishma)</td></tr>
+<tr><td><code>LEFT JOIN</code></td><td>Chapdagi hammasi + o'ngdan mos kelganlar</td></tr>
+<tr><td><code>RIGHT JOIN</code></td><td>O'ngdagi hammasi + chapdan mos kelganlar (kam ishlatiladi)</td></tr>
+<tr><td><code>FULL JOIN</code></td><td>Ikkala tomonning hammasi</td></tr>
+</table></div>
+
+<h2 id="agregatsiya-group-by-va-having"><a class="anchor" href="#agregatsiya-group-by-va-having">#</a>Agregatsiya: GROUP BY va HAVING</h2>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- Umumiy statistika
+SELECT COUNT(*) AS jami, AVG(price)::int AS ortacha, MIN(price), MAX(price), SUM(price * stock) AS ombor_qiymati
+FROM books;
+
+-- Har bir muallif bo&#x27;yicha
+SELECT a.name, COUNT(b.id) AS kitoblar, COALESCE(SUM(b.stock), 0) AS nusxalar
+FROM authors a
+LEFT JOIN books b ON b.author_id = a.id
+GROUP BY a.id, a.name
+HAVING COUNT(b.id) &gt;= 2              -- HAVING — guruhlardan keyin filtr (WHERE — guruhlashdan oldin)
+ORDER BY kitoblar DESC;
+
+-- Bajarilish tartibi: FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</code></pre></div>
+<h3>Subquery va CTE</h3>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- O&#x27;rtacha narxdan qimmat kitoblar
+SELECT title, price FROM books
+WHERE price &gt; (SELECT AVG(price) FROM books);
+
+-- CTE (WITH) — murakkab so&#x27;rovni nomlangan qadamlarga bo&#x27;lish
+WITH oylik AS (
+  SELECT date_trunc(&#x27;month&#x27;, created_at) AS oy, SUM(total) AS daromad
+  FROM orders
+  WHERE status = &#x27;paid&#x27;
+  GROUP BY 1
+)
+SELECT oy, daromad,
+       daromad - LAG(daromad) OVER (ORDER BY oy) AS oldingi_oyga_nisbatan
+FROM oylik
+ORDER BY oy;</code></pre></div>
+
+<h2 id="normalizatsiya"><a class="anchor" href="#normalizatsiya">#</a>Normalizatsiya</h2>
+<p><b>Normalizatsiya</b> — ma'lumotlarni takrorlanmaydigan va ziddiyatsiz qilib jadvallarga bo'lish. Yomon dizayn:</p>
+<div class="table-wrap"><table>
+<tr><th>order_id</th><th>customer_name</th><th>customer_phone</th><th>products</th></tr>
+<tr><td>1</td><td>Ali Valiyev</td><td>+998901112233</td><td>Kitob A, Kitob B</td></tr>
+<tr><td>2</td><td>Ali Valiyev</td><td>+998901112233</td><td>Kitob C</td></tr>
+</table></div>
+<p>Muammolar: Ali telefonini o'zgartirsa, uni barcha buyurtmalarda yangilash kerak (birida unutilsa — ziddiyat);
+"Kitob A nechta sotildi?" degan savolga matnni parse qilmasdan javob berib bo'lmaydi. To'g'ri dizayn — har bir
+mavjudot alohida jadvalda, bog'lanishlar kalitlar orqali:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">customers(id, name, phone)
+orders(id, customer_id → customers, status, total, created_at)
+order_items(order_id → orders, book_id → books, qty, price)   -- narx sotilgan paytdagi qiymat!</code></pre></div>
+<p><b>Asosiy qoidalar (1NF–3NF):</b> har bir katakda bitta qiymat (ro'yxat emas); har bir ustun to'liq birlamchi kalitga bog'liq;
+kalit bo'lmagan ustunlar bir-biriga bog'liq emas. Amaliy qoida: <i>"bitta fakt — bitta joyda"</i>.</p>
+<div class="callout info"><code>order_items.price</code> ataylab takrorlangan: kitob narxi keyin o'zgarsa ham, eski buyurtmada sotilgan narx saqlanib qolishi kerak. Bu — ongli denormalizatsiya.</div>
+
+<h2 id="indekslar"><a class="anchor" href="#indekslar">#</a>Indekslar</h2>
+<p>Indekssiz baza <code>WHERE email = '...'</code> so'rovi uchun <b>har bir qatorni</b> tekshiradi (Seq Scan). Indeks — kitob oxiridagi
+alifbo ko'rsatkichi kabi: kerakli joyni darhol topadi (B-tree, O(log n)).</p>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE INDEX idx_books_author ON books(author_id);         -- JOIN va filtrlar uchun
+CREATE UNIQUE INDEX idx_users_email ON users(lower(email)); -- katta-kichik harfsiz noyoblik
+CREATE INDEX idx_orders_user_date ON orders(user_id, created_at DESC); -- kompozit
+
+-- So&#x27;rov rejasini ko&#x27;rish
+EXPLAIN ANALYZE SELECT * FROM books WHERE author_id = 5;
+-- Index Scan using idx_books_author ... (actual time=0.02..0.03 ms)</code></pre></div>
+<ul>
+  <li><code>PRIMARY KEY</code> va <code>UNIQUE</code> avtomatik indekslanadi; <b>tashqi kalitlar — yo'q</b>, ularni qo'lda indekslang.</li>
+  <li>Indeks o'qishni tezlashtiradi, lekin yozishni biroz sekinlashtiradi va joy egallaydi — faqat haqiqatan so'raladigan ustunlarga qo'ying.</li>
+</ul>
+
+<h2 id="tranzaksiyalar-va-acid"><a class="anchor" href="#tranzaksiyalar-va-acid">#</a>Tranzaksiyalar va ACID</h2>
+<p><b>Tranzaksiya</b> — bir nechta amalni <b>"hammasi yoki hech biri"</b> tamoyili bilan bajarish. Klassik misol — pul o'tkazmasi:
+birinchi hisobdan yechildi, ikkinchisiga yozishda server o'chib qoldi — pul "yo'qoladi". Tranzaksiya buni oldini oladi.</p>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">BEGIN;
+  UPDATE accounts SET balance = balance - 500000 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 500000 WHERE id = 2;
+COMMIT;      -- ikkalasi birga saqlanadi
+-- yoki xato bo&#x27;lsa: ROLLBACK;  — hech narsa o&#x27;zgarmaydi</code></pre></div>
+<ul>
+  <li><b>A</b>tomicity — bo'linmaslik: hammasi yoki hech biri.</li>
+  <li><b>C</b>onsistency — izchillik: cheklovlar (<code>CHECK balance >= 0</code>) har doim bajariladi.</li>
+  <li><b>I</b>solation — ajratilganlik: parallel tranzaksiyalar bir-birining yarim natijasini ko'rmaydi.</li>
+  <li><b>D</b>urability — barqarorlik: <code>COMMIT</code> dan keyin ma'lumot, hatto elektr o'chsa ham, saqlanadi.</li>
+</ul>
+
+<h2 id="node-jsdan-postgresql-bilan-ishlash"><a class="anchor" href="#node-jsdan-postgresql-bilan-ishlash">#</a>Node.js'dan PostgreSQL bilan ishlash</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install pg</code></pre></div>
+<div class="code"><div class="code-head"><span>src/db/pool.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
+
+// Pool — tayyor ulanishlar to&#x27;plami (har so&#x27;rovga yangi ulanish ochish qimmat)
+export const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,   // postgres://user:pass@host:5432/db
+  max: 10,
+});
+
+export const query = (text, params) =&gt; pool.query(text, params);</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { query } from &#x27;./db/pool.js&#x27;;
+
+const { rows } = await query(&#x27;SELECT id, title, price FROM books WHERE price &lt; $1 ORDER BY price&#x27;, [100000]);
+console.log(rows);          // [{ id: 1, title: &quot;O&#x27;tkan kunlar&quot;, price: 65000 }, ...]
+
+const { rows: [book] } = await query(
+  &#x27;INSERT INTO books (title, author_id, price) VALUES ($1, $2, $3) RETURNING *&#x27;,
+  [&#x27;Kecha va kunduz&#x27;, 2, 55000]
+);</code></pre></div>
+
+<h3>SQL injection — eng xavfli xato</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ❌ HECH QACHON: foydalanuvchi ma&#x27;lumotini SQL satriga qo&#x27;shmang
+const email = req.body.email;            // hujumchi yuboradi:  &#x27; OR &#x27;1&#x27;=&#x27;1
+await query(`SELECT * FROM users WHERE email = &#x27;${email}&#x27;`);
+// Natijaviy SQL: SELECT * FROM users WHERE email = &#x27;&#x27; OR &#x27;1&#x27;=&#x27;1&#x27;  → BARCHA foydalanuvchilar!
+// Yoki: &#x27;; DROP TABLE users; --   → jadval o&#x27;chiriladi
+
+// ✅ DOIM parametrlangan so&#x27;rovlar ($1, $2 ...)
+await query(&#x27;SELECT * FROM users WHERE email = $1&#x27;, [email]);
+// Baza qiymatni hech qachon SQL kodi sifatida talqin qilmaydi</code></pre></div>
+<div class="callout danger"><span class="t">Qat'iy qoida</span>
+SQL'dagi har bir o'zgaruvchan qiymat — faqat <code>$1, $2...</code> parametrlari orqali. Ustun yoki saralash nomini dinamik
+tanlash kerak bo'lsa — oldindan belgilangan ruxsat ro'yxatidan (whitelist) foydalaning: <code>const col = { price: 'price', title: 'title' }[req.query.sort] ?? 'id'</code>.</div>
+
+<h3>ORM va query builder'lar</h3>
+<p>Xom SQL o'rniga ko'pincha <b>ORM</b> (Object-Relational Mapping) ishlatiladi: <b>Prisma</b>, <b>Drizzle</b>, <b>Sequelize</b>, <b>TypeORM</b>.
+Ular sxemani kodda tasvirlash, migratsiyalar va qulay API beradi. Lekin SQL'ni bilish baribir zarur — ORM qanday so'rov
+hosil qilayotganini tushunish va sekin so'rovlarni tuzatish uchun.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Prisma misoli — xuddi shu so&#x27;rov
+const books = await prisma.book.findMany({
+  where: { price: { lt: 100000 }, author: { country: &quot;O&#x27;zbekiston&quot; } },
+  include: { author: true },
+  orderBy: { price: &#x27;asc&#x27; },
+});</code></pre></div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Blog platformasi sxemasi va real so'rovlar</h3></div><div class="ex-body">
+<p>Foydalanuvchilar, postlar, izohlar, teglar (N:M) va layklar bo'lgan blog uchun to'liq sxema.</p>
+<div class="code"><div class="code-head"><span>blog/schema.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE users (
+  id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  username    TEXT NOT NULL UNIQUE CHECK (username ~ &#x27;^[a-z0-9_]{3,30}$&#x27;),
+  email       TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  bio         TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX users_email_uq ON users (lower(email));
+
+CREATE TABLE posts (
+  id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  author_id   BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  title       TEXT NOT NULL CHECK (length(title) BETWEEN 3 AND 200),
+  slug        TEXT NOT NULL UNIQUE,
+  body        TEXT NOT NULL,
+  status      TEXT NOT NULL DEFAULT &#x27;draft&#x27; CHECK (status IN (&#x27;draft&#x27;, &#x27;published&#x27;)),
+  published_at TIMESTAMPTZ,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX posts_author_idx ON posts (author_id);
+CREATE INDEX posts_published_idx ON posts (published_at DESC) WHERE status = &#x27;published&#x27;; -- qisman indeks
+
+CREATE TABLE comments (
+  id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  post_id     BIGINT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  author_id   BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  body        TEXT NOT NULL,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX comments_post_idx ON comments (post_id, created_at);
+
+CREATE TABLE tags (
+  id    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name  TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE post_tags (                       -- ko&#x27;pga-ko&#x27;p bog&#x27;lovchi jadval
+  post_id BIGINT REFERENCES posts(id) ON DELETE CASCADE,
+  tag_id  INT    REFERENCES tags(id)  ON DELETE CASCADE,
+  PRIMARY KEY (post_id, tag_id)
+);
+
+CREATE TABLE likes (
+  user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+  post_id BIGINT REFERENCES posts(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (user_id, post_id)               -- bir foydalanuvchi bir postga bir marta
+);</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/queries.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- 1. Bosh sahifa lentasi: muallif, izohlar va layklar soni, teglar
+SELECT p.id, p.title, p.slug, p.published_at,
+       u.username AS author,
+       (SELECT COUNT(*) FROM comments c WHERE c.post_id = p.id) AS comments,
+       (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id)    AS likes,
+       COALESCE(array_agg(t.name ORDER BY t.name) FILTER (WHERE t.id IS NOT NULL), &#x27;{}&#x27;) AS tags
+FROM posts p
+JOIN users u          ON u.id = p.author_id
+LEFT JOIN post_tags pt ON pt.post_id = p.id
+LEFT JOIN tags t       ON t.id = pt.tag_id
+WHERE p.status = &#x27;published&#x27;
+GROUP BY p.id, u.username
+ORDER BY p.published_at DESC
+LIMIT 10;
+
+-- 2. &quot;javascript&quot; tegidagi postlar
+SELECT p.title FROM posts p
+JOIN post_tags pt ON pt.post_id = p.id
+JOIN tags t ON t.id = pt.tag_id
+WHERE t.name = &#x27;javascript&#x27; AND p.status = &#x27;published&#x27;;
+
+-- 3. Oxirgi 30 kundagi eng faol 5 muallif (postlar + izohlar)
+WITH activity AS (
+  SELECT author_id, &#x27;post&#x27; AS kind FROM posts WHERE created_at &gt; now() - interval &#x27;30 days&#x27;
+  UNION ALL
+  SELECT author_id, &#x27;comment&#x27; FROM comments WHERE created_at &gt; now() - interval &#x27;30 days&#x27;
+)
+SELECT u.username,
+       COUNT(*) FILTER (WHERE kind = &#x27;post&#x27;)    AS posts,
+       COUNT(*) FILTER (WHERE kind = &#x27;comment&#x27;) AS comments,
+       COUNT(*) AS total
+FROM activity a JOIN users u ON u.id = a.author_id
+GROUP BY u.username
+ORDER BY total DESC
+LIMIT 5;
+
+-- 4. Layk qo&#x27;yish (takroriy bo&#x27;lsa — xato emas, shunchaki e&#x27;tiborsiz)
+INSERT INTO likes (user_id, post_id) VALUES (7, 42) ON CONFLICT DO NOTHING;
+
+-- 5. Post qidiruvi (to&#x27;liq matnli qidiruv)
+SELECT title, ts_rank(to_tsvector(&#x27;simple&#x27;, title || &#x27; &#x27; || body), q) AS rank
+FROM posts, plainto_tsquery(&#x27;simple&#x27;, &#x27;react hook&#x27;) q
+WHERE to_tsvector(&#x27;simple&#x27;, title || &#x27; &#x27; || body) @@ q
+ORDER BY rank DESC;</code></pre></div>
+<p><code>ON DELETE CASCADE</code> — foydalanuvchi o'chirilsa, uning postlari, izohlari va layklari ham avtomatik o'chadi.
+<code>FILTER (WHERE ...)</code> — bitta so'rovda bir nechta shartli hisob. Kompozit birlamchi kalit (<code>user_id, post_id</code>) takroriy laykni
+baza darajasida taqiqlaydi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Express API'ni JSON fayldan PostgreSQL'ga ko'chirish</h3></div><div class="ex-body">
+<p>9-darsdagi qatlamli arxitektura o'z samarasini beradi: <b>faqat service qatlami</b> o'zgaradi, routes va controllers tegilmaydi.</p>
+<div class="code"><div class="code-head"><span>migrations/001_books.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE IF NOT EXISTS books (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title      TEXT NOT NULL,
+  author     TEXT NOT NULL,
+  price      INTEGER NOT NULL CHECK (price &gt; 0),
+  stock      INTEGER NOT NULL DEFAULT 0 CHECK (stock &gt;= 0),
+  genre      TEXT NOT NULL,
+  year       INTEGER,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ,
+  UNIQUE (title, author)
+);
+CREATE INDEX IF NOT EXISTS books_genre_idx ON books (genre);</code></pre></div>
+<div class="code"><div class="code-head"><span>src/services/books.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { query } from &#x27;../db/pool.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+const SORT_SQL = {                    // whitelist — dinamik ORDER BY uchun xavfsiz usul
+  price: &#x27;price ASC&#x27;,
+  &#x27;-price&#x27;: &#x27;price DESC&#x27;,
+  title: &#x27;title ASC&#x27;,
+  &#x27;-createdAt&#x27;: &#x27;created_at DESC&#x27;,
+};
+
+const COLUMNS = `id, title, author, price, stock, genre, year,
+                 created_at AS &quot;createdAt&quot;, updated_at AS &quot;updatedAt&quot;`;
+
+export async function listBooks({ q, genre, minPrice, maxPrice, sort, page, limit }) {
+  const where = [];
+  const params = [];
+  const add = (sql, value) =&gt; { params.push(value); where.push(sql.replaceAll(&#x27;?&#x27;, `$${params.length}`)); };
+
+  if (q) add(&#x27;(title ILIKE ? OR author ILIKE ?)&#x27;, `%${q}%`);   // ikkala ? → bitta $n
+  if (genre) add(&#x27;genre = ?&#x27;, genre);
+  if (minPrice !== undefined) add(&#x27;price &gt;= ?&#x27;, minPrice);
+  if (maxPrice !== undefined) add(&#x27;price &lt;= ?&#x27;, maxPrice);
+
+  const whereSql = where.length ? `WHERE ${where.join(&#x27; AND &#x27;)}` : &#x27;&#x27;;
+  const offset = (page - 1) * limit;
+
+  const [{ rows }, { rows: [{ total }] }] = await Promise.all([
+    query(
+      `SELECT ${COLUMNS} FROM books ${whereSql}
+       ORDER BY ${SORT_SQL[sort]} LIMIT $${params.length + 1} OFFSET $${params.length + 2}`,
+      [...params, limit, offset]
+    ),
+    query(`SELECT COUNT(*)::int AS total FROM books ${whereSql}`, params),
+  ]);
+
+  return { data: rows, meta: { page, limit, total, pages: Math.ceil(total / limit) } };
+}
+
+export async function getBook(id) {
+  const { rows: [book] } = await query(`SELECT ${COLUMNS} FROM books WHERE id = $1`, [id]);
+  if (!book) throw HttpError.notFound(&#x27;Kitob topilmadi&#x27;);
+  return book;
+}
+
+export async function createBook({ title, author, price, stock, genre, year }) {
+  try {
+    const { rows: [book] } = await query(
+      `INSERT INTO books (title, author, price, stock, genre, year)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING ${COLUMNS}`,
+      [title, author, price, stock, genre, year ?? null]
+    );
+    return book;
+  } catch (err) {
+    if (err.code === &#x27;23505&#x27;) throw HttpError.conflict(&#x27;Bu kitob allaqachon mavjud&#x27;); // unique_violation
+    throw err;
+  }
+}
+
+export async function updateBook(id, patch) {
+  const allowed = [&#x27;title&#x27;, &#x27;author&#x27;, &#x27;price&#x27;, &#x27;stock&#x27;, &#x27;genre&#x27;, &#x27;year&#x27;];
+  const entries = Object.entries(patch).filter(([k]) =&gt; allowed.includes(k));
+  if (!entries.length) return getBook(id);
+
+  const set = entries.map(([k], i) =&gt; `${k} = $${i + 2}`).join(&#x27;, &#x27;);
+  const { rows: [book] } = await query(
+    `UPDATE books SET ${set}, updated_at = now() WHERE id = $1 RETURNING ${COLUMNS}`,
+    [id, ...entries.map(([, v]) =&gt; v)]
+  );
+  if (!book) throw HttpError.notFound(&#x27;Kitob topilmadi&#x27;);
+  return book;
+}
+
+export async function deleteBook(id) {
+  const { rowCount } = await query(&#x27;DELETE FROM books WHERE id = $1&#x27;, [id]);
+  if (!rowCount) throw HttpError.notFound(&#x27;Kitob topilmadi&#x27;);
+}</code></pre></div>
+<p><code>add()</code> yordamchisi qiymatni <code>params</code> ga qo'shib, shartdagi <code>?</code> belgilarini tegishli <code>$n</code> ga almashtiradi (<code>q</code> shartida ikkala <code>?</code> bitta parametrni ishlatadi).
+Ustun nomlari faqat <code>allowed</code> ro'yxatidan, qiymatlar esa faqat parametrlar orqali — injection'ga joy yo'q.
+UUID formatida bo'lmagan <code>id</code> kelsa, PostgreSQL <code>22P02</code> xatosini beradi — uni ham <code>errorHandler</code> da 404/400 ga aylantirish mumkin.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Buyurtma berish tranzaksiyasi (ombor, pool client, qulflash)</h3></div><div class="ex-body">
+<p>Buyurtma: (1) har bir kitob omborda yetarlimi, (2) ombordan ayirish, (3) buyurtma va uning qatorlarini yozish. Agar biror
+qadam muvaffaqiyatsiz bo'lsa — <b>hech narsa</b> o'zgarmasligi kerak.</p>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE orders (
+  id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id    BIGINT NOT NULL,
+  total      INTEGER NOT NULL,
+  status     TEXT NOT NULL DEFAULT &#x27;pending&#x27;,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE order_items (
+  order_id BIGINT REFERENCES orders(id) ON DELETE CASCADE,
+  book_id  UUID REFERENCES books(id),
+  qty      INTEGER NOT NULL CHECK (qty &gt; 0),
+  price    INTEGER NOT NULL,
+  PRIMARY KEY (order_id, book_id)
+);</code></pre></div>
+<div class="code"><div class="code-head"><span>src/services/orders.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { pool } from &#x27;../db/pool.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+// Qayta ishlatiladigan tranzaksiya yordamchisi
+export async function withTransaction(fn) {
+  const client = await pool.connect();     // tranzaksiya BITTA ulanishda bo&#x27;lishi shart
+  try {
+    await client.query(&#x27;BEGIN&#x27;);
+    const result = await fn(client);
+    await client.query(&#x27;COMMIT&#x27;);
+    return result;
+  } catch (err) {
+    await client.query(&#x27;ROLLBACK&#x27;);
+    throw err;
+  } finally {
+    client.release();                      // ulanishni pool&#x27;ga qaytarish — unutilsa pool &quot;tugaydi&quot;
+  }
+}
+
+export function placeOrder(userId, items) {   // items: [{ bookId, qty }]
+  return withTransaction(async (db) =&gt; {
+    const ids = items.map(i =&gt; i.bookId);
+
+    // FOR UPDATE — bu qatorlarni tranzaksiya tugaguncha qulflaydi:
+    // ikki xaridor oxirgi nusxani bir vaqtda sotib ololmaydi
+    const { rows: books } = await db.query(
+      &#x27;SELECT id, title, price, stock FROM books WHERE id = ANY($1) ORDER BY id FOR UPDATE&#x27;,
+      [ids]
+    );
+    const byId = new Map(books.map(b =&gt; [b.id, b]));
+
+    let total = 0;
+    for (const { bookId, qty } of items) {
+      const book = byId.get(bookId);
+      if (!book) throw HttpError.notFound(`Kitob topilmadi: ${bookId}`);
+      if (book.stock &lt; qty) {
+        throw HttpError.conflict(`&quot;${book.title}&quot; omborda yetarli emas (bor: ${book.stock}, so&#x27;raldi: ${qty})`);
+      }
+      total += book.price * qty;
+    }
+
+    const { rows: [order] } = await db.query(
+      &#x27;INSERT INTO orders (user_id, total) VALUES ($1, $2) RETURNING *&#x27;,
+      [userId, total]
+    );
+
+    for (const { bookId, qty } of items) {
+      await db.query(&#x27;UPDATE books SET stock = stock - $1 WHERE id = $2&#x27;, [qty, bookId]);
+      await db.query(
+        &#x27;INSERT INTO order_items (order_id, book_id, qty, price) VALUES ($1, $2, $3, $4)&#x27;,
+        [order.id, bookId, qty, byId.get(bookId).price]
+      );
+    }
+
+    return { ...order, items };
+  });
+}</code></pre></div>
+<p><b>Uchta muhim nuqta:</b> tranzaksiya uchun <code>pool.query</code> emas, bitta <code>client</code> kerak (aks holda har bir so'rov boshqa
+ulanishga tushishi mumkin); <code>FOR UPDATE</code> "race condition" ni yo'q qiladi; <code>ORDER BY id</code> bilan qulflash tartibi
+bir xil bo'lgani uchun "deadlock" ehtimoli kamayadi. Xato tashlansa — <code>ROLLBACK</code>, ombor qiymatlari o'zgarmaydi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Taqqoslash uchun: xuddi shu model MongoDB + Mongoose'da</h3></div><div class="ex-body">
+<p>NoSQL yondashuvni his qilish uchun blog postini MongoDB'da modellashtiramiz. Bu yerda izohlar post hujjati <b>ichiga joylanadi</b>.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install mongoose
+# docker run -d --name mongo -p 27017:27017 mongo:8</code></pre></div>
+<div class="code"><div class="code-head"><span>models/Post.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
+
+const commentSchema = new mongoose.Schema({
+  author: { type: mongoose.Schema.Types.ObjectId, ref: &#x27;User&#x27;, required: true },
+  body: { type: String, required: true, maxlength: 2000 },
+}, { timestamps: true });
+
+const postSchema = new mongoose.Schema({
+  author: { type: mongoose.Schema.Types.ObjectId, ref: &#x27;User&#x27;, required: true, index: true },
+  title: { type: String, required: true, trim: true, minlength: 3, maxlength: 200 },
+  slug: { type: String, required: true, unique: true },
+  body: String,
+  tags: [{ type: String, lowercase: true }],          // massiv — alohida jadval shart emas
+  status: { type: String, enum: [&#x27;draft&#x27;, &#x27;published&#x27;], default: &#x27;draft&#x27; },
+  comments: [commentSchema],                          // ichma-ich hujjatlar
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: &#x27;User&#x27; }],
+}, { timestamps: true });
+
+postSchema.index({ tags: 1, createdAt: -1 });
+postSchema.virtual(&#x27;likeCount&#x27;).get(function () { return this.likes.length; });
+
+export const Post = mongoose.model(&#x27;Post&#x27;, postSchema);</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
+import { Post } from &#x27;./models/Post.js&#x27;;
+
+await mongoose.connect(&#x27;mongodb://localhost:27017/blog&#x27;);
+
+// Yaratish
+const post = await Post.create({
+  author: userId, title: &#x27;React hook\&#x27;lari&#x27;, slug: &#x27;react-hooks&#x27;, tags: [&#x27;react&#x27;, &#x27;JavaScript&#x27;],
+});
+
+// &quot;javascript&quot; tegidagi nashr qilingan postlar, muallif ma&#x27;lumoti bilan (JOIN o&#x27;xshashi)
+const posts = await Post.find({ tags: &#x27;javascript&#x27;, status: &#x27;published&#x27; })
+  .populate(&#x27;author&#x27;, &#x27;username&#x27;)
+  .sort({ createdAt: -1 })
+  .limit(10)
+  .lean();
+
+// Izoh qo&#x27;shish — atomar operator
+await Post.updateOne({ _id: post._id }, { $push: { comments: { author: userId, body: &#x27;Zo\&#x27;r!&#x27; } } });
+
+// Layk (takrorlanmas) — $addToSet
+await Post.updateOne({ _id: post._id }, { $addToSet: { likes: userId } });
+
+// Agregatsiya: teglar bo&#x27;yicha postlar soni
+const stats = await Post.aggregate([
+  { $match: { status: &#x27;published&#x27; } },
+  { $unwind: &#x27;$tags&#x27; },
+  { $group: { _id: &#x27;$tags&#x27;, count: { $sum: 1 } } },
+  { $sort: { count: -1 } },
+]);</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Jihat</th><th>PostgreSQL</th><th>MongoDB</th></tr>
+<tr><td>Izohlar</td><td>Alohida jadval + JOIN</td><td>Post ichida (bitta o'qishda keladi, lekin hujjat 16 MB bilan cheklangan)</td></tr>
+<tr><td>Teglar</td><td>N:M jadval</td><td>Satrlar massivi</td></tr>
+<tr><td>Sxema</td><td>Baza darajasida majburiy</td><td>Mongoose (ilova darajasida)</td></tr>
+<tr><td>"Foydalanuvchining barcha izohlari"</td><td>Oddiy <code>WHERE author_id</code></td><td>Barcha postlarni skanerlash yoki agregatsiya — noqulay</td></tr>
+</table></div>
+<p>Xulosa: ma'lumotlarni qanday <b>so'rashingiz</b> modelni belgilaydi. Bog'lanishlar ko'p bo'lsa — relyatsion baza tabiiyroq.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><a href="https://sqlbolt.com" target="_blank" rel="noopener">SQLBolt</a> interaktiv darslarini to'liq bajaring.</li>
+  <li>Onlayn do'kon sxemasini loyihalang: <code>categories</code> (ichma-ich, <code>parent_id</code>), <code>products</code>, <code>customers</code>, <code>orders</code>, <code>order_items</code>, <code>reviews</code> (1–5 baho).</li>
+  <li>Shu sxema uchun so'rovlar: eng ko'p sotilgan 10 mahsulot; har bir toifaning o'rtacha reytingi; hech narsa sotib olmagan mijozlar; oylik daromad.</li>
+  <li><code>EXPLAIN ANALYZE</code> bilan indeksli va indekssiz so'rov tezligini 100 000 qatorli jadvalda solishtiring (<code>generate_series</code> bilan test ma'lumot yarating).</li>
+  <li>3-misoldagi <code>placeOrder</code> ni sinang: ikki terminaldan bir vaqtda oxirgi nusxani sotib olishga harakat qiling. <code>FOR UPDATE</code> olib tashlansa nima bo'ladi?</li>
+</ol>
+<details><summary>4-mashq uchun test ma'lumot</summary>
+<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">INSERT INTO books (title, author, price, stock, genre)
+SELECT &#x27;Kitob &#x27; || g, &#x27;Muallif &#x27; || (g % 500), (random() * 200000 + 10000)::int, (random() * 50)::int,
+       (ARRAY[&#x27;roman&#x27;,&#x27;ilmiy&#x27;,&#x27;bolalar&#x27;,&#x27;dasturlash&#x27;,&#x27;tarix&#x27;])[1 + g % 5]
+FROM generate_series(1, 100000) g;</code></pre></div>
+</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Relyatsion baza: jadvallar, birlamchi va tashqi kalitlar, cheklovlar — ma'lumot yaxlitligining kafolati.</li>
+  <li>SQL: <code>SELECT ... JOIN ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT</code>.</li>
+  <li>Normalizatsiya: "bitta fakt — bitta joyda"; N:M uchun bog'lovchi jadval.</li>
+  <li>Tez-tez filtrlanadigan va JOIN qilinadigan ustunlarga indeks; <code>EXPLAIN ANALYZE</code> bilan tekshiring.</li>
+  <li>Bir nechta bog'liq yozuv — tranzaksiya ichida (<code>BEGIN/COMMIT/ROLLBACK</code>).</li>
+  <li>Faqat parametrlangan so'rovlar — SQL injection'dan himoya.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="09-express-rest-api.html"><small>← Oldingi dars</small>Express.js va REST API</a><a class="next" href="11-autentifikatsiya.html"><small>Keyingi dars →</small>Autentifikatsiya va avtorizatsiya</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#relyatsion-va-nosql-bazalar">Relyatsion va NoSQL bazalar</a></li><li><a href="#asosiy-tushunchalar">Asosiy tushunchalar</a></li><li><a href="#postgresqlni-ornatish">PostgreSQL&#x27;ni o&#x27;rnatish</a></li><li><a href="#sql-jadval-yaratish-ddl">SQL: jadval yaratish (DDL)</a></li><li><a href="#sql-malumot-bilan-ishlash-crud">SQL: ma&#x27;lumot bilan ishlash (CRUD)</a></li><li><a href="#join-jadvallarni-birlashtirish">JOIN — jadvallarni birlashtirish</a></li><li><a href="#agregatsiya-group-by-va-having">Agregatsiya: GROUP BY va HAVING</a></li><li><a href="#normalizatsiya">Normalizatsiya</a></li><li><a href="#indekslar">Indekslar</a></li><li><a href="#tranzaksiyalar-va-acid">Tranzaksiyalar va ACID</a></li><li><a href="#node-jsdan-postgresql-bilan-ishlash">Node.js&#x27;dan PostgreSQL bilan ishlash</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

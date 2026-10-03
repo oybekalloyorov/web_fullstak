@@ -1,0 +1,71 @@
+<!-- title: Web Full-Stack dasturlash asoslari — to'liq qo'llanma | desc: Noldan full-stack dasturchigacha: HTML, CSS, JavaScript, Node.js, Express, ma'lumotlar bazasi, autentifikatsiya, React va deploy — chuqur nazariya va real amaliy misollar bilan. -->
+<section class="hero">
+  <span class="tag">🇺🇿 O'zbek tilida · Bepul · Ochiq manba</span>
+  <h1>Web <span>Full-Stack</span> dasturlash asoslari</h1>
+  <p>Brauzerda ko'rinadigan tugmadan tortib, serverdagi ma'lumotlar bazasigacha — veb-ilova qanday qurilishini
+  bosqichma-bosqich, chuqur nazariya va real loyihalarga yaqin amaliy misollar orqali o'rganing.</p>
+  <a class="btn primary" href="darslar/01-web-qanday-ishlaydi.html">Birinchi darsni boshlash →</a>
+  <a class="btn ghost" href="#darslar">Barcha darslar</a>
+  <div class="stats">
+    <div><b>{{COUNT}}</b>chuqur dars</div>
+    <div><b>50+</b>amaliy misol</div>
+    <div><b>1</b>yakuniy full-stack loyiha</div>
+    <div><b id="doneCount">0</b>siz o'qigan darslar</div>
+  </div>
+</section>
+
+<section class="home-section">
+  <h2>Full-stack dasturchi kim?</h2>
+  <p>Har bir veb-ilova ikki katta qismdan iborat:</p>
+  <div class="diagram">
+    <div class="flow">
+      <div class="node">🖥️ Frontend<small>HTML · CSS · JavaScript · React</small></div>
+      <div class="arrow">⇄ HTTP / JSON ⇄</div>
+      <div class="node">⚙️ Backend<small>Node.js · Express · REST API · Auth</small></div>
+      <div class="arrow">⇄ SQL ⇄</div>
+      <div class="node">🗄️ Ma'lumotlar bazasi<small>PostgreSQL · MongoDB</small></div>
+    </div>
+    <div class="diagram-caption">Full-stack dasturchi shu zanjirning barcha bo'g'inlarida ishlay oladi</div>
+  </div>
+  <p><b>Frontend</b> — foydalanuvchi ko'radigan va bosadigan hamma narsa. <b>Backend</b> — ko'rinmaydigan qism:
+  ma'lumotlarni saqlash, tekshirish, xavfsizlik va biznes-mantiq. <b>Full-stack dasturchi</b> ikkala tomonni ham
+  tushunadi va ilovani g'oyadan ishlab turgan saytgacha yolg'iz o'zi olib chiqa oladi.</p>
+</section>
+
+<section class="home-section">
+  <h2>O'qish yo'l xaritasi</h2>
+  <div class="roadmap">
+    <div class="stage"><h3>1. Poydevor</h3><ul><li>Web qanday ishlaydi</li><li>HTML</li><li>CSS</li></ul></div>
+    <div class="stage"><h3>2. JavaScript</h3><ul><li>Til asoslari</li><li>DOM va hodisalar</li><li>Asinxron JS</li><li>Git</li></ul></div>
+    <div class="stage"><h3>3. Backend</h3><ul><li>Node.js</li><li>Express va REST API</li><li>Ma'lumotlar bazasi</li><li>Autentifikatsiya</li></ul></div>
+    <div class="stage"><h3>4. Professional</h3><ul><li>React</li><li>Full-stack loyiha</li><li>Deploy, xavfsizlik, test</li></ul></div>
+  </div>
+</section>
+
+<section class="home-section" id="darslar">
+  <h2>Barcha darslar</h2>
+  <p>Darslar ketma-ket o'qish uchun mo'ljallangan — har biri oldingisiga tayanadi. Har bir darsda:
+  <b>batafsil nazariya</b>, <b>3–4 ta real amaliy misol</b>, <b>mustaqil mashqlar</b> va <b>xulosa</b> bor.</p>
+  <div class="cards">
+{{CARDS}}
+  </div>
+</section>
+
+<section class="home-section">
+  <h2>Qanday o'qish kerak?</h2>
+  <div class="callout tip"><span class="t">Eng samarali usul</span>
+  Har bir kod misolini <b>o'zingiz qo'lda yozing</b> (nusxa olmasdan), ishga tushiring, keyin ataylab o'zgartirib
+  buzing va nima bo'lishini kuzating. Dasturlash — o'qish orqali emas, yozish orqali o'rganiladi.</div>
+  <h3>Kerakli dasturlar</h3>
+  <ul>
+    <li><b>Brauzer</b> — Google Chrome yoki Firefox (DevTools uchun: <kbd>F12</kbd>)</li>
+    <li><b>Kod muharriri</b> — <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a></li>
+    <li><b>Node.js</b> — <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> dan LTS versiya</li>
+    <li><b>Git</b> — <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm.com</a></li>
+    <li><b>PostgreSQL</b> — 10-darsda kerak bo'ladi</li>
+  </ul>
+  <p>Saytdagi o'qish holatingiz brauzeringizda saqlanadi — har bir dars oxiridagi
+  <b>«Darsni o'qib bo'ldim»</b> tugmasini bosib boring.</p>
+  <div class="footer">Ushbu qo'llanma ochiq manba. Xato topsangiz yoki qo'shimcha kiritmoqchi bo'lsangiz —
+  <a href="https://github.com/oybekalloyorov/web_fullstak" target="_blank" rel="noopener">GitHub repozitoriyasida</a> issue yoki pull request oching.</div>
+</section>

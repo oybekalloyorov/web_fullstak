@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asinxron JavaScript va Fetch API — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Event loop, callback, Promise, async/await, fetch bilan API&#x27;ga so&#x27;rov yuborish, xatolarni boshqarish, parallel so&#x27;rovlar va so&#x27;rovni bekor qilish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a class="active" href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⏳</div><div><div class="crumb">06-dars · 14 tadan</div><h1>Asinxron JavaScript va Fetch API</h1><p class="lead">Event loop, callback, Promise, async/await, fetch bilan API&#x27;ga so&#x27;rov yuborish, xatolarni boshqarish, parallel so&#x27;rovlar va so&#x27;rovni bekor qilish.</p></div></div>
+
+<p>Veb-ilova doimo "kutadi": serverdan javobni, foydalanuvchi bosishini, faylning o'qilishini, taymerni. Agar har bir
+kutish butun dasturni to'xtatib qo'ysa, sahifa qotib qolardi. <b>Asinxron dasturlash</b> — uzoq davom etadigan
+amallarni boshlab, natijasini kutayotganda boshqa ishlarni davom ettirish san'ati. Frontend'ni backend bilan
+bog'lash aynan shu bilimga tayanadi.</p>
+
+<h2 id="sinxron-va-asinxron-kod"><a class="anchor" href="#sinxron-va-asinxron-kod">#</a>Sinxron va asinxron kod</h2>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">console.log(&#x27;1. Boshlandi&#x27;);
+
+setTimeout(() =&gt; {
+  console.log(&#x27;3. Taymer ishladi (0 ms bo\&#x27;lsa ham!)&#x27;);
+}, 0);
+
+console.log(&#x27;2. Tugadi&#x27;);
+
+// Natija: 1 → 2 → 3</code></pre></div>
+<p>Nega <code>0 ms</code> taymer oxirida bajarildi? Javob — <b>event loop</b> da.</p>
+
+<h2 id="event-loop-javascript-qanday-ishlaydi"><a class="anchor" href="#event-loop-javascript-qanday-ishlaydi">#</a>Event loop — JavaScript qanday ishlaydi</h2>
+<p>JavaScript <b>bir oqimli (single-threaded)</b>: bir vaqtda faqat bitta kod qatorini bajaradi. Lekin brauzer (yoki Node.js)
+unga yordamchi mexanizmlar beradi:</p>
+<ul>
+  <li><b>Call Stack (chaqiruvlar steki)</b> — hozir bajarilayotgan funksiyalar.</li>
+  <li><b>Web API'lar</b> — brauzerning o'zi bajaradigan ishlar: taymerlar, tarmoq so'rovlari, hodisalar. Ular JS oqimini band qilmaydi.</li>
+  <li><b>Macrotask navbati</b> — <code>setTimeout</code>, <code>setInterval</code>, hodisa ishlovchilari callback'lari.</li>
+  <li><b>Microtask navbati</b> — Promise callback'lari (<code>.then</code>, <code>await</code> dan keyingi kod). <b>Ustuvorligi yuqori.</b></li>
+</ul>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">Call Stack<small>sinxron kod</small></div>
+    <div class="arrow">→</div>
+    <div class="node">Web API<small>timer, fetch, events</small></div>
+    <div class="arrow">→</div>
+    <div class="node">Navbatlar<small>micro → macro</small></div>
+    <div class="arrow">↻ event loop ↻</div>
+    <div class="node">Call Stack</div>
+  </div>
+  <div class="diagram-caption">Stek bo'shagach, avval BARCHA microtask'lar, keyin BITTA macrotask bajariladi, so'ng sahifa qayta chiziladi</div>
+</div>
+<p><b>Event loop algoritmi:</b> (1) stekdagi sinxron kodni oxirigacha bajar → (2) microtask navbatini to'liq bo'shat →
+(3) kerak bo'lsa sahifani qayta chiz → (4) macrotask navbatidan bittasini olib, 1-qadamga qayt.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">console.log(&#x27;A&#x27;);
+setTimeout(() =&gt; console.log(&#x27;B — macrotask&#x27;), 0);
+Promise.resolve().then(() =&gt; console.log(&#x27;C — microtask&#x27;));
+queueMicrotask(() =&gt; console.log(&#x27;D — microtask&#x27;));
+console.log(&#x27;E&#x27;);
+
+// Natija: A, E, C, D, B</code></pre></div>
+<div class="callout warn"><span class="t">Event loop'ni bloklamang</span>
+Og'ir sinxron hisob (masalan, 5 soniyalik sikl) davomida sahifa butunlay qotadi — tugmalar ishlamaydi, animatsiya to'xtaydi.
+Node.js serverida esa bunday kod <b>barcha</b> foydalanuvchilarning so'rovlarini to'xtatib qo'yadi. Og'ir hisoblar uchun Web Worker
+(brauzer) yoki worker_threads (Node.js) ishlatiladi.</div>
+
+<h2 id="callbacklar-va-callback-hell"><a class="anchor" href="#callbacklar-va-callback-hell">#</a>Callback'lar va "callback hell"</h2>
+<p>Asinxronlikning eng qadimiy usuli — natija tayyor bo'lganda chaqiriladigan funksiya (callback) berish:</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function getUser(id, callback) {
+  setTimeout(() =&gt; callback(null, { id, name: &#x27;Ali&#x27; }), 500);
+}
+
+// Ketma-ket bog&#x27;liq amallar → &quot;piramida&quot; (callback hell)
+getUser(1, (err, user) =&gt; {
+  if (err) return console.error(err);
+  getOrders(user.id, (err, orders) =&gt; {
+    if (err) return console.error(err);
+    getOrderDetails(orders[0].id, (err, details) =&gt; {
+      if (err) return console.error(err);
+      getShipping(details.shippingId, (err, shipping) =&gt; {
+        // ... va hokazo — o&#x27;qish, xatolarni boshqarish juda qiyin
+      });
+    });
+  });
+});</code></pre></div>
+
+<h2 id="promise"><a class="anchor" href="#promise">#</a>Promise</h2>
+<p><b>Promise</b> (va'da) — kelajakda tayyor bo'ladigan natijani ifodalovchi obyekt. U uch holatdan birida bo'ladi:</p>
+<ul>
+  <li><b>pending</b> — kutilmoqda;</li>
+  <li><b>fulfilled</b> — muvaffaqiyatli bajarildi (qiymat bilan);</li>
+  <li><b>rejected</b> — xato bilan tugadi (sabab bilan).</li>
+</ul>
+<p>Holat bir marta o'zgaradi va boshqa o'zgarmaydi ("settled").</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Promise yaratish
+function kutish(ms) {
+  return new Promise((resolve) =&gt; setTimeout(resolve, ms));
+}
+
+function tangaTashlash() {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      Math.random() &gt; 0.5
+        ? resolve(&#x27;Gerb 🦅&#x27;)
+        : reject(new Error(&#x27;Raqam chiqdi 🔢&#x27;));
+    }, 1000);
+  });
+}
+
+// Promise&#x27;ni ishlatish
+tangaTashlash()
+  .then((natija) =&gt; console.log(&#x27;Yutdingiz:&#x27;, natija))
+  .catch((xato) =&gt; console.log(&#x27;Yutqazdingiz:&#x27;, xato.message))
+  .finally(() =&gt; console.log(&#x27;O\&#x27;yin tugadi&#x27;));</code></pre></div>
+<h3>Zanjir (chaining)</h3>
+<p><code>.then()</code> har doim <b>yangi Promise</b> qaytaradi. Callback'dan qaytarilgan qiymat keyingi <code>.then</code> ga o'tadi;
+agar Promise qaytarilsa — u tugashini kutadi. Bu callback piramidasini tekis zanjirga aylantiradi:</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">getUser(1)
+  .then(user =&gt; getOrders(user.id))
+  .then(orders =&gt; getOrderDetails(orders[0].id))
+  .then(details =&gt; getShipping(details.shippingId))
+  .then(shipping =&gt; console.log(shipping))
+  .catch(err =&gt; console.error(&#x27;Zanjirning istalgan joyidagi xato shu yerga keladi:&#x27;, err));</code></pre></div>
+
+<h3>Promise kombinatorlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Metod</th><th>Qachon tugaydi</th><th>Natija</th><th>Qo'llanilishi</th></tr>
+<tr><td><code>Promise.all</code></td><td>Hammasi bajarilganda yoki <b>birinchi xatoda</b></td><td>Natijalar massivi</td><td>Bir-biriga bog'liq bo'lmagan, hammasi kerak bo'lgan so'rovlar</td></tr>
+<tr><td><code>Promise.allSettled</code></td><td>Hammasi tugaganda (xato bo'lsa ham)</td><td><code>{status, value|reason}</code> massivi</td><td>Ba'zilari xato bo'lsa ham davom etish</td></tr>
+<tr><td><code>Promise.race</code></td><td>Birinchisi tugaganda (muvaffaqiyat yoki xato)</td><td>Birinchi natija</td><td>Timeout qo'yish</td></tr>
+<tr><td><code>Promise.any</code></td><td>Birinchi <b>muvaffaqiyatli</b>sida</td><td>Birinchi muvaffaqiyatli qiymat</td><td>Bir nechta zaxira serverdan eng tezi</td></tr>
+</table></div>
+
+<h2 id="async-await"><a class="anchor" href="#async-await">#</a>async / await</h2>
+<p><code>async/await</code> — Promise ustidagi "sintaktik shakar": asinxron kodni xuddi sinxron koddek yuqoridan pastga o'qiladigan qiladi.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">async function buyurtmaMalumoti(userId) {
+  try {
+    const user = await getUser(userId);          // Promise tugashini KUTADI (lekin oqimni bloklamaydi)
+    const orders = await getOrders(user.id);
+    const details = await getOrderDetails(orders[0].id);
+    return details;                              // async funksiya DOIM Promise qaytaradi
+  } catch (err) {
+    console.error(&#x27;Xato:&#x27;, err.message);
+    throw err;                                   // yuqoriga uzatish
+  }
+}
+
+buyurtmaMalumoti(1).then(d =&gt; console.log(d));
+// yoki boshqa async funksiya ichida:
+// const d = await buyurtmaMalumoti(1);</code></pre></div>
+<ul>
+  <li><code>await</code> faqat <code>async</code> funksiya ichida (yoki ES modulning yuqori darajasida) ishlatiladi.</li>
+  <li><code>await</code> funksiyani "pauza"ga qo'yadi, lekin event loop boshqa ishlarni davom ettiradi.</li>
+  <li>Xatolar oddiy <code>try...catch</code> bilan ushlanadi.</li>
+</ul>
+<h3>Ketma-ket va parallel bajarish</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ❌ SEKIN: bir-biriga bog&#x27;liq emas, lekin ketma-ket kutilyapti (1s + 1s + 1s = 3s)
+const users = await fetchUsers();
+const products = await fetchProducts();
+const stats = await fetchStats();
+
+// ✅ TEZ: parallel (eng uzuni = 1s)
+const [users2, products2, stats2] = await Promise.all([
+  fetchUsers(),
+  fetchProducts(),
+  fetchStats(),
+]);
+
+// ⚠️ forEach ichida await ishlamaydi (kutmaydi)!
+ids.forEach(async id =&gt; await save(id));        // ❌ — hammasi &quot;uchib ketadi&quot;
+for (const id of ids) await save(id);           // ✅ ketma-ket
+await Promise.all(ids.map(id =&gt; save(id)));     // ✅ parallel</code></pre></div>
+
+<h2 id="fetch-api-serverga-sorov-yuborish"><a class="anchor" href="#fetch-api-serverga-sorov-yuborish">#</a>Fetch API — serverga so'rov yuborish</h2>
+<p><code>fetch()</code> — brauzerda (va Node.js 18+ da) HTTP so'rov yuborishning standart usuli. U Promise qaytaradi.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// GET so&#x27;rov
+const response = await fetch(&#x27;https://jsonplaceholder.typicode.com/users&#x27;);
+console.log(response.status);       // 200
+console.log(response.ok);           // true (status 200–299 bo&#x27;lsa)
+console.log(response.headers.get(&#x27;content-type&#x27;));
+const users = await response.json(); // tanani JSON sifatida o&#x27;qish (bu ham Promise!)
+// boshqa formatlar: response.text(), response.blob(), response.formData()</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// POST so&#x27;rov — JSON yuborish
+const res = await fetch(&#x27;https://jsonplaceholder.typicode.com/posts&#x27;, {
+  method: &#x27;POST&#x27;,
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    &#x27;Authorization&#x27;: `Bearer ${token}`,
+  },
+  body: JSON.stringify({ title: &#x27;Salom&#x27;, body: &#x27;Matn&#x27;, userId: 1 }),
+});
+const created = await res.json();
+
+// PUT / PATCH / DELETE
+await fetch(`/api/posts/${id}`, { method: &#x27;PATCH&#x27;, headers: {...}, body: JSON.stringify({ title: &#x27;Yangi&#x27; }) });
+await fetch(`/api/posts/${id}`, { method: &#x27;DELETE&#x27; });
+
+// Fayl yuklash — FormData (Content-Type ni o&#x27;zingiz qo&#x27;ymang!)
+const fd = new FormData();
+fd.append(&#x27;avatar&#x27;, fileInput.files[0]);
+await fetch(&#x27;/api/upload&#x27;, { method: &#x27;POST&#x27;, body: fd });
+
+// Query parametrlar
+const url = new URL(&#x27;https://api.example.uz/products&#x27;);
+url.searchParams.set(&#x27;q&#x27;, &#x27;telefon&#x27;);
+url.searchParams.set(&#x27;page&#x27;, 2);
+await fetch(url);   // https://api.example.uz/products?q=telefon&amp;page=2</code></pre></div>
+<div class="callout danger"><span class="t">Eng ko'p uchraydigan xato</span>
+<code>fetch</code> faqat <b>tarmoq xatosida</b> (internet yo'q, server topilmadi, CORS) reject bo'ladi. Server <code>404</code> yoki
+<code>500</code> qaytarsa ham Promise <b>muvaffaqiyatli</b> tugaydi! Shuning uchun <code>response.ok</code> ni doim tekshiring.</div>
+
+<h3>Qayta ishlatiladigan API yordamchisi</h3>
+<div class="code"><div class="code-head"><span>api.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class ApiError extends Error {
+  constructor(status, message, data) {
+    super(message);
+    this.name = &#x27;ApiError&#x27;;
+    this.status = status;
+    this.data = data;
+  }
+}
+
+const BASE_URL = &#x27;http://localhost:3000/api&#x27;;
+
+export async function api(path, { method = &#x27;GET&#x27;, body, headers, ...rest } = {}) {
+  const token = localStorage.getItem(&#x27;token&#x27;);
+  const res = await fetch(BASE_URL + path, {
+    method,
+    headers: {
+      ...(body &amp;&amp; { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; }),
+      ...(token &amp;&amp; { Authorization: `Bearer ${token}` }),
+      ...headers,
+    },
+    body: body ? JSON.stringify(body) : undefined,
+    ...rest,
+  });
+
+  // 204 No Content — tana yo&#x27;q
+  const data = res.status === 204 ? null : await res.json().catch(() =&gt; null);
+
+  if (!res.ok) {
+    throw new ApiError(res.status, data?.message || res.statusText, data);
+  }
+  return data;
+}
+
+// Foydalanish:
+// const posts = await api(&#x27;/posts&#x27;);
+// const post  = await api(&#x27;/posts&#x27;, { method: &#x27;POST&#x27;, body: { title: &#x27;Salom&#x27; } });</code></pre></div>
+<p>Bu yordamchini 13-darsdagi full-stack loyihada ishlatamiz.</p>
+
+<h3>So'rovni bekor qilish va timeout</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const controller = new AbortController();
+
+fetch(&#x27;/api/big-report&#x27;, { signal: controller.signal })
+  .then(r =&gt; r.json())
+  .catch(err =&gt; {
+    if (err.name === &#x27;AbortError&#x27;) console.log(&#x27;So\&#x27;rov bekor qilindi&#x27;);
+    else throw err;
+  });
+
+controller.abort();   // masalan, foydalanuvchi &quot;Bekor qilish&quot; tugmasini bosdi
+
+// Timeout — zamonaviy qisqa usul
+await fetch(&#x27;/api/slow&#x27;, { signal: AbortSignal.timeout(5000) }); // 5 soniyadan keyin bekor</code></pre></div>
+
+<h3>CORS haqida qisqacha</h3>
+<p>Brauzer xavfsizlik uchun <b>Same-Origin Policy</b> ni qo'llaydi: <code>http://localhost:5173</code> dagi sahifa
+<code>http://localhost:3000</code> dagi API'ning javobini o'qiy olmaydi (port farq qilsa ham — boshqa "origin").
+Ruxsat berish <b>server</b> zimmasida: u <code>Access-Control-Allow-Origin</code> sarlavhasini qaytarishi kerak. Konsolda
+"blocked by CORS policy" xatosini ko'rsangiz, frontendni emas, backendni sozlang (9-darsda <code>cors</code> middleware).</p>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Foydalanuvchilar katalogi: yuklanish, xato va bo'sh holatlar</h3></div><div class="ex-body">
+<p>Har bir ma'lumot yuklaydigan interfeys <b>to'rt holatni</b> ko'rsatishi kerak: yuklanmoqda, xato, bo'sh, ma'lumot.</p>
+<div class="code"><div class="code-head"><span>users.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;main&gt;
+  &lt;h1&gt;Jamoa a&#x27;zolari&lt;/h1&gt;
+  &lt;button id=&quot;reload&quot;&gt;🔄 Qayta yuklash&lt;/button&gt;
+  &lt;div id=&quot;status&quot; role=&quot;status&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;users&quot; class=&quot;grid&quot;&gt;&lt;/div&gt;
+&lt;/main&gt;
+
+&lt;style&gt;
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .user { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; }
+  .user h3 { margin: 0 0 4px; }
+  .user small { color: #64748b; }
+  .skeleton { height: 110px; border-radius: 12px; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+              background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .error { color: #b91c1c; background: #fef2f2; padding: 12px; border-radius: 8px; }
+&lt;/style&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  const box = document.querySelector(&#x27;#users&#x27;);
+  const status = document.querySelector(&#x27;#status&#x27;);
+
+  function showSkeleton(n = 6) {
+    box.replaceChildren(...Array.from({ length: n }, () =&gt; {
+      const d = document.createElement(&#x27;div&#x27;);
+      d.className = &#x27;skeleton&#x27;;
+      return d;
+    }));
+  }
+
+  function userCard(u) {
+    const el = document.createElement(&#x27;article&#x27;);
+    el.className = &#x27;user&#x27;;
+    const h3 = document.createElement(&#x27;h3&#x27;);
+    h3.textContent = u.name;
+    const email = document.createElement(&#x27;a&#x27;);
+    email.href = `mailto:${u.email}`;
+    email.textContent = u.email;
+    const company = document.createElement(&#x27;small&#x27;);
+    company.textContent = `${u.company.name} · ${u.address.city}`;
+    el.append(h3, email, document.createElement(&#x27;br&#x27;), company);
+    return el;
+  }
+
+  async function loadUsers() {
+    showSkeleton();
+    status.textContent = &#x27;Yuklanmoqda...&#x27;;
+    try {
+      const res = await fetch(&#x27;https://jsonplaceholder.typicode.com/users&#x27;, {
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`Server xatosi: ${res.status}`);
+      const users = await res.json();
+
+      if (users.length === 0) {
+        box.replaceChildren();
+        status.textContent = &#x27;Hozircha a\&#x27;zolar yo\&#x27;q.&#x27;;
+        return;
+      }
+      box.replaceChildren(...users.map(userCard));
+      status.textContent = `${users.length} ta a&#x27;zo topildi`;
+    } catch (err) {
+      box.replaceChildren();
+      const msg = document.createElement(&#x27;p&#x27;);
+      msg.className = &#x27;error&#x27;;
+      msg.textContent = err.name === &#x27;TimeoutError&#x27;
+        ? &#x27;Server javob bermadi. Internetni tekshiring.&#x27;
+        : `Xatolik: ${err.message}`;
+      box.append(msg);
+      status.textContent = &#x27;&#x27;;
+    }
+  }
+
+  document.querySelector(&#x27;#reload&#x27;).addEventListener(&#x27;click&#x27;, loadUsers);
+  loadUsers();
+&lt;/script&gt;</code></pre></div>
+<p>DevTools → Network → <b>Offline</b> rejimini yoqib, xato holatini sinab ko'ring. "Slow 3G" bilan skeleton animatsiyasini ko'rasiz.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Ob-havo ilovasi: debounce qidiruv va ketma-ket so'rovlar</h3></div><div class="ex-body">
+<p><a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> — kalitsiz (API key talab qilmaydigan) bepul ob-havo API.
+Avval shahar nomidan koordinata topamiz (geocoding), keyin shu koordinata bo'yicha ob-havoni olamiz — <b>ikkinchi so'rov birinchisiga bog'liq</b>.</p>
+<div class="code"><div class="code-head"><span>weather.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;div class=&quot;weather&quot;&gt;
+  &lt;input id=&quot;city&quot; placeholder=&quot;Shahar nomi: Samarqand, Tashkent...&quot; autocomplete=&quot;off&quot;&gt;
+  &lt;ul id=&quot;suggestions&quot;&gt;&lt;/ul&gt;
+  &lt;section id=&quot;result&quot;&gt;&lt;/section&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  const input = document.querySelector(&#x27;#city&#x27;);
+  const list = document.querySelector(&#x27;#suggestions&#x27;);
+  const result = document.querySelector(&#x27;#result&#x27;);
+
+  const debounce = (fn, ms) =&gt; { let t; return (...a) =&gt; { clearTimeout(t); t = setTimeout(() =&gt; fn(...a), ms); }; };
+
+  let controller;   // eski so&#x27;rovni bekor qilish uchun
+
+  async function searchCities(query) {
+    if (query.length &lt; 2) return list.replaceChildren();
+    controller?.abort();                // foydalanuvchi yozishda davom etsa — eski so&#x27;rov keraksiz
+    controller = new AbortController();
+
+    const url = new URL(&#x27;https://geocoding-api.open-meteo.com/v1/search&#x27;);
+    url.search = new URLSearchParams({ name: query, count: 5, language: &#x27;en&#x27; });
+
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      const { results = [] } = await res.json();
+      list.replaceChildren(...results.map((c) =&gt; {
+        const li = document.createElement(&#x27;li&#x27;);
+        li.textContent = `${c.name}, ${c.country}`;
+        li.tabIndex = 0;
+        li.addEventListener(&#x27;click&#x27;, () =&gt; showWeather(c));
+        return li;
+      }));
+    } catch (err) {
+      if (err.name !== &#x27;AbortError&#x27;) console.error(err);
+    }
+  }
+
+  const WEATHER_CODES = { 0: &#x27;☀️ Ochiq&#x27;, 1: &#x27;🌤 Asosan ochiq&#x27;, 2: &#x27;⛅ Qisman bulutli&#x27;, 3: &#x27;☁️ Bulutli&#x27;,
+    45: &#x27;🌫 Tuman&#x27;, 61: &#x27;🌧 Yengil yomg\&#x27;ir&#x27;, 63: &#x27;🌧 Yomg\&#x27;ir&#x27;, 71: &#x27;🌨 Qor&#x27;, 95: &#x27;⛈ Momaqaldiroq&#x27; };
+
+  async function showWeather(city) {
+    list.replaceChildren();
+    input.value = city.name;
+    result.textContent = &#x27;Yuklanmoqda...&#x27;;
+
+    const url = new URL(&#x27;https://api.open-meteo.com/v1/forecast&#x27;);
+    url.search = new URLSearchParams({
+      latitude: city.latitude,
+      longitude: city.longitude,
+      current: &#x27;temperature_2m,wind_speed_10m,weather_code&#x27;,
+      daily: &#x27;temperature_2m_max,temperature_2m_min&#x27;,
+      timezone: &#x27;auto&#x27;,
+    });
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.statusText);
+      const data = await res.json();
+      const { temperature_2m: t, wind_speed_10m: w, weather_code: code } = data.current;
+
+      const days = data.daily.time.map((day, i) =&gt;
+        `${new Date(day).toLocaleDateString(&#x27;uz-UZ&#x27;, { weekday: &#x27;short&#x27;, day: &#x27;numeric&#x27; })}: ` +
+        `${Math.round(data.daily.temperature_2m_min[i])}°…${Math.round(data.daily.temperature_2m_max[i])}°`
+      );
+
+      result.innerHTML = &#x27;&#x27;;
+      const h2 = document.createElement(&#x27;h2&#x27;);
+      h2.textContent = `${city.name}: ${Math.round(t)}°C ${WEATHER_CODES[code] ?? &#x27;&#x27;}`;
+      const p = document.createElement(&#x27;p&#x27;);
+      p.textContent = `Shamol: ${w} km/soat`;
+      const ul = document.createElement(&#x27;ul&#x27;);
+      days.forEach((d) =&gt; { const li = document.createElement(&#x27;li&#x27;); li.textContent = d; ul.append(li); });
+      result.append(h2, p, ul);
+    } catch (err) {
+      result.textContent = `Ob-havoni olishda xato: ${err.message}`;
+    }
+  }
+
+  input.addEventListener(&#x27;input&#x27;, debounce((e) =&gt; searchCities(e.target.value.trim()), 400));
+&lt;/script&gt;</code></pre></div>
+<p><b>Ikki muhim usul:</b> <code>debounce</code> har harf uchun so'rov yubormaslikni ta'minlaydi; <code>AbortController</code> esa
+eski, endi keraksiz so'rovni bekor qiladi — aks holda sekin kelgan eski javob yangi natijaning ustiga yozilib qolishi
+mumkin ("race condition").</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Dashboard: parallel so'rovlar va qisman muvaffaqiyatsizlik</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>dashboard.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const BASE = &#x27;https://jsonplaceholder.typicode.com&#x27;;
+
+async function getJSON(path) {
+  const res = await fetch(BASE + path);
+  if (!res.ok) throw new Error(`${path} → ${res.status}`);
+  return res.json();
+}
+
+async function loadDashboard() {
+  console.time(&#x27;dashboard&#x27;);
+
+  // To&#x27;rtta mustaqil so&#x27;rov PARALLEL; bittasi xato bo&#x27;lsa ham qolganlari ko&#x27;rsatiladi
+  const results = await Promise.allSettled([
+    getJSON(&#x27;/users&#x27;),
+    getJSON(&#x27;/posts&#x27;),
+    getJSON(&#x27;/comments&#x27;),
+    getJSON(&#x27;/this-does-not-exist&#x27;),   // ataylab xato
+  ]);
+
+  const [users, posts, comments, broken] = results.map(r =&gt;
+    r.status === &#x27;fulfilled&#x27; ? r.value : null
+  );
+
+  results
+    .filter(r =&gt; r.status === &#x27;rejected&#x27;)
+    .forEach(r =&gt; console.warn(&#x27;⚠️ Vidjet yuklanmadi:&#x27;, r.reason.message));
+
+  if (users &amp;&amp; posts) {
+    // Eng faol 3 ta muallif
+    const postCount = posts.reduce((acc, p) =&gt; {
+      acc[p.userId] = (acc[p.userId] ?? 0) + 1;
+      return acc;
+    }, {});
+    const top = users
+      .map(u =&gt; ({ ism: u.name, postlar: postCount[u.id] ?? 0 }))
+      .sort((a, b) =&gt; b.postlar - a.postlar)
+      .slice(0, 3);
+    console.table(top);
+  }
+
+  console.log({
+    foydalanuvchilar: users?.length ?? &#x27;—&#x27;,
+    postlar: posts?.length ?? &#x27;—&#x27;,
+    izohlar: comments?.length ?? &#x27;—&#x27;,
+  });
+
+  console.timeEnd(&#x27;dashboard&#x27;); // ~ eng sekin so&#x27;rov vaqti, yig&#x27;indisi emas
+}
+
+loadDashboard();</code></pre></div>
+<p><code>Promise.all</code> ishlatilganda bitta buzilgan vidjet butun sahifani "o'ldirardi". <code>allSettled</code> esa har bir
+natijani alohida tekshirishga imkon beradi — real dashboard'larda aynan shunday qilinadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Ishonchli so'rov: timeout, qayta urinish (retry) va eksponensial kutish</h3></div><div class="ex-body">
+<p>Mobil internet uzilib qolishi yoki server vaqtincha band (<code>503</code>) bo'lishi mumkin. Professional ilovalar bunday
+holatlarda so'rovni bir necha marta, har safar uzoqroq kutib, takrorlaydi.</p>
+<div class="code"><div class="code-head"><span>fetchWithRetry.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const sleep = (ms) =&gt; new Promise(r =&gt; setTimeout(r, ms));
+
+const RETRYABLE = new Set([408, 429, 500, 502, 503, 504]);
+
+export async function fetchWithRetry(url, options = {}, {
+  retries = 3,
+  timeout = 8000,
+  baseDelay = 500,
+  onRetry = () =&gt; {},
+} = {}) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, { ...options, signal: AbortSignal.timeout(timeout) });
+
+      if (res.ok) return res;
+
+      // 4xx xatolarni (404, 401...) takrorlashdan foyda yo&#x27;q
+      if (!RETRYABLE.has(res.status) || attempt &gt;= retries) {
+        throw Object.assign(new Error(`HTTP ${res.status}`), { status: res.status });
+      }
+      // Server &quot;Retry-After&quot; sarlavhasini yuborgan bo&#x27;lsa, unga amal qilamiz
+      const retryAfter = Number(res.headers.get(&#x27;Retry-After&#x27;)) * 1000;
+      await wait(attempt, retryAfter);
+    } catch (err) {
+      const network = err.name === &#x27;TypeError&#x27; || err.name === &#x27;TimeoutError&#x27;;
+      if (!network || attempt &gt;= retries) throw err;
+      await wait(attempt);
+    }
+  }
+
+  async function wait(attempt, forced) {
+    // 500ms, 1000ms, 2000ms ... + tasodifiy &quot;jitter&quot; (hamma bir vaqtda qayta urinmasligi uchun)
+    const delay = forced || baseDelay * 2 ** attempt + Math.random() * 200;
+    onRetry({ attempt: attempt + 1, delay: Math.round(delay) });
+    await sleep(delay);
+  }
+}
+
+// Foydalanish
+try {
+  const res = await fetchWithRetry(&#x27;https://httpbin.org/status/503&#x27;, {}, {
+    retries: 3,
+    onRetry: ({ attempt, delay }) =&gt; console.log(`${attempt}-qayta urinish, ${delay}ms kutamiz...`),
+  });
+  console.log(await res.text());
+} catch (err) {
+  console.error(&#x27;Barcha urinishlar muvaffaqiyatsiz:&#x27;, err.message);
+}</code></pre></div>
+<div class="callout warn">Faqat <b>idempotent</b> so'rovlarni (GET, PUT, DELETE) avtomatik takrorlang. <code>POST /payments</code> ni qayta yuborish
+ikki marta to'lovga olib kelishi mumkin (1-darsdagi idempotentlik tushunchasini eslang). Bunday holatlar uchun serverlar
+"Idempotency-Key" sarlavhasidan foydalanadi.</div>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>Quyidagi kodning natijasini oldindan ayting, keyin tekshiring:
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">setTimeout(() =&gt; console.log(1));
+Promise.resolve().then(() =&gt; { console.log(2); setTimeout(() =&gt; console.log(3)); });
+(async () =&gt; { console.log(4); await null; console.log(5); })();
+console.log(6);</code></pre></div></li>
+  <li><code>promiseWithTimeout(promise, ms)</code> funksiyasini <code>Promise.race</code> bilan yozing.</li>
+  <li>GitHub API (<code>https://api.github.com/users/USERNAME</code> va <code>/repos</code>) orqali profil kartasi yasang: avatar, ism, followerlar va eng ko'p yulduzli 5 ta repo.</li>
+  <li>"Cheksiz scroll": JSONPlaceholder'dan postlarni 10 tadan yuklang (<code>?_page=2&amp;_limit=10</code>), sahifa oxiriga yetganda keyingisini (<code>IntersectionObserver</code> bilan).</li>
+  <li>5-darsdagi ro'yxatdan o'tish formasini <code>https://jsonplaceholder.typicode.com/users</code> ga POST qiladigan qiling; yuborish davomida tugmani o'chirib, "Yuborilmoqda..." deb ko'rsating.</li>
+</ol>
+<details><summary>1-savol javobi</summary><code>4, 6, 2, 5, 1, 3</code>. Sinxron: 4 va 6. Microtask'lar: 2 va 5. Macrotask'lar: 1, keyin 2-qadamda qo'shilgan 3.</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>JavaScript bir oqimli; asinxronlik event loop, Web API'lar va navbatlar orqali ishlaydi. Microtask'lar macrotask'lardan oldin.</li>
+  <li>Promise — kelajakdagi natija: pending → fulfilled/rejected.</li>
+  <li><code>async/await</code> + <code>try/catch</code> — asinxron kodni o'qilishi oson qiladi.</li>
+  <li>Mustaqil so'rovlarni <code>Promise.all</code>/<code>allSettled</code> bilan parallel bajaring.</li>
+  <li><code>fetch</code> HTTP xatolarda reject qilmaydi — <code>response.ok</code> ni tekshiring.</li>
+  <li><code>AbortController</code> — bekor qilish va timeout; retry faqat idempotent so'rovlar uchun.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="05-dom-va-hodisalar.html"><small>← Oldingi dars</small>DOM va hodisalar</a><a class="next" href="07-git-va-github.html"><small>Keyingi dars →</small>Git va GitHub</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#sinxron-va-asinxron-kod">Sinxron va asinxron kod</a></li><li><a href="#event-loop-javascript-qanday-ishlaydi">Event loop — JavaScript qanday ishlaydi</a></li><li><a href="#callbacklar-va-callback-hell">Callback&#x27;lar va &quot;callback hell&quot;</a></li><li><a href="#promise">Promise</a></li><li><a href="#async-await">async / await</a></li><li><a href="#fetch-api-serverga-sorov-yuborish">Fetch API — serverga so&#x27;rov yuborish</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

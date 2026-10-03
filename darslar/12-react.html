@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>React asoslari — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a class="active" href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚛️</div><div><div class="crumb">12-dars · 14 tadan</div><h1>React asoslari</h1><p class="lead">Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.</p></div></div>
+
+<p>5-darsdagi Todo ilovasida biz "holat → render" arxitekturasini qo'lda qurdik: holat o'zgarsa, <code>render()</code> funksiyasi DOM'ni
+qayta chizdi. Ilova kattalashgan sari bu qiyinlashadi: qaysi qismni yangilash kerak? Holat bir necha joyda bo'lsa-chi?
+<b>React</b> — aynan shu muammoni hal qiladigan kutubxona: siz <i>holat qanday ko'rinishga mos kelishini</i> tasvirlaysiz,
+React esa DOM'ni o'zi samarali yangilaydi. Bugun React — frontend vakansiyalarining eng katta qismida talab qilinadigan texnologiya.</p>
+
+<h2 id="reactning-asosiy-goyalari"><a class="anchor" href="#reactning-asosiy-goyalari">#</a>React'ning asosiy g'oyalari</h2>
+<ul>
+  <li><b>Deklarativlik</b> — "qanday o'zgartirish" (<code>appendChild</code>, <code>classList.add</code>) emas, "qanday ko'rinishi kerak" deb yozasiz: <code>UI = f(state)</code>.</li>
+  <li><b>Komponentlar</b> — interfeys mustaqil, qayta ishlatiladigan bo'laklardan quriladi: <code>&lt;Header&gt;</code>, <code>&lt;ProductCard&gt;</code>, <code>&lt;Cart&gt;</code>.</li>
+  <li><b>Bir yo'nalishli ma'lumot oqimi</b> — ma'lumot ota komponentdan farzandga <code>props</code> orqali tushadi; farzand o'zgarishni callback orqali "yuqoriga" xabar qiladi.</li>
+  <li><b>Virtual DOM va reconciliation</b> — holat o'zgarganda React yangi "virtual" daraxtni eskisi bilan solishtiradi va haqiqiy DOM'ga faqat farqni yozadi.</li>
+</ul>
+
+<h2 id="loyiha-yaratish-vite"><a class="anchor" href="#loyiha-yaratish-vite">#</a>Loyiha yaratish (Vite)</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm create vite@latest kitob-client -- --template react
+cd kitob-client
+npm install
+npm run dev          # http://localhost:5173</code></pre></div>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">kitob-client/
+├── index.html            # yagona HTML sahifa — &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+├── package.json
+├── vite.config.js
+└── src/
+    ├── main.jsx          # kirish nuqtasi: React&#x27;ni #root ga ulaydi
+    ├── App.jsx           # ildiz komponent
+    ├── index.css
+    └── components/</code></pre></div>
+<div class="code"><div class="code-head"><span>src/main.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { StrictMode } from &#x27;react&#x27;;
+import { createRoot } from &#x27;react-dom/client&#x27;;
+import App from &#x27;./App.jsx&#x27;;
+import &#x27;./index.css&#x27;;
+
+createRoot(document.getElementById(&#x27;root&#x27;)).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;
+);</code></pre></div>
+
+<h2 id="jsx"><a class="anchor" href="#jsx">#</a>JSX</h2>
+<p><b>JSX</b> — JavaScript ichida HTML'ga o'xshash sintaksis. Brauzer uni tushunmaydi — Vite uni oddiy funksiya chaqiruvlariga
+aylantiradi: <code>&lt;h1 className="t"&gt;Salom&lt;/h1&gt;</code> → <code>React.createElement('h1', { className: 't' }, 'Salom')</code>.</p>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Greeting() {
+  const user = { name: &#x27;Malika&#x27;, avatar: &#x27;/m.jpg&#x27;, unread: 3 };
+  const isMorning = new Date().getHours() &lt; 12;
+
+  return (
+    &lt;div className=&quot;greeting&quot;&gt;                       {/* class emas — className */}
+      &lt;img src={user.avatar} alt={user.name} /&gt;       {/* {} ichida istalgan JS ifoda */}
+      &lt;h2&gt;{isMorning ? &#x27;Xayrli tong&#x27; : &#x27;Salom&#x27;}, {user.name}!&lt;/h2&gt;
+      {user.unread &gt; 0 &amp;&amp; &lt;span className=&quot;badge&quot;&gt;{user.unread}&lt;/span&gt;}
+      &lt;label htmlFor=&quot;q&quot;&gt;Qidiruv&lt;/label&gt;               {/* for emas — htmlFor */}
+      &lt;input id=&quot;q&quot; style={{ width: 200, marginTop: 8 }} /&gt;  {/* style — obyekt, camelCase */}
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<p><b>JSX qoidalari:</b></p>
+<ul>
+  <li>Komponent <b>bitta</b> ildiz element qaytaradi. Ortiqcha <code>div</code> kerak bo'lmasa — fragment: <code>&lt;&gt;...&lt;/&gt;</code>.</li>
+  <li>Barcha teglar yopilishi shart: <code>&lt;img /&gt;</code>, <code>&lt;br /&gt;</code>, <code>&lt;input /&gt;</code>.</li>
+  <li>Atributlar camelCase: <code>onClick</code>, <code>tabIndex</code>, <code>className</code> (lekin <code>aria-*</code> va <code>data-*</code> o'zgarmaydi).</li>
+  <li><code>{}</code> ichida faqat <b>ifoda</b> (expression): <code>if</code>/<code>for</code> emas — ternary, <code>&amp;&amp;</code>, <code>.map()</code>.</li>
+  <li>React <code>{}</code> ichidagi matnni avtomatik ekranlaydi — XSS'dan himoya (<code>dangerouslySetInnerHTML</code> bundan mustasno, nomi ham ogohlantiradi).</li>
+</ul>
+
+<h2 id="komponentlar-va-props"><a class="anchor" href="#komponentlar-va-props">#</a>Komponentlar va props</h2>
+<p>Komponent — <b>katta harf bilan boshlanadigan</b> va JSX qaytaradigan funksiya. <b>Props</b> — komponentga tashqaridan beriladigan
+ma'lumotlar (HTML atributlari kabi). Props <b>faqat o'qish uchun</b>: komponent o'z props'ini o'zgartirmaydi.</p>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Avatar({ src, name, size = 48 }) {          // destructuring + standart qiymat
+  return &lt;img className=&quot;avatar&quot; src={src} alt={name} width={size} height={size} /&gt;;
+}
+
+function UserCard({ user, onFollow, children }) {
+  return (
+    &lt;article className=&quot;card&quot;&gt;
+      &lt;Avatar src={user.photo} name={user.name} size={64} /&gt;
+      &lt;h3&gt;{user.name}&lt;/h3&gt;
+      {children}                                      {/* teglar orasidagi mazmun */}
+      &lt;button onClick={() =&gt; onFollow(user.id)}&gt;Kuzatish&lt;/button&gt;
+    &lt;/article&gt;
+  );
+}
+
+// Foydalanish
+&lt;UserCard user={{ id: 1, name: &#x27;Bobur&#x27;, photo: &#x27;/b.jpg&#x27; }} onFollow={(id) =&gt; console.log(id)}&gt;
+  &lt;p&gt;Frontend dasturchi, Samarqand&lt;/p&gt;
+&lt;/UserCard&gt;</code></pre></div>
+<div class="callout tip"><span class="t">Komponentlarga qanday bo'lish kerak?</span>
+Dizayn maketiga qarab, har bir mustaqil "blok"ni to'rtburchak bilan o'rab chiqing. Qoida: bitta komponent — bitta vazifa.
+Komponent 150–200 qatordan oshsa yoki ichida takrorlanuvchi qism bo'lsa — bo'lish vaqti keldi.</div>
+
+<h2 id="state-komponent-xotirasi"><a class="anchor" href="#state-komponent-xotirasi">#</a>State — komponent xotirasi</h2>
+<p>Oddiy o'zgaruvchi (<code>let count = 0</code>) har render'da qaytadan yaratiladi va uning o'zgarishi ekranni yangilamaydi.
+<b>State</b> — React eslab qoladigan va o'zgarganda komponentni <b>qayta render qiladigan</b> qiymat.</p>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+
+function Counter() {
+  const [count, setCount] = useState(0);     // [joriy qiymat, o&#x27;zgartiruvchi funksiya]
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Bosildi: {count} marta&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+1&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(0)} disabled={count === 0}&gt;Nolga&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<h3>State bilan ishlashning muhim qoidalari</h3>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">// 1. State&#x27;ni TO&#x27;G&#x27;RIDAN-TO&#x27;G&#x27;RI o&#x27;zgartirmang — yangi obyekt/massiv yarating (immutability)
+const [todos, setTodos] = useState([]);
+todos.push(newTodo);                                  // ❌ React o&#x27;zgarishni sezmaydi
+setTodos([...todos, newTodo]);                        // ✅ qo&#x27;shish
+setTodos(todos.filter(t =&gt; t.id !== id));             // ✅ o&#x27;chirish
+setTodos(todos.map(t =&gt; t.id === id ? { ...t, done: !t.done } : t)); // ✅ yangilash
+
+const [form, setForm] = useState({ name: &#x27;&#x27;, email: &#x27;&#x27; });
+setForm({ ...form, email: &#x27;yangi@mail.uz&#x27; });        // ✅ obyektning bitta maydonini
+
+// 2. Yangi qiymat eskisiga bog&#x27;liq bo&#x27;lsa — funksional ko&#x27;rinish
+setCount(c =&gt; c + 1);
+setCount(c =&gt; c + 1);     // ikkalasi ham ishlaydi → +2
+// setCount(count + 1); setCount(count + 1);  → faqat +1 (ikkalasi ham eski &quot;count&quot; ni ko&#x27;radi)
+
+// 3. State yangilanishi asinxron: set&#x27;dan keyin darhol eski qiymat
+setCount(5);
+console.log(count);       // hali eski qiymat — yangisi keyingi render&#x27;da
+
+// 4. Hisoblanadigan qiymatni state&#x27;da saqlamang — render paytida hisoblang
+const doneCount = todos.filter(t =&gt; t.done).length;   // ✅ alohida state emas</code></pre></div>
+
+<h2 id="hodisalar"><a class="anchor" href="#hodisalar">#</a>Hodisalar</h2>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function SearchBox({ onSearch }) {
+  const [q, setQ] = useState(&#x27;&#x27;);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSearch(q.trim());
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        value={q}
+        onChange={(e) =&gt; setQ(e.target.value)}
+        onKeyDown={(e) =&gt; e.key === &#x27;Escape&#x27; &amp;&amp; setQ(&#x27;&#x27;)}
+      /&gt;
+      &lt;button type=&quot;submit&quot;&gt;Izlash&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+// ⚠️ onClick={handleClick}   ✅ funksiyani BERAMIZ
+//    onClick={handleClick()} ❌ render paytida CHAQIRILADI</code></pre></div>
+
+<h2 id="shartli-render-va-royxatlar"><a class="anchor" href="#shartli-render-va-royxatlar">#</a>Shartli render va ro'yxatlar</h2>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function ProductList({ products, loading, error }) {
+  if (loading) return &lt;Spinner /&gt;;                      // erta qaytish
+  if (error) return &lt;p className=&quot;error&quot;&gt;{error}&lt;/p&gt;;
+  if (products.length === 0) return &lt;p&gt;Mahsulot topilmadi&lt;/p&gt;;
+
+  return (
+    &lt;ul className=&quot;grid&quot;&gt;
+      {products.map((p) =&gt; (
+        &lt;li key={p.id}&gt;                                   {/* key — majburiy va barqaror */}
+          &lt;ProductCard product={p} /&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre></div>
+<div class="callout warn"><span class="t">key nima uchun kerak?</span>
+<code>key</code> React'ga ro'yxatdagi qaysi element qaysi ekanini aytadi: element qo'shilsa, o'chirilsa yoki tartib o'zgarsa,
+React to'g'ri DOM tugunlarini qayta ishlatadi. <code>key</code> sifatida <b>massiv indeksini</b> ishlatmang (agar ro'yxat tartibi o'zgarsa) —
+input'lardagi qiymatlar "aralashib ketadi". Ma'lumotning barqaror <code>id</code> sini ishlating.</div>
+
+<h2 id="formalar-boshqariladigan-komponentlar"><a class="anchor" href="#formalar-boshqariladigan-komponentlar">#</a>Formalar: boshqariladigan komponentlar</h2>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function RegisterForm({ onSubmit }) {
+  const [values, setValues] = useState({ name: &#x27;&#x27;, email: &#x27;&#x27;, plan: &#x27;free&#x27;, agree: false });
+  const [errors, setErrors] = useState({});
+
+  // Barcha maydonlar uchun bitta ishlovchi — name atributi orqali
+  function handleChange(e) {
+    const { name, value, type, checked } = e.target;
+    setValues(v =&gt; ({ ...v, [name]: type === &#x27;checkbox&#x27; ? checked : value }));
+  }
+
+  function validate(v) {
+    const e = {};
+    if (v.name.trim().length &lt; 2) e.name = &#x27;Ism juda qisqa&#x27;;
+    if (!/^\S+@\S+\.\S+$/.test(v.email)) e.email = &#x27;Email noto\&#x27;g\&#x27;ri&#x27;;
+    if (!v.agree) e.agree = &#x27;Shartlarga rozilik kerak&#x27;;
+    return e;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const errs = validate(values);
+    setErrors(errs);
+    if (Object.keys(errs).length === 0) onSubmit(values);
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit} noValidate&gt;
+      &lt;input name=&quot;name&quot; value={values.name} onChange={handleChange} placeholder=&quot;Ism&quot; /&gt;
+      {errors.name &amp;&amp; &lt;small className=&quot;error&quot;&gt;{errors.name}&lt;/small&gt;}
+
+      &lt;input name=&quot;email&quot; value={values.email} onChange={handleChange} placeholder=&quot;Email&quot; /&gt;
+      {errors.email &amp;&amp; &lt;small className=&quot;error&quot;&gt;{errors.email}&lt;/small&gt;}
+
+      &lt;select name=&quot;plan&quot; value={values.plan} onChange={handleChange}&gt;
+        &lt;option value=&quot;free&quot;&gt;Bepul&lt;/option&gt;
+        &lt;option value=&quot;pro&quot;&gt;Pro&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;label&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;agree&quot; checked={values.agree} onChange={handleChange} /&gt;
+        Shartlarga roziman
+      &lt;/label&gt;
+      {errors.agree &amp;&amp; &lt;small className=&quot;error&quot;&gt;{errors.agree}&lt;/small&gt;}
+
+      &lt;button&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre></div>
+<p><b>Boshqariladigan (controlled)</b> input'da qiymatning yagona "haqiqat manbai" — React state. Shu tufayli istalgan payt qiymatni o'qish,
+o'zgartirish va validatsiya qilish oson. Katta formalar uchun <b>React Hook Form</b> + <b>Zod</b> kutubxonalari mashhur.</p>
+
+<h2 id="stateni-yuqoriga-kotarish-lifting-state-up"><a class="anchor" href="#stateni-yuqoriga-kotarish-lifting-state-up">#</a>State'ni yuqoriga ko'tarish (lifting state up)</h2>
+<p>Ikki komponent bitta ma'lumotdan foydalanishi kerak bo'lsa (masalan, mahsulotlar ro'yxati va savat), state ularning
+<b>eng yaqin umumiy otasiga</b> ko'chiriladi. Ota ma'lumotni props orqali beradi, farzandlar esa o'zgarishni callback orqali so'raydi.</p>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Shop() {
+  const [cart, setCart] = useState([]);                  // umumiy state — otada
+
+  const addToCart = (product) =&gt;
+    setCart(c =&gt; {
+      const found = c.find(i =&gt; i.id === product.id);
+      return found
+        ? c.map(i =&gt; i.id === product.id ? { ...i, qty: i.qty + 1 } : i)
+        : [...c, { ...product, qty: 1 }];
+    });
+
+  return (
+    &lt;div className=&quot;shop&quot;&gt;
+      &lt;ProductList onAdd={addToCart} /&gt;                  {/* o&#x27;zgartiradi */}
+      &lt;CartSummary items={cart} /&gt;                        {/* o&#x27;qiydi */}
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+
+<h2 id="useeffect-tashqi-dunyo-bilan-sinxronlash"><a class="anchor" href="#useeffect-tashqi-dunyo-bilan-sinxronlash">#</a>useEffect — tashqi dunyo bilan sinxronlash</h2>
+<p>Render <b>sof</b> bo'lishi kerak: faqat JSX hisoblaydi. Server so'rovi, taymer, <code>document.title</code>, hodisa tinglovchisi kabi
+"yon ta'sirlar" (side effects) <code>useEffect</code> ichida bajariladi — u render ekranga chiqqandan <b>keyin</b> ishlaydi.</p>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+
+useEffect(() =&gt; {
+  // ... effekt
+  return () =&gt; { /* tozalash (cleanup): keyingi effektdan oldin va komponent o&#x27;chganda */ };
+}, [dep1, dep2]);   // bog&#x27;liqliklar massivi
+
+// [] — faqat birinchi render&#x27;dan keyin bir marta
+// [userId] — birinchi marta va userId o&#x27;zgarganda
+// massivsiz — HAR render&#x27;dan keyin (kamdan-kam kerak)</code></pre></div>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Clock() {
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; setNow(new Date()), 1000);
+    return () =&gt; clearInterval(id);          // tozalanmasa — &quot;xotira oqishi&quot; va ikki baravar taymer
+  }, []);
+
+  useEffect(() =&gt; {
+    document.title = now.toLocaleTimeString(&#x27;uz-UZ&#x27;);
+  }, [now]);
+
+  return &lt;time&gt;{now.toLocaleTimeString(&#x27;uz-UZ&#x27;)}&lt;/time&gt;;
+}</code></pre></div>
+<div class="callout info"><span class="t">StrictMode'da effekt ikki marta ishlaydi</span>
+Ishlab chiqish rejimida React tozalash funksiyasi to'g'ri yozilganini tekshirish uchun effektni ataylab "o'rnatish → tozalash →
+qayta o'rnatish" qiladi. Network panelida ikkita so'rovni ko'rsangiz — bu xato emas. Production'da bir marta ishlaydi.</div>
+<div class="callout warn"><span class="t">Effekt kerak bo'lmagan holatlar</span>
+Props yoki state'dan hisoblanadigan qiymat uchun effekt + state ishlatmang — shunchaki render paytida hisoblang. Foydalanuvchi
+harakatiga javob (tugma bosilganda so'rov yuborish) — hodisa ishlovchisida, effektda emas.</div>
+
+<h2 id="boshqa-muhim-hooklar"><a class="anchor" href="#boshqa-muhim-hooklar">#</a>Boshqa muhim hook'lar</h2>
+<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useRef, useMemo, useCallback, useReducer } from &#x27;react&#x27;;
+
+// useRef — render&#x27;lar orasida saqlanadigan, lekin o&#x27;zgarganda render QILMAYDIGAN qiymat; DOM elementga havola
+function AutoFocusInput() {
+  const inputRef = useRef(null);
+  useEffect(() =&gt; inputRef.current.focus(), []);
+  return &lt;input ref={inputRef} /&gt;;
+}
+
+// useMemo — og&#x27;ir hisob natijasini keshlash
+const sorted = useMemo(
+  () =&gt; [...products].sort((a, b) =&gt; a.price - b.price),
+  [products]
+);
+
+// useCallback — funksiyani keshlash (memo&#x27;langan farzandga beriladigan callback uchun)
+const handleAdd = useCallback((p) =&gt; setCart(c =&gt; [...c, p]), []);
+
+// useReducer — murakkab state mantiqi uchun (Redux uslubi)
+function reducer(state, action) {
+  switch (action.type) {
+    case &#x27;add&#x27;: return [...state, action.item];
+    case &#x27;remove&#x27;: return state.filter(i =&gt; i.id !== action.id);
+    case &#x27;clear&#x27;: return [];
+    default: throw new Error(`Noma&#x27;lum amal: ${action.type}`);
+  }
+}
+const [items, dispatch] = useReducer(reducer, []);
+dispatch({ type: &#x27;add&#x27;, item: { id: 1, name: &#x27;Kitob&#x27; } });</code></pre></div>
+<p><b>Hook qoidalari:</b> (1) faqat komponent yoki boshqa hook'ning <b>yuqori darajasida</b> chaqiriladi — <code>if</code>, sikl yoki ichki
+funksiyada emas; (2) faqat React funksiyalarida. Sabab: React hook'larni chaqirilish <b>tartibi</b> bo'yicha taniydi.</p>
+
+<h2 id="context-props-drilling-siz-malumot-uzatish"><a class="anchor" href="#context-props-drilling-siz-malumot-uzatish">#</a>Context — "props drilling"siz ma'lumot uzatish</h2>
+<p>Joriy foydalanuvchi, til yoki mavzu (theme) kabi ma'lumotlar o'nlab komponentga kerak. Ularni har bir darajadan props orqali
+o'tkazish ("prop drilling") noqulay. <b>Context</b> ma'lumotni daraxtning istalgan chuqurligiga to'g'ridan-to'g'ri yetkazadi.</p>
+<div class="code"><div class="code-head"><span>src/context/ThemeContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
+
+const ThemeContext = createContext(null);
+
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState(() =&gt; localStorage.getItem(&#x27;theme&#x27;) ?? &#x27;light&#x27;);
+
+  useEffect(() =&gt; {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(&#x27;theme&#x27;, theme);
+  }, [theme]);
+
+  const toggle = () =&gt; setTheme(t =&gt; (t === &#x27;light&#x27; ? &#x27;dark&#x27; : &#x27;light&#x27;));
+
+  return &lt;ThemeContext.Provider value={{ theme, toggle }}&gt;{children}&lt;/ThemeContext.Provider&gt;;
+}
+
+export function useTheme() {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error(&#x27;useTheme ThemeProvider ichida ishlatilishi kerak&#x27;);
+  return ctx;
+}
+
+// main.jsx:  &lt;ThemeProvider&gt;&lt;App /&gt;&lt;/ThemeProvider&gt;
+// Istalgan joyda:
+// const { theme, toggle } = useTheme();
+// &lt;button onClick={toggle}&gt;{theme === &#x27;light&#x27; ? &#x27;🌙&#x27; : &#x27;☀️&#x27;}&lt;/button&gt;</code></pre></div>
+
+<h2 id="react-router-sahifalar"><a class="anchor" href="#react-router-sahifalar">#</a>React Router — sahifalar</h2>
+<p>React ilovasi — <b>SPA (Single Page Application)</b>: bitta HTML, sahifalar orasidagi o'tish esa JavaScript bilan, serverga
+yangi HTML so'ramasdan bajariladi.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install react-router</code></pre></div>
+<div class="code"><div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Link, NavLink, useParams, useNavigate, Navigate } from &#x27;react-router&#x27;;
+
+export default function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;nav&gt;
+        &lt;NavLink to=&quot;/&quot; end&gt;Bosh sahifa&lt;/NavLink&gt;
+        &lt;NavLink to=&quot;/books&quot;&gt;Kitoblar&lt;/NavLink&gt;
+        &lt;NavLink to=&quot;/cart&quot;&gt;Savat&lt;/NavLink&gt;
+      &lt;/nav&gt;
+      &lt;Routes&gt;
+        &lt;Route path=&quot;/&quot; element={&lt;Home /&gt;} /&gt;
+        &lt;Route path=&quot;/books&quot; element={&lt;BookList /&gt;} /&gt;
+        &lt;Route path=&quot;/books/:id&quot; element={&lt;BookDetails /&gt;} /&gt;
+        &lt;Route path=&quot;/cart&quot; element={&lt;RequireAuth&gt;&lt;Cart /&gt;&lt;/RequireAuth&gt;} /&gt;
+        &lt;Route path=&quot;*&quot; element={&lt;NotFound /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+
+function BookDetails() {
+  const { id } = useParams();                     // /books/42 → id = &#x27;42&#x27;
+  const navigate = useNavigate();
+  // ... id bo&#x27;yicha kitobni yuklash
+  return &lt;button onClick={() =&gt; navigate(-1)}&gt;← Orqaga&lt;/button&gt;;
+}
+
+function RequireAuth({ children }) {
+  const user = useAuth();                          // 13-darsda yoziladi
+  return user ? children : &lt;Navigate to=&quot;/login&quot; replace /&gt;;
+}</code></pre></div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Mahsulotlar katalogi va savat (komponentlar, props, lifting state)</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>src/Shop.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+
+const PRODUCTS = [
+  { id: 1, name: &#x27;Simsiz quloqchin&#x27;, price: 450000, emoji: &#x27;🎧&#x27; },
+  { id: 2, name: &#x27;Aqlli soat&#x27;, price: 1200000, emoji: &#x27;⌚&#x27; },
+  { id: 3, name: &#x27;Powerbank 20000&#x27;, price: 320000, emoji: &#x27;🔋&#x27; },
+  { id: 4, name: &#x27;Mexanik klaviatura&#x27;, price: 890000, emoji: &#x27;⌨️&#x27; },
+];
+
+const som = (n) =&gt; n.toLocaleString(&#x27;uz-UZ&#x27;) + &quot; so&#x27;m&quot;;
+
+function ProductCard({ product, qtyInCart, onAdd }) {
+  return (
+    &lt;article className=&quot;product&quot;&gt;
+      &lt;div className=&quot;emoji&quot;&gt;{product.emoji}&lt;/div&gt;
+      &lt;h3&gt;{product.name}&lt;/h3&gt;
+      &lt;p&gt;{som(product.price)}&lt;/p&gt;
+      &lt;button onClick={() =&gt; onAdd(product)}&gt;
+        {qtyInCart ? `Savatda: ${qtyInCart} ✓ (+1)` : &#x27;Savatga&#x27;}
+      &lt;/button&gt;
+    &lt;/article&gt;
+  );
+}
+
+function CartItem({ item, onChangeQty, onRemove }) {
+  return (
+    &lt;li className=&quot;cart-item&quot;&gt;
+      &lt;span&gt;{item.emoji} {item.name}&lt;/span&gt;
+      &lt;div className=&quot;qty&quot;&gt;
+        &lt;button onClick={() =&gt; onChangeQty(item.id, item.qty - 1)} aria-label=&quot;Kamaytirish&quot;&gt;−&lt;/button&gt;
+        &lt;span&gt;{item.qty}&lt;/span&gt;
+        &lt;button onClick={() =&gt; onChangeQty(item.id, item.qty + 1)} aria-label=&quot;Ko&#x27;paytirish&quot;&gt;+&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;b&gt;{som(item.price * item.qty)}&lt;/b&gt;
+      &lt;button onClick={() =&gt; onRemove(item.id)} aria-label=&quot;O&#x27;chirish&quot;&gt;✕&lt;/button&gt;
+    &lt;/li&gt;
+  );
+}
+
+function Cart({ items, onChangeQty, onRemove, onClear }) {
+  const total = items.reduce((s, i) =&gt; s + i.price * i.qty, 0);           // hisoblanadigan qiymat
+  const count = items.reduce((s, i) =&gt; s + i.qty, 0);
+  const delivery = total === 0 || total &gt;= 1_000_000 ? 0 : 25_000;
+
+  if (items.length === 0) return &lt;aside className=&quot;cart&quot;&gt;&lt;h2&gt;🛒 Savat bo&#x27;sh&lt;/h2&gt;&lt;/aside&gt;;
+
+  return (
+    &lt;aside className=&quot;cart&quot;&gt;
+      &lt;h2&gt;🛒 Savat ({count})&lt;/h2&gt;
+      &lt;ul&gt;
+        {items.map(item =&gt; (
+          &lt;CartItem key={item.id} item={item} onChangeQty={onChangeQty} onRemove={onRemove} /&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p&gt;Yetkazish: {delivery ? som(delivery) : &#x27;BEPUL&#x27;}&lt;/p&gt;
+      {delivery &gt; 0 &amp;&amp; &lt;small&gt;Yana {som(1_000_000 - total)} xarid qilsangiz — bepul yetkazish&lt;/small&gt;}
+      &lt;h3&gt;Jami: {som(total + delivery)}&lt;/h3&gt;
+      &lt;button onClick={onClear}&gt;Tozalash&lt;/button&gt;
+    &lt;/aside&gt;
+  );
+}
+
+export default function Shop() {
+  const [cart, setCart] = useState([]);
+
+  const add = (product) =&gt; setCart(c =&gt;
+    c.some(i =&gt; i.id === product.id)
+      ? c.map(i =&gt; (i.id === product.id ? { ...i, qty: i.qty + 1 } : i))
+      : [...c, { ...product, qty: 1 }]
+  );
+  const changeQty = (id, qty) =&gt; setCart(c =&gt;
+    qty &lt;= 0 ? c.filter(i =&gt; i.id !== id) : c.map(i =&gt; (i.id === id ? { ...i, qty } : i))
+  );
+  const remove = (id) =&gt; setCart(c =&gt; c.filter(i =&gt; i.id !== id));
+
+  return (
+    &lt;div className=&quot;shop&quot;&gt;
+      &lt;section className=&quot;products&quot;&gt;
+        {PRODUCTS.map(p =&gt; (
+          &lt;ProductCard
+            key={p.id}
+            product={p}
+            qtyInCart={cart.find(i =&gt; i.id === p.id)?.qty}
+            onAdd={add}
+          /&gt;
+        ))}
+      &lt;/section&gt;
+      &lt;Cart items={cart} onChangeQty={changeQty} onRemove={remove} onClear={() =&gt; setCart([])} /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>src/index.css (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.shop { display: grid; grid-template-columns: 1fr 340px; gap: 24px; padding: 24px; align-items: start; }
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.product { border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; }
+.emoji { font-size: 48px; }
+.cart { position: sticky; top: 16px; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; }
+.cart ul { list-style: none; padding: 0; }
+.cart-item { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center; padding: 6px 0; }
+.qty { display: flex; gap: 6px; align-items: center; }
+@media (max-width: 800px) { .shop { grid-template-columns: 1fr; } }</code></pre></div>
+<p>Bu 4-darsdagi savat mantiqining React versiyasi. Savat state'i <code>Shop</code> da, chunki uni ham <code>ProductCard</code> (savatda nechta borligini
+ko'rsatish uchun), ham <code>Cart</code> ishlatadi. <code>total</code> state emas — har render'da hisoblanadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Todo ilovasi React'da: useReducer + localStorage</h3></div><div class="ex-body">
+<p>5-darsdagi 150 qatorlik ilovani React'da qayta yozamiz va farqni his qilamiz.</p>
+<div class="code"><div class="code-head"><span>src/TodoApp.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useReducer, useState } from &#x27;react&#x27;;
+
+function todosReducer(todos, action) {
+  switch (action.type) {
+    case &#x27;added&#x27;:
+      return [{ id: crypto.randomUUID(), text: action.text, done: false }, ...todos];
+    case &#x27;toggled&#x27;:
+      return todos.map(t =&gt; (t.id === action.id ? { ...t, done: !t.done } : t));
+    case &#x27;edited&#x27;:
+      return todos.map(t =&gt; (t.id === action.id ? { ...t, text: action.text } : t));
+    case &#x27;deleted&#x27;:
+      return todos.filter(t =&gt; t.id !== action.id);
+    case &#x27;clearedDone&#x27;:
+      return todos.filter(t =&gt; !t.done);
+    default:
+      throw new Error(&#x27;Noma\&#x27;lum amal: &#x27; + action.type);
+  }
+}
+
+const load = () =&gt; {
+  try { return JSON.parse(localStorage.getItem(&#x27;todos-react&#x27;)) ?? []; } catch { return []; }
+};
+
+const FILTERS = {
+  all: { label: &#x27;Barchasi&#x27;, fn: () =&gt; true },
+  active: { label: &#x27;Faol&#x27;, fn: t =&gt; !t.done },
+  done: { label: &#x27;Bajarilgan&#x27;, fn: t =&gt; t.done },
+};
+
+export default function TodoApp() {
+  const [todos, dispatch] = useReducer(todosReducer, undefined, load);   // lazy init
+  const [filter, setFilter] = useState(&#x27;all&#x27;);
+  const [text, setText] = useState(&#x27;&#x27;);
+
+  useEffect(() =&gt; {
+    localStorage.setItem(&#x27;todos-react&#x27;, JSON.stringify(todos));
+  }, [todos]);
+
+  const visible = todos.filter(FILTERS[filter].fn);
+  const left = todos.filter(t =&gt; !t.done).length;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!text.trim()) return;
+    dispatch({ type: &#x27;added&#x27;, text: text.trim() });
+    setText(&#x27;&#x27;);
+  }
+
+  return (
+    &lt;main className=&quot;app&quot;&gt;
+      &lt;h1&gt;📝 Vazifalar&lt;/h1&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input value={text} onChange={e =&gt; setText(e.target.value)} placeholder=&quot;Yangi vazifa...&quot; autoFocus /&gt;
+        &lt;button disabled={!text.trim()}&gt;Qo&#x27;shish&lt;/button&gt;
+      &lt;/form&gt;
+
+      &lt;div className=&quot;filters&quot;&gt;
+        {Object.entries(FILTERS).map(([key, f]) =&gt; (
+          &lt;button key={key} className={filter === key ? &#x27;active&#x27; : &#x27;&#x27;} onClick={() =&gt; setFilter(key)}&gt;
+            {f.label}
+          &lt;/button&gt;
+        ))}
+      &lt;/div&gt;
+
+      &lt;ul&gt;
+        {visible.map(todo =&gt; (
+          &lt;TodoItem key={todo.id} todo={todo} dispatch={dispatch} /&gt;
+        ))}
+        {visible.length === 0 &amp;&amp; &lt;li className=&quot;empty&quot;&gt;Hozircha vazifa yo&#x27;q 🎉&lt;/li&gt;}
+      &lt;/ul&gt;
+
+      &lt;footer&gt;
+        &lt;span&gt;{left} ta faol vazifa&lt;/span&gt;
+        {todos.some(t =&gt; t.done) &amp;&amp; (
+          &lt;button onClick={() =&gt; dispatch({ type: &#x27;clearedDone&#x27; })}&gt;Bajarilganlarni tozalash&lt;/button&gt;
+        )}
+      &lt;/footer&gt;
+    &lt;/main&gt;
+  );
+}
+
+function TodoItem({ todo, dispatch }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(todo.text);
+
+  function finish(save) {
+    if (save &amp;&amp; draft.trim()) dispatch({ type: &#x27;edited&#x27;, id: todo.id, text: draft.trim() });
+    else setDraft(todo.text);
+    setEditing(false);
+  }
+
+  return (
+    &lt;li className={todo.done ? &#x27;done&#x27; : &#x27;&#x27;}&gt;
+      &lt;input type=&quot;checkbox&quot; checked={todo.done} onChange={() =&gt; dispatch({ type: &#x27;toggled&#x27;, id: todo.id })} /&gt;
+      {editing ? (
+        &lt;input
+          className=&quot;edit&quot;
+          value={draft}
+          autoFocus
+          onChange={e =&gt; setDraft(e.target.value)}
+          onBlur={() =&gt; finish(true)}
+          onKeyDown={e =&gt; { if (e.key === &#x27;Enter&#x27;) finish(true); if (e.key === &#x27;Escape&#x27;) finish(false); }}
+        /&gt;
+      ) : (
+        &lt;span className=&quot;text&quot; onDoubleClick={() =&gt; setEditing(true)}&gt;{todo.text}&lt;/span&gt;
+      )}
+      &lt;button onClick={() =&gt; dispatch({ type: &#x27;deleted&#x27;, id: todo.id })} aria-label=&quot;O&#x27;chirish&quot;&gt;✕&lt;/button&gt;
+    &lt;/li&gt;
+  );
+}</code></pre></div>
+<p><b>Taqqoslang:</b> qo'lda <code>createElement</code>, <code>replaceChildren</code>, delegatsiya, "qaysi elementni yangilash kerak" degan savollar yo'qoldi.
+Reducer — sof funksiya: uni React'siz ham test qilish mumkin. Tahrirlash holati (<code>editing</code>) har bir element ichida — mahalliy (local) state.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Ma'lumot yuklash: useFetch custom hook va qidiruv</h3></div><div class="ex-body">
+<p><b>Custom hook</b> — <code>use</code> bilan boshlanadigan va ichida boshqa hook'lardan foydalanadigan funksiya. U komponentlar orasida
+<b>mantiqni</b> (UI'ni emas) qayta ishlatishga imkon beradi.</p>
+<div class="code"><div class="code-head"><span>src/hooks/useFetch.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+
+export function useFetch(url) {
+  const [state, setState] = useState({ data: null, loading: Boolean(url), error: null });
+
+  useEffect(() =&gt; {
+    if (!url) return;
+    const controller = new AbortController();
+    setState(s =&gt; ({ ...s, loading: true, error: null }));
+
+    fetch(url, { signal: controller.signal })
+      .then(res =&gt; {
+        if (!res.ok) throw new Error(`Server xatosi: ${res.status}`);
+        return res.json();
+      })
+      .then(data =&gt; setState({ data, loading: false, error: null }))
+      .catch(err =&gt; {
+        if (err.name !== &#x27;AbortError&#x27;) setState({ data: null, loading: false, error: err.message });
+      });
+
+    // url o&#x27;zgarsa yoki komponent yopilsa — eski so&#x27;rovni bekor qilamiz (race condition&#x27;dan himoya)
+    return () =&gt; controller.abort();
+  }, [url]);
+
+  return state;
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>src/hooks/useDebounce.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+
+export function useDebounce(value, delay = 400) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() =&gt; {
+    const t = setTimeout(() =&gt; setDebounced(value), delay);
+    return () =&gt; clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>src/UserSearch.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+import { useFetch } from &#x27;./hooks/useFetch&#x27;;
+import { useDebounce } from &#x27;./hooks/useDebounce&#x27;;
+
+export default function UserSearch() {
+  const [query, setQuery] = useState(&#x27;&#x27;);
+  const debouncedQuery = useDebounce(query, 400);
+  const { data: users, loading, error } = useFetch(&#x27;https://jsonplaceholder.typicode.com/users&#x27;);
+  const [selectedId, setSelectedId] = useState(null);
+  const { data: posts, loading: postsLoading } = useFetch(
+    selectedId ? `https://jsonplaceholder.typicode.com/posts?userId=${selectedId}` : null
+  );
+
+  const q = debouncedQuery.trim().toLowerCase();
+  const filtered = users?.filter(u =&gt;
+    u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)
+  ) ?? [];
+
+  return (
+    &lt;div className=&quot;user-search&quot;&gt;
+      &lt;input
+        type=&quot;search&quot;
+        value={query}
+        onChange={e =&gt; setQuery(e.target.value)}
+        placeholder=&quot;Ism yoki email bo&#x27;yicha qidirish...&quot;
+      /&gt;
+
+      {loading &amp;&amp; &lt;p&gt;Yuklanmoqda...&lt;/p&gt;}
+      {error &amp;&amp; &lt;p className=&quot;error&quot;&gt;⚠️ {error}&lt;/p&gt;}
+
+      &lt;div className=&quot;columns&quot;&gt;
+        &lt;ul&gt;
+          {filtered.map(u =&gt; (
+            &lt;li key={u.id}&gt;
+              &lt;button
+                className={u.id === selectedId ? &#x27;active&#x27; : &#x27;&#x27;}
+                onClick={() =&gt; setSelectedId(u.id)}
+              &gt;
+                &lt;b&gt;{u.name}&lt;/b&gt;&lt;br /&gt;&lt;small&gt;{u.email}&lt;/small&gt;
+              &lt;/button&gt;
+            &lt;/li&gt;
+          ))}
+          {!loading &amp;&amp; filtered.length === 0 &amp;&amp; &lt;li&gt;Hech kim topilmadi&lt;/li&gt;}
+        &lt;/ul&gt;
+
+        &lt;section&gt;
+          {!selectedId &amp;&amp; &lt;p&gt;Postlarini ko&#x27;rish uchun foydalanuvchini tanlang&lt;/p&gt;}
+          {postsLoading &amp;&amp; selectedId &amp;&amp; &lt;p&gt;Postlar yuklanmoqda...&lt;/p&gt;}
+          {posts?.map(p =&gt; (
+            &lt;article key={p.id}&gt;
+              &lt;h4&gt;{p.title}&lt;/h4&gt;
+              &lt;p&gt;{p.body}&lt;/p&gt;
+            &lt;/article&gt;
+          ))}
+        &lt;/section&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="callout tip">Real loyihalarda server ma'lumotlarini yuklash uchun <b>TanStack Query</b> (React Query) kutubxonasi ishlatiladi: keshlash,
+qayta yuklash, "stale-while-revalidate", mutatsiyalar va xatolarni boshqarishni tayyor holda beradi. <code>useFetch</code> esa uning ishlash
+tamoyilini tushunish uchun ajoyib mashq.</div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Ko'p sahifali ilova: Router, Context va useLocalStorage hook</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>src/hooks/useLocalStorage.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+
+export function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() =&gt; {
+    try {
+      const saved = localStorage.getItem(key);
+      return saved !== null ? JSON.parse(saved) : initialValue;
+    } catch {
+      return initialValue;
+    }
+  });
+
+  useEffect(() =&gt; {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* to&#x27;lgan yoki taqiqlangan */ }
+  }, [key, value]);
+
+  // Boshqa brauzer yorlig&#x27;ida o&#x27;zgarsa — sinxronlash
+  useEffect(() =&gt; {
+    const onStorage = (e) =&gt; {
+      if (e.key === key &amp;&amp; e.newValue !== null) setValue(JSON.parse(e.newValue));
+    };
+    window.addEventListener(&#x27;storage&#x27;, onStorage);
+    return () =&gt; window.removeEventListener(&#x27;storage&#x27;, onStorage);
+  }, [key]);
+
+  return [value, setValue];
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>src/context/FavoritesContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext } from &#x27;react&#x27;;
+import { useLocalStorage } from &#x27;../hooks/useLocalStorage&#x27;;
+
+const FavoritesContext = createContext(null);
+
+export function FavoritesProvider({ children }) {
+  const [ids, setIds] = useLocalStorage(&#x27;favorites&#x27;, []);
+  const toggle = (id) =&gt; setIds(list =&gt; (list.includes(id) ? list.filter(x =&gt; x !== id) : [...list, id]));
+  const isFavorite = (id) =&gt; ids.includes(id);
+  return (
+    &lt;FavoritesContext.Provider value={{ ids, toggle, isFavorite }}&gt;
+      {children}
+    &lt;/FavoritesContext.Provider&gt;
+  );
+}
+
+export const useFavorites = () =&gt; useContext(FavoritesContext);</code></pre></div>
+<div class="code"><div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, NavLink, Link, useParams } from &#x27;react-router&#x27;;
+import { FavoritesProvider, useFavorites } from &#x27;./context/FavoritesContext&#x27;;
+import { useFetch } from &#x27;./hooks/useFetch&#x27;;
+
+const API = &#x27;https://jsonplaceholder.typicode.com&#x27;;
+
+function Header() {
+  const { ids } = useFavorites();                 // props&#x27;siz — Context orqali
+  return (
+    &lt;header className=&quot;header&quot;&gt;
+      &lt;NavLink to=&quot;/&quot; end&gt;📰 Maqolalar&lt;/NavLink&gt;
+      &lt;NavLink to=&quot;/favorites&quot;&gt;⭐ Saralangan ({ids.length})&lt;/NavLink&gt;
+    &lt;/header&gt;
+  );
+}
+
+function FavoriteButton({ id }) {
+  const { isFavorite, toggle } = useFavorites();
+  const fav = isFavorite(id);
+  return (
+    &lt;button onClick={() =&gt; toggle(id)} aria-pressed={fav} title={fav ? &#x27;Saralangandan olish&#x27; : &#x27;Saralash&#x27;}&gt;
+      {fav ? &#x27;★&#x27; : &#x27;☆&#x27;}
+    &lt;/button&gt;
+  );
+}
+
+function PostList({ onlyFavorites = false }) {
+  const { data: posts, loading } = useFetch(`${API}/posts?_limit=20`);
+  const { ids } = useFavorites();
+  if (loading) return &lt;p&gt;Yuklanmoqda...&lt;/p&gt;;
+  if (!posts) return &lt;p&gt;Maqolalarni yuklab bo&#x27;lmadi.&lt;/p&gt;;
+  const list = onlyFavorites ? posts.filter(p =&gt; ids.includes(p.id)) : posts;
+  if (!list.length) return &lt;p&gt;Hozircha saralangan maqola yo&#x27;q.&lt;/p&gt;;
+  return (
+    &lt;ul className=&quot;posts&quot;&gt;
+      {list.map(p =&gt; (
+        &lt;li key={p.id}&gt;
+          &lt;FavoriteButton id={p.id} /&gt;
+          &lt;Link to={`/posts/${p.id}`}&gt;{p.title}&lt;/Link&gt;
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+function PostPage() {
+  const { id } = useParams();
+  const { data: post, loading, error } = useFetch(`${API}/posts/${id}`);
+  const { data: comments } = useFetch(`${API}/posts/${id}/comments`);
+  if (loading) return &lt;p&gt;Yuklanmoqda...&lt;/p&gt;;
+  if (error) return &lt;p&gt;Maqola topilmadi. &lt;Link to=&quot;/&quot;&gt;Bosh sahifaga&lt;/Link&gt;&lt;/p&gt;;
+  return (
+    &lt;article&gt;
+      &lt;Link to=&quot;/&quot;&gt;← Barcha maqolalar&lt;/Link&gt;
+      &lt;h1&gt;{post.title} &lt;FavoriteButton id={post.id} /&gt;&lt;/h1&gt;
+      &lt;p&gt;{post.body}&lt;/p&gt;
+      &lt;h3&gt;Izohlar ({comments?.length ?? &#x27;…&#x27;})&lt;/h3&gt;
+      {comments?.map(c =&gt; &lt;blockquote key={c.id}&gt;&lt;b&gt;{c.email}&lt;/b&gt;: {c.body}&lt;/blockquote&gt;)}
+    &lt;/article&gt;
+  );
+}
+
+export default function App() {
+  return (
+    &lt;FavoritesProvider&gt;
+      &lt;BrowserRouter&gt;
+        &lt;Header /&gt;
+        &lt;main&gt;
+          &lt;Routes&gt;
+            &lt;Route path=&quot;/&quot; element={&lt;PostList /&gt;} /&gt;
+            &lt;Route path=&quot;/favorites&quot; element={&lt;PostList onlyFavorites /&gt;} /&gt;
+            &lt;Route path=&quot;/posts/:id&quot; element={&lt;PostPage /&gt;} /&gt;
+            &lt;Route path=&quot;*&quot; element={&lt;h2&gt;404 — sahifa topilmadi&lt;/h2&gt;} /&gt;
+          &lt;/Routes&gt;
+        &lt;/main&gt;
+      &lt;/BrowserRouter&gt;
+    &lt;/FavoritesProvider&gt;
+  );
+}</code></pre></div>
+<p>Yulduzcha bosilganda <code>Header</code> dagi hisoblagich ham darhol yangilanadi — garchi ular daraxtning turli shoxlarida bo'lsa ham.
+Saralanganlar <code>useLocalStorage</code> tufayli sahifa yangilanganda ham, boshqa yorliqda ham saqlanadi.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><a href="https://react.dev/learn" target="_blank" rel="noopener">react.dev/learn</a> rasmiy qo'llanmasidagi "Tic-Tac-Toe" o'yinini yasang.</li>
+  <li>1-misoldagi savatni <code>CartContext</code> ga ko'chiring va <code>useLocalStorage</code> bilan saqlang; Header'da savatdagi mahsulotlar sonini ko'rsating.</li>
+  <li>6-darsdagi ob-havo ilovasini React'da qayta yozing: <code>useDebounce</code>, <code>useFetch</code>, yuklanish va xato holatlari bilan.</li>
+  <li><code>useOnlineStatus()</code> hook'ini yozing (<code>navigator.onLine</code>, <code>online</code>/<code>offline</code> hodisalari) va internet uzilganda banner ko'rsating.</li>
+  <li>Ko'p bosqichli forma (wizard): 3 qadam, "Orqaga/Keyingi" tugmalari, har qadamda validatsiya, oxirida umumiy ko'rinish.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>React: <code>UI = f(state)</code>; komponentlar — JSX qaytaruvchi funksiyalar.</li>
+  <li>Props — tashqaridan, faqat o'qish uchun; state — ichki xotira, o'zgarsa qayta render.</li>
+  <li>State'ni o'zgartirmang — yangi massiv/obyekt yarating; hisoblanadigan qiymatni state'da saqlamang.</li>
+  <li>Ro'yxatlarda barqaror <code>key</code>; formalarda boshqariladigan input'lar.</li>
+  <li><code>useEffect</code> — tashqi tizimlar bilan sinxronlash, cleanup bilan; custom hook'lar — mantiqni qayta ishlatish.</li>
+  <li>Context — global ma'lumot; React Router — SPA sahifalari.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="11-autentifikatsiya.html"><small>← Oldingi dars</small>Autentifikatsiya va avtorizatsiya</a><a class="next" href="13-fullstack-loyiha.html"><small>Keyingi dars →</small>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#reactning-asosiy-goyalari">React&#x27;ning asosiy g&#x27;oyalari</a></li><li><a href="#loyiha-yaratish-vite">Loyiha yaratish (Vite)</a></li><li><a href="#jsx">JSX</a></li><li><a href="#komponentlar-va-props">Komponentlar va props</a></li><li><a href="#state-komponent-xotirasi">State — komponent xotirasi</a></li><li><a href="#hodisalar">Hodisalar</a></li><li><a href="#shartli-render-va-royxatlar">Shartli render va ro&#x27;yxatlar</a></li><li><a href="#formalar-boshqariladigan-komponentlar">Formalar: boshqariladigan komponentlar</a></li><li><a href="#stateni-yuqoriga-kotarish-lifting-state-up">State&#x27;ni yuqoriga ko&#x27;tarish (lifting state up)</a></li><li><a href="#useeffect-tashqi-dunyo-bilan-sinxronlash">useEffect — tashqi dunyo bilan sinxronlash</a></li><li><a href="#boshqa-muhim-hooklar">Boshqa muhim hook&#x27;lar</a></li><li><a href="#context-props-drilling-siz-malumot-uzatish">Context — &quot;props drilling&quot;siz ma&#x27;lumot uzatish</a></li><li><a href="#react-router-sahifalar">React Router — sahifalar</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

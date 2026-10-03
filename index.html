@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Full-Stack dasturlash asoslari — to&#x27;liq qo&#x27;llanma</title>
+<meta name="description" content="Noldan full-stack dasturchigacha: HTML, CSS, JavaScript, Node.js, Express, ma&#x27;lumotlar bazasi, autentifikatsiya, React va deploy — chuqur nazariya va real amaliy misollar bilan.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="home">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+
+<section class="hero">
+  <span class="tag">🇺🇿 O'zbek tilida · Bepul · Ochiq manba</span>
+  <h1>Web <span>Full-Stack</span> dasturlash asoslari</h1>
+  <p>Brauzerda ko'rinadigan tugmadan tortib, serverdagi ma'lumotlar bazasigacha — veb-ilova qanday qurilishini
+  bosqichma-bosqich, chuqur nazariya va real loyihalarga yaqin amaliy misollar orqali o'rganing.</p>
+  <a class="btn primary" href="darslar/01-web-qanday-ishlaydi.html">Birinchi darsni boshlash →</a>
+  <a class="btn ghost" href="#darslar">Barcha darslar</a>
+  <div class="stats">
+    <div><b>14</b>chuqur dars</div>
+    <div><b>50+</b>amaliy misol</div>
+    <div><b>1</b>yakuniy full-stack loyiha</div>
+    <div><b id="doneCount">0</b>siz o'qigan darslar</div>
+  </div>
+</section>
+
+<section class="home-section">
+  <h2 id="full-stack-dasturchi-kim"><a class="anchor" href="#full-stack-dasturchi-kim">#</a>Full-stack dasturchi kim?</h2>
+  <p>Har bir veb-ilova ikki katta qismdan iborat:</p>
+  <div class="diagram">
+    <div class="flow">
+      <div class="node">🖥️ Frontend<small>HTML · CSS · JavaScript · React</small></div>
+      <div class="arrow">⇄ HTTP / JSON ⇄</div>
+      <div class="node">⚙️ Backend<small>Node.js · Express · REST API · Auth</small></div>
+      <div class="arrow">⇄ SQL ⇄</div>
+      <div class="node">🗄️ Ma'lumotlar bazasi<small>PostgreSQL · MongoDB</small></div>
+    </div>
+    <div class="diagram-caption">Full-stack dasturchi shu zanjirning barcha bo'g'inlarida ishlay oladi</div>
+  </div>
+  <p><b>Frontend</b> — foydalanuvchi ko'radigan va bosadigan hamma narsa. <b>Backend</b> — ko'rinmaydigan qism:
+  ma'lumotlarni saqlash, tekshirish, xavfsizlik va biznes-mantiq. <b>Full-stack dasturchi</b> ikkala tomonni ham
+  tushunadi va ilovani g'oyadan ishlab turgan saytgacha yolg'iz o'zi olib chiqa oladi.</p>
+</section>
+
+<section class="home-section">
+  <h2 id="oqish-yol-xaritasi"><a class="anchor" href="#oqish-yol-xaritasi">#</a>O'qish yo'l xaritasi</h2>
+  <div class="roadmap">
+    <div class="stage"><h3>1. Poydevor</h3><ul><li>Web qanday ishlaydi</li><li>HTML</li><li>CSS</li></ul></div>
+    <div class="stage"><h3>2. JavaScript</h3><ul><li>Til asoslari</li><li>DOM va hodisalar</li><li>Asinxron JS</li><li>Git</li></ul></div>
+    <div class="stage"><h3>3. Backend</h3><ul><li>Node.js</li><li>Express va REST API</li><li>Ma'lumotlar bazasi</li><li>Autentifikatsiya</li></ul></div>
+    <div class="stage"><h3>4. Professional</h3><ul><li>React</li><li>Full-stack loyiha</li><li>Deploy, xavfsizlik, test</li></ul></div>
+  </div>
+</section>
+
+<section class="home-section" id="darslar">
+  <h2 id="barcha-darslar"><a class="anchor" href="#barcha-darslar">#</a>Barcha darslar</h2>
+  <p>Darslar ketma-ket o'qish uchun mo'ljallangan — har biri oldingisiga tayanadi. Har bir darsda:
+  <b>batafsil nazariya</b>, <b>3–4 ta real amaliy misol</b>, <b>mustaqil mashqlar</b> va <b>xulosa</b> bor.</p>
+  <div class="cards">
+<a class="card" href="darslar/01-web-qanday-ishlaydi.html"><div class="card-icon">🌐</div><div class="card-num">01-dars</div><h3>Web qanday ishlaydi</h3><p>Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.</p><div class="card-level">Boshlang&#x27;ich · ~60 daqiqa</div></a>
+<a class="card" href="darslar/02-html.html"><div class="card-icon">🧱</div><div class="card-num">02-dars</div><h3>HTML — sahifa tuzilishi</h3><p>Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.</p><div class="card-level">Boshlang&#x27;ich · ~90 daqiqa</div></a>
+<a class="card" href="darslar/03-css.html"><div class="card-icon">🎨</div><div class="card-num">03-dars</div><h3>CSS — dizayn va maket</h3><p>Selektorlar, kaskad va spetsifiklik, box model, Flexbox, Grid, pozitsiyalash, responsiv dizayn, CSS o&#x27;zgaruvchilari va animatsiyalar.</p><div class="card-level">Boshlang&#x27;ich · ~120 daqiqa</div></a>
+<a class="card" href="darslar/04-javascript-asoslari.html"><div class="card-icon">⚡</div><div class="card-num">04-dars</div><h3>JavaScript asoslari</h3><p>O&#x27;zgaruvchilar, ma&#x27;lumot turlari, operatorlar, shartlar, sikllar, funksiyalar, scope va closure, massiv va obyekt metodlari, sinflar, modullar va xatolar bilan ishlash.</p><div class="card-level">Boshlang&#x27;ich–O&#x27;rta · ~150 daqiqa</div></a>
+<a class="card" href="darslar/05-dom-va-hodisalar.html"><div class="card-icon">🖱️</div><div class="card-num">05-dars</div><h3>DOM va hodisalar</h3><p>DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.</p><div class="card-level">O&#x27;rta · ~120 daqiqa</div></a>
+<a class="card" href="darslar/06-asinxron-javascript.html"><div class="card-icon">⏳</div><div class="card-num">06-dars</div><h3>Asinxron JavaScript va Fetch API</h3><p>Event loop, callback, Promise, async/await, fetch bilan API&#x27;ga so&#x27;rov yuborish, xatolarni boshqarish, parallel so&#x27;rovlar va so&#x27;rovni bekor qilish.</p><div class="card-level">O&#x27;rta · ~120 daqiqa</div></a>
+<a class="card" href="darslar/07-git-va-github.html"><div class="card-icon">🌿</div><div class="card-num">07-dars</div><h3>Git va GitHub</h3><p>Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.</p><div class="card-level">Boshlang&#x27;ich–O&#x27;rta · ~90 daqiqa</div></a>
+<a class="card" href="darslar/08-nodejs.html"><div class="card-icon">🟢</div><div class="card-num">08-dars</div><h3>Node.js va npm</h3><p>Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.</p><div class="card-level">O&#x27;rta · ~100 daqiqa</div></a>
+<a class="card" href="darslar/09-express-rest-api.html"><div class="card-icon">🚂</div><div class="card-num">09-dars</div><h3>Express.js va REST API</h3><p>Express asoslari, marshrutlash, middleware zanjiri, REST API dizayni, validatsiya, xatolarni markazlashgan boshqarish, CORS va loyiha tuzilmasi (MVC).</p><div class="card-level">O&#x27;rta · ~140 daqiqa</div></a>
+<a class="card" href="darslar/10-malumotlar-bazasi.html"><div class="card-icon">🗄️</div><div class="card-num">10-dars</div><h3>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</h3><p>Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.</p><div class="card-level">O&#x27;rta · ~150 daqiqa</div></a>
+<a class="card" href="darslar/11-autentifikatsiya.html"><div class="card-icon">🔐</div><div class="card-num">11-dars</div><h3>Autentifikatsiya va avtorizatsiya</h3><p>Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.</p><div class="card-level">O&#x27;rta–Yuqori · ~130 daqiqa</div></a>
+<a class="card" href="darslar/12-react.html"><div class="card-icon">⚛️</div><div class="card-num">12-dars</div><h3>React asoslari</h3><p>Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.</p><div class="card-level">O&#x27;rta · ~150 daqiqa</div></a>
+<a class="card" href="darslar/13-fullstack-loyiha.html"><div class="card-icon">🏗️</div><div class="card-num">13-dars</div><h3>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</h3><p>Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.</p><div class="card-level">Yuqori · ~4–6 soat amaliyot</div></a>
+<a class="card" href="darslar/14-deploy-xavfsizlik-test.html"><div class="card-icon">🚀</div><div class="card-num">14-dars</div><h3>Deploy, xavfsizlik va testlash</h3><p>Ilovani internetga chiqarish (PaaS, VPS, Docker, Nginx, HTTPS), CI/CD, OWASP asosiy zaifliklari (XSS, SQLi, CSRF), unumdorlik hamda avtomatik testlar (node:test, Supertest, Vitest).</p><div class="card-level">Yuqori · ~150 daqiqa</div></a>
+  </div>
+</section>
+
+<section class="home-section">
+  <h2 id="qanday-oqish-kerak"><a class="anchor" href="#qanday-oqish-kerak">#</a>Qanday o'qish kerak?</h2>
+  <div class="callout tip"><span class="t">Eng samarali usul</span>
+  Har bir kod misolini <b>o'zingiz qo'lda yozing</b> (nusxa olmasdan), ishga tushiring, keyin ataylab o'zgartirib
+  buzing va nima bo'lishini kuzating. Dasturlash — o'qish orqali emas, yozish orqali o'rganiladi.</div>
+  <h3>Kerakli dasturlar</h3>
+  <ul>
+    <li><b>Brauzer</b> — Google Chrome yoki Firefox (DevTools uchun: <kbd>F12</kbd>)</li>
+    <li><b>Kod muharriri</b> — <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a></li>
+    <li><b>Node.js</b> — <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a> dan LTS versiya</li>
+    <li><b>Git</b> — <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm.com</a></li>
+    <li><b>PostgreSQL</b> — 10-darsda kerak bo'ladi</li>
+  </ul>
+  <p>Saytdagi o'qish holatingiz brauzeringizda saqlanadi — har bir dars oxiridagi
+  <b>«Darsni o'qib bo'ldim»</b> tugmasini bosib boring.</p>
+  <div class="footer">Ushbu qo'llanma ochiq manba. Xato topsangiz yoki qo'shimcha kiritmoqchi bo'lsangiz —
+  <a href="https://github.com/oybekalloyorov/web_fullstak" target="_blank" rel="noopener">GitHub repozitoriyasida</a> issue yoki pull request oching.</div>
+</section>
+
+  </main>
+  
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

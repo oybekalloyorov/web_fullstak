@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autentifikatsiya va avtorizatsiya — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a class="active" href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔐</div><div><div class="crumb">11-dars · 14 tadan</div><h1>Autentifikatsiya va avtorizatsiya</h1><p class="lead">Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.</p></div></div>
+
+<p>Deyarli har bir ilovada "Kirish" tugmasi bor. Uning ortida esa veb-xavfsizlikning eng nozik qismi yotadi: parollarni
+qanday saqlash, foydalanuvchini keyingi so'rovlarda qanday "tanish", kimga nimaga ruxsat berish. Bu yerdagi xato butun
+ma'lumotlar bazasining o'g'irlanishiga olib kelishi mumkin. Shuning uchun har bir qarorning <b>nima uchun</b> ekanini tushunamiz.</p>
+
+<h2 id="autentifikatsiya-va-avtorizatsiya"><a class="anchor" href="#autentifikatsiya-va-avtorizatsiya">#</a>Autentifikatsiya va avtorizatsiya</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>Autentifikatsiya (AuthN)</th><th>Avtorizatsiya (AuthZ)</th></tr>
+<tr><td>Savol</td><td><b>Sen kimsan?</b></td><td><b>Senga nima qilish mumkin?</b></td></tr>
+<tr><td>Misol</td><td>Login va parolni tekshirish</td><td>Faqat admin foydalanuvchini o'chira oladi</td></tr>
+<tr><td>Xato kodi</td><td><code>401 Unauthorized</code></td><td><code>403 Forbidden</code></td></tr>
+<tr><td>Ketma-ketlik</td><td>Birinchi</td><td>Keyin</td></tr>
+</table></div>
+
+<h2 id="parollarni-saqlash-xeshlash"><a class="anchor" href="#parollarni-saqlash-xeshlash">#</a>Parollarni saqlash: xeshlash</h2>
+<p><b>Qoida №1: parolni hech qachon ochiq holda saqlamang.</b> Baza o'g'irlansa (bu katta kompaniyalarda ham bo'ladi), barcha
+parollar oshkor bo'ladi — odamlar esa bir xil parolni ko'p saytda ishlatadi.</p>
+<h3>Nima uchun shifrlash emas, xeshlash?</h3>
+<ul>
+  <li><b>Shifrlash</b> — ikki tomonlama: kalit bilan qayta ochish mumkin. Kalit o'g'irlansa — hamma parollar ochiladi.</li>
+  <li><b>Xeshlash</b> — bir tomonlama funksiya: <code>hash("salom123")</code> → <code>"$2b$12$Kix..."</code>, lekin xeshdan parolni qaytarib bo'lmaydi.
+  Tekshirishda kiritilgan parol qayta xeshlanadi va solishtiriladi.</li>
+</ul>
+<h3>Nima uchun MD5/SHA-256 emas?</h3>
+<p>Ular <b>tez</b> ishlash uchun yaratilgan — zamonaviy GPU sekundiga milliardlab SHA-256 hisoblaydi va oddiy parollarni
+lug'at hujumi bilan bir zumda topadi. Parollar uchun ataylab <b>sekin</b> va <b>tuzli (salted)</b> algoritmlar kerak:</p>
+<ul>
+  <li><b>bcrypt</b> — eng ko'p ishlatiladigan; "cost factor" (masalan 12) bilan sekinlik sozlanadi.</li>
+  <li><b>argon2id</b> — zamonaviy tavsiya (OWASP), xotirani ham talab qiladi.</li>
+  <li><b>Tuz (salt)</b> — har bir parolga qo'shiladigan tasodifiy qiymat. Bir xil parollar har xil xeshga ega bo'ladi, tayyor "rainbow table"lar ishlamaydi. bcrypt tuzni avtomatik yaratadi va xesh ichida saqlaydi.</li>
+</ul>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;      // npm install bcrypt   (yoki sof JS: bcryptjs)
+
+const hash = await bcrypt.hash(&#x27;MeningParolim2026&#x27;, 12);
+// &#x27;$2b$12$C6UzMDM.H6dfI/f/IKcEeO5H8v.Lk3PqxW7JLw7xYcR9EJzt4P6eW&#x27;
+//  │   │  └─ 22 belgili tuz + 31 belgili xesh
+//  │   └─ cost = 12 (2^12 = 4096 iteratsiya)
+//  └─ algoritm versiyasi
+
+const ok = await bcrypt.compare(&#x27;MeningParolim2026&#x27;, hash);   // true
+const bad = await bcrypt.compare(&#x27;boshqa&#x27;, hash);              // false</code></pre></div>
+
+<h2 id="foydalanuvchini-eslab-qolish-sessiya-va-token"><a class="anchor" href="#foydalanuvchini-eslab-qolish-sessiya-va-token">#</a>Foydalanuvchini "eslab qolish": sessiya va token</h2>
+<p>HTTP holatsiz (1-dars) — server har bir so'rovda kim kelganini bilmaydi. Login'dan keyin mijozga "guvohnoma" beriladi va u
+har bir so'rov bilan uni ko'rsatadi. Ikki asosiy yondashuv bor:</p>
+<h3>1. Sessiyalar (stateful)</h3>
+<ol>
+  <li>Login muvaffaqiyatli → server tasodifiy <b>sessiya ID</b> yaratadi va uni <b>serverda</b> (Redis yoki bazada) saqlaydi: <code>sid_abc → { userId: 7 }</code>.</li>
+  <li>ID mijozga <code>Set-Cookie: sid=abc; HttpOnly; Secure</code> orqali yuboriladi.</li>
+  <li>Brauzer har so'rovda cookie'ni avtomatik yuboradi; server ID bo'yicha foydalanuvchini topadi.</li>
+  <li>Chiqish — serverdagi yozuvni o'chirish. Darhol, ishonchli.</li>
+</ol>
+<h3>2. JWT tokenlar (stateless)</h3>
+<p><b>JWT (JSON Web Token)</b> — server <b>imzolagan</b> va ichida ma'lumot saqlovchi satr. Server hech narsani eslab qolmaydi:
+imzoni tekshirish kifoya.</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3OTE5ODAwMDB9.Xk3v...
+└──────────── header ───────────────┘ └──────────────────── payload ───────────────────────────┘ └ imzo ┘
+
+header:  { &quot;alg&quot;: &quot;HS256&quot;, &quot;typ&quot;: &quot;JWT&quot; }
+payload: { &quot;sub&quot;: &quot;7&quot;, &quot;role&quot;: &quot;user&quot;, &quot;iat&quot;: 1791979100, &quot;exp&quot;: 1791980000 }
+imzo:    HMAC-SHA256(base64(header) + &quot;.&quot; + base64(payload), JWT_SECRET)</code></pre></div>
+<div class="callout warn"><span class="t">JWT shifrlanmagan!</span>
+Header va payload shunchaki Base64 — <a href="https://jwt.io" target="_blank" rel="noopener">jwt.io</a> da istalgan kishi o'qiy oladi. Imzo faqat
+<b>o'zgartirilmaganini</b> kafolatlaydi. Payload'ga parol, karta raqami kabi maxfiy ma'lumot qo'ymang.</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Sessiya</th><th>JWT</th></tr>
+<tr><td>Holat qayerda</td><td>Serverda</td><td>Tokenning o'zida</td></tr>
+<tr><td>Har so'rovda bazaga murojaat</td><td>Ha (Redis bilan tez)</td><td>Yo'q</td></tr>
+<tr><td>Chiqish/bloklash</td><td>Darhol</td><td>Token muddati tugaguncha amal qiladi (qisqa muddat + refresh token kerak)</td></tr>
+<tr><td>Bir nechta server/mikroservis</td><td>Umumiy sessiya ombori kerak</td><td>Oson — har bir servis imzoni tekshiradi</td></tr>
+<tr><td>Mobil ilovalar</td><td>Mumkin</td><td>Juda qulay</td></tr>
+</table></div>
+
+<h3>Token qayerda saqlanadi?</h3>
+<div class="table-wrap"><table>
+<tr><th>Joy</th><th>XSS'ga qarshi</th><th>CSRF'ga qarshi</th><th>Izoh</th></tr>
+<tr><td><code>localStorage</code></td><td>❌ Har qanday skript o'qiydi</td><td>✅ Avtomatik yuborilmaydi</td><td>Oddiy, lekin XSS bo'lsa token o'g'irlanadi</td></tr>
+<tr><td><code>HttpOnly</code> cookie</td><td>✅ JS o'qiy olmaydi</td><td>⚠️ <code>SameSite</code> kerak</td><td><b>Veb-ilovalar uchun tavsiya</b></td></tr>
+<tr><td>Xotira (JS o'zgaruvchisi)</td><td>⚠️ Qisman</td><td>✅</td><td>Sahifa yangilansa yo'qoladi — refresh token bilan birga</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">res.cookie(&#x27;access_token&#x27;, token, {
+  httpOnly: true,                                  // document.cookie orqali o&#x27;qib bo&#x27;lmaydi
+  secure: process.env.NODE_ENV === &#x27;production&#x27;,  // faqat HTTPS orqali
+  sameSite: &#x27;lax&#x27;,                                 // boshqa saytdan POST so&#x27;rovlarda yuborilmaydi (CSRF himoyasi)
+  maxAge: 15 * 60 * 1000,                          // 15 daqiqa
+  path: &#x27;/&#x27;,
+});</code></pre></div>
+
+<h2 id="access-va-refresh-tokenlar"><a class="anchor" href="#access-va-refresh-tokenlar">#</a>Access va refresh tokenlar</h2>
+<p>Muammo: uzoq muddatli token o'g'irlansa — hujumchi uzoq vaqt foydalanadi; qisqa muddatli bo'lsa — foydalanuvchi har 15
+daqiqada qayta login qiladi. Yechim — ikki token:</p>
+<ul>
+  <li><b>Access token</b> — qisqa muddatli (5–15 daqiqa), har bir API so'rovida ishlatiladi.</li>
+  <li><b>Refresh token</b> — uzoq muddatli (7–30 kun), faqat <code>/auth/refresh</code> ga yuboriladi va yangi access token olish uchun ishlatiladi.
+  U <b>serverda (bazada) qayd qilinadi</b> — shuning uchun uni bekor qilish (logout, "barcha qurilmalardan chiqish") mumkin.</li>
+  <li><b>Rotatsiya</b> — har refresh'da eski refresh token bekor qilinib, yangisi beriladi. Eski token qayta ishlatilsa — o'g'irlik belgisi, foydalanuvchining barcha sessiyalari yopiladi.</li>
+</ul>
+
+<h2 id="login-xavfsizligi-boyicha-qoidalar"><a class="anchor" href="#login-xavfsizligi-boyicha-qoidalar">#</a>Login xavfsizligi bo'yicha qoidalar</h2>
+<ul>
+  <li><b>Umumiy xato xabari</b>: "Email yoki parol noto'g'ri" — "Bunday email yo'q" emas (aks holda hujumchi qaysi emaillar ro'yxatdan o'tganini biladi).</li>
+  <li><b>Rate limiting</b>: bir IP/akkauntga daqiqada 5–10 urinish (brute-force'ga qarshi).</li>
+  <li><b>Parol siyosati</b>: kamida 8–12 belgi; murakkablik qoidalaridan ko'ra uzunlik muhimroq; mashhur sizib chiqqan parollarni rad etish.</li>
+  <li><b>HTTPS</b> — majburiy.</li>
+  <li>Parolni tiklash tokenlari — bir martalik, qisqa muddatli, bazada <i>xesh</i> ko'rinishida.</li>
+  <li>Muhim ilovalar uchun <b>ikki bosqichli autentifikatsiya (2FA)</b>: TOTP (Google Authenticator) yoki SMS.</li>
+  <li>Tayyor yechimlar ham bor: <b>OAuth</b> ("Google bilan kirish"), Auth0, Clerk, Supabase Auth, Better Auth. Lekin ular ortidagi tamoyillarni bilish baribir zarur.</li>
+</ul>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Ro'yxatdan o'tish va login (bcrypt + JWT + httpOnly cookie)</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install bcrypt jsonwebtoken cookie-parser zod</code></pre></div>
+<div class="code"><div class="code-head"><span>migrations/002_users.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE users (
+  id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name          TEXT NOT NULL,
+  email         TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  role          TEXT NOT NULL DEFAULT &#x27;user&#x27; CHECK (role IN (&#x27;user&#x27;, &#x27;editor&#x27;, &#x27;admin&#x27;)),
+  token_version INTEGER NOT NULL DEFAULT 0,     -- oshirilsa barcha tokenlar bekor bo&#x27;ladi
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX users_email_uq ON users (lower(email));</code></pre></div>
+<div class="code"><div class="code-head"><span>src/config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function required(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Muhit o&#x27;zgaruvchisi o&#x27;rnatilmagan: ${name}`);
+  return v;
+}
+
+export const config = {
+  isProd: process.env.NODE_ENV === &#x27;production&#x27;,
+  jwtSecret: required(&#x27;JWT_SECRET&#x27;),               // kamida 32 belgili tasodifiy satr
+  accessTtl: &#x27;15m&#x27;,
+  clientUrl: process.env.CLIENT_URL ?? &#x27;http://localhost:5173&#x27;,
+};
+// Kalit yaratish: node -e &quot;console.log(require(&#x27;crypto&#x27;).randomBytes(48).toString(&#x27;hex&#x27;))&quot;</code></pre></div>
+<div class="code"><div class="code-head"><span>src/services/auth.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;
+import jwt from &#x27;jsonwebtoken&#x27;;
+import { query } from &#x27;../db/pool.js&#x27;;
+import { config } from &#x27;../config.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+const BCRYPT_COST = 12;
+// Foydalanuvchi topilmasa ham bcrypt.compare bajarilishi uchun — javob vaqti bo&#x27;yicha email borligini bilib bo&#x27;lmasin
+const DUMMY_HASH = await bcrypt.hash(&#x27;dummy-password&#x27;, BCRYPT_COST);
+
+const publicUser = ({ id, name, email, role }) =&gt; ({ id, name, email, role });
+
+export function signAccessToken(user) {
+  return jwt.sign(
+    { sub: String(user.id), role: user.role, tv: user.token_version },
+    config.jwtSecret,
+    { expiresIn: config.accessTtl, algorithm: &#x27;HS256&#x27; }
+  );
+}
+
+export async function register({ name, email, password }) {
+  const passwordHash = await bcrypt.hash(password, BCRYPT_COST);
+  try {
+    const { rows: [user] } = await query(
+      `INSERT INTO users (name, email, password_hash) VALUES ($1, lower($2), $3)
+       RETURNING id, name, email, role, token_version`,
+      [name, email, passwordHash]
+    );
+    return user;
+  } catch (err) {
+    if (err.code === &#x27;23505&#x27;) throw HttpError.conflict(&#x27;Bu email bilan ro\&#x27;yxatdan o\&#x27;tilgan&#x27;);
+    throw err;
+  }
+}
+
+export async function login({ email, password }) {
+  const { rows: [user] } = await query(&#x27;SELECT * FROM users WHERE email = lower($1)&#x27;, [email]);
+  const ok = await bcrypt.compare(password, user?.password_hash ?? DUMMY_HASH);
+  if (!user || !ok) throw HttpError.unauthorized(&#x27;Email yoki parol noto\&#x27;g\&#x27;ri&#x27;);
+  return user;
+}
+
+export { publicUser };</code></pre></div>
+<div class="code"><div class="code-head"><span>src/routes/auth.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+import { z } from &#x27;zod&#x27;;
+import { validate } from &#x27;../middleware/validate.js&#x27;;
+import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
+import * as auth from &#x27;../services/auth.service.js&#x27;;
+import { config } from &#x27;../config.js&#x27;;
+import { rateLimit } from &#x27;../middleware/common.js&#x27;;
+
+const router = Router();
+
+const registerSchema = z.object({
+  name: z.string().trim().min(2).max(60),
+  email: z.string().trim().email(),
+  password: z.string().min(8, &#x27;Parol kamida 8 belgi&#x27;).max(72),   // bcrypt 72 baytdan keyingisini e&#x27;tiborsiz qoldiradi
+});
+const loginSchema = z.object({ email: z.string().trim().email(), password: z.string().min(1) });
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: config.isProd,
+  sameSite: &#x27;lax&#x27;,
+  maxAge: 15 * 60 * 1000,
+};
+
+function sendSession(res, user, status = 200) {
+  res.cookie(&#x27;access_token&#x27;, auth.signAccessToken(user), cookieOptions);
+  res.status(status).json({ user: auth.publicUser(user) });
+}
+
+const authLimiter = rateLimit({ windowMs: 15 * 60_000, max: 10 });   // 15 daqiqada 10 urinish
+
+router.post(&#x27;/register&#x27;, authLimiter, validate(registerSchema), async (req, res) =&gt; {
+  const user = await auth.register(req.validated.body);
+  sendSession(res, user, 201);
+});
+
+router.post(&#x27;/login&#x27;, authLimiter, validate(loginSchema), async (req, res) =&gt; {
+  const user = await auth.login(req.validated.body);
+  sendSession(res, user);
+});
+
+router.post(&#x27;/logout&#x27;, (req, res) =&gt; {
+  res.clearCookie(&#x27;access_token&#x27;, { ...cookieOptions, maxAge: undefined });
+  res.status(204).end();
+});
+
+router.get(&#x27;/me&#x27;, requireAuth, (req, res) =&gt; {
+  res.json({ user: auth.publicUser(req.user) });
+});
+
+export default router;</code></pre></div>
+<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import cookieParser from &#x27;cookie-parser&#x27;;
+import authRouter from &#x27;./routes/auth.routes.js&#x27;;
+
+app.use(cors({ origin: config.clientUrl, credentials: true }));  // cookie uchun credentials SHART
+app.use(cookieParser());
+app.use(&#x27;/api/v1/auth&#x27;, authRouter);</code></pre></div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Himoyalangan marshrutlar va "faqat egasi" tekshiruvi</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>src/middleware/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
+import { query } from &#x27;../db/pool.js&#x27;;
+import { config } from &#x27;../config.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+export async function requireAuth(req, res, next) {
+  // Cookie (brauzer) yoki Authorization sarlavhasi (mobil ilova, Postman)
+  const header = req.get(&#x27;authorization&#x27;);
+  const token = req.cookies?.access_token
+    ?? (header?.startsWith(&#x27;Bearer &#x27;) ? header.slice(7) : null);
+
+  if (!token) return next(HttpError.unauthorized());
+
+  let payload;
+  try {
+    payload = jwt.verify(token, config.jwtSecret, { algorithms: [&#x27;HS256&#x27;] }); // algoritmni aniq ko&#x27;rsatamiz
+  } catch (err) {
+    return next(HttpError.unauthorized(
+      err.name === &#x27;TokenExpiredError&#x27; ? &#x27;Sessiya muddati tugagan&#x27; : &#x27;Token yaroqsiz&#x27;
+    ));
+  }
+
+  // Foydalanuvchi o&#x27;chirilgan yoki &quot;barcha qurilmalardan chiqish&quot; qilingan bo&#x27;lishi mumkin
+  const { rows: [user] } = await query(
+    &#x27;SELECT id, name, email, role, token_version FROM users WHERE id = $1&#x27;,
+    [payload.sub]
+  );
+  if (!user || user.token_version !== payload.tv) return next(HttpError.unauthorized(&#x27;Sessiya bekor qilingan&#x27;));
+
+  req.user = user;
+  next();
+}
+
+// Ixtiyoriy autentifikatsiya: mehmon ham kira oladi, lekin login qilgan bo&#x27;lsa req.user bo&#x27;ladi
+export function optionalAuth(req, res, next) {
+  if (!req.cookies?.access_token &amp;&amp; !req.get(&#x27;authorization&#x27;)) return next();
+  // Token yaroqsiz bo&#x27;lsa ham xato bermaymiz — mehmon sifatida davom etadi
+  return requireAuth(req, res, () =&gt; next());
+}</code></pre></div>
+<p>Endi postlar API'sida egalikni tekshiramiz. <b>Muhim:</b> ID'ni so'rov tanasidan emas, <code>req.user</code> dan olamiz —
+aks holda foydalanuvchi boshqa birov nomidan post yaratishi mumkin.</p>
+<div class="code"><div class="code-head"><span>src/routes/posts.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
+import { query } from &#x27;../db/pool.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+const router = Router();
+
+router.post(&#x27;/&#x27;, requireAuth, async (req, res) =&gt; {
+  const { title, body } = req.body;              // (validatsiya — 9-darsdagidek)
+  const { rows: [post] } = await query(
+    &#x27;INSERT INTO posts (author_id, title, body) VALUES ($1, $2, $3) RETURNING *&#x27;,
+    [req.user.id, title, body]                    // ✅ author_id — tokendan, mijozdan emas
+  );
+  res.status(201).json(post);
+});
+
+router.patch(&#x27;/:id&#x27;, requireAuth, async (req, res) =&gt; {
+  const { rows: [post] } = await query(&#x27;SELECT author_id FROM posts WHERE id = $1&#x27;, [req.params.id]);
+  if (!post) throw HttpError.notFound(&#x27;Post topilmadi&#x27;);
+
+  const isOwner = String(post.author_id) === String(req.user.id);
+  if (!isOwner &amp;&amp; req.user.role !== &#x27;admin&#x27;) {
+    throw HttpError.forbidden(&#x27;Faqat muallif yoki admin tahrirlay oladi&#x27;);
+  }
+
+  const { rows: [updated] } = await query(
+    &#x27;UPDATE posts SET title = COALESCE($2, title), body = COALESCE($3, body) WHERE id = $1 RETURNING *&#x27;,
+    [req.params.id, req.body.title, req.body.body]
+  );
+  res.json(updated);
+});
+
+export default router;</code></pre></div>
+<div class="callout danger"><span class="t">IDOR — eng keng tarqalgan avtorizatsiya xatosi</span>
+<code>GET /api/orders/1053</code> — tizimga kirgan foydalanuvchi URL'dagi raqamni o'zgartirib, <b>boshqa birovning</b> buyurtmasini
+ko'rsa — bu "Insecure Direct Object Reference". Har bir resursga murojaatda "bu resurs shu foydalanuvchigami?" degan tekshiruv
+bo'lishi shart: <code>WHERE id = $1 AND user_id = $2</code>.</div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Rollar va ruxsatlar (RBAC)</h3></div><div class="ex-body">
+<p>Har bir rolga emas, har bir <b>ruxsatga</b> tekshirish yozish kodni moslashuvchan qiladi: yangi rol qo'shish faqat jadvalni o'zgartirishni talab qiladi.</p>
+<div class="code"><div class="code-head"><span>src/auth/permissions.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export const PERMISSIONS = {
+  user:   [&#x27;post:create&#x27;, &#x27;post:update:own&#x27;, &#x27;post:delete:own&#x27;, &#x27;comment:create&#x27;],
+  editor: [&#x27;post:create&#x27;, &#x27;post:update:any&#x27;, &#x27;post:publish&#x27;, &#x27;comment:create&#x27;, &#x27;comment:delete:any&#x27;],
+  admin:  [&#x27;*&#x27;],                                   // hamma narsa
+};
+
+export function can(user, permission) {
+  const list = PERMISSIONS[user?.role] ?? [];
+  return list.includes(&#x27;*&#x27;) || list.includes(permission);
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>src/middleware/authorize.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { can } from &#x27;../auth/permissions.js&#x27;;
+import { HttpError } from &#x27;../utils/errors.js&#x27;;
+
+export const requirePermission = (...perms) =&gt; (req, res, next) =&gt; {
+  if (!req.user) return next(HttpError.unauthorized());
+  if (!perms.some(p =&gt; can(req.user, p))) {
+    return next(HttpError.forbidden(`Bu amal uchun ruxsat kerak: ${perms.join(&#x27; yoki &#x27;)}`));
+  }
+  next();
+};</code></pre></div>
+<div class="code"><div class="code-head"><span>Foydalanish</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
+import { requirePermission } from &#x27;../middleware/authorize.js&#x27;;
+import { can } from &#x27;../auth/permissions.js&#x27;;
+
+// Marshrut darajasida
+router.post(&#x27;/:id/publish&#x27;, requireAuth, requirePermission(&#x27;post:publish&#x27;), publishPost);
+router.get(&#x27;/admin/users&#x27;, requireAuth, requirePermission(&#x27;*&#x27;), listUsers);
+
+// Resurs darajasida (egalik bilan)
+router.delete(&#x27;/:id&#x27;, requireAuth, async (req, res) =&gt; {
+  const post = await getPost(req.params.id);
+  const allowed = can(req.user, &#x27;post:delete:any&#x27;)
+    || (can(req.user, &#x27;post:delete:own&#x27;) &amp;&amp; post.author_id === req.user.id);
+  if (!allowed) throw HttpError.forbidden();
+  await deletePost(post.id);
+  res.status(204).end();
+});
+
+// Admin foydalanuvchi rolini o&#x27;zgartiradi va uning eski tokenlarini bekor qiladi
+router.patch(&#x27;/admin/users/:id/role&#x27;, requireAuth, requirePermission(&#x27;*&#x27;), async (req, res) =&gt; {
+  const { rows: [u] } = await query(
+    &#x27;UPDATE users SET role = $2, token_version = token_version + 1 WHERE id = $1 RETURNING id, role&#x27;,
+    [req.params.id, req.body.role]
+  );
+  res.json(u);
+});</code></pre></div>
+<p>Frontendda ham xuddi shu <code>can()</code> funksiyasidan foydalanib, ruxsat bo'lmagan tugmalarni yashirish mumkin — lekin bu
+faqat qulaylik uchun. <b>Haqiqiy tekshiruv doim serverda.</b></p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Frontend: login formasi, sessiyani tekshirish va 401'ni boshqarish</h3></div><div class="ex-body">
+<p>httpOnly cookie ishlatilganda frontend tokenni umuman "ko'rmaydi" — brauzer uni o'zi yuboradi. Faqat <code>credentials: 'include'</code> kerak.</p>
+<div class="code"><div class="code-head"><span>client/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const API = &#x27;http://localhost:3000/api/v1&#x27;;
+
+export async function api(path, { method = &#x27;GET&#x27;, body } = {}) {
+  const res = await fetch(API + path, {
+    method,
+    credentials: &#x27;include&#x27;,          // 🍪 cookie&#x27;ni boshqa origin&#x27;dagi API&#x27;ga yuborish
+    headers: body ? { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; } : {},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  if (res.status === 401 &amp;&amp; path !== &#x27;/auth/me&#x27; &amp;&amp; path !== &#x27;/auth/login&#x27;) {
+    // Sessiya tugagan — foydalanuvchini login sahifasiga, qaytish manzili bilan
+    location.href = `/login.html?next=${encodeURIComponent(location.pathname)}`;
+    return new Promise(() =&gt; {});   // yo&#x27;naltirish paytida kod davom etmasin
+  }
+
+  const data = res.status === 204 ? null : await res.json();
+  if (!res.ok) throw Object.assign(new Error(data?.error?.message ?? &#x27;Xatolik&#x27;), { status: res.status, data });
+  return data;
+}
+
+export const auth = {
+  me: () =&gt; api(&#x27;/auth/me&#x27;).then(d =&gt; d.user).catch(() =&gt; null),
+  login: (email, password) =&gt; api(&#x27;/auth/login&#x27;, { method: &#x27;POST&#x27;, body: { email, password } }),
+  register: (data) =&gt; api(&#x27;/auth/register&#x27;, { method: &#x27;POST&#x27;, body: data }),
+  logout: () =&gt; api(&#x27;/auth/logout&#x27;, { method: &#x27;POST&#x27; }),
+};</code></pre></div>
+<div class="code"><div class="code-head"><span>client/login.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form id=&quot;login&quot;&gt;
+  &lt;h1&gt;Kirish&lt;/h1&gt;
+  &lt;input name=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; placeholder=&quot;Email&quot; required&gt;
+  &lt;input name=&quot;password&quot; type=&quot;password&quot; autocomplete=&quot;current-password&quot; placeholder=&quot;Parol&quot; required&gt;
+  &lt;button&gt;Kirish&lt;/button&gt;
+  &lt;p id=&quot;error&quot; role=&quot;alert&quot;&gt;&lt;/p&gt;
+&lt;/form&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  import { auth } from &#x27;./auth.js&#x27;;
+
+  const form = document.querySelector(&#x27;#login&#x27;);
+  const error = document.querySelector(&#x27;#error&#x27;);
+
+  // Allaqachon kirgan bo&#x27;lsa — to&#x27;g&#x27;ridan-to&#x27;g&#x27;ri ichkariga
+  if (await auth.me()) location.replace(&#x27;/dashboard.html&#x27;);
+
+  form.addEventListener(&#x27;submit&#x27;, async (e) =&gt; {
+    e.preventDefault();
+    const btn = form.querySelector(&#x27;button&#x27;);
+    btn.disabled = true;
+    btn.textContent = &#x27;Tekshirilmoqda...&#x27;;
+    error.textContent = &#x27;&#x27;;
+
+    try {
+      const { email, password } = Object.fromEntries(new FormData(form));
+      await auth.login(email, password);
+      const next = new URLSearchParams(location.search).get(&#x27;next&#x27;);
+      // 🔒 Open redirect&#x27;dan himoya: faqat o&#x27;z saytimizdagi yo&#x27;llarga
+      location.href = next?.startsWith(&#x27;/&#x27;) &amp;&amp; !next.startsWith(&#x27;//&#x27;) ? next : &#x27;/dashboard.html&#x27;;
+    } catch (err) {
+      error.textContent = err.status === 429
+        ? &#x27;Juda ko\&#x27;p urinish. 15 daqiqadan so\&#x27;ng qayta urinib ko\&#x27;ring.&#x27;
+        : err.message;
+      form.elements.password.value = &#x27;&#x27;;
+      form.elements.password.focus();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = &#x27;Kirish&#x27;;
+    }
+  });
+&lt;/script&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>client/dashboard.html (himoyalangan sahifa)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;header&gt;
+  &lt;span id=&quot;hello&quot;&gt;&lt;/span&gt;
+  &lt;button id=&quot;logout&quot;&gt;Chiqish&lt;/button&gt;
+&lt;/header&gt;
+&lt;script type=&quot;module&quot;&gt;
+  import { auth } from &#x27;./auth.js&#x27;;
+
+  const user = await auth.me();
+  if (!user) location.replace(&#x27;/login.html?next=/dashboard.html&#x27;);
+  else {
+    document.querySelector(&#x27;#hello&#x27;).textContent = `Salom, ${user.name}! (${user.role})`;
+    document.querySelector(&#x27;#logout&#x27;).onclick = async () =&gt; {
+      await auth.logout();
+      location.replace(&#x27;/login.html&#x27;);
+    };
+  }
+&lt;/script&gt;</code></pre></div>
+<div class="callout info"><span class="t">Cookie va turli domenlar</span>
+Frontend <code>localhost:5173</code>, API <code>localhost:3000</code> bo'lsa ham ular "same-site" (bir xil <code>localhost</code>), shuning uchun
+<code>SameSite=Lax</code> cookie ishlaydi. Production'da frontend va API'ni bitta domen ostida (<code>example.uz</code> va <code>api.example.uz</code>)
+yoki bitta origin'da (<code>/api</code> proksi orqali, 13-dars) joylash eng oson yo'l.</div>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>Refresh token mexanizmini qo'shing: <code>refresh_tokens(id, user_id, token_hash, expires_at, revoked_at)</code> jadvali, <code>POST /auth/refresh</code> (rotatsiya bilan), <code>POST /auth/logout-all</code>.</li>
+  <li>"Parolni unutdim": <code>POST /auth/forgot</code> bir martalik token yaratib (bazada xeshi bilan, 30 daqiqa muddat) konsolga havola chiqarsin; <code>POST /auth/reset</code> uni tekshirib, parolni almashtirsin va <code>token_version</code> ni oshirsin.</li>
+  <li>Login urinishlarini <code>login_attempts</code> jadvalida qayd qiling; 5 ta muvaffaqiyatsiz urinishdan keyin akkauntni 15 daqiqaga bloklang.</li>
+  <li>jwt.io saytida o'z tokeningizni oching va payload'ni o'zgartirib ko'ring. Server uni nega qabul qilmaydi?</li>
+  <li><code>GET /api/orders/:id</code> marshrutida IDOR zaifligini ataylab yarating, so'ng uni tuzating va farqni test bilan isbotlang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>AuthN — "kimsan?" (401), AuthZ — "nima qila olasan?" (403).</li>
+  <li>Parollar faqat bcrypt/argon2 bilan xeshlangan holda saqlanadi.</li>
+  <li>JWT imzolangan, lekin shifrlanmagan; qisqa muddat + refresh token; algoritmni aniq ko'rsating.</li>
+  <li>Veb-ilovalarda tokenni <code>HttpOnly; Secure; SameSite</code> cookie'da saqlang.</li>
+  <li>Foydalanuvchi ID'si doim tokendan; har bir resursda egalikni tekshiring (IDOR).</li>
+  <li>Ruxsatlar asosidagi RBAC kodni moslashuvchan qiladi; frontend tekshiruvi faqat UX uchun.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="10-malumotlar-bazasi.html"><small>← Oldingi dars</small>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a><a class="next" href="12-react.html"><small>Keyingi dars →</small>React asoslari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#autentifikatsiya-va-avtorizatsiya">Autentifikatsiya va avtorizatsiya</a></li><li><a href="#parollarni-saqlash-xeshlash">Parollarni saqlash: xeshlash</a></li><li><a href="#foydalanuvchini-eslab-qolish-sessiya-va-token">Foydalanuvchini &quot;eslab qolish&quot;: sessiya va token</a></li><li><a href="#access-va-refresh-tokenlar">Access va refresh tokenlar</a></li><li><a href="#login-xavfsizligi-boyicha-qoidalar">Login xavfsizligi bo&#x27;yicha qoidalar</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!-- title: Express.js va REST API | desc: Express asoslari, marshrutlash, middleware zanjiri, REST API dizayni, validatsiya, xatolarni markazlashgan boshqarish, CORS va loyiha tuzilmasi (MVC). | icon: 🚂 | level: O'rta · ~140 daqiqa -->
+
+<p><b>Express</b> — Node.js uchun eng mashhur minimalistik web-freymvork. U oldingi darsda qo'lda yozgan narsalarimizni —
+marshrutlash, JSON'ni o'qish, statik fayllar, xatolarni boshqarish — oddiy va tushunarli API bilan beradi.
+Bu darsda frontend ilovalar "gaplashadigan" haqiqiy <b>REST API</b> qurishni o'rganamiz.</p>
+
+<h2>Birinchi Express ilova</h2>
+<pre data-lang="bash">mkdir kitob-api && cd kitob-api
+npm init -y
+npm pkg set type=module
+npm install express</pre>
+<pre data-lang="js" data-title="src/server.js">import express from 'express';
+
+const app = express();
+app.use(express.json());           // JSON tanani avtomatik o'qish (req.body)
+
+app.get('/', (req, res) => {
+  res.send('Kitob API ishlayapti 📚');
+});
+
+app.get('/api/salom/:ism', (req, res) => {
+  res.json({ xabar: `Salom, ${req.params.ism}!` });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 http://localhost:${PORT}`));</pre>
+<p>8-darsdagi 35 qatorlik <code>http</code> serverini Express 10 qatorda bajardi. Endi har bir qismni chuqurroq ko'ramiz.</p>
+
+<h2>Marshrutlash (Routing)</h2>
+<p>Marshrut = <b>HTTP metod</b> + <b>yo'l</b> + <b>ishlovchi funksiya(lar)</b>.</p>
+<pre data-lang="js">app.get('/api/books', handler);          // o'qish
+app.post('/api/books', handler);         // yaratish
+app.put('/api/books/:id', handler);      // to'liq almashtirish
+app.patch('/api/books/:id', handler);    // qisman yangilash
+app.delete('/api/books/:id', handler);   // o'chirish
+app.all('/api/secret', handler);         // istalgan metod
+
+// Bitta yo'l uchun bir nechta metod
+app.route('/api/books/:id')
+  .get(getBook)
+  .patch(updateBook)
+  .delete(deleteBook);</pre>
+<h3>So'rov (req) obyektidan ma'lumot olish</h3>
+<pre data-lang="js">// GET /api/users/42/orders?status=paid&page=2
+app.get('/api/users/:userId/orders', (req, res) => {
+  req.params;          // { userId: '42' }               — yo'l parametrlari (doim satr!)
+  req.query;           // { status: 'paid', page: '2' }  — query parametrlar (doim satr!)
+  req.body;            // POST/PUT tanasi (express.json() kerak)
+  req.headers;         // barcha sarlavhalar (kichik harfda)
+  req.get('authorization');
+  req.method;          // 'GET'
+  req.path;            // '/api/users/42/orders'
+  req.ip;              // mijoz IP manzili
+  req.cookies;         // cookie-parser middleware bilan
+});</pre>
+<h3>Javob (res) usullari</h3>
+<pre data-lang="js">res.json({ id: 1 });                  // JSON + Content-Type avtomatik
+res.status(201).json(newBook);        // status kod + JSON
+res.status(204).end();                // tanasiz javob
+res.send('<h1>HTML</h1>');            // matn/HTML
+res.sendFile(path.join(dir, 'a.pdf'));
+res.download('/files/hisobot.xlsx');  // yuklab olish oynasi
+res.redirect(301, '/yangi-manzil');
+res.set('Cache-Control', 'no-store');
+res.cookie('theme', 'dark', { httpOnly: true, maxAge: 86400000 });</pre>
+<div class="callout warn">Bitta so'rovga <b>faqat bitta</b> javob yuboriladi. <code>res.json()</code> dan keyin yana <code>res.send()</code> chaqirilsa —
+"Cannot set headers after they are sent" xatosi. Shuning uchun javobdan keyin <code>return</code> qilish odatiy:
+<code>if (!book) return res.status(404).json(...)</code>.</div>
+
+<h3>Router — marshrutlarni modullarga ajratish</h3>
+<pre data-lang="js" data-title="src/routes/books.routes.js">import { Router } from 'express';
+const router = Router();
+
+router.get('/', (req, res) => { /* barcha kitoblar */ });
+router.get('/:id', (req, res) => { /* bitta kitob */ });
+router.post('/', (req, res) => { /* yaratish */ });
+
+export default router;</pre>
+<pre data-lang="js" data-title="src/app.js">import booksRouter from './routes/books.routes.js';
+import authorsRouter from './routes/authors.routes.js';
+
+app.use('/api/books', booksRouter);       // router ichidagi '/' → '/api/books'
+app.use('/api/authors', authorsRouter);</pre>
+
+<h2>Middleware — Express'ning yuragi</h2>
+<p><b>Middleware</b> — so'rov va javob o'rtasida ishlaydigan funksiya. Express ilovasi — bu middleware'lar <b>zanjiri</b>:
+so'rov ularning har biridan ketma-ket o'tadi.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">So'rov</div><div class="arrow">→</div>
+    <div class="node">logger</div><div class="arrow">→</div>
+    <div class="node">express.json()</div><div class="arrow">→</div>
+    <div class="node">auth</div><div class="arrow">→</div>
+    <div class="node">validate</div><div class="arrow">→</div>
+    <div class="node">route handler<small>res.json()</small></div>
+  </div>
+  <div class="diagram-caption">Har bir middleware so'rovni o'zgartirishi, javob qaytarib zanjirni to'xtatishi yoki next() bilan keyingisiga uzatishi mumkin</div>
+</div>
+<pre data-lang="js">function middleware(req, res, next) {
+  // 1. req/res ni o'qish yoki o'zgartirish
+  // 2. va keyin:
+  next();              // → keyingi middleware'ga o'tish
+  // yoki: res.status(401).json(...)  — zanjirni to'xtatish
+  // yoki: next(err)                  — xato ishlovchisiga o'tish
+}</pre>
+<h3>Middleware turlari</h3>
+<pre data-lang="js">// 1. Ilova darajasida — barcha so'rovlar uchun
+app.use(express.json({ limit: '1mb' }));             // JSON tana
+app.use(express.urlencoded({ extended: true }));    // HTML forma tanasi
+app.use(express.static('public'));                   // statik fayllar (public/index.html → /)
+
+// 2. Yo'l bo'yicha
+app.use('/api', apiRateLimiter);
+
+// 3. Marshrut darajasida — faqat shu marshrut uchun (bir nechta bo'lishi mumkin)
+app.delete('/api/books/:id', requireAuth, requireRole('admin'), deleteBook);
+
+// 4. Xato ishlovchi — 4 ta parametr (err, req, res, next). Doim ENG OXIRIDA
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: 'Server xatosi' });
+});</pre>
+<div class="callout info"><span class="t">Tartib muhim!</span>
+Middleware'lar <b>yozilgan tartibda</b> bajariladi. <code>express.json()</code> marshrutlardan keyin yozilsa, <code>req.body</code>
+<code>undefined</code> bo'ladi. 404 ishlovchisi barcha marshrutlardan keyin, xato ishlovchisi — eng oxirida.</div>
+
+<h3>Mashhur tayyor middleware'lar</h3>
+<div class="table-wrap"><table>
+<tr><th>Paket</th><th>Vazifasi</th></tr>
+<tr><td><code>cors</code></td><td>Boshqa domendagi frontendga API'dan foydalanishga ruxsat</td></tr>
+<tr><td><code>helmet</code></td><td>Xavfsizlik sarlavhalarini o'rnatadi</td></tr>
+<tr><td><code>morgan</code></td><td>So'rovlarni log qilish</td></tr>
+<tr><td><code>express-rate-limit</code></td><td>Bir IP'dan so'rovlar sonini cheklash</td></tr>
+<tr><td><code>cookie-parser</code></td><td>Cookie'larni <code>req.cookies</code> ga o'qish</td></tr>
+<tr><td><code>multer</code></td><td>Fayl yuklash (<code>multipart/form-data</code>)</td></tr>
+<tr><td><code>compression</code></td><td>Javoblarni gzip bilan siqish</td></tr>
+</table></div>
+
+<h2>REST API dizayni</h2>
+<p><b>REST (Representational State Transfer)</b> — API'ni loyihalash uslubi. Asosiy g'oya: hamma narsa — <b>resurs</b>
+(kitob, foydalanuvchi, buyurtma), har bir resurs <b>URL</b> bilan aniqlanadi, ular ustidagi amallar <b>HTTP metodlari</b> bilan ifodalanadi.</p>
+<div class="table-wrap"><table>
+<tr><th>Amal</th><th>Metod va URL</th><th>Muvaffaqiyatli javob</th></tr>
+<tr><td>Ro'yxat</td><td><code>GET /api/books</code></td><td><code>200</code> + massiv</td></tr>
+<tr><td>Bittasini olish</td><td><code>GET /api/books/42</code></td><td><code>200</code> + obyekt / <code>404</code></td></tr>
+<tr><td>Yaratish</td><td><code>POST /api/books</code></td><td><code>201</code> + yaratilgan obyekt</td></tr>
+<tr><td>To'liq yangilash</td><td><code>PUT /api/books/42</code></td><td><code>200</code></td></tr>
+<tr><td>Qisman yangilash</td><td><code>PATCH /api/books/42</code></td><td><code>200</code></td></tr>
+<tr><td>O'chirish</td><td><code>DELETE /api/books/42</code></td><td><code>204</code></td></tr>
+<tr><td>Ichki resurs</td><td><code>GET /api/authors/7/books</code></td><td><code>200</code></td></tr>
+</table></div>
+<h3>Yaxshi API qoidalari</h3>
+<ul>
+  <li>URL'da <b>otlar</b>, ko'plikda: <code>/api/books</code> ✅, <code>/api/getBooks</code> ❌, <code>/api/book/delete/5</code> ❌.</li>
+  <li>Kichik harflar va defis: <code>/api/order-items</code>.</li>
+  <li>Filtrlash, saralash, sahifalash — query orqali: <code>/api/books?genre=roman&amp;sort=-price&amp;page=2&amp;limit=20</code>.</li>
+  <li>To'g'ri status kodlar (1-dars jadvali).</li>
+  <li>Xatolar <b>bir xil formatda</b>: <code>{ "error": { "message": "...", "details": [...] } }</code>.</li>
+  <li>Versiyalash: <code>/api/v1/books</code> — API'ni buzuvchi o'zgarishlar kiritilganda eski mijozlar ishlashda davom etadi.</li>
+  <li>Sahifalangan javobda meta-ma'lumot: <code>{ data: [...], meta: { page, limit, total } }</code>.</li>
+</ul>
+
+<h2>Validatsiya</h2>
+<p>Mijozdan kelgan har qanday ma'lumot — <b>ishonchsiz</b>. Validatsiyasiz API bazaga noto'g'ri ma'lumot yozadi, xatolar bilan
+"yiqiladi" va hujumlarga ochiq bo'ladi. Qo'lda tekshirish mumkin, lekin <b>Zod</b> kabi sxema kutubxonalari qulayroq:</p>
+<pre data-lang="bash">npm install zod</pre>
+<pre data-lang="js">import { z } from 'zod';
+
+const bookSchema = z.object({
+  title: z.string().trim().min(1, 'Nom majburiy').max(200),
+  author: z.string().trim().min(2),
+  price: z.number().int().positive('Narx musbat bo\'lishi kerak'),
+  year: z.number().int().min(1450).max(new Date().getFullYear()).optional(),
+  genres: z.array(z.enum(['roman', 'ilmiy', 'bolalar', 'dasturlash'])).default([]),
+});
+
+const result = bookSchema.safeParse(req.body);
+if (!result.success) {
+  // result.error.issues → [{ path: ['price'], message: 'Narx musbat bo'lishi kerak' }, ...]
+}
+const cleanData = result.data;   // tozalangan, standart qiymatlar qo'shilgan, ortiqcha maydonlar olib tashlangan
+
+// PATCH uchun — barcha maydonlar ixtiyoriy
+const bookPatchSchema = bookSchema.partial();</pre>
+
+<h2>Xatolarni markazlashgan boshqarish</h2>
+<p>Har bir marshrutda <code>try/catch</code> yozib, xatoni qo'lda formatlash — takrorlanuvchi kod. To'g'ri yondashuv:
+marshrutlar xatoni <b>tashlaydi (throw)</b>, bitta xato middleware'i ularni <b>bir xil formatda</b> javobga aylantiradi.</p>
+<pre data-lang="js" data-title="src/utils/errors.js">export class HttpError extends Error {
+  constructor(status, message, details) {
+    super(message);
+    this.status = status;
+    this.details = details;
+  }
+  static badRequest(msg = 'Noto\'g\'ri so\'rov', details) { return new HttpError(400, msg, details); }
+  static unauthorized(msg = 'Avtorizatsiya talab qilinadi') { return new HttpError(401, msg); }
+  static forbidden(msg = 'Ruxsat yo\'q') { return new HttpError(403, msg); }
+  static notFound(msg = 'Topilmadi') { return new HttpError(404, msg); }
+  static conflict(msg) { return new HttpError(409, msg); }
+}</pre>
+<pre data-lang="js" data-title="src/middleware/errorHandler.js">import { HttpError } from '../utils/errors.js';
+
+export function notFound(req, res, next) {
+  next(HttpError.notFound(`Marshrut topilmadi: ${req.method} ${req.originalUrl}`));
+}
+
+// eslint-disable-next-line no-unused-vars
+export function errorHandler(err, req, res, next) {
+  // Noto'g'ri JSON (express.json() tashlaydi)
+  if (err.type === 'entity.parse.failed') {
+    err = HttpError.badRequest('So\'rov tanasidagi JSON noto\'g\'ri');
+  }
+
+  const status = err.status ?? 500;
+  if (status >= 500) console.error(err);   // kutilmagan xatolarni log qilamiz
+
+  res.status(status).json({
+    error: {
+      message: status >= 500 && process.env.NODE_ENV === 'production'
+        ? 'Ichki server xatosi'           // 🔒 production'da ichki tafsilotlarni oshkor qilmaymiz
+        : err.message,
+      ...(err.details && { details: err.details }),
+    },
+  });
+}</pre>
+<div class="callout tip"><span class="t">Express 5 va async xatolar</span>
+Express 5 da <code>async</code> marshrut ichida tashlangan xato yoki rad etilgan Promise avtomatik ravishda xato middleware'iga
+uzatiladi. Express 4 da esa buning uchun har bir handler'ni o'rash yoki <code>express-async-errors</code> paketini ishlatish kerak edi.</div>
+
+<h2>CORS</h2>
+<p>Frontend <code>http://localhost:5173</code> da, API <code>http://localhost:3000</code> da ishlasa, brauzer so'rovni bloklaydi (6-dars).
+Ruxsatni server beradi:</p>
+<pre data-lang="js">import cors from 'cors';
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://kitoblar.uz'],  // faqat ishonchli manbalar
+  credentials: true,                                          // cookie yuborishga ruxsat
+}));
+// ⚠️ origin: '*' — ochiq API'lardan tashqari tavsiya etilmaydi</pre>
+
+<h2>Loyiha tuzilmasi</h2>
+<p>Hamma kodni bitta faylga yozish 100 qatorgacha ishlaydi. Katta loyihalarda <b>mas'uliyatlarni ajratish</b> kerak:</p>
+<pre data-lang="text">kitob-api/
+├── src/
+│   ├── server.js              # faqat ishga tushirish (listen)
+│   ├── app.js                 # Express ilova: middleware'lar va router'lar
+│   ├── config.js              # muhit o'zgaruvchilari bir joyda
+│   ├── routes/                # URL → controller bog'lanishi
+│   │   └── books.routes.js
+│   ├── controllers/           # HTTP qatlami: req'dan o'qish, res'ga yozish
+│   │   └── books.controller.js
+│   ├── services/              # biznes-mantiq (HTTP haqida hech narsa bilmaydi)
+│   │   └── books.service.js
+│   ├── db/                    # ma'lumotlar bilan ishlash
+│   ├── middleware/            # auth, validate, errorHandler
+│   ├── schemas/               # Zod sxemalari
+│   └── utils/
+├── tests/
+├── .env
+├── .env.example
+├── .gitignore
+└── package.json</pre>
+<p><b>Nega bunday?</b> Controller "qanday so'raldi" bilan, service "nima qilish kerak" bilan, db qatlami "qayerda saqlanadi"
+bilan shug'ullanadi. JSON fayldan PostgreSQL'ga o'tganda faqat db qatlami o'zgaradi; service'ni HTTP'siz test qilish mumkin.
+<code>app.js</code> va <code>server.js</code> ning ajratilishi esa testlarda ilovani portni band qilmasdan ishga tushirishga imkon beradi (14-dars).</p>
+
+<h2>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Kitoblar do'koni uchun to'liq CRUD REST API</h3></div><div class="ex-body">
+<p>8-darsdagi <code>JsonStore</code> ustiga qurilgan, yuqoridagi tuzilmaga amal qilgan to'liq API. Filtrlash, qidiruv, saralash
+va sahifalash ham bor.</p>
+<pre data-lang="bash">npm install express zod cors helmet morgan</pre>
+<pre data-lang="js" data-title="src/schemas/book.schema.js">import { z } from 'zod';
+
+export const bookSchema = z.object({
+  title: z.string().trim().min(1).max(200),
+  author: z.string().trim().min(2).max(100),
+  price: z.number().int().positive(),
+  stock: z.number().int().min(0).default(0),
+  genre: z.enum(['roman', 'ilmiy', 'bolalar', 'dasturlash', 'tarix']),
+  year: z.number().int().min(1450).max(new Date().getFullYear()).optional(),
+});
+
+export const bookPatchSchema = bookSchema.partial();
+
+export const listQuerySchema = z.object({
+  q: z.string().trim().optional(),
+  genre: bookSchema.shape.genre.optional(),
+  minPrice: z.coerce.number().int().min(0).optional(),     // coerce: '5000' → 5000
+  maxPrice: z.coerce.number().int().min(0).optional(),
+  sort: z.enum(['price', '-price', 'title', '-createdAt']).default('-createdAt'),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
+});</pre>
+<pre data-lang="js" data-title="src/middleware/validate.js">import { HttpError } from '../utils/errors.js';
+
+// Sxema bo'yicha req.body / req.query ni tekshiruvchi middleware "fabrikasi"
+export const validate = (schema, source = 'body') => (req, res, next) => {
+  const result = schema.safeParse(req[source]);
+  if (!result.success) {
+    const details = result.error.issues.map(i => ({ field: i.path.join('.'), message: i.message }));
+    return next(HttpError.badRequest('Validatsiya xatosi', details));
+  }
+  req.validated = { ...req.validated, [source]: result.data };
+  next();
+};</pre>
+<pre data-lang="js" data-title="src/services/books.service.js">import { JsonStore } from '../db/jsonStore.js';
+import { HttpError } from '../utils/errors.js';
+
+const store = new JsonStore('data/books.json');
+
+const SORTERS = {
+  price: (a, b) => a.price - b.price,
+  '-price': (a, b) => b.price - a.price,
+  title: (a, b) => a.title.localeCompare(b.title),
+  '-createdAt': (a, b) => b.createdAt.localeCompare(a.createdAt),
+};
+
+export async function listBooks({ q, genre, minPrice, maxPrice, sort, page, limit }) {
+  const needle = q?.toLowerCase();
+  const all = await store.all({
+    filter: (b) =>
+      (!needle || b.title.toLowerCase().includes(needle) || b.author.toLowerCase().includes(needle)) &&
+      (!genre || b.genre === genre) &&
+      (minPrice === undefined || b.price >= minPrice) &&
+      (maxPrice === undefined || b.price <= maxPrice),
+    sort: SORTERS[sort],
+  });
+  const start = (page - 1) * limit;
+  return {
+    data: all.slice(start, start + limit),
+    meta: { page, limit, total: all.length, pages: Math.ceil(all.length / limit) },
+  };
+}
+
+export async function getBook(id) {
+  const book = await store.get(id);
+  if (!book) throw HttpError.notFound('Kitob topilmadi');
+  return book;
+}
+
+export async function createBook(data) {
+  const duplicate = await store.all({
+    filter: b => b.title.toLowerCase() === data.title.toLowerCase() && b.author === data.author,
+  });
+  if (duplicate.length) throw HttpError.conflict('Bu kitob allaqachon mavjud');
+  return store.create(data);
+}
+
+export async function updateBook(id, patch) {
+  const book = await store.update(id, patch);
+  if (!book) throw HttpError.notFound('Kitob topilmadi');
+  return book;
+}
+
+export async function deleteBook(id) {
+  if (!(await store.remove(id))) throw HttpError.notFound('Kitob topilmadi');
+}</pre>
+<pre data-lang="js" data-title="src/controllers/books.controller.js">import * as service from '../services/books.service.js';
+
+export const list = async (req, res) => res.json(await service.listBooks(req.validated.query));
+export const getOne = async (req, res) => res.json(await service.getBook(req.params.id));
+export const create = async (req, res) => res.status(201).json(await service.createBook(req.validated.body));
+export const update = async (req, res) => res.json(await service.updateBook(req.params.id, req.validated.body));
+export const remove = async (req, res) => {
+  await service.deleteBook(req.params.id);
+  res.status(204).end();
+};</pre>
+<pre data-lang="js" data-title="src/routes/books.routes.js">import { Router } from 'express';
+import * as ctrl from '../controllers/books.controller.js';
+import { validate } from '../middleware/validate.js';
+import { bookSchema, bookPatchSchema, listQuerySchema } from '../schemas/book.schema.js';
+
+const router = Router();
+
+router.get('/', validate(listQuerySchema, 'query'), ctrl.list);
+router.get('/:id', ctrl.getOne);
+router.post('/', validate(bookSchema), ctrl.create);
+router.patch('/:id', validate(bookPatchSchema), ctrl.update);
+router.delete('/:id', ctrl.remove);
+
+export default router;</pre>
+<pre data-lang="js" data-title="src/app.js">import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import booksRouter from './routes/books.routes.js';
+import { notFound, errorHandler } from './middleware/errorHandler.js';
+
+export const app = express();
+
+app.use(helmet());
+app.use(cors({ origin: process.env.CLIENT_URL ?? 'http://localhost:5173' }));
+app.use(morgan('dev'));
+app.use(express.json({ limit: '100kb' }));
+
+app.get('/api/health', (req, res) => res.json({ status: 'ok', uptime: process.uptime() }));
+app.use('/api/v1/books', booksRouter);
+
+app.use(notFound);
+app.use(errorHandler);</pre>
+<pre data-lang="js" data-title="src/server.js">import { app } from './app.js';
+
+const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => console.log(`📚 Kitob API: http://localhost:${PORT}/api/v1/books`));</pre>
+<p>Sinab ko'ramiz:</p>
+<pre data-lang="bash"># Yaratish
+curl -X POST localhost:3000/api/v1/books -H "Content-Type: application/json" \
+  -d '{"title":"O`tkan kunlar","author":"Abdulla Qodiriy","price":65000,"stock":10,"genre":"roman","year":1926}'
+# → 201 { "id": "c1f...", "title": "O`tkan kunlar", ... }
+
+# Validatsiya xatosi
+curl -X POST localhost:3000/api/v1/books -H "Content-Type: application/json" -d '{"title":"","price":-5}'
+# → 400 { "error": { "message": "Validatsiya xatosi", "details": [
+#          { "field": "title", "message": "..." },
+#          { "field": "author", "message": "..." }, ... ] } }
+#    (aniq xabar matni Zod versiyasiga bog'liq; o'zbekcha xabarlarni sxemada berish mumkin)
+
+# Ro'yxat: qidiruv, filtr, saralash, sahifalash
+curl "localhost:3000/api/v1/books?q=qodiriy&genre=roman&sort=-price&page=1&limit=5"
+
+# Qisman yangilash va o'chirish
+curl -X PATCH localhost:3000/api/v1/books/ID -H "Content-Type: application/json" -d '{"price":59000}'
+curl -i -X DELETE localhost:3000/api/v1/books/ID     # → 204
+curl -i localhost:3000/api/v1/books/ID               # → 404</pre>
+<div class="callout tip">curl o'rniga VS Code'ning <b>REST Client</b> kengaytmasi, <b>Thunder Client</b> yoki <b>Postman</b>/<b>Insomnia</b> dasturlaridan foydalanish qulayroq.</div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>O'z middleware'laringiz: so'rov ID, logger, vaqt o'lchash va API kaliti</h3></div><div class="ex-body">
+<pre data-lang="js" data-title="src/middleware/common.js">import { randomUUID } from 'node:crypto';
+
+// 1. Har bir so'rovga noyob ID — loglarda bitta so'rovning izini kuzatish uchun
+export function requestId(req, res, next) {
+  req.id = req.get('X-Request-Id') ?? randomUUID();
+  res.set('X-Request-Id', req.id);
+  next();
+}
+
+// 2. Tuzilgan (structured) logger: javob yuborilgandan keyin yozadi
+export function logger(req, res, next) {
+  const start = process.hrtime.bigint();
+  res.on('finish', () => {
+    const ms = Number(process.hrtime.bigint() - start) / 1e6;
+    const line = {
+      time: new Date().toISOString(),
+      id: req.id,
+      method: req.method,
+      url: req.originalUrl,
+      status: res.statusCode,
+      ms: Math.round(ms * 10) / 10,
+      ip: req.ip,
+    };
+    (res.statusCode >= 500 ? console.error : console.log)(JSON.stringify(line));
+  });
+  next();
+}
+
+// 3. Sekin so'rovlarni aniqlash
+export const slowWarning = (thresholdMs = 1000) => (req, res, next) => {
+  const t = setTimeout(() => console.warn(`🐢 Sekin so'rov (${thresholdMs}ms+): ${req.method} ${req.originalUrl}`), thresholdMs);
+  res.on('finish', () => clearTimeout(t));
+  next();
+};
+
+// 4. API kaliti bilan himoya (masalan, ichki xizmatlar uchun)
+export const requireApiKey = (req, res, next) => {
+  const key = req.get('X-API-Key');
+  if (!key || key !== process.env.INTERNAL_API_KEY) {
+    return res.status(401).json({ error: { message: 'API kaliti noto\'g\'ri' } });
+  }
+  next();
+};
+
+// 5. Juda oddiy xotiradagi rate limiter (o'rganish uchun; productionda express-rate-limit + Redis)
+export function rateLimit({ windowMs = 60_000, max = 60 } = {}) {
+  const hits = new Map();   // ip → { count, reset }
+  return (req, res, next) => {
+    const now = Date.now();
+    const entry = hits.get(req.ip) ?? { count: 0, reset: now + windowMs };
+    if (now > entry.reset) Object.assign(entry, { count: 0, reset: now + windowMs });
+    entry.count++;
+    hits.set(req.ip, entry);
+
+    res.set('RateLimit-Remaining', Math.max(0, max - entry.count));
+    if (entry.count > max) {
+      res.set('Retry-After', Math.ceil((entry.reset - now) / 1000));
+      return res.status(429).json({ error: { message: 'Juda ko\'p so\'rov. Birozdan keyin urinib ko\'ring.' } });
+    }
+    next();
+  };
+}</pre>
+<pre data-lang="js" data-title="src/app.js (qo'shimcha)">import { requestId, logger, slowWarning, requireApiKey, rateLimit } from './middleware/common.js';
+
+app.use(requestId);
+app.use(logger);
+app.use(slowWarning(800));
+app.use('/api', rateLimit({ windowMs: 60_000, max: 100 }));
+app.use('/internal', requireApiKey, internalRouter);</pre>
+<p>Log natijasi: <code>{"time":"2026-10-03T10:00:00.000Z","id":"5b1e...","method":"GET","url":"/api/v1/books","status":200,"ms":4.2,"ip":"::1"}</code>.
+JSON formatidagi loglarni keyinchalik monitoring tizimlarida (Grafana, Datadog) qidirish va tahlil qilish oson.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Fayl yuklash: kitob muqovasi (multer)</h3></div><div class="ex-body">
+<pre data-lang="bash">npm install multer</pre>
+<pre data-lang="js" data-title="src/routes/upload.routes.js">import { Router } from 'express';
+import multer from 'multer';
+import path from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { HttpError } from '../utils/errors.js';
+
+const ALLOWED = new Map([
+  ['image/jpeg', '.jpg'],
+  ['image/png', '.png'],
+  ['image/webp', '.webp'],
+]);
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: 'uploads/covers',
+    // 🔒 Foydalanuvchi bergan nomni ISHLATMAYMIZ — tasodifiy nom + ishonchli kengaytma
+    filename: (req, file, cb) => cb(null, randomUUID() + ALLOWED.get(file.mimetype)),
+  }),
+  limits: { fileSize: 2 * 1024 * 1024, files: 1 },    // 2 MB
+  fileFilter: (req, file, cb) =>
+    ALLOWED.has(file.mimetype)
+      ? cb(null, true)
+      : cb(HttpError.badRequest('Faqat JPG, PNG yoki WEBP rasm')),
+});
+
+const router = Router();
+
+router.post('/books/:id/cover', upload.single('cover'), async (req, res) => {
+  if (!req.file) throw HttpError.badRequest('Rasm yuborilmadi (maydon nomi: cover)');
+  const url = `/uploads/covers/${req.file.filename}`;
+  // await booksService.updateBook(req.params.id, { coverUrl: url });
+  res.status(201).json({ url, size: req.file.size });
+});
+
+export default router;</pre>
+<pre data-lang="js" data-title="src/app.js (qo'shimcha)">import fs from 'node:fs';
+fs.mkdirSync('uploads/covers', { recursive: true });
+app.use('/uploads', express.static('uploads', { maxAge: '7d' }));
+app.use('/api/v1', uploadRouter);
+
+// errorHandler ichida multer xatolarini ham tushunarli qilamiz:
+// if (err.code === 'LIMIT_FILE_SIZE') err = HttpError.badRequest('Fayl 2 MB dan katta');</pre>
+<pre data-lang="bash">curl -F "cover=@muqova.jpg" localhost:3000/api/v1/books/ID/cover
+# → 201 { "url": "/uploads/covers/0b6e...c1.jpg", "size": 184322 }</pre>
+<p>Frontend tomonda: <code>const fd = new FormData(); fd.append('cover', input.files[0]); fetch(url, { method: 'POST', body: fd })</code>.
+Production'da fayllar odatda serverning diskida emas, S3 kabi obyekt omborlarida saqlanadi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>API'ni frontend bilan bog'lash: statik sahifa + fetch</h3></div><div class="ex-body">
+<p>Express bitta serverda ham API'ni, ham frontend fayllarni bera oladi. <code>public/</code> papkasiga oddiy sahifa qo'shamiz:</p>
+<pre data-lang="html" data-title="public/index.html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitob do'koni</title>
+  <style>
+    body { font-family: system-ui; max-width: 760px; margin: 40px auto; padding: 0 16px; }
+    form { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr auto; gap: 8px; margin-bottom: 24px; }
+    input, select, button { padding: 8px; font: inherit; }
+    .book { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+    .error { color: #b91c1c; }
+  </style>
+</head>
+<body>
+  <h1>📚 Kitoblar</h1>
+  <form id="add">
+    <input name="title" placeholder="Nomi" required>
+    <input name="author" placeholder="Muallif" required>
+    <input name="price" type="number" placeholder="Narx" required>
+    <select name="genre">
+      <option value="roman">Roman</option><option value="dasturlash">Dasturlash</option>
+      <option value="ilmiy">Ilmiy</option><option value="bolalar">Bolalar</option>
+    </select>
+    <button>Qo'shish</button>
+  </form>
+  <p id="msg" class="error"></p>
+  <input id="search" placeholder="🔍 Qidirish..." style="width:100%;margin-bottom:12px">
+  <div id="list"></div>
+
+  <script type="module">
+    const API = '/api/v1/books';           // bir xil origin — CORS kerak emas
+    const list = document.querySelector('#list');
+    const msg = document.querySelector('#msg');
+
+    async function request(url, options) {
+      const res = await fetch(url, {
+        ...options,
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.status === 204) return null;
+      const data = await res.json();
+      if (!res.ok) {
+        const details = data.error.details?.map(d => `${d.field}: ${d.message}`).join('; ');
+        throw new Error(details || data.error.message);
+      }
+      return data;
+    }
+
+    async function load(q = '') {
+      const { data, meta } = await request(`${API}?limit=50&q=${encodeURIComponent(q)}`);
+      list.replaceChildren(...data.map(b => {
+        const row = document.createElement('div');
+        row.className = 'book';
+        const info = document.createElement('span');
+        info.textContent = `${b.title} — ${b.author} (${b.price.toLocaleString()} so'm)`;
+        const del = document.createElement('button');
+        del.textContent = '🗑';
+        del.onclick = async () => { await request(`${API}/${b.id}`, { method: 'DELETE' }); load(q); };
+        row.append(info, del);
+        return row;
+      }));
+      if (!meta.total) list.textContent = 'Kitob topilmadi';
+    }
+
+    document.querySelector('#add').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = Object.fromEntries(new FormData(e.target));
+      body.price = Number(body.price);
+      try {
+        await request(API, { method: 'POST', body: JSON.stringify(body) });
+        e.target.reset();
+        msg.textContent = '';
+        load();
+      } catch (err) {
+        msg.textContent = err.message;      // server validatsiya xabarini ko'rsatamiz
+      }
+    });
+
+    let t;
+    document.querySelector('#search').addEventListener('input', (e) => {
+      clearTimeout(t);
+      t = setTimeout(() => load(e.target.value), 300);
+    });
+
+    load();
+  </script>
+</body>
+</html></pre>
+<pre data-lang="js" data-title="src/app.js (qo'shimcha)">app.use(express.static('public'));   // http://localhost:3000 → public/index.html</pre>
+<p>Tabriklaymiz — bu sizning birinchi <b>full-stack</b> ilovangiz: brauzer → fetch → Express → validatsiya → service → fayl
+ombori va orqaga. Keyingi darslarda ombor o'rnini PostgreSQL egallaydi, autentifikatsiya qo'shiladi, frontend esa React'ga ko'chadi.</p>
+</div></div>
+
+<h2>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>Kitob API'siga <code>authors</code> resursini qo'shing: <code>GET /api/v1/authors/:id/books</code> muallifning barcha kitoblarini qaytarsin.</li>
+  <li><code>POST /api/v1/orders</code> yarating: <code>{ items: [{ bookId, qty }] }</code> qabul qilsin, <code>stock</code> yetarliligini tekshirib, kamaytirsin; yetmasa <code>409</code>.</li>
+  <li>Barcha javoblarga <code>X-Response-Time</code> sarlavhasini qo'shuvchi middleware yozing.</li>
+  <li><code>GET /api/v1/books/stats</code> — janrlar bo'yicha kitoblar soni, o'rtacha narx va eng qimmat kitob. (Diqqat: bu marshrut <code>/:id</code> dan <b>oldin</b> e'lon qilinishi kerak — nega?)</li>
+  <li>API hujjatini <code>README.md</code> da yozing: har bir endpoint, parametrlar, so'rov va javob namunalari, xato kodlari.</li>
+</ol>
+<details><summary>4-savol javobi</summary>Express marshrutlarni yozilgan tartibda tekshiradi. Agar <code>/:id</code> oldin tursa, <code>/stats</code> so'rovi unga mos keladi va <code>id = 'stats'</code> deb qabul qilinib, "Kitob topilmadi" qaytadi.</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Express ilovasi — middleware'lar zanjiri; <code>next()</code> boshqaruvni uzatadi, tartib muhim.</li>
+  <li>REST: resurslar (otlar, ko'plikda) + HTTP metodlari + to'g'ri status kodlar.</li>
+  <li>Mijoz ma'lumotini doim validatsiya qiling (Zod); xatolarni bitta middleware'da bir xil formatda qaytaring.</li>
+  <li>Routes → Controllers → Services → DB qatlamlari kodni test qilinadigan va o'zgartirishga oson qiladi.</li>
+  <li><code>cors</code>, <code>helmet</code>, rate limiting, fayl yuklashda ehtiyotkorlik — xavfsiz API asoslari.</li>
+</ul>
+</div>

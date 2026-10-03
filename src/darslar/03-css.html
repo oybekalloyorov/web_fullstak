@@ -1,0 +1,641 @@
+<!-- title: CSS — dizayn va maket | desc: Selektorlar, kaskad va spetsifiklik, box model, Flexbox, Grid, pozitsiyalash, responsiv dizayn, CSS o'zgaruvchilari va animatsiyalar. | icon: 🎨 | level: Boshlang'ich · ~120 daqiqa -->
+
+<p><b>CSS (Cascading Style Sheets)</b> HTML elementlarining ko'rinishini boshqaradi: rang, shrift, o'lcham,
+joylashuv, animatsiya. HTML — uyning g'ishtlari bo'lsa, CSS — uning bo'yog'i, mebeli va xonalar rejasi.
+CSS'ni "oson" deb o'ylash xato: kaskad, spetsifiklik va maket algoritmlarini tushunmasdan yozilgan CSS tezda
+boshqarib bo'lmaydigan tartibsizlikka aylanadi. Bu darsda CSS'ni <i>tizimli</i> tushunamiz.</p>
+
+<h2>CSS'ni ulash usullari</h2>
+<pre data-lang="html"><!-- 1. Tashqi fayl (eng to'g'ri usul — keshlanadi, qayta ishlatiladi) -->
+<link rel="stylesheet" href="css/style.css">
+
+<!-- 2. Ichki <style> bloki (bitta sahifaga xos uslublar) -->
+<style>
+  h1 { color: navy; }
+</style>
+
+<!-- 3. Inline (eng yuqori ustuvorlik, lekin qo'llab-quvvatlash qiyin) -->
+<p style="color: red; font-weight: bold;">Diqqat!</p></pre>
+
+<h3>Qoida sintaksisi</h3>
+<pre data-lang="css">/* selektor   { xususiyat: qiymat; } */
+.card-title {
+  color: #1e293b;          /* deklaratsiya */
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}</pre>
+
+<h2>Selektorlar</h2>
+<div class="table-wrap"><table>
+<tr><th>Selektor</th><th>Misol</th><th>Nimani tanlaydi</th></tr>
+<tr><td>Universal</td><td><code>*</code></td><td>Barcha elementlar</td></tr>
+<tr><td>Teg</td><td><code>p</code></td><td>Barcha <code>&lt;p&gt;</code> lar</td></tr>
+<tr><td>Sinf (class)</td><td><code>.btn</code></td><td><code>class="btn"</code> bo'lganlar</td></tr>
+<tr><td>ID</td><td><code>#header</code></td><td><code>id="header"</code> (yagona)</td></tr>
+<tr><td>Atribut</td><td><code>input[type="email"]</code>, <code>a[href^="https"]</code></td><td>Atribut qiymati bo'yicha (<code>^=</code> boshlanadi, <code>$=</code> tugaydi, <code>*=</code> o'z ichiga oladi)</td></tr>
+<tr><td>Avlod (descendant)</td><td><code>nav a</code></td><td><code>nav</code> ichidagi istalgan chuqurlikdagi <code>a</code></td></tr>
+<tr><td>Bevosita farzand</td><td><code>ul &gt; li</code></td><td>Faqat birinchi darajali <code>li</code></td></tr>
+<tr><td>Qo'shni aka-uka</td><td><code>h2 + p</code></td><td><code>h2</code> dan keyingi birinchi <code>p</code></td></tr>
+<tr><td>Umumiy aka-uka</td><td><code>h2 ~ p</code></td><td><code>h2</code> dan keyingi barcha <code>p</code> lar</td></tr>
+<tr><td>Guruh</td><td><code>h1, h2, h3</code></td><td>Bir nechta selektorga bir xil uslub</td></tr>
+</table></div>
+
+<h3>Psevdo-sinflar va psevdo-elementlar</h3>
+<pre data-lang="css">/* Holat bo'yicha (psevdo-sinflar — bitta ikki nuqta) */
+a:hover        { color: crimson; }          /* sichqoncha ustida */
+button:active  { transform: scale(.97); }   /* bosilgan payt */
+input:focus    { outline: 2px solid royalblue; }
+input:invalid  { border-color: red; }       /* validatsiyadan o'tmagan */
+input:disabled { opacity: .5; }
+a:visited      { color: purple; }
+
+/* Tuzilma bo'yicha */
+li:first-child       { font-weight: bold; }
+li:last-child        { border-bottom: none; }
+tr:nth-child(even)   { background: #f5f5f5; }  /* juft qatorlar */
+li:nth-child(3n + 1) { color: teal; }           /* 1, 4, 7, ... */
+p:not(.lead)         { font-size: 15px; }
+.card:has(img)       { padding-top: 0; }         /* ichida img bor kartalar */
+
+/* Psevdo-elementlar — ikki ikki nuqta: mavjud bo'lmagan "virtual" element yaratadi */
+.required::after { content: " *"; color: red; }
+blockquote::before { content: "“"; font-size: 3em; }
+p::first-line    { font-weight: 600; }
+::selection      { background: gold; }
+input::placeholder { color: #999; }</pre>
+
+<h2>Kaskad, spetsifiklik va meros</h2>
+<p>Bitta elementga bir nechta qoida to'g'ri kelsa, qaysi biri g'olib bo'ladi? Brauzer quyidagi tartibda hal qiladi
+(bu "Cascading" so'zining ma'nosi):</p>
+<ol>
+  <li><b>Muhimlik (importance)</b> — <code>!important</code> belgilangan deklaratsiya ustun turadi.</li>
+  <li><b>Spetsifiklik</b> — aniqroq selektor yutadi.</li>
+  <li><b>Manba tartibi</b> — spetsifiklik teng bo'lsa, <b>keyinroq yozilgan</b> qoida yutadi.</li>
+</ol>
+<h3>Spetsifiklikni hisoblash</h3>
+<p>Spetsifiklik uchta raqam bilan o'lchanadi: <b>(ID, Sinf, Teg)</b>.</p>
+<div class="table-wrap"><table>
+<tr><th>Selektor</th><th>(ID, Sinf/atribut/psevdo-sinf, Teg/psevdo-element)</th></tr>
+<tr><td><code>p</code></td><td>(0, 0, 1)</td></tr>
+<tr><td><code>.card p</code></td><td>(0, 1, 1)</td></tr>
+<tr><td><code>.card .title:hover</code></td><td>(0, 3, 0)</td></tr>
+<tr><td><code>#main .card p</code></td><td>(1, 1, 1)</td></tr>
+<tr><td><code>style="..."</code></td><td>har qanday selektordan yuqori</td></tr>
+</table></div>
+<p>Raqamlar chapdan o'ngga solishtiriladi: <code>(1,0,0)</code> har doim <code>(0,15,0)</code> dan katta.</p>
+<pre data-lang="css">#app p      { color: blue;  }  /* (1,0,1) — G'OLIB */
+.text.big   { color: green; }  /* (0,2,0) */
+p           { color: red;   }  /* (0,0,1) */</pre>
+<div class="callout warn"><span class="t">Amaliy maslahat</span>
+Uslublar uchun deyarli faqat <b>sinflardan</b> foydalaning. ID selektorlari va <code>!important</code> spetsifiklikni
+keskin oshiradi va keyinchalik uslubni o'zgartirishni qiyinlashtiradi. Spetsifiklikni past va bir tekis saqlash —
+toza CSS'ning siri.</div>
+<h3>Meros (inheritance)</h3>
+<p>Ba'zi xususiyatlar ota elementdan farzandlarga avtomatik o'tadi: asosan <b>matn bilan bog'liqlar</b> —
+<code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>.
+O'lcham va joylashuv xususiyatlari (<code>margin</code>, <code>padding</code>, <code>border</code>, <code>width</code>) meros
+qilinmaydi. Shuning uchun shriftni bir marta <code>body</code> ga berish yetarli.</p>
+<pre data-lang="css">body { font-family: "Inter", sans-serif; color: #222; line-height: 1.6; }
+button { font: inherit; }   /* tugmalar odatda shriftni meros olmaydi — majburlaymiz */</pre>
+
+<h2>Box model — har bir element bu quti</h2>
+<p>Brauzer har bir elementni to'rtburchak quti sifatida chizadi. Quti to'rt qatlamdan iborat:</p>
+<div class="diagram" style="text-align:center">
+  <div style="display:inline-block;padding:18px;background:#fde68a55;border:1px dashed #d97706">margin (tashqi bo'shliq)
+    <div style="padding:14px;margin-top:8px;background:#1f2937;color:#fff;border-radius:4px">border (chegara)
+      <div style="padding:16px;margin-top:8px;background:#86efac88;color:#111">padding (ichki bo'shliq)
+        <div style="padding:16px 30px;margin-top:8px;background:#93c5fd;color:#111;font-weight:700">content (mazmun)</div>
+      </div>
+    </div>
+  </div>
+</div>
+<pre data-lang="css">.box {
+  width: 300px;
+  padding: 20px;              /* ichki bo'shliq: barcha tomonlar */
+  border: 2px solid #333;
+  margin: 16px auto;          /* tepa/past 16px, chap/o'ng auto = gorizontal markazlash */
+}
+
+/* Qisqa yozuv tartibi: tepa → o'ng → past → chap (soat strelkasi bo'yicha) */
+.a { padding: 10px 20px 30px 40px; }
+.b { padding: 10px 20px; }   /* tepa/past 10, chap/o'ng 20 */</pre>
+<h3>box-sizing — eng muhim bitta qator</h3>
+<p>Standart holatda (<code>content-box</code>) <code>width: 300px</code> faqat mazmunga tegishli: yuqoridagi quti haqiqatda
+<code>300 + 2×20 + 2×2 = 344px</code> keng bo'ladi. Bu hisob-kitobni qiyinlashtiradi. <code>border-box</code> da esa
+<code>width</code> padding va border'ni o'z ichiga oladi:</p>
+<pre data-lang="css">/* Deyarli har bir loyihaning birinchi qatorlari */
+*, *::before, *::after {
+  box-sizing: border-box;
+}</pre>
+<div class="callout info"><span class="t">Margin collapse</span>
+Ikki blok element ustma-ust tursa, ularning vertikal marginlari <b>qo'shilmaydi</b>, balki kattasi olinadi:
+<code>margin-bottom: 30px</code> va <code>margin-top: 20px</code> orasidagi masofa 50 emas, <b>30px</b> bo'ladi.
+Flex va Grid ichida bu hodisa yuz bermaydi.</div>
+
+<h3>display xususiyati</h3>
+<div class="table-wrap"><table>
+<tr><th>Qiymat</th><th>Xatti-harakat</th></tr>
+<tr><td><code>block</code></td><td>Yangi qatordan, butun kenglik; width/height ishlaydi</td></tr>
+<tr><td><code>inline</code></td><td>Qator ichida; width/height va vertikal margin <b>ishlamaydi</b></td></tr>
+<tr><td><code>inline-block</code></td><td>Qator ichida, lekin width/height ishlaydi (tugmalar uchun)</td></tr>
+<tr><td><code>none</code></td><td>Element umuman chizilmaydi va joy egallamaydi</td></tr>
+<tr><td><code>flex</code> / <code>grid</code></td><td>Zamonaviy maket tizimlari (pastda batafsil)</td></tr>
+</table></div>
+
+<h2>O'lchov birliklari va ranglar</h2>
+<div class="table-wrap"><table>
+<tr><th>Birlik</th><th>Nimaga nisbatan</th><th>Qachon ishlatish</th></tr>
+<tr><td><code>px</code></td><td>Mutlaq piksel</td><td>Chegaralar, soyalar, kichik detallar</td></tr>
+<tr><td><code>rem</code></td><td><code>html</code> shrift o'lchami (odatda 16px)</td><td><b>Shrift o'lchamlari, bo'shliqlar</b> — foydalanuvchi sozlamalarini hurmat qiladi</td></tr>
+<tr><td><code>em</code></td><td>Joriy elementning shrift o'lchami</td><td>Matnga proporsional padding (tugmalar)</td></tr>
+<tr><td><code>%</code></td><td>Ota element o'lchami</td><td>Kengliklar</td></tr>
+<tr><td><code>vw</code> / <code>vh</code></td><td>Ekran kengligi / balandligining 1%</td><td>To'liq ekranli bloklar; mobilda <code>dvh</code> ishonchliroq</td></tr>
+<tr><td><code>fr</code></td><td>Grid'dagi bo'sh joy ulushi</td><td>Grid ustunlari</td></tr>
+<tr><td><code>ch</code></td><td>"0" belgisining kengligi</td><td>Matn qatori uzunligi: <code>max-width: 65ch</code></td></tr>
+</table></div>
+<pre data-lang="css">.title {
+  /* clamp(minimum, ideal, maksimum) — ekranga moslashuvchi shrift */
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+.sidebar { width: calc(100% - 2rem); }
+
+/* Ranglar */
+.a { color: #4f46e5; }                   /* HEX */
+.b { color: rgb(79 70 229); }            /* RGB */
+.c { color: rgb(79 70 229 / 50%); }      /* shaffoflik bilan */
+.d { color: hsl(243 75% 59%); }          /* ton, to'yinganlik, yorqinlik */
+.e { background: linear-gradient(135deg, #4f46e5, #0ea5e9); }</pre>
+
+<h2>Tipografiya</h2>
+<pre data-lang="css">@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; /* zaxira shriftlar */
+  font-size: 1rem;
+  line-height: 1.6;        /* birliksiz — shrift o'lchamiga nisbatan */
+  color: #1f2937;
+}
+h1 { font-weight: 700; letter-spacing: -0.02em; }
+.muted { color: #6b7280; }
+.truncate {                /* uzun matnni "..." bilan kesish */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.uppercase { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; }</pre>
+
+<h2>Flexbox — bir o'lchamli maket</h2>
+<p><b>Flexbox</b> elementlarni <b>bir yo'nalish bo'yicha</b> (qator yoki ustun) joylashtirish uchun. Navigatsiya,
+tugmalar guruhi, kartaning ichki qismi, markazlash — barchasi Flexbox bilan oson.</p>
+<p>Ikki tushuncha: <b>flex-konteyner</b> (<code>display: flex</code> berilgan ota) va <b>flex-elementlar</b> (uning bevosita farzandlari).
+Shuningdek ikki o'q: <b>asosiy o'q (main axis)</b> — <code>flex-direction</code> yo'nalishi, va <b>kesishgan o'q (cross axis)</b> — unga perpendikulyar.</p>
+<h3>Konteyner xususiyatlari</h3>
+<pre data-lang="css">.container {
+  display: flex;
+  flex-direction: row;          /* row | row-reverse | column | column-reverse */
+  flex-wrap: wrap;              /* sig'masa keyingi qatorga o'tish */
+  justify-content: space-between; /* ASOSIY o'q bo'yicha: flex-start | center | flex-end | space-between | space-around | space-evenly */
+  align-items: center;          /* KESISHGAN o'q bo'yicha: stretch | flex-start | center | flex-end | baseline */
+  gap: 16px;                    /* elementlar orasidagi masofa */
+}</pre>
+<h3>Element xususiyatlari</h3>
+<pre data-lang="css">.item {
+  flex-grow: 1;      /* bo'sh joydan qancha ulush olish (0 — olmaydi) */
+  flex-shrink: 1;    /* joy yetmasa qanchalik qisqarish (0 — qisqarmaydi) */
+  flex-basis: 200px; /* boshlang'ich o'lcham */
+  /* qisqa yozuv: */
+  flex: 1 1 200px;
+}
+.sidebar { flex: 0 0 260px; }   /* qat'iy 260px, cho'zilmaydi, qisqarmaydi */
+.main    { flex: 1; }           /* qolgan barcha joyni egallaydi */
+.special { align-self: flex-end; order: -1; } /* alohida tekislash va tartibni o'zgartirish */</pre>
+<div class="callout tip"><span class="t">Markazlashning eng oson usuli</span>
+<code>.parent { display: flex; justify-content: center; align-items: center; min-height: 100vh; }</code> — element
+ekranning qoq o'rtasiga joylashadi. Grid bilan esa yanada qisqa: <code>display: grid; place-items: center;</code></div>
+
+<h2>CSS Grid — ikki o'lchamli maket</h2>
+<p><b>Grid</b> qator <i>va</i> ustunlarni bir vaqtda boshqaradi. Sahifa maketi, rasm galereyasi, mahsulotlar
+katalogi, dashboard — Grid'ning ishi.</p>
+<pre data-lang="css">.grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;     /* 3 ustun: 200px va qolgani teng ikkiga */
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;                                  /* row-gap va column-gap */
+}
+
+/* repeat() va minmax() */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);                        /* 4 ta teng ustun */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* ✨ media query'siz responsiv! */
+}
+
+/* Element bir nechta katakni egallashi */
+.featured {
+  grid-column: 1 / 3;     /* 1-chiziqdan 3-chiziqqacha = 2 ustun */
+  grid-column: span 2;    /* yoki: 2 ustun egallash */
+  grid-row: span 2;
+}</pre>
+<h3>Nomlangan hududlar (grid-template-areas)</h3>
+<pre data-lang="css">.page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 64px 1fr 48px;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  min-height: 100vh;
+}
+.page > header { grid-area: header; }
+.page > aside  { grid-area: sidebar; }
+.page > main   { grid-area: main; }
+.page > footer { grid-area: footer; }
+
+@media (max-width: 768px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main" "sidebar" "footer";
+  }
+}</pre>
+<div class="table-wrap"><table>
+<tr><th>Vazifa</th><th>Flexbox</th><th>Grid</th></tr>
+<tr><td>Yo'nalish</td><td>Bir o'lchamli (qator <i>yoki</i> ustun)</td><td>Ikki o'lchamli (qator <i>va</i> ustun)</td></tr>
+<tr><td>Yondashuv</td><td>Mazmundan kelib chiqadi (content-first)</td><td>Maketdan kelib chiqadi (layout-first)</td></tr>
+<tr><td>Eng yaxshi joyi</td><td>Navbar, tugmalar, kartaning ichi</td><td>Sahifa skeleti, galereya, katalog</td></tr>
+</table></div>
+<p>Ular raqobatchi emas — odatda birga ishlatiladi: sahifa Grid bilan, uning ichidagi komponentlar Flexbox bilan.</p>
+
+<h2>Pozitsiyalash (position)</h2>
+<div class="table-wrap"><table>
+<tr><th>Qiymat</th><th>Xatti-harakat</th><th>Nimaga nisbatan</th></tr>
+<tr><td><code>static</code></td><td>Standart oqim</td><td>—</td></tr>
+<tr><td><code>relative</code></td><td>Oqimda qoladi, lekin siljitish mumkin; <code>absolute</code> farzandlar uchun "langar"</td><td>O'zining asl joyiga</td></tr>
+<tr><td><code>absolute</code></td><td>Oqimdan chiqadi (joy egallamaydi)</td><td>Eng yaqin pozitsiyalangan (static bo'lmagan) ajdodga</td></tr>
+<tr><td><code>fixed</code></td><td>Oqimdan chiqadi, scroll'da qimirlamaydi</td><td>Ekranga (viewport)</td></tr>
+<tr><td><code>sticky</code></td><td>Scroll ma'lum nuqtaga yetguncha oddiy, keyin "yopishib" qoladi</td><td>Scroll konteyneriga</td></tr>
+</table></div>
+<pre data-lang="css">.card { position: relative; }
+.card .badge {                 /* kartaning o'ng yuqori burchagidagi "Yangi" belgisi */
+  position: absolute;
+  top: 12px; right: 12px;
+}
+.header { position: sticky; top: 0; z-index: 10; }
+.chat-button { position: fixed; bottom: 24px; right: 24px; }
+.modal-backdrop { position: fixed; inset: 0; background: rgb(0 0 0 / .5); } /* inset: 0 = top/right/bottom/left: 0 */</pre>
+<p><code>z-index</code> — ustma-ust tushgan elementlardan qaysi biri yuqorida bo'lishi. Faqat pozitsiyalangan (yoki flex/grid farzandi) elementlarda ishlaydi.</p>
+
+<h2>Responsiv dizayn</h2>
+<p>Bugun trafikning 60%+ qismi telefonlardan keladi. <b>Responsiv dizayn</b> — sayt har qanday ekranga moslashishi.</p>
+<h3>Mobile-first yondashuv</h3>
+<p>Avval eng kichik ekran uchun oddiy uslub yoziladi, keyin <code>min-width</code> media so'rovlari bilan katta ekranlar uchun kengaytiriladi.</p>
+<pre data-lang="css">/* Standart: telefon (bitta ustun) */
+.products { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+/* Planshet: 640px va undan keng */
+@media (min-width: 640px) {
+  .products { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Noutbuk: 1024px va undan keng */
+@media (min-width: 1024px) {
+  .products { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Boshqa foydali media so'rovlar */
+@media (prefers-color-scheme: dark) { /* tizim tungi rejimda */ }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@media (hover: hover) { .card:hover { transform: translateY(-4px); } } /* faqat sichqonchali qurilmalarda */
+@media print { nav, footer { display: none; } }</pre>
+<div class="callout tip"><span class="t">Responsivlik uchun nazorat ro'yxati</span>
+<code>viewport</code> meta-tegi bor · rasmlarga <code>max-width: 100%</code> · qat'iy <code>width: 1200px</code> o'rniga
+<code>max-width</code> · <code>rem</code> va <code>clamp()</code> · Grid'da <code>auto-fill + minmax</code> · DevTools'dagi
+"Toggle device toolbar" (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>) bilan sinash.</div>
+
+<h2>CSS o'zgaruvchilari (Custom Properties)</h2>
+<pre data-lang="css">:root {
+  --color-primary: #4f46e5;
+  --color-text: #1f2937;
+  --color-bg: #ffffff;
+  --radius: 12px;
+  --space: 8px;
+}
+.btn {
+  background: var(--color-primary);
+  border-radius: var(--radius);
+  padding: calc(var(--space) * 1.5) calc(var(--space) * 3);
+}
+/* Mahalliy qayta belgilash */
+.btn.danger { --color-primary: #dc2626; }</pre>
+<p>Sass o'zgaruvchilaridan farqli, CSS o'zgaruvchilari <b>ishlash vaqtida</b> (runtime) ishlaydi: ularni JavaScript bilan
+o'zgartirish, media query ichida qayta belgilash va meros qilib berish mumkin. Bu tungi rejim yasashning eng qulay usuli (4-misol).</p>
+
+<h2>Transition, transform va animatsiya</h2>
+<pre data-lang="css">.btn {
+  transition: background-color .2s ease, transform .2s ease;
+}
+.btn:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px) scale(1.02);   /* siljitish, kattalashtirish, rotate(45deg), skew() */
+}
+
+/* Kalit kadrlar bilan animatsiya */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.loader {
+  width: 40px; height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.card { animation: fadeUp .5s ease both; }</pre>
+<div class="callout info"><span class="t">Unumdorlik</span>
+<code>transform</code> va <code>opacity</code> ni animatsiya qilish arzon (faqat Composite bosqichi). <code>width</code>, <code>top</code>,
+<code>margin</code> ni animatsiya qilish esa har kadrda Layout'ni qayta hisoblaydi va sekinlashtiradi (1-darsdagi rendering bosqichlarini eslang).</div>
+
+<h2>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Responsiv navigatsiya paneli (Flexbox)</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="navbar.html"><header class="navbar">
+  <a class="logo" href="/">Texno<span>Shop</span></a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="burger" aria-label="Menyuni ochish">☰</label>
+  <nav class="nav-links">
+    <a href="/" class="active">Bosh sahifa</a>
+    <a href="/catalog">Katalog</a>
+    <a href="/sale">Chegirmalar</a>
+    <a href="/contact">Aloqa</a>
+    <a href="/login" class="btn">Kirish</a>
+  </nav>
+</header></pre>
+<pre data-lang="css" data-title="navbar.css">*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; }
+
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px 24px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgb(0 0 0 / .06);
+}
+.logo { font-size: 1.4rem; font-weight: 800; color: #111; text-decoration: none; }
+.logo span { color: #4f46e5; }
+
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-links a { color: #374151; text-decoration: none; font-weight: 500; position: relative; }
+.nav-links a:not(.btn)::after {            /* hover'da pastdan chiziq "o'sib" chiqadi */
+  content: ""; position: absolute; left: 0; bottom: -4px;
+  width: 0; height: 2px; background: #4f46e5; transition: width .25s;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.btn { background: #4f46e5; color: #fff !important; padding: 8px 18px; border-radius: 8px; }
+
+.nav-toggle, .burger { display: none; }
+
+@media (max-width: 768px) {
+  .burger { display: block; font-size: 1.6rem; cursor: pointer; }
+  .nav-links {
+    display: none;                 /* yopiq */
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 16px;
+    gap: 14px;
+  }
+  .nav-toggle:checked ~ .nav-links { display: flex; }   /* checkbox belgilansa — ochiladi */
+}</pre>
+<p><b>Hiyla:</b> JavaScript'siz mobil menyu! Yashirin <code>checkbox</code> va uning <code>label</code>i "burger" tugmasi
+vazifasini bajaradi, <code>:checked ~ .nav-links</code> selektori esa menyuni ko'rsatadi. 5-darsda buni JavaScript bilan
+ham qilamiz.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Mahsulot kartalari katalogi (Grid + Flexbox)</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="catalog.html"><section class="catalog">
+  <article class="product">
+    <span class="badge">-20%</span>
+    <img src="https://picsum.photos/seed/phone/400/300" alt="Smartfon">
+    <div class="product-body">
+      <h3 class="product-title">Samsung Galaxy A55 8/256 GB, ko'k rang</h3>
+      <div class="price">
+        <span class="new">4 799 000 so'm</span>
+        <span class="old">5 999 000</span>
+      </div>
+      <button class="add">Savatga</button>
+    </div>
+  </article>
+  <!-- ...yana kartalar... -->
+</section></pre>
+<pre data-lang="css" data-title="catalog.css">.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.product {
+  position: relative;
+  display: flex;               /* karta ichi — ustun bo'yicha flex */
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;            /* rasm burchaklari ham yumaloq bo'lishi uchun */
+  transition: transform .2s, box-shadow .2s;
+}
+.product:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgb(0 0 0 / .08); }
+
+.product img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #ef4444; color: #fff; font-weight: 700; font-size: .8rem;
+  padding: 4px 8px; border-radius: 6px;
+}
+.product-body { display: flex; flex-direction: column; gap: 10px; padding: 16px; flex: 1; }
+.product-title {
+  margin: 0; font-size: 1rem; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; /* 2 qatordan oshsa "..." */
+}
+.price { display: flex; align-items: baseline; gap: 8px; margin-top: auto; } /* margin-top:auto — pastga itaradi */
+.new { font-size: 1.15rem; font-weight: 800; }
+.old { color: #9ca3af; text-decoration: line-through; font-size: .9rem; }
+.add {
+  border: 0; border-radius: 10px; padding: 10px; cursor: pointer;
+  background: #4f46e5; color: #fff; font: inherit; font-weight: 600;
+}
+.add:hover { background: #4338ca; }</pre>
+<p><b>Asosiy g'oyalar:</b> <code>repeat(auto-fill, minmax(240px, 1fr))</code> media query'siz ham ustunlar sonini
+ekranga moslaydi; <code>aspect-ratio</code> + <code>object-fit: cover</code> turli o'lchamdagi rasmlarni bir xil ko'rinishga
+keltiradi; <code>margin-top: auto</code> narx va tugmani doim karta pastiga itarib, barcha kartalarni tekis qiladi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Landing sahifa: hero bo'lim va admin panel maketi</h3></div><div class="ex-body">
+<pre data-lang="html"><section class="hero">
+  <div class="hero-text">
+    <h1>Dasturlashni <span>noldan</span> o'rganing</h1>
+    <p>6 oyda birinchi ishingizga tayyorlaymiz. Amaliy loyihalar va mentorlar bilan.</p>
+    <div class="actions">
+      <a class="btn primary" href="#">Bepul sinov darsi</a>
+      <a class="btn ghost" href="#">Dastur bilan tanishish</a>
+    </div>
+  </div>
+  <img src="hero.svg" alt="Noutbukda kod yozayotgan talaba">
+</section>
+
+<div class="dashboard">
+  <header>Header</header>
+  <aside>Sidebar</aside>
+  <main>
+    <div class="stats">
+      <div class="stat">Foydalanuvchilar<b>12 480</b></div>
+      <div class="stat">Buyurtmalar<b>3 215</b></div>
+      <div class="stat">Daromad<b>$48k</b></div>
+    </div>
+  </main>
+</div></pre>
+<pre data-lang="css">.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 48px;
+  min-height: 80vh;
+  padding: clamp(24px, 6vw, 96px);
+  background: radial-gradient(circle at top right, #eef2ff, #fff 60%);
+}
+.hero h1 { font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.1; margin: 0 0 16px; }
+.hero h1 span {
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { font-size: 1.15rem; color: #4b5563; max-width: 50ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.btn { padding: 14px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+.btn.primary { background: #4f46e5; color: #fff; }
+.btn.ghost { border: 2px solid #c7d2fe; color: #4f46e5; }
+.hero img { width: 100%; height: auto; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .hero p { margin-inline: auto; }
+  .actions { justify-content: center; }
+  .hero img { order: -1; max-width: 360px; margin: 0 auto; }  /* mobilda rasm tepada */
+}
+
+/* Admin panel maketi */
+.dashboard {
+  display: grid;
+  grid-template: "header header" 64px
+                 "aside  main"   1fr / 240px 1fr;   /* qisqa yozuv: hududlar + qatorlar / ustunlar */
+  min-height: 100vh;
+}
+.dashboard > header { grid-area: header; background: #111827; color: #fff; }
+.dashboard > aside  { grid-area: aside;  background: #1f2937; color: #fff; }
+.dashboard > main   { grid-area: main;   background: #f3f4f6; padding: 24px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.stat { background: #fff; padding: 20px; border-radius: 12px; color: #6b7280; }
+.stat b { display: block; font-size: 1.8rem; color: #111827; }
+
+@media (max-width: 768px) {
+  .dashboard { grid-template: "header" 64px "main" 1fr / 1fr; }
+  .dashboard > aside { display: none; }
+}</pre>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>CSS o'zgaruvchilari bilan kunduzgi/tungi rejim</h3></div><div class="ex-body">
+<pre data-lang="html" data-title="theme.html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tungi rejim</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f3f4f6;
+    --text: #111827;
+    --muted: #6b7280;
+    --primary: #4f46e5;
+  }
+  /* Tizim tungi rejimda bo'lsa (foydalanuvchi qo'lda tanlamagan bo'lsa) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f172a; --surface: #1e293b; --text: #e2e8f0; --muted: #94a3b8; --primary: #818cf8;
+    }
+  }
+  /* Foydalanuvchi qo'lda tungi rejimni tanlagan */
+  :root[data-theme="dark"] {
+    --bg: #0f172a; --surface: #1e293b; --text: #e2e8f0; --muted: #94a3b8; --primary: #818cf8;
+  }
+
+  body {
+    margin: 0; min-height: 100vh;
+    display: grid; place-items: center;
+    background: var(--bg); color: var(--text);
+    font-family: system-ui, sans-serif;
+    transition: background .3s, color .3s;
+  }
+  .card { background: var(--surface); padding: 32px; border-radius: 16px; max-width: 360px; }
+  .card p { color: var(--muted); }
+  button {
+    background: var(--primary); color: #fff; border: 0;
+    padding: 10px 18px; border-radius: 10px; font: inherit; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h2>Salom! 👋</h2>
+    <p>Barcha ranglar CSS o'zgaruvchilarida. Mavzuni almashtirish uchun faqat
+       o'zgaruvchilar qayta belgilanadi.</p>
+    <button id="toggle">🌙 Tungi rejim</button>
+  </div>
+  <script>
+    const btn = document.getElementById('toggle');
+    btn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const dark = root.dataset.theme === 'dark';
+      root.dataset.theme = dark ? 'light' : 'dark';
+      btn.textContent = dark ? '🌙 Tungi rejim' : '☀️ Kunduzgi rejim';
+    });
+  </script>
+</body>
+</html></pre>
+<p>Bu aynan siz o'qiyotgan sayt ishlatgan usul (o'ng yuqoridagi 🌓 tugmasi). Komponentlar hech qachon aniq rangni
+bilmaydi — faqat <code>var(--text)</code> kabi "ma'noli" o'zgaruvchilarni. Natijada yangi mavzu qo'shish bir necha qator bilan hal bo'ladi.</p>
+</div></div>
+
+<h2>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><a href="https://flexboxfroggy.com" target="_blank" rel="noopener">Flexbox Froggy</a> va <a href="https://cssgridgarden.com" target="_blank" rel="noopener">Grid Garden</a> o'yinlarini to'liq o'ting.</li>
+  <li>2-darsdagi portfolio sahifangizga dizayn bering: sticky navbar, hero bo'lim, loyihalar Grid'da, mobil versiya.</li>
+  <li>Quyidagi selektorlarning spetsifikligini hisoblang: <code>nav ul li a</code>, <code>.menu a:hover</code>, <code>#top .menu &gt; li</code>.</li>
+  <li>Narxlar jadvali (pricing) yarating: 3 ta tarif kartasi, o'rtadagisi "Mashhur" belgisi bilan kattaroq; mobilda ustma-ust.</li>
+  <li>Faqat CSS bilan yuklanish animatsiyasi (spinner) va "skeleton" karta (kulrang miltillovchi bloklar) yasang.</li>
+</ol>
+<details><summary>3-savol javobi</summary><code>nav ul li a</code> → (0,0,4); <code>.menu a:hover</code> → (0,2,1); <code>#top .menu &gt; li</code> → (1,1,1).</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Kaskad tartibi: <code>!important</code> → spetsifiklik → manba tartibi. Asosan sinflardan foydalaning.</li>
+  <li>Har bir element — quti: content + padding + border + margin. <code>box-sizing: border-box</code> ni unutmang.</li>
+  <li>Flexbox — bir o'lchamli, Grid — ikki o'lchamli maket; ular birga ishlatiladi.</li>
+  <li>Mobile-first + <code>min-width</code> media query + <code>rem</code>/<code>clamp()</code> = responsiv sayt.</li>
+  <li>CSS o'zgaruvchilari mavzular (theme) va izchil dizayn tizimi uchun asos.</li>
+  <li>Animatsiyada <code>transform</code> va <code>opacity</code> dan foydalaning.</li>
+</ul>
+</div>

@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web qanday ishlaydi — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a class="active" href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌐</div><div><div class="crumb">01-dars · 14 tadan</div><h1>Web qanday ishlaydi</h1><p class="lead">Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.</p></div></div>
+
+<p>Kod yozishni boshlashdan oldin eng muhim savolga javob topamiz: <b>brauzerga <code>google.com</code> deb yozib
+<kbd>Enter</kbd> bosganingizda aslida nima sodir bo'ladi?</b> Bu savolga chuqur javob bera olgan dasturchi
+frontend, backend, tarmoq va xavfsizlik muammolarining aksariyatini tez tushunadi. Ushbu dars — qolgan
+barcha darslarning poydevori.</p>
+
+<h2 id="internet-va-web-farqi-nimada"><a class="anchor" href="#internet-va-web-farqi-nimada">#</a>Internet va Web — farqi nimada?</h2>
+<p>Ko'pchilik bu ikki so'zni sinonim deb o'ylaydi, lekin ular turli narsalar:</p>
+<ul>
+  <li><b>Internet</b> — butun dunyodagi kompyuterlarni bir-biriga bog'lovchi <i>jismoniy va mantiqiy tarmoq</i>
+  (kabellar, routerlar, Wi-Fi, mobil tarmoqlar, TCP/IP protokollari). U 1960–70-yillarda ARPANET loyihasidan boshlangan.</li>
+  <li><b>Web (World Wide Web)</b> — Internet <i>ustida</i> ishlaydigan xizmatlardan biri: bir-biriga havolalar orqali
+  bog'langan hujjatlar (sahifalar) tizimi. Uni 1989-yilda Tim Berners-Li CERN'da ixtiro qilgan va uchta
+  asosiy texnologiyani yaratgan: <b>HTML</b> (hujjat tili), <b>URL</b> (manzil) va <b>HTTP</b> (uzatish protokoli).</li>
+</ul>
+<p>Internet ustida boshqa xizmatlar ham bor: elektron pochta (SMTP), fayl uzatish (FTP), onlayn o'yinlar,
+video qo'ng'iroqlar va hokazo. Web — ulardan faqat bittasi, lekin eng mashhuri.</p>
+
+<h3>Ma'lumot tarmoqda qanday harakatlanadi?</h3>
+<p>Siz yuborgan har qanday ma'lumot (rasm, matn, video) kichik bo'laklarga — <b>paketlarga</b> bo'linadi.
+Har bir paketda qabul qiluvchining <b>IP-manzili</b> yoziladi va paketlar routerlar orqali turli yo'llar
+bilan manzilga yetib boradi, u yerda yana birlashtiriladi. Bu jarayonni protokollar qatlamlari boshqaradi:</p>
+<div class="table-wrap"><table>
+<tr><th>Qatlam</th><th>Protokol misollari</th><th>Vazifasi</th></tr>
+<tr><td>Ilova (Application)</td><td>HTTP, HTTPS, DNS, SMTP, WebSocket</td><td>Dasturlar nima haqida "gaplashishini" belgilaydi</td></tr>
+<tr><td>Transport</td><td>TCP, UDP</td><td>Ma'lumot to'liq va to'g'ri tartibda yetib borishini kafolatlaydi (TCP)</td></tr>
+<tr><td>Tarmoq (Internet)</td><td>IP (IPv4, IPv6)</td><td>Paketni qaysi kompyuterga yetkazishni belgilaydi</td></tr>
+<tr><td>Kanal (Link)</td><td>Ethernet, Wi-Fi</td><td>Ma'lumotni jismoniy muhit orqali uzatadi</td></tr>
+</table></div>
+<div class="callout info"><span class="t">Veb-dasturchi uchun nima muhim?</span>
+Siz asosan eng yuqori qatlamda — <b>HTTP</b> bilan ishlaysiz. Lekin TCP ulanish o'rnatish vaqt olishini,
+IP-manzil nima ekanini va DNS qanday ishlashini bilish sahifa sekin yuklanishi yoki "server topilmadi"
+kabi muammolarni tushunishda juda yordam beradi.</div>
+
+<h2 id="mijoz-server-client-server-modeli"><a class="anchor" href="#mijoz-server-client-server-modeli">#</a>Mijoz-server (Client-Server) modeli</h2>
+<p>Web <b>mijoz-server</b> arxitekturasiga asoslangan. Bunda ikki tomon bor:</p>
+<ul>
+  <li><b>Mijoz (client)</b> — so'rov yuboruvchi dastur. Ko'pincha bu brauzer, lekin mobil ilova,
+  <code>curl</code> buyrug'i yoki boshqa server ham mijoz bo'lishi mumkin.</li>
+  <li><b>Server</b> — so'rovlarni kutib turadigan va ularga javob qaytaradigan dastur (va u ishlayotgan kompyuter).
+  Server 24/7 yoqilgan bo'ladi va bir vaqtda minglab mijozlarga xizmat qiladi.</li>
+</ul>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🧑‍💻 Mijoz (brauzer)</div>
+    <div class="arrow">— 1. So'rov (Request) →</div>
+    <div class="node">🖥️ Server</div>
+    <div class="arrow">← 2. Javob (Response) —</div>
+    <div class="node">🧑‍💻 Mijoz</div>
+  </div>
+  <div class="diagram-caption">Muloqotni har doim mijoz boshlaydi; server faqat javob beradi</div>
+</div>
+<p>Bu modelning muhim xususiyati: <b>muloqotni doim mijoz boshlaydi</b>. Server o'zi mijozga
+"birinchi bo'lib" xabar yubora olmaydi (oddiy HTTP'da). Real vaqtdagi chatlar uchun WebSocket kabi
+qo'shimcha texnologiyalar ishlatilishining sababi ham shu.</p>
+
+<h3>Statik va dinamik sahifalar</h3>
+<ul>
+  <li><b>Statik sayt</b> — server diskdagi tayyor fayllarni (<code>.html</code>, <code>.css</code>, rasmlar)
+  o'zgartirmasdan yuboradi. Har bir foydalanuvchi bir xil sahifani ko'radi. Masalan: portfolio, hujjatlar sayti
+  (aynan siz o'qiyotgan ushbu qo'llanma ham statik sayt).</li>
+  <li><b>Dinamik sayt</b> — server har bir so'rov uchun javobni dastur orqali <i>hosil qiladi</i>: ma'lumotlar bazasiga
+  murojaat qiladi, foydalanuvchini aniqlaydi, hisob-kitob qiladi. Masalan: Instagram lentasi har bir
+  odam uchun boshqacha.</li>
+</ul>
+
+<h2 id="url-tuzilishi"><a class="anchor" href="#url-tuzilishi">#</a>URL tuzilishi</h2>
+<p><b>URL (Uniform Resource Locator)</b> — internetdagi resursning to'liq manzili. Uni qismlarga ajratib ko'ramiz:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">https://shop.example.uz:443/products/phones?brand=samsung&amp;sort=price#reviews
+└─┬──┘   └──────┬──────┘ └┬┘└──────┬──────┘ └──────────┬──────────┘ └──┬──┘
+ sxema        host      port     yo&#x27;l (path)     so&#x27;rov satri (query)  fragment</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Qism</th><th>Misol</th><th>Ma'nosi</th></tr>
+<tr><td>Sxema (protocol)</td><td><code>https</code></td><td>Qaysi protokol bilan ulanish. <code>https</code> = shifrlangan HTTP</td></tr>
+<tr><td>Host (domen)</td><td><code>shop.example.uz</code></td><td>Server nomi. <code>shop</code> — subdomen, <code>example</code> — domen, <code>uz</code> — yuqori darajali domen (TLD)</td></tr>
+<tr><td>Port</td><td><code>443</code></td><td>Serverdagi "eshik" raqami. HTTP uchun standart 80, HTTPS uchun 443 (yozilmasa ham shu nazarda tutiladi)</td></tr>
+<tr><td>Yo'l (path)</td><td><code>/products/phones</code></td><td>Server ichidagi aniq resurs</td></tr>
+<tr><td>Query</td><td><code>?brand=samsung&amp;sort=price</code></td><td>Qo'shimcha parametrlar: <code>kalit=qiymat</code> juftliklari, <code>&amp;</code> bilan ajratiladi</td></tr>
+<tr><td>Fragment</td><td><code>#reviews</code></td><td>Sahifa ichidagi bo'lim. <b>Serverga yuborilmaydi</b>, faqat brauzerda ishlaydi</td></tr>
+</table></div>
+<div class="callout warn"><span class="t">URL kodlash (encoding)</span>
+URL'da bo'sh joy, kirill harflari yoki maxsus belgilar bevosita yozilmaydi — ular <code>%</code> bilan kodlanadi.
+Masalan, bo'sh joy <code>%20</code> ga, <code>o'</code> esa <code>o%27</code> ga aylanadi. JavaScript'da buning uchun
+<code>encodeURIComponent("salom dunyo")</code> funksiyasi bor.</div>
+
+<h2 id="dns-internetning-telefon-kitobi"><a class="anchor" href="#dns-internetning-telefon-kitobi">#</a>DNS — internetning telefon kitobi</h2>
+<p>Kompyuterlar bir-birini <b>IP-manzil</b> orqali topadi (masalan <code>142.250.74.46</code>). Odamlar uchun esa
+<code>google.com</code> kabi nomlarni eslab qolish oson. <b>DNS (Domain Name System)</b> — domen nomini IP-manzilga
+aylantiruvchi tizim.</p>
+<h3>DNS so'rovi bosqichma-bosqich</h3>
+<ol>
+  <li><b>Brauzer keshi</b> — brauzer bu domenni yaqinda ko'rganmi? Ha bo'lsa, tayyor IP ishlatiladi.</li>
+  <li><b>Operatsion tizim keshi</b> va <code>hosts</code> fayli tekshiriladi.</li>
+  <li><b>Rekursiv resolver</b> — odatda internet provayderingiz yoki <code>8.8.8.8</code> (Google), <code>1.1.1.1</code> (Cloudflare) serveri.
+  U javobni topish uchun quyidagilardan so'raydi:</li>
+  <li><b>Root server</b> → "<code>.com</code> zonasi bilan qaysi server shug'ullanadi?"</li>
+  <li><b>TLD server</b> (<code>.com</code>) → "<code>google.com</code> uchun mas'ul (authoritative) server qaysi?"</li>
+  <li><b>Authoritative server</b> → "<code>google.com</code> ning IP-manzili: <code>142.250.74.46</code>".</li>
+  <li>Javob keshlanadi (TTL — "yashash vaqti" davomida) va brauzerga qaytariladi.</li>
+</ol>
+<h3>Asosiy DNS yozuvlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Yozuv</th><th>Vazifasi</th><th>Misol</th></tr>
+<tr><td><code>A</code></td><td>Domen → IPv4 manzil</td><td><code>example.uz → 93.184.216.34</code></td></tr>
+<tr><td><code>AAAA</code></td><td>Domen → IPv6 manzil</td><td><code>example.uz → 2606:2800:220:1::</code></td></tr>
+<tr><td><code>CNAME</code></td><td>Domen → boshqa domen (taxallus)</td><td><code>www.example.uz → example.uz</code></td></tr>
+<tr><td><code>MX</code></td><td>Pochta serveri</td><td><code>example.uz → mail.example.uz</code></td></tr>
+<tr><td><code>TXT</code></td><td>Ixtiyoriy matn (domen egaligini tasdiqlash va h.k.)</td><td><code>"v=spf1 include:_spf.google.com ~all"</code></td></tr>
+</table></div>
+<p>Saytingizni hostingga joylaganingizda (14-dars) aynan shu yozuvlarni domen sozlamalarida kiritasiz.</p>
+
+<h2 id="http-protokoli-chuqur"><a class="anchor" href="#http-protokoli-chuqur">#</a>HTTP protokoli chuqur</h2>
+<p><b>HTTP (HyperText Transfer Protocol)</b> — mijoz va server o'rtasidagi muloqot qoidalari. U <b>matnli</b>
+(HTTP/1.1 da) va <b>holatsiz (stateless)</b> protokol: har bir so'rov mustaqil, server oldingi so'rovni "eslamaydi".
+Foydalanuvchi tizimga kirganini eslab qolish uchun cookie va tokenlar ishlatiladi (11-dars).</p>
+
+<h3>HTTP so'rovi (Request) tuzilishi</h3>
+<div class="code"><div class="code-head"><span>HTTP</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-http">POST /api/users HTTP/1.1
+Host: api.example.uz
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: application/json
+Content-Length: 46
+
+{&quot;name&quot;: &quot;Aziza&quot;, &quot;email&quot;: &quot;aziza@mail.uz&quot;}</code></pre></div>
+<ol>
+  <li><b>Boshlang'ich qator</b>: <i>metod</i> (<code>POST</code>), <i>yo'l</i> (<code>/api/users</code>), <i>versiya</i> (<code>HTTP/1.1</code>).</li>
+  <li><b>Sarlavhalar (headers)</b>: <code>Nom: qiymat</code> ko'rinishidagi meta-ma'lumotlar.</li>
+  <li><b>Bo'sh qator</b> — sarlavhalar tugaganini bildiradi.</li>
+  <li><b>Tana (body)</b> — yuborilayotgan ma'lumot (GET so'rovlarida odatda bo'lmaydi).</li>
+</ol>
+
+<h3>HTTP javobi (Response) tuzilishi</h3>
+<div class="code"><div class="code-head"><span>HTTP</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-http">HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+Location: /api/users/57
+Set-Cookie: session=abc123; HttpOnly; Secure
+Cache-Control: no-store
+Date: Sat, 03 Oct 2026 10:15:00 GMT
+
+{&quot;id&quot;: 57, &quot;name&quot;: &quot;Aziza&quot;, &quot;email&quot;: &quot;aziza@mail.uz&quot;}</code></pre></div>
+
+<h3>HTTP metodlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Metod</th><th>Ma'nosi</th><th>Tana bormi?</th><th>Xavfsiz?</th><th>Idempotent?</th></tr>
+<tr><td><code>GET</code></td><td>Resursni o'qish</td><td>Yo'q</td><td>Ha</td><td>Ha</td></tr>
+<tr><td><code>POST</code></td><td>Yangi resurs yaratish / amal bajarish</td><td>Ha</td><td>Yo'q</td><td>Yo'q</td></tr>
+<tr><td><code>PUT</code></td><td>Resursni to'liq almashtirish</td><td>Ha</td><td>Yo'q</td><td>Ha</td></tr>
+<tr><td><code>PATCH</code></td><td>Resursni qisman yangilash</td><td>Ha</td><td>Yo'q</td><td>Odatda yo'q</td></tr>
+<tr><td><code>DELETE</code></td><td>Resursni o'chirish</td><td>Odatda yo'q</td><td>Yo'q</td><td>Ha</td></tr>
+<tr><td><code>HEAD</code></td><td>GET kabi, lekin faqat sarlavhalar</td><td>Yo'q</td><td>Ha</td><td>Ha</td></tr>
+<tr><td><code>OPTIONS</code></td><td>Server qaysi metodlarni qabul qilishini so'rash (CORS)</td><td>Yo'q</td><td>Ha</td><td>Ha</td></tr>
+</table></div>
+<ul>
+  <li><b>Xavfsiz (safe)</b> — serverdagi ma'lumotni o'zgartirmaydi.</li>
+  <li><b>Idempotent</b> — bir xil so'rovni 1 marta yoki 10 marta yuborish natijasi bir xil. Masalan, <code>DELETE /users/5</code>
+  ni ikki marta yuborsangiz ham foydalanuvchi bir marta o'chadi. <code>POST /orders</code> ni ikki marta yuborsangiz
+  esa ikkita buyurtma yaratiladi — shuning uchun "To'lash" tugmasini ikki marta bosish xavfli.</li>
+</ul>
+
+<h3>Status kodlari</h3>
+<p>Server javobining birinchi qatoridagi uch xonali raqam so'rov natijasini bildiradi. Birinchi raqam — guruh:</p>
+<div class="table-wrap"><table>
+<tr><th>Kod</th><th>Ma'nosi</th><th>Qachon ishlatiladi</th></tr>
+<tr><td colspan="3"><b>2xx — Muvaffaqiyat</b></td></tr>
+<tr><td><code>200 OK</code></td><td>Hammasi joyida</td><td>GET, PUT, PATCH muvaffaqiyatli</td></tr>
+<tr><td><code>201 Created</code></td><td>Yangi resurs yaratildi</td><td>POST orqali foydalanuvchi qo'shildi</td></tr>
+<tr><td><code>204 No Content</code></td><td>Bajarildi, qaytaradigan narsa yo'q</td><td>DELETE muvaffaqiyatli</td></tr>
+<tr><td colspan="3"><b>3xx — Yo'naltirish</b></td></tr>
+<tr><td><code>301 Moved Permanently</code></td><td>Manzil butunlay o'zgargan</td><td><code>http://</code> → <code>https://</code></td></tr>
+<tr><td><code>302 Found</code></td><td>Vaqtincha boshqa manzil</td><td>Login'dan keyin bosh sahifaga</td></tr>
+<tr><td><code>304 Not Modified</code></td><td>Keshdagi nusxa hali yangi</td><td>Brauzer faylni qayta yuklamaydi</td></tr>
+<tr><td colspan="3"><b>4xx — Mijoz xatosi</b></td></tr>
+<tr><td><code>400 Bad Request</code></td><td>So'rov noto'g'ri</td><td>Email maydoni bo'sh yuborildi</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>Tizimga kirilmagan</td><td>Token yo'q yoki eskirgan</td></tr>
+<tr><td><code>403 Forbidden</code></td><td>Kirilgan, lekin ruxsat yo'q</td><td>Oddiy foydalanuvchi admin sahifasiga</td></tr>
+<tr><td><code>404 Not Found</code></td><td>Resurs topilmadi</td><td><code>/users/9999</code> mavjud emas</td></tr>
+<tr><td><code>409 Conflict</code></td><td>Holat ziddiyati</td><td>Bu email allaqachon ro'yxatdan o'tgan</td></tr>
+<tr><td><code>422 Unprocessable Entity</code></td><td>Ma'lumot validatsiyadan o'tmadi</td><td>Parol juda qisqa</td></tr>
+<tr><td><code>429 Too Many Requests</code></td><td>Juda ko'p so'rov</td><td>Rate limit oshib ketdi</td></tr>
+<tr><td colspan="3"><b>5xx — Server xatosi</b></td></tr>
+<tr><td><code>500 Internal Server Error</code></td><td>Serverda kutilmagan xato</td><td>Kodda bug</td></tr>
+<tr><td><code>502 Bad Gateway</code></td><td>Proksi orqadagi serverdan javob ololmadi</td><td>Node.js ilova o'chib qolgan, Nginx ishlayapti</td></tr>
+<tr><td><code>503 Service Unavailable</code></td><td>Server vaqtincha band</td><td>Texnik ishlar, haddan tashqari yuklama</td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Eslab qolish uchun</span>
+4xx — "sen xato qilding" (mijoz), 5xx — "men xato qildim" (server). API yozganda to'g'ri status kod qaytarish —
+professional backend dasturchining belgisi.</div>
+
+<h3>Muhim sarlavhalar (headers)</h3>
+<div class="table-wrap"><table>
+<tr><th>Sarlavha</th><th>Yo'nalish</th><th>Vazifasi</th></tr>
+<tr><td><code>Content-Type</code></td><td>Ikkalasi</td><td>Tana formati: <code>text/html</code>, <code>application/json</code>, <code>multipart/form-data</code></td></tr>
+<tr><td><code>Authorization</code></td><td>So'rov</td><td>Kimligingizni isbotlash: <code>Bearer &lt;token&gt;</code></td></tr>
+<tr><td><code>Cookie</code> / <code>Set-Cookie</code></td><td>So'rov / Javob</td><td>Brauzerda kichik ma'lumot saqlash (sessiya)</td></tr>
+<tr><td><code>Cache-Control</code></td><td>Javob</td><td>Javobni qancha vaqt keshlash mumkin</td></tr>
+<tr><td><code>Location</code></td><td>Javob</td><td>Yo'naltirish manzili yoki yangi resurs manzili</td></tr>
+<tr><td><code>Access-Control-Allow-Origin</code></td><td>Javob</td><td>CORS: qaysi saytlar bu API'ga murojaat qila oladi</td></tr>
+<tr><td><code>User-Agent</code></td><td>So'rov</td><td>Mijoz dasturi haqida ma'lumot</td></tr>
+</table></div>
+
+<h3>HTTPS va TLS</h3>
+<p>Oddiy HTTP'da ma'lumot <b>ochiq matn</b> sifatida uzatiladi — Wi-Fi tarmog'idagi har qanday odam parolingizni
+o'qiy oladi. <b>HTTPS</b> = HTTP + <b>TLS</b> shifrlash. TLS uchta narsani kafolatlaydi:</p>
+<ul>
+  <li><b>Maxfiylik</b> — ma'lumotni yo'lda hech kim o'qiy olmaydi;</li>
+  <li><b>Yaxlitlik</b> — ma'lumotni yo'lda hech kim o'zgartira olmaydi;</li>
+  <li><b>Haqiqiylik</b> — siz haqiqatan <code>bank.uz</code> bilan gaplashyapsiz (SSL sertifikat orqali).</li>
+</ul>
+<p>Bugungi kunda har qanday sayt HTTPS'da bo'lishi shart. <a href="https://letsencrypt.org" target="_blank" rel="noopener">Let's Encrypt</a>
+bepul sertifikat beradi.</p>
+
+<h3>HTTP versiyalari</h3>
+<ul>
+  <li><b>HTTP/1.1</b> (1997) — matnli, bitta ulanishda so'rovlar ketma-ket ketadi.</li>
+  <li><b>HTTP/2</b> (2015) — ikkilik format, bitta ulanishda ko'plab so'rovlar parallel (multiplexing), sarlavhalar siqiladi.</li>
+  <li><b>HTTP/3</b> (2022) — TCP o'rniga QUIC (UDP asosida), mobil tarmoqlarda tezroq.</li>
+</ul>
+<p>Dasturchi sifatida siz yozadigan kod deyarli o'zgarmaydi — metodlar, status kodlar va sarlavhalar ma'nosi bir xil.</p>
+
+<h2 id="brauzer-sahifani-qanday-chizadi"><a class="anchor" href="#brauzer-sahifani-qanday-chizadi">#</a>Brauzer sahifani qanday chizadi?</h2>
+<p>Server HTML qaytargandan keyin brauzer ichida murakkab jarayon boshlanadi — buni <b>Critical Rendering Path</b> deyiladi:</p>
+<ol>
+  <li><b>HTML parsing → DOM</b>. Brauzer HTML matnini o'qib, teglar daraxtini — <b>DOM (Document Object Model)</b> ni quradi.</li>
+  <li><b>CSS parsing → CSSOM</b>. Barcha CSS qoidalaridan uslublar daraxti quriladi.</li>
+  <li><b>Render tree</b>. DOM va CSSOM birlashtiriladi; ko'rinmas elementlar (<code>display:none</code>, <code>&lt;head&gt;</code>) tashlab yuboriladi.</li>
+  <li><b>Layout (reflow)</b>. Har bir elementning ekrandagi aniq o'lchami va joylashuvi hisoblanadi.</li>
+  <li><b>Paint</b>. Piksellar chiziladi: ranglar, matn, soyalar, rasmlar.</li>
+  <li><b>Composite</b>. Qatlamlar birlashtirilib ekranga chiqariladi.</li>
+</ol>
+<div class="callout warn"><span class="t">Nega bu muhim?</span>
+<code>&lt;script&gt;</code> tegi HTML parsing'ni <b>to'xtatib qo'yadi</b> — brauzer skriptni yuklab, bajarib bo'lgunicha
+qolgan HTML'ni o'qimaydi. Shuning uchun skriptlarni <code>&lt;body&gt;</code> oxiriga qo'yish yoki
+<code>defer</code> atributidan foydalanish tavsiya qilinadi. CSS esa chizishni bloklaydi — shuning uchun u
+<code>&lt;head&gt;</code> ichida bo'ladi.</div>
+
+<h3>To'liq zanjir: Enter bosilgandan sahifa chiqqungacha</h3>
+<ol>
+  <li>Brauzer URL'ni tahlil qiladi.</li>
+  <li><b>DNS</b> orqali domen IP-manzilga aylantiriladi.</li>
+  <li>Server bilan <b>TCP ulanish</b> o'rnatiladi (3 bosqichli "qo'l siqish": SYN → SYN-ACK → ACK).</li>
+  <li>HTTPS bo'lsa — <b>TLS handshake</b>: shifrlash kalitlari kelishiladi, sertifikat tekshiriladi.</li>
+  <li><b>HTTP so'rov</b> yuboriladi: <code>GET / HTTP/1.1</code>.</li>
+  <li>Server so'rovni qayta ishlaydi (balki bazaga murojaat qiladi) va <b>HTML javob</b> qaytaradi.</li>
+  <li>Brauzer HTML'ni o'qiy boshlaydi, unda CSS, JS, rasm havolalarini ko'rib, ular uchun <b>qo'shimcha so'rovlar</b> yuboradi.</li>
+  <li>DOM + CSSOM → Layout → Paint → sahifa ekranda.</li>
+  <li>JavaScript bajarilib, sahifa interaktiv bo'ladi.</li>
+</ol>
+
+<h2 id="frontend-backend-va-full-stack"><a class="anchor" href="#frontend-backend-va-full-stack">#</a>Frontend, Backend va Full-stack</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>Frontend</th><th>Backend</th></tr>
+<tr><td><b>Qayerda ishlaydi</b></td><td>Foydalanuvchi brauzerida</td><td>Serverda</td></tr>
+<tr><td><b>Texnologiyalar</b></td><td>HTML, CSS, JavaScript, React/Vue/Angular</td><td>Node.js, Python, PHP, Go, Java + SQL/NoSQL bazalar</td></tr>
+<tr><td><b>Vazifasi</b></td><td>Interfeys, animatsiya, foydalanuvchi bilan muloqot</td><td>Ma'lumot saqlash, biznes-mantiq, xavfsizlik, API</td></tr>
+<tr><td><b>Kodni kim ko'radi</b></td><td>Har kim (DevTools orqali)</td><td>Faqat siz</td></tr>
+</table></div>
+<div class="callout danger"><span class="t">Oltin qoida</span>
+Frontend kodiga <b>hech qachon ishonmang</b>. Foydalanuvchi brauzerdagi JavaScript'ni o'zgartirishi, tekshiruvlarni
+chetlab o'tishi va serverga istalgan so'rovni yuborishi mumkin. Narx, ruxsatlar, validatsiya — barchasi
+<b>serverda</b> qayta tekshirilishi shart.</div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>DevTools orqali real saytning so'rovlarini tahlil qilish</h3></div><div class="ex-body">
+<p>Har bir veb-dasturchining eng yaqin do'sti — brauzerning <b>Developer Tools</b> paneli.</p>
+<ol>
+  <li>Chrome'da istalgan saytni oching (masalan, <code>https://kun.uz</code>).</li>
+  <li><kbd>F12</kbd> (yoki <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>) bosing va <b>Network</b> yorlig'iga o'ting.</li>
+  <li>Sahifani <kbd>Ctrl</kbd>+<kbd>R</kbd> bilan yangilang.</li>
+  <li>Ro'yxatdagi birinchi so'rovni (sahifaning o'zi, turi <code>document</code>) bosing.</li>
+</ol>
+<p>Siz quyidagilarni ko'rasiz:</p>
+<ul>
+  <li><b>Headers</b> yorlig'i — Request URL, Request Method (<code>GET</code>), Status Code (<code>200</code>), Remote Address (serverning IP-manzili va porti), barcha so'rov va javob sarlavhalari.</li>
+  <li><b>Response</b> — server qaytargan xom HTML.</li>
+  <li><b>Timing</b> — vaqt qayerga ketgani: DNS Lookup, Initial connection (TCP), SSL, Waiting for server response (TTFB), Content Download.</li>
+</ul>
+<p>Pastki satrda jami so'rovlar soni (odatda 50–150 ta!), yuklangan hajm va <b>DOMContentLoaded</b> / <b>Load</b> vaqtlari
+ko'rsatiladi. <b>Type</b> ustuni bo'yicha saralab, sahifa nechta rasm, skript va CSS yuklayotganini ko'ring.</p>
+<div class="callout tip">"Disable cache" belgisini qo'yib, sahifani qayta yuklang — keshsiz yuklanish qancha uzoq davom etishini taqqoslang. Network panelidagi "Throttling" orqali sekin 3G internetni ham sinab ko'rish mumkin.</div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Terminal orqali HTTP so'rovlar yuborish (curl)</h3></div><div class="ex-body">
+<p><code>curl</code> — terminaldan HTTP so'rov yuboruvchi dastur. U Windows 10+, macOS va Linux'da o'rnatilgan bo'ladi.
+Brauzer "yashiradigan" narsalarni ko'rishning eng yaxshi usuli.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1. Oddiy GET so&#x27;rov — javob tanasini chiqaradi
+curl https://jsonplaceholder.typicode.com/users/1
+
+# 2. -i : javob sarlavhalarini ham ko&#x27;rsatish
+curl -i https://jsonplaceholder.typicode.com/users/1
+
+# 3. -v : to&#x27;liq jarayon (DNS, TCP, TLS, so&#x27;rov va javob sarlavhalari)
+curl -v https://example.com 2&gt;&amp;1 | head -40
+
+# 4. Yo&#x27;naltirishni ko&#x27;rish (301) va unga ergashish (-L)
+curl -I http://github.com
+curl -IL http://github.com
+
+# 5. POST so&#x27;rov: JSON yuborish
+curl -X POST https://jsonplaceholder.typicode.com/posts \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{&quot;title&quot;: &quot;Salom&quot;, &quot;body&quot;: &quot;Birinchi post&quot;, &quot;userId&quot;: 1}&#x27;
+
+# 6. Mavjud bo&#x27;lmagan resurs — 404 ni ko&#x27;rish
+curl -i https://jsonplaceholder.typicode.com/users/9999</code></pre></div>
+<p>5-buyruq natijasi:</p>
+<div class="code"><div class="code-head"><span>JSON</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+  &quot;title&quot;: &quot;Salom&quot;,
+  &quot;body&quot;: &quot;Birinchi post&quot;,
+  &quot;userId&quot;: 1,
+  &quot;id&quot;: 101
+}</code></pre></div>
+<p>E'tibor bering: server <code>201 Created</code> qaytardi va yangi resursga <code>id</code> berdi. Aynan shunday API'ni
+siz 9-darsda o'zingiz yozasiz.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>DNS so'rovini qo'lda tekshirish</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Domen IP-manzilini bilish (Windows, macOS, Linux)
+nslookup github.com
+
+# Batafsil (macOS / Linux): A, MX, TXT yozuvlari
+dig github.com A +short
+dig gmail.com MX +short
+dig google.com TXT +short
+
+# Ma&#x27;lum DNS server orqali so&#x27;rash (Cloudflare 1.1.1.1)
+nslookup kun.uz 1.1.1.1
+
+# Paket serverga qaysi routerlar orqali borayotganini ko&#x27;rish
+traceroute google.com     # macOS / Linux
+tracert google.com        # Windows</code></pre></div>
+<p><b>Tajriba:</b> o'z kompyuteringizdagi <code>hosts</code> faylini oching (Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>,
+macOS/Linux: <code>/etc/hosts</code>) va administrator huquqi bilan quyidagi qatorni qo'shing:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">127.0.0.1   mening-saytim.test</code></pre></div>
+<p>Endi brauzerda <code>http://mening-saytim.test</code> manzili sizning o'z kompyuteringizga (<code>localhost</code>) yo'naladi —
+chunki <code>hosts</code> fayli DNS'dan oldin tekshiriladi. Tajribadan keyin qatorni o'chirib qo'ying.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>20 qatorda o'z HTTP serveringizni yozish</h3></div><div class="ex-body">
+<p>Server — bu sehr emas, shunchaki portni tinglab turuvchi dastur. Buni isbotlash uchun Node.js'ning o'rnatilgan
+<code>http</code> moduli bilan oddiy server yozamiz (Node.js 8-darsda batafsil o'rganiladi; hozir faqat
+<a href="https://nodejs.org" target="_blank" rel="noopener">o'rnating</a>).</p>
+<div class="code"><div class="code-head"><span>server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const http = require(&#x27;http&#x27;);
+
+const server = http.createServer((req, res) =&gt; {
+  // Har bir kelgan so&#x27;rovni terminalga chiqaramiz
+  console.log(`${req.method} ${req.url}`);
+  console.log(&#x27;Sarlavhalar:&#x27;, req.headers);
+
+  if (req.url === &#x27;/&#x27;) {
+    res.writeHead(200, { &#x27;Content-Type&#x27;: &#x27;text/html; charset=utf-8&#x27; });
+    res.end(&#x27;&lt;h1&gt;Salom! Bu mening birinchi serverim&lt;/h1&gt;&lt;a href=&quot;/api/vaqt&quot;&gt;Vaqtni bilish&lt;/a&gt;&#x27;);
+  } else if (req.url === &#x27;/api/vaqt&#x27;) {
+    res.writeHead(200, { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    res.end(JSON.stringify({ vaqt: new Date().toISOString() }));
+  } else {
+    res.writeHead(404, { &#x27;Content-Type&#x27;: &#x27;text/plain; charset=utf-8&#x27; });
+    res.end(&#x27;404 — Sahifa topilmadi&#x27;);
+  }
+});
+
+server.listen(3000, () =&gt; console.log(&#x27;Server http://localhost:3000 da ishlayapti&#x27;));</code></pre></div>
+<p>Ishga tushirish:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node server.js
+# Boshqa terminalda:
+curl -i http://localhost:3000/api/vaqt
+curl -i http://localhost:3000/yoq-sahifa</code></pre></div>
+<p>Brauzerda <code>http://localhost:3000</code> ni oching va server terminaliga qarang: siz bitta sahifa ochgan bo'lsangiz ham,
+brauzer <code>/favicon.ico</code> uchun ham avtomatik so'rov yuborganini ko'rasiz. Endi siz mijoz (brauzer) va server
+o'rtasidagi muloqotni ikkala tomondan ham ko'rdingiz.</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li><code>https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;t=42s</code> URL'ini qismlarga ajrating: sxema, host, subdomen, yo'l, query parametrlari.</li>
+  <li>DevTools orqali uchta turli saytda nechta so'rov yuborilishini va sahifa necha soniyada yuklanishini solishtiring. Eng ko'p joy egallagan fayl turi qaysi?</li>
+  <li><code>curl -i</code> orqali <code>http://google.com</code> ga so'rov yuboring. Qanday status kod va <code>Location</code> sarlavhasi qaytdi? Nega?</li>
+  <li>4-misoldagi serverga <code>/api/salom?ism=Ali</code> marshrutini qo'shing, u <code>{"xabar": "Salom, Ali!"}</code> qaytarsin. (Maslahat: <code>new URL(req.url, 'http://localhost').searchParams.get('ism')</code>)</li>
+  <li>Quyidagi holatlar uchun to'g'ri status kodni tanlang: (a) parol noto'g'ri; (b) foydalanuvchi boshqa birovning buyurtmasini o'chirmoqchi; (c) yangi maqola yaratildi; (d) ma'lumotlar bazasi bilan aloqa uzildi.</li>
+</ol>
+<details><summary>5-savol javobi</summary>(a) <code>401</code>; (b) <code>403</code> (yoki ma'lumotni yashirish uchun <code>404</code>); (c) <code>201</code>; (d) <code>500</code> yoki <code>503</code>.</details>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Internet — tarmoq; Web — uning ustidagi HTML + URL + HTTP tizimi.</li>
+  <li>Mijoz so'rov yuboradi, server javob qaytaradi; muloqotni doim mijoz boshlaydi.</li>
+  <li>DNS domen nomini IP-manzilga aylantiradi; natijalar keshlanadi.</li>
+  <li>HTTP so'rovi: metod + yo'l + sarlavhalar + tana. Javob: status kod + sarlavhalar + tana.</li>
+  <li>Status kodlar: 2xx muvaffaqiyat, 3xx yo'naltirish, 4xx mijoz xatosi, 5xx server xatosi.</li>
+  <li>Brauzer HTML → DOM, CSS → CSSOM, keyin Layout va Paint orqali sahifani chizadi.</li>
+  <li>Serverda doim qayta tekshiring — frontendga ishonib bo'lmaydi.</li>
+</ul>
+</div>
+<nav class="pager"><span></span><a class="next" href="02-html.html"><small>Keyingi dars →</small>HTML — sahifa tuzilishi</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#internet-va-web-farqi-nimada">Internet va Web — farqi nimada?</a></li><li><a href="#mijoz-server-client-server-modeli">Mijoz-server (Client-Server) modeli</a></li><li><a href="#url-tuzilishi">URL tuzilishi</a></li><li><a href="#dns-internetning-telefon-kitobi">DNS — internetning telefon kitobi</a></li><li><a href="#http-protokoli-chuqur">HTTP protokoli chuqur</a></li><li><a href="#brauzer-sahifani-qanday-chizadi">Brauzer sahifani qanday chizadi?</a></li><li><a href="#frontend-backend-va-full-stack">Frontend, Backend va Full-stack</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

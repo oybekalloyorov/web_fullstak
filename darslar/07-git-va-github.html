@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git va GitHub — Full-Stack Qo&#x27;llanma</title>
+<meta name="description" content="Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <div class="side-title">Darslar</div>
+    <ol class="lesson-list" id="lessonList">
+<li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
+<li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
+<li><a href="../darslar/03-css.html"><span class="num">03</span>CSS — dizayn va maket</a></li>
+<li><a href="../darslar/04-javascript-asoslari.html"><span class="num">04</span>JavaScript asoslari</a></li>
+<li><a href="../darslar/05-dom-va-hodisalar.html"><span class="num">05</span>DOM va hodisalar</a></li>
+<li><a href="../darslar/06-asinxron-javascript.html"><span class="num">06</span>Asinxron JavaScript va Fetch API</a></li>
+<li><a class="active" href="../darslar/07-git-va-github.html"><span class="num">07</span>Git va GitHub</a></li>
+<li><a href="../darslar/08-nodejs.html"><span class="num">08</span>Node.js va npm</a></li>
+<li><a href="../darslar/09-express-rest-api.html"><span class="num">09</span>Express.js va REST API</a></li>
+<li><a href="../darslar/10-malumotlar-bazasi.html"><span class="num">10</span>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</a></li>
+<li><a href="../darslar/11-autentifikatsiya.html"><span class="num">11</span>Autentifikatsiya va avtorizatsiya</a></li>
+<li><a href="../darslar/12-react.html"><span class="num">12</span>React asoslari</a></li>
+<li><a href="../darslar/13-fullstack-loyiha.html"><span class="num">13</span>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</a></li>
+<li><a href="../darslar/14-deploy-xavfsizlik-test.html"><span class="num">14</span>Deploy, xavfsizlik va testlash</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌿</div><div><div class="crumb">07-dars · 14 tadan</div><h1>Git va GitHub</h1><p class="lead">Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.</p></div></div>
+
+<p>Tasavvur qiling: loyihangiz ishlab turibdi, siz yangi funksiya qo'shdingiz va hammasi buzildi. Qaysi o'zgarish
+sababchi? Kecha ishlagan versiyani qanday qaytarish mumkin? Uch kishi bitta faylni bir vaqtda qanday tahrirlaydi?
+<b>Git</b> — bu savollarning barchasiga javob beradigan <b>versiyalarni boshqarish tizimi (VCS)</b>. Bugun Git'ni bilmaydigan
+dasturchini ishga olishmaydi. Siz hozir o'qiyotgan qo'llanma ham Git orqali GitHub'ga joylangan.</p>
+
+<h2 id="git-va-github-farqi"><a class="anchor" href="#git-va-github-farqi">#</a>Git va GitHub — farqi</h2>
+<ul>
+  <li><b>Git</b> — kompyuteringizda ishlaydigan dastur. Loyiha tarixini saqlaydi. Internetsiz ham ishlaydi. 2005-yilda Linus Torvalds (Linux yaratuvchisi) yozgan.</li>
+  <li><b>GitHub</b> — Git repozitoriyalarini internetda saqlash va jamoa bo'lib ishlash platformasi (Pull Request, Issues, Actions, Pages). Muqobillari: GitLab, Bitbucket.</li>
+</ul>
+
+<h2 id="gitning-asosiy-tushunchalari"><a class="anchor" href="#gitning-asosiy-tushunchalari">#</a>Git'ning asosiy tushunchalari</h2>
+<h3>Uch hudud</h3>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📁 Working Directory<small>siz tahrirlayotgan fayllar</small></div>
+    <div class="arrow">— git add →</div>
+    <div class="node">📋 Staging Area (Index)<small>keyingi commit'ga tayyorlanganlar</small></div>
+    <div class="arrow">— git commit →</div>
+    <div class="node">🗄️ Repository (.git)<small>saqlangan tarix</small></div>
+  </div>
+</div>
+<ul>
+  <li><b>Working directory</b> — oddiy papka va fayllaringiz.</li>
+  <li><b>Staging area</b> — "savat": qaysi o'zgarishlar keyingi suratga (commit'ga) kirishini tanlaysiz. Bu bir nechta faylni
+  o'zgartirib, ularni mantiqiy jihatdan alohida commit'larga bo'lish imkonini beradi.</li>
+  <li><b>Repository</b> — <code>.git</code> yashirin papkasi: barcha commit'lar, branch'lar va tarix shu yerda.</li>
+</ul>
+<h3>Commit</h3>
+<p><b>Commit</b> — loyihaning ma'lum paytdagi to'liq <b>surati (snapshot)</b>. Har bir commit'da: noyob identifikator
+(SHA-1 xesh, masalan <code>a3f9c2e</code>), muallif, sana, xabar va ota commit'ga havola bor. Commit'lar zanjiri — loyiha tarixi.</p>
+<h3>Branch (tarmoq)</h3>
+<p><b>Branch</b> — commit'ga ko'rsatkich (yorliq). Yangi branch yaratish — tarixdan "nusxa" olib, asosiy kodga tegmasdan
+tajriba qilish demak. <code>HEAD</code> — hozir qaysi branch'da turganingizni bildiruvchi maxsus ko'rsatkich.</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">            C4 ── C5      ← feature/login
+           /
+C1 ── C2 ── C3 ── C6      ← main  ← HEAD</code></pre></div>
+
+<h2 id="ornatish-va-sozlash"><a class="anchor" href="#ornatish-va-sozlash">#</a>O'rnatish va sozlash</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Versiyani tekshirish
+git --version
+
+# Bir martalik sozlash (har bir commit&#x27;da ism va email yoziladi)
+git config --global user.name &quot;Ismingiz Familiyangiz&quot;
+git config --global user.email &quot;siz@example.com&quot;
+git config --global init.defaultBranch main
+git config --global core.editor &quot;code --wait&quot;     # VS Code muharrir sifatida
+
+git config --list   # sozlamalarni ko&#x27;rish</code></pre></div>
+
+<h2 id="asosiy-buyruqlar"><a class="anchor" href="#asosiy-buyruqlar">#</a>Asosiy buyruqlar</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Yangi repozitoriya
+git init
+
+# Holat: qaysi fayllar o&#x27;zgargan, qaysilari staging&#x27;da
+git status
+git status -s            # qisqa ko&#x27;rinish
+
+# O&#x27;zgarishlarni ko&#x27;rish
+git diff                 # working directory vs staging
+git diff --staged        # staging vs oxirgi commit
+
+# Staging&#x27;ga qo&#x27;shish
+git add index.html       # bitta fayl
+git add src/             # papka
+git add .                # barcha o&#x27;zgarishlar
+git add -p               # o&#x27;zgarishlarni bo&#x27;lakma-bo&#x27;lak tanlash (juda foydali!)
+
+# Commit
+git commit -m &quot;Bosh sahifaga navigatsiya qo&#x27;shildi&quot;
+git commit -am &quot;Xabar&quot;   # kuzatilayotgan fayllarni add + commit (yangi fayllar kirmaydi)
+
+# Tarix
+git log
+git log --oneline --graph --all     # chiroyli daraxt ko&#x27;rinishi
+git log -p index.html               # fayl o&#x27;zgarishlari tarixi
+git show a3f9c2e                    # bitta commit tafsilotlari
+git blame app.js                    # har bir qatorni kim, qachon o&#x27;zgartirgan</code></pre></div>
+
+<h3>Yaxshi commit xabari</h3>
+<div class="table-wrap"><table>
+<tr><th>❌ Yomon</th><th>✅ Yaxshi</th></tr>
+<tr><td><code>fix</code></td><td><code>Login formasida bo'sh parol bilan yuborish xatosi tuzatildi</code></td></tr>
+<tr><td><code>update</code></td><td><code>Mahsulot kartasiga chegirma belgisi qo'shildi</code></td></tr>
+<tr><td><code>asdasd</code></td><td><code>feat(cart): promokod qo'llash funksiyasi</code></td></tr>
+</table></div>
+<p>Ko'plab jamoalar <b>Conventional Commits</b> uslubidan foydalanadi: <code>feat:</code> (yangi funksiya), <code>fix:</code> (xato tuzatish),
+<code>docs:</code>, <code>style:</code>, <code>refactor:</code>, <code>test:</code>, <code>chore:</code>. Qoida: bitta commit — bitta mantiqiy o'zgarish.</p>
+
+<h3>.gitignore</h3>
+<p>Ba'zi fayllar repozitoriyaga <b>hech qachon</b> tushmasligi kerak:</p>
+<div class="code"><div class="code-head"><span>.gitignore</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text"># Bog&#x27;liqliklar (npm install bilan qayta tiklanadi)
+node_modules/
+
+# Maxfiy ma&#x27;lumotlar — PAROLLAR, KALITLAR!
+.env
+.env.local
+*.pem
+
+# Build natijalari
+dist/
+build/
+
+# Log va tizim fayllari
+*.log
+.DS_Store
+Thumbs.db
+
+# Muharrir sozlamalari
+.vscode/
+.idea/</code></pre></div>
+<div class="callout danger"><span class="t">Maxfiy kalitni push qilib qo'ydingizmi?</span>
+Faylni o'chirib, yangi commit qilish yetarli emas — kalit tarixda qoladi. GitHub'dagi botlar ochiq repozitoriyalardagi
+kalitlarni bir necha daqiqada topadi. <b>Darhol kalitni bekor qiling (revoke) va yangisini yarating.</b></div>
+
+<h2 id="branchlar-bilan-ishlash"><a class="anchor" href="#branchlar-bilan-ishlash">#</a>Branch'lar bilan ishlash</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git branch                       # branch&#x27;lar ro&#x27;yxati (* — joriy)
+git branch feature/cart          # yangi branch yaratish
+git switch feature/cart          # unga o&#x27;tish (eski usul: git checkout feature/cart)
+git switch -c feature/search     # yaratish + o&#x27;tish bir buyruqda
+
+# ... o&#x27;zgarishlar, commit&#x27;lar ...
+
+git switch main                  # asosiy branch&#x27;ga qaytish
+git merge feature/cart           # feature/cart ni main ga birlashtirish
+git branch -d feature/cart       # birlashtirilgan branch&#x27;ni o&#x27;chirish</code></pre></div>
+<h3>Merge turlari</h3>
+<ul>
+  <li><b>Fast-forward</b> — <code>main</code> da yangi commit bo'lmagan bo'lsa, Git shunchaki ko'rsatkichni oldinga suradi. Tarix to'g'ri chiziq.</li>
+  <li><b>Uch tomonlama merge</b> — ikkala branch'da ham yangi commit'lar bo'lsa, Git yangi <b>merge commit</b> yaratadi.</li>
+  <li><b>Rebase</b> — <code>git rebase main</code> — sizning commit'laringizni <code>main</code> ning oxiriga "ko'chirib o'tkazadi", tarix chiziqli bo'ladi.
+  <b>Qoida:</b> boshqalar bilan bo'lishilgan (push qilingan) branch'ni rebase qilmang.</li>
+</ul>
+
+<h2 id="konfliktlar-merge-conflict"><a class="anchor" href="#konfliktlar-merge-conflict">#</a>Konfliktlar (merge conflict)</h2>
+<p>Ikki branch bitta faylning <b>bitta qatorini</b> turlicha o'zgartirsa, Git qaysi birini tanlashni bilmaydi va sizdan so'raydi:</p>
+<div class="code"><div class="code-head"><span>index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;h1&gt;Xush kelibsiz, aziz mijoz!&lt;/h1&gt;
+=======
+&lt;h1&gt;Bizning do&#x27;konga xush kelibsiz!&lt;/h1&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/new-header</code></pre></div>
+<p>Hal qilish tartibi:</p>
+<ol>
+  <li>Faylni oching; <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> va <code>=======</code> orasida — sizning versiyangiz, <code>=======</code> va <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> orasida — birlashtirilayotgan branch versiyasi.</li>
+  <li>Keraklisini qoldiring (yoki ikkalasini birlashtiring) va <b>barcha belgilarni o'chiring</b>.</li>
+  <li><code>git add index.html</code> — "konflikt hal qilindi" deb belgilash.</li>
+  <li><code>git commit</code> — merge'ni yakunlash.</li>
+</ol>
+<p>VS Code konfliktlarni rangli ko'rsatadi va "Accept Current / Incoming / Both" tugmalarini taklif qiladi. Bekor qilish: <code>git merge --abort</code>.</p>
+
+<h2 id="xatolarni-tuzatish-va-orqaga-qaytish"><a class="anchor" href="#xatolarni-tuzatish-va-orqaga-qaytish">#</a>Xatolarni tuzatish va orqaga qaytish</h2>
+<div class="table-wrap"><table>
+<tr><th>Vaziyat</th><th>Buyruq</th></tr>
+<tr><td>Fayldagi saqlanmagan o'zgarishlarni bekor qilish</td><td><code>git restore app.js</code></td></tr>
+<tr><td>Faylni staging'dan chiqarish (o'zgarish qoladi)</td><td><code>git restore --staged app.js</code></td></tr>
+<tr><td>Oxirgi commit xabarini o'zgartirish / unutilgan faylni qo'shish (push qilinmagan bo'lsa)</td><td><code>git commit --amend</code></td></tr>
+<tr><td>Oxirgi commit'ni bekor qilish, o'zgarishlarni saqlab qolish</td><td><code>git reset --soft HEAD~1</code></td></tr>
+<tr><td>Push qilingan commit'ni xavfsiz bekor qilish (teskari commit yaratadi)</td><td><code>git revert a3f9c2e</code></td></tr>
+<tr><td>Ishni vaqtincha chetga qo'yish (boshqa branch'ga o'tish uchun)</td><td><code>git stash</code> → keyin <code>git stash pop</code></td></tr>
+<tr><td>Eski versiyadagi faylni ko'rish</td><td><code>git show a3f9c2e:src/app.js</code></td></tr>
+<tr><td>"Yo'qolgan" commit'ni topish</td><td><code>git reflog</code></td></tr>
+</table></div>
+<div class="callout warn"><code>git reset --hard</code> va <code>git push --force</code> — ma'lumotni qaytarib bo'lmas darajada o'chirishi mumkin bo'lgan buyruqlar.
+Umumiy branch'larda <code>revert</code> dan foydalaning; force push kerak bo'lsa <code>--force-with-lease</code> xavfsizroq.</div>
+
+<h2 id="remote-github-bilan-ishlash"><a class="anchor" href="#remote-github-bilan-ishlash">#</a>Remote: GitHub bilan ishlash</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Mavjud repozitoriyani yuklab olish
+git clone https://github.com/oybekalloyorov/web_fullstak.git
+cd web_fullstak
+
+# Lokal repozitoriyani GitHub&#x27;ga ulash
+git remote add origin https://github.com/USERNAME/REPO.git
+git remote -v                       # ulangan remote&#x27;lar
+
+# Yuborish
+git push -u origin main             # -u: keyingi safar shunchaki &quot;git push&quot;
+git push origin feature/cart        # boshqa branch
+
+# Olish
+git fetch origin                    # o&#x27;zgarishlarni yuklab olish (birlashtirmasdan)
+git pull                            # fetch + merge
+git pull --rebase                   # fetch + rebase (tarix toza qoladi)</code></pre></div>
+<h3>Autentifikatsiya</h3>
+<p>GitHub parol bilan push qilishni qabul qilmaydi. Ikki usul bor:</p>
+<ul>
+  <li><b>HTTPS + Personal Access Token</b> (Settings → Developer settings → Tokens) yoki <a href="https://cli.github.com" target="_blank" rel="noopener">GitHub CLI</a>: <code>gh auth login</code>.</li>
+  <li><b>SSH kalit</b>: <code>ssh-keygen -t ed25519 -C "siz@example.com"</code>, so'ng <code>~/.ssh/id_ed25519.pub</code> mazmunini GitHub → Settings → SSH keys ga qo'shing. Remote: <code>git@github.com:USERNAME/REPO.git</code>.</li>
+</ul>
+
+<h2 id="jamoaviy-ish-oqimi-github-flow"><a class="anchor" href="#jamoaviy-ish-oqimi-github-flow">#</a>Jamoaviy ish oqimi: GitHub Flow</h2>
+<ol>
+  <li><code>main</code> — doim ishlaydigan, deploy qilinadigan kod.</li>
+  <li>Har bir vazifa uchun <b>yangi branch</b>: <code>feature/payment</code>, <code>fix/login-error</code>.</li>
+  <li>Kichik, mantiqiy commit'lar; muntazam <code>push</code>.</li>
+  <li>GitHub'da <b>Pull Request (PR)</b> ochish: nima va nima uchun o'zgartirilganini yozish.</li>
+  <li><b>Code review</b>: jamoadoshlar kodni ko'rib chiqadi, izoh qoldiradi; avtomatik testlar (CI) ishlaydi.</li>
+  <li>Tasdiqlangach — <code>main</code> ga merge va branch'ni o'chirish.</li>
+  <li>Deploy.</li>
+</ol>
+<div class="callout tip"><span class="t">Fork va open-source</span>
+Boshqa birovning loyihasiga hissa qo'shish uchun: repozitoriyani <b>Fork</b> qiling (o'z akkauntingizga nusxa) → clone → branch →
+o'zgarish → push (o'z fork'ingizga) → asl loyihaga Pull Request oching.</div>
+
+<h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Noldan loyiha yaratish va GitHub'ga joylash</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1. Loyiha papkasi
+mkdir portfolio &amp;&amp; cd portfolio
+git init
+
+# 2. Fayllar
+echo &quot;# Mening portfoliom&quot; &gt; README.md
+echo &quot;node_modules/&quot; &gt; .gitignore
+touch index.html style.css
+
+# 3. Birinchi commit
+git status                  # 4 ta &quot;untracked&quot; fayl
+git add .
+git commit -m &quot;Loyiha tuzilmasi yaratildi&quot;
+
+# 4. GitHub&#x27;da bo&#x27;sh repozitoriya yarating (README&#x27;siz!), so&#x27;ng:
+git branch -M main
+git remote add origin https://github.com/USERNAME/portfolio.git
+git push -u origin main
+
+# 5. Keyingi ish sikli
+#    (index.html ga navigatsiya qo&#x27;shdingiz)
+git add index.html
+git commit -m &quot;feat: sarlavha va navigatsiya qo&#x27;shildi&quot;
+#    (style.css ga dizayn)
+git add style.css
+git commit -m &quot;style: navbar uchun flex maket&quot;
+git push
+
+git log --oneline
+# 9c1e4b2 style: navbar uchun flex maket
+# 5a7d310 feat: sarlavha va navigatsiya qo&#x27;shildi
+# 1f0a2c8 Loyiha tuzilmasi yaratildi</code></pre></div>
+<p>Siz ushbu qo'llanmaning repozitoriyasini ham aynan shunday boshlagansiz: <code>git init</code> → <code>git add README.md</code> → <code>git commit</code> →
+<code>git remote add origin</code> → <code>git push -u origin main</code>.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Feature branch, Pull Request va code review</h3></div><div class="ex-body">
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># main yangi ekaniga ishonch hosil qilamiz
+git switch main
+git pull
+
+# Vazifa: &quot;Aloqa formasi&quot; — yangi branch
+git switch -c feature/contact-form
+
+# ... contact.html yaratildi ...
+git add contact.html
+git commit -m &quot;feat(contact): aloqa formasi sahifasi&quot;
+
+# ... validatsiya qo&#x27;shildi ...
+git add js/contact.js
+git commit -m &quot;feat(contact): email va telefon validatsiyasi&quot;
+
+git push -u origin feature/contact-form
+# Terminal PR yaratish havolasini ko&#x27;rsatadi:
+# remote: Create a pull request for &#x27;feature/contact-form&#x27; on GitHub by visiting:
+# remote:   https://github.com/USERNAME/portfolio/pull/new/feature/contact-form</code></pre></div>
+<p>GitHub'da PR tavsifiga namuna:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">## Nima o&#x27;zgardi
+- /contact sahifasi va aloqa formasi qo&#x27;shildi
+- Email va +998 formatidagi telefon raqami tekshiriladi
+
+## Qanday tekshirish mumkin
+1. /contact.html ni oching
+2. Noto&#x27;g&#x27;ri email kiriting — qizil xabar chiqishi kerak
+
+## Skrinshotlar
+(rasm)
+
+Closes #12</code></pre></div>
+<p>Reviewer izoh qoldirdi: "Telefon maydoniga <code>autocomplete="tel"</code> qo'shing". Siz shu branch'da tuzatasiz:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git add contact.html
+git commit -m &quot;fix(contact): telefon maydoniga autocomplete qo&#x27;shildi&quot;
+git push                    # PR avtomatik yangilanadi
+
+# PR merge qilingach:
+git switch main
+git pull
+git branch -d feature/contact-form
+git push origin --delete feature/contact-form   # (GitHub&#x27;da &quot;Delete branch&quot; tugmasi ham bor)</code></pre></div>
+<p><code>Closes #12</code> — PR merge qilinganda 12-raqamli issue avtomatik yopiladi.</p>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Konfliktni qadamma-qadam hal qilish</h3></div><div class="ex-body">
+<p>Konfliktni o'z kompyuteringizda ataylab yaratib, hal qilishni mashq qilamiz:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">mkdir conflict-demo &amp;&amp; cd conflict-demo &amp;&amp; git init
+echo &quot;Narx: 100 000 so&#x27;m&quot; &gt; price.txt
+git add . &amp;&amp; git commit -m &quot;Boshlang&#x27;ich narx&quot;
+
+# Birinchi dasturchi: chegirma
+git switch -c discount
+echo &quot;Narx: 80 000 so&#x27;m (chegirma!)&quot; &gt; price.txt
+git commit -am &quot;Chegirmali narx&quot;
+
+# Ikkinchi dasturchi (main&#x27;da): narx oshdi
+git switch main
+echo &quot;Narx: 120 000 so&#x27;m&quot; &gt; price.txt
+git commit -am &quot;Narx oshirildi&quot;
+
+# Birlashtirish
+git merge discount
+# CONFLICT (content): Merge conflict in price.txt
+# Automatic merge failed; fix conflicts and then commit the result.
+
+git status        # both modified: price.txt
+cat price.txt</code></pre></div>
+<p>Fayl mazmuni:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Narx: 120 000 so&#x27;m
+=======
+Narx: 80 000 so&#x27;m (chegirma!)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; discount</code></pre></div>
+<p>Jamoa bilan kelishib, yangi narxga chegirma qo'llaymiz. Faylni shunday tahrirlaymiz:</p>
+<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">Narx: 96 000 so&#x27;m (120 000 dan 20% chegirma!)</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git add price.txt
+git commit -m &quot;Merge discount: yangi narxga chegirma qo&#x27;llandi&quot;
+git log --oneline --graph
+# *   d4e5f6a Merge discount: yangi narxga chegirma qo&#x27;llandi
+# |\
+# | * b2c3d4e Chegirmali narx
+# * | c3d4e5f Narx oshirildi
+# |/
+# * a1b2c3d Boshlang&#x27;ich narx</code></pre></div>
+</div></div>
+
+<div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Saytni GitHub Pages'da bepul joylash</h3></div><div class="ex-body">
+<p>Statik sayt (HTML/CSS/JS) uchun eng oson hosting — GitHub Pages. Ushbu qo'llanma ham shu usulda joylanadi.</p>
+<ol>
+  <li>Repozitoriyaning ildizida <code>index.html</code> bo'lsin va <code>main</code> ga push qiling.</li>
+  <li>GitHub'da repozitoriya → <b>Settings</b> → <b>Pages</b>.</li>
+  <li><b>Source</b>: "Deploy from a branch", <b>Branch</b>: <code>main</code>, papka: <code>/ (root)</code> → Save.</li>
+  <li>1–2 daqiqadan so'ng sayt <code>https://USERNAME.github.io/REPO/</code> manzilida ochiladi.</li>
+</ol>
+<p>Avtomatlashtirilgan variant — GitHub Actions bilan har push'da deploy:</p>
+<div class="code"><div class="code-head"><span>.github/workflows/pages.yml</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-yaml">name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4</code></pre></div>
+<p>Bunda Settings → Pages → Source sifatida "GitHub Actions" tanlanadi. O'z domeningiz bo'lsa (masalan <code>portfolio.uz</code>), Pages
+sozlamasida "Custom domain" ga yozing va domen DNS'ida <code>CNAME</code> yozuvini <code>USERNAME.github.io</code> ga yo'naltiring (1-darsdagi DNS bo'limi).</p>
+</div></div>
+
+<h2 id="mashqlar"><a class="anchor" href="#mashqlar">#</a>Mashqlar</h2>
+<div class="exercise">
+<h3>🏋️ Mustaqil ish</h3>
+<ol>
+  <li>Oldingi darslarda yozgan portfolio va Todo ilovangizni alohida repozitoriyalarga joylang va GitHub Pages orqali e'lon qiling.</li>
+  <li><a href="https://learngitbranching.js.org" target="_blank" rel="noopener">Learn Git Branching</a> interaktiv darslarining "Main" bo'limini o'ting.</li>
+  <li>3-misoldagi konfliktni takrorlang, lekin bu safar <code>git merge</code> o'rniga <code>git rebase main</code> bilan. Tarixda qanday farq bor?</li>
+  <li>Do'stingiz bilan bitta repozitoriyada ishlang: har biringiz alohida branch'da bitta faylni o'zgartiring, PR oching, bir-biringizning kodini review qiling.</li>
+  <li>Ataylab xato commit qiling va uni (a) <code>--amend</code>, (b) <code>reset --soft</code>, (c) <code>revert</code> bilan tuzating. Qaysi biri push'dan keyin xavfsiz?</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Xulosa</h3>
+<ul>
+  <li>Git — lokal versiyalar tizimi; GitHub — uning ustidagi hamkorlik platformasi.</li>
+  <li>Ish sikli: o'zgartirish → <code>git add</code> → <code>git commit</code> → <code>git push</code>.</li>
+  <li>Har bir vazifa — alohida branch; <code>main</code> doim ishlaydigan holatda.</li>
+  <li>Konflikt — qo'rqinchli emas: belgilarni o'chirib, to'g'ri variantni qoldirib, <code>add</code> + <code>commit</code>.</li>
+  <li><code>.env</code> va <code>node_modules</code> — doim <code>.gitignore</code> da.</li>
+  <li>Pull Request + code review — professional jamoaviy ishning standarti.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="06-asinxron-javascript.html"><small>← Oldingi dars</small>Asinxron JavaScript va Fetch API</a><a class="next" href="08-nodejs.html"><small>Keyingi dars →</small>Node.js va npm</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#git-va-github-farqi">Git va GitHub — farqi</a></li><li><a href="#gitning-asosiy-tushunchalari">Git&#x27;ning asosiy tushunchalari</a></li><li><a href="#ornatish-va-sozlash">O&#x27;rnatish va sozlash</a></li><li><a href="#asosiy-buyruqlar">Asosiy buyruqlar</a></li><li><a href="#branchlar-bilan-ishlash">Branch&#x27;lar bilan ishlash</a></li><li><a href="#konfliktlar-merge-conflict">Konfliktlar (merge conflict)</a></li><li><a href="#xatolarni-tuzatish-va-orqaga-qaytish">Xatolarni tuzatish va orqaga qaytish</a></li><li><a href="#remote-github-bilan-ishlash">Remote: GitHub bilan ishlash</a></li><li><a href="#jamoaviy-ish-oqimi-github-flow">Jamoaviy ish oqimi: GitHub Flow</a></li><li><a href="#amaliy-misollar">Amaliy misollar</a></li><li><a href="#mashqlar">Mashqlar</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
