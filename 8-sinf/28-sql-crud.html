@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="CRUD konsepsiyasi; INSERT bilan qo&#x27;shish, SELECT bilan o&#x27;qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o&#x27;chirish; WHERE&#x27;siz UPDATE/DELETE xavfi; o&#x27;quvchilar bazasi loyihasi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a class="active" href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">✏️</div><div><div class="crumb">28-mavzu · 31 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</h1><p class="lead">CRUD konsepsiyasi; INSERT bilan qo&#x27;shish, SELECT bilan o&#x27;qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o&#x27;chirish; WHERE&#x27;siz UPDATE/DELETE xavfi; o&#x27;quvchilar bazasi loyihasi.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>CRUD</b> — har qanday dasturning to'rtta asosiy amalini;</li>
+  <li><code>INSERT</code> — ma'lumot qo'shish;</li>
+  <li><code>SELECT</code> — ma'lumotni o'qish, tanlash va saralash;</li>
+  <li><code>UPDATE</code> — o'zgartirish va <code>DELETE</code> — o'chirish;</li>
+  <li>Eng xavfli xato — <code>WHERE</code>siz UPDATE/DELETE — dan qanday saqlanishni;</li>
+  <li>To'liq ishlaydigan o'quvchilar bazasini (18-loyiha).</li>
+</ul>
+</div>
+
+<h2 id="crud-nima"><a class="anchor" href="#crud-nima">#</a>CRUD nima?</h2>
+<p>Deyarli har qanday dastur ma'lumot bilan to'rtta amal bajaradi. Ularning bosh harflaridan <b>CRUD</b> so'zi hosil bo'lgan:</p>
+<div class="table-wrap"><table>
+<tr><th>Harf</th><th>Amal</th><th>SQL</th><th>Hayotiy misol (Instagram)</th><th>HTTP (39-mavzu)</th></tr>
+<tr><td><b>C</b>reate</td><td>Yaratish</td><td><code>INSERT</code></td><td>Yangi post joylash</td><td><code>POST</code></td></tr>
+<tr><td><b>R</b>ead</td><td>O'qish</td><td><code>SELECT</code></td><td>Lentani ko'rish</td><td><code>GET</code></td></tr>
+<tr><td><b>U</b>pdate</td><td>Yangilash</td><td><code>UPDATE</code></td><td>Post izohini tahrirlash</td><td><code>PUT/PATCH</code></td></tr>
+<tr><td><b>D</b>elete</td><td>O'chirish</td><td><code>DELETE</code></td><td>Postni o'chirish</td><td><code>DELETE</code></td></tr>
+</table></div>
+<p>Bu darsda 27-mavzuda yaratgan <code>maktab</code> bazasidagi jadvallar bilan ishlaymiz.</p>
+
+<h2 id="create-insert"><a class="anchor" href="#create-insert">#</a>Create — <code>INSERT</code></h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Bitta qator qo&#x27;shish
+INSERT INTO sinflar (nomi, sinf_rahbari, xona)
+VALUES (&#x27;8-A&#x27;, &#x27;Karimova Nodira&#x27;, 204);
+
+-- Bir nechta qatorni birdan
+INSERT INTO sinflar (nomi, sinf_rahbari, xona) VALUES
+    (&#x27;8-B&#x27;, &#x27;Rasulov Akmal&#x27;, 206),
+    (&#x27;8-V&#x27;, &#x27;Yusupova Malika&#x27;, 210);
+
+-- O&#x27;quvchilar (id avtomatik — SERIAL; alochi va yaratilgan — DEFAULT)
+INSERT INTO oquvchilar (ism, familiya, tugilgan_sana, email, sinf_id) VALUES
+    (&#x27;Ali&#x27;,     &#x27;Valiyev&#x27;,   &#x27;2012-03-15&#x27;, &#x27;ali@mail.uz&#x27;,     1),
+    (&#x27;Zarina&#x27;,  &#x27;Karimova&#x27;,  &#x27;2012-07-02&#x27;, &#x27;zarina@mail.uz&#x27;,  1),
+    (&#x27;Bobur&#x27;,   &#x27;Toshmatov&#x27;, &#x27;2011-11-20&#x27;, &#x27;bobur@mail.uz&#x27;,   2),
+    (&#x27;Madina&#x27;,  &#x27;Ergasheva&#x27;, &#x27;2012-01-09&#x27;, &#x27;madina@mail.uz&#x27;,  2),
+    (&#x27;Sardor&#x27;,  &#x27;Qodirov&#x27;,   &#x27;2012-05-30&#x27;, NULL,              3),
+    (&#x27;Dilnoza&#x27;, &#x27;Aminova&#x27;,   &#x27;2011-12-12&#x27;, &#x27;dilnoza@mail.uz&#x27;, 1);
+
+-- Qo&#x27;shilgan qatorni darhol ko&#x27;rish (PostgreSQL imkoniyati)
+INSERT INTO oquvchilar (ism, familiya, sinf_id)
+VALUES (&#x27;Jasur&#x27;, &#x27;Rahimov&#x27;, 3)
+RETURNING id, ism;</code></pre></div>
+<ul>
+  <li>Ustunlar ro'yxati va qiymatlar ro'yxati <b>bir xil tartib va sonda</b> bo'lishi kerak.</li>
+  <li><code>id</code> ni yozmaymiz — <code>SERIAL</code> uni o'zi beradi.</li>
+  <li><code>NULL</code> — "qiymat yo'q" (bo'sh). Faqat <code>NOT NULL</code> bo'lmagan ustunlarga.</li>
+</ul>
+<p>Baza cheklovlarni tekshiradi — quyidagilar <b>xato</b> beradi:</p>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">INSERT INTO oquvchilar (familiya) VALUES (&#x27;Aliyev&#x27;);
+-- ❌ null value in column &quot;ism&quot; violates not-null constraint
+
+INSERT INTO oquvchilar (ism, familiya, email) VALUES (&#x27;Vali&#x27;, &#x27;Aliyev&#x27;, &#x27;ali@mail.uz&#x27;);
+-- ❌ duplicate key value violates unique constraint (email band)
+
+INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (&#x27;Vali&#x27;, &#x27;Aliyev&#x27;, 99);
+-- ❌ violates foreign key constraint (99-sinf yo&#x27;q)
+
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, &#x27;Matematika&#x27;, 7);
+-- ❌ violates check constraint (baho 2..5 bo&#x27;lishi kerak)</code></pre></div>
+<div class="callout tip">Bu xatolar — <b>yaxshi</b> narsa! Baza noto'g'ri ma'lumot yozilishiga yo'l qo'ymayapti. Xato xabarini diqqat bilan o'qing — u aniq qaysi qoida buzilganini aytadi.</div>
+
+<h2 id="read-select"><a class="anchor" href="#read-select">#</a>Read — <code>SELECT</code></h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Barcha ustunlar va barcha qatorlar
+SELECT * FROM oquvchilar;
+
+-- Faqat kerakli ustunlar
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar;
+
+-- Ustunga boshqa nom berish (AS) va hisoblangan ustun
+SELECT ism || &#x27; &#x27; || familiya AS toliq_ism,              -- || — matnlarni birlashtirish
+       EXTRACT(YEAR FROM AGE(tugilgan_sana)) AS yoshi    -- yoshni hisoblash
+FROM oquvchilar;</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext"> toliq_ism         | yoshi
+-------------------+-------
+ Ali Valiyev       |    14
+ Zarina Karimova   |    14
+ Bobur Toshmatov   |    14
+ ...</code></pre></div>
+<h3><code>WHERE</code> — shart bo'yicha tanlash</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT * FROM oquvchilar WHERE sinf_id = 1;                     -- 8-A o&#x27;quvchilari
+SELECT * FROM oquvchilar WHERE ism = &#x27;Bobur&#x27;;
+SELECT * FROM oquvchilar WHERE tugilgan_sana &lt; &#x27;2012-01-01&#x27;;    -- 2012-yildan oldin tug&#x27;ilganlar
+SELECT * FROM oquvchilar WHERE email IS NULL;                   -- emaili yo&#x27;qlar (= NULL emas!)
+SELECT * FROM oquvchilar WHERE sinf_id = 1 AND alochi = TRUE;   -- VA
+SELECT * FROM oquvchilar WHERE sinf_id = 2 OR sinf_id = 3;      -- YOKI</code></pre></div>
+<p>Batafsil filtrlash (<code>LIKE</code>, <code>IN</code>, <code>BETWEEN</code>) — 30-mavzuda.</p>
+<h3><code>ORDER BY</code> va <code>LIMIT</code></h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT ism, familiya FROM oquvchilar ORDER BY familiya;                  -- A dan Z gacha
+SELECT ism, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana DESC;   -- eng yoshi birinchi
+SELECT ism FROM oquvchilar ORDER BY sinf_id, familiya;                  -- avval sinf, keyin familiya
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3;                          -- faqat birinchi 3 tasi
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3 OFFSET 3;                 -- keyingi 3 tasi (2-sahifa)</code></pre></div>
+<div class="callout info"><span class="t">SELECT qismlari tartibi</span>
+<code>SELECT</code> ustunlar → <code>FROM</code> jadval → <code>WHERE</code> shart → <code>ORDER BY</code> saralash → <code>LIMIT</code> son. Tartib qat'iy: <code>WHERE</code> ni <code>ORDER BY</code> dan keyin yozib bo'lmaydi.</div>
+
+<h2 id="update-update"><a class="anchor" href="#update-update">#</a>Update — <code>UPDATE</code></h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Bitta o&#x27;quvchining emailini o&#x27;zgartirish
+UPDATE oquvchilar
+SET email = &#x27;sardor@mail.uz&#x27;
+WHERE id = 5;
+
+-- Bir nechta ustunni birdan
+UPDATE oquvchilar
+SET alochi = TRUE, telefon = &#x27;+998901234567&#x27;
+WHERE id = 2;
+
+-- Hisob bilan: 8-A sinfi boshqa xonaga ko&#x27;chdi
+UPDATE sinflar SET xona = xona + 100 WHERE nomi = &#x27;8-A&#x27;;
+
+-- O&#x27;zgargan qatorni ko&#x27;rish
+UPDATE oquvchilar SET sinf_id = 2 WHERE id = 6 RETURNING *;</code></pre></div>
+
+<h2 id="delete-delete"><a class="anchor" href="#delete-delete">#</a>Delete — <code>DELETE</code></h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">DELETE FROM oquvchilar WHERE id = 7;
+
+DELETE FROM baholar WHERE sana &lt; &#x27;2025-09-01&#x27;;    -- eski baholarni tozalash</code></pre></div>
+
+<div class="callout danger"><span class="t">⚠️ ENG XAVFLI XATO: WHERE'ni unutish</span>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">UPDATE oquvchilar SET sinf_id = 1;      -- 😱 BARCHA o&#x27;quvchilar 8-A ga ko&#x27;chdi!
+DELETE FROM oquvchilar;                 -- 😱 BARCHA o&#x27;quvchilar o&#x27;chdi!</code></pre></div>
+<p>Baza "Ishonchingiz komilmi?" deb so'ramaydi. <b>Xavfsizlik qoidasi:</b> UPDATE yoki DELETE yozishdan oldin, xuddi shu <code>WHERE</code> bilan <b>avval SELECT</b> qiling va
+qaysi qatorlar o'zgarishini ko'ring:</p>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT * FROM baholar WHERE sana &lt; &#x27;2025-09-01&#x27;;   -- 1) avval ko&#x27;ramiz: 12 qator
+DELETE FROM baholar WHERE sana &lt; &#x27;2025-09-01&#x27;;     -- 2) keyin o&#x27;chiramiz</code></pre></div>
+</div>
+
+<h2 id="tranzaksiya-hammasi-yoki-hech-biri"><a class="anchor" href="#tranzaksiya-hammasi-yoki-hech-biri">#</a>Tranzaksiya — "hammasi yoki hech biri"</h2>
+<p>Ba'zan bir nechta o'zgarish faqat <b>birgalikda</b> ma'noga ega. Masalan, o'quvchini boshqa sinfga ko'chirish va bu haqda yozuv qoldirish:</p>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">BEGIN;                                               -- tranzaksiya boshlandi
+UPDATE oquvchilar SET sinf_id = 3 WHERE id = 1;
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, &#x27;Matematika&#x27;, 5);
+COMMIT;                                              -- hammasini saqlash
+-- Xato bo&#x27;lsa: ROLLBACK;  — barcha o&#x27;zgarishlar bekor qilinadi</code></pre></div>
+<div class="analogy"><span class="t">O'xshatish: pul o'tkazmasi</span>
+Do'stingizga 50 000 so'm o'tkazyapsiz: sizning hisobingizdan yechiladi VA do'stingiznikiga tushadi. Agar birinchisi bajarilib, ikkinchisida elektr o'chsa — pul
+"yo'qolib" qoladi. Tranzaksiya ikkalasi birga bajarilishini yoki ikkalasi ham bekor qilinishini kafolatlaydi.</div>
+
+<h2 id="amaliy-mashgulot-oquvchilar-bazasi-18-loyiha"><a class="anchor" href="#amaliy-mashgulot-oquvchilar-bazasi-18-loyiha">#</a>Amaliy mashg'ulot: o'quvchilar bazasi (18-loyiha)</h2>
+<ol class="steps">
+  <li>Yuqoridagi <code>INSERT</code> lar bilan sinflar va o'quvchilarni qo'shing. O'z sinfdoshlaringizdan yana 5 tasini qo'shing.</li>
+  <li><b>Baholar</b> jadvaliga kamida 20 ta baho qo'shing:
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">INSERT INTO baholar (oquvchi_id, fan, baho, sana) VALUES
+    (1, &#x27;Matematika&#x27;, 5, &#x27;2026-09-10&#x27;), (1, &#x27;Informatika&#x27;, 5, &#x27;2026-09-11&#x27;),
+    (1, &#x27;Ona tili&#x27;, 4, &#x27;2026-09-12&#x27;),   (2, &#x27;Matematika&#x27;, 5, &#x27;2026-09-10&#x27;),
+    (2, &#x27;Informatika&#x27;, 4, &#x27;2026-09-11&#x27;),(3, &#x27;Matematika&#x27;, 3, &#x27;2026-09-10&#x27;),
+    (3, &#x27;Informatika&#x27;, 4, &#x27;2026-09-11&#x27;),(4, &#x27;Matematika&#x27;, 5, &#x27;2026-09-10&#x27;),
+    (4, &#x27;Ona tili&#x27;, 5, &#x27;2026-09-12&#x27;),   (5, &#x27;Informatika&#x27;, 2, &#x27;2026-09-11&#x27;),
+    (6, &#x27;Matematika&#x27;, 4, &#x27;2026-09-10&#x27;), (6, &#x27;Informatika&#x27;, 5, &#x27;2026-09-11&#x27;);</code></pre></div></li>
+  <li>Quyidagi so'rovlarni yozing:
+    <ol>
+      <li>Barcha o'quvchilarning to'liq ismi, familiya bo'yicha tartiblangan.</li>
+      <li>2-sinf (sinf_id = 2) o'quvchilari.</li>
+      <li>Eng yoshi katta 3 nafar o'quvchi.</li>
+      <li>Emaili kiritilmagan o'quvchilar.</li>
+      <li>Informatikadan 5 olgan baholar.</li>
+    </ol></li>
+  <li>Sardorning (id=5) emailini qo'shing; Zarinani a'lochi deb belgilang.</li>
+  <li>Bitta o'quvchini o'chiring (avval SELECT bilan tekshirib!). Uning baholari ham o'chdimi? Nima uchun? (<code>ON DELETE CASCADE</code>)</li>
+</ol>
+<details><summary>3-topshiriq javoblari</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT ism || &#x27; &#x27; || familiya AS toliq_ism FROM oquvchilar ORDER BY familiya;
+SELECT * FROM oquvchilar WHERE sinf_id = 2;
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana LIMIT 3;
+SELECT ism, familiya FROM oquvchilar WHERE email IS NULL;
+SELECT * FROM baholar WHERE fan = &#x27;Informatika&#x27; AND baho = 5;</code></pre></div>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>WHERE email = NULL</code> — hech narsa qaytarmaydi. NULL bilan taqqoslash: <code>IS NULL</code> / <code>IS NOT NULL</code>.</li>
+  <li>❌ Matn qiymatini qo'shtirnoqsiz yozish: <code>WHERE ism = Ali</code> — <code>column "ali" does not exist</code>.</li>
+  <li>❌ <code>INSERT</code> da ustunlar va qiymatlar soni mos emas: <code>INSERT has more expressions than target columns</code>.</li>
+  <li>❌ <code>WHERE</code>siz UPDATE/DELETE. Avval SELECT!</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">CRUD'dagi "R" qaysi SQL buyrug'iga mos keladi?</p><ol>
+<li><code>INSERT</code></li><li><code>SELECT</code></li><li><code>UPDATE</code></li><li><code>REMOVE</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>DELETE FROM oquvchilar;</code> nima qiladi?</p><ol>
+<li>Faqat birinchi qatorni o'chiradi</li><li>Jadvalni o'chiradi</li><li>Xato beradi</li><li>Jadvaldagi BARCHA qatorlarni o'chiradi</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Emaili kiritilmagan o'quvchilarni topuvchi to'g'ri shart?</p><ol>
+<li><code>WHERE email IS NULL</code></li><li><code>WHERE email = NULL</code></li><li><code>WHERE email = ''</code></li><li><code>WHERE NOT email</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Natijani kamayish tartibida saralash uchun?</p><ol>
+<li><code>ORDER BY ... ASC</code></li><li><code>SORT BY ... DOWN</code></li><li><code>ORDER BY ... DESC</code></li><li><code>ORDER DESC BY ...</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Faqat birinchi 5 ta natijani olish uchun?</p><ol>
+<li><code>TOP 5</code></li><li><code>LIMIT 5</code></li><li><code>FIRST 5</code></li><li><code>COUNT 5</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Bir nechta o'zgarishni "hammasi yoki hech biri" tarzida bajarish nima deyiladi?</p><ol>
+<li>Indeks</li><li>JOIN</li><li>Cheklov</li><li>Tranzaksiya</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>27-mavzudagi <code>dokon</code> bazasini to'ldiring: 3 toifa, 15 mahsulot, 5 mijoz.</li>
+  <li>So'rovlar: eng qimmat 5 mahsulot; omborda tugagan (<code>soni = 0</code>) mahsulotlar; narxi 50 000 dan arzon mahsulotlar alifbo tartibida.</li>
+  <li>Barcha "Kanselyariya" toifasidagi mahsulotlar narxini 10% oshiring (<code>SET narx = narx * 1.1</code>) — avval SELECT bilan tekshiring!</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>CRUD: Create (<code>INSERT</code>), Read (<code>SELECT</code>), Update (<code>UPDATE</code>), Delete (<code>DELETE</code>).</li>
+  <li><code>INSERT INTO t (a, b) VALUES (1, 'x');</code></li>
+  <li><code>SELECT ustunlar FROM t WHERE shart ORDER BY u DESC LIMIT n;</code></li>
+  <li><code>UPDATE t SET a = 1 WHERE id = 5;</code> / <code>DELETE FROM t WHERE id = 5;</code> — <b>WHERE'ni unutmang, avval SELECT!</b></li>
+  <li><code>IS NULL</code>; tranzaksiya — <code>BEGIN ... COMMIT / ROLLBACK</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="27-postgresql-jadval.html"><small>← Oldingi mavzu</small>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a><a class="next" href="29-sql-join-index-backup.html"><small>Keyingi mavzu →</small>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#crud-nima">CRUD nima?</a></li><li><a href="#create-insert">Create — INSERT</a></li><li><a href="#read-select">Read — SELECT</a></li><li><a href="#update-update">Update — UPDATE</a></li><li><a href="#delete-delete">Delete — DELETE</a></li><li><a href="#tranzaksiya-hammasi-yoki-hech-biri">Tranzaksiya — &quot;hammasi yoki hech biri&quot;</a></li><li><a href="#amaliy-mashgulot-oquvchilar-bazasi-18-loyiha">Amaliy mashg&#x27;ulot: o&#x27;quvchilar bazasi (18-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

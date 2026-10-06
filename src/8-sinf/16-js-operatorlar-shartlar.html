@@ -1,0 +1,268 @@
+<!-- title: JavaScript'da operatorlar va ifodalar. Shart operatorlari | desc: Arifmetik, tayinlash, taqqoslash va mantiqiy operatorlar; == va === farqi; if, else if, else; ternary operator; switch; amaliy dasturlar: baho aniqlash, juft-toq, kirish tizimi. | icon: 🔀 | level: 2 soat · amaliy | bob: II bob. JavaScript asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Arifmetik amallar va qoldiqli bo'lish (<code>%</code>);</li>
+  <li>Qiymatlarni taqqoslash va <code>==</code> bilan <code>===</code> farqini;</li>
+  <li>Mantiqiy operatorlar: VA (<code>&amp;&amp;</code>), YOKI (<code>||</code>), EMAS (<code>!</code>);</li>
+  <li>Dasturga "qaror qabul qildirish": <code>if</code>, <code>else if</code>, <code>else</code>, <code>switch</code>;</li>
+  <li>Baho hisoblovchi, parolni tekshiruvchi va boshqa amaliy dasturlarni.</li>
+</ul>
+</div>
+
+<h2>Operator va ifoda</h2>
+<p><b>Operator</b> — qiymatlar ustida amal bajaruvchi belgi (<code>+</code>, <code>&gt;</code>, <code>&amp;&amp;</code>). <b>Ifoda</b> — natijada qiymat beradigan kod bo'lagi:
+<code>5 + 3</code> → <code>8</code>, <code>yosh &gt;= 18</code> → <code>true</code>.</p>
+
+<h2>Arifmetik operatorlar</h2>
+<pre data-lang="js" data-play>const a = 17;
+const b = 5;
+console.log(a + b);    // 22  qo'shish
+console.log(a - b);    // 12  ayirish
+console.log(a * b);    // 85  ko'paytirish
+console.log(a / b);    // 3.4 bo'lish
+console.log(a % b);    // 2   QOLDIQ: 17 = 5·3 + 2
+console.log(a ** 2);   // 289 daraja: 17²
+console.log((a + b) * 2);  // 44 — qavslar avval bajariladi</pre>
+<h3>Qoldiq operatori <code>%</code> — juda foydali!</h3>
+<ul>
+  <li><b>Juft yoki toq?</b> <code>son % 2 === 0</code> bo'lsa — juft.</li>
+  <li><b>Bo'linadimi?</b> <code>son % 3 === 0</code> — 3 ga qoldiqsiz bo'linadi.</li>
+  <li><b>Oxirgi raqam:</b> <code>1234 % 10</code> → <code>4</code>.</li>
+  <li><b>Vaqt:</b> 135 daqiqa = <code>Math.floor(135 / 60)</code> soat va <code>135 % 60</code> daqiqa → 2 soat 15 daqiqa.</li>
+</ul>
+<h3>Math obyekti</h3>
+<pre data-lang="js" data-play>console.log(Math.round(4.6));   // 5   — yaxlitlash
+console.log(Math.floor(4.9));   // 4   — pastga yaxlitlash
+console.log(Math.ceil(4.1));    // 5   — yuqoriga yaxlitlash
+console.log(Math.max(3, 9, 2)); // 9   — eng kattasi
+console.log(Math.min(3, 9, 2)); // 2
+console.log(Math.sqrt(81));     // 9   — kvadrat ildiz
+console.log(Math.abs(-7));      // 7   — modul
+console.log(Math.random());     // 0 va 1 orasidagi tasodifiy son
+console.log(Math.floor(Math.random() * 6) + 1);  // 1 dan 6 gacha — o'yin kubigi 🎲</pre>
+
+<h2>Tayinlash operatorlari</h2>
+<pre data-lang="js" data-play>let ball = 10;
+ball += 5;    // ball = ball + 5  → 15
+ball -= 3;    // ball = ball - 3  → 12
+ball *= 2;    // ball = ball * 2  → 24
+ball /= 4;    // ball = ball / 4  → 6
+ball++;       // ball = ball + 1  → 7  (inkrement)
+ball--;       // ball = ball - 1  → 6  (dekrement)
+console.log(ball);</pre>
+
+<h2>Taqqoslash operatorlari</h2>
+<p>Natijasi doim <code>true</code> yoki <code>false</code>:</p>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Misol</th><th>Natija</th></tr>
+<tr><td><code>&gt;</code></td><td>katta</td><td><code>10 &gt; 7</code></td><td>true</td></tr>
+<tr><td><code>&lt;</code></td><td>kichik</td><td><code>10 &lt; 7</code></td><td>false</td></tr>
+<tr><td><code>&gt;=</code></td><td>katta yoki teng</td><td><code>18 &gt;= 18</code></td><td>true</td></tr>
+<tr><td><code>&lt;=</code></td><td>kichik yoki teng</td><td><code>5 &lt;= 4</code></td><td>false</td></tr>
+<tr><td><code>===</code></td><td><b>qat'iy teng</b> (qiymat va tur)</td><td><code>5 === 5</code></td><td>true</td></tr>
+<tr><td><code>!==</code></td><td>qat'iy teng emas</td><td><code>5 !== 3</code></td><td>true</td></tr>
+</table></div>
+<h3><code>==</code> va <code>===</code> — muhim farq!</h3>
+<pre data-lang="js" data-play>console.log(5 == "5");    // true  😱 — turni o'zgartirib taqqoslaydi
+console.log(5 === "5");   // false ✅ — son va matn har xil narsa
+console.log(0 == false);  // true  😱
+console.log(0 === false); // false ✅</pre>
+<div class="callout danger"><span class="t">Qoida</span>
+Doim <b><code>===</code></b> va <b><code>!==</code></b> ishlating. <code>==</code> turlarni "o'zicha" o'zgartiradi va kutilmagan xatolarga olib keladi.
+Va yana: <code>=</code> — tayinlash, <code>===</code> — taqqoslash. Ularni adashtirmang!</div>
+
+<h2>Mantiqiy operatorlar</h2>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Qachon true</th></tr>
+<tr><td><code>&amp;&amp;</code></td><td>VA</td><td><b>Ikkala</b> shart ham rost bo'lsa</td></tr>
+<tr><td><code>||</code></td><td>YOKI</td><td><b>Kamida bittasi</b> rost bo'lsa</td></tr>
+<tr><td><code>!</code></td><td>EMAS</td><td>Qiymatni teskarisiga aylantiradi</td></tr>
+</table></div>
+<div class="analogy"><span class="t">Hayotiy misollar</span>
+<b>VA:</b> "Kinoga borasan — agar uy vazifasini bajargan <b>va</b> xonangni yig'ishtirgan bo'lsang." Ikkalasi ham kerak.<br>
+<b>YOKI:</b> "Muzqaymoq olasan — agar a'lo baho olgan <b>yoki</b> tug'ilgan kuning bo'lsa." Bittasi yetarli.<br>
+<b>EMAS:</b> "Agar yomg'ir yog'<b>mayotgan</b> bo'lsa, futbolga chiqamiz."</div>
+<pre data-lang="js" data-play>const yosh = 15;
+const ruxsatnoma = true;
+
+console.log(yosh >= 14 && ruxsatnoma);   // true  — ikkalasi ham rost
+console.log(yosh >= 18 && ruxsatnoma);   // false — birinchisi yolg'on
+console.log(yosh >= 18 || ruxsatnoma);   // true  — ikkinchisi rost
+console.log(!ruxsatnoma);                // false
+
+// Oraliqni tekshirish: 10 va 20 orasidami?
+const son = 15;
+console.log(son >= 10 && son <= 20);     // true</pre>
+
+<h2>Shart operatori: <code>if</code></h2>
+<p>Dastur hamma vaqt bir xil ishlamaydi — u <b>vaziyatga qarab qaror qabul qiladi</b>.</p>
+<pre data-lang="js">if (shart) {
+  // shart TRUE bo'lsa bajariladi
+} else {
+  // shart FALSE bo'lsa bajariladi
+}</pre>
+<pre data-lang="js" data-play>const harorat = 28;
+
+if (harorat > 25) {
+  console.log("Issiq! Kepka kiying 🧢");
+} else {
+  console.log("Havo salqin 🧥");
+}</pre>
+<h3><code>else if</code> — bir nechta variant</h3>
+<p>Shartlar <b>yuqoridan pastga</b> tekshiriladi va <b>birinchi</b> rost shart bajariladi — qolganlari tekshirilmaydi.</p>
+<pre data-lang="js" data-play>const ball = 78;
+let baho;
+
+if (ball >= 86) {
+  baho = 5;
+} else if (ball >= 71) {
+  baho = 4;
+} else if (ball >= 56) {
+  baho = 3;
+} else {
+  baho = 2;
+}
+
+console.log(`${ball} ball → ${baho} baho`);</pre>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">ball = 78</div><div class="arrow">→</div>
+    <div class="node">78 ≥ 86?<small>yo'q</small></div><div class="arrow">→</div>
+    <div class="node">78 ≥ 71?<small>HA ✅</small></div><div class="arrow">→</div>
+    <div class="node">baho = 4<small>qolganlari tekshirilmaydi</small></div>
+  </div>
+</div>
+<div class="callout warn"><span class="t">Tartib muhim!</span>
+Agar <code>ball &gt;= 56</code> shartini birinchi yozsangiz, 95 ball ham "3" bo'lib qoladi — chunki 95 ≥ 56 rost va dastur shu yerda to'xtaydi.
+Shartlarni <b>kattadan kichikka</b> (yoki aniqroqdan umumiyroqqa) yozing.</div>
+
+<h3>Ichma-ich shartlar</h3>
+<pre data-lang="js" data-play>const login = "admin";
+const parol = "12345";
+
+if (login === "admin") {
+  if (parol === "12345") {
+    console.log("✅ Xush kelibsiz, admin!");
+  } else {
+    console.log("❌ Parol noto'g'ri");
+  }
+} else {
+  console.log("❌ Bunday foydalanuvchi yo'q");
+}</pre>
+
+<h3>Ternary (uchlik) operator — qisqa if</h3>
+<pre data-lang="js" data-play>const yosh = 16;
+// shart ? rost_bo'lsa : yolg'on_bo'lsa
+const holat = yosh >= 18 ? "katta" : "voyaga yetmagan";
+console.log(holat);
+
+const son = 7;
+console.log(`${son} — ${son % 2 === 0 ? "juft" : "toq"} son`);</pre>
+<p>Oddiy, ikki variantli tanlovlar uchun qulay. Murakkab shartlar uchun oddiy <code>if</code> o'qilishi osonroq.</p>
+
+<h2><code>switch</code> — ko'p variantli tanlov</h2>
+<p>Bitta qiymatni ko'p aniq variantlar bilan solishtirish kerak bo'lganda <code>if...else if</code> zanjiridan qulayroq:</p>
+<pre data-lang="js" data-play>const kun = 3;
+let kunNomi;
+
+switch (kun) {
+  case 1:
+    kunNomi = "Dushanba";
+    break;
+  case 2:
+    kunNomi = "Seshanba";
+    break;
+  case 3:
+    kunNomi = "Chorshanba";
+    break;
+  case 4:
+    kunNomi = "Payshanba";
+    break;
+  case 5:
+    kunNomi = "Juma";
+    break;
+  case 6:
+  case 7:
+    kunNomi = "Dam olish kuni 🎉";   // 6 va 7 uchun bir xil natija
+    break;
+  default:
+    kunNomi = "Bunday kun yo'q";      // hech biri mos kelmasa
+}
+
+console.log(kunNomi);</pre>
+<div class="callout warn"><code>break</code> ni unutsangiz, dastur keyingi <code>case</code> larni ham bajarib ketadi! <code>switch</code> qat'iy taqqoslash (<code>===</code>) bilan ishlaydi.</div>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>Juft yoki toq.</b> Foydalanuvchidan son so'rang va uning juft/toq, musbat/manfiy/nol ekanini aniqlang.</li>
+  <li><b>Baho aniqlovchi.</b> 0–100 oralig'idagi ballni so'rang. Agar ball shu oraliqda bo'lmasa — "Noto'g'ri ball!" deb chiqaring. Aks holda bahoni va izohni ("A'lo!", "Yaxshi", ...) chiqaring.</li>
+  <li><b>Kirish tizimi:</b>
+<pre data-lang="js" data-play>const TOGRI_LOGIN = "malika";
+const TOGRI_PAROL = "qwerty123";
+
+const login = prompt("Login:");
+const parol = prompt("Parol:");
+
+if (login === null || parol === null) {
+  alert("Kirish bekor qilindi");
+} else if (login === "" || parol === "") {
+  alert("⚠️ Login va parol bo'sh bo'lmasligi kerak");
+} else if (login.toLowerCase() === TOGRI_LOGIN && parol === TOGRI_PAROL) {
+  alert(`✅ Xush kelibsiz, ${login}!`);
+} else {
+  alert("❌ Login yoki parol noto'g'ri");
+}</pre>
+  Nima uchun loginni <code>toLowerCase()</code> bilan, parolni esa aynan solishtiryapmiz? Muhokama qiling.</li>
+  <li><b>Kabisa yili.</b> Yil 4 ga bo'linsa va 100 ga bo'linmasa, yoki 400 ga bo'linsa — kabisa yili. Foydalanuvchi kiritgan yilni tekshiring (2024 ✅, 1900 ❌, 2000 ✅).</li>
+  <li><b>Chipta narxi.</b> Kinoteatr: 7 yoshgacha — bepul, 7–17 — 20 000, 18–59 — 35 000, 60+ — 15 000 so'm. Seshanba kuni hammaga 50% chegirma.
+  Yosh va hafta kunini so'rab, narxni hisoblang.</li>
+  <li><b>Hafta kuni (switch).</b> 1–12 raqamini so'rab, oy nomini va qaysi faslga tegishli ekanini chiqaring.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>if (ball = 100)</code> — bu taqqoslash emas, <b>tayinlash</b>! To'g'risi: <code>if (ball === 100)</code>.</li>
+  <li>❌ <code>if (10 &lt; son &lt; 20)</code> — JS'da bunday yozib bo'lmaydi. To'g'risi: <code>if (son &gt; 10 &amp;&amp; son &lt; 20)</code>.</li>
+  <li>❌ <code>prompt</code> natijasini <code>Number()</code>siz taqqoslash: <code>"9" &gt; "10"</code> → <code>true</code> (matnlar alifbo bo'yicha taqqoslanadi!).</li>
+  <li>❌ <code>switch</code> da <code>break</code> unutilgan.</li>
+  <li>❌ Jingalak qavslarni yopishni unutish — VS Code qavslarni rangli qilib juftlab ko'rsatadi, kuzating.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q"><code>17 % 5</code> natijasi?</p><ol>
+<li>3.4</li><li>3</li><li>2</li><li>85</li></ol>
+<p class="explain">17 = 5 × 3 + <b>2</b>. % — qoldiq.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>5 === "5"</code> natijasi?</p><ol>
+<li>true</li><li>false</li><li>Xato</li><li>undefined</li></ol>
+<p class="explain">=== turini ham tekshiradi: son va matn har xil.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>true &amp;&amp; false</code> natijasi?</p><ol>
+<li>false</li><li>true</li><li>null</li><li>Xato</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>let x = 10; x += 5; x *= 2;</code> dan keyin x nechaga teng?</p><ol>
+<li>17</li><li>20</li><li>25</li><li>30</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Ball 92 bo'lsa, quyidagi kod nima chiqaradi?<br><code>if (ball &gt;= 56) console.log("3"); else if (ball &gt;= 86) console.log("5");</code></p><ol>
+<li>5</li><li>3</li><li>Ikkalasi ham</li><li>Hech narsa</li></ol>
+<p class="explain">Birinchi rost shart bajariladi. Tartib noto'g'ri yozilgani uchun xato natija chiqdi.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>const t = 20 &gt; 10 ? "ha" : "yo'q";</code> — t ning qiymati?</p><ol>
+<li><code>true</code></li><li>"yo'q"</li><li>"ha"</li><li>20</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>BMI kalkulyatori:</b> vazn (kg) va bo'y (m) so'rab, BMI = vazn / bo'y² ni hisoblang va natijani izohlang (kam vazn, me'yorda, ortiqcha).</li>
+  <li><b>Uchburchak:</b> uch tomon uzunligini so'rab, bunday uchburchak mavjudmi (har bir tomon qolgan ikkitasi yig'indisidan kichik) va qanday turda (teng tomonli, teng yonli, turli tomonli) ekanini aniqlang.</li>
+  <li><b>Tosh-qaychi-qog'oz:</b> foydalanuvchi tanlaydi, kompyuter <code>Math.random()</code> bilan tanlaydi, g'olibni aniqlang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Arifmetika: <code>+ - * / % **</code>; <code>%</code> — qoldiq (juft/toq tekshirish).</li>
+  <li>Taqqoslash: <code>&gt; &lt; &gt;= &lt;= === !==</code> — doim <code>===</code>.</li>
+  <li>Mantiq: <code>&amp;&amp;</code> (ikkalasi), <code>||</code> (bittasi), <code>!</code> (teskari).</li>
+  <li><code>if / else if / else</code> — birinchi rost shart bajariladi; tartibga e'tibor bering.</li>
+  <li>Ternary: <code>shart ? a : b</code>; <code>switch</code> — ko'p aniq variantlar uchun, <code>break</code> bilan.</li>
+</ul>
+</div>

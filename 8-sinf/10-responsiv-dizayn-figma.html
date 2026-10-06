@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Responsiv dizayn nima, viewport, moslashuvchan rasmlar, media query sintaksisi, mobile-first yondashuv, breakpointlar, DevTools&#x27;da telefon rejimi; Figma&#x27;da maket bilan ishlash va uni kodga o&#x27;tkazish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a class="active" href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📱</div><div><div class="crumb">10-mavzu · 31 tadan · I bob. HTML va CSS</div><h1>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</h1><p class="lead">Responsiv dizayn nima, viewport, moslashuvchan rasmlar, media query sintaksisi, mobile-first yondashuv, breakpointlar, DevTools&#x27;da telefon rejimi; Figma&#x27;da maket bilan ishlash va uni kodga o&#x27;tkazish.</p><div class="hero-level">3 soat · 1 nazariy + 2 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Nima uchun saytlar telefon, planshet va kompyuterda turlicha ko'rinishi kerakligini;</li>
+  <li><code>viewport</code> meta-tegi va moslashuvchan rasmlarni;</li>
+  <li><b>Media query</b> — ekran o'lchamiga qarab turli CSS yozishni;</li>
+  <li><b>Mobile-first</b> yondashuvini va breakpointlarni;</li>
+  <li><b>Figma</b> dasturida maket bilan ishlash va uni HTML/CSS'ga aylantirishni;</li>
+  <li>To'liq responsiv Landing Page yaratishni (4 va 5-loyihalar).</li>
+</ul>
+</div>
+
+<h2 id="responsiv-dizayn-nima"><a class="anchor" href="#responsiv-dizayn-nima">#</a>Responsiv dizayn nima?</h2>
+<p>Bugun internetdan foydalanuvchilarning <b>60% dan ortig'i</b> telefondan kiradi. Kompyuter uchun yasalgan 1200 piksellik sayt 390 piksellik telefon
+ekranida yo juda mayda ko'rinadi, yo yonga sig'may qoladi. <b>Responsiv (moslashuvchan) dizayn</b> — sayt <b>har qanday ekran o'lchamiga</b> o'zi moslashishi.</p>
+<div class="analogy"><span class="t">O'xshatish: suv</span>
+Suv qaysi idishga quyilsa — stakan, choynak yoki chelak — o'sha shaklni oladi. Responsiv sayt ham suvga o'xshaydi: telefon, planshet yoki
+katta monitor — har biriga moslashadi. Bunga erishishning 3 asosiy vositasi bor: <b>moslashuvchan maket</b> (%, fr, flex, grid),
+<b>moslashuvchan rasmlar</b> va <b>media so'rovlar</b>.</div>
+<p>Istalgan katta saytni (masalan, kun.uz) oching va brauzer oynasini asta-sekin toraytiring — menyu, ustunlar va rasmlar qanday o'zgarishini kuzating.</p>
+
+<h2 id="1-qadam-viewport-meta-tegi"><a class="anchor" href="#1-qadam-viewport-meta-tegi">#</a>1-qadam: viewport meta-tegi</h2>
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code></pre></div>
+<p>Bu qator bo'lmasa, telefon brauzeri sahifani "980 piksellik kompyuter ekrani" deb o'ylaydi va hammasini kichraytirib ko'rsatadi — media query'lar
+umuman ishlamaydi. <code>width=device-width</code> — "sahifa kengligi = qurilma ekran kengligi". Bu qatorni <b>har bir sahifaga</b> yozing (VS Code'dagi <code>!</code> shabloni uni avtomatik qo'shadi).</p>
+
+<h2 id="2-qadam-moslashuvchan-olchamlar-va-rasmlar"><a class="anchor" href="#2-qadam-moslashuvchan-olchamlar-va-rasmlar">#</a>2-qadam: moslashuvchan o'lchamlar va rasmlar</h2>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* ❌ Qattiq o&#x27;lcham — telefonda sig&#x27;maydi */
+.konteyner { width: 1100px; }
+
+/* ✅ Moslashuvchan: kengligi ekranga qarab, lekin 1100px dan oshmaydi */
+.konteyner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;     /* telefonda matn ekran chetiga yopishmasin */
+}
+
+/* ✅ Rasmlar hech qachon konteynerdan chiqib ketmasin */
+img {
+  max-width: 100%;
+  height: auto;        /* proporsiya saqlansin */
+}
+
+/* ✅ Shrift o&#x27;lchami ekranga qarab silliq o&#x27;zgaradi: kamida 1.8rem, ko&#x27;pi bilan 3.5rem */
+h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); }</code></pre></div>
+<p>8-mavzudagi <code>repeat(auto-fill, minmax(220px, 1fr))</code> ham responsivlikning kuchli vositasi — ustunlar soni o'zi o'zgaradi.</p>
+
+<h2 id="3-qadam-media-sorovlar-media-queries"><a class="anchor" href="#3-qadam-media-sorovlar-media-queries">#</a>3-qadam: media so'rovlar (media queries)</h2>
+<p><b>Media query</b> — "agar ekran shunday bo'lsa, quyidagi CSS'ni qo'lla" degan <b>shart</b>.</p>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">@media (max-width: 768px) {
+  /* Bu qoidalar FAQAT ekran kengligi 768px yoki undan KICHIK bo&#x27;lganda ishlaydi */
+  .menyu { flex-direction: column; }
+  h1 { font-size: 1.8rem; }
+}
+
+@media (min-width: 1024px) {
+  /* FAQAT ekran 1024px yoki undan KATTA bo&#x27;lganda */
+  .kartalar { grid-template-columns: repeat(4, 1fr); }
+}</code></pre></div>
+<ul>
+  <li><code>max-width: 768px</code> — "<b>ko'pi bilan</b> 768px" (ya'ni 768 va undan kichik ekranlar).</li>
+  <li><code>min-width: 1024px</code> — "<b>kamida</b> 1024px" (1024 va undan katta).</li>
+  <li>Shartlarni birlashtirish: <code>@media (min-width: 600px) and (max-width: 900px) { ... }</code></li>
+</ul>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  body { font-family: sans-serif; background: #e0e7ff; transition: background .3s; }
+  .xabar::after { content: &quot;💻 Katta ekran (900px dan katta)&quot;; }
+
+  @media (max-width: 900px) {
+    body { background: #fef3c7; }
+    .xabar::after { content: &quot;📟 O&#x27;rta ekran (600–900px)&quot;; }
+  }
+  @media (max-width: 600px) {
+    body { background: #dcfce7; }
+    .xabar::after { content: &quot;📱 Kichik ekran (600px gacha)&quot;; }
+  }
+&lt;/style&gt;
+&lt;h2 class=&quot;xabar&quot;&gt;&lt;/h2&gt;
+&lt;p&gt;&quot;⧉ Yangi oynada&quot; bosing va brauzer oynasini toraytirib-kengaytirib ko&#x27;ring — fon rangi va yozuv o&#x27;zgaradi.&lt;/p&gt;</code></pre></div>
+
+<h3>Breakpointlar (to'xtash nuqtalari)</h3>
+<p><b>Breakpoint</b> — dizayn o'zgaradigan ekran kengligi. Ko'p ishlatiladiganlari:</p>
+<div class="table-wrap"><table>
+<tr><th>Qurilma</th><th>Taxminiy kenglik</th><th>Odatiy maket</th></tr>
+<tr><td>📱 Telefon</td><td>360–480px</td><td>1 ustun, "burger" menyu</td></tr>
+<tr><td>📱 Katta telefon / kichik planshet</td><td>481–768px</td><td>1–2 ustun</td></tr>
+<tr><td>📟 Planshet</td><td>769–1024px</td><td>2–3 ustun</td></tr>
+<tr><td>💻 Noutbuk / kompyuter</td><td>1025px+</td><td>3–4 ustun, to'liq menyu</td></tr>
+</table></div>
+<div class="callout tip">Breakpointlarni qurilmalarga emas, <b>dizayningizga</b> qarab tanlang: oynani toraytiring va dizayn "buzila boshlagan" joyda breakpoint qo'ying.</div>
+
+<h3>Mobile-first yondashuvi</h3>
+<p>Ikki yo'l bor:</p>
+<ul>
+  <li><b>Desktop-first</b>: avval katta ekran uchun yozasiz, keyin <code>max-width</code> bilan kichraytirasiz.</li>
+  <li><b>Mobile-first</b> ✅: avval <b>telefon</b> uchun oddiy CSS, keyin <code>min-width</code> bilan katta ekranlar uchun <b>qo'shimchalar</b>.</li>
+</ul>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* MOBILE-FIRST */
+
+/* 1. Standart — telefon: hammasi bitta ustunda */
+.kartalar { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+/* 2. Planshet va undan katta */
+@media (min-width: 640px) {
+  .kartalar { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 3. Kompyuter */
+@media (min-width: 1024px) {
+  .kartalar { grid-template-columns: repeat(4, 1fr); }
+}</code></pre></div>
+<p><b>Nima uchun mobile-first yaxshiroq?</b> Telefon uchun dizayn odatda oddiyroq (bitta ustun) — undan murakkabga o'tish osonroq.
+Telefonlar kamroq CSS yuklaydi va eng ko'p foydalanuvchi aynan telefonda.</p>
+
+<h3>DevTools'da telefon rejimi</h3>
+<ol class="steps">
+  <li>Sahifangizni Chrome'da oching, <kbd>F12</kbd> bosing.</li>
+  <li>Chap yuqoridagi telefon-planshet belgisini bosing (<b>Toggle device toolbar</b>, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>).</li>
+  <li>Tepadan qurilmani tanlang: iPhone SE, Pixel 7, iPad... yoki "Responsive" rejimida chetini sudrab o'lchamni o'zgartiring.</li>
+  <li>Eng muhim tekshiruv: <b>gorizontal scroll</b> (yonga aylantirish) paydo bo'lmasligi kerak.</li>
+</ol>
+
+<h2 id="responsiv-navigatsiya"><a class="anchor" href="#responsiv-navigatsiya">#</a>Responsiv navigatsiya</h2>
+<p>Kompyuterda menyu gorizontal, telefonda esa sig'magani uchun "☰ burger" tugmasi orqali ochiladi. JavaScript'siz, faqat CSS bilan:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: sans-serif; }
+  .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+            padding: 14px 20px; background: #1e1b4b; color: white; }
+  .logo { font-weight: 800; font-size: 1.3rem; }
+  .menyu { display: flex; gap: 20px; }
+  .menyu a { color: white; text-decoration: none; }
+  #burger, .burger-tugma { display: none; }
+
+  @media (max-width: 640px) {
+    .burger-tugma { display: block; font-size: 1.6rem; cursor: pointer; }
+    .menyu { display: none; width: 100%; flex-direction: column; gap: 12px; padding-top: 14px; }
+    #burger:checked ~ .menyu { display: flex; }   /* checkbox belgilansa — menyu ochiladi */
+  }
+&lt;/style&gt;
+&lt;header class=&quot;header&quot;&gt;
+  &lt;div class=&quot;logo&quot;&gt;Maktab №5&lt;/div&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;burger&quot;&gt;
+  &lt;label for=&quot;burger&quot; class=&quot;burger-tugma&quot;&gt;☰&lt;/label&gt;
+  &lt;nav class=&quot;menyu&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;Bosh sahifa&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;Yangiliklar&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;Ustozlar&lt;/a&gt;&lt;a href=&quot;#&quot;&gt;Aloqa&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;p style=&quot;padding:20px&quot;&gt;Yangi oynada ochib, oynani 640px dan toraytiring va ☰ ni bosing.&lt;/p&gt;</code></pre></div>
+<p><b>Hiyla:</b> yashirin <code>checkbox</code> va uning <code>label</code>i tugma vazifasini bajaradi. <code>:checked ~ .menyu</code> — "checkbox belgilangan
+bo'lsa, undan keyingi <code>.menyu</code>ni ko'rsat". 19-mavzuda buni JavaScript bilan ham qilamiz.</p>
+
+<h2 id="figma-dizayndan-kodga"><a class="anchor" href="#figma-dizayndan-kodga">#</a>Figma — dizayndan kodga</h2>
+<p>Professional jamoalarda sayt avval <b>dizayner</b> tomonidan maxsus dasturda chiziladi, keyin <b>frontend dasturchi</b> uni kodga aylantiradi.
+Eng mashhur dastur — <b>Figma</b>. U brauzerda ishlaydi va o'quvchilar uchun bepul tarifi bor.</p>
+<h3>Figma bilan tanishish</h3>
+<ol class="steps">
+  <li><a href="https://www.figma.com" target="_blank" rel="noopener">figma.com</a> da Gmail orqali ro'yxatdan o'ting.</li>
+  <li><b>Figma Community</b> bo'limidan bepul "Landing page" yoki "Portfolio" shablonini toping va <b>Open in Figma</b> bosing (nusxa sizning akkauntingizga tushadi).</li>
+  <li>Asosiy tushunchalar:
+    <ul>
+      <li><b>Frame</b> — ekran yoki sahifa (masalan, "Desktop 1440", "iPhone 14"). Ichidagi elementlarning "konteyneri".</li>
+      <li><b>Layers</b> (chap panel) — barcha elementlar daraxti. HTML tuzilmasiga juda o'xshaydi!</li>
+      <li><b>Design</b> (o'ng panel) — tanlangan elementning o'lchami, rangi, shrifti, radiusi, soyasi.</li>
+      <li><b>Auto layout</b> — Figma'dagi Flexbox! Elementlarni qator yoki ustunga teradi, <code>gap</code> va <code>padding</code> beradi.</li>
+    </ul>
+  </li>
+</ol>
+<h3>Dizayndan qiymatlarni olish</h3>
+<p>Elementni tanlang va o'ng paneldan o'qing — yoki yuqoridagi <b>Dev Mode</b> (<kbd>Shift</kbd>+<kbd>D</kbd>) ni yoqing, Figma tayyor CSS ko'rsatadi:</p>
+<div class="table-wrap"><table>
+<tr><th>Figma'da</th><th>CSS'da</th></tr>
+<tr><td>Fill: <code>#4F46E5</code></td><td><code>background-color: #4f46e5;</code> (matn uchun — <code>color</code>)</td></tr>
+<tr><td>Text: Inter, Bold, 48</td><td><code>font-family: "Inter"; font-weight: 700; font-size: 48px;</code></td></tr>
+<tr><td>Corner radius: 12</td><td><code>border-radius: 12px;</code></td></tr>
+<tr><td>Stroke: 1, #E5E7EB, Inside</td><td><code>border: 1px solid #e5e7eb;</code></td></tr>
+<tr><td>Drop shadow: X 0, Y 4, Blur 12, #000 10%</td><td><code>box-shadow: 0 4px 12px rgba(0,0,0,.1);</code></td></tr>
+<tr><td>Auto layout: horizontal, gap 24, padding 16 32</td><td><code>display:flex; gap:24px; padding:16px 32px;</code></td></tr>
+<tr><td>Auto layout: vertical, center</td><td><code>flex-direction:column; align-items:center;</code></td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Elementlar orasidagi masofani o'lchash</span>
+Bitta elementni tanlab, <kbd>Alt</kbd> tugmasini bosib turing va sichqonchani boshqa element ustiga olib boring — Figma ular orasidagi masofani qizil raqam bilan ko'rsatadi.</div>
+<h3>Rasmlarni eksport qilish</h3>
+<p>Rasm yoki ikonkani tanlang → o'ng paneldagi <b>Export</b> → formatni tanlang (rasmlar uchun PNG/JPG, ikonkalar uchun SVG) → <b>Export</b>.</p>
+<h3>Maketni kodlash tartibi</h3>
+<ol class="steps">
+  <li>Dizaynni "bloklarga" bo'ling: header, hero, xizmatlar, sharhlar, footer. Har biri — HTML'da <code>section</code>.</li>
+  <li>Avval faqat <b>HTML tuzilmasini</b> yozing (dizaynsiz).</li>
+  <li>Ranglar va shriftlarni bir joyga yig'ing (CSS boshida izoh sifatida yoki keyinchalik CSS o'zgaruvchilari bilan).</li>
+  <li>Bloklarni yuqoridan pastga ketma-ket uslublang. Avval katta maket (flex/grid), keyin detallar.</li>
+  <li>Oxirida telefon versiyasini (Figma'da mobil frame bo'lsa — unga qarab) media query bilan qo'shing.</li>
+</ol>
+
+<h2 id="amaliy-mashgulot-responsiv-landing-page-4-loyiha"><a class="anchor" href="#amaliy-mashgulot-responsiv-landing-page-4-loyiha">#</a>Amaliy mashg'ulot: responsiv Landing Page (4-loyiha)</h2>
+<p>"IT Akademiya" uchun bir sahifali reklama sayti. Avval to'liq kodni o'qing, ▶ bilan sinab ko'ring, so'ng o'zingizning mavzungizda (kitob do'koni,
+sport zali, sayohat) qayta yarating.</p>
+<div class="code" data-play><div class="code-head"><span>landing/index.html</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;IT Akademiya — dasturlashni o&#x27;rganing&lt;/title&gt;
+&lt;style&gt;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: &quot;Segoe UI&quot;, Arial, sans-serif; color: #1f2937; line-height: 1.6; }
+  img { max-width: 100%; height: auto; display: block; }
+  .konteyner { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- MOBILE (standart) ---------- */
+  .header { position: sticky; top: 0; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.06); z-index: 10; }
+  .header .konteyner { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+  .logo { font-weight: 800; font-size: 1.3rem; color: #4f46e5; }
+  .menyu { display: none; }                         /* telefonda yashirin */
+  .header .tugma { padding: 8px 14px; font-size: .9rem; }
+
+  .tugma { display: inline-block; background: #4f46e5; color: #fff; text-decoration: none;
+           padding: 12px 24px; border-radius: 999px; font-weight: 600; }
+
+  .hero { padding: 48px 0; background: linear-gradient(135deg, #eef2ff, #fdf2f8); }
+  .hero .konteyner { display: flex; flex-direction: column; gap: 28px; text-align: center; align-items: center; }
+  .hero h1 { font-size: clamp(1.9rem, 6vw, 3.2rem); line-height: 1.15; }
+  .hero h1 span { color: #4f46e5; }
+  .hero p { color: #4b5563; font-size: 1.1rem; }
+  .hero img { border-radius: 20px; }
+
+  .bolim { padding: 56px 0; }
+  .bolim h2 { text-align: center; font-size: 1.9rem; margin-bottom: 28px; }
+  .kurslar { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .kurs { border: 1px solid #e5e7eb; border-radius: 16px; padding: 22px; box-shadow: 0 6px 18px rgba(0,0,0,.05); }
+  .kurs .ikon { font-size: 2rem; }
+  .kurs h3 { margin: 6px 0; }
+  .narx { color: #4f46e5; font-weight: 800; margin-top: 8px; }
+
+  .raqamlar { background: #1e1b4b; color: #fff; }
+  .raqamlar .konteyner { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: center; }
+  .raqamlar b { display: block; font-size: 2rem; color: #a5b4fc; }
+
+  .footer { padding: 24px 0; text-align: center; color: #6b7280; font-size: .9rem; }
+
+  /* ---------- PLANSHET: 640px va undan katta ---------- */
+  @media (min-width: 640px) {
+    .kurslar { grid-template-columns: repeat(2, 1fr); }
+    .raqamlar .konteyner { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* ---------- KOMPYUTER: 960px va undan katta ---------- */
+  @media (min-width: 960px) {
+    .menyu { display: flex; gap: 28px; }
+    .menyu a { color: #374151; text-decoration: none; font-weight: 500; }
+    .menyu a:hover { color: #4f46e5; }
+    .hero { padding: 90px 0; }
+    .hero .konteyner { flex-direction: row; text-align: left; }
+    .hero .matn, .hero img { flex: 1; }
+    .kurslar { grid-template-columns: repeat(3, 1fr); }
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header class=&quot;header&quot;&gt;
+    &lt;div class=&quot;konteyner&quot;&gt;
+      &lt;div class=&quot;logo&quot;&gt;IT Akademiya&lt;/div&gt;
+      &lt;nav class=&quot;menyu&quot;&gt;&lt;a href=&quot;#kurslar&quot;&gt;Kurslar&lt;/a&gt;&lt;a href=&quot;#natijalar&quot;&gt;Natijalar&lt;/a&gt;&lt;a href=&quot;#aloqa&quot;&gt;Aloqa&lt;/a&gt;&lt;/nav&gt;
+      &lt;a class=&quot;tugma&quot; href=&quot;#aloqa&quot;&gt;Yozilish&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;section class=&quot;hero&quot;&gt;
+    &lt;div class=&quot;konteyner&quot;&gt;
+      &lt;div class=&quot;matn&quot;&gt;
+        &lt;h1&gt;Kelajak kasbini &lt;span&gt;bugun&lt;/span&gt; o&#x27;rganing&lt;/h1&gt;
+        &lt;p&gt;8–11-sinf o&#x27;quvchilari uchun dasturlash kurslari. Amaliy loyihalar va tajribali mentorlar.&lt;/p&gt;
+        &lt;br&gt;&lt;a class=&quot;tugma&quot; href=&quot;#kurslar&quot;&gt;Kurslarni ko&#x27;rish&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;img src=&quot;https://picsum.photos/seed/darsxona/700/480&quot; alt=&quot;Kompyuter xonasida dars o&#x27;tayotgan o&#x27;quvchilar&quot;&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;bolim&quot; id=&quot;kurslar&quot;&gt;
+    &lt;div class=&quot;konteyner&quot;&gt;
+      &lt;h2&gt;Kurslarimiz&lt;/h2&gt;
+      &lt;div class=&quot;kurslar&quot;&gt;
+        &lt;article class=&quot;kurs&quot;&gt;&lt;div class=&quot;ikon&quot;&gt;🌐&lt;/div&gt;&lt;h3&gt;Web Frontend&lt;/h3&gt;&lt;p&gt;HTML, CSS, JavaScript — 4 oy&lt;/p&gt;&lt;p class=&quot;narx&quot;&gt;450 000 so&#x27;m/oy&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;kurs&quot;&gt;&lt;div class=&quot;ikon&quot;&gt;🐍&lt;/div&gt;&lt;h3&gt;Python Backend&lt;/h3&gt;&lt;p&gt;Python, Django, PostgreSQL — 5 oy&lt;/p&gt;&lt;p class=&quot;narx&quot;&gt;500 000 so&#x27;m/oy&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;kurs&quot;&gt;&lt;div class=&quot;ikon&quot;&gt;🤖&lt;/div&gt;&lt;h3&gt;Telegram botlar&lt;/h3&gt;&lt;p&gt;Python, Aiogram — 2 oy&lt;/p&gt;&lt;p class=&quot;narx&quot;&gt;400 000 so&#x27;m/oy&lt;/p&gt;&lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;bolim raqamlar&quot; id=&quot;natijalar&quot;&gt;
+    &lt;div class=&quot;konteyner&quot;&gt;
+      &lt;div&gt;&lt;b&gt;1200+&lt;/b&gt;bitiruvchi&lt;/div&gt;
+      &lt;div&gt;&lt;b&gt;35&lt;/b&gt;mentor&lt;/div&gt;
+      &lt;div&gt;&lt;b&gt;87%&lt;/b&gt;ishga joylashgan&lt;/div&gt;
+      &lt;div&gt;&lt;b&gt;4.9★&lt;/b&gt;reyting&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;footer class=&quot;footer&quot; id=&quot;aloqa&quot;&gt;© 2026 IT Akademiya · +998 90 000 00 00&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<p><b>Topshiriq:</b></p>
+<ol class="steps">
+  <li>Kodni o'z mavzungizga moslang (ranglar, matnlar, rasmlar). Kamida 5 ta bo'lim: header, hero, xizmatlar/mahsulotlar, raqamlar yoki sharhlar, footer.</li>
+  <li>DevTools'da 3 ta o'lchamda tekshiring: iPhone SE (375px), iPad (768px), kompyuter (1280px). Gorizontal scroll bo'lmasin!</li>
+  <li>Telefonda menyu yashiringan — yuqoridagi "burger" usulini qo'shing.</li>
+  <li><b>5-loyiha:</b> Figma Community'dan oddiy bir sahifali shablonni tanlang va uni o'lchamlari, ranglari va shriftlarini Dev Mode'dan olib, imkon qadar aniq kodlang.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>viewport</code> meta-tegini unutish — telefonda media query'lar ishlamaydi.</li>
+  <li>❌ <code>width: 1200px</code> kabi qattiq kengliklar — gorizontal scroll paydo bo'ladi. <code>max-width</code> ishlating.</li>
+  <li>❌ Media query'ni CSS faylning <b>boshiga</b> yozish — keyingi oddiy qoidalar uni "bosib" ketadi. Media query'lar asosiy qoidalardan <b>keyin</b> yoziladi.</li>
+  <li>❌ <code>@media (max-width: 768)</code> — birlik (<code>px</code>) unutilgan.</li>
+  <li>❌ Faqat kompyuterda tekshirish. Haqiqiy telefonda ham oching (Live Server + bir Wi-Fi tarmog'ida telefondan kompyuter IP-manziliga kirish mumkin).</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q"><code>@media (max-width: 600px) { ... }</code> ichidagi qoidalar qachon ishlaydi?</p><ol>
+<li>Ekran 600px dan katta bo'lganda</li><li>Ekran 600px yoki undan kichik bo'lganda</li><li>Faqat aynan 600px da</li><li>Har doim</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Mobile-first yondashuvida asosan qaysi shart ishlatiladi?</p><ol>
+<li><code>min-width</code></li><li><code>max-width</code></li><li><code>orientation</code></li><li><code>max-height</code></li></ol>
+<p class="explain">Avval telefon uchun yoziladi, keyin "kamida shuncha keng bo'lsa" deb katta ekranlar qo'shiladi.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Rasm konteynerdan chiqib ketmasligi uchun eng to'g'ri CSS?</p><ol>
+<li><code>width: 1000px</code></li><li><code>overflow: scroll</code></li><li><code>width: 100vw</code></li><li><code>max-width: 100%; height: auto;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Figma'dagi "Auto layout" CSS'dagi qaysi texnologiyaga o'xshaydi?</p><ol>
+<li>position: absolute</li><li>HTML jadval</li><li>Flexbox</li><li>Media query</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>&lt;meta name="viewport"&gt;</code> bo'lmasa telefonda nima bo'ladi?</p><ol>
+<li>Sayt umuman ochilmaydi</li><li>Sahifa kompyuter kengligida, kichraytirilgan holda ko'rinadi</li><li>Ranglar o'zgaradi</li><li>Hech narsa o'zgarmaydi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Portfolio va maktab saytlaringizni to'liq responsiv qiling (3 ta breakpoint).</li>
+  <li>Figma'da o'z portfoliongiz uchun oddiy maket chizing: 1 ta Desktop frame (1440px) va 1 ta Mobile frame (390px). Auto layout ishlating.</li>
+  <li>Telefoningizda 3 ta sevimli saytingizni oching va ularning mobil versiyasida nimalar o'zgarganini (menyu, ustunlar, shrift) yozib chiqing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Responsivlik = viewport meta + moslashuvchan o'lchamlar (<code>%</code>, <code>max-width</code>, <code>fr</code>) + <code>img { max-width: 100% }</code> + media query.</li>
+  <li><code>@media (min-width: 768px) { ... }</code> — shartli CSS; mobile-first'da <code>min-width</code>.</li>
+  <li>DevTools → Device toolbar (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>) bilan tekshiring; gorizontal scroll bo'lmasin.</li>
+  <li>Figma: Frame, Layers, Auto layout (= Flexbox), Dev Mode'dan tayyor CSS qiymatlar, Export.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="09-pseudo-class-position.html"><small>← Oldingi mavzu</small>CSS pseudo-class va pseudo-elementlar. CSS position</a><a class="next" href="11-git-github-seo.html"><small>Keyingi mavzu →</small>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#responsiv-dizayn-nima">Responsiv dizayn nima?</a></li><li><a href="#1-qadam-viewport-meta-tegi">1-qadam: viewport meta-tegi</a></li><li><a href="#2-qadam-moslashuvchan-olchamlar-va-rasmlar">2-qadam: moslashuvchan o&#x27;lchamlar va rasmlar</a></li><li><a href="#3-qadam-media-sorovlar-media-queries">3-qadam: media so&#x27;rovlar (media queries)</a></li><li><a href="#responsiv-navigatsiya">Responsiv navigatsiya</a></li><li><a href="#figma-dizayndan-kodga">Figma — dizayndan kodga</a></li><li><a href="#amaliy-mashgulot-responsiv-landing-page-4-loyiha">Amaliy mashg&#x27;ulot: responsiv Landing Page (4-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

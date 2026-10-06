@@ -1,0 +1,214 @@
+<!-- title: Ma'lumotlarni qo'shish, ko'rish va saqlash. CRUD operatsiyalari | desc: CRUD konsepsiyasi; INSERT bilan qo'shish, SELECT bilan o'qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o'chirish; WHERE'siz UPDATE/DELETE xavfi; o'quvchilar bazasi loyihasi. | icon: ✏️ | level: 2 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>CRUD</b> — har qanday dasturning to'rtta asosiy amalini;</li>
+  <li><code>INSERT</code> — ma'lumot qo'shish;</li>
+  <li><code>SELECT</code> — ma'lumotni o'qish, tanlash va saralash;</li>
+  <li><code>UPDATE</code> — o'zgartirish va <code>DELETE</code> — o'chirish;</li>
+  <li>Eng xavfli xato — <code>WHERE</code>siz UPDATE/DELETE — dan qanday saqlanishni;</li>
+  <li>To'liq ishlaydigan o'quvchilar bazasini (18-loyiha).</li>
+</ul>
+</div>
+
+<h2>CRUD nima?</h2>
+<p>Deyarli har qanday dastur ma'lumot bilan to'rtta amal bajaradi. Ularning bosh harflaridan <b>CRUD</b> so'zi hosil bo'lgan:</p>
+<div class="table-wrap"><table>
+<tr><th>Harf</th><th>Amal</th><th>SQL</th><th>Hayotiy misol (Instagram)</th><th>HTTP (39-mavzu)</th></tr>
+<tr><td><b>C</b>reate</td><td>Yaratish</td><td><code>INSERT</code></td><td>Yangi post joylash</td><td><code>POST</code></td></tr>
+<tr><td><b>R</b>ead</td><td>O'qish</td><td><code>SELECT</code></td><td>Lentani ko'rish</td><td><code>GET</code></td></tr>
+<tr><td><b>U</b>pdate</td><td>Yangilash</td><td><code>UPDATE</code></td><td>Post izohini tahrirlash</td><td><code>PUT/PATCH</code></td></tr>
+<tr><td><b>D</b>elete</td><td>O'chirish</td><td><code>DELETE</code></td><td>Postni o'chirish</td><td><code>DELETE</code></td></tr>
+</table></div>
+<p>Bu darsda 27-mavzuda yaratgan <code>maktab</code> bazasidagi jadvallar bilan ishlaymiz.</p>
+
+<h2>Create — <code>INSERT</code></h2>
+<pre data-lang="sql">-- Bitta qator qo'shish
+INSERT INTO sinflar (nomi, sinf_rahbari, xona)
+VALUES ('8-A', 'Karimova Nodira', 204);
+
+-- Bir nechta qatorni birdan
+INSERT INTO sinflar (nomi, sinf_rahbari, xona) VALUES
+    ('8-B', 'Rasulov Akmal', 206),
+    ('8-V', 'Yusupova Malika', 210);
+
+-- O'quvchilar (id avtomatik — SERIAL; alochi va yaratilgan — DEFAULT)
+INSERT INTO oquvchilar (ism, familiya, tugilgan_sana, email, sinf_id) VALUES
+    ('Ali',     'Valiyev',   '2012-03-15', 'ali@mail.uz',     1),
+    ('Zarina',  'Karimova',  '2012-07-02', 'zarina@mail.uz',  1),
+    ('Bobur',   'Toshmatov', '2011-11-20', 'bobur@mail.uz',   2),
+    ('Madina',  'Ergasheva', '2012-01-09', 'madina@mail.uz',  2),
+    ('Sardor',  'Qodirov',   '2012-05-30', NULL,              3),
+    ('Dilnoza', 'Aminova',   '2011-12-12', 'dilnoza@mail.uz', 1);
+
+-- Qo'shilgan qatorni darhol ko'rish (PostgreSQL imkoniyati)
+INSERT INTO oquvchilar (ism, familiya, sinf_id)
+VALUES ('Jasur', 'Rahimov', 3)
+RETURNING id, ism;</pre>
+<ul>
+  <li>Ustunlar ro'yxati va qiymatlar ro'yxati <b>bir xil tartib va sonda</b> bo'lishi kerak.</li>
+  <li><code>id</code> ni yozmaymiz — <code>SERIAL</code> uni o'zi beradi.</li>
+  <li><code>NULL</code> — "qiymat yo'q" (bo'sh). Faqat <code>NOT NULL</code> bo'lmagan ustunlarga.</li>
+</ul>
+<p>Baza cheklovlarni tekshiradi — quyidagilar <b>xato</b> beradi:</p>
+<pre data-lang="sql">INSERT INTO oquvchilar (familiya) VALUES ('Aliyev');
+-- ❌ null value in column "ism" violates not-null constraint
+
+INSERT INTO oquvchilar (ism, familiya, email) VALUES ('Vali', 'Aliyev', 'ali@mail.uz');
+-- ❌ duplicate key value violates unique constraint (email band)
+
+INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES ('Vali', 'Aliyev', 99);
+-- ❌ violates foreign key constraint (99-sinf yo'q)
+
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, 'Matematika', 7);
+-- ❌ violates check constraint (baho 2..5 bo'lishi kerak)</pre>
+<div class="callout tip">Bu xatolar — <b>yaxshi</b> narsa! Baza noto'g'ri ma'lumot yozilishiga yo'l qo'ymayapti. Xato xabarini diqqat bilan o'qing — u aniq qaysi qoida buzilganini aytadi.</div>
+
+<h2>Read — <code>SELECT</code></h2>
+<pre data-lang="sql">-- Barcha ustunlar va barcha qatorlar
+SELECT * FROM oquvchilar;
+
+-- Faqat kerakli ustunlar
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar;
+
+-- Ustunga boshqa nom berish (AS) va hisoblangan ustun
+SELECT ism || ' ' || familiya AS toliq_ism,              -- || — matnlarni birlashtirish
+       EXTRACT(YEAR FROM AGE(tugilgan_sana)) AS yoshi    -- yoshni hisoblash
+FROM oquvchilar;</pre>
+<pre data-lang="output"> toliq_ism         | yoshi
+-------------------+-------
+ Ali Valiyev       |    14
+ Zarina Karimova   |    14
+ Bobur Toshmatov   |    14
+ ...</pre>
+<h3><code>WHERE</code> — shart bo'yicha tanlash</h3>
+<pre data-lang="sql">SELECT * FROM oquvchilar WHERE sinf_id = 1;                     -- 8-A o'quvchilari
+SELECT * FROM oquvchilar WHERE ism = 'Bobur';
+SELECT * FROM oquvchilar WHERE tugilgan_sana < '2012-01-01';    -- 2012-yildan oldin tug'ilganlar
+SELECT * FROM oquvchilar WHERE email IS NULL;                   -- emaili yo'qlar (= NULL emas!)
+SELECT * FROM oquvchilar WHERE sinf_id = 1 AND alochi = TRUE;   -- VA
+SELECT * FROM oquvchilar WHERE sinf_id = 2 OR sinf_id = 3;      -- YOKI</pre>
+<p>Batafsil filtrlash (<code>LIKE</code>, <code>IN</code>, <code>BETWEEN</code>) — 30-mavzuda.</p>
+<h3><code>ORDER BY</code> va <code>LIMIT</code></h3>
+<pre data-lang="sql">SELECT ism, familiya FROM oquvchilar ORDER BY familiya;                  -- A dan Z gacha
+SELECT ism, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana DESC;   -- eng yoshi birinchi
+SELECT ism FROM oquvchilar ORDER BY sinf_id, familiya;                  -- avval sinf, keyin familiya
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3;                          -- faqat birinchi 3 tasi
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3 OFFSET 3;                 -- keyingi 3 tasi (2-sahifa)</pre>
+<div class="callout info"><span class="t">SELECT qismlari tartibi</span>
+<code>SELECT</code> ustunlar → <code>FROM</code> jadval → <code>WHERE</code> shart → <code>ORDER BY</code> saralash → <code>LIMIT</code> son. Tartib qat'iy: <code>WHERE</code> ni <code>ORDER BY</code> dan keyin yozib bo'lmaydi.</div>
+
+<h2>Update — <code>UPDATE</code></h2>
+<pre data-lang="sql">-- Bitta o'quvchining emailini o'zgartirish
+UPDATE oquvchilar
+SET email = 'sardor@mail.uz'
+WHERE id = 5;
+
+-- Bir nechta ustunni birdan
+UPDATE oquvchilar
+SET alochi = TRUE, telefon = '+998901234567'
+WHERE id = 2;
+
+-- Hisob bilan: 8-A sinfi boshqa xonaga ko'chdi
+UPDATE sinflar SET xona = xona + 100 WHERE nomi = '8-A';
+
+-- O'zgargan qatorni ko'rish
+UPDATE oquvchilar SET sinf_id = 2 WHERE id = 6 RETURNING *;</pre>
+
+<h2>Delete — <code>DELETE</code></h2>
+<pre data-lang="sql">DELETE FROM oquvchilar WHERE id = 7;
+
+DELETE FROM baholar WHERE sana < '2025-09-01';    -- eski baholarni tozalash</pre>
+
+<div class="callout danger"><span class="t">⚠️ ENG XAVFLI XATO: WHERE'ni unutish</span>
+<pre data-lang="sql">UPDATE oquvchilar SET sinf_id = 1;      -- 😱 BARCHA o'quvchilar 8-A ga ko'chdi!
+DELETE FROM oquvchilar;                 -- 😱 BARCHA o'quvchilar o'chdi!</pre>
+<p>Baza "Ishonchingiz komilmi?" deb so'ramaydi. <b>Xavfsizlik qoidasi:</b> UPDATE yoki DELETE yozishdan oldin, xuddi shu <code>WHERE</code> bilan <b>avval SELECT</b> qiling va
+qaysi qatorlar o'zgarishini ko'ring:</p>
+<pre data-lang="sql">SELECT * FROM baholar WHERE sana < '2025-09-01';   -- 1) avval ko'ramiz: 12 qator
+DELETE FROM baholar WHERE sana < '2025-09-01';     -- 2) keyin o'chiramiz</pre>
+</div>
+
+<h2>Tranzaksiya — "hammasi yoki hech biri"</h2>
+<p>Ba'zan bir nechta o'zgarish faqat <b>birgalikda</b> ma'noga ega. Masalan, o'quvchini boshqa sinfga ko'chirish va bu haqda yozuv qoldirish:</p>
+<pre data-lang="sql">BEGIN;                                               -- tranzaksiya boshlandi
+UPDATE oquvchilar SET sinf_id = 3 WHERE id = 1;
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, 'Matematika', 5);
+COMMIT;                                              -- hammasini saqlash
+-- Xato bo'lsa: ROLLBACK;  — barcha o'zgarishlar bekor qilinadi</pre>
+<div class="analogy"><span class="t">O'xshatish: pul o'tkazmasi</span>
+Do'stingizga 50 000 so'm o'tkazyapsiz: sizning hisobingizdan yechiladi VA do'stingiznikiga tushadi. Agar birinchisi bajarilib, ikkinchisida elektr o'chsa — pul
+"yo'qolib" qoladi. Tranzaksiya ikkalasi birga bajarilishini yoki ikkalasi ham bekor qilinishini kafolatlaydi.</div>
+
+<h2>Amaliy mashg'ulot: o'quvchilar bazasi (18-loyiha)</h2>
+<ol class="steps">
+  <li>Yuqoridagi <code>INSERT</code> lar bilan sinflar va o'quvchilarni qo'shing. O'z sinfdoshlaringizdan yana 5 tasini qo'shing.</li>
+  <li><b>Baholar</b> jadvaliga kamida 20 ta baho qo'shing:
+<pre data-lang="sql">INSERT INTO baholar (oquvchi_id, fan, baho, sana) VALUES
+    (1, 'Matematika', 5, '2026-09-10'), (1, 'Informatika', 5, '2026-09-11'),
+    (1, 'Ona tili', 4, '2026-09-12'),   (2, 'Matematika', 5, '2026-09-10'),
+    (2, 'Informatika', 4, '2026-09-11'),(3, 'Matematika', 3, '2026-09-10'),
+    (3, 'Informatika', 4, '2026-09-11'),(4, 'Matematika', 5, '2026-09-10'),
+    (4, 'Ona tili', 5, '2026-09-12'),   (5, 'Informatika', 2, '2026-09-11'),
+    (6, 'Matematika', 4, '2026-09-10'), (6, 'Informatika', 5, '2026-09-11');</pre></li>
+  <li>Quyidagi so'rovlarni yozing:
+    <ol>
+      <li>Barcha o'quvchilarning to'liq ismi, familiya bo'yicha tartiblangan.</li>
+      <li>2-sinf (sinf_id = 2) o'quvchilari.</li>
+      <li>Eng yoshi katta 3 nafar o'quvchi.</li>
+      <li>Emaili kiritilmagan o'quvchilar.</li>
+      <li>Informatikadan 5 olgan baholar.</li>
+    </ol></li>
+  <li>Sardorning (id=5) emailini qo'shing; Zarinani a'lochi deb belgilang.</li>
+  <li>Bitta o'quvchini o'chiring (avval SELECT bilan tekshirib!). Uning baholari ham o'chdimi? Nima uchun? (<code>ON DELETE CASCADE</code>)</li>
+</ol>
+<details><summary>3-topshiriq javoblari</summary>
+<pre data-lang="sql">SELECT ism || ' ' || familiya AS toliq_ism FROM oquvchilar ORDER BY familiya;
+SELECT * FROM oquvchilar WHERE sinf_id = 2;
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana LIMIT 3;
+SELECT ism, familiya FROM oquvchilar WHERE email IS NULL;
+SELECT * FROM baholar WHERE fan = 'Informatika' AND baho = 5;</pre>
+</details>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>WHERE email = NULL</code> — hech narsa qaytarmaydi. NULL bilan taqqoslash: <code>IS NULL</code> / <code>IS NOT NULL</code>.</li>
+  <li>❌ Matn qiymatini qo'shtirnoqsiz yozish: <code>WHERE ism = Ali</code> — <code>column "ali" does not exist</code>.</li>
+  <li>❌ <code>INSERT</code> da ustunlar va qiymatlar soni mos emas: <code>INSERT has more expressions than target columns</code>.</li>
+  <li>❌ <code>WHERE</code>siz UPDATE/DELETE. Avval SELECT!</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">CRUD'dagi "R" qaysi SQL buyrug'iga mos keladi?</p><ol>
+<li><code>INSERT</code></li><li><code>SELECT</code></li><li><code>UPDATE</code></li><li><code>REMOVE</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>DELETE FROM oquvchilar;</code> nima qiladi?</p><ol>
+<li>Faqat birinchi qatorni o'chiradi</li><li>Jadvalni o'chiradi</li><li>Xato beradi</li><li>Jadvaldagi BARCHA qatorlarni o'chiradi</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Emaili kiritilmagan o'quvchilarni topuvchi to'g'ri shart?</p><ol>
+<li><code>WHERE email IS NULL</code></li><li><code>WHERE email = NULL</code></li><li><code>WHERE email = ''</code></li><li><code>WHERE NOT email</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Natijani kamayish tartibida saralash uchun?</p><ol>
+<li><code>ORDER BY ... ASC</code></li><li><code>SORT BY ... DOWN</code></li><li><code>ORDER BY ... DESC</code></li><li><code>ORDER DESC BY ...</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Faqat birinchi 5 ta natijani olish uchun?</p><ol>
+<li><code>TOP 5</code></li><li><code>LIMIT 5</code></li><li><code>FIRST 5</code></li><li><code>COUNT 5</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Bir nechta o'zgarishni "hammasi yoki hech biri" tarzida bajarish nima deyiladi?</p><ol>
+<li>Indeks</li><li>JOIN</li><li>Cheklov</li><li>Tranzaksiya</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>27-mavzudagi <code>dokon</code> bazasini to'ldiring: 3 toifa, 15 mahsulot, 5 mijoz.</li>
+  <li>So'rovlar: eng qimmat 5 mahsulot; omborda tugagan (<code>soni = 0</code>) mahsulotlar; narxi 50 000 dan arzon mahsulotlar alifbo tartibida.</li>
+  <li>Barcha "Kanselyariya" toifasidagi mahsulotlar narxini 10% oshiring (<code>SET narx = narx * 1.1</code>) — avval SELECT bilan tekshiring!</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>CRUD: Create (<code>INSERT</code>), Read (<code>SELECT</code>), Update (<code>UPDATE</code>), Delete (<code>DELETE</code>).</li>
+  <li><code>INSERT INTO t (a, b) VALUES (1, 'x');</code></li>
+  <li><code>SELECT ustunlar FROM t WHERE shart ORDER BY u DESC LIMIT n;</code></li>
+  <li><code>UPDATE t SET a = 1 WHERE id = 5;</code> / <code>DELETE FROM t WHERE id = 5;</code> — <b>WHERE'ni unutmang, avval SELECT!</b></li>
+  <li><code>IS NULL</code>; tranzaksiya — <code>BEGIN ... COMMIT / ROLLBACK</code>.</li>
+</ul>
+</div>

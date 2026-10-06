@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o&#x27;zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a class="active" href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚡</div><div><div class="crumb">15-mavzu · 31 tadan · II bob. JavaScript asoslari</div><h1>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</h1><p class="lead">JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o&#x27;zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>JavaScript nima va u HTML/CSS'dan nimasi bilan farq qilishini;</li>
+  <li>JavaScript kodini sahifaga ulash va brauzer konsolidan foydalanishni;</li>
+  <li><b>O'zgaruvchi</b> nima ekanini va <code>let</code>, <code>const</code> bilan yaratishni;</li>
+  <li>Asosiy ma'lumot turlarini: matn, son, mantiqiy qiymat va boshqalar;</li>
+  <li>Birinchi interaktiv dasturingizni yozishni.</li>
+</ul>
+</div>
+
+<h2 id="javascript-nima"><a class="anchor" href="#javascript-nima">#</a>JavaScript nima?</h2>
+<p><b>JavaScript (JS)</b> — veb-sahifalarga <b>harakat va mantiq</b> qo'shuvchi <b>dasturlash tili</b>. HTML va CSS'dan farqli o'laroq, unda hisob-kitob, shartlar,
+takrorlanishlar bor — ya'ni u haqiqiy dasturlash tili.</p>
+<div class="analogy"><span class="t">O'xshatish: uy (davomi)</span>
+HTML — devorlar, CSS — bo'yoq va mebel. <b>JavaScript</b> — elektr tarmog'i va "aqlli uy" tizimi: tugma bosilsa chiroq yonadi, eshik oldiga kelsangiz
+qo'ng'iroq chalinadi, harorat pasaysa isitish yoqiladi.</div>
+<p><b>JavaScript bilan nimalar qilinadi?</b></p>
+<ul>
+  <li>Tugma bosilganda biror narsa sodir bo'lishi (menyu ochilishi, rasm almashishi);</li>
+  <li>Formani yuborishdan oldin tekshirish ("Parol juda qisqa!");</li>
+  <li>Kalkulyator, o'yinlar, testlar, taymerlar;</li>
+  <li>Sahifani qayta yuklamasdan yangi ma'lumot olish (Instagram lentasi, ob-havo).</li>
+</ul>
+<div class="callout info"><span class="t">JavaScript ≠ Java</span>
+Nomlari o'xshash, lekin bu ikki butunlay boshqa til — xuddi "olma" va "olmos" kabi. JavaScript 1995-yilda atigi 10 kunda yaratilgan va hozir dunyodagi eng
+mashhur dasturlash tillaridan biri. U nafaqat brauzerda, balki serverda (Node.js) va mobil ilovalarda ham ishlaydi.</div>
+
+<h2 id="javascriptni-ishga-tushirish"><a class="anchor" href="#javascriptni-ishga-tushirish">#</a>JavaScript'ni ishga tushirish</h2>
+<h3>1. Brauzer konsoli — eng tez usul</h3>
+<p>Chrome'da <kbd>F12</kbd> → <b>Console</b> yorlig'i. Bu yerga kod yozib <kbd>Enter</kbd> bossangiz, darhol bajariladi:</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(&quot;Salom, dunyo!&quot;);
+console.log(2 + 3);
+console.log(&quot;Men&quot;, 14, &quot;yoshdaman&quot;);</code></pre></div>
+<p><code>console.log()</code> — qavs ichidagini konsolga chiqaradi. Dasturchilar undan kodni tekshirish uchun doimo foydalanadi. (Bu sahifadagi ▶ tugmasi
+natijani o'ng tomonda ko'rsatadi.)</p>
+<h3>2. HTML sahifada — <code>&lt;script&gt;</code> tegi</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;title&gt;JS&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Birinchi dasturim&lt;/h1&gt;
+
+  &lt;script&gt;
+    alert(&quot;Saytga xush kelibsiz!&quot;);          // oyna chiqaradi
+    console.log(&quot;Bu konsolda ko&#x27;rinadi&quot;);
+    document.write(&quot;&lt;p&gt;Bu sahifaga yozildi&lt;/p&gt;&quot;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<h3>3. Alohida <code>.js</code> fayl ✅</h3>
+<div class="code"><div class="code-head"><span>index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;body&gt;
+  &lt;h1&gt;Sahifa&lt;/h1&gt;
+  &lt;!-- Skript body OXIRIDA: avval HTML yuklansin, keyin JS --&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(&quot;app.js ishladi!&quot;);</code></pre></div>
+<p>CSS kabi, eng to'g'ri usul — alohida fayl. <code>&lt;script&gt;</code> ni <code>&lt;/body&gt;</code> dan oldin qo'ying — shunda JavaScript ishlay boshlaganda sahifa elementlari allaqachon mavjud bo'ladi.</p>
+<h3>Izohlar</h3>
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Bir qatorli izoh
+
+/* Ko&#x27;p qatorli
+   izoh */</code></pre></div>
+
+<h2 id="ozgaruvchilar"><a class="anchor" href="#ozgaruvchilar">#</a>O'zgaruvchilar</h2>
+<p><b>O'zgaruvchi</b> — ma'lumotni saqlash uchun <b>nomlangan "quti"</b>. Unga qiymat qo'yasiz va keyinroq nomi orqali ishlatasiz.</p>
+<div class="analogy"><span class="t">O'xshatish: yorliqli qutilar</span>
+Javonda qutilar turibdi. Har biriga yorliq yopishtirilgan: "ism", "yosh", "ball". "ism" qutisiga "Malika" qog'ozini, "yosh" qutisiga 14 raqamini soldingiz.
+Endi "yosh qutisida nima bor?" deb so'rasangiz — 14. Yorliq — o'zgaruvchi <b>nomi</b>, ichidagi narsa — uning <b>qiymati</b>.</div>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">let ism = &quot;Malika&quot;;        // &quot;ism&quot; qutisini yaratdik va ichiga &quot;Malika&quot; ni soldik
+let yosh = 14;
+console.log(ism);           // Malika
+console.log(yosh);          // 14
+
+yosh = 15;                  // qiymatni o&#x27;zgartirish (let ni qayta yozmaymiz!)
+console.log(yosh);          // 15
+
+let shahar;                 // e&#x27;lon qilindi, lekin qiymat berilmadi
+console.log(shahar);        // undefined</code></pre></div>
+<ul>
+  <li><code>let</code> — o'zgaruvchi e'lon qilish kalit so'zi.</li>
+  <li><code>=</code> — <b>tayinlash</b> belgisi ("tenglik" emas!): "o'ngdagi qiymatni chapdagi qutiga sol".</li>
+  <li>Satr oxirida <code>;</code> (nuqta-vergul) — buyruq tugadi.</li>
+</ul>
+
+<h3><code>let</code>, <code>const</code> va <code>var</code></h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const PI = 3.14;            // const — o&#x27;zgarmas (constant)
+const tugilganYil = 2012;
+// PI = 5;                  // ❌ Xato! const qiymatini o&#x27;zgartirib bo&#x27;lmaydi
+
+let ball = 0;               // let — o&#x27;zgaradigan qiymat
+ball = ball + 10;
+console.log(ball);          // 10</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th></th><th><code>const</code></th><th><code>let</code></th><th><code>var</code></th></tr>
+<tr><td>Qiymatni o'zgartirish</td><td>❌ Yo'q</td><td>✅ Ha</td><td>✅ Ha</td></tr>
+<tr><td>Qachon ishlatish</td><td><b>Doim birinchi tanlov</b></td><td>Qiymat o'zgarishi kerak bo'lsa</td><td>Eski kodlarda uchraydi. <b>Ishlatmang</b></td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Oltin qoida</span>
+Har doim <code>const</code> bilan boshlang. Agar keyinroq qiymatni o'zgartirish kerak bo'lsa — <code>let</code> ga almashtiring. <code>var</code> eski usul va kutilmagan xatolarga olib keladi.</div>
+
+<h3>O'zgaruvchilarni nomlash qoidalari</h3>
+<div class="table-wrap"><table>
+<tr><th>Qoida</th><th>✅ To'g'ri</th><th>❌ Noto'g'ri</th></tr>
+<tr><td>Harf, <code>$</code> yoki <code>_</code> bilan boshlanadi</td><td><code>ism</code>, <code>_soni</code></td><td><code>1ism</code></td></tr>
+<tr><td>Bo'sh joy bo'lmaydi</td><td><code>sinfRahbari</code></td><td><code>sinf rahbari</code></td></tr>
+<tr><td>Defis bo'lmaydi</td><td><code>umumiyBall</code></td><td><code>umumiy-ball</code></td></tr>
+<tr><td>Maxsus so'zlar bo'lmaydi</td><td><code>mening_let</code></td><td><code>let</code>, <code>const</code>, <code>if</code></td></tr>
+<tr><td>Apostrof (') bo'lmaydi</td><td><code>ogil</code>, <code>yosh</code></td><td><code>o'g'il</code></td></tr>
+</table></div>
+<ul>
+  <li>JS <b>katta-kichik harfni farqlaydi</b>: <code>ism</code> va <code>Ism</code> — ikki xil o'zgaruvchi!</li>
+  <li>Bir necha so'zli nomlar <b>camelCase</b> uslubida yoziladi: birinchi so'z kichik, keyingilari katta harf bilan — <code>oquvchiSoni</code>, <code>dasturlashTili</code>.</li>
+  <li>Nom <b>mazmunli</b> bo'lsin: <code>x</code>, <code>a1</code> ❌ → <code>narx</code>, <code>chegirmaFoizi</code> ✅.</li>
+</ul>
+
+<h2 id="malumot-turlari"><a class="anchor" href="#malumot-turlari">#</a>Ma'lumot turlari</h2>
+<p>Har bir qiymatning <b>turi</b> bor. Tur — bu qiymat bilan nima qilish mumkinligini belgilaydi: sonlarni qo'shish mumkin, matnni katta harfga aylantirish mumkin.</p>
+<h3>1. String — matn (satr)</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const ism = &quot;Aziz&quot;;                 // qo&#x27;sh tirnoq
+const familiya = &#x27;Karimov&#x27;;         // bitta tirnoq
+const shahar = `Toshkent`;          // teskari tirnoq (backtick) — eng qulayi
+
+// Satrlarni birlashtirish
+console.log(ism + &quot; &quot; + familiya);                  // Aziz Karimov
+
+// Shablon satr (template literal): ${} ichiga o&#x27;zgaruvchi qo&#x27;yiladi
+const yosh = 14;
+console.log(`Mening ismim ${ism}, ${yosh} yoshdaman, ${shahar}da yashayman.`);
+
+// Foydali imkoniyatlar
+console.log(ism.length);            // 4 — harflar soni
+console.log(ism.toUpperCase());     // AZIZ
+console.log(ism.toLowerCase());     // aziz
+console.log(familiya[0]);           // K — birinchi harf (sanash 0 dan boshlanadi!)
+console.log(&quot;salom dunyo&quot;.includes(&quot;dunyo&quot;));   // true</code></pre></div>
+<div class="callout warn"><span class="t">O'zbekcha apostrof bilan ehtiyot bo'ling</span>
+<code>'O'zbekiston'</code> ❌ — birinchi <code>'</code> satrni ochadi, ikkinchisi yopadi va xato chiqadi. Yechim: qo'sh tirnoq yoki backtick ishlating:
+<code>"O'zbekiston"</code> yoki <code>`O'zbekiston`</code> ✅.</div>
+<h3>2. Number — son</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const butun = 42;
+const kasr = 3.14;            // o&#x27;nlik kasr NUQTA bilan (vergul emas!)
+const manfiy = -10;
+console.log(butun + kasr);    // 45.14
+console.log(10 / 3);          // 3.3333333333333335
+console.log(10 / 0);          // Infinity — cheksizlik
+console.log(&quot;olma&quot; * 2);      // NaN — &quot;Not a Number&quot; (son emas)</code></pre></div>
+<h3>3. Boolean — mantiqiy qiymat</h3>
+<p>Faqat ikki qiymat: <code>true</code> (rost, ha) yoki <code>false</code> (yolg'on, yo'q). Shartlarda ishlatiladi (16-mavzu).</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const tizimgaKirgan = true;
+const darsTugadi = false;
+console.log(5 &gt; 3);           // true
+console.log(10 === 7);        // false</code></pre></div>
+<h3>4. Undefined va null</h3>
+<ul>
+  <li><code>undefined</code> — "qiymat hali <b>berilmagan</b>" (bo'sh quti, ichiga hech narsa solinmagan).</li>
+  <li><code>null</code> — "qiymat <b>ataylab bo'sh</b>" (dasturchi qutini o'zi bo'shatib qo'ygan).</li>
+</ul>
+<h3>Murakkab turlar (oldinda)</h3>
+<p><b>Array</b> (massiv, ro'yxat) <code>[1, 2, 3]</code> va <b>Object</b> (obyekt) <code>{ ism: "Ali" }</code> — 18-mavzuda batafsil.</p>
+<h3>Turni aniqlash: <code>typeof</code></h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(typeof &quot;Salom&quot;);     // string
+console.log(typeof 25);          // number
+console.log(typeof true);        // boolean
+console.log(typeof undefined);   // undefined
+console.log(typeof null);        // object  ← JavaScript&#x27;ning mashhur &quot;tarixiy xatosi&quot;!
+console.log(typeof [1, 2]);      // object</code></pre></div>
+
+<h3>Turlarni o'zgartirish</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Matn + son = matn (son matnga aylanadi)
+console.log(&quot;5&quot; + 3);           // &quot;53&quot;  😮
+console.log(&quot;5&quot; - 3);           // 2     (ayirishda matn songa aylanadi)
+
+// Aniq o&#x27;zgartirish
+console.log(Number(&quot;42&quot;) + 8);  // 50
+console.log(String(100) + &quot;%&quot;); // &quot;100%&quot;
+console.log(parseInt(&quot;15px&quot;));  // 15
+console.log(parseFloat(&quot;3.5&quot;));  // 3.5</code></pre></div>
+<div class="callout warn">Foydalanuvchi kiritgan har qanday ma'lumot (<code>prompt</code>, forma) <b>doim matn</b> bo'lib keladi. Hisoblashdan oldin <code>Number()</code> bilan songa aylantiring!</div>
+
+<h2 id="foydalanuvchi-bilan-muloqot"><a class="anchor" href="#foydalanuvchi-bilan-muloqot">#</a>Foydalanuvchi bilan muloqot</h2>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const ism = prompt(&quot;Ismingiz nima?&quot;);                  // matn kiritish oynasi
+const tugilganYil = Number(prompt(&quot;Qaysi yilda tug&#x27;ilgansiz?&quot;));
+const yosh = 2026 - tugilganYil;
+
+alert(`Salom, ${ism}! Siz ${yosh} yoshdasiz.`);
+const tasdiq = confirm(&quot;Dasturlashni yoqtirasizmi?&quot;);   // OK → true, Cancel → false
+console.log(&quot;Javob:&quot;, tasdiq);</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Funksiya</th><th>Vazifasi</th><th>Nima qaytaradi</th></tr>
+<tr><td><code>alert("...")</code></td><td>Xabar oynasi</td><td>Hech narsa</td></tr>
+<tr><td><code>prompt("...")</code></td><td>Matn kiritish oynasi</td><td>Kiritilgan <b>matn</b> (yoki <code>null</code>)</td></tr>
+<tr><td><code>confirm("...")</code></td><td>OK / Bekor qilish oynasi</td><td><code>true</code> yoki <code>false</code></td></tr>
+</table></div>
+<p>Bu oynalar eski va unchalik chiroyli emas — o'rganish uchun qulay. 19-mavzudan boshlab sahifaning o'zida input va tugmalar bilan ishlaymiz.</p>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>js-darslar/</code> papkasida <code>index.html</code> va <code>app.js</code> yarating, skriptni <code>&lt;/body&gt;</code> oldidan ulang.</li>
+  <li><b>"Men haqimda" dasturi.</b> O'zingiz haqingizda 5 ta o'zgaruvchi yarating (ism, familiya, yosh, sinf, sevimli fan) va shablon satr bilan bitta chiroyli gapni konsolga chiqaring.</li>
+  <li><b>Yosh kalkulyatori.</b> <code>prompt</code> bilan tug'ilgan yilni so'rang va: yoshni, 2030-yilda necha yoshda bo'lishini, necha kun yashaganini (taxminan, × 365) hisoblang.</li>
+  <li><b>Do'kon cheki.</b>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const mahsulot = &quot;Daftar&quot;;
+const narx = 5000;
+const soni = 4;
+const jami = narx * soni;
+
+console.log(&quot;======= CHEK =======&quot;);
+console.log(`Mahsulot: ${mahsulot}`);
+console.log(`Narxi: ${narx} so&#x27;m × ${soni} dona`);
+console.log(`Jami: ${jami} so&#x27;m`);
+console.log(&quot;====================&quot;);
+console.log(&quot;Xaridingiz uchun rahmat!&quot;);</code></pre></div>
+  Kodni o'zgartiring: yana ikkita mahsulot qo'shing va umumiy summani hisoblang.</li>
+  <li><b>Tur detektivi.</b> 8 ta turli qiymat (matn, son, kasr, true, undefined, null, "123", 0) uchun <code>typeof</code> natijalarini oldindan daftarga yozing, so'ng konsolda tekshiring.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Uncaught SyntaxError</code> — qo'shtirnoq yopilmagan yoki o'zbekcha apostrof satrni "sindirib" qo'ygan.</li>
+  <li>❌ <code>ReferenceError: x is not defined</code> — o'zgaruvchi nomi noto'g'ri yozilgan (katta-kichik harf!) yoki e'lon qilinmagan.</li>
+  <li>❌ <code>TypeError: Assignment to constant variable</code> — <code>const</code> qiymatini o'zgartirishga urinish.</li>
+  <li>❌ <code>prompt</code> dan olingan sonni qo'shish: <code>"10" + 5 = "105"</code>. <code>Number()</code> unutilgan.</li>
+  <li>❌ Bitta o'zgaruvchini ikki marta <code>let</code> bilan e'lon qilish: <code>let a = 1; let a = 2;</code></li>
+</ul>
+<div class="callout tip"><span class="t">Xatolarni o'qishni o'rganing</span>
+Konsoldagi qizil xabar — dushman emas, yordamchi! U xato turini va qaysi faylning <b>qaysi qatorida</b> ekanini aytadi (masalan, <code>app.js:12</code>). Ustiga bossangiz, o'sha qatorga olib boradi.</div>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Qiymati keyinchalik o'zgarmaydigan o'zgaruvchi qaysi kalit so'z bilan e'lon qilinadi?</p><ol>
+<li><code>let</code></li><li><code>const</code></li><li><code>var</code></li><li><code>fix</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi o'zgaruvchi nomi to'g'ri?</p><ol>
+<li><code>2sinf</code></li><li><code>umumiy-ball</code></li><li><code>sinf rahbari</code></li><li><code>oquvchilarSoni</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>console.log("7" + 3)</code> natijasi?</p><ol>
+<li>10</li><li>4</li><li>"73"</li><li>Xato</li></ol>
+<p class="explain">Matnga son qo'shilsa, son matnga aylanib, ular yopishtiriladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>typeof true</code> nima qaytaradi?</p><ol>
+<li><code>"boolean"</code></li><li><code>"string"</code></li><li><code>"true"</code></li><li><code>"number"</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>const ism = "Ali"; console.log(`Salom, ${ism}!`)</code> nima chiqaradi?</p><ol>
+<li><code>Salom, ${ism}!</code></li><li><code>Salom, Ali!</code></li><li><code>Salom, ism!</code></li><li>Xato</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>prompt()</code> qanday turdagi qiymat qaytaradi?</p><ol>
+<li>Doim son</li><li>Boolean</li><li>Matn (string) yoki null</li><li>Massiv</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Valyuta hisoblagichi (oddiy):</b> foydalanuvchidan dollar miqdorini so'rang va kurs (<code>const KURS = 12700</code>) bo'yicha so'mga aylantirib, <code>alert</code> bilan ko'rsating.</li>
+  <li><b>Doira:</b> radiusni so'rang, yuzasi (π·r²) va uzunligini (2·π·r) hisoblang. <code>Math.PI</code> dan foydalaning.</li>
+  <li>Ismingizni so'rab, quyidagilarni chiqaring: harflar soni, KATTA harflarda, birinchi va oxirgi harfi.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>JavaScript — sahifaga mantiq va harakat qo'shuvchi dasturlash tili; alohida <code>.js</code> fayl <code>&lt;/body&gt;</code> oldidan ulanadi.</li>
+  <li><code>console.log()</code> — natijani konsolga chiqarish (<kbd>F12</kbd> → Console).</li>
+  <li><code>const</code> — o'zgarmas, <code>let</code> — o'zgaruvchan; <code>var</code> ishlatmang. Nomlar — camelCase.</li>
+  <li>Turlar: string, number, boolean, undefined, null (+ array, object). <code>typeof</code> — turini aniqlash.</li>
+  <li>Shablon satr: <code>`Salom, ${ism}!`</code>. Kiritilgan ma'lumot matn — <code>Number()</code> bilan songa aylantiring.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="14-nazorat-ishi-1.html"><small>← Oldingi mavzu</small>Yakuniy nazorat ishi — I bob (HTML va CSS)</a><a class="next" href="16-js-operatorlar-shartlar.html"><small>Keyingi mavzu →</small>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#javascript-nima">JavaScript nima?</a></li><li><a href="#javascriptni-ishga-tushirish">JavaScript&#x27;ni ishga tushirish</a></li><li><a href="#ozgaruvchilar">O&#x27;zgaruvchilar</a></li><li><a href="#malumot-turlari">Ma&#x27;lumot turlari</a></li><li><a href="#foydalanuvchi-bilan-muloqot">Foydalanuvchi bilan muloqot</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

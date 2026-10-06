@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi — Full-Stack Qo&#x27;llanma</title>
+<title>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🏗️</div><div><div class="crumb">13-dars · 14 tadan</div><h1>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</h1><p class="lead">Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🏗️</div><div><div class="crumb">13-dars · 14 tadan</div><h1>Yakuniy loyiha: full-stack &quot;Eslatmalar&quot; ilovasi</h1><p class="lead">Barcha bilimlarni birlashtiramiz: PostgreSQL + Express API + JWT autentifikatsiya + React frontend. Loyihalash, backend, frontend va ularni bog&#x27;lash bosqichma-bosqich.</p><div class="hero-level">Yuqori · ~4–6 soat amaliyot</div></div></div>
 
 <p>Endi barcha bo'laklarni bitta haqiqiy ilovaga yig'amiz. <b>"Eslatmalar" (Notes)</b> — foydalanuvchilar ro'yxatdan o'tadi, shaxsiy
 eslatmalar yaratadi, ularni teglar bilan belgilaydi, qidiradi, mahkamlaydi (pin) va arxivlaydi. Loyiha kichik ko'rinadi, lekin unda
@@ -88,7 +89,7 @@ Tushunmagan joyingiz bo'lsa — tegishli darsga qayting (havolalar matnda).</div
 <tr><td><code>GET /api/tags</code></td><td>—</td><td><code>200 [{ name, count }]</code></td></tr>
 </table></div>
 <h3>Papka tuzilmasi</h3>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">notes-app/
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">notes-app/
 ├── server/
 │   ├── package.json
 │   ├── .env / .env.example
@@ -106,7 +107,7 @@ Tushunmagan joyingiz bo'lsa — tegishli darsga qayting (havolalar matnda).</div
         └── components/  NoteCard.jsx  NoteEditor.jsx  TagFilter.jsx</code></pre></div>
 
 <h2 id="2-bosqich-malumotlar-bazasi"><a class="anchor" href="#2-bosqich-malumotlar-bazasi">#</a>2-bosqich: Ma'lumotlar bazasi</h2>
-<div class="code"><div class="code-head"><span>server/db/schema.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pgcrypto;   -- gen_random_uuid() uchun (PG 13+ da o&#x27;rnatilgan)
+<div class="code"><div class="code-head"><span>server/db/schema.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pgcrypto;   -- gen_random_uuid() uchun (PG 13+ da o&#x27;rnatilgan)
 
 CREATE TABLE IF NOT EXISTS users (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -134,20 +135,20 @@ CREATE INDEX IF NOT EXISTS notes_user_list_idx ON notes (user_id, archived, pinn
 CREATE INDEX IF NOT EXISTS notes_tags_idx ON notes USING GIN (tags);   -- massiv ichida qidiruv uchun</code></pre></div>
 <p>Teglar uchun alohida N:M jadval o'rniga PostgreSQL massivi (<code>TEXT[]</code>) tanlandi: teglar faqat bitta foydalanuvchiga tegishli, alohida
 xususiyatlari yo'q, va GIN indeksi <code>tags @&gt; ARRAY['ish']</code> so'rovini tezlashtiradi. Bu — loyihaning ehtiyojiga qarab qilingan ongli tanlov (10-dars).</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">docker run -d --name notes-db -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=notes -p 5432:5432 postgres:17
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">docker run -d --name notes-db -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=notes -p 5432:5432 postgres:17
 psql postgres://postgres:secret@localhost:5432/notes -f server/db/schema.sql</code></pre></div>
 
 <h2 id="3-bosqich-backend-express-api"><a class="anchor" href="#3-bosqich-backend-express-api">#</a>3-bosqich: Backend (Express API)</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">mkdir -p notes-app/server &amp;&amp; cd notes-app/server
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">mkdir -p notes-app/server &amp;&amp; cd notes-app/server
 npm init -y &amp;&amp; npm pkg set type=module
 npm install express pg bcrypt jsonwebtoken cookie-parser zod helmet morgan
 npm pkg set scripts.dev=&quot;node --watch --env-file=.env src/server.js&quot;
 npm pkg set scripts.start=&quot;node src/server.js&quot;</code></pre></div>
-<div class="code"><div class="code-head"><span>server/.env.example</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-ini">PORT=3000
+<div class="code"><div class="code-head"><span>server/.env.example</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-ini">PORT=3000
 DATABASE_URL=postgres://postgres:secret@localhost:5432/notes
 JWT_SECRET=bu-yerga-48-baytlik-tasodifiy-kalit
 NODE_ENV=development</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const required = (name) =&gt; {
+<div class="code"><div class="code-head"><span>server/src/config.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const required = (name) =&gt; {
   if (!process.env[name]) throw new Error(`.env da ${name} yo&#x27;q`);
   return process.env[name];
 };
@@ -158,12 +159,12 @@ export const config = {
   jwtSecret: required(&#x27;JWT_SECRET&#x27;),
   isProd: process.env.NODE_ENV === &#x27;production&#x27;,
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/db.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
+<div class="code"><div class="code-head"><span>server/src/db.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
 import { config } from &#x27;./config.js&#x27;;
 
 export const pool = new pg.Pool({ connectionString: config.databaseUrl });
 export const query = (text, params) =&gt; pool.query(text, params);</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/middleware/errors.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class HttpError extends Error {
+<div class="code"><div class="code-head"><span>server/src/middleware/errors.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export class HttpError extends Error {
   constructor(status, message, details) {
     super(message);
     this.status = status;
@@ -187,7 +188,7 @@ export function errorHandler(err, req, res, _next) {
     },
   });
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/middleware/validate.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { HttpError } from &#x27;./errors.js&#x27;;
+<div class="code"><div class="code-head"><span>server/src/middleware/validate.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { HttpError } from &#x27;./errors.js&#x27;;
 
 export const validate = (schema, source = &#x27;body&#x27;) =&gt; (req, res, next) =&gt; {
   const r = schema.safeParse(req[source]);
@@ -198,7 +199,7 @@ export const validate = (schema, source = &#x27;body&#x27;) =&gt; (req, res, nex
   req.valid = r.data;
   next();
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/middleware/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
+<div class="code"><div class="code-head"><span>server/src/middleware/auth.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
 import { config } from &#x27;../config.js&#x27;;
 import { HttpError } from &#x27;./errors.js&#x27;;
 
@@ -226,7 +227,7 @@ export function requireAuth(req, res, next) {
     next(new HttpError(401, &#x27;Sessiya muddati tugagan&#x27;));
   }
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/routes/auth.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>server/src/routes/auth.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import bcrypt from &#x27;bcrypt&#x27;;
 import { z } from &#x27;zod&#x27;;
 import { query } from &#x27;../db.js&#x27;;
@@ -287,7 +288,7 @@ router.get(&#x27;/me&#x27;, requireAuth, async (req, res) =&gt; {
 });
 
 export default router;</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/routes/notes.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>server/src/routes/notes.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import { z } from &#x27;zod&#x27;;
 import { query } from &#x27;../db.js&#x27;;
 import { validate } from &#x27;../middleware/validate.js&#x27;;
@@ -394,7 +395,7 @@ export const tagsRouter = Router().get(&#x27;/&#x27;, requireAuth, async (req, r
 });</code></pre></div>
 <p>Diqqat: <code>WHERE id = $1 AND user_id = $2</code> — boshqa foydalanuvchining eslatmasini tahrirlashga urinish <code>403</code> emas, <code>404</code> qaytaradi.
 Bu ataylab: hujumchiga hatto "bunday ID mavjud" degan ma'lumotni ham bermaymiz.</p>
-<div class="code"><div class="code-head"><span>server/src/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import express from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>server/src/app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import express from &#x27;express&#x27;;
 import helmet from &#x27;helmet&#x27;;
 import morgan from &#x27;morgan&#x27;;
 import cookieParser from &#x27;cookie-parser&#x27;;
@@ -417,7 +418,7 @@ app.use(&#x27;/api/tags&#x27;, tagsRouter);
 
 app.use(&#x27;/api&#x27;, notFound);
 app.use(errorHandler);</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { app } from &#x27;./app.js&#x27;;
+<div class="code"><div class="code-head"><span>server/src/server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { app } from &#x27;./app.js&#x27;;
 import { config } from &#x27;./config.js&#x27;;
 import { pool } from &#x27;./db.js&#x27;;
 
@@ -432,7 +433,7 @@ for (const signal of [&#x27;SIGINT&#x27;, &#x27;SIGTERM&#x27;]) {
   });
 }</code></pre></div>
 <h3>Backend'ni tekshirish</h3>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cp .env.example .env    # va JWT_SECRET ni to&#x27;ldiring
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">cp .env.example .env    # va JWT_SECRET ni to&#x27;ldiring
 npm run dev
 
 # -c / -b : cookie&#x27;ni faylga saqlash va yuborish (brauzer kabi)
@@ -447,10 +448,10 @@ curl -b jar.txt localhost:3000/api/tags
 curl -i localhost:3000/api/notes            # cookie&#x27;siz → 401</code></pre></div>
 
 <h2 id="4-bosqich-frontend-react"><a class="anchor" href="#4-bosqich-frontend-react">#</a>4-bosqich: Frontend (React)</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cd ..   # notes-app/
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">cd ..   # notes-app/
 npm create vite@latest client -- --template react
 cd client &amp;&amp; npm install &amp;&amp; npm install react-router</code></pre></div>
-<div class="code"><div class="code-head"><span>client/vite.config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { defineConfig } from &#x27;vite&#x27;;
+<div class="code"><div class="code-head"><span>client/vite.config.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { defineConfig } from &#x27;vite&#x27;;
 import react from &#x27;@vitejs/plugin-react&#x27;;
 
 export default defineConfig({
@@ -461,7 +462,7 @@ export default defineConfig({
     proxy: { &#x27;/api&#x27;: &#x27;http://localhost:3000&#x27; },
   },
 });</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/api.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class ApiError extends Error {
+<div class="code"><div class="code-head"><span>client/src/api.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export class ApiError extends Error {
   constructor(status, message, details) {
     super(message);
     this.status = status;
@@ -497,7 +498,7 @@ export const notesApi = {
   remove: (id) =&gt; api(`/notes/${id}`, { method: &#x27;DELETE&#x27; }),
   tags: () =&gt; api(&#x27;/tags&#x27;),
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/context/AuthContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>client/src/context/AuthContext.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
 import { authApi } from &#x27;../api&#x27;;
 
 const AuthContext = createContext(null);
@@ -525,7 +526,7 @@ export function AuthProvider({ children }) {
 }
 
 export const useAuth = () =&gt; useContext(AuthContext);</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Navigate } from &#x27;react-router&#x27;;
+<div class="code"><div class="code-head"><span>client/src/App.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Navigate } from &#x27;react-router&#x27;;
 import { AuthProvider, useAuth } from &#x27;./context/AuthContext&#x27;;
 import LoginPage from &#x27;./pages/LoginPage&#x27;;
 import NotesPage from &#x27;./pages/NotesPage&#x27;;
@@ -556,7 +557,7 @@ export default function App() {
     &lt;/AuthProvider&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/pages/LoginPage.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>client/src/pages/LoginPage.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
 import { useAuth } from &#x27;../context/AuthContext&#x27;;
 
 export default function LoginPage() {
@@ -609,7 +610,7 @@ export default function LoginPage() {
     &lt;/main&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/components/NoteEditor.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>client/src/components/NoteEditor.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
 
 export const COLORS = [&#x27;default&#x27;, &#x27;yellow&#x27;, &#x27;green&#x27;, &#x27;blue&#x27;, &#x27;pink&#x27;, &#x27;purple&#x27;];
 
@@ -657,7 +658,7 @@ export default function NoteEditor({ initial, onSave, onCancel }) {
     &lt;/form&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/components/NoteCard.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">export default function NoteCard({ note, onEdit, onUpdate, onDelete, onTagClick }) {
+<div class="code"><div class="code-head"><span>client/src/components/NoteCard.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">export default function NoteCard({ note, onEdit, onUpdate, onDelete, onTagClick }) {
   const date = new Date(note.updatedAt).toLocaleString(&#x27;uz-UZ&#x27;, { dateStyle: &#x27;medium&#x27;, timeStyle: &#x27;short&#x27; });
   return (
     &lt;article className={`note note-${note.color}`}&gt;
@@ -687,7 +688,7 @@ export default function NoteEditor({ initial, onSave, onCancel }) {
     &lt;/article&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/pages/NotesPage.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useCallback, useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>client/src/pages/NotesPage.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useCallback, useEffect, useState } from &#x27;react&#x27;;
 import { NavLink } from &#x27;react-router&#x27;;
 import { useAuth } from &#x27;../context/AuthContext&#x27;;
 import { notesApi } from &#x27;../api&#x27;;
@@ -818,7 +819,7 @@ export default function NotesPage({ archived = false }) {
     &lt;/div&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/index.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">:root { --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --primary: #4f46e5; }
+<div class="code"><div class="code-head"><span>client/src/index.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">:root { --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --primary: #4f46e5; }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
 button { font: inherit; cursor: pointer; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 6px 10px; }
@@ -867,7 +868,7 @@ input, textarea { font: inherit; width: 100%; padding: 10px; border: 1px solid v
 }</code></pre></div>
 
 <h2 id="5-bosqich-ishga-tushirish-va-tekshirish"><a class="anchor" href="#5-bosqich-ishga-tushirish-va-tekshirish">#</a>5-bosqich: Ishga tushirish va tekshirish</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1-terminal — baza (agar ishlamayotgan bo&#x27;lsa)
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># 1-terminal — baza (agar ishlamayotgan bo&#x27;lsa)
 docker start notes-db
 
 # 2-terminal — backend
@@ -889,8 +890,8 @@ cd notes-app/client &amp;&amp; npm run dev
 
 <h2 id="6-bosqich-production-uchun-yigish"><a class="anchor" href="#6-bosqich-production-uchun-yigish">#</a>6-bosqich: Production uchun yig'ish</h2>
 <p>Production'da ikkita alohida server shart emas: Express React'ning build qilingan statik fayllarini o'zi bera oladi.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cd client &amp;&amp; npm run build      # → client/dist/ (minifikatsiya qilingan HTML, JS, CSS)</code></pre></div>
-<div class="code"><div class="code-head"><span>server/src/app.js (qo&#x27;shimcha, errorHandler&#x27;dan oldin)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">cd client &amp;&amp; npm run build      # → client/dist/ (minifikatsiya qilingan HTML, JS, CSS)</code></pre></div>
+<div class="code"><div class="code-head"><span>server/src/app.js (qo&#x27;shimcha, errorHandler&#x27;dan oldin)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
 
 const dist = path.resolve(import.meta.dirname, &#x27;../../client/dist&#x27;);
 app.use(express.static(dist, { maxAge: &#x27;1y&#x27;, index: false }));

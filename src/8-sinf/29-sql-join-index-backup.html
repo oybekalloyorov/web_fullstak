@@ -1,0 +1,257 @@
+<!-- title: Jadvallarni bog'lash va JOIN. Index, constraint, data integrity. Backup va restore | desc: INNER, LEFT, RIGHT JOIN va ular farqi; bir nechta jadvalni birlashtirish; indekslar va EXPLAIN; cheklovlar va ma'lumotlar yaxlitligi (ON DELETE); pg_dump va pgAdmin orqali zaxira nusxa va tiklash. | icon: 🔗 | level: 1 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Bir nechta jadvaldagi ma'lumotlarni <b>JOIN</b> bilan birlashtirishni;</li>
+  <li><code>INNER</code>, <code>LEFT</code> va <code>RIGHT JOIN</code> farqini;</li>
+  <li>Qidiruvni tezlashtiruvchi <b>indekslar</b>ni;</li>
+  <li>Ma'lumotlar <b>yaxlitligi</b> va cheklovlar qanday himoya qilishini;</li>
+  <li>Bazaning <b>zaxira nusxasini</b> olish va tiklashni (backup / restore).</li>
+</ul>
+</div>
+
+<h2>Nima uchun JOIN kerak?</h2>
+<p>26-mavzuda ma'lumotlarni takrorlamaslik uchun ularni turli jadvallarga ajratdik: o'quvchilar alohida, sinflar alohida, baholar alohida. Endi savol:
+<b>"Ali Valiyev qaysi sinfda va sinf rahbari kim?"</b> Javob uchun ikkala jadvalni <b>birlashtirish</b> kerak — buni <code>JOIN</code> qiladi.</p>
+<div class="analogy"><span class="t">O'xshatish: ikkita ro'yxat</span>
+Sizda ikkita qog'oz bor: birinchisida "O'quvchi — sinf raqami", ikkinchisida "Sinf raqami — sinf rahbari". Ali'ning rahbarini bilish uchun birinchi qog'ozdan
+sinf raqamini topib, ikkinchi qog'ozdan shu raqamni qidirasiz. JOIN aynan shuni avtomatik va millionlab qator uchun bir zumda qiladi.</div>
+
+<h2>INNER JOIN</h2>
+<pre data-lang="sql">SELECT oquvchilar.ism, oquvchilar.familiya, sinflar.nomi, sinflar.sinf_rahbari
+FROM oquvchilar
+INNER JOIN sinflar ON oquvchilar.sinf_id = sinflar.id;</pre>
+<ul>
+  <li><code>JOIN sinflar</code> — qaysi jadval bilan birlashtiramiz.</li>
+  <li><code>ON oquvchilar.sinf_id = sinflar.id</code> — <b>qaysi ustunlar bo'yicha</b> moslashtiramiz (odatda FK = PK).</li>
+  <li><code>jadval.ustun</code> — ikki jadvalda bir xil nomli ustun bo'lsa (ikkalasida <code>id</code> bor), qaysi biri ekanini aniq ko'rsatish uchun.</li>
+</ul>
+<h3>Taxalluslar — qisqaroq yozuv</h3>
+<pre data-lang="sql">SELECT o.ism, o.familiya, s.nomi AS sinf, s.sinf_rahbari
+FROM oquvchilar AS o
+JOIN sinflar AS s ON o.sinf_id = s.id        -- JOIN = INNER JOIN
+ORDER BY s.nomi, o.familiya;</pre>
+<pre data-lang="output"> ism     | familiya  | sinf | sinf_rahbari
+---------+-----------+------+-----------------
+ Dilnoza | Aminova   | 8-A  | Karimova Nodira
+ Zarina  | Karimova  | 8-A  | Karimova Nodira
+ Ali     | Valiyev   | 8-A  | Karimova Nodira
+ Madina  | Ergasheva | 8-B  | Rasulov Akmal
+ Bobur   | Toshmatov | 8-B  | Rasulov Akmal
+ ...</pre>
+
+<h2>JOIN turlari</h2>
+<p>Agar biror o'quvchining <code>sinf_id</code> si bo'sh (NULL) bo'lsa yoki biror sinfda hali o'quvchi bo'lmasa-chi? Shu yerda JOIN turlari farq qiladi:</p>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Natijada nima bo'ladi</th><th>Doira diagrammasi</th></tr>
+<tr><td><code>INNER JOIN</code></td><td>Faqat <b>ikkala</b> jadvalda ham mos keladigan qatorlar</td><td>Ikki doiraning <b>kesishmasi</b></td></tr>
+<tr><td><code>LEFT JOIN</code></td><td><b>Chap</b> jadvalning HAMMA qatorlari + o'ngdan mos kelganlar (mos kelmasa — NULL)</td><td>Butun chap doira</td></tr>
+<tr><td><code>RIGHT JOIN</code></td><td><b>O'ng</b> jadvalning HAMMA qatorlari + chapdan mos kelganlar</td><td>Butun o'ng doira</td></tr>
+<tr><td><code>FULL JOIN</code></td><td>Ikkala jadvalning hamma qatorlari</td><td>Ikkala doira</td></tr>
+</table></div>
+<pre data-lang="sql">-- Tayyorgarlik: sinfsiz o'quvchi va o'quvchisiz sinf qo'shamiz
+INSERT INTO oquvchilar (ism, familiya) VALUES ('Yangi', 'Keldi');   -- sinf_id = NULL
+INSERT INTO sinflar (nomi, sinf_rahbari) VALUES ('8-G', 'Azimov B.');  -- hali o'quvchisi yo'q
+
+-- INNER: "Yangi Keldi" ham, "8-G" ham YO'Q
+SELECT o.ism, s.nomi FROM oquvchilar o JOIN sinflar s ON o.sinf_id = s.id;
+
+-- LEFT: barcha o'quvchilar; "Yangi Keldi" ning sinfi — NULL
+SELECT o.ism, s.nomi FROM oquvchilar o LEFT JOIN sinflar s ON o.sinf_id = s.id;
+
+-- RIGHT: barcha sinflar; "8-G" uchun o'quvchi — NULL
+SELECT o.ism, s.nomi FROM oquvchilar o RIGHT JOIN sinflar s ON o.sinf_id = s.id;</pre>
+<h3>LEFT JOIN'ning foydali qo'llanilishi: "yo'q"larni topish</h3>
+<pre data-lang="sql">-- Hali birorta ham baho olmagan o'quvchilar
+SELECT o.ism, o.familiya
+FROM oquvchilar o
+LEFT JOIN baholar b ON b.oquvchi_id = o.id
+WHERE b.id IS NULL;</pre>
+<div class="callout tip">Qaysi JOIN kerakligini bilish uchun so'rang: "Mos kelmagan qatorlar natijada <b>ko'rinishi kerakmi</b>?" Yo'q → <code>INNER</code>. Chap jadvalning hammasi kerak → <code>LEFT</code>.
+Amalda <code>RIGHT JOIN</code> kam ishlatiladi — jadvallar o'rnini almashtirib, <code>LEFT</code> bilan yozish mumkin.</div>
+
+<h3>Uch jadvalni birlashtirish</h3>
+<pre data-lang="sql">-- Kim, qaysi sinfdan, qaysi fandan, qanday baho olgan
+SELECT o.ism || ' ' || o.familiya AS oquvchi,
+       s.nomi AS sinf,
+       b.fan,
+       b.baho,
+       b.sana
+FROM baholar b
+JOIN oquvchilar o ON b.oquvchi_id = o.id
+JOIN sinflar s    ON o.sinf_id = s.id
+WHERE b.fan = 'Matematika'
+ORDER BY b.baho DESC, oquvchi;</pre>
+<h3>Ko'pga-ko'p: to'garaklar</h3>
+<pre data-lang="sql">-- Har bir o'quvchi qaysi to'garaklarda (oraliq jadval orqali)
+SELECT o.ism, t.nomi AS togarak
+FROM oquvchilar o
+JOIN azoliklar a  ON a.oquvchi_id = o.id
+JOIN togaraklar t ON t.id = a.togarak_id
+ORDER BY o.ism;</pre>
+
+<h2>Indekslar — qidiruvni tezlashtirish</h2>
+<p>Jadvalda 1 000 000 qator bo'lsa, <code>WHERE familiya = 'Karimova'</code> uchun baza har bir qatorni birma-bir tekshiradi. <b>Indeks</b> — maxsus "ko'rsatkich" bo'lib,
+kerakli qatorlarni darhol topishga yordam beradi.</p>
+<div class="analogy"><span class="t">O'xshatish: kitob oxiridagi ko'rsatkich</span>
+"Fotosintez" so'zini darslikda topish uchun 300 betni varaqlaysizmi? Yo'q — kitob oxiridagi alifboli <b>ko'rsatkich</b>ga qaraysiz: "Fotosintez — 47, 112-betlar".
+Indeks — baza uchun xuddi shunday ko'rsatkich.</div>
+<pre data-lang="sql">-- Familiya bo'yicha tez-tez qidiramiz — indeks yaratamiz
+CREATE INDEX idx_oquvchilar_familiya ON oquvchilar (familiya);
+
+-- Tashqi kalitlar JOIN'da ishlatiladi — ularga indeks foydali
+CREATE INDEX idx_baholar_oquvchi ON baholar (oquvchi_id);
+
+-- Baza so'rovni qanday bajarishini ko'rish
+EXPLAIN SELECT * FROM oquvchilar WHERE familiya = 'Karimova';
+
+DROP INDEX idx_oquvchilar_familiya;    -- indeksni o'chirish</pre>
+<ul>
+  <li><code>PRIMARY KEY</code> va <code>UNIQUE</code> ustunlarga indeks <b>avtomatik</b> yaratiladi.</li>
+  <li>Indeks o'qishni tezlashtiradi, lekin <b>yozishni biroz sekinlashtiradi</b> va joy egallaydi. Shuning uchun faqat <b>tez-tez qidiriladigan</b> ustunlarga qo'yiladi.</li>
+  <li>Kichik jadvallarda (yuzlab qator) farq sezilmaydi; minglab va millionlab qatorda — juda katta.</li>
+</ul>
+
+<h2>Constraint va ma'lumotlar yaxlitligi (data integrity)</h2>
+<p><b>Ma'lumotlar yaxlitligi</b> — bazadagi ma'lumotlar har doim <b>to'g'ri, izchil va ishonchli</b> bo'lishi. Buni dastur kodiga emas, <b>bazaning o'ziga</b> ishonib topshirish kerak —
+chunki dasturda xato bo'lishi mumkin, baza esa qoidani doim tekshiradi.</p>
+<div class="table-wrap"><table>
+<tr><th>Yaxlitlik turi</th><th>Nimani kafolatlaydi</th><th>Vosita</th></tr>
+<tr><td>Obyekt yaxlitligi</td><td>Har bir qator noyob va aniqlanadigan</td><td><code>PRIMARY KEY</code></td></tr>
+<tr><td>Havola yaxlitligi</td><td>FK doim mavjud qatorga ishora qiladi</td><td><code>FOREIGN KEY</code> (<code>REFERENCES</code>)</td></tr>
+<tr><td>Qiymat yaxlitligi</td><td>Qiymatlar to'g'ri turda va chegarada</td><td>Turlar, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code></td></tr>
+</table></div>
+<h3>FK qatori o'chirilganda nima bo'ladi?</h3>
+<div class="table-wrap"><table>
+<tr><th>Variant</th><th>Xatti-harakat</th><th>Misol</th></tr>
+<tr><td><code>ON DELETE RESTRICT</code> (standart)</td><td>O'chirishga ruxsat bermaydi</td><td>O'quvchilari bor sinfni o'chirib bo'lmaydi</td></tr>
+<tr><td><code>ON DELETE CASCADE</code></td><td>Bog'liq qatorlar ham o'chadi</td><td>O'quvchi o'chsa — baholari ham</td></tr>
+<tr><td><code>ON DELETE SET NULL</code></td><td>FK ustuni NULL bo'ladi</td><td>Sinf yopilsa — o'quvchilar "sinfsiz" qoladi</td></tr>
+</table></div>
+<pre data-lang="sql">DELETE FROM sinflar WHERE id = 1;
+-- ❌ update or delete on table "sinflar" violates foreign key constraint ...
+--    Key (id)=(1) is still referenced from table "oquvchilar".
+-- Baza "yetim" o'quvchilar paydo bo'lishiga yo'l qo'ymadi ✅</pre>
+<h3>Mavjud jadvalga cheklov qo'shish</h3>
+<pre data-lang="sql">ALTER TABLE oquvchilar ADD CONSTRAINT email_formati CHECK (email LIKE '%@%.%');
+ALTER TABLE sinflar ADD CONSTRAINT xona_musbat CHECK (xona > 0);</pre>
+
+<h2>Backup va Restore — zaxira nusxa</h2>
+<p>Kompyuter buzilishi, tasodifiy <code>DELETE</code> yoki viruslar — ma'lumot yo'qolishining sabablari ko'p. <b>Backup</b> — bazaning nusxasini saqlab qo'yish, <b>restore</b> —
+nusxadan qayta tiklash. Professional qoida: <b>"Tekshirilmagan zaxira — zaxira emas"</b> — tiklashni ham sinab ko'ring.</p>
+<h3>pgAdmin orqali</h3>
+<ol class="steps">
+  <li><b>Backup:</b> <code>maktab</code> bazasi ustida o'ng tugma → <b>Backup...</b> → fayl nomi (<code>maktab_2026-10-06.backup</code>) → Format: <b>Custom</b> → <b>Backup</b>.</li>
+  <li><b>Restore:</b> yangi bo'sh baza yarating (<code>maktab_tiklangan</code>) → o'ng tugma → <b>Restore...</b> → faylni tanlang → <b>Restore</b>.</li>
+  <li>Tiklangan bazadagi jadvallar va ma'lumotlarni tekshiring.</li>
+</ol>
+<h3>Buyruqlar qatori orqali</h3>
+<pre data-lang="bash"># Butun bazani SQL fayl ko'rinishida saqlash
+pg_dump -U postgres -d maktab -f maktab_backup.sql
+
+# Siqilgan (custom) formatda
+pg_dump -U postgres -d maktab -F c -f maktab.backup
+
+# Tiklash
+createdb -U postgres maktab_yangi
+psql -U postgres -d maktab_yangi -f maktab_backup.sql           # .sql fayldan
+pg_restore -U postgres -d maktab_yangi maktab.backup             # .backup fayldan</pre>
+<p><code>maktab_backup.sql</code> faylini oddiy matn muharririda oching — u bazani qaytadan yaratuvchi <code>CREATE TABLE</code> va <code>INSERT</code> buyruqlaridan iborat!</p>
+
+<h2>Amaliy mashg'ulot: mahsulotlar va buyurtmalar bazasi (19-loyiha)</h2>
+<pre data-lang="sql" data-title="dokon.sql">CREATE TABLE mijozlar (
+    id      SERIAL PRIMARY KEY,
+    ism     VARCHAR(100) NOT NULL,
+    telefon VARCHAR(20) UNIQUE
+);
+CREATE TABLE mahsulotlar (
+    id     SERIAL PRIMARY KEY,
+    nomi   VARCHAR(100) NOT NULL,
+    narx   NUMERIC(12, 2) NOT NULL CHECK (narx > 0),
+    soni   INTEGER NOT NULL DEFAULT 0 CHECK (soni >= 0)
+);
+CREATE TABLE buyurtmalar (
+    id        SERIAL PRIMARY KEY,
+    mijoz_id  INTEGER NOT NULL REFERENCES mijozlar(id),
+    sana      TIMESTAMP DEFAULT NOW(),
+    holat     VARCHAR(20) DEFAULT 'yangi' CHECK (holat IN ('yangi', 'yetkazilmoqda', 'yetkazildi', 'bekor'))
+);
+CREATE TABLE buyurtma_tarkibi (                                 -- ko'pga-ko'p
+    buyurtma_id  INTEGER REFERENCES buyurtmalar(id) ON DELETE CASCADE,
+    mahsulot_id  INTEGER REFERENCES mahsulotlar(id),
+    soni         INTEGER NOT NULL CHECK (soni > 0),
+    narx         NUMERIC(12, 2) NOT NULL,                       -- sotilgan paytdagi narx!
+    PRIMARY KEY (buyurtma_id, mahsulot_id)
+);
+
+INSERT INTO mijozlar (ism, telefon) VALUES
+    ('Aziz', '+998901111111'), ('Nilufar', '+998902222222'), ('Kamol', '+998903333333');
+INSERT INTO mahsulotlar (nomi, narx, soni) VALUES
+    ('Daftar', 5000, 200), ('Ruchka', 3000, 500), ('Ryukzak', 180000, 15), ('Kalkulyator', 95000, 0);
+INSERT INTO buyurtmalar (mijoz_id, holat) VALUES (1, 'yetkazildi'), (2, 'yangi'), (1, 'yangi');
+INSERT INTO buyurtma_tarkibi VALUES
+    (1, 1, 10, 5000), (1, 2, 5, 3000), (2, 3, 1, 180000), (3, 1, 2, 5000);</pre>
+<p>Quyidagi so'rovlarni yozing:</p>
+<ol class="steps">
+  <li>Har bir buyurtma: raqami, mijoz ismi, sanasi va holati.</li>
+  <li>1-buyurtma tarkibi: mahsulot nomi, soni, narxi va <code>soni * narx</code> (summa).</li>
+  <li>Hali birorta ham buyurtma bermagan mijozlar (LEFT JOIN + IS NULL).</li>
+  <li>Hech qachon sotilmagan mahsulotlar.</li>
+  <li>Bazaning zaxira nusxasini oling, <code>mahsulotlar</code> jadvalidan bitta qatorni o'chiring, so'ng nusxadan yangi bazaga tiklab, qator o'z joyida ekanini tekshiring.</li>
+</ol>
+<details><summary>Javoblar (1–4)</summary>
+<pre data-lang="sql">SELECT b.id, m.ism, b.sana, b.holat
+FROM buyurtmalar b JOIN mijozlar m ON m.id = b.mijoz_id;
+
+SELECT p.nomi, t.soni, t.narx, t.soni * t.narx AS summa
+FROM buyurtma_tarkibi t JOIN mahsulotlar p ON p.id = t.mahsulot_id
+WHERE t.buyurtma_id = 1;
+
+SELECT m.ism FROM mijozlar m
+LEFT JOIN buyurtmalar b ON b.mijoz_id = m.id
+WHERE b.id IS NULL;
+
+SELECT p.nomi FROM mahsulotlar p
+LEFT JOIN buyurtma_tarkibi t ON t.mahsulot_id = p.id
+WHERE t.mahsulot_id IS NULL;</pre>
+</details>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>column reference "id" is ambiguous</code> — ikki jadvalda ham <code>id</code> bor; <code>o.id</code> yoki <code>s.id</code> deb aniq yozing.</li>
+  <li>❌ <code>ON</code> shartini unutish yoki noto'g'ri ustunlarni bog'lash (<code>o.id = s.id</code>) — natija mantiqsiz bo'ladi.</li>
+  <li>❌ LEFT JOIN'dan keyin o'ng jadval bo'yicha <code>WHERE</code> qo'yib, uni INNER'ga aylantirib qo'yish.</li>
+  <li>❌ Zaxira nusxani o'sha kompyuterning o'zida saqlash — kompyuter buzilsa, nusxa ham yo'qoladi. Boshqa joyga (fleshka, bulut) ham ko'chiring.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="1"><p class="q">Faqat ikkala jadvalda ham mos keladigan qatorlarni qaytaruvchi JOIN?</p><ol>
+<li><code>INNER JOIN</code></li><li><code>LEFT JOIN</code></li><li><code>RIGHT JOIN</code></li><li><code>FULL JOIN</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Barcha o'quvchilarni (sinfi bo'lmaganlarini ham) sinf nomi bilan chiqarish uchun?</p><ol>
+<li><code>oquvchilar INNER JOIN sinflar</code></li><li><code>sinflar INNER JOIN oquvchilar</code></li><li><code>oquvchilar LEFT JOIN sinflar</code></li><li><code>oquvchilar RIGHT JOIN sinflar</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Indeksning asosiy vazifasi?</p><ol>
+<li>Ma'lumotlarni shifrlash</li><li>Qidiruvni tezlashtirish</li><li>Zaxira nusxa olish</li><li>Jadvallarni bog'lash</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">O'quvchi o'chirilganda uning baholari ham avtomatik o'chishi uchun FK'ga nima qo'shiladi?</p><ol>
+<li><code>ON DELETE RESTRICT</code></li><li><code>ON DELETE SET NULL</code></li><li><code>NOT NULL</code></li><li><code>ON DELETE CASCADE</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">PostgreSQL bazasining zaxira nusxasini oluvchi buyruq?</p><ol>
+<li><code>pg_backup</code></li><li><code>pg_dump</code></li><li><code>COPY DATABASE</code></li><li><code>SAVE DATABASE</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona bazangizda (27-mavzu uyga vazifasi): har bir ijara — kitob nomi, muallif, o'quvchi ismi; hali qaytarilmagan kitoblar; hech kim olmagan kitoblar.</li>
+  <li>Haftada bir marta avtomatik backup qilish nima uchun muhimligini va qanday tashkil qilish mumkinligini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>SELECT ... FROM a JOIN b ON a.fk = b.id</code>; taxalluslar: <code>FROM oquvchilar o</code>.</li>
+  <li>INNER — faqat moslar; LEFT — chapning hammasi; RIGHT — o'ngning hammasi. "Yo'q"larni topish: LEFT JOIN + <code>IS NULL</code>.</li>
+  <li>Indeks — tez qidiruv uchun ko'rsatkich (<code>CREATE INDEX</code>); PK/UNIQUE'da avtomatik.</li>
+  <li>Yaxlitlik: PK, FK, NOT NULL, UNIQUE, CHECK; <code>ON DELETE CASCADE / RESTRICT / SET NULL</code>.</li>
+  <li>Backup: <code>pg_dump</code> / pgAdmin Backup; restore: <code>psql -f</code>, <code>pg_restore</code>. Tiklashni sinab ko'ring!</li>
+</ul>
+</div>

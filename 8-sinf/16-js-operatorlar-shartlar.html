@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Arifmetik, tayinlash, taqqoslash va mantiqiy operatorlar; == va === farqi; if, else if, else; ternary operator; switch; amaliy dasturlar: baho aniqlash, juft-toq, kirish tizimi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a class="active" href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔀</div><div><div class="crumb">16-mavzu · 31 tadan · II bob. JavaScript asoslari</div><h1>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</h1><p class="lead">Arifmetik, tayinlash, taqqoslash va mantiqiy operatorlar; == va === farqi; if, else if, else; ternary operator; switch; amaliy dasturlar: baho aniqlash, juft-toq, kirish tizimi.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Arifmetik amallar va qoldiqli bo'lish (<code>%</code>);</li>
+  <li>Qiymatlarni taqqoslash va <code>==</code> bilan <code>===</code> farqini;</li>
+  <li>Mantiqiy operatorlar: VA (<code>&amp;&amp;</code>), YOKI (<code>||</code>), EMAS (<code>!</code>);</li>
+  <li>Dasturga "qaror qabul qildirish": <code>if</code>, <code>else if</code>, <code>else</code>, <code>switch</code>;</li>
+  <li>Baho hisoblovchi, parolni tekshiruvchi va boshqa amaliy dasturlarni.</li>
+</ul>
+</div>
+
+<h2 id="operator-va-ifoda"><a class="anchor" href="#operator-va-ifoda">#</a>Operator va ifoda</h2>
+<p><b>Operator</b> — qiymatlar ustida amal bajaruvchi belgi (<code>+</code>, <code>&gt;</code>, <code>&amp;&amp;</code>). <b>Ifoda</b> — natijada qiymat beradigan kod bo'lagi:
+<code>5 + 3</code> → <code>8</code>, <code>yosh &gt;= 18</code> → <code>true</code>.</p>
+
+<h2 id="arifmetik-operatorlar"><a class="anchor" href="#arifmetik-operatorlar">#</a>Arifmetik operatorlar</h2>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const a = 17;
+const b = 5;
+console.log(a + b);    // 22  qo&#x27;shish
+console.log(a - b);    // 12  ayirish
+console.log(a * b);    // 85  ko&#x27;paytirish
+console.log(a / b);    // 3.4 bo&#x27;lish
+console.log(a % b);    // 2   QOLDIQ: 17 = 5·3 + 2
+console.log(a ** 2);   // 289 daraja: 17²
+console.log((a + b) * 2);  // 44 — qavslar avval bajariladi</code></pre></div>
+<h3>Qoldiq operatori <code>%</code> — juda foydali!</h3>
+<ul>
+  <li><b>Juft yoki toq?</b> <code>son % 2 === 0</code> bo'lsa — juft.</li>
+  <li><b>Bo'linadimi?</b> <code>son % 3 === 0</code> — 3 ga qoldiqsiz bo'linadi.</li>
+  <li><b>Oxirgi raqam:</b> <code>1234 % 10</code> → <code>4</code>.</li>
+  <li><b>Vaqt:</b> 135 daqiqa = <code>Math.floor(135 / 60)</code> soat va <code>135 % 60</code> daqiqa → 2 soat 15 daqiqa.</li>
+</ul>
+<h3>Math obyekti</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(Math.round(4.6));   // 5   — yaxlitlash
+console.log(Math.floor(4.9));   // 4   — pastga yaxlitlash
+console.log(Math.ceil(4.1));    // 5   — yuqoriga yaxlitlash
+console.log(Math.max(3, 9, 2)); // 9   — eng kattasi
+console.log(Math.min(3, 9, 2)); // 2
+console.log(Math.sqrt(81));     // 9   — kvadrat ildiz
+console.log(Math.abs(-7));      // 7   — modul
+console.log(Math.random());     // 0 va 1 orasidagi tasodifiy son
+console.log(Math.floor(Math.random() * 6) + 1);  // 1 dan 6 gacha — o&#x27;yin kubigi 🎲</code></pre></div>
+
+<h2 id="tayinlash-operatorlari"><a class="anchor" href="#tayinlash-operatorlari">#</a>Tayinlash operatorlari</h2>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">let ball = 10;
+ball += 5;    // ball = ball + 5  → 15
+ball -= 3;    // ball = ball - 3  → 12
+ball *= 2;    // ball = ball * 2  → 24
+ball /= 4;    // ball = ball / 4  → 6
+ball++;       // ball = ball + 1  → 7  (inkrement)
+ball--;       // ball = ball - 1  → 6  (dekrement)
+console.log(ball);</code></pre></div>
+
+<h2 id="taqqoslash-operatorlari"><a class="anchor" href="#taqqoslash-operatorlari">#</a>Taqqoslash operatorlari</h2>
+<p>Natijasi doim <code>true</code> yoki <code>false</code>:</p>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Misol</th><th>Natija</th></tr>
+<tr><td><code>&gt;</code></td><td>katta</td><td><code>10 &gt; 7</code></td><td>true</td></tr>
+<tr><td><code>&lt;</code></td><td>kichik</td><td><code>10 &lt; 7</code></td><td>false</td></tr>
+<tr><td><code>&gt;=</code></td><td>katta yoki teng</td><td><code>18 &gt;= 18</code></td><td>true</td></tr>
+<tr><td><code>&lt;=</code></td><td>kichik yoki teng</td><td><code>5 &lt;= 4</code></td><td>false</td></tr>
+<tr><td><code>===</code></td><td><b>qat'iy teng</b> (qiymat va tur)</td><td><code>5 === 5</code></td><td>true</td></tr>
+<tr><td><code>!==</code></td><td>qat'iy teng emas</td><td><code>5 !== 3</code></td><td>true</td></tr>
+</table></div>
+<h3><code>==</code> va <code>===</code> — muhim farq!</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(5 == &quot;5&quot;);    // true  😱 — turni o&#x27;zgartirib taqqoslaydi
+console.log(5 === &quot;5&quot;);   // false ✅ — son va matn har xil narsa
+console.log(0 == false);  // true  😱
+console.log(0 === false); // false ✅</code></pre></div>
+<div class="callout danger"><span class="t">Qoida</span>
+Doim <b><code>===</code></b> va <b><code>!==</code></b> ishlating. <code>==</code> turlarni "o'zicha" o'zgartiradi va kutilmagan xatolarga olib keladi.
+Va yana: <code>=</code> — tayinlash, <code>===</code> — taqqoslash. Ularni adashtirmang!</div>
+
+<h2 id="mantiqiy-operatorlar"><a class="anchor" href="#mantiqiy-operatorlar">#</a>Mantiqiy operatorlar</h2>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Qachon true</th></tr>
+<tr><td><code>&amp;&amp;</code></td><td>VA</td><td><b>Ikkala</b> shart ham rost bo'lsa</td></tr>
+<tr><td><code>||</code></td><td>YOKI</td><td><b>Kamida bittasi</b> rost bo'lsa</td></tr>
+<tr><td><code>!</code></td><td>EMAS</td><td>Qiymatni teskarisiga aylantiradi</td></tr>
+</table></div>
+<div class="analogy"><span class="t">Hayotiy misollar</span>
+<b>VA:</b> "Kinoga borasan — agar uy vazifasini bajargan <b>va</b> xonangni yig'ishtirgan bo'lsang." Ikkalasi ham kerak.<br>
+<b>YOKI:</b> "Muzqaymoq olasan — agar a'lo baho olgan <b>yoki</b> tug'ilgan kuning bo'lsa." Bittasi yetarli.<br>
+<b>EMAS:</b> "Agar yomg'ir yog'<b>mayotgan</b> bo'lsa, futbolga chiqamiz."</div>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const yosh = 15;
+const ruxsatnoma = true;
+
+console.log(yosh &gt;= 14 &amp;&amp; ruxsatnoma);   // true  — ikkalasi ham rost
+console.log(yosh &gt;= 18 &amp;&amp; ruxsatnoma);   // false — birinchisi yolg&#x27;on
+console.log(yosh &gt;= 18 || ruxsatnoma);   // true  — ikkinchisi rost
+console.log(!ruxsatnoma);                // false
+
+// Oraliqni tekshirish: 10 va 20 orasidami?
+const son = 15;
+console.log(son &gt;= 10 &amp;&amp; son &lt;= 20);     // true</code></pre></div>
+
+<h2 id="shart-operatori-if"><a class="anchor" href="#shart-operatori-if">#</a>Shart operatori: <code>if</code></h2>
+<p>Dastur hamma vaqt bir xil ishlamaydi — u <b>vaziyatga qarab qaror qabul qiladi</b>.</p>
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">if (shart) {
+  // shart TRUE bo&#x27;lsa bajariladi
+} else {
+  // shart FALSE bo&#x27;lsa bajariladi
+}</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const harorat = 28;
+
+if (harorat &gt; 25) {
+  console.log(&quot;Issiq! Kepka kiying 🧢&quot;);
+} else {
+  console.log(&quot;Havo salqin 🧥&quot;);
+}</code></pre></div>
+<h3><code>else if</code> — bir nechta variant</h3>
+<p>Shartlar <b>yuqoridan pastga</b> tekshiriladi va <b>birinchi</b> rost shart bajariladi — qolganlari tekshirilmaydi.</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const ball = 78;
+let baho;
+
+if (ball &gt;= 86) {
+  baho = 5;
+} else if (ball &gt;= 71) {
+  baho = 4;
+} else if (ball &gt;= 56) {
+  baho = 3;
+} else {
+  baho = 2;
+}
+
+console.log(`${ball} ball → ${baho} baho`);</code></pre></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">ball = 78</div><div class="arrow">→</div>
+    <div class="node">78 ≥ 86?<small>yo'q</small></div><div class="arrow">→</div>
+    <div class="node">78 ≥ 71?<small>HA ✅</small></div><div class="arrow">→</div>
+    <div class="node">baho = 4<small>qolganlari tekshirilmaydi</small></div>
+  </div>
+</div>
+<div class="callout warn"><span class="t">Tartib muhim!</span>
+Agar <code>ball &gt;= 56</code> shartini birinchi yozsangiz, 95 ball ham "3" bo'lib qoladi — chunki 95 ≥ 56 rost va dastur shu yerda to'xtaydi.
+Shartlarni <b>kattadan kichikka</b> (yoki aniqroqdan umumiyroqqa) yozing.</div>
+
+<h3>Ichma-ich shartlar</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const login = &quot;admin&quot;;
+const parol = &quot;12345&quot;;
+
+if (login === &quot;admin&quot;) {
+  if (parol === &quot;12345&quot;) {
+    console.log(&quot;✅ Xush kelibsiz, admin!&quot;);
+  } else {
+    console.log(&quot;❌ Parol noto&#x27;g&#x27;ri&quot;);
+  }
+} else {
+  console.log(&quot;❌ Bunday foydalanuvchi yo&#x27;q&quot;);
+}</code></pre></div>
+
+<h3>Ternary (uchlik) operator — qisqa if</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const yosh = 16;
+// shart ? rost_bo&#x27;lsa : yolg&#x27;on_bo&#x27;lsa
+const holat = yosh &gt;= 18 ? &quot;katta&quot; : &quot;voyaga yetmagan&quot;;
+console.log(holat);
+
+const son = 7;
+console.log(`${son} — ${son % 2 === 0 ? &quot;juft&quot; : &quot;toq&quot;} son`);</code></pre></div>
+<p>Oddiy, ikki variantli tanlovlar uchun qulay. Murakkab shartlar uchun oddiy <code>if</code> o'qilishi osonroq.</p>
+
+<h2 id="switch-kop-variantli-tanlov"><a class="anchor" href="#switch-kop-variantli-tanlov">#</a><code>switch</code> — ko'p variantli tanlov</h2>
+<p>Bitta qiymatni ko'p aniq variantlar bilan solishtirish kerak bo'lganda <code>if...else if</code> zanjiridan qulayroq:</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const kun = 3;
+let kunNomi;
+
+switch (kun) {
+  case 1:
+    kunNomi = &quot;Dushanba&quot;;
+    break;
+  case 2:
+    kunNomi = &quot;Seshanba&quot;;
+    break;
+  case 3:
+    kunNomi = &quot;Chorshanba&quot;;
+    break;
+  case 4:
+    kunNomi = &quot;Payshanba&quot;;
+    break;
+  case 5:
+    kunNomi = &quot;Juma&quot;;
+    break;
+  case 6:
+  case 7:
+    kunNomi = &quot;Dam olish kuni 🎉&quot;;   // 6 va 7 uchun bir xil natija
+    break;
+  default:
+    kunNomi = &quot;Bunday kun yo&#x27;q&quot;;      // hech biri mos kelmasa
+}
+
+console.log(kunNomi);</code></pre></div>
+<div class="callout warn"><code>break</code> ni unutsangiz, dastur keyingi <code>case</code> larni ham bajarib ketadi! <code>switch</code> qat'iy taqqoslash (<code>===</code>) bilan ishlaydi.</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>Juft yoki toq.</b> Foydalanuvchidan son so'rang va uning juft/toq, musbat/manfiy/nol ekanini aniqlang.</li>
+  <li><b>Baho aniqlovchi.</b> 0–100 oralig'idagi ballni so'rang. Agar ball shu oraliqda bo'lmasa — "Noto'g'ri ball!" deb chiqaring. Aks holda bahoni va izohni ("A'lo!", "Yaxshi", ...) chiqaring.</li>
+  <li><b>Kirish tizimi:</b>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const TOGRI_LOGIN = &quot;malika&quot;;
+const TOGRI_PAROL = &quot;qwerty123&quot;;
+
+const login = prompt(&quot;Login:&quot;);
+const parol = prompt(&quot;Parol:&quot;);
+
+if (login === null || parol === null) {
+  alert(&quot;Kirish bekor qilindi&quot;);
+} else if (login === &quot;&quot; || parol === &quot;&quot;) {
+  alert(&quot;⚠️ Login va parol bo&#x27;sh bo&#x27;lmasligi kerak&quot;);
+} else if (login.toLowerCase() === TOGRI_LOGIN &amp;&amp; parol === TOGRI_PAROL) {
+  alert(`✅ Xush kelibsiz, ${login}!`);
+} else {
+  alert(&quot;❌ Login yoki parol noto&#x27;g&#x27;ri&quot;);
+}</code></pre></div>
+  Nima uchun loginni <code>toLowerCase()</code> bilan, parolni esa aynan solishtiryapmiz? Muhokama qiling.</li>
+  <li><b>Kabisa yili.</b> Yil 4 ga bo'linsa va 100 ga bo'linmasa, yoki 400 ga bo'linsa — kabisa yili. Foydalanuvchi kiritgan yilni tekshiring (2024 ✅, 1900 ❌, 2000 ✅).</li>
+  <li><b>Chipta narxi.</b> Kinoteatr: 7 yoshgacha — bepul, 7–17 — 20 000, 18–59 — 35 000, 60+ — 15 000 so'm. Seshanba kuni hammaga 50% chegirma.
+  Yosh va hafta kunini so'rab, narxni hisoblang.</li>
+  <li><b>Hafta kuni (switch).</b> 1–12 raqamini so'rab, oy nomini va qaysi faslga tegishli ekanini chiqaring.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>if (ball = 100)</code> — bu taqqoslash emas, <b>tayinlash</b>! To'g'risi: <code>if (ball === 100)</code>.</li>
+  <li>❌ <code>if (10 &lt; son &lt; 20)</code> — JS'da bunday yozib bo'lmaydi. To'g'risi: <code>if (son &gt; 10 &amp;&amp; son &lt; 20)</code>.</li>
+  <li>❌ <code>prompt</code> natijasini <code>Number()</code>siz taqqoslash: <code>"9" &gt; "10"</code> → <code>true</code> (matnlar alifbo bo'yicha taqqoslanadi!).</li>
+  <li>❌ <code>switch</code> da <code>break</code> unutilgan.</li>
+  <li>❌ Jingalak qavslarni yopishni unutish — VS Code qavslarni rangli qilib juftlab ko'rsatadi, kuzating.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q"><code>17 % 5</code> natijasi?</p><ol>
+<li>3.4</li><li>3</li><li>2</li><li>85</li></ol>
+<p class="explain">17 = 5 × 3 + <b>2</b>. % — qoldiq.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>5 === "5"</code> natijasi?</p><ol>
+<li>true</li><li>false</li><li>Xato</li><li>undefined</li></ol>
+<p class="explain">=== turini ham tekshiradi: son va matn har xil.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>true &amp;&amp; false</code> natijasi?</p><ol>
+<li>false</li><li>true</li><li>null</li><li>Xato</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>let x = 10; x += 5; x *= 2;</code> dan keyin x nechaga teng?</p><ol>
+<li>17</li><li>20</li><li>25</li><li>30</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Ball 92 bo'lsa, quyidagi kod nima chiqaradi?<br><code>if (ball &gt;= 56) console.log("3"); else if (ball &gt;= 86) console.log("5");</code></p><ol>
+<li>5</li><li>3</li><li>Ikkalasi ham</li><li>Hech narsa</li></ol>
+<p class="explain">Birinchi rost shart bajariladi. Tartib noto'g'ri yozilgani uchun xato natija chiqdi.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>const t = 20 &gt; 10 ? "ha" : "yo'q";</code> — t ning qiymati?</p><ol>
+<li><code>true</code></li><li>"yo'q"</li><li>"ha"</li><li>20</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>BMI kalkulyatori:</b> vazn (kg) va bo'y (m) so'rab, BMI = vazn / bo'y² ni hisoblang va natijani izohlang (kam vazn, me'yorda, ortiqcha).</li>
+  <li><b>Uchburchak:</b> uch tomon uzunligini so'rab, bunday uchburchak mavjudmi (har bir tomon qolgan ikkitasi yig'indisidan kichik) va qanday turda (teng tomonli, teng yonli, turli tomonli) ekanini aniqlang.</li>
+  <li><b>Tosh-qaychi-qog'oz:</b> foydalanuvchi tanlaydi, kompyuter <code>Math.random()</code> bilan tanlaydi, g'olibni aniqlang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Arifmetika: <code>+ - * / % **</code>; <code>%</code> — qoldiq (juft/toq tekshirish).</li>
+  <li>Taqqoslash: <code>&gt; &lt; &gt;= &lt;= === !==</code> — doim <code>===</code>.</li>
+  <li>Mantiq: <code>&amp;&amp;</code> (ikkalasi), <code>||</code> (bittasi), <code>!</code> (teskari).</li>
+  <li><code>if / else if / else</code> — birinchi rost shart bajariladi; tartibga e'tibor bering.</li>
+  <li>Ternary: <code>shart ? a : b</code>; <code>switch</code> — ko'p aniq variantlar uchun, <code>break</code> bilan.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="15-js-ozgaruvchilar.html"><small>← Oldingi mavzu</small>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a><a class="next" href="17-js-sikllar-funksiyalar.html"><small>Keyingi mavzu →</small>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#operator-va-ifoda">Operator va ifoda</a></li><li><a href="#arifmetik-operatorlar">Arifmetik operatorlar</a></li><li><a href="#tayinlash-operatorlari">Tayinlash operatorlari</a></li><li><a href="#taqqoslash-operatorlari">Taqqoslash operatorlari</a></li><li><a href="#mantiqiy-operatorlar">Mantiqiy operatorlar</a></li><li><a href="#shart-operatori-if">Shart operatori: if</a></li><li><a href="#switch-kop-variantli-tanlov">switch — ko&#x27;p variantli tanlov</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL) — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="JavaScript, Python va ma&#x27;lumotlar bazasi bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a class="active" href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📝</div><div><div class="crumb">31-mavzu · 31 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</h1><p class="lead">JavaScript, Python va ma&#x27;lumotlar bazasi bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.</p><div class="hero-level">1 soat · nazorat ishi</div></div></div>
+
+<div class="goals">
+<h3>📋 Nazorat ishi tuzilishi</h3>
+<ul>
+  <li><b>1-qism:</b> 25 ta yopiq test × 3 ball = <b>75 ball</b> (JavaScript — 8, Python — 9, SQL — 8 ta savol).</li>
+  <li><b>2-qism:</b> 5 ta ochiq savol va amaliy topshiriq × 5 ball = <b>25 ball</b>.</li>
+  <li><b>Jami: 100 ball.</b> Vaqt: 80 daqiqa.</li>
+</ul>
+</div>
+
+<h2 id="takrorlash-rejasi"><a class="anchor" href="#takrorlash-rejasi">#</a>Takrorlash rejasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Mavzu</th><th>Bilishingiz kerak</th></tr>
+<tr><td><a href="15-js-ozgaruvchilar.html">15–16. JS asoslari</a></td><td>let/const, turlar, typeof, operatorlar, === , if/else, switch, ternary</td></tr>
+<tr><td><a href="17-js-sikllar-funksiyalar.html">17–18. Sikllar, funksiyalar, massivlar</a></td><td>for, while, break, function, return, arrow; push/pop, map/filter/reduce, obyektlar</td></tr>
+<tr><td><a href="19-dom-bom-eventlar.html">19–20. DOM va hodisalar</a></td><td>querySelector, textContent, classList, createElement, addEventListener, preventDefault, localStorage</td></tr>
+<tr><td><a href="21-python-kirish.html">21–22. Python asoslari</a></td><td>print/input, turlar, // va %, f-satr, if/elif/else, for+range, while, try/except, fayllar</td></tr>
+<tr><td><a href="23-python-list-tuple-set-dict.html">23–25. Tuzilmalar, funksiyalar, OOP</a></td><td>list/tuple/set/dict, slicing, def/return, modullar, json; class, __init__, self, meros</td></tr>
+<tr><td><a href="26-malumotlar-bazasi-kirish.html">26–30. Ma'lumotlar bazasi</a></td><td>jadval/ustun/qator, PK/FK, bog'lanishlar, turlar, CREATE, CRUD, JOIN, indeks, GROUP BY, HAVING</td></tr>
+</table></div>
+
+<h2 id="1-qism-yopiq-testlar-25-3-75-ball"><a class="anchor" href="#1-qism-yopiq-testlar-25-3-75-ball">#</a>1-qism: Yopiq testlar (25 × 3 = 75 ball)</h2>
+<h3>JavaScript</h3>
+<div class="quiz" data-answer="3"><p class="q">1. Qiymatini o'zgartirib bo'lmaydigan o'zgaruvchi?</p><ol>
+<li><code>let</code></li><li><code>var</code></li><li><code>const</code></li><li><code>static</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">2. <code>console.log(10 % 4)</code> natijasi?</p><ol>
+<li>2.5</li><li>2</li><li>40</li><li>6</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">3. <code>"3" === 3</code> natijasi?</p><ol>
+<li>true</li><li>"33"</li><li>6</li><li>false</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">4. <code>for (let i = 1; i &lt;= 3; i++)</code> sikli necha marta bajariladi?</p><ol>
+<li>3</li><li>2</li><li>4</li><li>Cheksiz</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">5. <code>[5, 10, 15].map(x =&gt; x / 5)</code> natijasi?</p><ol>
+<li>30</li><li>[5, 10, 15]</li><li>[1, 2, 3]</li><li>6</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">6. <code>const k = { ism: "Ali" };</code> — ismni o'qish?</p><ol>
+<li><code>k(ism)</code></li><li><code>k.ism</code></li><li><code>k-&gt;ism</code></li><li><code>k[ism]</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">7. Tugma bosilishiga javob beruvchi to'g'ri kod?</p><ol>
+<li><code>btn.addEventListener("click", fn)</code></li><li><code>btn.on("press", fn)</code></li><li><code>btn.click = fn()</code></li><li><code>addEvent(btn, fn)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">8. Massivni localStorage'ga saqlashdan oldin nima qilinadi?</p><ol>
+<li><code>Number()</code></li><li><code>toString()</code></li><li>Hech narsa</li><li><code>JSON.stringify()</code></li></ol></div>
+<h3>Python</h3>
+<div class="quiz" data-answer="2"><p class="q">9. <code>print(17 // 5)</code> natijasi?</p><ol>
+<li>3.4</li><li>3</li><li>2</li><li>85</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">10. <code>input()</code> qaytaradigan qiymat turi?</p><ol>
+<li>int</li><li>float</li><li>str</li><li>bool</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">11. JS'dagi <code>else if</code> ning Python'dagi ko'rinishi?</p><ol>
+<li><code>elif</code></li><li><code>else if</code></li><li><code>elsif</code></li><li><code>orif</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">12. <code>list(range(1, 5))</code> natijasi?</p><ol>
+<li>[1, 2, 3, 4, 5]</li><li>[0, 1, 2, 3, 4]</li><li>[1, 5]</li><li>[1, 2, 3, 4]</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">13. Qaysi tuzilma o'zgartirilmaydi (immutable)?</p><ol>
+<li>list</li><li>tuple</li><li>dict</li><li>set</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">14. <code>d = {"a": 1}; print(d.get("b", 0))</code> natijasi?</p><ol>
+<li>KeyError</li><li>None</li><li>0</li><li>1</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">15. <code>int("abc")</code> qanday xato beradi?</p><ol>
+<li>ValueError</li><li>TypeError</li><li>NameError</li><li>IndexError</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">16. Obyekt yaratilganda avtomatik chaqiriladigan metod?</p><ol>
+<li><code>__str__</code></li><li><code>__new__</code></li><li><code>start()</code></li><li><code>__init__</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">17. <code>class It(Hayvon):</code> — bu OOP'ning qaysi tamoyili?</p><ol>
+<li>Inkapsulyatsiya</li><li>Merosxo'rlik</li><li>Polimorfizm</li><li>Abstraksiya</li></ol></div>
+<h3>Ma'lumotlar bazasi va SQL</h3>
+<div class="quiz" data-answer="3"><p class="q">18. Har bir qatorni noyob aniqlovchi ustun?</p><ol>
+<li>Tashqi kalit</li><li>Indeks</li><li>Birlamchi kalit (PK)</li><li>NOT NULL</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">19. Pul summasi uchun eng mos tur?</p><ol>
+<li><code>NUMERIC(12, 2)</code></li><li><code>REAL</code></li><li><code>VARCHAR</code></li><li><code>INTEGER</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">20. CRUD'dagi "C" ga mos SQL buyrug'i?</p><ol>
+<li><code>CREATE</code></li><li><code>SELECT</code></li><li><code>UPDATE</code></li><li><code>INSERT</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">21. <code>WHERE</code>siz <code>DELETE FROM oquvchilar;</code> nima qiladi?</p><ol>
+<li>Xato beradi</li><li>Barcha qatorlarni o'chiradi</li><li>Birinchi qatorni o'chiradi</li><li>Jadvalni o'chiradi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">22. Chap jadvalning barcha qatorlarini qaytaruvchi JOIN?</p><ol>
+<li>INNER JOIN</li><li>RIGHT JOIN</li><li>LEFT JOIN</li><li>CROSS JOIN</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">23. Emaili kiritilmaganlarni topuvchi shart?</p><ol>
+<li><code>email IS NULL</code></li><li><code>email = NULL</code></li><li><code>email == ''</code></li><li><code>NOT email</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">24. "Har bir sinfdagi o'quvchilar soni" uchun nima kerak?</p><ol>
+<li><code>ORDER BY</code></li><li><code>DISTINCT</code></li><li><code>LIMIT</code></li><li><code>GROUP BY</code> + <code>COUNT</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">25. Guruhlangan natijani shart bo'yicha filtrlash?</p><ol>
+<li><code>WHERE</code></li><li><code>HAVING</code></li><li><code>FILTER</code></li><li><code>IF</code></li></ol></div>
+
+<h2 id="2-qism-ochiq-savollar-va-amaliy-topshiriqlar-5-5-25-ball"><a class="anchor" href="#2-qism-ochiq-savollar-va-amaliy-topshiriqlar-5-5-25-ball">#</a>2-qism: Ochiq savollar va amaliy topshiriqlar (5 × 5 = 25 ball)</h2>
+<div class="exercise">
+<h3>1-topshiriq (5 ball). JavaScript: DOM</h3>
+<p>Sahifada <code>&lt;input id="ism"&gt;</code>, <code>&lt;button id="btn"&gt;</code> va <code>&lt;p id="javob"&gt;</code> bor. Tugma bosilganda, agar maydon bo'sh bo'lsa —
+"Ismingizni kiriting!" qizil rangda, aks holda "Salom, [ism]!" yashil rangda chiqsin.</p>
+<details><summary>Namuna javob va baholash</summary>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;input id=&quot;ism&quot; placeholder=&quot;Ism&quot;&gt;
+&lt;button id=&quot;btn&quot;&gt;Salomlash&lt;/button&gt;
+&lt;p id=&quot;javob&quot;&gt;&lt;/p&gt;
+&lt;script&gt;
+  document.querySelector(&quot;#btn&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+    const ism = document.querySelector(&quot;#ism&quot;).value.trim();
+    const javob = document.querySelector(&quot;#javob&quot;);
+    if (ism === &quot;&quot;) {
+      javob.textContent = &quot;Ismingizni kiriting!&quot;;
+      javob.style.color = &quot;red&quot;;
+    } else {
+      javob.textContent = `Salom, ${ism}!`;
+      javob.style.color = &quot;green&quot;;
+    }
+  });
+&lt;/script&gt;</code></pre></div>
+<p><b>Baholash:</b> elementlarni topish — 1; hodisa tinglovchisi — 1; bo'sh tekshiruvi (trim bilan) — 1; textContent bilan chiqarish — 1; ranglar — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>2-topshiriq (5 ball). Python: funksiya va ro'yxat</h3>
+<p><code>statistika(ballar)</code> funksiyasini yozing: u ballar ro'yxatini olib, o'rtacha (2 xona kasr), eng yuqori, eng past ball va 86 dan yuqori ballar sonini dict ko'rinishida qaytarsin.
+Bo'sh ro'yxat uchun <code>None</code> qaytarsin.</p>
+<details><summary>Namuna javob</summary>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">def statistika(ballar):
+    if not ballar:
+        return None
+    return {
+        &quot;ortacha&quot;: round(sum(ballar) / len(ballar), 2),
+        &quot;eng_yuqori&quot;: max(ballar),
+        &quot;eng_past&quot;: min(ballar),
+        &quot;alo&quot;: len([b for b in ballar if b &gt; 86]),
+    }
+
+print(statistika([90, 75, 88, 60]))
+# {&#x27;ortacha&#x27;: 78.25, &#x27;eng_yuqori&#x27;: 90, &#x27;eng_past&#x27;: 60, &#x27;alo&#x27;: 2}</code></pre></div>
+<p><b>Baholash:</b> def va return — 1; bo'sh holat — 1; o'rtacha va yaxlitlash — 1; max/min — 1; shartli sanash — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>3-topshiriq (5 ball). Python OOP</h3>
+<p><code>Tortburchak</code> klassini yozing: konstruktor eni va bo'yini oladi; <code>yuza()</code>, <code>perimetr()</code> metodlari va <code>__str__</code>
+("Tortburchak 4×5"). Undan meros olgan <code>Kvadrat</code> klassi faqat bitta tomonni oladi.</p>
+<details><summary>Namuna javob</summary>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">class Tortburchak:
+    def __init__(self, eni, boyi):
+        self.eni = eni
+        self.boyi = boyi
+
+    def yuza(self):
+        return self.eni * self.boyi
+
+    def perimetr(self):
+        return 2 * (self.eni + self.boyi)
+
+    def __str__(self):
+        return f&quot;Tortburchak {self.eni}×{self.boyi}&quot;
+
+
+class Kvadrat(Tortburchak):
+    def __init__(self, tomon):
+        super().__init__(tomon, tomon)
+
+
+k = Kvadrat(4)
+print(k, k.yuza(), k.perimetr())   # Tortburchak 4×4 16 16</code></pre></div>
+<p><b>Baholash:</b> klass va __init__ — 1; metodlar — 2; __str__ — 1; meros va super() — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>4-topshiriq (5 ball). SQL: jadval va CRUD</h3>
+<p><code>kitoblar</code> jadvalini yarating (id, nomi — majburiy, muallif, yil — 1450 dan katta, narx — pul, mavjud — boolean, standart TRUE).
+3 ta kitob qo'shing; 2000-yildan keyin chiqqan kitoblarni narx bo'yicha kamayish tartibida chiqaring; bitta kitob narxini 10% oshiring.</p>
+<details><summary>Namuna javob</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE kitoblar (
+    id      SERIAL PRIMARY KEY,
+    nomi    VARCHAR(200) NOT NULL,
+    muallif VARCHAR(100),
+    yil     INTEGER CHECK (yil &gt; 1450),
+    narx    NUMERIC(10, 2),
+    mavjud  BOOLEAN DEFAULT TRUE
+);
+
+INSERT INTO kitoblar (nomi, muallif, yil, narx) VALUES
+    (&#x27;O&#x27;&#x27;tkan kunlar&#x27;, &#x27;Abdulla Qodiriy&#x27;, 1926, 65000),
+    (&#x27;Ufq&#x27;, &#x27;Said Ahmad&#x27;, 1976, 48000),
+    (&#x27;Python asoslari&#x27;, &#x27;Muallif X&#x27;, 2021, 90000);
+
+SELECT nomi, yil, narx FROM kitoblar WHERE yil &gt; 2000 ORDER BY narx DESC;
+
+UPDATE kitoblar SET narx = narx * 1.1 WHERE id = 1;</code></pre></div>
+<p><b>Baholash:</b> jadval va turlar — 1; cheklovlar — 1; INSERT (apostrof to'g'ri) — 1; SELECT + WHERE + ORDER BY — 1; UPDATE + WHERE — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>5-topshiriq (5 ball). SQL: JOIN va GROUP BY</h3>
+<p><code>sinflar(id, nomi)</code>, <code>oquvchilar(id, ism, sinf_id)</code>, <code>baholar(id, oquvchi_id, baho)</code> jadvallari berilgan. Har bir sinfning nomi, o'quvchilar
+soni va o'rtacha bahosini chiqaring; faqat o'rtacha bahosi 4 dan yuqori sinflar, o'rtacha baho bo'yicha kamayish tartibida.</p>
+<details><summary>Namuna javob</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT s.nomi,
+       COUNT(DISTINCT o.id) AS oquvchilar,
+       ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+HAVING AVG(b.baho) &gt; 4
+ORDER BY ortacha DESC;</code></pre></div>
+<p><b>Baholash:</b> JOIN'lar to'g'ri — 2; GROUP BY va agregatlar — 1 (DISTINCT'ni bilgani — ustiga rag'bat); HAVING — 1; ORDER BY — 1.</p>
+</details>
+</div>
+
+<h2 id="baholash-shkalasi"><a class="anchor" href="#baholash-shkalasi">#</a>Baholash shkalasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Ball</th><th>Natija</th><th>Tavsiya</th></tr>
+<tr><td>86–100</td><td>A'lo</td><td>IV bob — Django'ga tayyorsiz!</td></tr>
+<tr><td>71–85</td><td>Yaxshi</td><td>Xato qilgan mavzular amaliyotini takrorlang.</td></tr>
+<tr><td>60–70</td><td>Qoniqarli</td><td>Ayniqsa OOP (25) va SQL JOIN/GROUP BY (29–30) ni qayta ishlang — Django'da ular juda kerak bo'ladi.</td></tr>
+<tr><td>0–59</td><td>Qoniqarsiz</td><td>Mentor bilan qo'shimcha mashg'ulot tavsiya etiladi.</td></tr>
+</table></div>
+
+<div class="summary-box">
+<h3>🎉 III bob yakunlandi!</h3>
+<p>Siz endi ikki dasturlash tilida (JavaScript va Python) dastur yoza olasiz, OOP tamoyillarini bilasiz va ma'lumotlar bazasini loyihalab, SQL bilan
+boshqara olasiz. Keyingi bobda bularning hammasini birlashtiramiz: <b>Python + PostgreSQL + Django = haqiqiy veb-ilova</b>!</p>
+</div>
+<nav class="pager"><a class="prev" href="30-sql-filtr-aggregatsiya.html"><small>← Oldingi mavzu</small>Filtrlash va shartlar. Aggregation va grouping</a><span></span></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#takrorlash-rejasi">Takrorlash rejasi</a></li><li><a href="#1-qism-yopiq-testlar-25-3-75-ball">1-qism: Yopiq testlar (25 × 3 = 75 ball)</a></li><li><a href="#2-qism-ochiq-savollar-va-amaliy-topshiriqlar-5-5-25-ball">2-qism: Ochiq savollar va amaliy topshiriqlar (5 × 5 = 25 ball)</a></li><li><a href="#baholash-shkalasi">Baholash shkalasi</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

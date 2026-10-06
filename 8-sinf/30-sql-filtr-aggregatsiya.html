@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Filtrlash va shartlar. Aggregation va grouping — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="WHERE&#x27;da taqqoslash, AND/OR/NOT, IN, BETWEEN, LIKE/ILIKE, IS NULL; ORDER BY, LIMIT, DISTINCT; agregat funksiyalar COUNT, SUM, AVG, MIN, MAX; GROUP BY va HAVING; statistik hisobotlar tayyorlash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a class="active" href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📊</div><div><div class="crumb">30-mavzu · 31 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Filtrlash va shartlar. Aggregation va grouping</h1><p class="lead">WHERE&#x27;da taqqoslash, AND/OR/NOT, IN, BETWEEN, LIKE/ILIKE, IS NULL; ORDER BY, LIMIT, DISTINCT; agregat funksiyalar COUNT, SUM, AVG, MIN, MAX; GROUP BY va HAVING; statistik hisobotlar tayyorlash.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Murakkab shartlar bilan aniq ma'lumotlarni tanlashni: <code>IN</code>, <code>BETWEEN</code>, <code>LIKE</code>;</li>
+  <li>Takrorlarni olib tashlash (<code>DISTINCT</code>) va sahifalash;</li>
+  <li><b>Agregat funksiyalar</b>: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>;</li>
+  <li><code>GROUP BY</code> bilan guruhlab hisoblash va <code>HAVING</code> bilan guruhlarni filtrlashni;</li>
+  <li>Haqiqiy hisobotlar tayyorlashni: "har bir sinf o'rtacha bahosi", "eng ko'p sotilgan mahsulot".</li>
+</ul>
+</div>
+
+<h2 id="filtrlash-where-chuqurroq"><a class="anchor" href="#filtrlash-where-chuqurroq">#</a>Filtrlash: WHERE chuqurroq</h2>
+<h3>Taqqoslash va mantiq</h3>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Misol</th></tr>
+<tr><td><code>=</code>, <code>&lt;&gt;</code> (yoki <code>!=</code>)</td><td>teng, teng emas</td><td><code>fan &lt;&gt; 'Tarix'</code></td></tr>
+<tr><td><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td><td>katta, kichik...</td><td><code>baho &gt;= 4</code></td></tr>
+<tr><td><code>AND</code>, <code>OR</code>, <code>NOT</code></td><td>va, yoki, emas</td><td><code>baho = 5 AND fan = 'Fizika'</code></td></tr>
+<tr><td><code>IN (...)</code></td><td>ro'yxatdagi qiymatlardan biri</td><td><code>sinf_id IN (1, 3)</code></td></tr>
+<tr><td><code>BETWEEN a AND b</code></td><td>oraliqda (chegaralar kiradi)</td><td><code>narx BETWEEN 10000 AND 50000</code></td></tr>
+<tr><td><code>LIKE</code> / <code>ILIKE</code></td><td>naqsh bo'yicha matn qidirish (ILIKE — harf katta-kichikligiga qaramaydi)</td><td><code>ism LIKE 'A%'</code></td></tr>
+<tr><td><code>IS NULL</code> / <code>IS NOT NULL</code></td><td>bo'sh / bo'sh emas</td><td><code>email IS NOT NULL</code></td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- IN — OR&#x27;ning qisqa shakli
+SELECT * FROM baholar WHERE fan IN (&#x27;Matematika&#x27;, &#x27;Informatika&#x27;, &#x27;Fizika&#x27;);
+
+-- BETWEEN — oraliq (sanalar bilan ham ishlaydi)
+SELECT * FROM baholar WHERE sana BETWEEN &#x27;2026-09-01&#x27; AND &#x27;2026-09-30&#x27;;
+SELECT ism, tugilgan_sana FROM oquvchilar WHERE tugilgan_sana BETWEEN &#x27;2012-01-01&#x27; AND &#x27;2012-12-31&#x27;;
+
+-- NOT bilan
+SELECT * FROM oquvchilar WHERE sinf_id NOT IN (1, 2);
+
+-- Qavslar muhim! AND OR&#x27;dan oldin bajariladi
+SELECT * FROM baholar
+WHERE (fan = &#x27;Matematika&#x27; OR fan = &#x27;Fizika&#x27;) AND baho = 5;</code></pre></div>
+<div class="callout warn">Qavssiz <code>WHERE fan = 'Matematika' OR fan = 'Fizika' AND baho = 5</code> — bu "Matematikadagi <b>barcha</b> baholar YOKI Fizikadagi 5 lar" deb tushuniladi. Shubha bo'lsa — qavs qo'ying.</div>
+
+<h3>LIKE — naqsh bo'yicha qidirish</h3>
+<div class="table-wrap"><table>
+<tr><th>Belgi</th><th>Ma'nosi</th></tr>
+<tr><td><code>%</code></td><td>istalgan sondagi (0 yoki ko'p) istalgan belgilar</td></tr>
+<tr><td><code>_</code></td><td>aynan bitta istalgan belgi</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT ism FROM oquvchilar WHERE ism LIKE &#x27;D%&#x27;;         -- D bilan boshlanadi: Dilnoza
+SELECT ism FROM oquvchilar WHERE familiya LIKE &#x27;%ova&#x27;;  -- &quot;ova&quot; bilan tugaydi: Karimova, Aminova
+SELECT ism FROM oquvchilar WHERE ism LIKE &#x27;%a%&#x27;;        -- ichida &quot;a&quot; bor
+SELECT ism FROM oquvchilar WHERE ism LIKE &#x27;_li&#x27;;        -- 3 harfli, &quot;li&quot; bilan tugaydi: Ali
+SELECT ism FROM oquvchilar WHERE ism ILIKE &#x27;zarina&#x27;;    -- katta-kichik harfga qaramaydi
+SELECT * FROM oquvchilar WHERE email LIKE &#x27;%@mail.uz&#x27;;  -- mail.uz pochtasidagilar</code></pre></div>
+<p>Saytlardagi <b>qidiruv maydoni</b> ko'pincha aynan <code>ILIKE '%so''z%'</code> bilan ishlaydi.</p>
+
+<h3>DISTINCT — takrorlarsiz</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT fan FROM baholar;             -- Matematika, Informatika, Matematika, ... (takrorlar bilan)
+SELECT DISTINCT fan FROM baholar;    -- har bir fan bir marta
+SELECT DISTINCT fan FROM baholar ORDER BY fan;</code></pre></div>
+
+<h2 id="agregat-funksiyalar"><a class="anchor" href="#agregat-funksiyalar">#</a>Agregat funksiyalar</h2>
+<p><b>Agregat</b> (yig'uvchi) funksiya ko'p qatorni olib, <b>bitta natija</b> qaytaradi. Bu — statistika va hisobotlarning asosi.</p>
+<div class="table-wrap"><table>
+<tr><th>Funksiya</th><th>Vazifasi</th></tr>
+<tr><td><code>COUNT(*)</code></td><td>Qatorlar soni</td></tr>
+<tr><td><code>COUNT(ustun)</code></td><td>NULL bo'lmagan qiymatlar soni</td></tr>
+<tr><td><code>COUNT(DISTINCT ustun)</code></td><td>Noyob qiymatlar soni</td></tr>
+<tr><td><code>SUM(ustun)</code></td><td>Yig'indi</td></tr>
+<tr><td><code>AVG(ustun)</code></td><td>O'rtacha qiymat</td></tr>
+<tr><td><code>MIN(ustun)</code> / <code>MAX(ustun)</code></td><td>Eng kichik / eng katta</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT COUNT(*) AS jami_oquvchilar FROM oquvchilar;
+SELECT COUNT(email) AS emaili_borlar FROM oquvchilar;
+SELECT COUNT(DISTINCT fan) AS fanlar_soni FROM baholar;
+
+SELECT ROUND(AVG(baho), 2) AS ortacha_baho,     -- ROUND — yaxlitlash
+       MAX(baho) AS eng_yuqori,
+       MIN(baho) AS eng_past
+FROM baholar
+WHERE fan = &#x27;Matematika&#x27;;
+
+SELECT MIN(tugilgan_sana) AS eng_kattasi, MAX(tugilgan_sana) AS eng_kichigi FROM oquvchilar;</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext"> ortacha_baho | eng_yuqori | eng_past
+--------------+------------+----------
+         4.40 |          5 |        3</code></pre></div>
+
+<h2 id="group-by-guruhlab-hisoblash"><a class="anchor" href="#group-by-guruhlab-hisoblash">#</a>GROUP BY — guruhlab hisoblash</h2>
+<p>"Butun maktab o'rtacha bahosi" — bitta son. Lekin ko'pincha <b>har bir guruh uchun</b> natija kerak: <b>har bir fan</b> bo'yicha o'rtacha, <b>har bir sinfda</b> nechta o'quvchi...</p>
+<div class="analogy"><span class="t">O'xshatish: rangli qalamlar</span>
+Stol ustida aralash qalamlar. Siz ularni rangiga qarab <b>uyumlarga ajratasiz</b> (GROUP BY rang), keyin <b>har bir uyumni sanaysiz</b> (COUNT): "qizil — 5, ko'k — 3, yashil — 7".</div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Har bir fan bo&#x27;yicha baholar soni va o&#x27;rtachasi
+SELECT fan,
+       COUNT(*) AS baholar_soni,
+       ROUND(AVG(baho), 2) AS ortacha
+FROM baholar
+GROUP BY fan
+ORDER BY ortacha DESC;</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext"> fan         | baholar_soni | ortacha
+-------------+--------------+---------
+ Ona tili    |            2 |    4.50
+ Informatika |            5 |    4.00
+ Matematika  |            5 |    4.40
+ ...</code></pre></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Har bir sinfda nechta o&#x27;quvchi (JOIN + GROUP BY)
+SELECT s.nomi AS sinf, COUNT(o.id) AS oquvchilar_soni
+FROM sinflar s
+LEFT JOIN oquvchilar o ON o.sinf_id = s.id
+GROUP BY s.nomi
+ORDER BY s.nomi;
+
+-- Har bir o&#x27;quvchining o&#x27;rtacha bahosi (reyting)
+SELECT o.ism || &#x27; &#x27; || o.familiya AS oquvchi,
+       COUNT(b.id) AS baholar,
+       ROUND(AVG(b.baho), 2) AS ortacha
+FROM oquvchilar o
+JOIN baholar b ON b.oquvchi_id = o.id
+GROUP BY o.id, o.ism, o.familiya
+ORDER BY ortacha DESC;</code></pre></div>
+<div class="callout danger"><span class="t">GROUP BY'ning oltin qoidasi</span>
+<code>SELECT</code> dagi har bir ustun yoki <b>agregat funksiya ichida</b> bo'lishi, yoki <b><code>GROUP BY</code> da</b> ko'rsatilgan bo'lishi kerak.
+<code>SELECT fan, ism, AVG(baho) ... GROUP BY fan</code> — xato: fan bo'yicha guruhda ko'p ism bor, qaysi birini ko'rsatish kerak?</div>
+
+<h2 id="having-guruhlarni-filtrlash"><a class="anchor" href="#having-guruhlarni-filtrlash">#</a>HAVING — guruhlarni filtrlash</h2>
+<p><code>WHERE</code> <b>qatorlarni</b> guruhlashdan <b>oldin</b> filtrlaydi. <code>HAVING</code> esa <b>guruhlarni</b> hisob-kitobdan <b>keyin</b> filtrlaydi.</p>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- O&#x27;rtacha bahosi 4.5 dan yuqori o&#x27;quvchilar
+SELECT o.ism, ROUND(AVG(b.baho), 2) AS ortacha
+FROM oquvchilar o
+JOIN baholar b ON b.oquvchi_id = o.id
+GROUP BY o.id, o.ism
+HAVING AVG(b.baho) &gt; 4.5;
+
+-- Faqat sentabr baholari asosida (WHERE), kamida 2 ta baho olgan (HAVING) o&#x27;quvchilar
+SELECT oquvchi_id, COUNT(*) AS soni
+FROM baholar
+WHERE sana &gt;= &#x27;2026-09-01&#x27;           -- 1) qatorlar filtri
+GROUP BY oquvchi_id                  -- 2) guruhlash
+HAVING COUNT(*) &gt;= 2                 -- 3) guruhlar filtri
+ORDER BY soni DESC;                  -- 4) saralash</code></pre></div>
+<h3>SELECT'ning to'liq tuzilishi va bajarilish tartibi</h3>
+<div class="table-wrap"><table>
+<tr><th>Yozilish tartibi</th><th>Bajarilish tartibi</th><th>Vazifasi</th></tr>
+<tr><td>1. <code>SELECT</code></td><td>5</td><td>Qaysi ustunlarni ko'rsatish</td></tr>
+<tr><td>2. <code>FROM</code> / <code>JOIN</code></td><td>1</td><td>Qaysi jadval(lar)dan</td></tr>
+<tr><td>3. <code>WHERE</code></td><td>2</td><td>Qatorlarni filtrlash</td></tr>
+<tr><td>4. <code>GROUP BY</code></td><td>3</td><td>Guruhlash</td></tr>
+<tr><td>5. <code>HAVING</code></td><td>4</td><td>Guruhlarni filtrlash</td></tr>
+<tr><td>6. <code>ORDER BY</code></td><td>6</td><td>Saralash</td></tr>
+<tr><td>7. <code>LIMIT</code></td><td>7</td><td>Natijalar sonini cheklash</td></tr>
+</table></div>
+<p>Shuning uchun <code>WHERE AVG(baho) &gt; 4</code> yozib bo'lmaydi — <code>WHERE</code> bajarilayotganda guruhlar va o'rtacha hali hisoblanmagan!</p>
+
+<h2 id="amaliy-mashgulot-hisobotlar"><a class="anchor" href="#amaliy-mashgulot-hisobotlar">#</a>Amaliy mashg'ulot: hisobotlar</h2>
+<p>28 va 29-mavzulardagi <code>maktab</code> va <code>dokon</code> bazalarida quyidagi hisobotlarni tayyorlang:</p>
+<h3>Maktab bazasi</h3>
+<ol class="steps">
+  <li>Familiyasi "ov" bilan tugaydigan o'quvchilar.</li>
+  <li>2012-yilda tug'ilgan o'quvchilar soni.</li>
+  <li>Har bir fan bo'yicha: baholar soni, o'rtacha, eng past va eng yuqori baho.</li>
+  <li>Har bir sinf bo'yicha o'rtacha baho (3 ta jadval: sinflar, oquvchilar, baholar).</li>
+  <li>Kamida bitta "2" olgan o'quvchilar ro'yxati (takrorlarsiz).</li>
+  <li>Eng yuqori o'rtacha bahoga ega 3 nafar o'quvchi.</li>
+</ol>
+<h3>Do'kon bazasi</h3>
+<ol class="steps">
+  <li>Narxi 4 000 dan 100 000 gacha bo'lgan mahsulotlar.</li>
+  <li>Har bir buyurtmaning umumiy summasi: <code>SUM(soni * narx)</code>.</li>
+  <li>Har bir mijoz nechta buyurtma bergani va jami qancha to'lagani.</li>
+  <li>Eng ko'p sotilgan mahsulot (dona hisobida).</li>
+  <li>Umumiy summasi 50 000 so'mdan oshgan buyurtmalar (HAVING).</li>
+</ol>
+<details><summary>Ba'zi javoblar</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Maktab 4: har bir sinf bo&#x27;yicha o&#x27;rtacha baho
+SELECT s.nomi, ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+ORDER BY ortacha DESC;
+
+-- Maktab 5: kamida bitta &quot;2&quot; olganlar
+SELECT DISTINCT o.ism, o.familiya
+FROM oquvchilar o JOIN baholar b ON b.oquvchi_id = o.id
+WHERE b.baho = 2;
+
+-- Do&#x27;kon 3: mijozlar statistikasi
+SELECT m.ism, COUNT(DISTINCT b.id) AS buyurtmalar, COALESCE(SUM(t.soni * t.narx), 0) AS jami
+FROM mijozlar m
+LEFT JOIN buyurtmalar b ON b.mijoz_id = m.id
+LEFT JOIN buyurtma_tarkibi t ON t.buyurtma_id = b.id
+GROUP BY m.id, m.ism
+ORDER BY jami DESC;
+
+-- Do&#x27;kon 5: 50 000 dan oshgan buyurtmalar
+SELECT buyurtma_id, SUM(soni * narx) AS summa
+FROM buyurtma_tarkibi
+GROUP BY buyurtma_id
+HAVING SUM(soni * narx) &gt; 50000;</code></pre></div>
+<p><code>COALESCE(qiymat, 0)</code> — qiymat NULL bo'lsa 0 qaytaradi (buyurtmasi yo'q mijoz uchun).</p>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>column "o.ism" must appear in the GROUP BY clause</code> — SELECT'dagi oddiy ustun GROUP BY'da yo'q.</li>
+  <li>❌ <code>aggregate functions are not allowed in WHERE</code> — guruh sharti <code>HAVING</code> da yoziladi.</li>
+  <li>❌ <code>LIKE 'a%'</code> katta "A" ni topmaydi — <code>ILIKE</code> ishlating.</li>
+  <li>❌ <code>COUNT(ustun)</code> va <code>COUNT(*)</code> ni adashtirish — birinchisi NULL'larni sanamaydi.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">"A" harfi bilan boshlanadigan ismlarni topuvchi shart?</p><ol>
+<li><code>ism = 'A%'</code></li><li><code>ism LIKE 'A%'</code></li><li><code>ism LIKE '%A'</code></li><li><code>ism IN 'A'</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Jadvaldagi qatorlar sonini qaytaruvchi funksiya?</p><ol>
+<li><code>SUM(*)</code></li><li><code>LENGTH(*)</code></li><li><code>COUNT(*)</code></li><li><code>TOTAL(*)</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">"Har bir fan bo'yicha o'rtacha baho" uchun nima kerak?</p><ol>
+<li><code>GROUP BY fan</code> + <code>AVG(baho)</code></li><li><code>ORDER BY fan</code></li><li><code>DISTINCT fan</code></li><li><code>WHERE fan = AVG</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Guruhlarni hisob-kitobdan keyin filtrlash uchun qaysi kalit so'z?</p><ol>
+<li><code>WHERE</code></li><li><code>FILTER</code></li><li><code>LIMIT</code></li><li><code>HAVING</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>WHERE narx BETWEEN 100 AND 200</code> — 200 natijaga kiradimi?</p><ol>
+<li>Yo'q</li><li>Ha, chegaralar kiradi</li><li>Faqat 100 kiradi</li><li>Xato beradi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Takrorlanmas qiymatlarni olish uchun?</p><ol>
+<li><code>UNIQUE</code></li><li><code>SINGLE</code></li><li><code>DISTINCT</code></li><li><code>GROUP</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona bazangiz uchun 5 ta hisobot: eng ko'p o'qilgan kitob, eng faol o'quvchi, har bir muallifning kitoblari soni, qaytarilishi kechikkan ijaralar soni, oylar bo'yicha ijaralar soni (<code>EXTRACT(MONTH FROM sana)</code>).</li>
+  <li><a href="https://sqlbolt.com" target="_blank" rel="noopener">SQLBolt</a> saytida 1–12-darslarni bajaring (inglizcha, interaktiv).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Filtrlar: <code>IN</code>, <code>BETWEEN</code>, <code>LIKE '%x%'</code> / <code>ILIKE</code>, <code>IS NULL</code>, <code>AND/OR/NOT</code> (qavslar!).</li>
+  <li><code>DISTINCT</code> — takrorsiz; <code>ORDER BY</code>, <code>LIMIT</code>.</li>
+  <li>Agregatlar: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>; <code>ROUND</code>, <code>COALESCE</code>.</li>
+  <li><code>GROUP BY</code> — guruhlab hisoblash; <code>HAVING</code> — guruh sharti; <code>WHERE</code> — qator sharti.</li>
+  <li>Tartib: SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="29-sql-join-index-backup.html"><small>← Oldingi mavzu</small>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a><a class="next" href="31-nazorat-ishi-2.html"><small>Keyingi mavzu →</small>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#filtrlash-where-chuqurroq">Filtrlash: WHERE chuqurroq</a></li><li><a href="#agregat-funksiyalar">Agregat funksiyalar</a></li><li><a href="#group-by-guruhlab-hisoblash">GROUP BY — guruhlab hisoblash</a></li><li><a href="#having-guruhlarni-filtrlash">HAVING — guruhlarni filtrlash</a></li><li><a href="#amaliy-mashgulot-hisobotlar">Amaliy mashg&#x27;ulot: hisobotlar</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

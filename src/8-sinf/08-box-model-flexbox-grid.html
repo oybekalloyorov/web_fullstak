@@ -1,0 +1,429 @@
+<!-- title: Box model va o'lcham birliklari. Flexbox va Grid | desc: Har bir element — quti: content, padding, border, margin; box-sizing; px, %, em, rem, vw, vh; display; Flexbox bilan bir o'lchamli va CSS Grid bilan ikki o'lchamli sahifa maketlari. | icon: 📦 | level: 3 soat · 1 nazariy + 2 amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Brauzer har bir elementni qanday "quti" sifatida ko'rishini (box model);</li>
+  <li><code>margin</code>, <code>padding</code>, <code>border</code> va <code>box-sizing</code> ni;</li>
+  <li>O'lcham birliklari: <code>px</code>, <code>%</code>, <code>em</code>, <code>rem</code>, <code>vw</code>, <code>vh</code>;</li>
+  <li><b>Flexbox</b> bilan menyu, kartalar qatori, markazlash;</li>
+  <li><b>CSS Grid</b> bilan butun sahifa maketi va galereya yaratishni.</li>
+</ul>
+<p>Bu kursdagi eng muhim CSS mavzusi — 3 soat ajratilgan. Shoshilmang, har bir misolni ▶ tugmasi bilan o'zgartirib ko'ring.</p>
+</div>
+
+<h2>Box model — har bir element quti</h2>
+<p>Brauzer sahifadagi <b>har bir</b> elementni (sarlavha, paragraf, rasm, tugma) to'rtburchak quti sifatida chizadi. Bu quti 4 qatlamdan iborat:</p>
+<div class="diagram" style="text-align:center">
+  <div style="display:inline-block;padding:16px 22px;background:#fde68a66;border:2px dashed #d97706;border-radius:6px">
+    <b>margin</b> — tashqi bo'shliq (qo'shnilardan masofa)
+    <div style="margin-top:10px;padding:12px;background:#1f2937;color:#fff;border-radius:4px"><b>border</b> — chegara
+      <div style="margin-top:10px;padding:14px;background:#86efac;color:#14532d"><b>padding</b> — ichki bo'shliq
+        <div style="margin-top:10px;padding:14px 30px;background:#93c5fd;color:#1e3a8a;font-weight:700">content — mazmun (matn, rasm)</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: rasmli ramka</span>
+Devordagi rasmni tasavvur qiling. <b>Content</b> — rasmning o'zi. <b>Padding</b> — rasm atrofidagi oq qog'oz hoshiya (paspartu).
+<b>Border</b> — yog'och ramka. <b>Margin</b> — devorda shu ramka bilan qo'shni ramka orasidagi bo'sh joy.</div>
+<pre data-lang="html" data-play><style>
+  .quti {
+    width: 250px;
+    padding: 20px;               /* ichki bo'shliq — fon rangi shu yerga ham tarqaladi */
+    border: 5px solid #4f46e5;
+    margin: 30px;                /* tashqi bo'shliq — har doim shaffof */
+    background: #e0e7ff;
+  }
+</style>
+<div class="quti">Men qutiman. F12 bosib, meni tanlang va "Computed" panelidagi box model chizmasiga qarang!</div>
+<div class="quti">Men ikkinchi qutiman</div></pre>
+<h3><code>padding</code> va <code>margin</code> yozish usullari</h3>
+<pre data-lang="css">padding: 20px;                 /* 4 tomon ham 20px */
+padding: 10px 20px;            /* tepa-past 10px, chap-o'ng 20px */
+padding: 10px 20px 30px;       /* tepa 10, chap-o'ng 20, past 30 */
+padding: 10px 20px 30px 40px;  /* tepa, o'ng, past, chap (soat strelkasi bo'yicha) */
+padding-top: 10px;             /* faqat bitta tomon: -top, -right, -bottom, -left */
+
+margin: 0 auto;                /* tepa-past 0, chap-o'ng auto → blokni GORIZONTAL MARKAZLASH */</pre>
+<div class="callout tip"><span class="t">Blokni markazga qo'yish</span>
+Kengligi berilgan blokni sahifa o'rtasiga qo'yish uchun: <code>width: 600px; margin: 0 auto;</code>. Brauzer chap va o'ng bo'shliqni teng taqsimlaydi.</div>
+
+<h3><code>box-sizing</code> — eng muhim bitta qator</h3>
+<p>Yuqoridagi <code>.quti</code> ning kengligi aslida necha piksel? <code>width: 250px</code> deb yozdik, lekin brauzer standart holatda <b>padding va border'ni qo'shib</b> hisoblaydi:</p>
+<p style="text-align:center"><code>250 + 20 + 20 (padding) + 5 + 5 (border) = <b>300px</b></code> 😕</p>
+<p>Bu hisob-kitobni juda chalkashtiradi. Yechim:</p>
+<pre data-lang="css">/* Har bir loyihaning CSS faylini shu qoida bilan boshlang */
+* {
+  box-sizing: border-box;   /* endi width = padding + border + content. 250px — haqiqatan 250px */
+}</pre>
+<pre data-lang="html" data-play><style>
+  div { width: 250px; padding: 20px; border: 5px solid; margin: 10px 0; }
+  .content-box { box-sizing: content-box; border-color: tomato; }
+  .border-box  { box-sizing: border-box;  border-color: green; }
+</style>
+<div class="content-box">content-box: men 300px kenglikdaman</div>
+<div class="border-box">border-box: men aynan 250px kenglikdaman</div></pre>
+
+<h3><code>display</code> xossasi</h3>
+<div class="table-wrap"><table>
+<tr><th>Qiymat</th><th>Xatti-harakat</th></tr>
+<tr><td><code>block</code></td><td>Yangi qatordan, butun kenglik; <code>width</code>/<code>height</code> ishlaydi (<code>div</code>, <code>p</code>, <code>h1</code>)</td></tr>
+<tr><td><code>inline</code></td><td>Qatorda, faqat mazmuncha; <code>width</code>/<code>height</code> va tepa-past <code>margin</code> <b>ishlamaydi</b> (<code>span</code>, <code>a</code>)</td></tr>
+<tr><td><code>inline-block</code></td><td>Qatorda turadi, lekin <code>width</code>/<code>height</code> ishlaydi (tugmalar uchun qulay)</td></tr>
+<tr><td><code>none</code></td><td>Element butunlay yashiriladi va joy egallamaydi</td></tr>
+<tr><td><code>flex</code> / <code>grid</code></td><td>Zamonaviy maket tizimlari (pastda)</td></tr>
+</table></div>
+
+<h2>O'lcham birliklari</h2>
+<div class="table-wrap"><table>
+<tr><th>Birlik</th><th>Nimaga nisbatan</th><th>Misol</th><th>Qachon ishlatish</th></tr>
+<tr><td><code>px</code></td><td>Mutlaq (ekran pikseli)</td><td><code>border: 1px</code></td><td>Chegaralar, soyalar, mayda detallar</td></tr>
+<tr><td><code>%</code></td><td>Ota element o'lchamiga</td><td><code>width: 50%</code></td><td>Kengliklar</td></tr>
+<tr><td><code>em</code></td><td>Joriy elementning shrift o'lchamiga</td><td><code>padding: 0.5em 1em</code></td><td>Matn o'lchamiga mos padding (tugmalar)</td></tr>
+<tr><td><code>rem</code></td><td><b>Sahifa asosiy shrifti</b>ga (odatda 16px)</td><td><code>font-size: 1.5rem</code> = 24px</td><td><b>Shriftlar va bo'shliqlar</b></td></tr>
+<tr><td><code>vw</code></td><td>Ekran kengligining 1%</td><td><code>width: 100vw</code></td><td>Ekran kengligida bloklar</td></tr>
+<tr><td><code>vh</code></td><td>Ekran balandligining 1%</td><td><code>min-height: 100vh</code></td><td>To'liq ekranli bosh qism (hero)</td></tr>
+</table></div>
+<pre data-lang="html" data-play><style>
+  html { font-size: 16px; }
+  .ota { width: 400px; background: #e0e7ff; padding: 10px; }
+  .yarim { width: 50%; background: #a5b4fc; }            /* 400 ning 50% = 200px */
+  .rem { font-size: 1.5rem; }                             /* 16 × 1.5 = 24px */
+  .em-ota { font-size: 20px; }
+  .em { font-size: 2em; }                                 /* 20 × 2 = 40px */
+  .ekran { height: 20vh; background: #fbcfe8; margin-top: 10px; }
+</style>
+<div class="ota"><div class="yarim">50% kenglik</div></div>
+<p class="rem">1.5rem = 24px</p>
+<div class="em-ota">Ota 20px — <span class="em">2em</span></div>
+<div class="ekran">Ekran balandligining 20%i. Oynani kichraytirib ko'ring.</div></pre>
+
+<h2>Flexbox — elementlarni bir qatorga terish</h2>
+<p><b>Flexbox</b> — elementlarni <b>bir yo'nalishda</b> (qator yoki ustun) joylashtirish tizimi. Navigatsiya menyusi, tugmalar qatori, kartalarni yonma-yon
+qo'yish, biror narsani markazga joylash — Flexbox'ning ishi.</p>
+<h3>Ikki asosiy tushuncha</h3>
+<ul>
+  <li><b>Flex konteyner</b> — <code>display: flex</code> berilgan <b>ota</b> element.</li>
+  <li><b>Flex elementlar</b> — uning <b>bevosita farzandlari</b>. Ular avtomatik ravishda bir qatorga tiziladi.</li>
+</ul>
+<pre data-lang="html" data-play><style>
+  .konteyner {
+    display: flex;               /* ⬅ shu bitta qator hammasini o'zgartiradi */
+    gap: 10px;                   /* elementlar orasidagi masofa */
+    background: #f1f5f9;
+    padding: 10px;
+  }
+  .element { background: #4f46e5; color: white; padding: 20px; border-radius: 8px; }
+</style>
+<div class="konteyner">
+  <div class="element">1</div>
+  <div class="element">2</div>
+  <div class="element">3</div>
+</div>
+<p>display: flex ni o'chirib ko'ring — elementlar yana ustma-ust tushadi.</p></pre>
+<h3>Asosiy va kesishgan o'q</h3>
+<div class="analogy"><span class="t">O'xshatish: avtobus bekati</span>
+Odamlar bekatda navbatga turdi. Navbat yo'nalishi — <b>asosiy o'q</b> (main axis): <code>justify-content</code> odamlarni shu chiziq bo'ylab
+taqsimlaydi (boshida to'planish, o'rtada, oralari teng...). Navbatga perpendikulyar yo'nalish — <b>kesishgan o'q</b> (cross axis):
+<code>align-items</code> odamlarni bo'yi bo'yicha tekislaydi (tepasi, o'rtasi, pastki qismi bo'yicha).</div>
+<h3>Konteyner xossalari</h3>
+<pre data-lang="html" data-play><style>
+  .k { display: flex; background: #f1f5f9; margin: 8px 0; padding: 8px; height: 90px; border-radius: 8px; }
+  .k div { background: #4f46e5; color: #fff; padding: 8px 14px; border-radius: 6px; }
+  .k div:nth-child(2) { padding: 22px 14px; }   /* ikkinchisi balandroq */
+
+  .k1 { justify-content: flex-start; }      /* boshida (standart) */
+  .k2 { justify-content: center; }          /* markazda */
+  .k3 { justify-content: flex-end; }        /* oxirida */
+  .k4 { justify-content: space-between; }   /* chetlarga yopishgan, oralari teng */
+  .k5 { justify-content: space-around; }    /* atrofida teng bo'shliq */
+  .k6 { justify-content: space-evenly; }    /* barcha bo'shliqlar teng */
+  .k7 { align-items: center; }              /* kesishgan o'q: vertikal markaz */
+  .k8 { align-items: flex-end; }            /* pastga tekislash */
+  .k9 { justify-content: center; align-items: center; }  /* ✨ to'liq markazlash */
+</style>
+<div class="k k1"><div>flex-start</div><div>2</div><div>3</div></div>
+<div class="k k2"><div>center</div><div>2</div><div>3</div></div>
+<div class="k k3"><div>flex-end</div><div>2</div><div>3</div></div>
+<div class="k k4"><div>space-between</div><div>2</div><div>3</div></div>
+<div class="k k5"><div>space-around</div><div>2</div><div>3</div></div>
+<div class="k k6"><div>space-evenly</div><div>2</div><div>3</div></div>
+<div class="k k7"><div>align-items: center</div><div>2</div><div>3</div></div>
+<div class="k k8"><div>align-items: flex-end</div><div>2</div><div>3</div></div>
+<div class="k k9"><div>to'liq markaz</div><div>2</div><div>3</div></div></pre>
+<div class="table-wrap"><table>
+<tr><th>Xossa (konteynerga)</th><th>Qiymatlar</th><th>Vazifasi</th></tr>
+<tr><td><code>flex-direction</code></td><td><code>row</code> | <code>column</code> | <code>row-reverse</code> | <code>column-reverse</code></td><td>Asosiy o'q yo'nalishi (qator yoki ustun)</td></tr>
+<tr><td><code>justify-content</code></td><td><code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code></td><td>Asosiy o'q bo'yicha taqsimlash</td></tr>
+<tr><td><code>align-items</code></td><td><code>stretch</code> (standart), <code>flex-start</code>, <code>center</code>, <code>flex-end</code></td><td>Kesishgan o'q bo'yicha tekislash</td></tr>
+<tr><td><code>flex-wrap</code></td><td><code>nowrap</code> | <code>wrap</code></td><td>Sig'masa keyingi qatorga o'tsinmi</td></tr>
+<tr><td><code>gap</code></td><td><code>16px</code></td><td>Elementlar orasidagi masofa</td></tr>
+</table></div>
+<div class="callout warn"><code>flex-direction: column</code> qilinsa, o'qlar <b>almashadi</b>: endi <code>justify-content</code> vertikal, <code>align-items</code> esa gorizontal ishlaydi.</div>
+
+<h3>Element xossalari: <code>flex</code></h3>
+<pre data-lang="html" data-play><style>
+  .k { display: flex; gap: 8px; background: #f1f5f9; padding: 8px; margin: 8px 0; }
+  .k div { background: #4f46e5; color: #fff; padding: 14px; border-radius: 6px; }
+  .yon { flex: 0 0 150px; background: #f97316 !important; }  /* qat'iy 150px */
+  .asosiy { flex: 1; }                                         /* qolgan BARCHA joyni oladi */
+  .ikki { flex: 2; }                                           /* flex:1 dan 2 barobar ko'p joy */
+</style>
+<div class="k"><div class="yon">Yon panel 150px</div><div class="asosiy">Asosiy qism — flex: 1</div></div>
+<div class="k"><div class="asosiy">flex: 1</div><div class="ikki">flex: 2 (ikki barobar keng)</div><div class="asosiy">flex: 1</div></div></pre>
+
+<h2>CSS Grid — panjara (to'r) maketi</h2>
+<p><b>Grid</b> — elementlarni <b>qator va ustunlar</b>dan iborat to'rga joylashtiradi (ikki o'lchamli). Butun sahifa maketi, rasm galereyasi,
+mahsulotlar katalogi uchun ideal.</p>
+<div class="analogy"><span class="t">O'xshatish: shaxmat taxtasi yoki Excel jadvali</span>
+Grid — bu katakli taxta. Siz avval nechta ustun va qator bo'lishini belgilaysiz, keyin elementlarni kataklarga joylashtirasiz. Ba'zi elementlar
+bir nechta katakni egallashi mumkin — Excel'dagi kataklarni birlashtirish kabi.</div>
+<pre data-lang="html" data-play><style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;   /* 3 ta teng ustun */
+    gap: 12px;
+  }
+  .grid div { background: #10b981; color: white; padding: 24px; border-radius: 8px; text-align: center; font-weight: bold; }
+</style>
+<div class="grid">
+  <div>1</div><div>2</div><div>3</div>
+  <div>4</div><div>5</div><div>6</div>
+  <div>7</div>
+</div></pre>
+<h3><code>fr</code> birligi va <code>repeat()</code></h3>
+<ul>
+  <li><code>fr</code> (<i>fraction</i>) — <b>bo'sh joyning ulushi</b>. <code>1fr 2fr</code> — ikkinchi ustun birinchisidan 2 barobar keng.</li>
+  <li><code>repeat(4, 1fr)</code> = <code>1fr 1fr 1fr 1fr</code>.</li>
+  <li>Aralash: <code>grid-template-columns: 250px 1fr;</code> — chapda qat'iy 250px yon panel, qolgani asosiy qism.</li>
+</ul>
+<h3>✨ Sehrli qator: avtomatik moslashuvchi galereya</h3>
+<pre data-lang="html" data-play><style>
+  .galereya {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .galereya img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; }
+</style>
+<div class="galereya">
+  <img src="https://picsum.photos/seed/a1/300" alt="1">
+  <img src="https://picsum.photos/seed/a2/300" alt="2">
+  <img src="https://picsum.photos/seed/a3/300" alt="3">
+  <img src="https://picsum.photos/seed/a4/300" alt="4">
+  <img src="https://picsum.photos/seed/a5/300" alt="5">
+  <img src="https://picsum.photos/seed/a6/300" alt="6">
+  <img src="https://picsum.photos/seed/a7/300" alt="7">
+  <img src="https://picsum.photos/seed/a8/300" alt="8">
+</div>
+<p>"⧉ Yangi oynada" tugmasini bosib, oyna kengligini o'zgartiring — ustunlar soni o'zi o'zgaradi!</p></pre>
+<p><code>repeat(auto-fill, minmax(150px, 1fr))</code> — "har bir ustun kamida 150px bo'lsin, nechta sig'sa shuncha ustun qil, ortgan joyni teng
+taqsimla". Telefonda 2 ta, planshetda 4 ta, kompyuterda 6 ta ustun — hech qanday qo'shimcha kodsiz.</p>
+<h3>Elementni bir nechta katakka cho'zish</h3>
+<pre data-lang="html" data-play><style>
+  .g { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .g div { background: #8b5cf6; color: #fff; padding: 20px; border-radius: 8px; text-align: center; }
+  .katta { grid-column: span 2; grid-row: span 2; background: #f97316 !important; }
+  .keng  { grid-column: 1 / 5; background: #0ea5e9 !important; }   /* 1-chiziqdan 5-chiziqqacha = 4 ustun */
+</style>
+<div class="g">
+  <div class="katta">2×2 katta</div>
+  <div>b</div><div>c</div><div>d</div><div>e</div>
+  <div class="keng">Butun qator bo'ylab</div>
+</div></pre>
+<h3>Nomlangan hududlar — sahifa maketi</h3>
+<pre data-lang="html" data-play><style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: sans-serif; }
+  .sahifa {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 70px 1fr 50px;
+    grid-template-areas:
+      "header header"
+      "aside  main"
+      "footer footer";
+    min-height: 100vh;
+    gap: 8px;
+  }
+  header { grid-area: header; background: #4f46e5; }
+  aside  { grid-area: aside;  background: #a5b4fc; }
+  main   { grid-area: main;   background: #e0e7ff; }
+  footer { grid-area: footer; background: #312e81; }
+  .sahifa > * { padding: 16px; color: #111; font-weight: bold; }
+  header, footer { color: white !important; }
+</style>
+<div class="sahifa">
+  <header>header</header>
+  <aside>aside (yon panel)</aside>
+  <main>main — asosiy mazmun</main>
+  <footer>footer</footer>
+</div></pre>
+<p><code>grid-template-areas</code> — maketni so'zlar bilan "chizish". Har bir qo'shtirnoq — bitta qator, har bir so'z — bitta ustun.</p>
+
+<h3>Flexbox yoki Grid?</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Flexbox</th><th>Grid</th></tr>
+<tr><td>O'lcham</td><td>Bir o'lchamli: qator <b>yoki</b> ustun</td><td>Ikki o'lchamli: qator <b>va</b> ustun</td></tr>
+<tr><td>Eng yaxshi joyi</td><td>Menyu, tugmalar, kartaning ichi, markazlash</td><td>Sahifa maketi, galereya, katalog</td></tr>
+<tr><td>Qoida</td><td colspan="2">Ular raqobatchi emas! Sahifa skeleti — Grid, uning ichidagi kichik qismlar — Flexbox.</td></tr>
+</table></div>
+
+<h2>Amaliy mashg'ulot: portfolio sayti maketi (2-loyiha)</h2>
+<ol class="steps">
+  <li>Yangi papka: <code>portfolio/</code>, ichida <code>index.html</code> va <code>style.css</code>.</li>
+  <li>HTML tuzilmasi (semantik!):
+<pre data-lang="html" data-title="portfolio/index.html"><body>
+  <header class="header">
+    <a class="logo" href="#">Ali<span>.dev</span></a>
+    <nav class="menu">
+      <a href="#haqida">Men haqimda</a>
+      <a href="#loyihalar">Loyihalar</a>
+      <a href="#aloqa">Aloqa</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Salom, men Ali — yosh veb-dasturchi</h1>
+      <p>HTML, CSS va JavaScript o'rganyapman.</p>
+      <a class="tugma" href="#loyihalar">Ishlarimni ko'rish</a>
+    </section>
+
+    <section id="loyihalar">
+      <h2>Loyihalarim</h2>
+      <div class="loyihalar">
+        <article class="loyiha"><h3>Vizitka sayti</h3><p>HTML va CSS</p></article>
+        <article class="loyiha"><h3>Dars jadvali</h3><p>HTML jadvallar</p></article>
+        <article class="loyiha"><h3>O'quvchi kartasi</h3><p>CSS dizayn</p></article>
+        <article class="loyiha"><h3>Kalkulyator</h3><p>Tez kunda...</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2026 Ali</footer>
+</body></pre></li>
+  <li>CSS — har bir qoidani o'qib, nima qilayotganini tushunib yozing:
+<pre data-lang="html" data-title="Natijani sinab ko'ring" data-play><style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", Arial, sans-serif; color: #1f2937; line-height: 1.6; }
+
+/* HEADER: logo chapda, menyu o'ngda — Flexbox */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: #111; text-decoration: none; }
+.logo span { color: #4f46e5; }
+.menu { display: flex; gap: 24px; }
+.menu a { color: #374151; text-decoration: none; font-weight: 500; }
+
+/* HERO: to'liq markazlash — Flexbox ustun bo'yicha */
+.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+}
+.hero h1 { font-size: 2.4rem; max-width: 700px; }
+.tugma { background: #4f46e5; color: white; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 600; }
+
+/* LOYIHALAR: avtomatik moslashuvchi Grid */
+#loyihalar { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+#loyihalar h2 { text-align: center; margin-bottom: 30px; font-size: 2rem; }
+.loyihalar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.loyiha {
+  padding: 24px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0,0,0,.05);
+}
+.loyiha h3 { color: #4f46e5; margin-bottom: 6px; }
+
+.footer { text-align: center; padding: 24px; background: #111827; color: #9ca3af; }
+</style>
+<header class="header">
+  <a class="logo" href="#">Ali<span>.dev</span></a>
+  <nav class="menu"><a href="#haqida">Men haqimda</a><a href="#loyihalar">Loyihalar</a><a href="#aloqa">Aloqa</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <h1>Salom, men Ali — yosh veb-dasturchi</h1>
+    <p>HTML, CSS va JavaScript o'rganyapman.</p>
+    <a class="tugma" href="#loyihalar">Ishlarimni ko'rish</a>
+  </section>
+  <section id="loyihalar">
+    <h2>Loyihalarim</h2>
+    <div class="loyihalar">
+      <article class="loyiha"><h3>Vizitka sayti</h3><p>HTML va CSS</p></article>
+      <article class="loyiha"><h3>Dars jadvali</h3><p>HTML jadvallar</p></article>
+      <article class="loyiha"><h3>O'quvchi kartasi</h3><p>CSS dizayn</p></article>
+      <article class="loyiha"><h3>Kalkulyator</h3><p>Tez kunda...</p></article>
+    </div>
+  </section>
+</main>
+<footer class="footer">© 2026 Ali</footer></pre></li>
+  <li>"Men haqimda" bo'limini qo'shing: chapda rasmingiz, o'ngda matn — <b>Flexbox</b> bilan (<code>display:flex; gap:30px; align-items:center</code>).</li>
+  <li>"Ko'nikmalarim" bo'limini qo'shing: HTML, CSS, JavaScript, Python... nishonlari (badge) — <code>flex-wrap: wrap</code> bilan.</li>
+  <li><kbd>F12</kbd> → Elements'da <code>display: grid</code> yonidagi <b>grid</b> belgisini bosing — brauzer panjarani chizib ko'rsatadi. Flex uchun ham xuddi shunday.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>display: flex</code> ni <b>farzandga</b> yozish — u <b>otaga</b> (konteynerga) yoziladi.</li>
+  <li>❌ <code>justify-content: center</code> vertikal markazlamayapti — vertikal uchun <code>align-items</code> kerak (va konteynerning balandligi bo'lishi kerak!).</li>
+  <li>❌ <code>box-sizing: border-box</code> ni unutish — elementlar kutilganidan kengroq chiqib, qatorga sig'may qoladi.</li>
+  <li>❌ <code>inline</code> elementga (<code>a</code>, <code>span</code>) <code>width</code>/<code>height</code> berish — ishlamaydi; <code>display: inline-block</code> yoki <code>block</code> kerak.</li>
+  <li>❌ Grid'da <code>grid-template-columns: 1fr, 1fr</code> — vergul qo'yilmaydi: <code>1fr 1fr</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Element chegarasi bilan mazmuni orasidagi bo'shliq nima deyiladi?</p><ol>
+<li>margin</li><li>border</li><li>padding</li><li>gap</li></ol>
+<p class="explain">padding — ichki, margin — tashqi bo'shliq.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>width: 200px; padding: 10px; border: 5px solid;</code> + <code>box-sizing: border-box</code>. Elementning to'liq kengligi?</p><ol>
+<li>230px</li><li>200px</li><li>215px</li><li>210px</li></ol>
+<p class="explain">border-box'da width padding va border'ni o'z ichiga oladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Menyuda logotipni chapga, havolalarni o'ngga surish uchun konteynerga nima yoziladi?</p><ol>
+<li><code>display:flex; justify-content: space-between</code></li><li><code>display:flex; align-items: center</code></li><li><code>display:grid; gap: 10px</code></li><li><code>text-align: justify</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Root shrift 16px bo'lsa, <code>2rem</code> necha piksel?</p><ol>
+<li>2px</li><li>16px</li><li>18px</li><li>32px</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>grid-template-columns: 1fr 3fr;</code> — konteyner 800px bo'lsa (gap yo'q), birinchi ustun necha piksel?</p><ol>
+<li>400px</li><li>100px</li><li>200px</li><li>267px</li></ol>
+<p class="explain">Jami 4 ulush: 800/4 = 200px; ikkinchisi 600px.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Butun sahifa maketi (header, yon panel, asosiy qism, footer) uchun eng qulay vosita?</p><ol>
+<li>Faqat Flexbox</li><li>CSS Grid (grid-template-areas)</li><li>HTML jadval</li><li><code>float</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><a href="https://flexboxfroggy.com" target="_blank" rel="noopener">Flexbox Froggy</a> (24 daraja) va <a href="https://cssgridgarden.com" target="_blank" rel="noopener">Grid Garden</a> (28 daraja) o'yinlarini to'liq o'ting.</li>
+  <li>Portfolio saytingizni yakunlang: "Men haqimda" (Flex), "Loyihalar" (Grid), "Ko'nikmalar" (flex-wrap), "Aloqa" (forma) va footer.</li>
+  <li>Rasm galereyasi sahifasi yarating: 12 ta rasm, ulardan 2 tasi <code>span 2</code> bilan katta.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Box model: content + padding + border + margin. Har doim <code>* { box-sizing: border-box; }</code>.</li>
+  <li>Birliklar: <code>px</code> (aniq), <code>%</code> (otaga), <code>rem</code> (shriftlar), <code>vw/vh</code> (ekranga).</li>
+  <li>Flexbox (konteynerga <code>display:flex</code>): <code>justify-content</code> — asosiy o'q, <code>align-items</code> — kesishgan o'q, <code>gap</code>, <code>flex: 1</code>.</li>
+  <li>Grid: <code>grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))</code>, <code>span</code>, <code>grid-template-areas</code>.</li>
+</ul>
+</div>

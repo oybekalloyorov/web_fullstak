@@ -1,0 +1,275 @@
+<!-- title: Back-end haqida. Python'ga kirish va o'rnatish. O'zgaruvchilar, turlar, operatorlar, kiritish-chiqarish | desc: Back-end nima qiladi, algoritm va blok-sxema (Flowgorithm), Python'ni o'rnatish va VS Code, print va input, o'zgaruvchilar, int/float/str/bool, operatorlar, f-satrlar. | icon: 🐍 | level: 2 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Back-end nima va u front-end bilan qanday "gaplashishini";</li>
+  <li>Algoritm va blok-sxema tushunchalarini;</li>
+  <li>Python'ni o'rnatish va birinchi dasturni ishga tushirishni;</li>
+  <li><code>print()</code> va <code>input()</code> bilan muloqotni;</li>
+  <li>O'zgaruvchilar, ma'lumot turlari va operatorlarni (JavaScript bilan taqqoslab).</li>
+</ul>
+</div>
+
+<h2>Back-end nima?</h2>
+<p>I va II boblarda <b>front-end</b> — brauzerda ishlaydigan qismni o'rgandik. Lekin quyidagi savollarga front-end javob bera olmaydi:</p>
+<ul>
+  <li>Instagram'dagi milliardlab rasmlar <b>qayerda saqlanadi</b>?</li>
+  <li>Parolingiz to'g'riligini <b>kim tekshiradi</b>?</li>
+  <li>Do'stingiz yuborgan xabar sizga <b>qanday yetib keladi</b>?</li>
+</ul>
+<p>Bularning hammasi — <b>back-end</b>ning ishi: serverda ishlaydigan, foydalanuvchi ko'rmaydigan dastur.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🖥️ Front-end<small>HTML, CSS, JS — brauzerda</small></div>
+    <div class="arrow">⇄ so'rov / javob ⇄</div>
+    <div class="node">⚙️ Back-end<small>Python, Django — serverda</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🗄️ Ma'lumotlar bazasi<small>PostgreSQL</small></div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: restoran (1-mavzudan davomi)</span>
+Front-end — zal va ofitsiant. <b>Back-end</b> — oshxona: buyurtmani qabul qiladi, retsept (biznes-mantiq) bo'yicha tayyorlaydi, omborga (ma'lumotlar bazasi)
+murojaat qiladi. Mijoz oshxonani ko'rmaydi, lekin usiz restoran ishlamaydi.</div>
+<p><b>Back-end vazifalari:</b> ma'lumotlarni saqlash va o'qish, foydalanuvchini tekshirish (login), hisob-kitoblar (buyurtma summasi), xavfsizlik,
+boshqa xizmatlar bilan aloqa (to'lov tizimlari, SMS).</p>
+
+<h2>Algoritm va blok-sxema</h2>
+<p>Har qanday dastur <b>algoritm</b>dan boshlanadi. <b>Algoritm</b> — masalani yechish uchun <b>aniq va tartibli qadamlar</b> ketma-ketligi.</p>
+<div class="analogy"><span class="t">Kundalik algoritm: choy damlash</span>
+1) Choynakka suv quy. 2) Qaynat. 3) Choynakni chay. 4) Choy sol. 5) Qaynoq suv quy. 6) 5 daqiqa kut. Har bir qadam aniq, tartibi muhim — 5-qadamni 1-qadamdan
+oldin bajarib bo'lmaydi.</div>
+<p>Algoritmni chizma ko'rinishida ifodalash — <b>blok-sxema</b>:</p>
+<div class="table-wrap"><table>
+<tr><th>Shakl</th><th>Ma'nosi</th></tr>
+<tr><td>⬭ Oval</td><td>Boshlanish / Tugash</td></tr>
+<tr><td>▱ Parallelogramm</td><td>Kiritish / Chiqarish (input, print)</td></tr>
+<tr><td>▭ To'rtburchak</td><td>Amal (hisoblash, tayinlash)</td></tr>
+<tr><td>◇ Romb</td><td>Shart (ha / yo'q)</td></tr>
+<tr><td>→ Strelka</td><td>Bajarilish yo'nalishi</td></tr>
+</table></div>
+<p>Algoritmlarning uch asosiy turi: <b>chiziqli</b> (qadamlar ketma-ket), <b>tarmoqlanuvchi</b> (shart bo'yicha ikki yo'l) va <b>takrorlanuvchi</b> (sikl).</p>
+<div class="callout tip"><span class="t">Flowgorithm</span>
+<a href="http://www.flowgorithm.org" target="_blank" rel="noopener">Flowgorithm</a> — blok-sxemani chizib, uni darhol <b>ishga tushirish</b> mumkin bo'lgan bepul dastur.
+U chizmangizni Python kodiga ham aylantirib beradi. Murakkab masalani yechishdan oldin uning blok-sxemasini Flowgorithm'da tuzib ko'ring.</div>
+
+<h2>Nima uchun Python?</h2>
+<ul>
+  <li><b>Sodda sintaksis</b> — ingliz tiliga yaqin, o'qish oson. Yangi boshlovchilar uchun eng mashhur til.</li>
+  <li><b>Universal</b> — veb-saytlar (Instagram, Pinterest back-endi Django'da), sun'iy intellekt, ma'lumotlar tahlili, avtomatlashtirish, Telegram botlar.</li>
+  <li><b>Katta jamiyat</b> — har qanday savolga internetda javob bor; minglab tayyor kutubxonalar.</li>
+</ul>
+<h3>JavaScript bilan taqqoslash</h3>
+<pre data-lang="js" data-title="JavaScript">let ism = "Ali";
+if (ism === "Ali") {
+  console.log("Salom, " + ism);
+}</pre>
+<pre data-lang="python" data-title="Python">ism = "Ali"
+if ism == "Ali":
+    print("Salom, " + ism)</pre>
+<p>Farqlar: <code>let</code> yo'q, nuqta-vergul yo'q, jingalak qavslar o'rniga <b>ikki nuqta va chekinish (bo'sh joy)</b>.</p>
+
+<h2>Python'ni o'rnatish</h2>
+<ol class="steps">
+  <li><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org/downloads</a> dan eng so'nggi versiyani (3.12+) yuklab oling.</li>
+  <li>O'rnatish oynasida <b>"Add python.exe to PATH"</b> belgisini <b>albatta</b> qo'ying! (Aks holda terminal Python'ni topa olmaydi.) → <b>Install Now</b>.</li>
+  <li>Terminalda (cmd yoki VS Code terminali) tekshiring:
+<pre data-lang="bash">python --version
+# Python 3.12.x
+# macOS/Linux'da: python3 --version</pre></li>
+  <li>VS Code'da <b>Extensions</b> → "Python" (Microsoft) kengaytmasini o'rnating.</li>
+  <li>Yangi fayl: <code>salom.py</code> (kengaytma <code>.py</code>!), ichiga yozing va o'ng yuqoridagi ▶ tugmasini bosing (yoki terminalda <code>python salom.py</code>):
+<pre data-lang="python" data-title="salom.py">print("Salom, dunyo!")
+print("Men Python o'rganyapman 🐍")</pre>
+<pre data-lang="output">Salom, dunyo!
+Men Python o'rganyapman 🐍</pre></li>
+</ol>
+<div class="callout info"><span class="t">Interaktiv rejim</span>
+Terminalda shunchaki <code>python</code> deb yozsangiz, <code>&gt;&gt;&gt;</code> belgisi chiqadi — bu yerda har bir buyruq darhol bajariladi. Tez tajriba uchun qulay.
+Chiqish: <code>exit()</code>. Kompyuterda Python bo'lmasa, brauzerda ishlaydigan <a href="https://www.online-python.com" target="_blank" rel="noopener">online-python.com</a> dan foydalanish mumkin.</div>
+
+<h2>Chiqarish: <code>print()</code></h2>
+<pre data-lang="python">print("Salom")                       # matn
+print(2 + 3)                         # 5
+print("Yosh:", 14)                   # bir nechta qiymat — vergul bilan, orasiga bo'sh joy qo'yiladi
+print("A", "B", "C", sep="-")        # A-B-C   — ajratuvchini o'zgartirish
+print("Bir", end=" ")                # qator oxirida yangi qatorga o'tmaydi
+print("qatorda")
+print()                              # bo'sh qator
+print("=" * 20)                      # ====================  — matnni takrorlash</pre>
+<pre data-lang="output">Salom
+5
+Yosh: 14
+A-B-C
+Bir qatorda
+
+====================</pre>
+<p>Python'da izohlar <code>#</code> belgisi bilan yoziladi.</p>
+
+<h2>O'zgaruvchilar</h2>
+<p>Python'da o'zgaruvchi yaratish uchun hech qanday kalit so'z kerak emas — shunchaki nom va qiymat:</p>
+<pre data-lang="python">ism = "Malika"
+yosh = 14
+boy = 1.62
+alochi = True
+
+print(ism, yosh, boy, alochi)
+
+yosh = yosh + 1          # qiymatni o'zgartirish
+print("Keyingi yil:", yosh)
+
+a, b, c = 1, 2, 3        # bir nechtasini birdan
+x = y = 0                # bir xil qiymat</pre>
+<h3>Nomlash qoidalari</h3>
+<ul>
+  <li>Harf yoki <code>_</code> bilan boshlanadi; harf, raqam, <code>_</code> dan iborat; bo'sh joy va defis yo'q.</li>
+  <li>Katta-kichik harf farq qiladi: <code>ism</code> ≠ <code>Ism</code>.</li>
+  <li>Python uslubi — <b>snake_case</b>: so'zlar pastki chiziq bilan: <code>oquvchi_soni</code>, <code>umumiy_ball</code>. (JS'dagi camelCase emas!)</li>
+  <li>O'zgarmas qiymatlar odatda KATTA harflar bilan: <code>PI = 3.14</code>, <code>MAKS_BALL = 100</code>.</li>
+</ul>
+
+<h2>Ma'lumot turlari</h2>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Nomi</th><th>Misol</th><th>JavaScript'da</th></tr>
+<tr><td><code>int</code></td><td>Butun son</td><td><code>14</code>, <code>-5</code>, <code>1_000_000</code></td><td>number</td></tr>
+<tr><td><code>float</code></td><td>Kasr son</td><td><code>3.14</code>, <code>-0.5</code></td><td>number</td></tr>
+<tr><td><code>str</code></td><td>Matn (satr)</td><td><code>"Salom"</code>, <code>'Ali'</code></td><td>string</td></tr>
+<tr><td><code>bool</code></td><td>Mantiqiy</td><td><code>True</code>, <code>False</code> (bosh harf katta!)</td><td>true / false</td></tr>
+<tr><td><code>NoneType</code></td><td>"Hech narsa"</td><td><code>None</code></td><td>null</td></tr>
+</table></div>
+<pre data-lang="python">print(type(14))        # <class 'int'>
+print(type(3.14))      # <class 'float'>
+print(type("salom"))   # <class 'str'>
+print(type(True))      # <class 'bool'>
+print(type(None))      # <class 'NoneType'></pre>
+<h3>Turlarni o'zgartirish</h3>
+<pre data-lang="python">print(int("42") + 8)       # 50
+print(float("3.5") * 2)    # 7.0
+print(str(100) + "%")      # 100%
+print(int(7.9))            # 7  — kasr qismi tashlanadi (yaxlitlanmaydi!)
+print(round(7.9))          # 8  — yaxlitlash
+print(round(3.14159, 2))   # 3.14
+
+# print("Yosh: " + 14)     # ❌ TypeError — Python matn va sonni avtomatik qo'shmaydi!
+print("Yosh: " + str(14))  # ✅</pre>
+<div class="callout info"><span class="t">JavaScript'dan farqi</span>
+JS'da <code>"5" + 3 = "53"</code> edi. Python esa bunday "sehr"ga yo'l qo'ymaydi va <b>xato</b> beradi — bu yaxshi, chunki xatolar yashirinib qolmaydi.</div>
+
+<h2>Kiritish: <code>input()</code></h2>
+<pre data-lang="python">ism = input("Ismingiz nima? ")
+print("Salom,", ism)
+
+yosh = int(input("Yoshingiz nechada? "))     # ⬅ input DOIM matn qaytaradi — int() bilan songa!
+print("10 yildan keyin siz", yosh + 10, "yoshda bo'lasiz")</pre>
+<pre data-lang="output">Ismingiz nima? Dilshod
+Salom, Dilshod
+Yoshingiz nechada? 14
+10 yildan keyin siz 24 yoshda bo'lasiz</pre>
+
+<h2>f-satrlar — chiroyli chiqarish</h2>
+<p>JavaScript'dagi <code>`${}`</code> ning Python'dagi "akasi" — <b>f-string</b>: satr oldiga <code>f</code> harfi, o'zgaruvchilar <code>{}</code> ichida.</p>
+<pre data-lang="python">ism = "Nodira"
+ball = 87.456
+print(f"{ism} {ball} ball to'pladi")
+print(f"Yaxlitlangan: {ball:.1f}")           # 87.5 — 1 xona kasr
+print(f"2 + 3 = {2 + 3}")                     # ifodalar ham ishlaydi
+narx = 1250000
+print(f"Narxi: {narx:,} so'm")                # 1,250,000 so'm — minglik ajratish</pre>
+<pre data-lang="output">Nodira 87.456 ball to'pladi
+Yaxlitlangan: 87.5
+2 + 3 = 5
+Narxi: 1,250,000 so'm</pre>
+
+<h2>Operatorlar</h2>
+<pre data-lang="python">a, b = 17, 5
+print(a + b)    # 22
+print(a - b)    # 12
+print(a * b)    # 85
+print(a / b)    # 3.4   — oddiy bo'lish (doim float)
+print(a // b)   # 3     — BUTUN bo'lish (JS'da yo'q!)
+print(a % b)    # 2     — qoldiq
+print(a ** 2)   # 289   — daraja
+
+x = 10
+x += 5          # 15  (Python'da x++ YO'Q — x += 1 yoziladi)
+
+# Taqqoslash — natija True/False
+print(5 > 3, 5 == 5, 5 != 3, 5 >= 6)   # True True True False
+
+# Mantiqiy — so'zlar bilan!
+yosh = 15
+print(yosh > 12 and yosh < 18)   # True   (JS: &&)
+print(yosh < 7 or yosh > 60)     # False  (JS: ||)
+print(not True)                  # False  (JS: !)
+print(12 < yosh < 18)            # True   — Python'da shunday yozish mumkin!</pre>
+<div class="table-wrap"><table>
+<tr><th>Amal</th><th>JavaScript</th><th>Python</th></tr>
+<tr><td>Teng</td><td><code>===</code></td><td><code>==</code></td></tr>
+<tr><td>VA / YOKI / EMAS</td><td><code>&amp;&amp;</code> / <code>||</code> / <code>!</code></td><td><code>and</code> / <code>or</code> / <code>not</code></td></tr>
+<tr><td>Butun bo'lish</td><td><code>Math.floor(a / b)</code></td><td><code>a // b</code></td></tr>
+<tr><td>Bittaga oshirish</td><td><code>x++</code></td><td><code>x += 1</code></td></tr>
+<tr><td>Rost / Yolg'on</td><td><code>true</code> / <code>false</code></td><td><code>True</code> / <code>False</code></td></tr>
+</table></div>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>Anketa.</b> Foydalanuvchidan ism, familiya, tug'ilgan yil va shaharni so'rang va f-satr bilan chiroyli "vizitka" chiqaring (ramka uchun <code>"*" * 30</code>).</li>
+  <li><b>Do'kon:</b>
+<pre data-lang="python" data-title="dokon.py">print("=== DAFTAR DO'KONI ===")
+narx = 5500
+soni = int(input("Nechta daftar olasiz? "))
+pul = int(input("Qancha pul berdingiz? "))
+
+jami = narx * soni
+qaytim = pul - jami
+
+print(f"Jami: {jami:,} so'm")
+print(f"Qaytim: {qaytim:,} so'm")</pre>
+  Kengaytiring: chegirma 10% (agar 10 tadan ko'p olsa) — hozircha shartsiz, faqat formulada hisoblab ko'ring; shartlarni keyingi darsda o'rganamiz.</li>
+  <li><b>Vaqt o'giruvchi.</b> Daqiqalarni kiriting → soat va daqiqaga aylantiring (<code>//</code> va <code>%</code>): 135 → "2 soat 15 daqiqa".</li>
+  <li><b>Harorat.</b> Selsiyni Farengeytga o'giring: F = C × 9/5 + 32.</li>
+  <li><b>Blok-sxema.</b> "Uchburchak yuzi (asos va balandlik bo'yicha)" algoritmining blok-sxemasini daftarga (yoki Flowgorithm'da) chizing, so'ng Python'da yozing.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>'python' is not recognized</code> — o'rnatishda "Add to PATH" belgilanmagan. Python'ni qayta o'rnating (Modify → PATH).</li>
+  <li>❌ <code>TypeError: can only concatenate str (not "int") to str</code> — matn va sonni <code>+</code> bilan qo'shish. <code>str()</code> yoki f-satr ishlating.</li>
+  <li>❌ <code>input()</code> natijasini <code>int()</code>siz hisoblash: <code>"5" * 3 = "555"</code>.</li>
+  <li>❌ <code>true</code> deb kichik harf bilan yozish — Python'da <code>True</code>.</li>
+  <li>❌ <code>Print("...")</code> — katta P bilan. Python katta-kichik harfni farqlaydi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Back-end'ning vazifasi qaysi?</p><ol>
+<li>Tugma rangini o'zgartirish</li><li>Ma'lumotlarni serverda saqlash va parolni tekshirish</li><li>Animatsiya yaratish</li><li>Sahifa shriftini tanlash</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Blok-sxemada shart (ha/yo'q) qaysi shakl bilan belgilanadi?</p><ol>
+<li>Oval</li><li>To'rtburchak</li><li>Romb</li><li>Parallelogramm</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q"><code>print(17 // 5)</code> natijasi?</p><ol>
+<li>3</li><li>3.4</li><li>2</li><li>85</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>input()</code> funksiyasi qanday turdagi qiymat qaytaradi?</p><ol>
+<li>int</li><li>float</li><li>bool</li><li>str</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Python'da VA mantiqiy operatori qanday yoziladi?</p><ol>
+<li><code>&amp;&amp;</code></li><li><code>and</code></li><li><code>AND</code></li><li><code>&amp;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>ism = "Ali"; print(f"Salom, {ism}!")</code> natijasi?</p><ol>
+<li><code>Salom, {ism}!</code></li><li><code>f"Salom, Ali!"</code></li><li><code>Salom, Ali!</code></li><li>Xato</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Shaxsiy kalkulyator:</b> ikki son so'rab, ularning yig'indisi, ayirmasi, ko'paytmasi, bo'linmasi, butun bo'linmasi, qoldig'i va darajasini jadval ko'rinishida chiqaring.</li>
+  <li><b>Pul jamg'arish:</b> oylik jamg'arma va maqsad summasini so'rab, necha oyda maqsadga yetishni hisoblang (<code>//</code> va qoldiq bo'lsa +1).</li>
+  <li><b>Uch xonali son:</b> foydalanuvchi uch xonali son kiritadi; uning raqamlari yig'indisini toping (345 → 12).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Back-end — serverdagi dastur: ma'lumotlar, tekshiruv, mantiq. Algoritm — aniq qadamlar ketma-ketligi; blok-sxema — uning chizmasi.</li>
+  <li>Python: <code>.py</code> fayl, <code>python fayl.py</code> bilan ishga tushadi; o'rnatishda "Add to PATH".</li>
+  <li><code>print()</code> — chiqarish, <code>input()</code> — kiritish (doim <code>str</code>; <code>int()</code>/<code>float()</code> bilan o'giring).</li>
+  <li>Turlar: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code> (<code>True/False</code>), <code>None</code>. Nomlar — snake_case.</li>
+  <li>Operatorlar: <code>// % **</code>, <code>and or not</code>; f-satr: <code>f"{nom}"</code>.</li>
+</ul>
+</div>

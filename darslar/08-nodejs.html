@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Node.js va npm — Full-Stack Qo&#x27;llanma</title>
+<title>Node.js va npm — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🟢</div><div><div class="crumb">08-dars · 14 tadan</div><h1>Node.js va npm</h1><p class="lead">Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🟢</div><div><div class="crumb">08-dars · 14 tadan</div><h1>Node.js va npm</h1><p class="lead">Node.js nima, modullar tizimi (CommonJS va ESM), npm va package.json, fs, path, events, http modullari, muhit o&#x27;zgaruvchilari va CLI dasturlar.</p><div class="hero-level">O&#x27;rta · ~100 daqiqa</div></div></div>
 
 <p>Shu paytgacha JavaScript faqat brauzerda ishladi. <b>Node.js</b> — JavaScript'ni brauzerdan tashqarida, ya'ni
 kompyuter yoki serverda ishga tushiruvchi muhit (runtime). U tufayli siz bilgan til bilan web-serverlar, API'lar,
@@ -72,7 +73,7 @@ I/O ko'p bo'lgan ilovalar: REST API, real vaqtli chat (WebSocket), streaming, mi
 
 <h2 id="ornatish-va-birinchi-dastur"><a class="anchor" href="#ornatish-va-birinchi-dastur">#</a>O'rnatish va birinchi dastur</h2>
 <p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> dan <b>LTS</b> versiyani o'rnating. Bir nechta versiya bilan ishlash uchun <code>nvm</code> (Node Version Manager) qulay.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node --version     # v22.x.x
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node --version     # v22.x.x
 npm --version      # 10.x.x
 
 node               # REPL — interaktiv rejim (chiqish: .exit yoki Ctrl+C ikki marta)
@@ -81,7 +82,7 @@ node               # REPL — interaktiv rejim (chiqish: .exit yoki Ctrl+C ikki 
 
 node app.js        # faylni bajarish
 node --watch app.js  # fayl o&#x27;zgarganda avtomatik qayta ishga tushirish (Node 18.11+)</code></pre></div>
-<div class="code"><div class="code-head"><span>app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">console.log(&#x27;Salom, Node.js!&#x27;);
+<div class="code"><div class="code-head"><span>app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(&#x27;Salom, Node.js!&#x27;);
 console.log(&#x27;Node versiyasi:&#x27;, process.version);
 console.log(&#x27;Operatsion tizim:&#x27;, process.platform);
 console.log(&#x27;Joriy papka:&#x27;, process.cwd());
@@ -90,21 +91,21 @@ console.log(&#x27;Buyruq argumentlari:&#x27;, process.argv.slice(2));   // node 
 <h2 id="modullar-tizimi"><a class="anchor" href="#modullar-tizimi">#</a>Modullar tizimi</h2>
 <p>Node.js'da har bir fayl — alohida modul. Ikki tizim mavjud:</p>
 <h3>CommonJS (an'anaviy)</h3>
-<div class="code"><div class="code-head"><span>math.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function qoshish(a, b) { return a + b; }
+<div class="code"><div class="code-head"><span>math.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function qoshish(a, b) { return a + b; }
 const PI = 3.14159;
 
 module.exports = { qoshish, PI };</code></pre></div>
-<div class="code"><div class="code-head"><span>index.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const { qoshish, PI } = require(&#x27;./math&#x27;);   // .js kengaytmasi ixtiyoriy
+<div class="code"><div class="code-head"><span>index.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const { qoshish, PI } = require(&#x27;./math&#x27;);   // .js kengaytmasi ixtiyoriy
 const fs = require(&#x27;fs&#x27;);                     // o&#x27;rnatilgan modul
 const express = require(&#x27;express&#x27;);           // npm paketi
 console.log(qoshish(2, 3));</code></pre></div>
 <h3>ES Modules (zamonaviy, tavsiya etiladi)</h3>
-<div class="code"><div class="code-head"><span>package.json</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+<div class="code"><div class="code-head"><span>package.json</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
   &quot;type&quot;: &quot;module&quot;
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>math.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export const qoshish = (a, b) =&gt; a + b;
+<div class="code"><div class="code-head"><span>math.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export const qoshish = (a, b) =&gt; a + b;
 export default class Kalkulyator { /* ... */ }</code></pre></div>
-<div class="code"><div class="code-head"><span>index.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import Kalkulyator, { qoshish } from &#x27;./math.js&#x27;;   // ESM&#x27;da kengaytma MAJBURIY
+<div class="code"><div class="code-head"><span>index.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import Kalkulyator, { qoshish } from &#x27;./math.js&#x27;;   // ESM&#x27;da kengaytma MAJBURIY
 import fs from &#x27;node:fs/promises&#x27;;                    // &quot;node:&quot; prefiksi — o&#x27;rnatilgan modul ekanini aniq ko&#x27;rsatadi
 import express from &#x27;express&#x27;;
 
@@ -121,7 +122,7 @@ const config = JSON.parse(await fs.readFile(&#x27;./config.json&#x27;, &#x27;utf
 
 <h2 id="npm-va-package-json"><a class="anchor" href="#npm-va-package-json">#</a>npm va package.json</h2>
 <p><b>npm (Node Package Manager)</b> — dunyodagi eng katta dasturiy kutubxonalar ombori (2 milliondan ortiq paket) va ularni boshqaruvchi vosita.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm init -y                     # package.json yaratish
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm init -y                     # package.json yaratish
 
 npm install express             # dependency (ilova ishlashi uchun kerak)
 npm i express                   # qisqa yozuv
@@ -134,7 +135,7 @@ npm uninstall lodash
 npm outdated                    # eskirgan paketlar
 npm audit                       # xavfsizlik zaifliklari
 npx create-vite@latest          # paketni o&#x27;rnatmasdan bir martalik bajarish</code></pre></div>
-<div class="code"><div class="code-head"><span>package.json</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+<div class="code"><div class="code-head"><span>package.json</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
   &quot;name&quot;: &quot;kitob-api&quot;,
   &quot;version&quot;: &quot;1.0.0&quot;,
   &quot;description&quot;: &quot;Kitoblar do&#x27;koni uchun REST API&quot;,
@@ -170,7 +171,7 @@ GitHub'dagi faollik va <code>npm audit</code> natijasiga qarang. Nomi o'xshash s
 
 <h2 id="ornatilgan-asosiy-modullar"><a class="anchor" href="#ornatilgan-asosiy-modullar">#</a>O'rnatilgan asosiy modullar</h2>
 <h3>fs — fayl tizimi</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
 import { existsSync, createReadStream } from &#x27;node:fs&#x27;;
 
 // O&#x27;qish va yozish
@@ -194,7 +195,7 @@ if (!existsSync(&#x27;config.json&#x27;)) console.log(&#x27;Config topilmadi&#x2
 (konfiguratsiya o'qish) yoki CLI skriptlarda ishlating; server so'rovlarini qayta ishlashda — doim asinxron versiyalar.</div>
 
 <h3>path — fayl yo'llari</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import path from &#x27;node:path&#x27;;
 
 path.join(&#x27;uploads&#x27;, &#x27;2026&#x27;, &#x27;rasm.png&#x27;);   // &#x27;uploads/2026/rasm.png&#x27; (Windows&#x27;da &#x27;\&#x27;)
 path.resolve(&#x27;src&#x27;, &#x27;app.js&#x27;);              // to&#x27;liq absolyut yo&#x27;l
@@ -209,7 +210,7 @@ const publicDir = path.join(__dirname, &#x27;public&#x27;);</code></pre></div>
 <p>Yo'llarni hech qachon satr qo'shish bilan (<code>'uploads/' + name</code>) yasamang — <code>path.join</code> Windows/Linux farqini va ortiqcha <code>/</code> larni o'zi hal qiladi.</p>
 
 <h3>events — hodisalar</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { EventEmitter } from &#x27;node:events&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { EventEmitter } from &#x27;node:events&#x27;;
 
 class Buyurtmalar extends EventEmitter {
   yarat(buyurtma) {
@@ -228,7 +229,7 @@ orders.yarat({ email: &#x27;ali@mail.uz&#x27;, mahsulot: &#x27;Noutbuk&#x27; });
 
 <h3>Streams — oqimlar</h3>
 <p>1 GB faylni <code>readFile</code> bilan o'qish 1 GB xotira talab qiladi. <b>Stream</b> esa ma'lumotni kichik bo'laklarda (chunk) qayta ishlaydi:</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { createReadStream, createWriteStream } from &#x27;node:fs&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { createReadStream, createWriteStream } from &#x27;node:fs&#x27;;
 import { createGzip } from &#x27;node:zlib&#x27;;
 import { pipeline } from &#x27;node:stream/promises&#x27;;
 
@@ -241,11 +242,11 @@ await pipeline(
 
 <h3>process va muhit o'zgaruvchilari</h3>
 <p>Parollar, API kalitlari, port raqami kabi sozlamalar kodda emas, <b>muhit o'zgaruvchilarida (environment variables)</b> saqlanadi.</p>
-<div class="code"><div class="code-head"><span>.env</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-ini">PORT=3000
+<div class="code"><div class="code-head"><span>.env</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-ini">PORT=3000
 DATABASE_URL=postgres://user:parol@localhost:5432/kitoblar
 JWT_SECRET=juda-uzun-va-tasodifiy-maxfiy-kalit
 NODE_ENV=development</code></pre></div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Node 20.6+ da .env faylni o&#x27;rnatilgan holda yuklash:
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Node 20.6+ da .env faylni o&#x27;rnatilgan holda yuklash:
 //   node --env-file=.env src/server.js
 // (eski versiyalarda: npm i dotenv  →  import &#x27;dotenv/config&#x27;;)
 
@@ -265,7 +266,7 @@ process.on(&#x27;SIGINT&#x27;, () =&gt; {          // Ctrl+C
 
 <h2 id="http-moduli-freymvorksiz-server"><a class="anchor" href="#http-moduli-freymvorksiz-server">#</a>http moduli — freymvorksiz server</h2>
 <p>Express'ga o'tishdan oldin, uning ostida nima borligini ko'raylik:</p>
-<div class="code"><div class="code-head"><span>server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
+<div class="code"><div class="code-head"><span>server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
 
 const server = http.createServer(async (req, res) =&gt; {
   const url = new URL(req.url, `http://${req.headers.host}`);
@@ -304,7 +305,7 @@ Marshrutlar 50 taga yetsa, bu kod boshqarib bo'lmaydigan bo'ladi. Aynan shu muam
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Yuklamalar papkasini tartiblovchi CLI dastur</h3></div><div class="ex-body">
 <p>"Downloads" papkasidagi yuzlab fayllarni turiga qarab papkalarga ajratadigan foydali skript.</p>
-<div class="code"><div class="code-head"><span>organize.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">#!/usr/bin/env node
+<div class="code"><div class="code-head"><span>organize.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">#!/usr/bin/env node
 import fs from &#x27;node:fs/promises&#x27;;
 import path from &#x27;node:path&#x27;;
 
@@ -364,7 +365,7 @@ try {
   console.error(`❌ Xato: ${err.code === &#x27;ENOENT&#x27; ? &#x27;papka topilmadi&#x27; : err.message}`);
   process.exit(1);
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node organize.js ~/Downloads --dry-run   # avval nima bo&#x27;lishini ko&#x27;ramiz
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node organize.js ~/Downloads --dry-run   # avval nima bo&#x27;lishini ko&#x27;ramiz
 node organize.js ~/Downloads             # haqiqiy ko&#x27;chirish</code></pre></div>
 <p><code>--dry-run</code> rejimi — xavfli amallarni bajaruvchi har qanday skriptda bo'lishi kerak bo'lgan yaxshi odat.</p>
 </div></div>
@@ -372,7 +373,7 @@ node organize.js ~/Downloads             # haqiqiy ko&#x27;chirish</code></pre><
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Statik fayl serveri (http + fs + path)</h3></div><div class="ex-body">
 <p>Shaxsiy saytingizni (2–3-darslar) brauzerda <code>http://localhost:8080</code> orqali ochadigan server. Unda real
 serverlar duch keladigan muammolar — MIME turlari, 404 va xavfsizlik — hal qilingan.</p>
-<div class="code"><div class="code-head"><span>static-server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
+<div class="code"><div class="code-head"><span>static-server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import http from &#x27;node:http&#x27;;
 import fs from &#x27;node:fs/promises&#x27;;
 import { createReadStream } from &#x27;node:fs&#x27;;
 import path from &#x27;node:path&#x27;;
@@ -432,7 +433,7 @@ const server = http.createServer(async (req, res) =&gt; {
 });
 
 server.listen(PORT, () =&gt; console.log(`📂 ${ROOT} → http://localhost:${PORT}`));</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node static-server.js ./portfolio
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node static-server.js ./portfolio
 curl -i http://localhost:8080/
 curl -i --path-as-is http://localhost:8080/../../etc/passwd   # 403 qaytishi kerak</code></pre></div>
 </div></div>
@@ -440,7 +441,7 @@ curl -i --path-as-is http://localhost:8080/../../etc/passwd   # 403 qaytishi ker
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>JSON faylga asoslangan "mini ma'lumotlar bazasi" moduli</h3></div><div class="ex-body">
 <p>Haqiqiy bazaga (10-dars) o'tishdan oldin, ma'lumotni JSON faylda saqlovchi qayta ishlatiladigan modul yozamiz. U 9-darsdagi
 Express API'da ishlatiladi.</p>
-<div class="code"><div class="code-head"><span>src/db/jsonStore.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
+<div class="code"><div class="code-head"><span>src/db/jsonStore.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import fs from &#x27;node:fs/promises&#x27;;
 import path from &#x27;node:path&#x27;;
 import { randomUUID } from &#x27;node:crypto&#x27;;
 
@@ -510,7 +511,7 @@ export class JsonStore {
     });
   }
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>try.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { JsonStore } from &#x27;./src/db/jsonStore.js&#x27;;
+<div class="code"><div class="code-head"><span>try.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { JsonStore } from &#x27;./src/db/jsonStore.js&#x27;;
 
 const books = new JsonStore(&#x27;data/books.json&#x27;);
 const b = await books.create({ title: &#x27;Clean Code&#x27;, author: &#x27;Robert Martin&#x27;, price: 180000 });
@@ -526,7 +527,7 @@ ustidan yozib yuborardi — klassik <b>race condition</b>. Haqiqiy ma'lumotlar b
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Valyuta kursi CLI: tashqi API, argumentlar va kesh</h3></div><div class="ex-body">
 <p>O'zbekiston Markaziy banki ochiq API'sidan kurslarni olib, summani konvertatsiya qiladi. Natija 1 soat keshlanadi.</p>
-<div class="code"><div class="code-head"><span>kurs.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">#!/usr/bin/env node
+<div class="code"><div class="code-head"><span>kurs.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">#!/usr/bin/env node
 import fs from &#x27;node:fs/promises&#x27;;
 import os from &#x27;node:os&#x27;;
 import path from &#x27;node:path&#x27;;
@@ -587,7 +588,7 @@ try {
   console.error(&#x27;❌&#x27;, err.message);
   process.exitCode = 1;
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node kurs.js 100 USD
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node kurs.js 100 USD
 node kurs.js 5000000 UZS --to EUR
 node kurs.js 50 EUR -t USD --fresh</code></pre></div>
 <p><code>package.json</code> ga <code>"bin": { "kurs": "./kurs.js" }</code> qo'shib, <code>npm link</code> qilsangiz, buyruq butun tizimda <code>kurs 100 USD</code> ko'rinishida ishlaydi.</p>

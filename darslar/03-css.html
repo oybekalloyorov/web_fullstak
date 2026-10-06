@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CSS — dizayn va maket — Full-Stack Qo&#x27;llanma</title>
+<title>CSS — dizayn va maket — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Selektorlar, kaskad va spetsifiklik, box model, Flexbox, Grid, pozitsiyalash, responsiv dizayn, CSS o&#x27;zgaruvchilari va animatsiyalar.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🎨</div><div><div class="crumb">03-dars · 14 tadan</div><h1>CSS — dizayn va maket</h1><p class="lead">Selektorlar, kaskad va spetsifiklik, box model, Flexbox, Grid, pozitsiyalash, responsiv dizayn, CSS o&#x27;zgaruvchilari va animatsiyalar.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🎨</div><div><div class="crumb">03-dars · 14 tadan</div><h1>CSS — dizayn va maket</h1><p class="lead">Selektorlar, kaskad va spetsifiklik, box model, Flexbox, Grid, pozitsiyalash, responsiv dizayn, CSS o&#x27;zgaruvchilari va animatsiyalar.</p><div class="hero-level">Boshlang&#x27;ich · ~120 daqiqa</div></div></div>
 
 <p><b>CSS (Cascading Style Sheets)</b> HTML elementlarining ko'rinishini boshqaradi: rang, shrift, o'lcham,
 joylashuv, animatsiya. HTML — uyning g'ishtlari bo'lsa, CSS — uning bo'yog'i, mebeli va xonalar rejasi.
@@ -52,7 +53,7 @@ CSS'ni "oson" deb o'ylash xato: kaskad, spetsifiklik va maket algoritmlarini tus
 boshqarib bo'lmaydigan tartibsizlikka aylanadi. Bu darsda CSS'ni <i>tizimli</i> tushunamiz.</p>
 
 <h2 id="cssni-ulash-usullari"><a class="anchor" href="#cssni-ulash-usullari">#</a>CSS'ni ulash usullari</h2>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!-- 1. Tashqi fayl (eng to&#x27;g&#x27;ri usul — keshlanadi, qayta ishlatiladi) --&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!-- 1. Tashqi fayl (eng to&#x27;g&#x27;ri usul — keshlanadi, qayta ishlatiladi) --&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;
 
 &lt;!-- 2. Ichki &lt;style&gt; bloki (bitta sahifaga xos uslublar) --&gt;
@@ -64,7 +65,7 @@ boshqarib bo'lmaydigan tartibsizlikka aylanadi. Bu darsda CSS'ni <i>tizimli</i> 
 &lt;p style=&quot;color: red; font-weight: bold;&quot;&gt;Diqqat!&lt;/p&gt;</code></pre></div>
 
 <h3>Qoida sintaksisi</h3>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">/* selektor   { xususiyat: qiymat; } */
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* selektor   { xususiyat: qiymat; } */
 .card-title {
   color: #1e293b;          /* deklaratsiya */
   font-size: 1.25rem;
@@ -87,7 +88,7 @@ boshqarib bo'lmaydigan tartibsizlikka aylanadi. Bu darsda CSS'ni <i>tizimli</i> 
 </table></div>
 
 <h3>Psevdo-sinflar va psevdo-elementlar</h3>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">/* Holat bo&#x27;yicha (psevdo-sinflar — bitta ikki nuqta) */
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* Holat bo&#x27;yicha (psevdo-sinflar — bitta ikki nuqta) */
 a:hover        { color: crimson; }          /* sichqoncha ustida */
 button:active  { transform: scale(.97); }   /* bosilgan payt */
 input:focus    { outline: 2px solid royalblue; }
@@ -129,7 +130,7 @@ input::placeholder { color: #999; }</code></pre></div>
 <tr><td><code>style="..."</code></td><td>har qanday selektordan yuqori</td></tr>
 </table></div>
 <p>Raqamlar chapdan o'ngga solishtiriladi: <code>(1,0,0)</code> har doim <code>(0,15,0)</code> dan katta.</p>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">#app p      { color: blue;  }  /* (1,0,1) — G&#x27;OLIB */
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">#app p      { color: blue;  }  /* (1,0,1) — G&#x27;OLIB */
 .text.big   { color: green; }  /* (0,2,0) */
 p           { color: red;   }  /* (0,0,1) */</code></pre></div>
 <div class="callout warn"><span class="t">Amaliy maslahat</span>
@@ -141,7 +142,7 @@ toza CSS'ning siri.</div>
 <code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>.
 O'lcham va joylashuv xususiyatlari (<code>margin</code>, <code>padding</code>, <code>border</code>, <code>width</code>) meros
 qilinmaydi. Shuning uchun shriftni bir marta <code>body</code> ga berish yetarli.</p>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">body { font-family: &quot;Inter&quot;, sans-serif; color: #222; line-height: 1.6; }
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">body { font-family: &quot;Inter&quot;, sans-serif; color: #222; line-height: 1.6; }
 button { font: inherit; }   /* tugmalar odatda shriftni meros olmaydi — majburlaymiz */</code></pre></div>
 
 <h2 id="box-model-har-bir-element-bu-quti"><a class="anchor" href="#box-model-har-bir-element-bu-quti">#</a>Box model — har bir element bu quti</h2>
@@ -155,7 +156,7 @@ button { font: inherit; }   /* tugmalar odatda shriftni meros olmaydi — majbur
     </div>
   </div>
 </div>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.box {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.box {
   width: 300px;
   padding: 20px;              /* ichki bo&#x27;shliq: barcha tomonlar */
   border: 2px solid #333;
@@ -169,7 +170,7 @@ button { font: inherit; }   /* tugmalar odatda shriftni meros olmaydi — majbur
 <p>Standart holatda (<code>content-box</code>) <code>width: 300px</code> faqat mazmunga tegishli: yuqoridagi quti haqiqatda
 <code>300 + 2×20 + 2×2 = 344px</code> keng bo'ladi. Bu hisob-kitobni qiyinlashtiradi. <code>border-box</code> da esa
 <code>width</code> padding va border'ni o'z ichiga oladi:</p>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">/* Deyarli har bir loyihaning birinchi qatorlari */
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* Deyarli har bir loyihaning birinchi qatorlari */
 *, *::before, *::after {
   box-sizing: border-box;
 }</code></pre></div>
@@ -199,7 +200,7 @@ Flex va Grid ichida bu hodisa yuz bermaydi.</div>
 <tr><td><code>fr</code></td><td>Grid'dagi bo'sh joy ulushi</td><td>Grid ustunlari</td></tr>
 <tr><td><code>ch</code></td><td>"0" belgisining kengligi</td><td>Matn qatori uzunligi: <code>max-width: 65ch</code></td></tr>
 </table></div>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.title {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.title {
   /* clamp(minimum, ideal, maksimum) — ekranga moslashuvchi shrift */
   font-size: clamp(1.5rem, 4vw, 3rem);
 }
@@ -213,7 +214,7 @@ Flex va Grid ichida bu hodisa yuz bermaydi.</div>
 .e { background: linear-gradient(135deg, #4f46e5, #0ea5e9); }</code></pre></div>
 
 <h2 id="tipografiya"><a class="anchor" href="#tipografiya">#</a>Tipografiya</h2>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">@import url(&#x27;https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap&#x27;);
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">@import url(&#x27;https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap&#x27;);
 
 body {
   font-family: &quot;Inter&quot;, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif; /* zaxira shriftlar */
@@ -236,7 +237,7 @@ tugmalar guruhi, kartaning ichki qismi, markazlash — barchasi Flexbox bilan os
 <p>Ikki tushuncha: <b>flex-konteyner</b> (<code>display: flex</code> berilgan ota) va <b>flex-elementlar</b> (uning bevosita farzandlari).
 Shuningdek ikki o'q: <b>asosiy o'q (main axis)</b> — <code>flex-direction</code> yo'nalishi, va <b>kesishgan o'q (cross axis)</b> — unga perpendikulyar.</p>
 <h3>Konteyner xususiyatlari</h3>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.container {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.container {
   display: flex;
   flex-direction: row;          /* row | row-reverse | column | column-reverse */
   flex-wrap: wrap;              /* sig&#x27;masa keyingi qatorga o&#x27;tish */
@@ -245,7 +246,7 @@ Shuningdek ikki o'q: <b>asosiy o'q (main axis)</b> — <code>flex-direction</cod
   gap: 16px;                    /* elementlar orasidagi masofa */
 }</code></pre></div>
 <h3>Element xususiyatlari</h3>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.item {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.item {
   flex-grow: 1;      /* bo&#x27;sh joydan qancha ulush olish (0 — olmaydi) */
   flex-shrink: 1;    /* joy yetmasa qanchalik qisqarish (0 — qisqarmaydi) */
   flex-basis: 200px; /* boshlang&#x27;ich o&#x27;lcham */
@@ -262,7 +263,7 @@ ekranning qoq o'rtasiga joylashadi. Grid bilan esa yanada qisqa: <code>display: 
 <h2 id="css-grid-ikki-olchamli-maket"><a class="anchor" href="#css-grid-ikki-olchamli-maket">#</a>CSS Grid — ikki o'lchamli maket</h2>
 <p><b>Grid</b> qator <i>va</i> ustunlarni bir vaqtda boshqaradi. Sahifa maketi, rasm galereyasi, mahsulotlar
 katalogi, dashboard — Grid'ning ishi.</p>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.grid {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.grid {
   display: grid;
   grid-template-columns: 200px 1fr 1fr;     /* 3 ustun: 200px va qolgani teng ikkiga */
   grid-template-rows: auto 1fr auto;
@@ -283,7 +284,7 @@ katalogi, dashboard — Grid'ning ishi.</p>
   grid-row: span 2;
 }</code></pre></div>
 <h3>Nomlangan hududlar (grid-template-areas)</h3>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.page {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.page {
   display: grid;
   grid-template-columns: 240px 1fr;
   grid-template-rows: 64px 1fr 48px;
@@ -321,7 +322,7 @@ katalogi, dashboard — Grid'ning ishi.</p>
 <tr><td><code>fixed</code></td><td>Oqimdan chiqadi, scroll'da qimirlamaydi</td><td>Ekranga (viewport)</td></tr>
 <tr><td><code>sticky</code></td><td>Scroll ma'lum nuqtaga yetguncha oddiy, keyin "yopishib" qoladi</td><td>Scroll konteyneriga</td></tr>
 </table></div>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.card { position: relative; }
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.card { position: relative; }
 .card .badge {                 /* kartaning o&#x27;ng yuqori burchagidagi &quot;Yangi&quot; belgisi */
   position: absolute;
   top: 12px; right: 12px;
@@ -335,7 +336,7 @@ katalogi, dashboard — Grid'ning ishi.</p>
 <p>Bugun trafikning 60%+ qismi telefonlardan keladi. <b>Responsiv dizayn</b> — sayt har qanday ekranga moslashishi.</p>
 <h3>Mobile-first yondashuv</h3>
 <p>Avval eng kichik ekran uchun oddiy uslub yoziladi, keyin <code>min-width</code> media so'rovlari bilan katta ekranlar uchun kengaytiriladi.</p>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">/* Standart: telefon (bitta ustun) */
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* Standart: telefon (bitta ustun) */
 .products { display: grid; grid-template-columns: 1fr; gap: 16px; }
 
 /* Planshet: 640px va undan keng */
@@ -359,7 +360,7 @@ katalogi, dashboard — Grid'ning ishi.</p>
 "Toggle device toolbar" (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>) bilan sinash.</div>
 
 <h2 id="css-ozgaruvchilari-custom-properties"><a class="anchor" href="#css-ozgaruvchilari-custom-properties">#</a>CSS o'zgaruvchilari (Custom Properties)</h2>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">:root {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">:root {
   --color-primary: #4f46e5;
   --color-text: #1f2937;
   --color-bg: #ffffff;
@@ -377,7 +378,7 @@ katalogi, dashboard — Grid'ning ishi.</p>
 o'zgartirish, media query ichida qayta belgilash va meros qilib berish mumkin. Bu tungi rejim yasashning eng qulay usuli (4-misol).</p>
 
 <h2 id="transition-transform-va-animatsiya"><a class="anchor" href="#transition-transform-va-animatsiya">#</a>Transition, transform va animatsiya</h2>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.btn {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.btn {
   transition: background-color .2s ease, transform .2s ease;
 }
 .btn:hover {
@@ -410,7 +411,7 @@ o'zgartirish, media query ichida qayta belgilash va meros qilib berish mumkin. B
 <h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Responsiv navigatsiya paneli (Flexbox)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>navbar.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;header class=&quot;navbar&quot;&gt;
+<div class="code"><div class="code-head"><span>navbar.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;header class=&quot;navbar&quot;&gt;
   &lt;a class=&quot;logo&quot; href=&quot;/&quot;&gt;Texno&lt;span&gt;Shop&lt;/span&gt;&lt;/a&gt;
   &lt;input type=&quot;checkbox&quot; id=&quot;nav-toggle&quot; class=&quot;nav-toggle&quot;&gt;
   &lt;label for=&quot;nav-toggle&quot; class=&quot;burger&quot; aria-label=&quot;Menyuni ochish&quot;&gt;☰&lt;/label&gt;
@@ -422,7 +423,7 @@ o'zgartirish, media query ichida qayta belgilash va meros qilib berish mumkin. B
     &lt;a href=&quot;/login&quot; class=&quot;btn&quot;&gt;Kirish&lt;/a&gt;
   &lt;/nav&gt;
 &lt;/header&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>navbar.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">*, *::before, *::after { box-sizing: border-box; }
+<div class="code"><div class="code-head"><span>navbar.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">*, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, sans-serif; }
 
 .navbar {
@@ -467,7 +468,7 @@ ham qilamiz.</p>
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Mahsulot kartalari katalogi (Grid + Flexbox)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>catalog.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;section class=&quot;catalog&quot;&gt;
+<div class="code"><div class="code-head"><span>catalog.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;section class=&quot;catalog&quot;&gt;
   &lt;article class=&quot;product&quot;&gt;
     &lt;span class=&quot;badge&quot;&gt;-20%&lt;/span&gt;
     &lt;img src=&quot;https://picsum.photos/seed/phone/400/300&quot; alt=&quot;Smartfon&quot;&gt;
@@ -482,7 +483,7 @@ ham qilamiz.</p>
   &lt;/article&gt;
   &lt;!-- ...yana kartalar... --&gt;
 &lt;/section&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>catalog.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.catalog {
+<div class="code"><div class="code-head"><span>catalog.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.catalog {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 24px;
@@ -527,7 +528,7 @@ keltiradi; <code>margin-top: auto</code> narx va tugmani doim karta pastiga itar
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Landing sahifa: hero bo'lim va admin panel maketi</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;section class=&quot;hero&quot;&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;section class=&quot;hero&quot;&gt;
   &lt;div class=&quot;hero-text&quot;&gt;
     &lt;h1&gt;Dasturlashni &lt;span&gt;noldan&lt;/span&gt; o&#x27;rganing&lt;/h1&gt;
     &lt;p&gt;6 oyda birinchi ishingizga tayyorlaymiz. Amaliy loyihalar va mentorlar bilan.&lt;/p&gt;
@@ -550,7 +551,7 @@ keltiradi; <code>margin-top: auto</code> narx va tugmani doim karta pastiga itar
     &lt;/div&gt;
   &lt;/main&gt;
 &lt;/div&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>CSS</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.hero {
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
@@ -599,7 +600,7 @@ keltiradi; <code>margin-top: auto</code> narx va tugmani doim karta pastiga itar
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>CSS o'zgaruvchilari bilan kunduzgi/tungi rejim</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>theme.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<div class="code"><div class="code-head"><span>theme.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;uz&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;

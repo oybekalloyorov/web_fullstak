@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>React asoslari — Full-Stack Qo&#x27;llanma</title>
+<title>React asoslari — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚛️</div><div><div class="crumb">12-dars · 14 tadan</div><h1>React asoslari</h1><p class="lead">Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚛️</div><div><div class="crumb">12-dars · 14 tadan</div><h1>React asoslari</h1><p class="lead">Komponentlar, JSX, props, state, hodisalar, ro&#x27;yxatlar va key, formalar, useEffect va ma&#x27;lumot yuklash, custom hook&#x27;lar, Context va React Router.</p><div class="hero-level">O&#x27;rta · ~150 daqiqa</div></div></div>
 
 <p>5-darsdagi Todo ilovasida biz "holat → render" arxitekturasini qo'lda qurdik: holat o'zgarsa, <code>render()</code> funksiyasi DOM'ni
 qayta chizdi. Ilova kattalashgan sari bu qiyinlashadi: qaysi qismni yangilash kerak? Holat bir necha joyda bo'lsa-chi?
@@ -60,11 +61,11 @@ React esa DOM'ni o'zi samarali yangilaydi. Bugun React — frontend vakansiyalar
 </ul>
 
 <h2 id="loyiha-yaratish-vite"><a class="anchor" href="#loyiha-yaratish-vite">#</a>Loyiha yaratish (Vite)</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm create vite@latest kitob-client -- --template react
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm create vite@latest kitob-client -- --template react
 cd kitob-client
 npm install
 npm run dev          # http://localhost:5173</code></pre></div>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">kitob-client/
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">kitob-client/
 ├── index.html            # yagona HTML sahifa — &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
 ├── package.json
 ├── vite.config.js
@@ -73,7 +74,7 @@ npm run dev          # http://localhost:5173</code></pre></div>
     ├── App.jsx           # ildiz komponent
     ├── index.css
     └── components/</code></pre></div>
-<div class="code"><div class="code-head"><span>src/main.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { StrictMode } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/main.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { StrictMode } from &#x27;react&#x27;;
 import { createRoot } from &#x27;react-dom/client&#x27;;
 import App from &#x27;./App.jsx&#x27;;
 import &#x27;./index.css&#x27;;
@@ -87,7 +88,7 @@ createRoot(document.getElementById(&#x27;root&#x27;)).render(
 <h2 id="jsx"><a class="anchor" href="#jsx">#</a>JSX</h2>
 <p><b>JSX</b> — JavaScript ichida HTML'ga o'xshash sintaksis. Brauzer uni tushunmaydi — Vite uni oddiy funksiya chaqiruvlariga
 aylantiradi: <code>&lt;h1 className="t"&gt;Salom&lt;/h1&gt;</code> → <code>React.createElement('h1', { className: 't' }, 'Salom')</code>.</p>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Greeting() {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function Greeting() {
   const user = { name: &#x27;Malika&#x27;, avatar: &#x27;/m.jpg&#x27;, unread: 3 };
   const isMorning = new Date().getHours() &lt; 12;
 
@@ -113,7 +114,7 @@ aylantiradi: <code>&lt;h1 className="t"&gt;Salom&lt;/h1&gt;</code> → <code>Rea
 <h2 id="komponentlar-va-props"><a class="anchor" href="#komponentlar-va-props">#</a>Komponentlar va props</h2>
 <p>Komponent — <b>katta harf bilan boshlanadigan</b> va JSX qaytaradigan funksiya. <b>Props</b> — komponentga tashqaridan beriladigan
 ma'lumotlar (HTML atributlari kabi). Props <b>faqat o'qish uchun</b>: komponent o'z props'ini o'zgartirmaydi.</p>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Avatar({ src, name, size = 48 }) {          // destructuring + standart qiymat
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function Avatar({ src, name, size = 48 }) {          // destructuring + standart qiymat
   return &lt;img className=&quot;avatar&quot; src={src} alt={name} width={size} height={size} /&gt;;
 }
 
@@ -139,7 +140,7 @@ Komponent 150–200 qatordan oshsa yoki ichida takrorlanuvchi qism bo'lsa — bo
 <h2 id="state-komponent-xotirasi"><a class="anchor" href="#state-komponent-xotirasi">#</a>State — komponent xotirasi</h2>
 <p>Oddiy o'zgaruvchi (<code>let count = 0</code>) har render'da qaytadan yaratiladi va uning o'zgarishi ekranni yangilamaydi.
 <b>State</b> — React eslab qoladigan va o'zgarganda komponentni <b>qayta render qiladigan</b> qiymat.</p>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
 
 function Counter() {
   const [count, setCount] = useState(0);     // [joriy qiymat, o&#x27;zgartiruvchi funksiya]
@@ -153,7 +154,7 @@ function Counter() {
   );
 }</code></pre></div>
 <h3>State bilan ishlashning muhim qoidalari</h3>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">// 1. State&#x27;ni TO&#x27;G&#x27;RIDAN-TO&#x27;G&#x27;RI o&#x27;zgartirmang — yangi obyekt/massiv yarating (immutability)
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">// 1. State&#x27;ni TO&#x27;G&#x27;RIDAN-TO&#x27;G&#x27;RI o&#x27;zgartirmang — yangi obyekt/massiv yarating (immutability)
 const [todos, setTodos] = useState([]);
 todos.push(newTodo);                                  // ❌ React o&#x27;zgarishni sezmaydi
 setTodos([...todos, newTodo]);                        // ✅ qo&#x27;shish
@@ -176,7 +177,7 @@ console.log(count);       // hali eski qiymat — yangisi keyingi render&#x27;da
 const doneCount = todos.filter(t =&gt; t.done).length;   // ✅ alohida state emas</code></pre></div>
 
 <h2 id="hodisalar"><a class="anchor" href="#hodisalar">#</a>Hodisalar</h2>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function SearchBox({ onSearch }) {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function SearchBox({ onSearch }) {
   const [q, setQ] = useState(&#x27;&#x27;);
 
   function handleSubmit(e) {
@@ -199,7 +200,7 @@ const doneCount = todos.filter(t =&gt; t.done).length;   // ✅ alohida state em
 //    onClick={handleClick()} ❌ render paytida CHAQIRILADI</code></pre></div>
 
 <h2 id="shartli-render-va-royxatlar"><a class="anchor" href="#shartli-render-va-royxatlar">#</a>Shartli render va ro'yxatlar</h2>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function ProductList({ products, loading, error }) {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function ProductList({ products, loading, error }) {
   if (loading) return &lt;Spinner /&gt;;                      // erta qaytish
   if (error) return &lt;p className=&quot;error&quot;&gt;{error}&lt;/p&gt;;
   if (products.length === 0) return &lt;p&gt;Mahsulot topilmadi&lt;/p&gt;;
@@ -220,7 +221,7 @@ React to'g'ri DOM tugunlarini qayta ishlatadi. <code>key</code> sifatida <b>mass
 input'lardagi qiymatlar "aralashib ketadi". Ma'lumotning barqaror <code>id</code> sini ishlating.</div>
 
 <h2 id="formalar-boshqariladigan-komponentlar"><a class="anchor" href="#formalar-boshqariladigan-komponentlar">#</a>Formalar: boshqariladigan komponentlar</h2>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function RegisterForm({ onSubmit }) {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function RegisterForm({ onSubmit }) {
   const [values, setValues] = useState({ name: &#x27;&#x27;, email: &#x27;&#x27;, plan: &#x27;free&#x27;, agree: false });
   const [errors, setErrors] = useState({});
 
@@ -274,7 +275,7 @@ o'zgartirish va validatsiya qilish oson. Katta formalar uchun <b>React Hook Form
 <h2 id="stateni-yuqoriga-kotarish-lifting-state-up"><a class="anchor" href="#stateni-yuqoriga-kotarish-lifting-state-up">#</a>State'ni yuqoriga ko'tarish (lifting state up)</h2>
 <p>Ikki komponent bitta ma'lumotdan foydalanishi kerak bo'lsa (masalan, mahsulotlar ro'yxati va savat), state ularning
 <b>eng yaqin umumiy otasiga</b> ko'chiriladi. Ota ma'lumotni props orqali beradi, farzandlar esa o'zgarishni callback orqali so'raydi.</p>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Shop() {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function Shop() {
   const [cart, setCart] = useState([]);                  // umumiy state — otada
 
   const addToCart = (product) =&gt;
@@ -296,7 +297,7 @@ o'zgartirish va validatsiya qilish oson. Katta formalar uchun <b>React Hook Form
 <h2 id="useeffect-tashqi-dunyo-bilan-sinxronlash"><a class="anchor" href="#useeffect-tashqi-dunyo-bilan-sinxronlash">#</a>useEffect — tashqi dunyo bilan sinxronlash</h2>
 <p>Render <b>sof</b> bo'lishi kerak: faqat JSX hisoblaydi. Server so'rovi, taymer, <code>document.title</code>, hodisa tinglovchisi kabi
 "yon ta'sirlar" (side effects) <code>useEffect</code> ichida bajariladi — u render ekranga chiqqandan <b>keyin</b> ishlaydi.</p>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
 
 useEffect(() =&gt; {
   // ... effekt
@@ -306,7 +307,7 @@ useEffect(() =&gt; {
 // [] — faqat birinchi render&#x27;dan keyin bir marta
 // [userId] — birinchi marta va userId o&#x27;zgarganda
 // massivsiz — HAR render&#x27;dan keyin (kamdan-kam kerak)</code></pre></div>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">function Clock() {
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">function Clock() {
   const [now, setNow] = useState(new Date());
 
   useEffect(() =&gt; {
@@ -328,7 +329,7 @@ Props yoki state'dan hisoblanadigan qiymat uchun effekt + state ishlatmang — s
 harakatiga javob (tugma bosilganda so'rov yuborish) — hodisa ishlovchisida, effektda emas.</div>
 
 <h2 id="boshqa-muhim-hooklar"><a class="anchor" href="#boshqa-muhim-hooklar">#</a>Boshqa muhim hook'lar</h2>
-<div class="code"><div class="code-head"><span>React (JSX)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useRef, useMemo, useCallback, useReducer } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>React (JSX)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useRef, useMemo, useCallback, useReducer } from &#x27;react&#x27;;
 
 // useRef — render&#x27;lar orasida saqlanadigan, lekin o&#x27;zgarganda render QILMAYDIGAN qiymat; DOM elementga havola
 function AutoFocusInput() {
@@ -363,7 +364,7 @@ funksiyada emas; (2) faqat React funksiyalarida. Sabab: React hook'larni chaqiri
 <h2 id="context-props-drilling-siz-malumot-uzatish"><a class="anchor" href="#context-props-drilling-siz-malumot-uzatish">#</a>Context — "props drilling"siz ma'lumot uzatish</h2>
 <p>Joriy foydalanuvchi, til yoki mavzu (theme) kabi ma'lumotlar o'nlab komponentga kerak. Ularni har bir darajadan props orqali
 o'tkazish ("prop drilling") noqulay. <b>Context</b> ma'lumotni daraxtning istalgan chuqurligiga to'g'ridan-to'g'ri yetkazadi.</p>
-<div class="code"><div class="code-head"><span>src/context/ThemeContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/context/ThemeContext.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { createContext, useContext, useEffect, useState } from &#x27;react&#x27;;
 
 const ThemeContext = createContext(null);
 
@@ -394,8 +395,8 @@ export function useTheme() {
 <h2 id="react-router-sahifalar"><a class="anchor" href="#react-router-sahifalar">#</a>React Router — sahifalar</h2>
 <p>React ilovasi — <b>SPA (Single Page Application)</b>: bitta HTML, sahifalar orasidagi o'tish esa JavaScript bilan, serverga
 yangi HTML so'ramasdan bajariladi.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install react-router</code></pre></div>
-<div class="code"><div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Link, NavLink, useParams, useNavigate, Navigate } from &#x27;react-router&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install react-router</code></pre></div>
+<div class="code"><div class="code-head"><span>src/App.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Link, NavLink, useParams, useNavigate, Navigate } from &#x27;react-router&#x27;;
 
 export default function App() {
   return (
@@ -431,7 +432,7 @@ function RequireAuth({ children }) {
 <h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Mahsulotlar katalogi va savat (komponentlar, props, lifting state)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>src/Shop.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/Shop.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
 
 const PRODUCTS = [
   { id: 1, name: &#x27;Simsiz quloqchin&#x27;, price: 450000, emoji: &#x27;🎧&#x27; },
@@ -522,7 +523,7 @@ export default function Shop() {
     &lt;/div&gt;
   );
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/index.css (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">.shop { display: grid; grid-template-columns: 1fr 340px; gap: 24px; padding: 24px; align-items: start; }
+<div class="code"><div class="code-head"><span>src/index.css (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.shop { display: grid; grid-template-columns: 1fr 340px; gap: 24px; padding: 24px; align-items: start; }
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
 .product { border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; text-align: center; }
 .emoji { font-size: 48px; }
@@ -537,7 +538,7 @@ ko'rsatish uchun), ham <code>Cart</code> ishlatadi. <code>total</code> state ema
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Todo ilovasi React'da: useReducer + localStorage</h3></div><div class="ex-body">
 <p>5-darsdagi 150 qatorlik ilovani React'da qayta yozamiz va farqni his qilamiz.</p>
-<div class="code"><div class="code-head"><span>src/TodoApp.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useReducer, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/TodoApp.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useEffect, useReducer, useState } from &#x27;react&#x27;;
 
 function todosReducer(todos, action) {
   switch (action.type) {
@@ -654,7 +655,7 @@ Reducer — sof funksiya: uni React'siz ham test qilish mumkin. Tahrirlash holat
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Ma'lumot yuklash: useFetch custom hook va qidiruv</h3></div><div class="ex-body">
 <p><b>Custom hook</b> — <code>use</code> bilan boshlanadigan va ichida boshqa hook'lardan foydalanadigan funksiya. U komponentlar orasida
 <b>mantiqni</b> (UI'ni emas) qayta ishlatishga imkon beradi.</p>
-<div class="code"><div class="code-head"><span>src/hooks/useFetch.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/hooks/useFetch.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
 
 export function useFetch(url) {
   const [state, setState] = useState({ data: null, loading: Boolean(url), error: null });
@@ -680,7 +681,7 @@ export function useFetch(url) {
 
   return state;
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/hooks/useDebounce.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/hooks/useDebounce.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
 
 export function useDebounce(value, delay = 400) {
   const [debounced, setDebounced] = useState(value);
@@ -690,7 +691,7 @@ export function useDebounce(value, delay = 400) {
   }, [value, delay]);
   return debounced;
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/UserSearch.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/UserSearch.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useState } from &#x27;react&#x27;;
 import { useFetch } from &#x27;./hooks/useFetch&#x27;;
 import { useDebounce } from &#x27;./hooks/useDebounce&#x27;;
 
@@ -755,7 +756,7 @@ tamoyilini tushunish uchun ajoyib mashq.</div>
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Ko'p sahifali ilova: Router, Context va useLocalStorage hook</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>src/hooks/useLocalStorage.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/hooks/useLocalStorage.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { useEffect, useState } from &#x27;react&#x27;;
 
 export function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() =&gt; {
@@ -782,7 +783,7 @@ export function useLocalStorage(key, initialValue) {
 
   return [value, setValue];
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/context/FavoritesContext.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { createContext, useContext } from &#x27;react&#x27;;
+<div class="code"><div class="code-head"><span>src/context/FavoritesContext.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { createContext, useContext } from &#x27;react&#x27;;
 import { useLocalStorage } from &#x27;../hooks/useLocalStorage&#x27;;
 
 const FavoritesContext = createContext(null);
@@ -799,7 +800,7 @@ export function FavoritesProvider({ children }) {
 }
 
 export const useFavorites = () =&gt; useContext(FavoritesContext);</code></pre></div>
-<div class="code"><div class="code-head"><span>src/App.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, NavLink, Link, useParams } from &#x27;react-router&#x27;;
+<div class="code"><div class="code-head"><span>src/App.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { BrowserRouter, Routes, Route, NavLink, Link, useParams } from &#x27;react-router&#x27;;
 import { FavoritesProvider, useFavorites } from &#x27;./context/FavoritesContext&#x27;;
 import { useFetch } from &#x27;./hooks/useFetch&#x27;;
 

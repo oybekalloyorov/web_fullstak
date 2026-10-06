@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Versiyalarni boshqarish tizimi nima, Git&#x27;ni o&#x27;rnatish, init, add, commit, status, log; GitHub&#x27;da repozitoriya, push va clone; GitHub Pages; SEO asoslari: title, description, sarlavhalar, alt, tezlik.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a class="active" href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌿</div><div><div class="crumb">11-mavzu · 31 tadan · I bob. HTML va CSS</div><h1>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</h1><p class="lead">Versiyalarni boshqarish tizimi nima, Git&#x27;ni o&#x27;rnatish, init, add, commit, status, log; GitHub&#x27;da repozitoriya, push va clone; GitHub Pages; SEO asoslari: title, description, sarlavhalar, alt, tezlik.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Versiyalarni boshqarish nima va dasturchilarga nima uchun kerakligini;</li>
+  <li>Git'ning asosiy buyruqlari: <code>init</code>, <code>status</code>, <code>add</code>, <code>commit</code>, <code>log</code>;</li>
+  <li>GitHub'da repozitoriya yaratish va loyihani <code>push</code> qilishni;</li>
+  <li>Saytni GitHub Pages orqali bepul internetga chiqarishni;</li>
+  <li>Saytingiz Google'da yaxshi chiqishi uchun SEO asoslarini.</li>
+</ul>
+</div>
+
+<h2 id="versiyalarni-boshqarish-nima"><a class="anchor" href="#versiyalarni-boshqarish-nima">#</a>Versiyalarni boshqarish nima?</h2>
+<p>Tanish vaziyat: <code>referat.docx</code>, <code>referat_yangi.docx</code>, <code>referat_yangi_OXIRGI.docx</code>, <code>referat_yangi_OXIRGI_2.docx</code>... Qaysi biri
+haqiqatan oxirgisi? Kecha nimani o'zgartirgan edingiz? Dasturchilar bu muammoni <b>versiyalarni boshqarish tizimi</b> bilan hal qiladi.</p>
+<p><b>Git</b> — eng mashhur versiyalarni boshqarish tizimi. U loyihangizning har bir saqlangan holatini ("surat"ini) eslab qoladi.</p>
+<div class="analogy"><span class="t">O'xshatish: o'yindagi saqlash nuqtalari</span>
+Kompyuter o'yinlarida qiyin bosqichdan oldin "save" qilasiz. Yutqazsangiz — o'sha nuqtaga qaytasiz. Git'dagi <b>commit</b> — xuddi shunday saqlash
+nuqtasi. Har bir commit'ga izoh yozasiz ("Menyu qo'shildi") va istalgan paytda istalgan nuqtaga qaytishingiz mumkin.</div>
+<p><b>Git nima beradi?</b></p>
+<ul>
+  <li>📜 Loyihaning to'liq <b>tarixi</b>: kim, qachon, nimani o'zgartirgan.</li>
+  <li>⏪ Xato qilsangiz — oldingi ishlaydigan holatga <b>qaytish</b>.</li>
+  <li>👥 <b>Jamoa</b> bo'lib bitta loyihada bir vaqtda ishlash (13-mavzu).</li>
+  <li>☁️ GitHub orqali kodni <b>internetda saqlash</b> — kompyuter buzilsa ham loyiha yo'qolmaydi.</li>
+</ul>
+<h3>Git va GitHub — farqi</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Git</th><th>GitHub</th></tr>
+<tr><td>Nima</td><td><b>Dastur</b> (kompyuteringizga o'rnatiladi)</td><td><b>Veb-sayt</b> (github.com)</td></tr>
+<tr><td>Vazifasi</td><td>Versiyalarni saqlaydi va boshqaradi</td><td>Git loyihalarini internetda saqlaydi, ulashadi</td></tr>
+<tr><td>Internetsiz</td><td>Ishlaydi</td><td>Ishlamaydi</td></tr>
+<tr><td>O'xshatish</td><td>Fotoapparat</td><td>Instagram (suratlarni saqlash va ulashish joyi)</td></tr>
+</table></div>
+
+<h2 id="gitni-ornatish-va-sozlash"><a class="anchor" href="#gitni-ornatish-va-sozlash">#</a>Git'ni o'rnatish va sozlash</h2>
+<ol class="steps">
+  <li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a> dan yuklab, o'rnating (barcha sozlamalarni standart holda qoldiring).</li>
+  <li>VS Code'da terminalni oching: <b>Terminal → New Terminal</b> (<kbd>Ctrl</kbd>+<kbd>`</kbd>).</li>
+  <li>Tekshiring va o'zingizni tanishtiring (bir marta qilinadi):
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git --version
+git config --global user.name &quot;Ismingiz Familiyangiz&quot;
+git config --global user.email &quot;sizning@gmail.com&quot;</code></pre></div></li>
+</ol>
+
+<h2 id="gitning-asosiy-buyruqlari"><a class="anchor" href="#gitning-asosiy-buyruqlari">#</a>Git'ning asosiy buyruqlari</h2>
+<h3>Uchta hudud</h3>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📁 Ishchi papka<small>siz tahrirlayotgan fayllar</small></div>
+    <div class="arrow">— git add →</div>
+    <div class="node">📋 Staging (tayyorlash)<small>"suratga" kiradiganlar</small></div>
+    <div class="arrow">— git commit →</div>
+    <div class="node">🗄️ Repozitoriya<small>saqlangan tarix</small></div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: guruh surati</span>
+<b>Ishchi papka</b> — sinf xonasi, hamma o'z ishi bilan band. <b>git add</b> — suratga tushadiganlarni oldinga chaqirish. <b>git commit</b> — "chik!" — surat olindi va albomga (tarixga) qo'shildi.</div>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># 1. Loyiha papkasida Git&#x27;ni ishga tushirish (bir marta)
+git init
+
+# 2. Holatni ko&#x27;rish: qaysi fayllar yangi, qaysilari o&#x27;zgargan
+git status
+
+# 3. Fayllarni &quot;suratga&quot; tayyorlash
+git add index.html          # bitta fayl
+git add .                   # barcha o&#x27;zgarishlar (nuqta = hammasi)
+
+# 4. Saqlash nuqtasi (commit) yaratish — izoh bilan!
+git commit -m &quot;Bosh sahifa va menyu qo&#x27;shildi&quot;
+
+# 5. Tarixni ko&#x27;rish
+git log --oneline</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">a3f9c2e Bosh sahifa va menyu qo&#x27;shildi
+1b7d004 Loyiha boshlandi</code></pre></div>
+<div class="callout tip"><span class="t">Yaxshi commit izohi</span>
+Nima qilinganini aniq yozing: <code>"fix"</code>, <code>"o'zgarish"</code>, <code>"asdf"</code> ❌ → <code>"Aloqa sahifasiga forma qo'shildi"</code>,
+<code>"Telefonda menyu xatosi tuzatildi"</code> ✅. Kichik, mantiqiy qadamlar bilan tez-tez commit qiling.</div>
+<div class="callout info">VS Code'da chap paneldagi <b>Source Control</b> belgisi (shoxlangan chiziqlar) orqali ham xuddi shu ishlarni sichqoncha bilan qilish mumkin:
+"+" — add, matn yozib ✓ — commit.</div>
+
+<h2 id="githubga-yuklash"><a class="anchor" href="#githubga-yuklash">#</a>GitHub'ga yuklash</h2>
+<ol class="steps">
+  <li><a href="https://github.com" target="_blank" rel="noopener">github.com</a> da ro'yxatdan o'ting (foydalanuvchi nomini jiddiy tanlang — u portfoliongiz manzili bo'ladi).</li>
+  <li>O'ng yuqoridagi <b>+ → New repository</b>. Nom bering (masalan, <code>portfolio</code>), <b>Public</b> tanlang, "Add a README" belgisini <b>qo'ymang</b> → <b>Create repository</b>.</li>
+  <li>GitHub ko'rsatgan buyruqlarni terminalda bajaring:
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git branch -M main
+git remote add origin https://github.com/USERNAME/portfolio.git
+git push -u origin main</code></pre></div>
+  Birinchi marta brauzer orqali GitHub'ga kirish so'raladi — ruxsat bering.</li>
+  <li>GitHub sahifasini yangilang — fayllaringiz internetda! 🎉</li>
+  <li>Keyingi o'zgarishlardan so'ng uchta buyruq yetarli:
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git add .
+git commit -m &quot;Loyihalar bo&#x27;limi qo&#x27;shildi&quot;
+git push</code></pre></div></li>
+</ol>
+<h3>Boshqa loyihani yuklab olish — <code>clone</code></h3>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git clone https://github.com/USERNAME/portfolio.git
+# Maktab kompyuteridan uyga: o&#x27;zgarishlarni olish
+git pull</code></pre></div>
+<div class="callout warn"><span class="t">GitHub'ga nimani yuklamaslik kerak</span>
+Parollar, shaxsiy ma'lumotlar, juda katta fayllar (videolar). Ochiq (public) repozitoriyani <b>butun dunyo</b> ko'radi.</div>
+
+<h2 id="hosting-github-pages"><a class="anchor" href="#hosting-github-pages">#</a>Hosting: GitHub Pages</h2>
+<p>1-mavzuda hosting — sayt fayllari saqlanadigan server ekanini bildik. HTML/CSS/JS saytlar uchun <b>GitHub Pages</b> — bepul hosting:</p>
+<ol class="steps">
+  <li>Repozitoriyada <b>Settings → Pages</b> bo'limiga kiring.</li>
+  <li><b>Source</b>: "Deploy from a branch", <b>Branch</b>: <code>main</code>, papka <code>/ (root)</code> → <b>Save</b>.</li>
+  <li>1–2 daqiqadan so'ng saytingiz <code>https://USERNAME.github.io/portfolio/</code> manzilida ochiladi. Havolani do'stlaringizga yuboring!</li>
+</ol>
+<p>Muhim: bosh sahifa fayli <code>index.html</code> deb nomlangan bo'lishi kerak. 13-mavzuda Netlify va Vercel'ni ham o'rganamiz.</p>
+
+<h2 id="seo-googleda-yuqorida-chiqish"><a class="anchor" href="#seo-googleda-yuqorida-chiqish">#</a>SEO — Google'da yuqorida chiqish</h2>
+<p><b>SEO (Search Engine Optimization)</b> — saytni qidiruv tizimlari uchun "tushunarli" qilish, natijada u qidiruvda yuqoriroq chiqadi.
+Google sayt "o'quvchi"si — robot. U dizaynni emas, <b>kodni</b> o'qiydi.</p>
+<h3>Asosiy SEO qoidalari (siz hozir qila oladiganlar)</h3>
+<div class="table-wrap"><table>
+<tr><th>Qoida</th><th>Qanday</th></tr>
+<tr><td>Mazmunli <code>&lt;title&gt;</code></td><td>Har bir sahifada har xil, 50–60 belgi: <code>Ali Valiyev — yosh veb-dasturchi portfoliosi</code></td></tr>
+<tr><td><code>meta description</code></td><td>Google natijasidagi tavsif, 150–160 belgi</td></tr>
+<tr><td>Bitta <code>&lt;h1&gt;</code> va sarlavhalar tartibi</td><td>h1 → h2 → h3 (2-mavzu)</td></tr>
+<tr><td>Semantik teglar</td><td><code>header</code>, <code>main</code>, <code>article</code> (5-mavzu)</td></tr>
+<tr><td>Rasmlarda <code>alt</code></td><td>Mazmunli tavsif (4-mavzu)</td></tr>
+<tr><td>Tushunarli manzillar</td><td><code>/loyihalar.html</code> ✅, <code>/page1.html</code> ❌</td></tr>
+<tr><td>Tezlik</td><td>Rasmlarni siqish, <code>loading="lazy"</code></td></tr>
+<tr><td>Mobilga moslik</td><td>Responsiv dizayn (10-mavzu) — Google mobil versiyani asosiy deb hisoblaydi</td></tr>
+<tr><td>HTTPS</td><td>GitHub Pages, Netlify avtomatik beradi</td></tr>
+<tr><td>Sifatli mazmun</td><td>Eng muhimi! Foydali, noyob, o'z so'zlaringiz bilan yozilgan matn</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Ali Valiyev — yosh veb-dasturchi portfoliosi&lt;/title&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;Samarqandlik 8-sinf o&#x27;quvchisi Ali Valiyevning HTML, CSS va JavaScript loyihalari.&quot;&gt;
+
+  &lt;!-- Telegram/Facebook&#x27;da havola yuborilganda chiroyli &quot;kartochka&quot; uchun --&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;Ali Valiyev — portfolio&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;Mening veb-loyihalarim&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://USERNAME.github.io/portfolio/rasmlar/preview.jpg&quot;&gt;
+&lt;/head&gt;</code></pre></div>
+<p><b>Tekshirish:</b> Chrome → <kbd>F12</kbd> → <b>Lighthouse</b> yorlig'i → "SEO" va "Performance" belgilang → <b>Analyze page load</b>. 90+ ball — a'lo natija.
+Lighthouse har bir muammoni va uni qanday tuzatishni ko'rsatadi.</p>
+
+<h2 id="amaliy-mashgulot-6-va-7-loyihalar"><a class="anchor" href="#amaliy-mashgulot-6-va-7-loyihalar">#</a>Amaliy mashg'ulot (6 va 7-loyihalar)</h2>
+<ol class="steps">
+  <li>Git'ni o'rnating va sozlang (<code>user.name</code>, <code>user.email</code>).</li>
+  <li>8-mavzudagi <code>portfolio/</code> papkasini VS Code'da oching, terminalda <code>git init</code>.</li>
+  <li><code>git status</code> → <code>git add .</code> → <code>git commit -m "Portfolio: birinchi versiya"</code>.</li>
+  <li>GitHub'da <code>portfolio</code> repozitoriyasini yarating va <code>push</code> qiling.</li>
+  <li>Biror o'zgarish kiriting (masalan, yangi loyiha kartasi), yana <code>add</code> → <code>commit</code> → <code>push</code>. GitHub'da <b>commits</b> tarixini oching.</li>
+  <li>GitHub Pages'ni yoqing va saytingizni telefoningizdan oching.</li>
+  <li>Barcha sahifalarga <code>title</code> va <code>description</code> qo'shing, Lighthouse bilan SEO ballini tekshiring va 90+ ga yetkazing.</li>
+  <li>Repozitoriyaga <code>README.md</code> fayl qo'shing — loyiha haqida qisqacha:
+<div class="code"><div class="code-head"><span>README.md</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text"># Mening portfoliom
+
+8-sinf o&#x27;quvchisi Ali Valiyevning shaxsiy sayti.
+
+**Sayt:** https://USERNAME.github.io/portfolio/
+
+## Texnologiyalar
+- HTML5 (semantik teglar)
+- CSS3 (Flexbox, Grid, responsiv dizayn)</code></pre></div></li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>git commit</code> qilishdan oldin <code>git add</code> ni unutish — "nothing added to commit" xabari.</li>
+  <li>❌ <code>git init</code> ni noto'g'ri papkada (masalan, butun "Ish stoli"da) bajarish. Doim loyiha papkasi ichida.</li>
+  <li>❌ GitHub Pages'da sahifa ochilmayapti — bosh fayl <code>index.html</code> emas (masalan, <code>Index.html</code> yoki <code>bosh.html</code>).</li>
+  <li>❌ Rasmlar GitHub Pages'da ko'rinmayapti — fayl nomida katta-kichik harf farqi (<code>Logo.PNG</code> ≠ <code>logo.png</code>).</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">O'zgarishlarni "saqlash nuqtasi" sifatida tarixga yozuvchi buyruq?</p><ol>
+<li><code>git add</code></li><li><code>git push</code></li><li><code>git commit</code></li><li><code>git init</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Git va GitHub farqi nimada?</p><ol>
+<li>Git — kompyuterdagi dastur, GitHub — loyihalarni internetda saqlovchi sayt</li><li>Ular bir xil narsa</li><li>GitHub — dastur, Git — sayt</li><li>Git faqat internetda ishlaydi</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Lokal commit'larni GitHub'ga yuborish buyrug'i?</p><ol>
+<li><code>git pull</code></li><li><code>git clone</code></li><li><code>git status</code></li><li><code>git push</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Google natijasida sahifa ostida ko'rinadigan qisqa tavsif qaysi teg bilan beriladi?</p><ol>
+<li><code>&lt;title&gt;</code></li><li><code>&lt;meta name="description"&gt;</code></li><li><code>&lt;h1&gt;</code></li><li><code>&lt;p class="seo"&gt;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">SEO uchun foydali EMAS narsa qaysi?</p><ol>
+<li>Rasmlarda alt matni</li><li>Saytning telefonga moslashishi</li><li>Sahifada 5 ta h1 sarlavha</li><li>Tez yuklanish</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Barcha oldingi loyihalaringizni (vizitka, maktab sahifasi, landing) alohida repozitoriyalarga joylang va GitHub Pages'ni yoqing.</li>
+  <li>Har bir loyihada kamida 5 ta mazmunli commit bo'lsin.</li>
+  <li>GitHub profilingizni bezang: rasm, bio, va <code>USERNAME/USERNAME</code> nomli maxsus repozitoriyada profil README yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Git — versiyalar tizimi (dastur), GitHub — kodni internetda saqlash platformasi.</li>
+  <li>Ish sikli: o'zgartirish → <code>git add .</code> → <code>git commit -m "izoh"</code> → <code>git push</code>.</li>
+  <li><code>git status</code> — holat, <code>git log --oneline</code> — tarix, <code>git clone</code>/<code>git pull</code> — yuklab olish.</li>
+  <li>GitHub Pages: Settings → Pages → main → sayt <code>USERNAME.github.io/repo</code> da.</li>
+  <li>SEO: title, description, bitta h1, semantika, alt, tezlik, mobilga moslik, sifatli mazmun.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="10-responsiv-dizayn-figma.html"><small>← Oldingi mavzu</small>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a><a class="next" href="12-css-animatsiya.html"><small>Keyingi mavzu →</small>CSS animatsiyalar va transformatsiyalar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#versiyalarni-boshqarish-nima">Versiyalarni boshqarish nima?</a></li><li><a href="#gitni-ornatish-va-sozlash">Git&#x27;ni o&#x27;rnatish va sozlash</a></li><li><a href="#gitning-asosiy-buyruqlari">Git&#x27;ning asosiy buyruqlari</a></li><li><a href="#githubga-yuklash">GitHub&#x27;ga yuklash</a></li><li><a href="#hosting-github-pages">Hosting: GitHub Pages</a></li><li><a href="#seo-googleda-yuqorida-chiqish">SEO — Google&#x27;da yuqorida chiqish</a></li><li><a href="#amaliy-mashgulot-6-va-7-loyihalar">Amaliy mashg&#x27;ulot (6 va 7-loyihalar)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

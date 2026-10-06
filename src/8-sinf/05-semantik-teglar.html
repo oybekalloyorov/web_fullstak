@@ -1,0 +1,222 @@
+<!-- title: HTML5 semantik teglari va ularning roli | desc: Semantik HTML nima, header, nav, main, section, article, aside, footer teglarining vazifalari, div va span farqi, SEO va foydalanish qulayligi (accessibility) uchun ahamiyati. | icon: 🏛️ | level: 1 soat · amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>"Semantik" so'zining ma'nosini va nima uchun muhimligini;</li>
+  <li>Sahifaning asosiy qismlarini ifodalovchi HTML5 teglarini;</li>
+  <li><code>section</code> va <code>article</code>, <code>div</code> va <code>span</code> farqini;</li>
+  <li>Semantik teglar Google (SEO) va ko'zi ojiz foydalanuvchilarga qanday yordam berishini;</li>
+  <li>Vizitka saytingizni to'g'ri semantik tuzilmaga keltirishni.</li>
+</ul>
+</div>
+
+<h2>"Semantik" nima degani?</h2>
+<p><b>Semantika</b> — ma'no. <b>Semantik teg</b> — nomi uning <b>ichidagi mazmun nima ekanini</b> aytib turadigan teg.</p>
+<ul>
+  <li><code>&lt;div&gt;</code> — hech narsa demaydi: "bu shunchaki quti".</li>
+  <li><code>&lt;nav&gt;</code> — "bu yerda navigatsiya (menyu) bor".</li>
+  <li><code>&lt;footer&gt;</code> — "bu sahifaning pastki qismi".</li>
+</ul>
+<div class="analogy"><span class="t">O'xshatish: ko'chib o'tish qutilari</span>
+Ko'chib o'tayotganda barcha qutilarga "quti" deb yozsangiz (<code>div</code>), yangi uyda nima qayerdaligini topish uchun hammasini ochishga to'g'ri keladi.
+Agar "Oshxona idishlari", "Kitoblar", "Kiyimlar" deb yozsangiz (<code>header</code>, <code>article</code>, <code>footer</code>) — hamma, hatto
+begona odam ham, darhol tushunadi. Semantik teglar — qutilarga yozilgan yorliqlar.</div>
+<p>2014-yilgacha (HTML4) saytlar asosan <code>&lt;div&gt;</code> lardan qurilgan: <code>&lt;div id="header"&gt;</code>, <code>&lt;div class="menu"&gt;</code>.
+<b>HTML5</b> bu keng tarqalgan qismlar uchun maxsus teglarni qo'shdi.</p>
+
+<h2>Asosiy semantik teglar</h2>
+<div class="diagram">
+  <div style="display:grid;gap:6px;max-width:520px;margin:auto;font-size:14px;font-weight:600;text-align:center">
+    <div style="padding:10px;border-radius:8px;background:#c7d2fe;color:#1e1b4b">&lt;header&gt; — logo, sarlavha<div style="margin:6px auto 0;max-width:80%;padding:6px;border-radius:6px;background:#a5b4fc">&lt;nav&gt; — menyu</div></div>
+    <div style="display:grid;grid-template-columns:3fr 1fr;gap:6px">
+      <div style="padding:10px;border-radius:8px;background:#bbf7d0;color:#14532d">&lt;main&gt; — asosiy mazmun
+        <div style="margin-top:6px;padding:8px;border-radius:6px;background:#86efac">&lt;section&gt; — bo'lim</div>
+        <div style="margin-top:6px;padding:8px;border-radius:6px;background:#86efac">&lt;article&gt; — maqola</div>
+      </div>
+      <div style="padding:10px;border-radius:8px;background:#fde68a;color:#713f12">&lt;aside&gt;<br>yon panel</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#fbcfe8;color:#831843">&lt;footer&gt; — pastki qism</div>
+  </div>
+  <div class="diagram-caption">Odatiy veb-sahifaning semantik tuzilmasi</div>
+</div>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Vazifasi</th><th>Ichida odatda nima bo'ladi</th></tr>
+<tr><td><code>&lt;header&gt;</code></td><td>Sahifa yoki bo'limning <b>kirish qismi</b></td><td>Logo, sayt nomi, menyu, qidiruv</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td><b>Asosiy navigatsiya</b> havolalari</td><td>Sayt menyusi, mundarija</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>Sahifaning <b>asosiy, noyob mazmuni</b>. Sahifada <b>faqat bitta</b></td><td>Maqolalar, mahsulotlar, asosiy matn</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>Mavzu bo'yicha guruhlangan <b>bo'lim</b> (odatda sarlavhasi bor)</td><td>"Biz haqimizda", "Xizmatlar", "Narxlar"</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td><b>Mustaqil</b>, alohida olib tarqatsa ham tushunarli mazmun</td><td>Yangilik, blog posti, mahsulot kartasi, izoh</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>Asosiy mazmunga <b>qo'shimcha</b>, yondosh ma'lumot</td><td>Yon panel, "O'xshash maqolalar", reklama</td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>Sahifa yoki bo'limning <b>pastki qismi</b></td><td>Mualliflik huquqi, aloqa, ijtimoiy tarmoqlar</td></tr>
+<tr><td><code>&lt;figure&gt;</code> / <code>&lt;figcaption&gt;</code></td><td>Rasm, diagramma va uning izohi</td><td>Rasm + "1-rasm. ..."</td></tr>
+<tr><td><code>&lt;time&gt;</code></td><td>Sana yoki vaqt</td><td><code>&lt;time datetime="2026-09-01"&gt;1-sentabr&lt;/time&gt;</code></td></tr>
+<tr><td><code>&lt;address&gt;</code></td><td>Aloqa ma'lumotlari</td><td>Manzil, email, telefon</td></tr>
+</table></div>
+
+<h3><code>section</code> va <code>article</code> — farqi nimada?</h3>
+<p>Oddiy savol bering: <b>"Bu qismni boshqa saytga alohida olib qo'ysam, o'zi tushunarli bo'ladimi?"</b></p>
+<ul>
+  <li><b>Ha</b> → <code>&lt;article&gt;</code>. Masalan: yangilik maqolasi, mahsulot kartasi, foydalanuvchi izohi, forumdagi post.</li>
+  <li><b>Yo'q, u sahifaning bir qismi</b> → <code>&lt;section&gt;</code>. Masalan: "Bizning xizmatlar" bo'limi faqat shu sayt kontekstida ma'noli.</li>
+</ul>
+<p>Ular bir-birining ichida bo'lishi mumkin: "Yangiliklar" <code>section</code>i ichida bir nechta <code>article</code>; yoki uzun <code>article</code> ichida bir nechta <code>section</code>.</p>
+
+<h3><code>div</code> va <code>span</code> — ma'nosiz konteynerlar</h3>
+<p>Semantik teglar bor ekan, <code>div</code> kerak emasmi? Kerak! Ular <b>faqat dizayn uchun</b> guruhlash kerak bo'lganda ishlatiladi:</p>
+<ul>
+  <li><code>&lt;div&gt;</code> — <b>blok</b> konteyner (yangi qatordan boshlanadi, butun kenglikni egallaydi).</li>
+  <li><code>&lt;span&gt;</code> — <b>qator ichidagi</b> konteyner (matnning bir bo'lagiga rang berish uchun).</li>
+</ul>
+<pre data-lang="html" data-play><div class="karta">
+  <p>Bugun havo <span style="color: orange; font-weight: bold">+28°C</span>, quyoshli.</p>
+</div></pre>
+<div class="callout tip"><span class="t">Qoida</span>
+Avval mos semantik teg bormi — o'ylang. Agar hech biri mos kelmasa, faqat CSS uchun guruhlash kerak bo'lsa — <code>div</code>/<code>span</code>.</div>
+
+<h3>Blok va qator ichidagi (inline) elementlar</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Blok elementlar</th><th>Qator ichidagi (inline) elementlar</th></tr>
+<tr><td>Misollar</td><td><code>div, p, h1–h6, ul, ol, li, table, form, header, section, article...</code></td><td><code>span, a, strong, em, img, input, label, code...</code></td></tr>
+<tr><td>Joylashuvi</td><td>Doim yangi qatordan boshlanadi</td><td>Matn bilan bir qatorda turadi</td></tr>
+<tr><td>Kengligi</td><td>Butun mavjud kenglikni egallaydi</td><td>Faqat o'z mazmunicha</td></tr>
+</table></div>
+<pre data-lang="html" data-play><div style="background: lightblue">Men blokman — butun kenglikni egallayman</div>
+<div style="background: lightgreen">Men ham blokman — yangi qatordan boshlandim</div>
+<span style="background: pink">Men inline'man</span>
+<span style="background: gold">Men ham — yoningizda turibman</span></pre>
+
+<h2>Semantika nima uchun muhim?</h2>
+<h3>1. SEO — qidiruv tizimlari uchun</h3>
+<p>Google'ning roboti sahifani "ko'zi" bilan emas, kod orqali o'qiydi. <code>&lt;main&gt;</code> va <code>&lt;article&gt;</code> unga "asosiy mazmun shu yerda",
+<code>&lt;nav&gt;</code> va <code>&lt;footer&gt;</code> esa "bular takrorlanuvchi qismlar" deb aytadi. Natijada sahifangiz qidiruvda to'g'riroq va yuqoriroq chiqadi.</p>
+<h3>2. Accessibility (foydalanish qulayligi)</h3>
+<p>Ko'zi ojiz odamlar <b>ekran o'quvchi</b> dasturlar (screen reader) yordamida internetdan foydalanadi. Bu dasturlar semantik teglar orqali
+"Navigatsiyaga o'tish", "Asosiy mazmunga o'tish", "Keyingi maqola" kabi buyruqlarni beradi. <code>div</code>lardan qurilgan sahifada
+esa ular uchun hamma narsa bir xil "quti".</p>
+<h3>3. Kodni o'qish va jamoada ishlash</h3>
+<p>Kodingizni ochgan boshqa dasturchi (yoki bir oydan keyingi o'zingiz!) <code>&lt;footer&gt;</code> ni ko'rib, darhol nima ekanini tushunadi.</p>
+
+<h2>Misol: "div sho'rva"dan semantik kodga</h2>
+<p><b>❌ Oldin</b> — hammasi <code>div</code>:</p>
+<pre data-lang="html"><div id="header">
+  <div class="logo">Maktab №5</div>
+  <div class="menu">
+    <a href="#">Bosh sahifa</a> <a href="#">Yangiliklar</a>
+  </div>
+</div>
+<div id="content">
+  <div class="news">
+    <div class="title">Bilimlar bellashuvi</div>
+    <div class="text">8-sinflar o'rtasida...</div>
+  </div>
+</div>
+<div id="footer">© 2026</div></pre>
+<p><b>✅ Keyin</b> — semantik:</p>
+<pre data-lang="html" data-play><header>
+  <h1>Maktab №5</h1>
+  <nav>
+    <a href="#">Bosh sahifa</a> | <a href="#">Yangiliklar</a>
+  </nav>
+</header>
+
+<main>
+  <section>
+    <h2>So'nggi yangiliklar</h2>
+
+    <article>
+      <h3>Bilimlar bellashuvi</h3>
+      <p><time datetime="2026-10-02">2-oktabr, 2026</time></p>
+      <p>8-sinflar o'rtasida informatika fanidan bilimlar bellashuvi bo'lib o'tdi.
+         G'olib — 8-"B" sinf jamoasi!</p>
+    </article>
+
+    <article>
+      <h3>Yangi kompyuter xonasi</h3>
+      <p><time datetime="2026-09-15">15-sentabr, 2026</time></p>
+      <p>Maktabimizda 20 ta kompyuterli zamonaviy sinf xonasi ochildi.</p>
+    </article>
+  </section>
+</main>
+
+<aside>
+  <h2>E'lonlar</h2>
+  <p>Ota-onalar majlisi — shanba, soat 10:00.</p>
+</aside>
+
+<footer>
+  <address>Samarqand sh., Mustaqillik ko'chasi, 5-uy · <a href="tel:+998662000000">+998 66 200 00 00</a></address>
+  <p><small>&copy; 2026 Maktab №5</small></p>
+</footer></pre>
+<p>Brauzerda ikkala variant <b>bir xil</b> ko'rinadi — farq kod ichida. Lekin ikkinchisini Google ham, ekran o'quvchi ham, boshqa dasturchi ham to'g'ri tushunadi.</p>
+
+<h2>SEO uchun <code>head</code> qismi</h2>
+<p>Semantik <code>body</code> bilan birga <code>head</code> ichida ham to'g'ri ma'lumot bo'lishi kerak:</p>
+<pre data-lang="html"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maktab №5 — Samarqand shahridagi umumta'lim maktabi</title>
+  <meta name="description" content="Maktab №5 yangiliklari, dars jadvali, to'garaklar va ustozlar haqida ma'lumot.">
+</head></pre>
+<ul>
+  <li><code>&lt;title&gt;</code> — Google natijasidagi ko'k sarlavha. Har bir sahifada <b>har xil</b> va mazmunli bo'lsin.</li>
+  <li><code>&lt;meta name="description"&gt;</code> — sarlavha ostidagi qisqa tavsif (150–160 belgi).</li>
+</ul>
+
+<h2>Amaliy mashg'ulot: vizitkani semantik qilish</h2>
+<ol class="steps">
+  <li>4-mavzuda yaratgan <code>vizitka/index.html</code> faylini oching.</li>
+  <li>Navigatsiya menyusini <code>&lt;header&gt;</code> ichiga, menyuni esa <code>&lt;nav&gt;</code> ichiga o'rang. Ismingizni <code>&lt;header&gt;</code> ichidagi logotip sifatida qo'ying.</li>
+  <li>Sahifaning asosiy mazmunini <code>&lt;main&gt;</code> ichiga oling.</li>
+  <li>"Men haqimda", "Ko'nikmalarim", "Maqsadlarim" qismlarini alohida <code>&lt;section&gt;</code> larga ajrating, har birida <code>&lt;h2&gt;</code> sarlavha bo'lsin.</li>
+  <li><code>hobbilar.html</code> da har bir hobbini <code>&lt;article&gt;</code> qiling (u alohida olib tarqatsa ham tushunarli).</li>
+  <li>Sahifa oxiriga <code>&lt;footer&gt;</code> qo'shing: mualliflik huquqi (<code>&amp;copy;</code>) va <code>&lt;address&gt;</code> ichida aloqa.</li>
+  <li>"Qiziqarli fakt" kabi qo'shimcha ma'lumotni <code>&lt;aside&gt;</code> ga joylang.</li>
+  <li>Har bir sahifaga mazmunli <code>&lt;title&gt;</code> va <code>&lt;meta name="description"&gt;</code> yozing.</li>
+  <li><b>Tekshirish:</b> <a href="https://validator.w3.org/#validate_by_input" target="_blank" rel="noopener">validator.w3.org</a> saytiga kodingizni
+  joylab, "Check" bosing. Xatolar ro'yxati bo'sh bo'lguncha tuzating.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Sahifada bir nechta <code>&lt;main&gt;</code> — faqat bitta bo'ladi.</li>
+  <li>❌ Har bir havola guruhini <code>&lt;nav&gt;</code> qilish — <code>nav</code> faqat <b>asosiy</b> navigatsiya uchun.</li>
+  <li>❌ Faqat dizayn uchun <code>&lt;section&gt;</code> ishlatish — sarlavhasi yo'q va mavzusi aniq bo'lmasa, bu <code>div</code>.</li>
+  <li>❌ <code>&lt;header&gt;</code> ni <code>&lt;head&gt;</code> bilan adashtirish: <code>head</code> — ko'rinmas meta-ma'lumot, <code>header</code> — ko'rinadigan sahifa tepasi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Sahifaning asosiy, noyob mazmuni qaysi teg ichida bo'ladi?</p><ol>
+<li><code>&lt;section&gt;</code></li><li><code>&lt;main&gt;</code></li><li><code>&lt;body&gt;</code></li><li><code>&lt;header&gt;</code></li></ol>
+<p class="explain"><code>main</code> — sahifada bitta, asosiy mazmun uchun.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Blogdagi alohida post uchun eng mos teg qaysi?</p><ol>
+<li><code>&lt;article&gt;</code></li><li><code>&lt;aside&gt;</code></li><li><code>&lt;nav&gt;</code></li><li><code>&lt;span&gt;</code></li></ol>
+<p class="explain">Post mustaqil mazmun — uni alohida olib tarqatsa ham tushunarli.</p></div>
+<div class="quiz" data-answer="4"><p class="q">"O'xshash maqolalar" yon paneli uchun qaysi teg mos?</p><ol>
+<li><code>&lt;footer&gt;</code></li><li><code>&lt;main&gt;</code></li><li><code>&lt;section&gt;</code></li><li><code>&lt;aside&gt;</code></li></ol>
+<p class="explain"><code>aside</code> — asosiy mazmunga qo'shimcha, yondosh ma'lumot.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Qaysi element <b>inline</b> (qator ichida)?</p><ol>
+<li><code>&lt;div&gt;</code></li><li><code>&lt;p&gt;</code></li><li><code>&lt;span&gt;</code></li><li><code>&lt;section&gt;</code></li></ol>
+<p class="explain"><code>span</code>, <code>a</code>, <code>strong</code>, <code>img</code> — inline; qolganlari blok.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Semantik teglar nima uchun foydali EMAS?</p><ol>
+<li>Google sahifani yaxshiroq tushunadi</li><li>Sahifa avtomatik chiroyli bo'lib qoladi</li><li>Ekran o'quvchi dasturlar qulayroq ishlaydi</li><li>Kod o'qilishi osonlashadi</li></ol>
+<p class="explain">Semantik teglar ko'rinishni o'zgartirmaydi — dizayn CSS'ning ishi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Sevimli yangiliklar saytingizni oching, <kbd>F12</kbd> → Elements orqali kodini ko'ring. Qaysi semantik teglar ishlatilganini yozib chiqing.</li>
+  <li>"Sinfimiz gazetasi" sahifasini yarating: <code>header</code> (gazeta nomi + <code>nav</code>), <code>main</code> ichida 3 ta <code>article</code> (yangilik),
+  <code>aside</code> (tug'ilgan kunlar), <code>footer</code>. Har bir yangilikda <code>&lt;time&gt;</code> ishlating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Semantik teg — nomi mazmunini aytadigan teg.</li>
+  <li><code>header</code>, <code>nav</code>, <code>main</code> (bitta), <code>section</code>, <code>article</code>, <code>aside</code>, <code>footer</code> — sahifaning asosiy qismlari.</li>
+  <li>Mustaqil mazmun — <code>article</code>; sahifa bo'limi — <code>section</code>; faqat dizayn uchun — <code>div</code>/<code>span</code>.</li>
+  <li>Semantika SEO, accessibility va kod o'qilishi uchun muhim; ko'rinishga ta'sir qilmaydi.</li>
+</ul>
+</div>

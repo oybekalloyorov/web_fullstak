@@ -1,0 +1,335 @@
+<!-- title: Jadval, ro'yxat va forma elementlari | desc: Tartibli va tartibsiz ro'yxatlar, jadvallar (thead, tbody, colspan, rowspan), forma va uning elementlari: input turlari, label, select, textarea, tugmalar. | icon: 📋 | level: 1 soat · amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Tartibli va tartibsiz ro'yxatlar yaratishni;</li>
+  <li>Dars jadvali kabi jadvallarni, kataklarni birlashtirishni;</li>
+  <li>Foydalanuvchidan ma'lumot oluvchi formalarni: matn, parol, email, tanlash, belgilash maydonlari va tugmalarni;</li>
+  <li>Forma ma'lumoti qayerga va qanday yuborilishini.</li>
+</ul>
+</div>
+
+<h2>Ro'yxatlar</h2>
+<h3>Tartibsiz ro'yxat — <code>&lt;ul&gt;</code></h3>
+<p><b>ul</b> = <i>unordered list</i>. Tartib muhim bo'lmaganda: xarid ro'yxati, ko'nikmalar, menyu. Har bir band — <code>&lt;li&gt;</code> (<i>list item</i>).</p>
+<pre data-lang="html" data-play><h3>Bozorlik ro'yxati</h3>
+<ul>
+  <li>Non</li>
+  <li>Sut</li>
+  <li>Olma</li>
+</ul></pre>
+<h3>Tartibli ro'yxat — <code>&lt;ol&gt;</code></h3>
+<p><b>ol</b> = <i>ordered list</i>. Tartib muhim bo'lganda: retsept qadamlari, reyting, ko'rsatmalar.</p>
+<pre data-lang="html" data-play><h3>Choy damlash</h3>
+<ol>
+  <li>Suvni qaynating</li>
+  <li>Choynakni issiq suv bilan chayib oling</li>
+  <li>Choy soling va qaynoq suv quying</li>
+  <li>5 daqiqa damlang</li>
+</ol>
+
+<h3>Olimpiada g'oliblari (Rim raqamlari bilan)</h3>
+<ol type="I">
+  <li>Malika</li>
+  <li>Jasur</li>
+  <li>Dilnoza</li>
+</ol>
+
+<h3>3-dan boshlanuvchi, teskari ro'yxat</h3>
+<ol start="3" reversed>
+  <li>Uchinchi</li>
+  <li>Ikkinchi</li>
+  <li>Birinchi</li>
+</ol></pre>
+<div class="table-wrap"><table>
+<tr><th>Atribut (<code>ol</code> uchun)</th><th>Natija</th></tr>
+<tr><td><code>type="1"</code></td><td>1, 2, 3 (standart)</td></tr>
+<tr><td><code>type="a"</code> / <code>type="A"</code></td><td>a, b, c / A, B, C</td></tr>
+<tr><td><code>type="i"</code> / <code>type="I"</code></td><td>i, ii, iii / I, II, III</td></tr>
+<tr><td><code>start="5"</code></td><td>5 dan boshlaydi</td></tr>
+<tr><td><code>reversed</code></td><td>Teskari tartibda sanaydi</td></tr>
+</table></div>
+<h3>Ichma-ich ro'yxat</h3>
+<p>Ro'yxat ichida ro'yxat — <code>&lt;li&gt;</code> <b>ichiga</b> yangi <code>ul</code>/<code>ol</code> yoziladi:</p>
+<pre data-lang="html" data-play><ul>
+  <li>Aniq fanlar
+    <ul>
+      <li>Matematika</li>
+      <li>Informatika</li>
+    </ul>
+  </li>
+  <li>Tabiiy fanlar
+    <ul>
+      <li>Fizika</li>
+      <li>Kimyo</li>
+    </ul>
+  </li>
+</ul></pre>
+<h3>Ta'riflar ro'yxati — <code>&lt;dl&gt;</code></h3>
+<p>Lug'at yoki "atama — izoh" juftliklari uchun: <code>dt</code> — atama, <code>dd</code> — izoh.</p>
+<pre data-lang="html" data-play><dl>
+  <dt>HTML</dt>
+  <dd>Sahifa tuzilishini yaratuvchi til</dd>
+  <dt>CSS</dt>
+  <dd>Sahifa dizaynini beruvchi til</dd>
+</dl></pre>
+
+<h2>Jadvallar</h2>
+<p>Jadval — <b>qator va ustunlardan</b> iborat ma'lumot: dars jadvali, baholar, narxlar. Asosiy teglar:</p>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Ma'nosi</th></tr>
+<tr><td><code>&lt;table&gt;</code></td><td>Butun jadval</td></tr>
+<tr><td><code>&lt;tr&gt;</code></td><td><b>t</b>able <b>r</b>ow — qator</td></tr>
+<tr><td><code>&lt;td&gt;</code></td><td><b>t</b>able <b>d</b>ata — oddiy katak</td></tr>
+<tr><td><code>&lt;th&gt;</code></td><td><b>t</b>able <b>h</b>eader — sarlavha katagi (qalin, markazda)</td></tr>
+<tr><td><code>&lt;caption&gt;</code></td><td>Jadval nomi</td></tr>
+<tr><td><code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code></td><td>Jadvalning bosh, asosiy va pastki qismlari</td></tr>
+</table></div>
+<div class="analogy"><span class="t">Eslab qolish uchun</span>
+Jadval <b>qatorma-qator</b> yoziladi: avval <code>&lt;tr&gt;</code> (qator) ochasiz, uning ichiga chapdan o'ngga kataklarni (<code>&lt;td&gt;</code>) yozasiz.
+Ustun degan alohida teg yo'q — ustunlar har qatordagi kataklar tartibidan hosil bo'ladi.</div>
+<pre data-lang="html" data-play><table border="1">
+  <caption>8-"A" sinf baholari</caption>
+  <thead>
+    <tr>
+      <th>O'quvchi</th>
+      <th>Matematika</th>
+      <th>Informatika</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ali</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Zarina</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>O'rtacha</th>
+      <td>4.5</td>
+      <td>5</td>
+    </tr>
+  </tfoot>
+</table></pre>
+<div class="callout info"><code>border="1"</code> — eski usul, faqat hozircha chegaralarni ko'rish uchun. 7-mavzudan boshlab chegaralarni CSS bilan chiroyli qilamiz.</div>
+<h3>Kataklarni birlashtirish: <code>colspan</code> va <code>rowspan</code></h3>
+<ul>
+  <li><code>colspan="2"</code> — katak <b>gorizontal</b> bo'yicha 2 ta ustunni egallaydi.</li>
+  <li><code>rowspan="2"</code> — katak <b>vertikal</b> bo'yicha 2 ta qatorni egallaydi.</li>
+</ul>
+<pre data-lang="html" data-play><table border="1">
+  <caption>Dars jadvali</caption>
+  <tr>
+    <th>Vaqt</th><th>Dushanba</th><th>Seshanba</th>
+  </tr>
+  <tr>
+    <td>08:30</td><td>Matematika</td><td rowspan="2">Informatika<br>(juft dars)</td>
+  </tr>
+  <tr>
+    <td>09:20</td><td>Ona tili</td>
+    <!-- Seshanba katagi yo'q: tepadagi rowspan uni egallab turibdi -->
+  </tr>
+  <tr>
+    <td>10:10</td><td colspan="2">🍎 Katta tanaffus</td>
+  </tr>
+</table></pre>
+<div class="callout warn">Birlashtirilgan katak egallagan joyga keyingi qatorlarda katak <b>yozilmaydi</b>, aks holda jadval "siljib" ketadi. Har bir qatordagi kataklar soni (birlashtirishlarni hisobga olganda) teng bo'lishi kerak.</div>
+<div class="callout tip">Jadvalni faqat <b>jadval ko'rinishidagi ma'lumot</b> uchun ishlating. Sahifa maketini (menyu, ustunlar) jadval bilan qurish — eskirgan usul; buning uchun Flexbox va Grid bor (8-mavzu).</div>
+
+<h2>Formalar — foydalanuvchidan ma'lumot olish</h2>
+<p>Ro'yxatdan o'tish, qidiruv, izoh qoldirish, test topshirish — barchasi <b>forma</b> orqali. Forma — frontend va backend o'rtasidagi ko'prik:
+foydalanuvchi ma'lumot kiritadi, forma uni serverga yuboradi.</p>
+<pre data-lang="html" data-play><form action="/royxatdan-otish" method="POST">
+  <label for="ism">Ismingiz:</label>
+  <input type="text" id="ism" name="ism" placeholder="Masalan: Aziz" required>
+
+  <button type="submit">Yuborish</button>
+</form></pre>
+<div class="table-wrap"><table>
+<tr><th>Qism</th><th>Vazifasi</th></tr>
+<tr><td><code>&lt;form&gt;</code></td><td>Barcha maydonlarni o'rab turuvchi "konvert"</td></tr>
+<tr><td><code>action</code></td><td>Ma'lumot qaysi manzilga (serverdagi qaysi sahifaga) yuboriladi</td></tr>
+<tr><td><code>method</code></td><td><code>GET</code> — ma'lumot manzil satriga qo'shiladi (qidiruv uchun); <code>POST</code> — yashirin yuboriladi (parollar, ro'yxatdan o'tish)</td></tr>
+<tr><td><code>&lt;label&gt;</code></td><td>Maydon yozuvi. <code>for</code> atributi input'ning <code>id</code>siga teng bo'lsa, yozuv bosilganda maydon faollashadi</td></tr>
+<tr><td><code>name</code></td><td><b>Eng muhim atribut!</b> Serverga ma'lumot <code>name=qiymat</code> ko'rinishida boradi. <code>name</code>siz maydon yuborilmaydi</td></tr>
+<tr><td><code>placeholder</code></td><td>Maydon bo'sh turganda ko'rinadigan kulrang maslahat</td></tr>
+<tr><td><code>required</code></td><td>Majburiy maydon — to'ldirilmasa forma yuborilmaydi</td></tr>
+</table></div>
+
+<h3>Input turlari</h3>
+<p>Bitta <code>&lt;input&gt;</code> tegi <code>type</code> atributiga qarab butunlay boshqacha ko'rinadi:</p>
+<pre data-lang="html" data-play><form>
+  <p>Matn: <input type="text" name="ism"></p>
+  <p>Parol: <input type="password" name="parol"></p>
+  <p>Email: <input type="email" name="email"></p>
+  <p>Son (1–10): <input type="number" name="son" min="1" max="10"></p>
+  <p>Telefon: <input type="tel" name="tel" placeholder="+998 90 123 45 67"></p>
+  <p>Sana: <input type="date" name="sana"></p>
+  <p>Vaqt: <input type="time" name="vaqt"></p>
+  <p>Rang: <input type="color" name="rang" value="#4f46e5"></p>
+  <p>Diapazon: <input type="range" name="daraja" min="0" max="100"></p>
+  <p>Fayl: <input type="file" name="rasm" accept="image/*"></p>
+
+  <p>Jinsingiz:
+    <label><input type="radio" name="jins" value="o'g'il"> O'g'il bola</label>
+    <label><input type="radio" name="jins" value="qiz"> Qiz bola</label>
+  </p>
+
+  <p>Qiziqishlar:
+    <label><input type="checkbox" name="qiziqish" value="sport"> Sport</label>
+    <label><input type="checkbox" name="qiziqish" value="musiqa" checked> Musiqa</label>
+    <label><input type="checkbox" name="qiziqish" value="kitob"> Kitob</label>
+  </p>
+</form></pre>
+<div class="table-wrap"><table>
+<tr><th>type</th><th>Qachon ishlatiladi</th></tr>
+<tr><td><code>text</code></td><td>Oddiy matn: ism, shahar</td></tr>
+<tr><td><code>password</code></td><td>Parol — belgilar nuqta bo'lib ko'rinadi</td></tr>
+<tr><td><code>email</code></td><td>Email — <code>@</code> borligini brauzer o'zi tekshiradi</td></tr>
+<tr><td><code>number</code></td><td>Faqat son; <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+<tr><td><code>radio</code></td><td>Bir nechta variantdan <b>faqat bittasi</b>. Bir guruh radiolarda <code>name</code> <b>bir xil</b> bo'lishi shart!</td></tr>
+<tr><td><code>checkbox</code></td><td>Bir nechtasini belgilash mumkin; <code>checked</code> — oldindan belgilangan</td></tr>
+<tr><td><code>date</code>, <code>time</code>, <code>color</code>, <code>range</code>, <code>file</code></td><td>Sana, vaqt, rang, slayder, fayl tanlash</td></tr>
+<tr><td><code>submit</code>, <code>reset</code></td><td>Yuborish va tozalash tugmalari (eski usul; hozir <code>&lt;button&gt;</code>)</td></tr>
+</table></div>
+
+<h3>Tanlash ro'yxati va katta matn maydoni</h3>
+<pre data-lang="html" data-play><form>
+  <label for="viloyat">Viloyat:</label>
+  <select id="viloyat" name="viloyat">
+    <option value="">— Tanlang —</option>
+    <option value="toshkent">Toshkent</option>
+    <option value="samarqand" selected>Samarqand</option>
+    <option value="buxoro">Buxoro</option>
+    <option value="xorazm">Xorazm</option>
+  </select>
+
+  <br><br>
+  <label for="fikr">Fikringiz:</label><br>
+  <textarea id="fikr" name="fikr" rows="5" cols="40" placeholder="Bu yerga yozing..."></textarea>
+
+  <br>
+  <button type="submit">Yuborish</button>
+  <button type="reset">Tozalash</button>
+</form></pre>
+<ul>
+  <li><code>&lt;select&gt;</code> — ochiladigan ro'yxat; har bir variant <code>&lt;option&gt;</code>. Serverga <code>value</code> qiymati yuboriladi, foydalanuvchi esa teg ichidagi matnni ko'radi.</li>
+  <li><code>&lt;textarea&gt;</code> — ko'p qatorli matn (izoh, xat). <code>rows</code> — balandlik (qatorlarda), <code>cols</code> — kenglik.</li>
+  <li><code>&lt;button type="submit"&gt;</code> — formani yuboradi; <code>type="reset"</code> — barcha maydonlarni tozalaydi.</li>
+</ul>
+<h3>Brauzer tekshiruvi (validatsiya)</h3>
+<p>Brauzer ba'zi tekshiruvlarni o'zi bajaradi va xato bo'lsa formani yubormaydi:</p>
+<ul>
+  <li><code>required</code> — bo'sh bo'lmasin;</li>
+  <li><code>minlength="8"</code>, <code>maxlength="20"</code> — matn uzunligi;</li>
+  <li><code>min</code>, <code>max</code> — son yoki sana chegarasi;</li>
+  <li><code>type="email"</code> — email formati.</li>
+</ul>
+<div class="callout warn">Bu tekshiruvlar faqat foydalanuvchiga qulaylik uchun. Ayyor foydalanuvchi ularni chetlab o'tishi mumkin, shuning uchun
+ma'lumotlar <b>serverda ham</b> tekshiriladi (37-mavzu, Django Forms).</div>
+
+<h2>Amaliy mashg'ulot: "To'garakka yozilish" sahifasi</h2>
+<ol class="steps">
+  <li><code>togarak.html</code> faylini yarating va HTML skeletini yozing.</li>
+  <li>Sahifa tepasiga <code>&lt;h1&gt;</code> sarlavha va to'garaklar haqida qisqa paragraf yozing.</li>
+  <li>To'garaklar jadvalini yarating: ustunlar — "To'garak", "Kunlar", "Vaqt", "Joylar soni". Kamida 4 qator.
+  Bitta to'garakni ikki kunda o'tishini <code>rowspan</code> bilan ko'rsating.</li>
+  <li>"Nima uchun yozilish kerak?" — <code>&lt;ul&gt;</code> ro'yxati (3 ta sabab).</li>
+  <li>"Qanday yozilish mumkin?" — <code>&lt;ol&gt;</code> (qadamlar).</li>
+  <li>Ro'yxatdan o'tish formasini yozing:
+<pre data-lang="html" data-play><h2>Ro'yxatdan o'tish</h2>
+<form action="#" method="POST">
+  <p>
+    <label for="fio">To'liq ism *</label><br>
+    <input type="text" id="fio" name="fio" required minlength="3">
+  </p>
+  <p>
+    <label for="sinf">Sinf *</label><br>
+    <select id="sinf" name="sinf" required>
+      <option value="">— Tanlang —</option>
+      <option>7</option><option>8</option><option>9</option>
+    </select>
+  </p>
+  <p>
+    <label for="tel">Ota-ona telefoni *</label><br>
+    <input type="tel" id="tel" name="tel" placeholder="+998 __ ___ __ __" required>
+  </p>
+  <p>To'garak *<br>
+    <label><input type="radio" name="togarak" value="robototexnika" required> Robototexnika</label><br>
+    <label><input type="radio" name="togarak" value="dasturlash"> Dasturlash</label><br>
+    <label><input type="radio" name="togarak" value="shaxmat"> Shaxmat</label>
+  </p>
+  <p>Qaysi kunlar qulay?<br>
+    <label><input type="checkbox" name="kun" value="du"> Dushanba</label>
+    <label><input type="checkbox" name="kun" value="chor"> Chorshanba</label>
+    <label><input type="checkbox" name="kun" value="ju"> Juma</label>
+  </p>
+  <p>
+    <label for="izoh">Qo'shimcha izoh</label><br>
+    <textarea id="izoh" name="izoh" rows="3" cols="40"></textarea>
+  </p>
+  <p>
+    <label><input type="checkbox" name="rozilik" required> Qoidalar bilan tanishdim</label>
+  </p>
+  <button type="submit">Yozilish</button>
+  <button type="reset">Tozalash</button>
+</form></pre></li>
+  <li>Sahifani brauzerda oching. Formani bo'sh holda yuborib ko'ring — brauzer qaysi maydonlarni ko'rsatadi? Telefon raqamisiz yuborib ko'ring.</li>
+  <li><b>Tajriba:</b> <code>method="POST"</code> ni <code>method="GET"</code> ga o'zgartiring va formani to'ldirib yuboring. Manzil satriga qarang —
+  barcha ma'lumotlar <code>?fio=...&amp;sinf=8&amp;...</code> ko'rinishida ko'rinadi. Shuning uchun parollar uchun <code>GET</code> ishlatilmaydi!</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>&lt;li&gt;</code> ni <code>ul</code>/<code>ol</code> siz yozish — ro'yxat bandi doim ro'yxat ichida bo'ladi.</li>
+  <li>❌ Radio tugmalarga turli <code>name</code> berish — hammasini birdaniga belgilash mumkin bo'lib qoladi.</li>
+  <li>❌ <code>&lt;label for="..."&gt;</code> dagi qiymat input'ning <code>id</code>siga mos kelmasligi.</li>
+  <li>❌ Input'da <code>name</code> yo'qligi — ma'lumot serverga bormaydi.</li>
+  <li>❌ Jadvalda <code>&lt;td&gt;</code> ni <code>&lt;tr&gt;</code> siz to'g'ridan-to'g'ri <code>&lt;table&gt;</code> ichiga yozish.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Retsept qadamlari uchun qaysi ro'yxat mos?</p><ol>
+<li><code>&lt;ul&gt;</code></li><li><code>&lt;ol&gt;</code></li><li><code>&lt;dl&gt;</code></li><li><code>&lt;table&gt;</code></li></ol>
+<p class="explain">Qadamlar tartibi muhim — shuning uchun tartibli ro'yxat (<code>ol</code>).</p></div>
+<div class="quiz" data-answer="3"><p class="q">Jadvalda yangi qator qaysi teg bilan boshlanadi?</p><ol>
+<li><code>&lt;td&gt;</code></li><li><code>&lt;th&gt;</code></li><li><code>&lt;tr&gt;</code></li><li><code>&lt;row&gt;</code></li></ol>
+<p class="explain"><code>tr</code> = table row. Kataklar (<code>td</code>/<code>th</code>) uning ichida.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Katakni ikki ustun kengligida birlashtirish uchun qaysi atribut kerak?</p><ol>
+<li><code>colspan="2"</code></li><li><code>rowspan="2"</code></li><li><code>span="2"</code></li><li><code>width="2"</code></li></ol>
+<p class="explain">col = ustun (gorizontal), row = qator (vertikal).</p></div>
+<div class="quiz" data-answer="4"><p class="q">"Jinsingiz" savoliga faqat bitta javob tanlash uchun qaysi input turi kerak?</p><ol>
+<li><code>checkbox</code></li><li><code>text</code></li><li><code>select multiple</code></li><li><code>radio</code></li></ol>
+<p class="explain">Radio — bir guruhdan bitta tanlov. Guruhdagi barcha radiolarning <code>name</code>i bir xil bo'lishi kerak.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Forma ma'lumoti serverga qaysi atribut nomi bilan boradi?</p><ol>
+<li><code>id</code></li><li><code>name</code></li><li><code>placeholder</code></li><li><code>class</code></li></ol>
+<p class="explain">Server <code>name=qiymat</code> juftliklarini oladi. <code>id</code> esa <code>label</code> va CSS uchun.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Parol yuboradigan forma uchun qaysi <code>method</code> to'g'ri?</p><ol>
+<li><code>GET</code></li><li><code>SEND</code></li><li><code>POST</code></li><li><code>PUT</code></li></ol>
+<p class="explain">GET'da ma'lumot manzil satrida ochiq ko'rinadi va brauzer tarixida saqlanadi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>O'z sinfingizning to'liq <b>haftalik dars jadvali</b>ni HTML jadval sifatida yarating (<code>caption</code>, <code>thead</code>, tanaffuslar uchun <code>colspan</code>).</li>
+  <li>2-mavzudagi retsept sahifangizni yangilang: masalliqlarni <code>ul</code>, tayyorlash bosqichlarini <code>ol</code> bilan yozing.</li>
+  <li>"Kutubxonaga a'zo bo'lish" formasini yarating: ism, tug'ilgan sana, email, sevimli janr (<code>select</code>), qaysi tillarda o'qiydi (<code>checkbox</code>), izoh (<code>textarea</code>).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>ul</code> — tartibsiz, <code>ol</code> — tartibli ro'yxat; bandlar <code>li</code>.</li>
+  <li>Jadval: <code>table → tr (qator) → td/th (katak)</code>; <code>colspan</code> — gorizontal, <code>rowspan</code> — vertikal birlashtirish.</li>
+  <li>Forma: <code>action</code> (qayerga), <code>method</code> (GET/POST), har bir maydonda <code>name</code> va <code>label</code>.</li>
+  <li><code>radio</code> — bitta tanlov (bir xil name), <code>checkbox</code> — bir nechta, <code>select</code> — ro'yxatdan, <code>textarea</code> — ko'p qatorli matn.</li>
+</ul>
+</div>

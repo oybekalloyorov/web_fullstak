@@ -1,0 +1,250 @@
+<!-- title: HTML hujjatining tuzilishi, asosiy teglar va atributlar | desc: HTML nima, teg va element, hujjat skeleti (html, head, body), sarlavhalar, paragraflar, matn teglari va atributlar. Birinchi veb-sahifani yaratish. | icon: 🧱 | level: 1 soat · amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>HTML nima va nima uchun kerakligini;</li>
+  <li>Teg, element va atribut tushunchalarini;</li>
+  <li>Har bir HTML sahifaning majburiy "skeleti"ni;</li>
+  <li>Sarlavha, paragraf va matnni formatlovchi teglarni;</li>
+  <li>VS Code'da birinchi veb-sahifangizni yaratib, brauzerda ochishni.</li>
+</ul>
+</div>
+
+<h2>HTML nima?</h2>
+<p><b>HTML (HyperText Markup Language)</b> — veb-sahifalarning <b>tuzilishini</b> yaratuvchi <b>belgilash tili</b>. U dasturlash tili emas:
+unda hisob-kitob yoki shartlar yo'q. HTML brauzerga faqat "bu — sarlavha, bu — paragraf, bu — rasm, bu — tugma" deb aytadi.</p>
+<div class="analogy"><span class="t">O'xshatish: uy qurilishi</span>
+Veb-sahifa — uy. <b>HTML</b> — uyning <b>g'ishtlari va devorlari</b> (tuzilma). <b>CSS</b> — bo'yoq, gilam, mebel (dizayn, 6-mavzudan).
+<b>JavaScript</b> — elektr va suv: chiroqni yoqish, eshik qo'ng'irog'i (harakat, 15-mavzudan). Devorsiz bo'yoq ham, elektr ham ma'nosiz.</div>
+<p>Istalgan saytda sichqonchaning o'ng tugmasini bosib <b>"Sahifa kodini ko'rish"</b> (<kbd>Ctrl</kbd>+<kbd>U</kbd>) ni tanlang — siz
+o'sha sahifaning HTML kodini ko'rasiz. Har bir sayt, hatto YouTube ham, HTML'dan boshlanadi.</p>
+
+<h2>Teg, element va atribut</h2>
+<h3>Teg</h3>
+<p><b>Teg</b> — burchak qavslar ichidagi kalit so'z. Ko'pchilik teglar <b>juft</b> bo'ladi: ochuvchi va yopuvchi.</p>
+<pre data-lang="html"><p>Bu paragraf matni.</p>
+<!--
+<p>   — ochuvchi teg
+</p>  — yopuvchi teg (oldida / belgisi bor)
+-->
+</pre>
+<h3>Element</h3>
+<p><b>Element</b> = ochuvchi teg + mazmun + yopuvchi teg. Yuqoridagi butun qator — bitta paragraf elementi.</p>
+<h3>Bo'sh (yolg'iz) teglar</h3>
+<p>Ba'zi teglarning mazmuni bo'lmaydi va ular yopilmaydi:</p>
+<ul>
+  <li><code>&lt;br&gt;</code> — yangi qatorga o'tish;</li>
+  <li><code>&lt;hr&gt;</code> — gorizontal chiziq;</li>
+  <li><code>&lt;img&gt;</code> — rasm (4-mavzu);</li>
+  <li><code>&lt;input&gt;</code> — kiritish maydoni (3-mavzu);</li>
+  <li><code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code> — sahifa haqida ma'lumot.</li>
+</ul>
+<h3>Atribut</h3>
+<p><b>Atribut</b> — elementga qo'shimcha ma'lumot yoki sozlama. U doim <b>ochuvchi tegda</b>, <code>nom="qiymat"</code> ko'rinishida yoziladi.</p>
+<pre data-lang="html"><a href="https://kun.uz" title="Yangiliklar sayti">Kun.uz ga o'tish</a>
+<!--
+ a      — teg nomi (havola)
+ href   — atribut nomi: qayerga olib boradi
+ "https://kun.uz" — atribut qiymati (qo'shtirnoq ichida)
+ title  — yana bir atribut: sichqoncha ustiga borganda chiqadigan yozuv
+-->
+</pre>
+<p>Hamma teglarda ishlatiladigan (global) atributlar:</p>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th><th>Misol</th></tr>
+<tr><td><code>id</code></td><td>Elementning <b>yagona</b> nomi (sahifada takrorlanmaydi)</td><td><code>&lt;h1 id="sarlavha"&gt;</code></td></tr>
+<tr><td><code>class</code></td><td>Guruh nomi (CSS uchun, bir nechta element bir xil bo'lishi mumkin)</td><td><code>&lt;p class="muhim"&gt;</code></td></tr>
+<tr><td><code>title</code></td><td>Sichqoncha ustiga kelganda chiqadigan izoh</td><td><code>&lt;abbr title="..."&gt;</code></td></tr>
+<tr><td><code>style</code></td><td>Elementga to'g'ridan-to'g'ri CSS</td><td><code>&lt;p style="color: red"&gt;</code></td></tr>
+<tr><td><code>lang</code></td><td>Matn tili</td><td><code>&lt;html lang="uz"&gt;</code></td></tr>
+</table></div>
+
+<h2>HTML hujjatining skeleti</h2>
+<p>Har bir HTML sahifa quyidagi majburiy tuzilmadan boshlanadi. Uni yod olish shart emas — VS Code'da bo'sh <code>.html</code> faylga
+<code>!</code> belgisini yozib <kbd>Enter</kbd> (yoki <kbd>Tab</kbd>) bossangiz, o'zi yaratiladi. Lekin <b>har bir qatorning ma'nosini</b> bilishingiz kerak:</p>
+<pre data-lang="html" data-title="index.html" data-play><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mening birinchi sahifam</title>
+</head>
+<body>
+  <h1>Salom, dunyo!</h1>
+  <p>Bu mening birinchi veb-sahifam.</p>
+</body>
+</html></pre>
+<div class="table-wrap"><table>
+<tr><th>Qator</th><th>Ma'nosi</th></tr>
+<tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>"Bu zamonaviy HTML5 hujjat" — brauzerga ko'rsatma. Doim birinchi qatorda.</td></tr>
+<tr><td><code>&lt;html lang="uz"&gt;</code></td><td>Butun sahifaning "qutisi" (ildiz element). <code>lang="uz"</code> — sahifa tili o'zbekcha.</td></tr>
+<tr><td><code>&lt;head&gt;</code></td><td>"Bosh qism" — sahifa haqidagi <b>ko'rinmaydigan</b> ma'lumotlar.</td></tr>
+<tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Belgilar kodlash: o'zbekcha <code>o'</code>, <code>g'</code>, kirill harflari va emoji 😀 to'g'ri ko'rinishi uchun.</td></tr>
+<tr><td><code>&lt;meta name="viewport"...&gt;</code></td><td>Telefonda sahifa to'g'ri o'lchamda ko'rinishi uchun (10-mavzuda muhim).</td></tr>
+<tr><td><code>&lt;title&gt;</code></td><td>Brauzer <b>yorlig'idagi</b> (tab) nom va Google natijalaridagi sarlavha.</td></tr>
+<tr><td><code>&lt;body&gt;</code></td><td>"Tana" — foydalanuvchi <b>ko'radigan</b> hamma narsa shu yerda.</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: odam</span>
+<code>&lt;head&gt;</code> — odamning "pasporti": ismi, tili, yoshi (ko'rinmaydi, lekin muhim). <code>&lt;body&gt;</code> — odamning o'zi: ko'rinishi, kiyimi, harakatlari.</div>
+
+<h3>Ichma-ich joylashish (nesting)</h3>
+<p>Elementlar bir-birining ichida joylashadi — xuddi matryoshka qo'g'irchoqlari kabi. Asosiy qoida: <b>oxirgi ochilgan teg birinchi yopiladi</b>.</p>
+<pre data-lang="html"><!-- ✅ To'g'ri -->
+<p>Bu <strong>juda muhim</strong> gap.</p>
+
+<!-- ❌ Noto'g'ri: teglar "kesishib" qolgan -->
+<p>Bu <strong>juda muhim</p> gap.</strong></pre>
+<div class="callout tip">Kodni chiroyli o'qilishi uchun ichki elementlarni <b>2 ta bo'sh joy</b> bilan suring (indentatsiya). VS Code'da <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd> kodni avtomatik tartiblaydi.</div>
+
+<h2>Sarlavhalar va paragraflar</h2>
+<p>HTML'da 6 darajali sarlavha bor: <code>&lt;h1&gt;</code> (eng muhim, eng katta) dan <code>&lt;h6&gt;</code> (eng kichik) gacha.</p>
+<pre data-lang="html" data-play><h1>Maktabimiz yangiliklari</h1>       <!-- sahifaning asosiy sarlavhasi (bitta) -->
+<h2>Sport</h2>                         <!-- bo'lim -->
+<h3>Futbol bo'yicha musobaqa</h3>      <!-- kichik bo'lim -->
+<p>8-"A" sinf jamoasi shahar chempionatida g'olib bo'ldi.</p>
+<h3>Shaxmat to'garagi</h3>
+<p>Har seshanba kuni soat 15:00 da.</p>
+<h2>Fanlar</h2>
+<p>Informatika olimpiadasiga ro'yxatdan o'tish boshlandi.</p></pre>
+<p><b>Qoidalar:</b></p>
+<ul>
+  <li>Sahifada odatda <b>faqat bitta</b> <code>&lt;h1&gt;</code> bo'ladi — u sahifaning asosiy mavzusi.</li>
+  <li>Darajalarni sakrab o'tmang: <code>h2</code> dan keyin <code>h4</code> emas, <code>h3</code>.</li>
+  <li>Sarlavha tegini matnni <b>kattalashtirish uchun</b> ishlatmang — buning uchun CSS bor. Sarlavha — <b>ma'no</b> (kitob mundarijasi kabi).</li>
+</ul>
+<p><code>&lt;p&gt;</code> — paragraf. Brauzer paragraflar orasiga avtomatik bo'sh joy qo'yadi.</p>
+<div class="callout warn"><span class="t">Diqqat: HTML bo'sh joylarni "yutadi"</span>
+Kodda nechta bo'sh joy yoki <kbd>Enter</kbd> qo'ysangiz ham, brauzer ularni <b>bitta bo'sh joy</b> qilib ko'rsatadi. Yangi qatorga
+o'tish uchun <code>&lt;br&gt;</code>, yangi abzats uchun yangi <code>&lt;p&gt;</code> ishlating.</div>
+
+<h2>Matnni formatlash teglari</h2>
+<pre data-lang="html" data-play><p>
+  <strong>Qalin va muhim</strong> matn,
+  <b>shunchaki qalin</b> matn.<br>
+  <em>Urg'u berilgan (kursiv)</em> va <i>shunchaki kursiv</i>.<br>
+  <mark>Marker bilan belgilangan</mark> matn.<br>
+  <u>Tagiga chizilgan</u> va <del>o'chirilgan</del> matn.<br>
+  <small>Mayda yozuv</small> va oddiy matn.<br>
+  Suv formulasi: H<sub>2</sub>O, maydon: 5 m<sup>2</sup><br>
+  <code>console.log()</code> — dastur kodi.<br>
+  <abbr title="HyperText Markup Language">HTML</abbr> — sichqonchani ustiga olib boring.
+</p>
+
+<blockquote>
+  Bilim — eng katta boylik.
+</blockquote>
+
+<hr>
+
+<pre>
+Bu teg ichida     bo'sh joylar
+    va qatorlar      SAQLANADI.
+</pre></pre>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Vazifasi</th></tr>
+<tr><td><code>&lt;strong&gt;</code> / <code>&lt;b&gt;</code></td><td>Qalin. <code>strong</code> — "bu muhim" degan <b>ma'no</b> ham beradi (ko'zi ojizlar uchun dasturlar ovozini o'zgartiradi).</td></tr>
+<tr><td><code>&lt;em&gt;</code> / <code>&lt;i&gt;</code></td><td>Kursiv. <code>em</code> — urg'u ma'nosida.</td></tr>
+<tr><td><code>&lt;mark&gt;</code></td><td>Marker bilan belgilash (sariq fon)</td></tr>
+<tr><td><code>&lt;sub&gt;</code> / <code>&lt;sup&gt;</code></td><td>Pastki / yuqori indeks: H<sub>2</sub>O, x<sup>2</sup></td></tr>
+<tr><td><code>&lt;br&gt;</code></td><td>Yangi qatorga o'tish (yolg'iz teg)</td></tr>
+<tr><td><code>&lt;hr&gt;</code></td><td>Mavzuni ajratuvchi chiziq (yolg'iz teg)</td></tr>
+<tr><td><code>&lt;blockquote&gt;</code></td><td>Iqtibos (boshqa manbadan keltirilgan gap)</td></tr>
+<tr><td><code>&lt;pre&gt;</code></td><td>Matnni yozilganidek (bo'sh joylari bilan) ko'rsatish</td></tr>
+</table></div>
+
+<h3>Izohlar (comments)</h3>
+<p>Izoh — brauzer ko'rsatmaydigan, faqat dasturchi uchun yozilgan eslatma:</p>
+<pre data-lang="html"><!-- Bu izoh. Sahifada ko'rinmaydi. -->
+<!-- TODO: bu yerga rasm qo'shish kerak --></pre>
+
+<h3>Maxsus belgilar (entities)</h3>
+<p>Ba'zi belgilar HTML'da "band" — masalan <code>&lt;</code> tegni boshlaydi. Ularni matnda ko'rsatish uchun maxsus kodlar ishlatiladi:</p>
+<div class="table-wrap"><table>
+<tr><th>Yozilishi</th><th>Natija</th><th>Ma'nosi</th></tr>
+<tr><td><code>&amp;lt;</code></td><td>&lt;</td><td>kichik belgisi</td></tr>
+<tr><td><code>&amp;gt;</code></td><td>&gt;</td><td>katta belgisi</td></tr>
+<tr><td><code>&amp;amp;</code></td><td>&amp;</td><td>"va" belgisi</td></tr>
+<tr><td><code>&amp;copy;</code></td><td>&copy;</td><td>mualliflik huquqi</td></tr>
+<tr><td><code>&amp;nbsp;</code></td><td>(bo'sh joy)</td><td>uzilmaydigan bo'sh joy</td></tr>
+</table></div>
+
+<h2>Amaliy mashg'ulot: "Men haqimda" sahifasi</h2>
+<ol class="steps">
+  <li>Ish stolida <code>men-haqimda</code> nomli papka yarating.</li>
+  <li>VS Code'ni oching: <b>File → Open Folder</b> → shu papkani tanlang.</li>
+  <li>Yangi fayl yarating: <code>index.html</code> (nomi aynan shunday — <code>index</code> veb-saytning bosh sahifasi degani).</li>
+  <li>Faylga <code>!</code> yozib <kbd>Enter</kbd> bosing — skelet paydo bo'ladi. <code>lang="en"</code> ni <code>lang="uz"</code> ga o'zgartiring.</li>
+  <li><code>&lt;title&gt;</code> ga ismingizni yozing.</li>
+  <li><code>&lt;body&gt;</code> ichiga quyidagi kodni (o'z ma'lumotlaringiz bilan) <b>qo'lda</b> yozing:
+<pre data-lang="html" data-play><h1>Sardor Aliyev</h1>
+<p><em>8-"B" sinf o'quvchisi, kelajakdagi dasturchi</em></p>
+<hr>
+
+<h2>Men haqimda</h2>
+<p>Men <strong>Samarqand</strong> shahrida yashayman. 14 yoshdaman.
+Bo'sh vaqtimda kitob o'qiyman va futbol o'ynayman.</p>
+
+<h2>Nima uchun dasturlashni o'rganyapman?</h2>
+<p>Men o'z <mark>mobil o'yinimni</mark> yaratmoqchiman.<br>
+Buning uchun avval web-dasturlash asoslarini o'rganyapman.</p>
+
+<h2>Sevimli iqtibosim</h2>
+<blockquote>Har bir dasturchi bir paytlar yangi boshlovchi bo'lgan.</blockquote>
+
+<hr>
+<p><small>&copy; 2026 Sardor Aliyev</small></p></pre></li>
+  <li>Faylni saqlang (<kbd>Ctrl</kbd>+<kbd>S</kbd>). Papkadagi <code>index.html</code> ustiga ikki marta bosing — sahifa brauzerda ochiladi.</li>
+  <li>Qulayroq usul: VS Code'ga <b>Live Server</b> kengaytmasini o'rnating (chap paneldagi Extensions belgisi → "Live Server" → Install).
+  So'ng faylda o'ng tugma → <b>Open with Live Server</b>. Endi har saqlaganingizda brauzer <b>o'zi yangilanadi</b>.</li>
+  <li><kbd>Ctrl</kbd>+<kbd>U</kbd> bilan o'z sahifangizning kodini brauzerda ko'ring.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Yopuvchi tegni unutish: <code>&lt;p&gt;Matn</code> → keyingi butun matn ham paragraf ichida qolib ketishi mumkin.</li>
+  <li>❌ Yopuvchi tegda <code>/</code> ni unutish: <code>&lt;h1&gt;Sarlavha&lt;h1&gt;</code> — ikkinchisi yana <i>ochuvchi</i> teg bo'lib qoladi.</li>
+  <li>❌ Matnni <code>&lt;head&gt;</code> ichiga yozish — u ko'rinmaydi. Ko'rinadigan narsa faqat <code>&lt;body&gt;</code> da.</li>
+  <li>❌ Faylni <code>.html</code> emas, <code>.txt</code> kengaytmasi bilan saqlash (<code>index.html.txt</code>).</li>
+  <li>❌ Atribut qiymatini qo'shtirnoqsiz yoki "aqlli" qo'shtirnoq (“ ”) bilan yozish — doim oddiy <code>"</code> ishlating.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Foydalanuvchiga ko'rinadigan barcha mazmun qaysi teg ichida yoziladi?</p><ol>
+<li><code>&lt;head&gt;</code></li><li><code>&lt;title&gt;</code></li><li><code>&lt;body&gt;</code></li><li><code>&lt;meta&gt;</code></li></ol>
+<p class="explain"><code>&lt;head&gt;</code> — ko'rinmaydigan ma'lumotlar, <code>&lt;body&gt;</code> — ko'rinadigan mazmun.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>&lt;a href="https://kun.uz"&gt;</code> da <code>href</code> nima?</p><ol>
+<li>Teg</li><li>Atribut</li><li>Element</li><li>Izoh</li></ol>
+<p class="explain"><code>a</code> — teg, <code>href</code> — atribut, <code>"https://kun.uz"</code> — atribut qiymati.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi teg yolg'iz (yopuvchi tegi yo'q)?</p><ol>
+<li><code>&lt;p&gt;</code></li><li><code>&lt;h1&gt;</code></li><li><code>&lt;strong&gt;</code></li><li><code>&lt;br&gt;</code></li></ol>
+<p class="explain"><code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;meta&gt;</code> — yolg'iz teglar.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>&lt;meta charset="UTF-8"&gt;</code> qatori nima uchun kerak?</p><ol>
+<li>O'zbekcha harflar, kirill va emoji to'g'ri ko'rinishi uchun</li><li>Sahifani tezlashtirish uchun</li><li>Sahifaga rang berish uchun</li><li>Telefonda ko'rinishi uchun</li></ol>
+<p class="explain">UTF-8 — dunyodagi deyarli barcha harf va belgilarni qamrab oluvchi kodlash.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Kodda 5 ta bo'sh joy yozsangiz, brauzer nechta ko'rsatadi?</p><ol>
+<li>5 ta</li><li>Hech qancha</li><li>1 ta</li><li>10 ta</li></ol>
+<p class="explain">HTML ketma-ket bo'sh joy va qator o'tishlarni bitta bo'sh joyga aylantiradi (<code>&lt;pre&gt;</code> bundan mustasno).</p></div>
+<div class="quiz" data-answer="2"><p class="q">Qaysi kod <b>to'g'ri</b> yozilgan?</p><ol>
+<li><code>&lt;p&gt;&lt;em&gt;Salom&lt;/p&gt;&lt;/em&gt;</code></li><li><code>&lt;p&gt;&lt;em&gt;Salom&lt;/em&gt;&lt;/p&gt;</code></li><li><code>&lt;p&gt;&lt;em&gt;Salom&lt;p&gt;&lt;/em&gt;</code></li><li><code>&lt;em&gt;&lt;p&gt;Salom&lt;/em&gt;&lt;/p&gt;</code></li></ol>
+<p class="explain">Oxirgi ochilgan (<code>em</code>) birinchi yopiladi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>"Men haqimda" sahifangizga "Sevimli fanlarim" (<code>h2</code>) bo'limini qo'shing va har bir fan haqida bitta paragraf yozing.</li>
+  <li><code>retsept.html</code> nomli sahifa yarating: sevimli taomingiz retsepti — sarlavha, kirish paragrafi, "Masalliqlar" va "Tayyorlash" bo'limlari (hozircha paragraflar bilan; ro'yxatlarni keyingi darsda o'rganamiz).</li>
+  <li>Sahifangizda <code>&lt;sup&gt;</code> va <code>&lt;sub&gt;</code> ishlatib, ikkita matematika va kimyo formulasini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>HTML — sahifaning tuzilishi (skeleti). Dasturlash tili emas, belgilash tili.</li>
+  <li>Element = ochuvchi teg + mazmun + yopuvchi teg. Atributlar ochuvchi tegda yoziladi: <code>nom="qiymat"</code>.</li>
+  <li>Skelet: <code>&lt;!DOCTYPE html&gt;</code> → <code>&lt;html&gt;</code> → <code>&lt;head&gt;</code> (ko'rinmas) + <code>&lt;body&gt;</code> (ko'rinadi).</li>
+  <li><code>h1</code>–<code>h6</code> — sarlavhalar (ma'no bo'yicha), <code>p</code> — paragraf, <code>strong</code>/<code>em</code> — muhim/urg'u.</li>
+  <li>Teglar to'g'ri tartibda yopiladi: oxirgi ochilgan — birinchi yopiladi.</li>
+</ul>
+</div>

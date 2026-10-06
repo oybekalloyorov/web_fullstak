@@ -1,0 +1,206 @@
+<!-- title: Yakuniy nazorat ishi — I bob (HTML va CSS) | desc: I bob bo'yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni. | icon: 📝 | level: 1 soat · nazorat ishi | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>📋 Nazorat ishi tuzilishi</h3>
+<ul>
+  <li><b>1-qism:</b> 25 ta yopiq test — har biri <b>3 ball</b> (jami 75 ball). Har bir savolda bitta to'g'ri javob.</li>
+  <li><b>2-qism:</b> 5 ta ochiq savol va amaliy topshiriq — har biri <b>5 ball</b> (jami 25 ball).</li>
+  <li><b>Jami: 100 ball.</b> Vaqt: 80 daqiqa (test — 30 daqiqa, amaliy qism — 50 daqiqa).</li>
+</ul>
+<p>Bu sahifadan <b>tayyorgarlik</b> uchun foydalaning: testlarni yeching, natijangizni ko'ring, xato qilgan mavzularingizni qayta o'qing.</p>
+</div>
+
+<h2>Takrorlash rejasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Mavzu</th><th>Bilishingiz kerak</th></tr>
+<tr><td><a href="01-internet-dns-hosting.html">1. Internet, DNS, hosting</a></td><td>Mijoz-server, IP, domen, DNS, hosting, HTTP/HTTPS, status kodlar, front-end va back-end</td></tr>
+<tr><td><a href="02-html-tuzilishi.html">2. HTML tuzilishi</a></td><td>Teg, element, atribut, skelet, head/body, h1–h6, p, matn teglari</td></tr>
+<tr><td><a href="03-jadval-royxat-forma.html">3. Jadval, ro'yxat, forma</a></td><td>ul/ol/li, table/tr/td/th, colspan/rowspan, form, input turlari, name, label, select, textarea</td></tr>
+<tr><td><a href="04-havolalar-rasmlar-media.html">4. Havolalar, media</a></td><td>a href, target, absolyut/nisbiy yo'l, ../, #id, img src alt, audio/video controls, iframe</td></tr>
+<tr><td><a href="05-semantik-teglar.html">5. Semantik teglar</a></td><td>header, nav, main, section, article, aside, footer; blok va inline</td></tr>
+<tr><td><a href="06-css-ulash-selektorlar-matn.html">6. CSS asoslari</a></td><td>3 ulash usuli, selektorlar, ustuvorlik, ranglar, matn va shrift xossalari</td></tr>
+<tr><td><a href="07-css-background-border.html">7. Fon va chegara</a></td><td>background-*, cover/contain, gradient, border, border-radius, box-shadow</td></tr>
+<tr><td><a href="08-box-model-flexbox-grid.html">8. Box model, Flex, Grid</a></td><td>margin/padding/border, box-sizing, birliklar, display:flex va xossalari, grid-template-columns, fr</td></tr>
+<tr><td><a href="09-pseudo-class-position.html">9. Pseudo va position</a></td><td>:hover, :nth-child, ::before/::after, relative/absolute/fixed/sticky, z-index</td></tr>
+<tr><td><a href="10-responsiv-dizayn-figma.html">10. Responsiv dizayn</a></td><td>viewport, media query, min/max-width, mobile-first, Figma asoslari</td></tr>
+<tr><td><a href="11-git-github-seo.html">11. Git, GitHub, SEO</a></td><td>init/add/commit/push, GitHub Pages, title, description, alt</td></tr>
+<tr><td><a href="12-css-animatsiya.html">12. Animatsiya</a></td><td>transform, transition, @keyframes, animation</td></tr>
+<tr><td><a href="13-jamoa-loyiha-deploy.html">13. Jamoa va deploy</a></td><td>branch, merge, konflikt, Pull Request, Netlify/Vercel</td></tr>
+</table></div>
+
+<h2>1-qism: Yopiq testlar (25 × 3 = 75 ball)</h2>
+<div class="quiz" data-answer="2"><p class="q">1. Domen nomini IP-manzilga aylantiruvchi tizim qaysi?</p><ol>
+<li>HTTP</li><li>DNS</li><li>HTML</li><li>Hosting</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">2. Server "500" kodini qaytardi. Bu nimani bildiradi?</p><ol>
+<li>Sahifa topilmadi</li><li>Muvaffaqiyatli</li><li>Sahifa ko'chirilgan</li><li>Serverda ichki xato</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">3. Foydalanuvchiga ko'rinadigan mazmun qaysi teg ichida yoziladi?</p><ol>
+<li><code>&lt;body&gt;</code></li><li><code>&lt;head&gt;</code></li><li><code>&lt;title&gt;</code></li><li><code>&lt;meta&gt;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">4. Qaysi teg yolg'iz (yopuvchi tegi yo'q)?</p><ol>
+<li><code>&lt;p&gt;</code></li><li><code>&lt;li&gt;</code></li><li><code>&lt;img&gt;</code></li><li><code>&lt;a&gt;</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">5. Tartibli (raqamlangan) ro'yxat qaysi teg bilan yaratiladi?</p><ol>
+<li><code>&lt;ul&gt;</code></li><li><code>&lt;ol&gt;</code></li><li><code>&lt;dl&gt;</code></li><li><code>&lt;list&gt;</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">6. Jadval katagini ikki qator balandligida birlashtiruvchi atribut?</p><ol>
+<li><code>colspan="2"</code></li><li><code>merge="2"</code></li><li><code>height="2"</code></li><li><code>rowspan="2"</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">7. Forma maydonidagi ma'lumot serverga qaysi atribut nomi bilan yuboriladi?</p><ol>
+<li><code>name</code></li><li><code>id</code></li><li><code>class</code></li><li><code>value</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">8. Bir guruhdan faqat bitta variant tanlash uchun qaysi input turi?</p><ol>
+<li><code>checkbox</code></li><li><code>select</code></li><li><code>radio</code></li><li><code>option</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">9. <code>sahifalar/aloqa.html</code> dan <code>rasmlar/logo.png</code> ga to'g'ri yo'l?</p><ol>
+<li><code>rasmlar/logo.png</code></li><li><code>../rasmlar/logo.png</code></li><li><code>/sahifalar/rasmlar/logo.png</code></li><li><code>C:/rasmlar/logo.png</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">10. Rasmning matnli tavsifi qaysi atributda yoziladi?</p><ol>
+<li><code>title</code></li><li><code>src</code></li><li><code>desc</code></li><li><code>alt</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">11. Mustaqil maqola yoki yangilik uchun eng mos semantik teg?</p><ol>
+<li><code>&lt;article&gt;</code></li><li><code>&lt;aside&gt;</code></li><li><code>&lt;nav&gt;</code></li><li><code>&lt;div&gt;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">12. Butun saytga yagona dizayn berishning eng to'g'ri usuli?</p><ol>
+<li>Inline CSS</li><li>Har sahifada &lt;style&gt;</li><li>External CSS fayl</li><li>HTML atributlari</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">13. <code>id="menyu"</code> elementni tanlovchi selektor?</p><ol>
+<li><code>.menyu</code></li><li><code>#menyu</code></li><li><code>menyu</code></li><li><code>*menyu</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">14. Qaysi selektor eng kuchli (ustuvor)?</p><ol>
+<li><code>p</code></li><li><code>.matn</code></li><li><code>div p</code></li><li><code>#asosiy</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">15. Fon rasmi butun maydonni to'ldirishi uchun?</p><ol>
+<li><code>background-size: cover</code></li><li><code>background-size: contain</code></li><li><code>background-repeat: repeat</code></li><li><code>background: fill</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">16. Kvadrat elementni doiraga aylantirish uchun?</p><ol>
+<li><code>border: round</code></li><li><code>radius: 100px</code></li><li><code>border-radius: 50%</code></li><li><code>shape: circle</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">17. Element chegarasi va mazmuni orasidagi ichki bo'shliq?</p><ol>
+<li>margin</li><li>padding</li><li>gap</li><li>outline</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">18. <code>box-sizing: border-box</code> nima qiladi?</p><ol>
+<li>Chegarani yashiradi</li><li>Elementni markazga qo'yadi</li><li>Margin'ni nolga tenglaydi</li><li>width ichiga padding va border'ni ham qo'shadi</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">19. Flex konteynerda elementlarni asosiy o'q bo'yicha markazlash?</p><ol>
+<li><code>justify-content: center</code></li><li><code>align-items: center</code></li><li><code>text-align: center</code></li><li><code>flex: center</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">20. 3 ta teng ustunli Grid qaysi?</p><ol>
+<li><code>grid-columns: 3</code></li><li><code>grid-template-columns: 3fr</code></li><li><code>grid-template-columns: repeat(3, 1fr)</code></li><li><code>columns: 1fr, 1fr, 1fr</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">21. Ichidagi <code>absolute</code> elementlar unga nisbatan joylashishi uchun ota elementga nima beriladi?</p><ol>
+<li><code>position: absolute</code></li><li><code>position: relative</code></li><li><code>position: static</code></li><li><code>display: block</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">22. <code>@media (max-width: 768px)</code> qoidalari qachon ishlaydi?</p><ol>
+<li>Ekran 768px dan katta bo'lsa</li><li>Faqat planshetda</li><li>Doim</li><li>Ekran 768px yoki undan kichik bo'lsa</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">23. Hover effekti silliq bo'lishi uchun ishlatiladigan xossa?</p><ol>
+<li><code>transition</code></li><li><code>transform</code></li><li><code>animation-name</code></li><li><code>@keyframes</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">24. Lokal o'zgarishlarni GitHub'ga yuboruvchi Git buyrug'i?</p><ol>
+<li><code>git commit</code></li><li><code>git pull</code></li><li><code>git push</code></li><li><code>git add</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">25. Netlify yoki Vercel nima?</p><ol>
+<li>Kod muharrirlari</li><li>Saytlarni bepul joylash (hosting) platformalari</li><li>CSS freymvorklari</li><li>Brauzerlar</li></ol></div>
+
+<h2>2-qism: Ochiq savollar va amaliy topshiriqlar (5 × 5 = 25 ball)</h2>
+<div class="exercise">
+<h3>1-topshiriq (5 ball). Nazariy savol</h3>
+<p>Brauzerga <code>https://maktab.uz</code> deb yozilganda sahifa ekranda paydo bo'lgunicha qanday bosqichlar bo'lishini ketma-ket tushuntiring. Javobda DNS, server, so'rov, javob tushunchalari bo'lsin.</p>
+<details><summary>Namuna javob va baholash</summary>
+<p>(1) DNS <code>maktab.uz</code> ni IP-manzilga aylantiradi; (2) brauzer shu IP'dagi serverga xavfsiz (HTTPS) ulanadi; (3) brauzer HTTP so'rov yuboradi;
+(4) server (hosting) sahifani topib, status 200 va HTML bilan javob qaytaradi; (5) brauzer HTML'ni o'qiydi, CSS, rasm va JS fayllarni qo'shimcha so'raydi;
+(6) hammasini birlashtirib, sahifani chizadi.</p>
+<p><b>Baholash:</b> 5 — barcha bosqichlar to'g'ri tartibda; 3–4 — 1–2 bosqich tushib qolgan; 1–2 — faqat umumiy tasavvur; 0 — javob yo'q yoki noto'g'ri.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>2-topshiriq (5 ball). Kodni tuzating</h3>
+<p>Quyidagi kodda <b>5 ta xato</b> bor. Ularni toping va to'g'rilangan kodni yozing.</p>
+<pre data-lang="html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <title>Kutubxona<title>
+</head>
+<body>
+  <h1>Kitoblarimiz</h1>
+  <img src="rasmlar/kitob.jpg">
+  <ul>
+    <li>O'tkan kunlar</li>
+    <li>Mehrobdan chayon
+  </ul>
+  <a href="www.kitob.uz">Kitob do'koni</a>
+  <p>Telefon: <strong>+998 90 123 45 67</p></strong>
+</body>
+</html></pre>
+<details><summary>Javob</summary>
+<ol>
+  <li><code>&lt;title&gt;</code> yopilmagan: <code>&lt;/title&gt;</code> bo'lishi kerak.</li>
+  <li><code>&lt;img&gt;</code> da <code>alt</code> atributi yo'q: <code>alt="Kitob muqovasi"</code>.</li>
+  <li>Ikkinchi <code>&lt;li&gt;</code> yopilmagan.</li>
+  <li>Tashqi havolada protokol yo'q: <code>href="https://www.kitob.uz"</code>.</li>
+  <li>Teglar noto'g'ri yopilgan: <code>&lt;strong&gt;...&lt;/strong&gt;&lt;/p&gt;</code>.</li>
+</ol>
+<p>Qo'shimcha: <code>&lt;meta charset="UTF-8"&gt;</code> va viewport meta-tegi ham yo'q (topgan o'quvchiga rag'bat).</p>
+<p><b>Baholash:</b> har bir topilgan va to'g'ri tuzatilgan xato — 1 ball.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>3-topshiriq (5 ball). Forma yarating</h3>
+<p>"Olimpiadaga ro'yxatdan o'tish" formasini yozing: to'liq ism (majburiy), sinf (select: 7, 8, 9), fan (radio: matematika, informatika, fizika),
+email (majburiy), izoh (textarea) va "Yuborish" tugmasi. Har bir maydonda <code>label</code> bo'lsin.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="html" data-play><form action="/olimpiada" method="POST">
+  <p><label for="ism">To'liq ism</label><br>
+     <input type="text" id="ism" name="ism" required></p>
+  <p><label for="sinf">Sinf</label><br>
+     <select id="sinf" name="sinf"><option>7</option><option>8</option><option>9</option></select></p>
+  <p>Fan:<br>
+     <label><input type="radio" name="fan" value="matematika" required> Matematika</label>
+     <label><input type="radio" name="fan" value="informatika"> Informatika</label>
+     <label><input type="radio" name="fan" value="fizika"> Fizika</label></p>
+  <p><label for="email">Email</label><br>
+     <input type="email" id="email" name="email" required></p>
+  <p><label for="izoh">Izoh</label><br>
+     <textarea id="izoh" name="izoh" rows="3"></textarea></p>
+  <button type="submit">Yuborish</button>
+</form></pre>
+<p><b>Baholash:</b> forma va method — 1; barcha maydonlar to'g'ri turda — 2; label va name'lar — 1; required va radio'larda bir xil name — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>4-topshiriq (5 ball). Flexbox maket</h3>
+<p>Header yarating: chapda logotip, o'ngda 3 ta havoladan iborat menyu, vertikal markazda. Menyu havolalariga sichqoncha borganda rang silliq o'zgarsin.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="html" data-play><style>
+  .header { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background: #1e1b4b; }
+  .logo { color: white; font-weight: bold; font-size: 1.4rem; }
+  .menyu { display: flex; gap: 24px; }
+  .menyu a { color: #c7d2fe; text-decoration: none; transition: color .3s; }
+  .menyu a:hover { color: #fbbf24; }
+</style>
+<header class="header">
+  <div class="logo">Kutubxona</div>
+  <nav class="menyu"><a href="#">Bosh sahifa</a><a href="#">Kitoblar</a><a href="#">Aloqa</a></nav>
+</header></pre>
+<p><b>Baholash:</b> semantik teglar — 1; display:flex + space-between — 1; align-items: center — 1; menyu ichida flex/gap — 1; transition + :hover — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>5-topshiriq (5 ball). Responsiv kartalar</h3>
+<p>3 ta mahsulot kartasidan iborat bo'lim yarating: kompyuterda 3 ustun, 768px va undan kichik ekranda 1 ustun. Kartalarda rasm, nom, narx, yumaloq
+burchak va soya bo'lsin.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="html" data-play><style>
+  * { box-sizing: border-box; }
+  .kartalar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 20px; }
+  .karta { border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.1); overflow: hidden; font-family: sans-serif; }
+  .karta img { width: 100%; height: 150px; object-fit: cover; display: block; }
+  .karta h3, .karta p { margin: 10px 14px; }
+  .narx { color: #4f46e5; font-weight: bold; }
+  @media (max-width: 768px) {
+    .kartalar { grid-template-columns: 1fr; }
+  }
+</style>
+<section class="kartalar">
+  <article class="karta"><img src="https://picsum.photos/seed/k1/400/300" alt="Daftar"><h3>Daftar</h3><p class="narx">5 000 so'm</p></article>
+  <article class="karta"><img src="https://picsum.photos/seed/k2/400/300" alt="Ruchka"><h3>Ruchka</h3><p class="narx">3 000 so'm</p></article>
+  <article class="karta"><img src="https://picsum.photos/seed/k3/400/300" alt="Sumka"><h3>Sumka</h3><p class="narx">150 000 so'm</p></article>
+</section></pre>
+<p><b>Baholash:</b> Grid 3 ustun — 1; media query to'g'ri — 2; karta dizayni (radius, soya) — 1; rasm alt va o'lchami to'g'ri — 1.</p>
+</details>
+</div>
+
+<h2>Baholash shkalasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Ball</th><th>Natija</th><th>Tavsiya</th></tr>
+<tr><td>86–100</td><td>A'lo</td><td>II bobga tayyorsiz! Portfoliongizni boyitishda davom eting.</td></tr>
+<tr><td>71–85</td><td>Yaxshi</td><td>Xato qilgan mavzularni qayta ko'rib chiqing.</td></tr>
+<tr><td>60–70</td><td>Qoniqarli</td><td>Amaliy topshiriqlarni qayta bajaring, ayniqsa 8 va 10-mavzular.</td></tr>
+<tr><td>0–59</td><td>Qoniqarsiz</td><td>Mentor bilan qo'shimcha mashg'ulot va bobni qayta takrorlash tavsiya etiladi.</td></tr>
+</table></div>
+<div class="callout info">O'quv dasturiga ko'ra, chorak yakunida joriy nazorat (40 ball) va oraliq nazorat (20 ball) jamlanadi; jami 60 balldan kamida <b>36 ball</b>
+to'plagan o'quvchi yakuniy nazoratga qo'yiladi. Yakuniy nazoratda 100 balldan kamida <b>60 ball</b> to'plash keyingi chorakda o'qishni davom ettirish imkonini beradi.</div>
+
+<div class="summary-box">
+<h3>🎉 I bob yakunlandi!</h3>
+<p>Siz endi HTML va CSS yordamida semantik, chiroyli, animatsiyali va telefonga moslashuvchan veb-sahifalar yarata olasiz, ularni GitHub'da saqlab,
+Netlify/Vercel'ga joylay olasiz. Keyingi bobda sahifalarga <b>"jon" beramiz</b> — JavaScript dasturlash tilini o'rganamiz.</p>
+</div>

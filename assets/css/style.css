@@ -261,3 +261,60 @@ tr:last-child td { border-bottom: none; }
   .topbar, .sidebar, .toc, .pager, .progress, .copy { display: none !important; }
   .layout { display: block; }
 }
+
+/* ===== 8-sinf kursi uchun qo'shimcha komponentlar ===== */
+.course-switch { display: grid; gap: 4px; margin: 12px 0 4px; }
+.course-switch a { display: block; padding: 7px 12px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: var(--muted); border: 1px solid var(--border); }
+.course-switch a:hover { color: var(--text); text-decoration: none; background: var(--surface-2); }
+.course-switch a.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.lesson-list .side-group { margin: 16px 12px 6px; font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); line-height: 1.35; }
+.hero-level { margin-top: 10px; display: inline-block; font-size: 13px; font-weight: 600; color: var(--muted); background: var(--surface-2); border: 1px solid var(--border); padding: 3px 10px; border-radius: 999px; }
+.bob-title { margin: 2em 0 .8em; font-size: 1.2rem; padding-left: 12px; border-left: 4px solid var(--accent); }
+
+/* Kod: "Natija" bloki va tugmalar */
+.code-actions { display: flex; gap: 6px; }
+.run { background: #16a34a; border: 1px solid #16a34a; color: #fff; border-radius: 6px; padding: 3px 10px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.run:hover { filter: brightness(1.1); }
+.code.output { background: #0b1a12; border-color: #1b3a28; }
+.code.output .code-head { background: #11291b; color: #86efac; }
+.code.output code { color: #d1fae5; }
+
+/* Brauzerdagi "Sinab ko'rish" maydoni */
+.playground { margin: -0.6em 0 1.6em; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.playground .pg-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--surface-2); font-size: 13px; font-weight: 600; color: var(--muted); gap: 8px; flex-wrap: wrap; }
+.playground .pg-head button { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+.playground .pg-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 260px; }
+.playground textarea { width: 100%; min-height: 260px; border: 0; border-right: 1px solid var(--border); resize: vertical; padding: 12px; font: 13px/1.6 "JetBrains Mono", monospace; background: var(--code-bg); color: #e3e8f7; tab-size: 2; }
+.playground iframe { width: 100%; height: 100%; min-height: 260px; border: 0; background: #fff; }
+@media (max-width: 700px) { .playground .pg-body { grid-template-columns: 1fr; } .playground textarea { border-right: 0; border-bottom: 1px solid var(--border); } }
+
+/* Interaktiv test savollari */
+.quiz { margin: 1.2em 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+.quiz .q { font-weight: 700; margin: 0 0 10px; }
+.quiz .q::before { content: "❓ "; }
+.quiz ol { list-style: upper-alpha; margin: 0; padding-left: 1.6em; }
+.quiz li { padding: 6px 10px; margin: 4px 0; border-radius: 8px; border: 1px solid transparent; }
+.js .quiz li { cursor: pointer; }
+.js .quiz li:hover { background: var(--surface-2); }
+.quiz li.right { background: var(--tip-bg); border-color: var(--tip); font-weight: 600; }
+.quiz li.wrong { background: var(--danger-bg); border-color: var(--danger); text-decoration: line-through; }
+.quiz .explain { margin: 10px 0 0; padding: 10px 12px; border-radius: 8px; background: var(--info-bg); font-size: 14.5px; }
+.js .quiz .explain { display: none; }
+.js .quiz.answered .explain { display: block; }
+.quiz-score { position: sticky; bottom: 12px; margin: 1.5em 0; padding: 12px 16px; border-radius: 12px; background: var(--accent); color: #fff; font-weight: 700; text-align: center; box-shadow: var(--shadow); }
+
+/* Kichik komponentlar */
+.analogy { margin: 1.4em 0; padding: 14px 18px 14px 54px; border-radius: var(--radius); background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent); position: relative; }
+.analogy::before { content: "🧠"; position: absolute; left: 16px; top: 12px; font-size: 22px; }
+.analogy .t { display: block; font-weight: 700; margin-bottom: 2px; }
+.goals { margin: 1em 0 1.5em; padding: 16px 20px; border-radius: 14px; background: var(--accent-soft); border: 1px solid var(--border); }
+.goals h3 { margin: 0 0 6px !important; font-size: 1.05rem !important; }
+.goals ul { margin: 0; }
+.steps { counter-reset: step; list-style: none; padding-left: 0 !important; }
+.steps > li { counter-increment: step; position: relative; padding-left: 46px; margin: 14px 0 !important; }
+.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 800; font-size: 14px; }
+.glossary dt { font-weight: 700; margin-top: 10px; }
+.glossary dd { margin: 2px 0 0 0; color: var(--muted); }
+.homework { margin: 2em 0; padding: 18px 22px; border-radius: 16px; background: var(--tip-bg); border: 2px solid color-mix(in srgb, var(--tip) 40%, transparent); }
+.homework h3 { margin-top: 0 !important; }
+.mistakes li { margin: .5em 0; }

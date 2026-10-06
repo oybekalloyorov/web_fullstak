@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Express.js va REST API — Full-Stack Qo&#x27;llanma</title>
+<title>Express.js va REST API — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Express asoslari, marshrutlash, middleware zanjiri, REST API dizayni, validatsiya, xatolarni markazlashgan boshqarish, CORS va loyiha tuzilmasi (MVC).">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,18 +45,18 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🚂</div><div><div class="crumb">09-dars · 14 tadan</div><h1>Express.js va REST API</h1><p class="lead">Express asoslari, marshrutlash, middleware zanjiri, REST API dizayni, validatsiya, xatolarni markazlashgan boshqarish, CORS va loyiha tuzilmasi (MVC).</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🚂</div><div><div class="crumb">09-dars · 14 tadan</div><h1>Express.js va REST API</h1><p class="lead">Express asoslari, marshrutlash, middleware zanjiri, REST API dizayni, validatsiya, xatolarni markazlashgan boshqarish, CORS va loyiha tuzilmasi (MVC).</p><div class="hero-level">O&#x27;rta · ~140 daqiqa</div></div></div>
 
 <p><b>Express</b> — Node.js uchun eng mashhur minimalistik web-freymvork. U oldingi darsda qo'lda yozgan narsalarimizni —
 marshrutlash, JSON'ni o'qish, statik fayllar, xatolarni boshqarish — oddiy va tushunarli API bilan beradi.
 Bu darsda frontend ilovalar "gaplashadigan" haqiqiy <b>REST API</b> qurishni o'rganamiz.</p>
 
 <h2 id="birinchi-express-ilova"><a class="anchor" href="#birinchi-express-ilova">#</a>Birinchi Express ilova</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">mkdir kitob-api &amp;&amp; cd kitob-api
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">mkdir kitob-api &amp;&amp; cd kitob-api
 npm init -y
 npm pkg set type=module
 npm install express</code></pre></div>
-<div class="code"><div class="code-head"><span>src/server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import express from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import express from &#x27;express&#x27;;
 
 const app = express();
 app.use(express.json());           // JSON tanani avtomatik o&#x27;qish (req.body)
@@ -74,7 +75,7 @@ app.listen(PORT, () =&gt; console.log(`🚀 http://localhost:${PORT}`));</code><
 
 <h2 id="marshrutlash-routing"><a class="anchor" href="#marshrutlash-routing">#</a>Marshrutlash (Routing)</h2>
 <p>Marshrut = <b>HTTP metod</b> + <b>yo'l</b> + <b>ishlovchi funksiya(lar)</b>.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">app.get(&#x27;/api/books&#x27;, handler);          // o&#x27;qish
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">app.get(&#x27;/api/books&#x27;, handler);          // o&#x27;qish
 app.post(&#x27;/api/books&#x27;, handler);         // yaratish
 app.put(&#x27;/api/books/:id&#x27;, handler);      // to&#x27;liq almashtirish
 app.patch(&#x27;/api/books/:id&#x27;, handler);    // qisman yangilash
@@ -87,7 +88,7 @@ app.route(&#x27;/api/books/:id&#x27;)
   .patch(updateBook)
   .delete(deleteBook);</code></pre></div>
 <h3>So'rov (req) obyektidan ma'lumot olish</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// GET /api/users/42/orders?status=paid&amp;page=2
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// GET /api/users/42/orders?status=paid&amp;page=2
 app.get(&#x27;/api/users/:userId/orders&#x27;, (req, res) =&gt; {
   req.params;          // { userId: &#x27;42&#x27; }               — yo&#x27;l parametrlari (doim satr!)
   req.query;           // { status: &#x27;paid&#x27;, page: &#x27;2&#x27; }  — query parametrlar (doim satr!)
@@ -100,7 +101,7 @@ app.get(&#x27;/api/users/:userId/orders&#x27;, (req, res) =&gt; {
   req.cookies;         // cookie-parser middleware bilan
 });</code></pre></div>
 <h3>Javob (res) usullari</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">res.json({ id: 1 });                  // JSON + Content-Type avtomatik
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">res.json({ id: 1 });                  // JSON + Content-Type avtomatik
 res.status(201).json(newBook);        // status kod + JSON
 res.status(204).end();                // tanasiz javob
 res.send(&#x27;&lt;h1&gt;HTML&lt;/h1&gt;&#x27;);            // matn/HTML
@@ -114,7 +115,7 @@ res.cookie(&#x27;theme&#x27;, &#x27;dark&#x27;, { httpOnly: true, maxAge: 864000
 <code>if (!book) return res.status(404).json(...)</code>.</div>
 
 <h3>Router — marshrutlarni modullarga ajratish</h3>
-<div class="code"><div class="code-head"><span>src/routes/books.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/routes/books.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 const router = Router();
 
 router.get(&#x27;/&#x27;, (req, res) =&gt; { /* barcha kitoblar */ });
@@ -122,7 +123,7 @@ router.get(&#x27;/:id&#x27;, (req, res) =&gt; { /* bitta kitob */ });
 router.post(&#x27;/&#x27;, (req, res) =&gt; { /* yaratish */ });
 
 export default router;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import booksRouter from &#x27;./routes/books.routes.js&#x27;;
+<div class="code"><div class="code-head"><span>src/app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import booksRouter from &#x27;./routes/books.routes.js&#x27;;
 import authorsRouter from &#x27;./routes/authors.routes.js&#x27;;
 
 app.use(&#x27;/api/books&#x27;, booksRouter);       // router ichidagi &#x27;/&#x27; → &#x27;/api/books&#x27;
@@ -142,7 +143,7 @@ so'rov ularning har biridan ketma-ket o'tadi.</p>
   </div>
   <div class="diagram-caption">Har bir middleware so'rovni o'zgartirishi, javob qaytarib zanjirni to'xtatishi yoki next() bilan keyingisiga uzatishi mumkin</div>
 </div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function middleware(req, res, next) {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function middleware(req, res, next) {
   // 1. req/res ni o&#x27;qish yoki o&#x27;zgartirish
   // 2. va keyin:
   next();              // → keyingi middleware&#x27;ga o&#x27;tish
@@ -150,7 +151,7 @@ so'rov ularning har biridan ketma-ket o'tadi.</p>
   // yoki: next(err)                  — xato ishlovchisiga o&#x27;tish
 }</code></pre></div>
 <h3>Middleware turlari</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// 1. Ilova darajasida — barcha so&#x27;rovlar uchun
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// 1. Ilova darajasida — barcha so&#x27;rovlar uchun
 app.use(express.json({ limit: &#x27;1mb&#x27; }));             // JSON tana
 app.use(express.urlencoded({ extended: true }));    // HTML forma tanasi
 app.use(express.static(&#x27;public&#x27;));                   // statik fayllar (public/index.html → /)
@@ -208,8 +209,8 @@ Middleware'lar <b>yozilgan tartibda</b> bajariladi. <code>express.json()</code> 
 <h2 id="validatsiya"><a class="anchor" href="#validatsiya">#</a>Validatsiya</h2>
 <p>Mijozdan kelgan har qanday ma'lumot — <b>ishonchsiz</b>. Validatsiyasiz API bazaga noto'g'ri ma'lumot yozadi, xatolar bilan
 "yiqiladi" va hujumlarga ochiq bo'ladi. Qo'lda tekshirish mumkin, lekin <b>Zod</b> kabi sxema kutubxonalari qulayroq:</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install zod</code></pre></div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { z } from &#x27;zod&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install zod</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { z } from &#x27;zod&#x27;;
 
 const bookSchema = z.object({
   title: z.string().trim().min(1, &#x27;Nom majburiy&#x27;).max(200),
@@ -231,7 +232,7 @@ const bookPatchSchema = bookSchema.partial();</code></pre></div>
 <h2 id="xatolarni-markazlashgan-boshqarish"><a class="anchor" href="#xatolarni-markazlashgan-boshqarish">#</a>Xatolarni markazlashgan boshqarish</h2>
 <p>Har bir marshrutda <code>try/catch</code> yozib, xatoni qo'lda formatlash — takrorlanuvchi kod. To'g'ri yondashuv:
 marshrutlar xatoni <b>tashlaydi (throw)</b>, bitta xato middleware'i ularni <b>bir xil formatda</b> javobga aylantiradi.</p>
-<div class="code"><div class="code-head"><span>src/utils/errors.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export class HttpError extends Error {
+<div class="code"><div class="code-head"><span>src/utils/errors.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export class HttpError extends Error {
   constructor(status, message, details) {
     super(message);
     this.status = status;
@@ -243,7 +244,7 @@ marshrutlar xatoni <b>tashlaydi (throw)</b>, bitta xato middleware'i ularni <b>b
   static notFound(msg = &#x27;Topilmadi&#x27;) { return new HttpError(404, msg); }
   static conflict(msg) { return new HttpError(409, msg); }
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/middleware/errorHandler.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { HttpError } from &#x27;../utils/errors.js&#x27;;
+<div class="code"><div class="code-head"><span>src/middleware/errorHandler.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 export function notFound(req, res, next) {
   next(HttpError.notFound(`Marshrut topilmadi: ${req.method} ${req.originalUrl}`));
@@ -275,7 +276,7 @@ uzatiladi. Express 4 da esa buning uchun har bir handler'ni o'rash yoki <code>ex
 <h2 id="cors"><a class="anchor" href="#cors">#</a>CORS</h2>
 <p>Frontend <code>http://localhost:5173</code> da, API <code>http://localhost:3000</code> da ishlasa, brauzer so'rovni bloklaydi (6-dars).
 Ruxsatni server beradi:</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import cors from &#x27;cors&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import cors from &#x27;cors&#x27;;
 
 app.use(cors({
   origin: [&#x27;http://localhost:5173&#x27;, &#x27;https://kitoblar.uz&#x27;],  // faqat ishonchli manbalar
@@ -285,7 +286,7 @@ app.use(cors({
 
 <h2 id="loyiha-tuzilmasi"><a class="anchor" href="#loyiha-tuzilmasi">#</a>Loyiha tuzilmasi</h2>
 <p>Hamma kodni bitta faylga yozish 100 qatorgacha ishlaydi. Katta loyihalarda <b>mas'uliyatlarni ajratish</b> kerak:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">kitob-api/
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">kitob-api/
 ├── src/
 │   ├── server.js              # faqat ishga tushirish (listen)
 │   ├── app.js                 # Express ilova: middleware&#x27;lar va router&#x27;lar
@@ -314,8 +315,8 @@ bilan shug'ullanadi. JSON fayldan PostgreSQL'ga o'tganda faqat db qatlami o'zgar
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Kitoblar do'koni uchun to'liq CRUD REST API</h3></div><div class="ex-body">
 <p>8-darsdagi <code>JsonStore</code> ustiga qurilgan, yuqoridagi tuzilmaga amal qilgan to'liq API. Filtrlash, qidiruv, saralash
 va sahifalash ham bor.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install express zod cors helmet morgan</code></pre></div>
-<div class="code"><div class="code-head"><span>src/schemas/book.schema.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { z } from &#x27;zod&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install express zod cors helmet morgan</code></pre></div>
+<div class="code"><div class="code-head"><span>src/schemas/book.schema.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { z } from &#x27;zod&#x27;;
 
 export const bookSchema = z.object({
   title: z.string().trim().min(1).max(200),
@@ -337,7 +338,7 @@ export const listQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
 });</code></pre></div>
-<div class="code"><div class="code-head"><span>src/middleware/validate.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { HttpError } from &#x27;../utils/errors.js&#x27;;
+<div class="code"><div class="code-head"><span>src/middleware/validate.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 // Sxema bo&#x27;yicha req.body / req.query ni tekshiruvchi middleware &quot;fabrikasi&quot;
 export const validate = (schema, source = &#x27;body&#x27;) =&gt; (req, res, next) =&gt; {
@@ -349,7 +350,7 @@ export const validate = (schema, source = &#x27;body&#x27;) =&gt; (req, res, nex
   req.validated = { ...req.validated, [source]: result.data };
   next();
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>src/services/books.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { JsonStore } from &#x27;../db/jsonStore.js&#x27;;
+<div class="code"><div class="code-head"><span>src/services/books.service.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { JsonStore } from &#x27;../db/jsonStore.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 const store = new JsonStore(&#x27;data/books.json&#x27;);
@@ -401,7 +402,7 @@ export async function updateBook(id, patch) {
 export async function deleteBook(id) {
   if (!(await store.remove(id))) throw HttpError.notFound(&#x27;Kitob topilmadi&#x27;);
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/controllers/books.controller.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import * as service from &#x27;../services/books.service.js&#x27;;
+<div class="code"><div class="code-head"><span>src/controllers/books.controller.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import * as service from &#x27;../services/books.service.js&#x27;;
 
 export const list = async (req, res) =&gt; res.json(await service.listBooks(req.validated.query));
 export const getOne = async (req, res) =&gt; res.json(await service.getBook(req.params.id));
@@ -411,7 +412,7 @@ export const remove = async (req, res) =&gt; {
   await service.deleteBook(req.params.id);
   res.status(204).end();
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>src/routes/books.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/routes/books.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import * as ctrl from &#x27;../controllers/books.controller.js&#x27;;
 import { validate } from &#x27;../middleware/validate.js&#x27;;
 import { bookSchema, bookPatchSchema, listQuerySchema } from &#x27;../schemas/book.schema.js&#x27;;
@@ -425,7 +426,7 @@ router.patch(&#x27;/:id&#x27;, validate(bookPatchSchema), ctrl.update);
 router.delete(&#x27;/:id&#x27;, ctrl.remove);
 
 export default router;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import express from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import express from &#x27;express&#x27;;
 import cors from &#x27;cors&#x27;;
 import helmet from &#x27;helmet&#x27;;
 import morgan from &#x27;morgan&#x27;;
@@ -444,12 +445,12 @@ app.use(&#x27;/api/v1/books&#x27;, booksRouter);
 
 app.use(notFound);
 app.use(errorHandler);</code></pre></div>
-<div class="code"><div class="code-head"><span>src/server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { app } from &#x27;./app.js&#x27;;
+<div class="code"><div class="code-head"><span>src/server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { app } from &#x27;./app.js&#x27;;
 
 const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, () =&gt; console.log(`📚 Kitob API: http://localhost:${PORT}/api/v1/books`));</code></pre></div>
 <p>Sinab ko'ramiz:</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Yaratish
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Yaratish
 curl -X POST localhost:3000/api/v1/books -H &quot;Content-Type: application/json&quot; \
   -d &#x27;{&quot;title&quot;:&quot;O`tkan kunlar&quot;,&quot;author&quot;:&quot;Abdulla Qodiriy&quot;,&quot;price&quot;:65000,&quot;stock&quot;:10,&quot;genre&quot;:&quot;roman&quot;,&quot;year&quot;:1926}&#x27;
 # → 201 { &quot;id&quot;: &quot;c1f...&quot;, &quot;title&quot;: &quot;O`tkan kunlar&quot;, ... }
@@ -472,7 +473,7 @@ curl -i localhost:3000/api/v1/books/ID               # → 404</code></pre></div
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>O'z middleware'laringiz: so'rov ID, logger, vaqt o'lchash va API kaliti</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>src/middleware/common.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { randomUUID } from &#x27;node:crypto&#x27;;
+<div class="code"><div class="code-head"><span>src/middleware/common.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { randomUUID } from &#x27;node:crypto&#x27;;
 
 // 1. Har bir so&#x27;rovga noyob ID — loglarda bitta so&#x27;rovning izini kuzatish uchun
 export function requestId(req, res, next) {
@@ -534,7 +535,7 @@ export function rateLimit({ windowMs = 60_000, max = 60 } = {}) {
     next();
   };
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { requestId, logger, slowWarning, requireApiKey, rateLimit } from &#x27;./middleware/common.js&#x27;;
+<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { requestId, logger, slowWarning, requireApiKey, rateLimit } from &#x27;./middleware/common.js&#x27;;
 
 app.use(requestId);
 app.use(logger);
@@ -546,8 +547,8 @@ JSON formatidagi loglarni keyinchalik monitoring tizimlarida (Grafana, Datadog) 
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Fayl yuklash: kitob muqovasi (multer)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install multer</code></pre></div>
-<div class="code"><div class="code-head"><span>src/routes/upload.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install multer</code></pre></div>
+<div class="code"><div class="code-head"><span>src/routes/upload.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import multer from &#x27;multer&#x27;;
 import path from &#x27;node:path&#x27;;
 import { randomUUID } from &#x27;node:crypto&#x27;;
@@ -582,14 +583,14 @@ router.post(&#x27;/books/:id/cover&#x27;, upload.single(&#x27;cover&#x27;), asyn
 });
 
 export default router;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import fs from &#x27;node:fs&#x27;;
+<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import fs from &#x27;node:fs&#x27;;
 fs.mkdirSync(&#x27;uploads/covers&#x27;, { recursive: true });
 app.use(&#x27;/uploads&#x27;, express.static(&#x27;uploads&#x27;, { maxAge: &#x27;7d&#x27; }));
 app.use(&#x27;/api/v1&#x27;, uploadRouter);
 
 // errorHandler ichida multer xatolarini ham tushunarli qilamiz:
 // if (err.code === &#x27;LIMIT_FILE_SIZE&#x27;) err = HttpError.badRequest(&#x27;Fayl 2 MB dan katta&#x27;);</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">curl -F &quot;cover=@muqova.jpg&quot; localhost:3000/api/v1/books/ID/cover
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">curl -F &quot;cover=@muqova.jpg&quot; localhost:3000/api/v1/books/ID/cover
 # → 201 { &quot;url&quot;: &quot;/uploads/covers/0b6e...c1.jpg&quot;, &quot;size&quot;: 184322 }</code></pre></div>
 <p>Frontend tomonda: <code>const fd = new FormData(); fd.append('cover', input.files[0]); fetch(url, { method: 'POST', body: fd })</code>.
 Production'da fayllar odatda serverning diskida emas, S3 kabi obyekt omborlarida saqlanadi.</p>
@@ -597,7 +598,7 @@ Production'da fayllar odatda serverning diskida emas, S3 kabi obyekt omborlarida
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>API'ni frontend bilan bog'lash: statik sahifa + fetch</h3></div><div class="ex-body">
 <p>Express bitta serverda ham API'ni, ham frontend fayllarni bera oladi. <code>public/</code> papkasiga oddiy sahifa qo'shamiz:</p>
-<div class="code"><div class="code-head"><span>public/index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<div class="code"><div class="code-head"><span>public/index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;uz&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -686,7 +687,7 @@ Production'da fayllar odatda serverning diskida emas, S3 kabi obyekt omborlarida
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">app.use(express.static(&#x27;public&#x27;));   // http://localhost:3000 → public/index.html</code></pre></div>
+<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">app.use(express.static(&#x27;public&#x27;));   // http://localhost:3000 → public/index.html</code></pre></div>
 <p>Tabriklaymiz — bu sizning birinchi <b>full-stack</b> ilovangiz: brauzer → fetch → Express → validatsiya → service → fayl
 ombori va orqaga. Keyingi darslarda ombor o'rnini PostgreSQL egallaydi, autentifikatsiya qo'shiladi, frontend esa React'ga ko'chadi.</p>
 </div></div>

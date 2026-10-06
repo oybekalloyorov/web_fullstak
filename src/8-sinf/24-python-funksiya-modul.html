@@ -1,0 +1,271 @@
+<!-- title: Python funksiyalar, modullar va standart kutubxonalar | desc: def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko'rinish doirasi, docstring; o'z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar. | icon: 🧰 | level: 1 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python'da funksiya yaratish (<code>def</code>), parametrlar va <code>return</code>;</li>
+  <li>Standart qiymatli va nomlangan argumentlarni, <code>lambda</code>ni;</li>
+  <li>Kodni bir nechta faylga (modullarga) bo'lish va <code>import</code> qilishni;</li>
+  <li>Tayyor "asboblar qutisi" — standart kutubxonalarni: <code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code>, <code>os</code>;</li>
+  <li><code>pip</code> orqali internetdan qo'shimcha kutubxonalar o'rnatishni.</li>
+</ul>
+</div>
+
+<h2>Funksiyalar</h2>
+<p>17-mavzuda JavaScript funksiyalarini o'rgandik. G'oya bir xil: <b>nomlangan, qayta ishlatiladigan kod bloki</b>. Python'da u <code>def</code> (define — aniqlash) bilan yaratiladi.</p>
+<pre data-lang="python">def salomlash(ism):
+    """Berilgan ism bilan salomlashadi."""      # docstring — funksiya hujjati
+    print(f"Assalomu alaykum, {ism}!")
+
+salomlash("Madina")
+salomlash("Jasur")</pre>
+<pre data-lang="python">def tortburchak_yuzi(eni, boyi):
+    return eni * boyi                 # natijani qaytaradi
+
+yuza = tortburchak_yuzi(5, 3)
+print(yuza)                            # 15
+print(tortburchak_yuzi(2, 2) + 10)     # 14</pre>
+<div class="table-wrap"><table>
+<tr><th>JavaScript</th><th>Python</th></tr>
+<tr><td><code>function qosh(a, b) { return a + b; }</code></td><td><code>def qosh(a, b):<br>&nbsp;&nbsp;&nbsp;&nbsp;return a + b</code></td></tr>
+<tr><td><code>const qosh = (a, b) =&gt; a + b;</code></td><td><code>qosh = lambda a, b: a + b</code></td></tr>
+</table></div>
+
+<h3>Parametrlar turlari</h3>
+<pre data-lang="python"># Standart qiymat
+def darajaga(son, daraja=2):
+    return son ** daraja
+
+print(darajaga(5))          # 25  — daraja=2 (standart)
+print(darajaga(2, 10))      # 1024
+
+# Nomlangan (kalitli) argumentlar — tartibni eslash shart emas
+def anketa(ism, yosh, shahar="Toshkent"):
+    print(f"{ism}, {yosh} yosh, {shahar}")
+
+anketa("Ali", 14)
+anketa(yosh=15, ism="Laylo", shahar="Xiva")
+
+# Istalgan sonli argumentlar
+def ortacha(*sonlar):              # *sonlar — barcha argumentlar tuple'ga yig'iladi
+    return sum(sonlar) / len(sonlar)
+
+print(ortacha(4, 5, 5, 3))          # 4.25
+
+# Bir nechta qiymat qaytarish (aslida tuple)
+def min_max(royxat):
+    return min(royxat), max(royxat)
+
+eng_kichik, eng_katta = min_max([7, 2, 9, 4])
+print(eng_kichik, eng_katta)        # 2 9</pre>
+
+<h3>lambda — kichik, nomsiz funksiya</h3>
+<pre data-lang="python">kvadrat = lambda x: x * x
+print(kvadrat(7))                    # 49
+
+oquvchilar = [("Ali", 85), ("Vali", 92), ("Gani", 78)]
+oquvchilar.sort(key=lambda o: o[1], reverse=True)   # ball bo'yicha saralash
+print(oquvchilar)                    # [('Vali', 92), ('Ali', 85), ('Gani', 78)]</pre>
+<p><code>lambda</code> asosan saralash (<code>sort(key=...)</code>), <code>max(key=...)</code> kabi joylarda "bir martalik" funksiya sifatida ishlatiladi.</p>
+
+<h3>Ko'rinish doirasi (scope)</h3>
+<pre data-lang="python">maktab = "5-maktab"           # global o'zgaruvchi
+
+def tanishtir():
+    ism = "Laylo"             # lokal — faqat funksiya ichida
+    print(ism, maktab)        # ✅ globalni o'qish mumkin
+
+tanishtir()
+# print(ism)                  # ❌ NameError</pre>
+<div class="callout tip"><span class="t">Yaxshi funksiya</span>
+Funksiya kerakli ma'lumotni <b>parametr orqali oladi</b> va natijani <b>return bilan qaytaradi</b>. Global o'zgaruvchilarni o'zgartiruvchi funksiyalar kodni chalkashtiradi.
+Har bir funksiya — bitta vazifa, nomi — fe'l: <code>hisobla_ortacha</code>, <code>tekshir_parol</code>.</div>
+
+<h2>Modullar — kodni fayllarga bo'lish</h2>
+<p>Dastur kattalashgani sari hamma narsani bitta faylga yozish noqulay bo'ladi. <b>Modul</b> — bu shunchaki <code>.py</code> fayl. Undagi funksiyalarni boshqa faylda <code>import</code> bilan ishlatish mumkin.</p>
+<div class="analogy"><span class="t">O'xshatish: asboblar qutisi</span>
+Usta har safar bolg'a yasamaydi — tayyor qutidan oladi. Modul — sizning "asboblar qutingiz": bir marta yozilgan foydali funksiyalar to'plami.</div>
+<pre data-lang="python" data-title="geometriya.py">PI = 3.14159
+
+def doira_yuzi(r):
+    return PI * r ** 2
+
+def doira_uzunligi(r):
+    return 2 * PI * r</pre>
+<pre data-lang="python" data-title="main.py (xuddi shu papkada)">import geometriya                       # butun modulni ulash
+
+print(geometriya.doira_yuzi(5))
+print(geometriya.PI)
+
+from geometriya import doira_uzunligi   # faqat kerakli funksiyani
+print(doira_uzunligi(5))
+
+import geometriya as g                  # qisqa taxallus bilan
+print(g.doira_yuzi(1))</pre>
+<h3><code>if __name__ == "__main__":</code></h3>
+<pre data-lang="python" data-title="geometriya.py (oxirida)">if __name__ == "__main__":
+    # Bu qism FAQAT fayl to'g'ridan-to'g'ri ishga tushirilganda bajariladi,
+    # boshqa fayl import qilganda — bajarilmaydi. Sinash (test) uchun qulay.
+    print("Sinov:", doira_yuzi(2))</pre>
+
+<h2>Standart kutubxona — "batareyalar bilan birga"</h2>
+<p>Python bilan birga yuzlab tayyor modul keladi. Eng foydalilari:</p>
+<h3><code>math</code> — matematika</h3>
+<pre data-lang="python">import math
+print(math.sqrt(144))        # 12.0 — kvadrat ildiz
+print(math.pi)               # 3.141592653589793
+print(math.ceil(4.1))        # 5 — yuqoriga yaxlitlash
+print(math.floor(4.9))       # 4 — pastga
+print(math.factorial(5))     # 120
+print(math.gcd(24, 36))      # 12 — EKUB</pre>
+<h3><code>random</code> — tasodifiylik</h3>
+<pre data-lang="python">import random
+print(random.randint(1, 6))                    # 1..6 (ikkalasi ham kiradi) — o'yin kubigi
+print(random.random())                         # 0..1 oralig'idagi kasr
+print(random.choice(["tosh", "qaychi", "qog'oz"]))   # ro'yxatdan bittasi
+print(random.sample(range(1, 50), 6))          # 6 ta takrorlanmas son — lotereya
+royxat = [1, 2, 3, 4, 5]
+random.shuffle(royxat)                         # aralashtirish
+print(royxat)</pre>
+<h3><code>datetime</code> — sana va vaqt</h3>
+<pre data-lang="python">from datetime import datetime, date, timedelta
+
+hozir = datetime.now()
+print(hozir)                                    # 2026-10-06 14:35:12.123456
+print(hozir.strftime("%d.%m.%Y %H:%M"))         # 06.10.2026 14:35 — formatlash
+print(hozir.year, hozir.month, hozir.day)
+
+tugilgan = date(2012, 3, 21)
+bugun = date.today()
+print("Yashagan kunlar:", (bugun - tugilgan).days)
+
+keyingi_hafta = bugun + timedelta(days=7)
+print("Bir haftadan keyin:", keyingi_hafta)</pre>
+<h3><code>json</code> — ma'lumotlarni saqlash va almashish</h3>
+<p><b>JSON</b> — dasturlar o'rtasida ma'lumot almashishning eng mashhur formati. Python dict/list ↔ JSON matn.</p>
+<pre data-lang="python">import json
+
+oquvchilar = [{"ism": "Ali", "baho": 5}, {"ism": "Zarina", "baho": 4}]
+
+# Faylga saqlash
+with open("oquvchilar.json", "w", encoding="utf-8") as f:
+    json.dump(oquvchilar, f, ensure_ascii=False, indent=2)
+
+# Fayldan o'qish
+with open("oquvchilar.json", encoding="utf-8") as f:
+    qayta = json.load(f)
+print(qayta[1]["ism"])          # Zarina
+
+# Matnga va matndan
+matn = json.dumps({"ok": True})   # '{"ok": true}'
+obj = json.loads(matn)</pre>
+<pre data-lang="json" data-title="oquvchilar.json">[
+  {
+    "ism": "Ali",
+    "baho": 5
+  },
+  {
+    "ism": "Zarina",
+    "baho": 4
+  }
+]</pre>
+<div class="callout info"><code>ensure_ascii=False</code> — o'zbekcha harflar <code>‘</code> kabi kodlarga aylanmasdan, o'qiladigan holda saqlanadi. <code>indent=2</code> — chiroyli formatlash.</div>
+<h3><code>os</code> — fayllar va papkalar</h3>
+<pre data-lang="python">import os
+print(os.getcwd())                       # joriy papka
+print(os.listdir("."))                   # papkadagi fayllar ro'yxati
+print(os.path.exists("oquvchilar.json")) # fayl bormi?
+os.makedirs("hisobotlar", exist_ok=True) # papka yaratish</pre>
+
+<h2>pip — tashqi kutubxonalar</h2>
+<p>Standart kutubxonadan tashqari, <a href="https://pypi.org" target="_blank" rel="noopener">PyPI</a> da 500 000 dan ortiq tayyor paket bor. Ular <code>pip</code> buyrug'i bilan o'rnatiladi:</p>
+<pre data-lang="bash">pip install requests          # internetdan ma'lumot olish
+pip install django            # 33-mavzuda!
+pip list                      # o'rnatilganlar ro'yxati
+pip uninstall requests</pre>
+<pre data-lang="python">import requests
+javob = requests.get("https://api.github.com/users/torvalds")
+print(javob.json()["name"])     # Linus Torvalds</pre>
+<div class="callout warn"><span class="t">Virtual muhit (virtual environment)</span>
+Har bir loyiha uchun alohida "quti" yaratish tavsiya etiladi — shunda bir loyihaning paketlari boshqasiga xalaqit bermaydi. Buni 33-mavzuda Django o'rnatganda batafsil qilamiz:
+<code>python -m venv venv</code>.</div>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>O'z modulingiz.</b> <code>yordamchi.py</code> faylida quyidagi funksiyalarni yozing va <code>main.py</code> da import qilib sinang:
+<pre data-lang="python" data-title="yordamchi.py">def son_sora(matn, eng_kichik=None, eng_katta=None):
+    """To'g'ri butun son kiritilguncha so'raydi."""
+    while True:
+        try:
+            son = int(input(matn))
+        except ValueError:
+            print("  Iltimos, butun son kiriting")
+            continue
+        if eng_kichik is not None and son < eng_kichik:
+            print(f"  Son {eng_kichik} dan kichik bo'lmasin")
+        elif eng_katta is not None and son > eng_katta:
+            print(f"  Son {eng_katta} dan katta bo'lmasin")
+        else:
+            return son
+
+def tubmi(n):
+    """n tub son bo'lsa True qaytaradi."""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def baho(ball):
+    if ball >= 86: return 5
+    if ball >= 71: return 4
+    if ball >= 56: return 3
+    return 2
+
+
+if __name__ == "__main__":
+    print([n for n in range(30) if tubmi(n)])</pre></li>
+  <li><b>Lotereya:</b> <code>random.sample</code> bilan 6 ta "yutuqli" son yarating, foydalanuvchidan 6 ta son so'rang (<code>son_sora</code> bilan, 1–49) va nechtasi to'g'ri kelganini ayting (set kesishmasi!).</li>
+  <li><b>Tug'ilgan kun hisoblagichi:</b> tug'ilgan sanani so'rab, necha kun yashaganingizni va keyingi tug'ilgan kuningizgacha necha kun qolganini <code>datetime</code> bilan hisoblang.</li>
+  <li><b>23-mavzudagi o'quvchilar dasturini</b> JSON faylga saqlaydigan qiling: dastur ishga tushganda <code>json.load</code>, har o'zgarishdan keyin <code>json.dump</code>.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Funksiyani e'lon qilishdan <b>oldin</b> chaqirish — Python faylni yuqoridan pastga o'qiydi.</li>
+  <li>❌ <code>return</code> unutilgan — funksiya <code>None</code> qaytaradi.</li>
+  <li>❌ O'z faylingizni standart modul nomi bilan atash: <code>random.py</code>, <code>math.py</code> — Python sizning faylingizni import qilib, xato beradi!</li>
+  <li>❌ <code>ModuleNotFoundError: No module named 'requests'</code> — paket o'rnatilmagan: <code>pip install requests</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Python'da funksiya qaysi kalit so'z bilan yaratiladi?</p><ol>
+<li><code>function</code></li><li><code>def</code></li><li><code>func</code></li><li><code>fn</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>def f(a, b=10): return a + b</code> — <code>f(5)</code> natijasi?</p><ol>
+<li>5</li><li>Xato</li><li>15</li><li>10</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">1 dan 6 gacha tasodifiy butun son beruvchi kod?</p><ol>
+<li><code>random.randint(1, 6)</code></li><li><code>random.random(6)</code></li><li><code>math.random(1, 6)</code></li><li><code>randint(6)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Python dict'ni JSON faylga yozuvchi funksiya?</p><ol>
+<li><code>json.load()</code></li><li><code>json.read()</code></li><li><code>file.json()</code></li><li><code>json.dump()</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Tashqi kutubxonani o'rnatish buyrug'i?</p><ol>
+<li><code>python get requests</code></li><li><code>pip install requests</code></li><li><code>import install requests</code></li><li><code>npm install requests</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Parol generatori:</b> <code>random</code> va <code>string</code> modullari yordamida berilgan uzunlikdagi (harf, raqam, belgi aralash) parol yaratuvchi funksiya.</li>
+  <li><b>Kunlik kvota:</b> "Bugungi maslahat" dasturi — 10 ta maslahatdan biri tasodifiy chiqsin, chiqqanlari JSON faylda saqlansin va bir kunda takrorlanmasin.</li>
+  <li>O'zingizning <code>matn_yordamchi.py</code> modulingizni yarating: so'zlar soni, unli harflar soni, palindrom tekshiruvi funksiyalari bilan.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>def nom(param, standart=qiymat): return natija</code>; nomlangan argumentlar; <code>*args</code>; <code>lambda x: ...</code>.</li>
+  <li>Modul — <code>.py</code> fayl: <code>import modul</code>, <code>from modul import f</code>, <code>import modul as m</code>; <code>if __name__ == "__main__":</code>.</li>
+  <li>Standart kutubxona: <code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code> (<code>dump/load</code>), <code>os</code>.</li>
+  <li>Tashqi paketlar: <code>pip install nom</code>.</li>
+</ul>
+</div>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Autentifikatsiya va avtorizatsiya — Full-Stack Qo&#x27;llanma</title>
+<title>Autentifikatsiya va avtorizatsiya — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔐</div><div><div class="crumb">11-dars · 14 tadan</div><h1>Autentifikatsiya va avtorizatsiya</h1><p class="lead">Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔐</div><div><div class="crumb">11-dars · 14 tadan</div><h1>Autentifikatsiya va avtorizatsiya</h1><p class="lead">Parollarni xeshlash (bcrypt), sessiya va JWT, httpOnly cookie, himoyalangan marshrutlar, rollar va ruxsatlar, access/refresh tokenlar hamda frontendda tokenlar bilan ishlash.</p><div class="hero-level">O&#x27;rta–Yuqori · ~130 daqiqa</div></div></div>
 
 <p>Deyarli har bir ilovada "Kirish" tugmasi bor. Uning ortida esa veb-xavfsizlikning eng nozik qismi yotadi: parollarni
 qanday saqlash, foydalanuvchini keyingi so'rovlarda qanday "tanish", kimga nimaga ruxsat berish. Bu yerdagi xato butun
@@ -76,7 +77,7 @@ lug'at hujumi bilan bir zumda topadi. Parollar uchun ataylab <b>sekin</b> va <b>
   <li><b>argon2id</b> — zamonaviy tavsiya (OWASP), xotirani ham talab qiladi.</li>
   <li><b>Tuz (salt)</b> — har bir parolga qo'shiladigan tasodifiy qiymat. Bir xil parollar har xil xeshga ega bo'ladi, tayyor "rainbow table"lar ishlamaydi. bcrypt tuzni avtomatik yaratadi va xesh ichida saqlaydi.</li>
 </ul>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;      // npm install bcrypt   (yoki sof JS: bcryptjs)
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;      // npm install bcrypt   (yoki sof JS: bcryptjs)
 
 const hash = await bcrypt.hash(&#x27;MeningParolim2026&#x27;, 12);
 // &#x27;$2b$12$C6UzMDM.H6dfI/f/IKcEeO5H8v.Lk3PqxW7JLw7xYcR9EJzt4P6eW&#x27;
@@ -100,7 +101,7 @@ har bir so'rov bilan uni ko'rsatadi. Ikki asosiy yondashuv bor:</p>
 <h3>2. JWT tokenlar (stateless)</h3>
 <p><b>JWT (JSON Web Token)</b> — server <b>imzolagan</b> va ichida ma'lumot saqlovchi satr. Server hech narsani eslab qolmaydi:
 imzoni tekshirish kifoya.</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3OTE5ODAwMDB9.Xk3v...
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Iiwicm9sZSI6InVzZXIiLCJleHAiOjE3OTE5ODAwMDB9.Xk3v...
 └──────────── header ───────────────┘ └──────────────────── payload ───────────────────────────┘ └ imzo ┘
 
 header:  { &quot;alg&quot;: &quot;HS256&quot;, &quot;typ&quot;: &quot;JWT&quot; }
@@ -125,7 +126,7 @@ Header va payload shunchaki Base64 — <a href="https://jwt.io" target="_blank" 
 <tr><td><code>HttpOnly</code> cookie</td><td>✅ JS o'qiy olmaydi</td><td>⚠️ <code>SameSite</code> kerak</td><td><b>Veb-ilovalar uchun tavsiya</b></td></tr>
 <tr><td>Xotira (JS o'zgaruvchisi)</td><td>⚠️ Qisman</td><td>✅</td><td>Sahifa yangilansa yo'qoladi — refresh token bilan birga</td></tr>
 </table></div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">res.cookie(&#x27;access_token&#x27;, token, {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">res.cookie(&#x27;access_token&#x27;, token, {
   httpOnly: true,                                  // document.cookie orqali o&#x27;qib bo&#x27;lmaydi
   secure: process.env.NODE_ENV === &#x27;production&#x27;,  // faqat HTTPS orqali
   sameSite: &#x27;lax&#x27;,                                 // boshqa saytdan POST so&#x27;rovlarda yuborilmaydi (CSRF himoyasi)
@@ -157,8 +158,8 @@ daqiqada qayta login qiladi. Yechim — ikki token:</p>
 <h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Ro'yxatdan o'tish va login (bcrypt + JWT + httpOnly cookie)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install bcrypt jsonwebtoken cookie-parser zod</code></pre></div>
-<div class="code"><div class="code-head"><span>migrations/002_users.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE users (
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install bcrypt jsonwebtoken cookie-parser zod</code></pre></div>
+<div class="code"><div class="code-head"><span>migrations/002_users.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE users (
   id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name          TEXT NOT NULL,
   email         TEXT NOT NULL,
@@ -168,7 +169,7 @@ daqiqada qayta login qiladi. Yechim — ikki token:</p>
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX users_email_uq ON users (lower(email));</code></pre></div>
-<div class="code"><div class="code-head"><span>src/config.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function required(name) {
+<div class="code"><div class="code-head"><span>src/config.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function required(name) {
   const v = process.env[name];
   if (!v) throw new Error(`Muhit o&#x27;zgaruvchisi o&#x27;rnatilmagan: ${name}`);
   return v;
@@ -181,7 +182,7 @@ export const config = {
   clientUrl: process.env.CLIENT_URL ?? &#x27;http://localhost:5173&#x27;,
 };
 // Kalit yaratish: node -e &quot;console.log(require(&#x27;crypto&#x27;).randomBytes(48).toString(&#x27;hex&#x27;))&quot;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/services/auth.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;
+<div class="code"><div class="code-head"><span>src/services/auth.service.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import bcrypt from &#x27;bcrypt&#x27;;
 import jwt from &#x27;jsonwebtoken&#x27;;
 import { query } from &#x27;../db/pool.js&#x27;;
 import { config } from &#x27;../config.js&#x27;;
@@ -224,7 +225,7 @@ export async function login({ email, password }) {
 }
 
 export { publicUser };</code></pre></div>
-<div class="code"><div class="code-head"><span>src/routes/auth.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/routes/auth.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import { z } from &#x27;zod&#x27;;
 import { validate } from &#x27;../middleware/validate.js&#x27;;
 import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
@@ -275,7 +276,7 @@ router.get(&#x27;/me&#x27;, requireAuth, (req, res) =&gt; {
 });
 
 export default router;</code></pre></div>
-<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import cookieParser from &#x27;cookie-parser&#x27;;
+<div class="code"><div class="code-head"><span>src/app.js (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import cookieParser from &#x27;cookie-parser&#x27;;
 import authRouter from &#x27;./routes/auth.routes.js&#x27;;
 
 app.use(cors({ origin: config.clientUrl, credentials: true }));  // cookie uchun credentials SHART
@@ -284,7 +285,7 @@ app.use(&#x27;/api/v1/auth&#x27;, authRouter);</code></pre></div>
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Himoyalangan marshrutlar va "faqat egasi" tekshiruvi</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>src/middleware/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
+<div class="code"><div class="code-head"><span>src/middleware/auth.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import jwt from &#x27;jsonwebtoken&#x27;;
 import { query } from &#x27;../db/pool.js&#x27;;
 import { config } from &#x27;../config.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
@@ -325,7 +326,7 @@ export function optionalAuth(req, res, next) {
 }</code></pre></div>
 <p>Endi postlar API'sida egalikni tekshiramiz. <b>Muhim:</b> ID'ni so'rov tanasidan emas, <code>req.user</code> dan olamiz —
 aks holda foydalanuvchi boshqa birov nomidan post yaratishi mumkin.</p>
-<div class="code"><div class="code-head"><span>src/routes/posts.routes.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
+<div class="code"><div class="code-head"><span>src/routes/posts.routes.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { Router } from &#x27;express&#x27;;
 import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
 import { query } from &#x27;../db/pool.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
@@ -366,7 +367,7 @@ bo'lishi shart: <code>WHERE id = $1 AND user_id = $2</code>.</div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Rollar va ruxsatlar (RBAC)</h3></div><div class="ex-body">
 <p>Har bir rolga emas, har bir <b>ruxsatga</b> tekshirish yozish kodni moslashuvchan qiladi: yangi rol qo'shish faqat jadvalni o'zgartirishni talab qiladi.</p>
-<div class="code"><div class="code-head"><span>src/auth/permissions.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">export const PERMISSIONS = {
+<div class="code"><div class="code-head"><span>src/auth/permissions.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">export const PERMISSIONS = {
   user:   [&#x27;post:create&#x27;, &#x27;post:update:own&#x27;, &#x27;post:delete:own&#x27;, &#x27;comment:create&#x27;],
   editor: [&#x27;post:create&#x27;, &#x27;post:update:any&#x27;, &#x27;post:publish&#x27;, &#x27;comment:create&#x27;, &#x27;comment:delete:any&#x27;],
   admin:  [&#x27;*&#x27;],                                   // hamma narsa
@@ -376,7 +377,7 @@ export function can(user, permission) {
   const list = PERMISSIONS[user?.role] ?? [];
   return list.includes(&#x27;*&#x27;) || list.includes(permission);
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>src/middleware/authorize.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { can } from &#x27;../auth/permissions.js&#x27;;
+<div class="code"><div class="code-head"><span>src/middleware/authorize.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { can } from &#x27;../auth/permissions.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 export const requirePermission = (...perms) =&gt; (req, res, next) =&gt; {
@@ -386,7 +387,7 @@ export const requirePermission = (...perms) =&gt; (req, res, next) =&gt; {
   }
   next();
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>Foydalanish</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
+<div class="code"><div class="code-head"><span>Foydalanish</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { requireAuth } from &#x27;../middleware/auth.js&#x27;;
 import { requirePermission } from &#x27;../middleware/authorize.js&#x27;;
 import { can } from &#x27;../auth/permissions.js&#x27;;
 
@@ -418,7 +419,7 @@ faqat qulaylik uchun. <b>Haqiqiy tekshiruv doim serverda.</b></p>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Frontend: login formasi, sessiyani tekshirish va 401'ni boshqarish</h3></div><div class="ex-body">
 <p>httpOnly cookie ishlatilganda frontend tokenni umuman "ko'rmaydi" — brauzer uni o'zi yuboradi. Faqat <code>credentials: 'include'</code> kerak.</p>
-<div class="code"><div class="code-head"><span>client/auth.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const API = &#x27;http://localhost:3000/api/v1&#x27;;
+<div class="code"><div class="code-head"><span>client/auth.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const API = &#x27;http://localhost:3000/api/v1&#x27;;
 
 export async function api(path, { method = &#x27;GET&#x27;, body } = {}) {
   const res = await fetch(API + path, {
@@ -445,7 +446,7 @@ export const auth = {
   register: (data) =&gt; api(&#x27;/auth/register&#x27;, { method: &#x27;POST&#x27;, body: data }),
   logout: () =&gt; api(&#x27;/auth/logout&#x27;, { method: &#x27;POST&#x27; }),
 };</code></pre></div>
-<div class="code"><div class="code-head"><span>client/login.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form id=&quot;login&quot;&gt;
+<div class="code"><div class="code-head"><span>client/login.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form id=&quot;login&quot;&gt;
   &lt;h1&gt;Kirish&lt;/h1&gt;
   &lt;input name=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; placeholder=&quot;Email&quot; required&gt;
   &lt;input name=&quot;password&quot; type=&quot;password&quot; autocomplete=&quot;current-password&quot; placeholder=&quot;Parol&quot; required&gt;
@@ -487,7 +488,7 @@ export const auth = {
     }
   });
 &lt;/script&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>client/dashboard.html (himoyalangan sahifa)</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;header&gt;
+<div class="code"><div class="code-head"><span>client/dashboard.html (himoyalangan sahifa)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;header&gt;
   &lt;span id=&quot;hello&quot;&gt;&lt;/span&gt;
   &lt;button id=&quot;logout&quot;&gt;Chiqish&lt;/button&gt;
 &lt;/header&gt;

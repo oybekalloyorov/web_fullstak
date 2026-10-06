@@ -1,0 +1,239 @@
+<!-- title: Filtrlash va shartlar. Aggregation va grouping | desc: WHERE'da taqqoslash, AND/OR/NOT, IN, BETWEEN, LIKE/ILIKE, IS NULL; ORDER BY, LIMIT, DISTINCT; agregat funksiyalar COUNT, SUM, AVG, MIN, MAX; GROUP BY va HAVING; statistik hisobotlar tayyorlash. | icon: 📊 | level: 1 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Murakkab shartlar bilan aniq ma'lumotlarni tanlashni: <code>IN</code>, <code>BETWEEN</code>, <code>LIKE</code>;</li>
+  <li>Takrorlarni olib tashlash (<code>DISTINCT</code>) va sahifalash;</li>
+  <li><b>Agregat funksiyalar</b>: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>;</li>
+  <li><code>GROUP BY</code> bilan guruhlab hisoblash va <code>HAVING</code> bilan guruhlarni filtrlashni;</li>
+  <li>Haqiqiy hisobotlar tayyorlashni: "har bir sinf o'rtacha bahosi", "eng ko'p sotilgan mahsulot".</li>
+</ul>
+</div>
+
+<h2>Filtrlash: WHERE chuqurroq</h2>
+<h3>Taqqoslash va mantiq</h3>
+<div class="table-wrap"><table>
+<tr><th>Operator</th><th>Ma'nosi</th><th>Misol</th></tr>
+<tr><td><code>=</code>, <code>&lt;&gt;</code> (yoki <code>!=</code>)</td><td>teng, teng emas</td><td><code>fan &lt;&gt; 'Tarix'</code></td></tr>
+<tr><td><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></td><td>katta, kichik...</td><td><code>baho &gt;= 4</code></td></tr>
+<tr><td><code>AND</code>, <code>OR</code>, <code>NOT</code></td><td>va, yoki, emas</td><td><code>baho = 5 AND fan = 'Fizika'</code></td></tr>
+<tr><td><code>IN (...)</code></td><td>ro'yxatdagi qiymatlardan biri</td><td><code>sinf_id IN (1, 3)</code></td></tr>
+<tr><td><code>BETWEEN a AND b</code></td><td>oraliqda (chegaralar kiradi)</td><td><code>narx BETWEEN 10000 AND 50000</code></td></tr>
+<tr><td><code>LIKE</code> / <code>ILIKE</code></td><td>naqsh bo'yicha matn qidirish (ILIKE — harf katta-kichikligiga qaramaydi)</td><td><code>ism LIKE 'A%'</code></td></tr>
+<tr><td><code>IS NULL</code> / <code>IS NOT NULL</code></td><td>bo'sh / bo'sh emas</td><td><code>email IS NOT NULL</code></td></tr>
+</table></div>
+<pre data-lang="sql">-- IN — OR'ning qisqa shakli
+SELECT * FROM baholar WHERE fan IN ('Matematika', 'Informatika', 'Fizika');
+
+-- BETWEEN — oraliq (sanalar bilan ham ishlaydi)
+SELECT * FROM baholar WHERE sana BETWEEN '2026-09-01' AND '2026-09-30';
+SELECT ism, tugilgan_sana FROM oquvchilar WHERE tugilgan_sana BETWEEN '2012-01-01' AND '2012-12-31';
+
+-- NOT bilan
+SELECT * FROM oquvchilar WHERE sinf_id NOT IN (1, 2);
+
+-- Qavslar muhim! AND OR'dan oldin bajariladi
+SELECT * FROM baholar
+WHERE (fan = 'Matematika' OR fan = 'Fizika') AND baho = 5;</pre>
+<div class="callout warn">Qavssiz <code>WHERE fan = 'Matematika' OR fan = 'Fizika' AND baho = 5</code> — bu "Matematikadagi <b>barcha</b> baholar YOKI Fizikadagi 5 lar" deb tushuniladi. Shubha bo'lsa — qavs qo'ying.</div>
+
+<h3>LIKE — naqsh bo'yicha qidirish</h3>
+<div class="table-wrap"><table>
+<tr><th>Belgi</th><th>Ma'nosi</th></tr>
+<tr><td><code>%</code></td><td>istalgan sondagi (0 yoki ko'p) istalgan belgilar</td></tr>
+<tr><td><code>_</code></td><td>aynan bitta istalgan belgi</td></tr>
+</table></div>
+<pre data-lang="sql">SELECT ism FROM oquvchilar WHERE ism LIKE 'D%';         -- D bilan boshlanadi: Dilnoza
+SELECT ism FROM oquvchilar WHERE familiya LIKE '%ova';  -- "ova" bilan tugaydi: Karimova, Aminova
+SELECT ism FROM oquvchilar WHERE ism LIKE '%a%';        -- ichida "a" bor
+SELECT ism FROM oquvchilar WHERE ism LIKE '_li';        -- 3 harfli, "li" bilan tugaydi: Ali
+SELECT ism FROM oquvchilar WHERE ism ILIKE 'zarina';    -- katta-kichik harfga qaramaydi
+SELECT * FROM oquvchilar WHERE email LIKE '%@mail.uz';  -- mail.uz pochtasidagilar</pre>
+<p>Saytlardagi <b>qidiruv maydoni</b> ko'pincha aynan <code>ILIKE '%so''z%'</code> bilan ishlaydi.</p>
+
+<h3>DISTINCT — takrorlarsiz</h3>
+<pre data-lang="sql">SELECT fan FROM baholar;             -- Matematika, Informatika, Matematika, ... (takrorlar bilan)
+SELECT DISTINCT fan FROM baholar;    -- har bir fan bir marta
+SELECT DISTINCT fan FROM baholar ORDER BY fan;</pre>
+
+<h2>Agregat funksiyalar</h2>
+<p><b>Agregat</b> (yig'uvchi) funksiya ko'p qatorni olib, <b>bitta natija</b> qaytaradi. Bu — statistika va hisobotlarning asosi.</p>
+<div class="table-wrap"><table>
+<tr><th>Funksiya</th><th>Vazifasi</th></tr>
+<tr><td><code>COUNT(*)</code></td><td>Qatorlar soni</td></tr>
+<tr><td><code>COUNT(ustun)</code></td><td>NULL bo'lmagan qiymatlar soni</td></tr>
+<tr><td><code>COUNT(DISTINCT ustun)</code></td><td>Noyob qiymatlar soni</td></tr>
+<tr><td><code>SUM(ustun)</code></td><td>Yig'indi</td></tr>
+<tr><td><code>AVG(ustun)</code></td><td>O'rtacha qiymat</td></tr>
+<tr><td><code>MIN(ustun)</code> / <code>MAX(ustun)</code></td><td>Eng kichik / eng katta</td></tr>
+</table></div>
+<pre data-lang="sql">SELECT COUNT(*) AS jami_oquvchilar FROM oquvchilar;
+SELECT COUNT(email) AS emaili_borlar FROM oquvchilar;
+SELECT COUNT(DISTINCT fan) AS fanlar_soni FROM baholar;
+
+SELECT ROUND(AVG(baho), 2) AS ortacha_baho,     -- ROUND — yaxlitlash
+       MAX(baho) AS eng_yuqori,
+       MIN(baho) AS eng_past
+FROM baholar
+WHERE fan = 'Matematika';
+
+SELECT MIN(tugilgan_sana) AS eng_kattasi, MAX(tugilgan_sana) AS eng_kichigi FROM oquvchilar;</pre>
+<pre data-lang="output"> ortacha_baho | eng_yuqori | eng_past
+--------------+------------+----------
+         4.40 |          5 |        3</pre>
+
+<h2>GROUP BY — guruhlab hisoblash</h2>
+<p>"Butun maktab o'rtacha bahosi" — bitta son. Lekin ko'pincha <b>har bir guruh uchun</b> natija kerak: <b>har bir fan</b> bo'yicha o'rtacha, <b>har bir sinfda</b> nechta o'quvchi...</p>
+<div class="analogy"><span class="t">O'xshatish: rangli qalamlar</span>
+Stol ustida aralash qalamlar. Siz ularni rangiga qarab <b>uyumlarga ajratasiz</b> (GROUP BY rang), keyin <b>har bir uyumni sanaysiz</b> (COUNT): "qizil — 5, ko'k — 3, yashil — 7".</div>
+<pre data-lang="sql">-- Har bir fan bo'yicha baholar soni va o'rtachasi
+SELECT fan,
+       COUNT(*) AS baholar_soni,
+       ROUND(AVG(baho), 2) AS ortacha
+FROM baholar
+GROUP BY fan
+ORDER BY ortacha DESC;</pre>
+<pre data-lang="output"> fan         | baholar_soni | ortacha
+-------------+--------------+---------
+ Ona tili    |            2 |    4.50
+ Informatika |            5 |    4.00
+ Matematika  |            5 |    4.40
+ ...</pre>
+<pre data-lang="sql">-- Har bir sinfda nechta o'quvchi (JOIN + GROUP BY)
+SELECT s.nomi AS sinf, COUNT(o.id) AS oquvchilar_soni
+FROM sinflar s
+LEFT JOIN oquvchilar o ON o.sinf_id = s.id
+GROUP BY s.nomi
+ORDER BY s.nomi;
+
+-- Har bir o'quvchining o'rtacha bahosi (reyting)
+SELECT o.ism || ' ' || o.familiya AS oquvchi,
+       COUNT(b.id) AS baholar,
+       ROUND(AVG(b.baho), 2) AS ortacha
+FROM oquvchilar o
+JOIN baholar b ON b.oquvchi_id = o.id
+GROUP BY o.id, o.ism, o.familiya
+ORDER BY ortacha DESC;</pre>
+<div class="callout danger"><span class="t">GROUP BY'ning oltin qoidasi</span>
+<code>SELECT</code> dagi har bir ustun yoki <b>agregat funksiya ichida</b> bo'lishi, yoki <b><code>GROUP BY</code> da</b> ko'rsatilgan bo'lishi kerak.
+<code>SELECT fan, ism, AVG(baho) ... GROUP BY fan</code> — xato: fan bo'yicha guruhda ko'p ism bor, qaysi birini ko'rsatish kerak?</div>
+
+<h2>HAVING — guruhlarni filtrlash</h2>
+<p><code>WHERE</code> <b>qatorlarni</b> guruhlashdan <b>oldin</b> filtrlaydi. <code>HAVING</code> esa <b>guruhlarni</b> hisob-kitobdan <b>keyin</b> filtrlaydi.</p>
+<pre data-lang="sql">-- O'rtacha bahosi 4.5 dan yuqori o'quvchilar
+SELECT o.ism, ROUND(AVG(b.baho), 2) AS ortacha
+FROM oquvchilar o
+JOIN baholar b ON b.oquvchi_id = o.id
+GROUP BY o.id, o.ism
+HAVING AVG(b.baho) > 4.5;
+
+-- Faqat sentabr baholari asosida (WHERE), kamida 2 ta baho olgan (HAVING) o'quvchilar
+SELECT oquvchi_id, COUNT(*) AS soni
+FROM baholar
+WHERE sana >= '2026-09-01'           -- 1) qatorlar filtri
+GROUP BY oquvchi_id                  -- 2) guruhlash
+HAVING COUNT(*) >= 2                 -- 3) guruhlar filtri
+ORDER BY soni DESC;                  -- 4) saralash</pre>
+<h3>SELECT'ning to'liq tuzilishi va bajarilish tartibi</h3>
+<div class="table-wrap"><table>
+<tr><th>Yozilish tartibi</th><th>Bajarilish tartibi</th><th>Vazifasi</th></tr>
+<tr><td>1. <code>SELECT</code></td><td>5</td><td>Qaysi ustunlarni ko'rsatish</td></tr>
+<tr><td>2. <code>FROM</code> / <code>JOIN</code></td><td>1</td><td>Qaysi jadval(lar)dan</td></tr>
+<tr><td>3. <code>WHERE</code></td><td>2</td><td>Qatorlarni filtrlash</td></tr>
+<tr><td>4. <code>GROUP BY</code></td><td>3</td><td>Guruhlash</td></tr>
+<tr><td>5. <code>HAVING</code></td><td>4</td><td>Guruhlarni filtrlash</td></tr>
+<tr><td>6. <code>ORDER BY</code></td><td>6</td><td>Saralash</td></tr>
+<tr><td>7. <code>LIMIT</code></td><td>7</td><td>Natijalar sonini cheklash</td></tr>
+</table></div>
+<p>Shuning uchun <code>WHERE AVG(baho) &gt; 4</code> yozib bo'lmaydi — <code>WHERE</code> bajarilayotganda guruhlar va o'rtacha hali hisoblanmagan!</p>
+
+<h2>Amaliy mashg'ulot: hisobotlar</h2>
+<p>28 va 29-mavzulardagi <code>maktab</code> va <code>dokon</code> bazalarida quyidagi hisobotlarni tayyorlang:</p>
+<h3>Maktab bazasi</h3>
+<ol class="steps">
+  <li>Familiyasi "ov" bilan tugaydigan o'quvchilar.</li>
+  <li>2012-yilda tug'ilgan o'quvchilar soni.</li>
+  <li>Har bir fan bo'yicha: baholar soni, o'rtacha, eng past va eng yuqori baho.</li>
+  <li>Har bir sinf bo'yicha o'rtacha baho (3 ta jadval: sinflar, oquvchilar, baholar).</li>
+  <li>Kamida bitta "2" olgan o'quvchilar ro'yxati (takrorlarsiz).</li>
+  <li>Eng yuqori o'rtacha bahoga ega 3 nafar o'quvchi.</li>
+</ol>
+<h3>Do'kon bazasi</h3>
+<ol class="steps">
+  <li>Narxi 4 000 dan 100 000 gacha bo'lgan mahsulotlar.</li>
+  <li>Har bir buyurtmaning umumiy summasi: <code>SUM(soni * narx)</code>.</li>
+  <li>Har bir mijoz nechta buyurtma bergani va jami qancha to'lagani.</li>
+  <li>Eng ko'p sotilgan mahsulot (dona hisobida).</li>
+  <li>Umumiy summasi 50 000 so'mdan oshgan buyurtmalar (HAVING).</li>
+</ol>
+<details><summary>Ba'zi javoblar</summary>
+<pre data-lang="sql">-- Maktab 4: har bir sinf bo'yicha o'rtacha baho
+SELECT s.nomi, ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+ORDER BY ortacha DESC;
+
+-- Maktab 5: kamida bitta "2" olganlar
+SELECT DISTINCT o.ism, o.familiya
+FROM oquvchilar o JOIN baholar b ON b.oquvchi_id = o.id
+WHERE b.baho = 2;
+
+-- Do'kon 3: mijozlar statistikasi
+SELECT m.ism, COUNT(DISTINCT b.id) AS buyurtmalar, COALESCE(SUM(t.soni * t.narx), 0) AS jami
+FROM mijozlar m
+LEFT JOIN buyurtmalar b ON b.mijoz_id = m.id
+LEFT JOIN buyurtma_tarkibi t ON t.buyurtma_id = b.id
+GROUP BY m.id, m.ism
+ORDER BY jami DESC;
+
+-- Do'kon 5: 50 000 dan oshgan buyurtmalar
+SELECT buyurtma_id, SUM(soni * narx) AS summa
+FROM buyurtma_tarkibi
+GROUP BY buyurtma_id
+HAVING SUM(soni * narx) > 50000;</pre>
+<p><code>COALESCE(qiymat, 0)</code> — qiymat NULL bo'lsa 0 qaytaradi (buyurtmasi yo'q mijoz uchun).</p>
+</details>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>column "o.ism" must appear in the GROUP BY clause</code> — SELECT'dagi oddiy ustun GROUP BY'da yo'q.</li>
+  <li>❌ <code>aggregate functions are not allowed in WHERE</code> — guruh sharti <code>HAVING</code> da yoziladi.</li>
+  <li>❌ <code>LIKE 'a%'</code> katta "A" ni topmaydi — <code>ILIKE</code> ishlating.</li>
+  <li>❌ <code>COUNT(ustun)</code> va <code>COUNT(*)</code> ni adashtirish — birinchisi NULL'larni sanamaydi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">"A" harfi bilan boshlanadigan ismlarni topuvchi shart?</p><ol>
+<li><code>ism = 'A%'</code></li><li><code>ism LIKE 'A%'</code></li><li><code>ism LIKE '%A'</code></li><li><code>ism IN 'A'</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Jadvaldagi qatorlar sonini qaytaruvchi funksiya?</p><ol>
+<li><code>SUM(*)</code></li><li><code>LENGTH(*)</code></li><li><code>COUNT(*)</code></li><li><code>TOTAL(*)</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">"Har bir fan bo'yicha o'rtacha baho" uchun nima kerak?</p><ol>
+<li><code>GROUP BY fan</code> + <code>AVG(baho)</code></li><li><code>ORDER BY fan</code></li><li><code>DISTINCT fan</code></li><li><code>WHERE fan = AVG</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Guruhlarni hisob-kitobdan keyin filtrlash uchun qaysi kalit so'z?</p><ol>
+<li><code>WHERE</code></li><li><code>FILTER</code></li><li><code>LIMIT</code></li><li><code>HAVING</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>WHERE narx BETWEEN 100 AND 200</code> — 200 natijaga kiradimi?</p><ol>
+<li>Yo'q</li><li>Ha, chegaralar kiradi</li><li>Faqat 100 kiradi</li><li>Xato beradi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Takrorlanmas qiymatlarni olish uchun?</p><ol>
+<li><code>UNIQUE</code></li><li><code>SINGLE</code></li><li><code>DISTINCT</code></li><li><code>GROUP</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona bazangiz uchun 5 ta hisobot: eng ko'p o'qilgan kitob, eng faol o'quvchi, har bir muallifning kitoblari soni, qaytarilishi kechikkan ijaralar soni, oylar bo'yicha ijaralar soni (<code>EXTRACT(MONTH FROM sana)</code>).</li>
+  <li><a href="https://sqlbolt.com" target="_blank" rel="noopener">SQLBolt</a> saytida 1–12-darslarni bajaring (inglizcha, interaktiv).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Filtrlar: <code>IN</code>, <code>BETWEEN</code>, <code>LIKE '%x%'</code> / <code>ILIKE</code>, <code>IS NULL</code>, <code>AND/OR/NOT</code> (qavslar!).</li>
+  <li><code>DISTINCT</code> — takrorsiz; <code>ORDER BY</code>, <code>LIMIT</code>.</li>
+  <li>Agregatlar: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>; <code>ROUND</code>, <code>COALESCE</code>.</li>
+  <li><code>GROUP BY</code> — guruhlab hisoblash; <code>HAVING</code> — guruh sharti; <code>WHERE</code> — qator sharti.</li>
+  <li>Tartib: SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT.</li>
+</ul>
+</div>

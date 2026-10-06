@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jadval, ro&#x27;yxat va forma elementlari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Tartibli va tartibsiz ro&#x27;yxatlar, jadvallar (thead, tbody, colspan, rowspan), forma va uning elementlari: input turlari, label, select, textarea, tugmalar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a class="active" href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📋</div><div><div class="crumb">03-mavzu · 31 tadan · I bob. HTML va CSS</div><h1>Jadval, ro&#x27;yxat va forma elementlari</h1><p class="lead">Tartibli va tartibsiz ro&#x27;yxatlar, jadvallar (thead, tbody, colspan, rowspan), forma va uning elementlari: input turlari, label, select, textarea, tugmalar.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Tartibli va tartibsiz ro'yxatlar yaratishni;</li>
+  <li>Dars jadvali kabi jadvallarni, kataklarni birlashtirishni;</li>
+  <li>Foydalanuvchidan ma'lumot oluvchi formalarni: matn, parol, email, tanlash, belgilash maydonlari va tugmalarni;</li>
+  <li>Forma ma'lumoti qayerga va qanday yuborilishini.</li>
+</ul>
+</div>
+
+<h2 id="royxatlar"><a class="anchor" href="#royxatlar">#</a>Ro'yxatlar</h2>
+<h3>Tartibsiz ro'yxat — <code>&lt;ul&gt;</code></h3>
+<p><b>ul</b> = <i>unordered list</i>. Tartib muhim bo'lmaganda: xarid ro'yxati, ko'nikmalar, menyu. Har bir band — <code>&lt;li&gt;</code> (<i>list item</i>).</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;h3&gt;Bozorlik ro&#x27;yxati&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Non&lt;/li&gt;
+  &lt;li&gt;Sut&lt;/li&gt;
+  &lt;li&gt;Olma&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+<h3>Tartibli ro'yxat — <code>&lt;ol&gt;</code></h3>
+<p><b>ol</b> = <i>ordered list</i>. Tartib muhim bo'lganda: retsept qadamlari, reyting, ko'rsatmalar.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;h3&gt;Choy damlash&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Suvni qaynating&lt;/li&gt;
+  &lt;li&gt;Choynakni issiq suv bilan chayib oling&lt;/li&gt;
+  &lt;li&gt;Choy soling va qaynoq suv quying&lt;/li&gt;
+  &lt;li&gt;5 daqiqa damlang&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Olimpiada g&#x27;oliblari (Rim raqamlari bilan)&lt;/h3&gt;
+&lt;ol type=&quot;I&quot;&gt;
+  &lt;li&gt;Malika&lt;/li&gt;
+  &lt;li&gt;Jasur&lt;/li&gt;
+  &lt;li&gt;Dilnoza&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;3-dan boshlanuvchi, teskari ro&#x27;yxat&lt;/h3&gt;
+&lt;ol start=&quot;3&quot; reversed&gt;
+  &lt;li&gt;Uchinchi&lt;/li&gt;
+  &lt;li&gt;Ikkinchi&lt;/li&gt;
+  &lt;li&gt;Birinchi&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Atribut (<code>ol</code> uchun)</th><th>Natija</th></tr>
+<tr><td><code>type="1"</code></td><td>1, 2, 3 (standart)</td></tr>
+<tr><td><code>type="a"</code> / <code>type="A"</code></td><td>a, b, c / A, B, C</td></tr>
+<tr><td><code>type="i"</code> / <code>type="I"</code></td><td>i, ii, iii / I, II, III</td></tr>
+<tr><td><code>start="5"</code></td><td>5 dan boshlaydi</td></tr>
+<tr><td><code>reversed</code></td><td>Teskari tartibda sanaydi</td></tr>
+</table></div>
+<h3>Ichma-ich ro'yxat</h3>
+<p>Ro'yxat ichida ro'yxat — <code>&lt;li&gt;</code> <b>ichiga</b> yangi <code>ul</code>/<code>ol</code> yoziladi:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;Aniq fanlar
+    &lt;ul&gt;
+      &lt;li&gt;Matematika&lt;/li&gt;
+      &lt;li&gt;Informatika&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Tabiiy fanlar
+    &lt;ul&gt;
+      &lt;li&gt;Fizika&lt;/li&gt;
+      &lt;li&gt;Kimyo&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+<h3>Ta'riflar ro'yxati — <code>&lt;dl&gt;</code></h3>
+<p>Lug'at yoki "atama — izoh" juftliklari uchun: <code>dt</code> — atama, <code>dd</code> — izoh.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;Sahifa tuzilishini yaratuvchi til&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Sahifa dizaynini beruvchi til&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+<h2 id="jadvallar"><a class="anchor" href="#jadvallar">#</a>Jadvallar</h2>
+<p>Jadval — <b>qator va ustunlardan</b> iborat ma'lumot: dars jadvali, baholar, narxlar. Asosiy teglar:</p>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Ma'nosi</th></tr>
+<tr><td><code>&lt;table&gt;</code></td><td>Butun jadval</td></tr>
+<tr><td><code>&lt;tr&gt;</code></td><td><b>t</b>able <b>r</b>ow — qator</td></tr>
+<tr><td><code>&lt;td&gt;</code></td><td><b>t</b>able <b>d</b>ata — oddiy katak</td></tr>
+<tr><td><code>&lt;th&gt;</code></td><td><b>t</b>able <b>h</b>eader — sarlavha katagi (qalin, markazda)</td></tr>
+<tr><td><code>&lt;caption&gt;</code></td><td>Jadval nomi</td></tr>
+<tr><td><code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code></td><td>Jadvalning bosh, asosiy va pastki qismlari</td></tr>
+</table></div>
+<div class="analogy"><span class="t">Eslab qolish uchun</span>
+Jadval <b>qatorma-qator</b> yoziladi: avval <code>&lt;tr&gt;</code> (qator) ochasiz, uning ichiga chapdan o'ngga kataklarni (<code>&lt;td&gt;</code>) yozasiz.
+Ustun degan alohida teg yo'q — ustunlar har qatordagi kataklar tartibidan hosil bo'ladi.</div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;table border=&quot;1&quot;&gt;
+  &lt;caption&gt;8-&quot;A&quot; sinf baholari&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;O&#x27;quvchi&lt;/th&gt;
+      &lt;th&gt;Matematika&lt;/th&gt;
+      &lt;th&gt;Informatika&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ali&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Zarina&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th&gt;O&#x27;rtacha&lt;/th&gt;
+      &lt;td&gt;4.5&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></div>
+<div class="callout info"><code>border="1"</code> — eski usul, faqat hozircha chegaralarni ko'rish uchun. 7-mavzudan boshlab chegaralarni CSS bilan chiroyli qilamiz.</div>
+<h3>Kataklarni birlashtirish: <code>colspan</code> va <code>rowspan</code></h3>
+<ul>
+  <li><code>colspan="2"</code> — katak <b>gorizontal</b> bo'yicha 2 ta ustunni egallaydi.</li>
+  <li><code>rowspan="2"</code> — katak <b>vertikal</b> bo'yicha 2 ta qatorni egallaydi.</li>
+</ul>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;table border=&quot;1&quot;&gt;
+  &lt;caption&gt;Dars jadvali&lt;/caption&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Vaqt&lt;/th&gt;&lt;th&gt;Dushanba&lt;/th&gt;&lt;th&gt;Seshanba&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;08:30&lt;/td&gt;&lt;td&gt;Matematika&lt;/td&gt;&lt;td rowspan=&quot;2&quot;&gt;Informatika&lt;br&gt;(juft dars)&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;09:20&lt;/td&gt;&lt;td&gt;Ona tili&lt;/td&gt;
+    &lt;!-- Seshanba katagi yo&#x27;q: tepadagi rowspan uni egallab turibdi --&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;10:10&lt;/td&gt;&lt;td colspan=&quot;2&quot;&gt;🍎 Katta tanaffus&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre></div>
+<div class="callout warn">Birlashtirilgan katak egallagan joyga keyingi qatorlarda katak <b>yozilmaydi</b>, aks holda jadval "siljib" ketadi. Har bir qatordagi kataklar soni (birlashtirishlarni hisobga olganda) teng bo'lishi kerak.</div>
+<div class="callout tip">Jadvalni faqat <b>jadval ko'rinishidagi ma'lumot</b> uchun ishlating. Sahifa maketini (menyu, ustunlar) jadval bilan qurish — eskirgan usul; buning uchun Flexbox va Grid bor (8-mavzu).</div>
+
+<h2 id="formalar-foydalanuvchidan-malumot-olish"><a class="anchor" href="#formalar-foydalanuvchidan-malumot-olish">#</a>Formalar — foydalanuvchidan ma'lumot olish</h2>
+<p>Ro'yxatdan o'tish, qidiruv, izoh qoldirish, test topshirish — barchasi <b>forma</b> orqali. Forma — frontend va backend o'rtasidagi ko'prik:
+foydalanuvchi ma'lumot kiritadi, forma uni serverga yuboradi.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form action=&quot;/royxatdan-otish&quot; method=&quot;POST&quot;&gt;
+  &lt;label for=&quot;ism&quot;&gt;Ismingiz:&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;ism&quot; name=&quot;ism&quot; placeholder=&quot;Masalan: Aziz&quot; required&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Yuborish&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Qism</th><th>Vazifasi</th></tr>
+<tr><td><code>&lt;form&gt;</code></td><td>Barcha maydonlarni o'rab turuvchi "konvert"</td></tr>
+<tr><td><code>action</code></td><td>Ma'lumot qaysi manzilga (serverdagi qaysi sahifaga) yuboriladi</td></tr>
+<tr><td><code>method</code></td><td><code>GET</code> — ma'lumot manzil satriga qo'shiladi (qidiruv uchun); <code>POST</code> — yashirin yuboriladi (parollar, ro'yxatdan o'tish)</td></tr>
+<tr><td><code>&lt;label&gt;</code></td><td>Maydon yozuvi. <code>for</code> atributi input'ning <code>id</code>siga teng bo'lsa, yozuv bosilganda maydon faollashadi</td></tr>
+<tr><td><code>name</code></td><td><b>Eng muhim atribut!</b> Serverga ma'lumot <code>name=qiymat</code> ko'rinishida boradi. <code>name</code>siz maydon yuborilmaydi</td></tr>
+<tr><td><code>placeholder</code></td><td>Maydon bo'sh turganda ko'rinadigan kulrang maslahat</td></tr>
+<tr><td><code>required</code></td><td>Majburiy maydon — to'ldirilmasa forma yuborilmaydi</td></tr>
+</table></div>
+
+<h3>Input turlari</h3>
+<p>Bitta <code>&lt;input&gt;</code> tegi <code>type</code> atributiga qarab butunlay boshqacha ko'rinadi:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form&gt;
+  &lt;p&gt;Matn: &lt;input type=&quot;text&quot; name=&quot;ism&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Parol: &lt;input type=&quot;password&quot; name=&quot;parol&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Email: &lt;input type=&quot;email&quot; name=&quot;email&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Son (1–10): &lt;input type=&quot;number&quot; name=&quot;son&quot; min=&quot;1&quot; max=&quot;10&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Telefon: &lt;input type=&quot;tel&quot; name=&quot;tel&quot; placeholder=&quot;+998 90 123 45 67&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Sana: &lt;input type=&quot;date&quot; name=&quot;sana&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Vaqt: &lt;input type=&quot;time&quot; name=&quot;vaqt&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Rang: &lt;input type=&quot;color&quot; name=&quot;rang&quot; value=&quot;#4f46e5&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Diapazon: &lt;input type=&quot;range&quot; name=&quot;daraja&quot; min=&quot;0&quot; max=&quot;100&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;Fayl: &lt;input type=&quot;file&quot; name=&quot;rasm&quot; accept=&quot;image/*&quot;&gt;&lt;/p&gt;
+
+  &lt;p&gt;Jinsingiz:
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;jins&quot; value=&quot;o&#x27;g&#x27;il&quot;&gt; O&#x27;g&#x27;il bola&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;jins&quot; value=&quot;qiz&quot;&gt; Qiz bola&lt;/label&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;Qiziqishlar:
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;qiziqish&quot; value=&quot;sport&quot;&gt; Sport&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;qiziqish&quot; value=&quot;musiqa&quot; checked&gt; Musiqa&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;qiziqish&quot; value=&quot;kitob&quot;&gt; Kitob&lt;/label&gt;
+  &lt;/p&gt;
+&lt;/form&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>type</th><th>Qachon ishlatiladi</th></tr>
+<tr><td><code>text</code></td><td>Oddiy matn: ism, shahar</td></tr>
+<tr><td><code>password</code></td><td>Parol — belgilar nuqta bo'lib ko'rinadi</td></tr>
+<tr><td><code>email</code></td><td>Email — <code>@</code> borligini brauzer o'zi tekshiradi</td></tr>
+<tr><td><code>number</code></td><td>Faqat son; <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+<tr><td><code>radio</code></td><td>Bir nechta variantdan <b>faqat bittasi</b>. Bir guruh radiolarda <code>name</code> <b>bir xil</b> bo'lishi shart!</td></tr>
+<tr><td><code>checkbox</code></td><td>Bir nechtasini belgilash mumkin; <code>checked</code> — oldindan belgilangan</td></tr>
+<tr><td><code>date</code>, <code>time</code>, <code>color</code>, <code>range</code>, <code>file</code></td><td>Sana, vaqt, rang, slayder, fayl tanlash</td></tr>
+<tr><td><code>submit</code>, <code>reset</code></td><td>Yuborish va tozalash tugmalari (eski usul; hozir <code>&lt;button&gt;</code>)</td></tr>
+</table></div>
+
+<h3>Tanlash ro'yxati va katta matn maydoni</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form&gt;
+  &lt;label for=&quot;viloyat&quot;&gt;Viloyat:&lt;/label&gt;
+  &lt;select id=&quot;viloyat&quot; name=&quot;viloyat&quot;&gt;
+    &lt;option value=&quot;&quot;&gt;— Tanlang —&lt;/option&gt;
+    &lt;option value=&quot;toshkent&quot;&gt;Toshkent&lt;/option&gt;
+    &lt;option value=&quot;samarqand&quot; selected&gt;Samarqand&lt;/option&gt;
+    &lt;option value=&quot;buxoro&quot;&gt;Buxoro&lt;/option&gt;
+    &lt;option value=&quot;xorazm&quot;&gt;Xorazm&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;br&gt;&lt;br&gt;
+  &lt;label for=&quot;fikr&quot;&gt;Fikringiz:&lt;/label&gt;&lt;br&gt;
+  &lt;textarea id=&quot;fikr&quot; name=&quot;fikr&quot; rows=&quot;5&quot; cols=&quot;40&quot; placeholder=&quot;Bu yerga yozing...&quot;&gt;&lt;/textarea&gt;
+
+  &lt;br&gt;
+  &lt;button type=&quot;submit&quot;&gt;Yuborish&lt;/button&gt;
+  &lt;button type=&quot;reset&quot;&gt;Tozalash&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+<ul>
+  <li><code>&lt;select&gt;</code> — ochiladigan ro'yxat; har bir variant <code>&lt;option&gt;</code>. Serverga <code>value</code> qiymati yuboriladi, foydalanuvchi esa teg ichidagi matnni ko'radi.</li>
+  <li><code>&lt;textarea&gt;</code> — ko'p qatorli matn (izoh, xat). <code>rows</code> — balandlik (qatorlarda), <code>cols</code> — kenglik.</li>
+  <li><code>&lt;button type="submit"&gt;</code> — formani yuboradi; <code>type="reset"</code> — barcha maydonlarni tozalaydi.</li>
+</ul>
+<h3>Brauzer tekshiruvi (validatsiya)</h3>
+<p>Brauzer ba'zi tekshiruvlarni o'zi bajaradi va xato bo'lsa formani yubormaydi:</p>
+<ul>
+  <li><code>required</code> — bo'sh bo'lmasin;</li>
+  <li><code>minlength="8"</code>, <code>maxlength="20"</code> — matn uzunligi;</li>
+  <li><code>min</code>, <code>max</code> — son yoki sana chegarasi;</li>
+  <li><code>type="email"</code> — email formati.</li>
+</ul>
+<div class="callout warn">Bu tekshiruvlar faqat foydalanuvchiga qulaylik uchun. Ayyor foydalanuvchi ularni chetlab o'tishi mumkin, shuning uchun
+ma'lumotlar <b>serverda ham</b> tekshiriladi (37-mavzu, Django Forms).</div>
+
+<h2 id="amaliy-mashgulot-togarakka-yozilish-sahifasi"><a class="anchor" href="#amaliy-mashgulot-togarakka-yozilish-sahifasi">#</a>Amaliy mashg'ulot: "To'garakka yozilish" sahifasi</h2>
+<ol class="steps">
+  <li><code>togarak.html</code> faylini yarating va HTML skeletini yozing.</li>
+  <li>Sahifa tepasiga <code>&lt;h1&gt;</code> sarlavha va to'garaklar haqida qisqa paragraf yozing.</li>
+  <li>To'garaklar jadvalini yarating: ustunlar — "To'garak", "Kunlar", "Vaqt", "Joylar soni". Kamida 4 qator.
+  Bitta to'garakni ikki kunda o'tishini <code>rowspan</code> bilan ko'rsating.</li>
+  <li>"Nima uchun yozilish kerak?" — <code>&lt;ul&gt;</code> ro'yxati (3 ta sabab).</li>
+  <li>"Qanday yozilish mumkin?" — <code>&lt;ol&gt;</code> (qadamlar).</li>
+  <li>Ro'yxatdan o'tish formasini yozing:
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;h2&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/h2&gt;
+&lt;form action=&quot;#&quot; method=&quot;POST&quot;&gt;
+  &lt;p&gt;
+    &lt;label for=&quot;fio&quot;&gt;To&#x27;liq ism *&lt;/label&gt;&lt;br&gt;
+    &lt;input type=&quot;text&quot; id=&quot;fio&quot; name=&quot;fio&quot; required minlength=&quot;3&quot;&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for=&quot;sinf&quot;&gt;Sinf *&lt;/label&gt;&lt;br&gt;
+    &lt;select id=&quot;sinf&quot; name=&quot;sinf&quot; required&gt;
+      &lt;option value=&quot;&quot;&gt;— Tanlang —&lt;/option&gt;
+      &lt;option&gt;7&lt;/option&gt;&lt;option&gt;8&lt;/option&gt;&lt;option&gt;9&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for=&quot;tel&quot;&gt;Ota-ona telefoni *&lt;/label&gt;&lt;br&gt;
+    &lt;input type=&quot;tel&quot; id=&quot;tel&quot; name=&quot;tel&quot; placeholder=&quot;+998 __ ___ __ __&quot; required&gt;
+  &lt;/p&gt;
+  &lt;p&gt;To&#x27;garak *&lt;br&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;togarak&quot; value=&quot;robototexnika&quot; required&gt; Robototexnika&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;togarak&quot; value=&quot;dasturlash&quot;&gt; Dasturlash&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;togarak&quot; value=&quot;shaxmat&quot;&gt; Shaxmat&lt;/label&gt;
+  &lt;/p&gt;
+  &lt;p&gt;Qaysi kunlar qulay?&lt;br&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;kun&quot; value=&quot;du&quot;&gt; Dushanba&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;kun&quot; value=&quot;chor&quot;&gt; Chorshanba&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;kun&quot; value=&quot;ju&quot;&gt; Juma&lt;/label&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for=&quot;izoh&quot;&gt;Qo&#x27;shimcha izoh&lt;/label&gt;&lt;br&gt;
+    &lt;textarea id=&quot;izoh&quot; name=&quot;izoh&quot; rows=&quot;3&quot; cols=&quot;40&quot;&gt;&lt;/textarea&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;rozilik&quot; required&gt; Qoidalar bilan tanishdim&lt;/label&gt;
+  &lt;/p&gt;
+  &lt;button type=&quot;submit&quot;&gt;Yozilish&lt;/button&gt;
+  &lt;button type=&quot;reset&quot;&gt;Tozalash&lt;/button&gt;
+&lt;/form&gt;</code></pre></div></li>
+  <li>Sahifani brauzerda oching. Formani bo'sh holda yuborib ko'ring — brauzer qaysi maydonlarni ko'rsatadi? Telefon raqamisiz yuborib ko'ring.</li>
+  <li><b>Tajriba:</b> <code>method="POST"</code> ni <code>method="GET"</code> ga o'zgartiring va formani to'ldirib yuboring. Manzil satriga qarang —
+  barcha ma'lumotlar <code>?fio=...&amp;sinf=8&amp;...</code> ko'rinishida ko'rinadi. Shuning uchun parollar uchun <code>GET</code> ishlatilmaydi!</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>&lt;li&gt;</code> ni <code>ul</code>/<code>ol</code> siz yozish — ro'yxat bandi doim ro'yxat ichida bo'ladi.</li>
+  <li>❌ Radio tugmalarga turli <code>name</code> berish — hammasini birdaniga belgilash mumkin bo'lib qoladi.</li>
+  <li>❌ <code>&lt;label for="..."&gt;</code> dagi qiymat input'ning <code>id</code>siga mos kelmasligi.</li>
+  <li>❌ Input'da <code>name</code> yo'qligi — ma'lumot serverga bormaydi.</li>
+  <li>❌ Jadvalda <code>&lt;td&gt;</code> ni <code>&lt;tr&gt;</code> siz to'g'ridan-to'g'ri <code>&lt;table&gt;</code> ichiga yozish.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Retsept qadamlari uchun qaysi ro'yxat mos?</p><ol>
+<li><code>&lt;ul&gt;</code></li><li><code>&lt;ol&gt;</code></li><li><code>&lt;dl&gt;</code></li><li><code>&lt;table&gt;</code></li></ol>
+<p class="explain">Qadamlar tartibi muhim — shuning uchun tartibli ro'yxat (<code>ol</code>).</p></div>
+<div class="quiz" data-answer="3"><p class="q">Jadvalda yangi qator qaysi teg bilan boshlanadi?</p><ol>
+<li><code>&lt;td&gt;</code></li><li><code>&lt;th&gt;</code></li><li><code>&lt;tr&gt;</code></li><li><code>&lt;row&gt;</code></li></ol>
+<p class="explain"><code>tr</code> = table row. Kataklar (<code>td</code>/<code>th</code>) uning ichida.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Katakni ikki ustun kengligida birlashtirish uchun qaysi atribut kerak?</p><ol>
+<li><code>colspan="2"</code></li><li><code>rowspan="2"</code></li><li><code>span="2"</code></li><li><code>width="2"</code></li></ol>
+<p class="explain">col = ustun (gorizontal), row = qator (vertikal).</p></div>
+<div class="quiz" data-answer="4"><p class="q">"Jinsingiz" savoliga faqat bitta javob tanlash uchun qaysi input turi kerak?</p><ol>
+<li><code>checkbox</code></li><li><code>text</code></li><li><code>select multiple</code></li><li><code>radio</code></li></ol>
+<p class="explain">Radio — bir guruhdan bitta tanlov. Guruhdagi barcha radiolarning <code>name</code>i bir xil bo'lishi kerak.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Forma ma'lumoti serverga qaysi atribut nomi bilan boradi?</p><ol>
+<li><code>id</code></li><li><code>name</code></li><li><code>placeholder</code></li><li><code>class</code></li></ol>
+<p class="explain">Server <code>name=qiymat</code> juftliklarini oladi. <code>id</code> esa <code>label</code> va CSS uchun.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Parol yuboradigan forma uchun qaysi <code>method</code> to'g'ri?</p><ol>
+<li><code>GET</code></li><li><code>SEND</code></li><li><code>POST</code></li><li><code>PUT</code></li></ol>
+<p class="explain">GET'da ma'lumot manzil satrida ochiq ko'rinadi va brauzer tarixida saqlanadi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>O'z sinfingizning to'liq <b>haftalik dars jadvali</b>ni HTML jadval sifatida yarating (<code>caption</code>, <code>thead</code>, tanaffuslar uchun <code>colspan</code>).</li>
+  <li>2-mavzudagi retsept sahifangizni yangilang: masalliqlarni <code>ul</code>, tayyorlash bosqichlarini <code>ol</code> bilan yozing.</li>
+  <li>"Kutubxonaga a'zo bo'lish" formasini yarating: ism, tug'ilgan sana, email, sevimli janr (<code>select</code>), qaysi tillarda o'qiydi (<code>checkbox</code>), izoh (<code>textarea</code>).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>ul</code> — tartibsiz, <code>ol</code> — tartibli ro'yxat; bandlar <code>li</code>.</li>
+  <li>Jadval: <code>table → tr (qator) → td/th (katak)</code>; <code>colspan</code> — gorizontal, <code>rowspan</code> — vertikal birlashtirish.</li>
+  <li>Forma: <code>action</code> (qayerga), <code>method</code> (GET/POST), har bir maydonda <code>name</code> va <code>label</code>.</li>
+  <li><code>radio</code> — bitta tanlov (bir xil name), <code>checkbox</code> — bir nechta, <code>select</code> — ro'yxatdan, <code>textarea</code> — ko'p qatorli matn.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="02-html-tuzilishi.html"><small>← Oldingi mavzu</small>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a><a class="next" href="04-havolalar-rasmlar-media.html"><small>Keyingi mavzu →</small>Havolalar va navigatsiya. Rasmlar va media elementlari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#royxatlar">Ro&#x27;yxatlar</a></li><li><a href="#jadvallar">Jadvallar</a></li><li><a href="#formalar-foydalanuvchidan-malumot-olish">Formalar — foydalanuvchidan ma&#x27;lumot olish</a></li><li><a href="#amaliy-mashgulot-togarakka-yozilish-sahifasi">Amaliy mashg&#x27;ulot: &quot;To&#x27;garakka yozilish&quot; sahifasi</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!-- title: HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha | desc: Loyihani rejalashtirish, "holat → chizish" usuli, forma tekshirish; To-Do List (localStorage bilan), mini test tizimi va interaktiv komponentlar — bosqichma-bosqich. | icon: 🧩 | level: 2 soat · amaliy | bob: II bob. JavaScript asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Loyihani boshlashdan oldin <b>rejalashtirishni</b>;</li>
+  <li>Professional usul: ma'lumotni <b>massivda</b> saqlab, sahifani undan <b>chizish</b> (render);</li>
+  <li>Formani JavaScript bilan tekshirish (validatsiya);</li>
+  <li>To'liq <b>To-Do List</b> ilovasini (11-loyiha);</li>
+  <li><b>Mini test tizimi</b>ni (12-loyiha) yaratishni.</li>
+</ul>
+<p>Bu dars — II bobning yakuni: o'zgaruvchilar, shartlar, sikllar, funksiyalar, massivlar, DOM va hodisalar bitta loyihada birlashadi.</p>
+</div>
+
+<h2>Loyihani qanday boshlash kerak?</h2>
+<p>Yangi boshlovchilarning eng katta xatosi — darhol kod yozishga tushish. Tajribali dasturchi avval <b>o'ylaydi</b>:</p>
+<ol class="steps">
+  <li><b>Nima qilishi kerak?</b> Funksiyalar ro'yxatini yozing: "vazifa qo'shish", "bajarildi deb belgilash", "o'chirish"...</li>
+  <li><b>Qanday ko'rinadi?</b> Qog'ozga chizib oling: input, tugma, ro'yxat.</li>
+  <li><b>Qanday ma'lumot saqlanadi?</b> Har bir vazifa — obyekt: <code>{ id, matn, bajarildi }</code>; hammasi — massiv.</li>
+  <li><b>Qaysi hodisalar bor?</b> Forma yuborildi → qo'shish; checkbox bosildi → belgilash; 🗑 bosildi → o'chirish.</li>
+  <li><b>Kichik qadamlar bilan yozing</b> va har qadamdan keyin tekshiring.</li>
+</ol>
+
+<h2>"Holat → Chizish" usuli</h2>
+<p>Ro'yxatga element qo'shganda ham, o'chirganda ham DOM'ni qo'lda "yamash" chalkashlikka olib keladi. Professional usul:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">👆 Hodisa<small>tugma bosildi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">📦 Holat (massiv) o'zgaradi<small>push / filter / map</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🎨 render()<small>sahifa massivdan qaytadan chiziladi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">💾 saqlash<small>localStorage</small></div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: doska va daftar</span>
+Daftar — <b>holat</b> (haqiqiy ma'lumot). Doska — <b>ekran</b>. O'qituvchi doskaga to'g'ridan-to'g'ri yozib-o'chirib o'tirmaydi: avval daftarni yangilaydi,
+keyin doskani artib, daftardagini qaytadan yozadi. Shunda doska va daftar hech qachon farq qilmaydi.</div>
+<p>Aynan shu g'oya React kabi zamonaviy kutubxonalarning asosida yotadi.</p>
+
+<h2>1-loyiha: To-Do List (11-loyiha)</h2>
+<h3>1-qadam: HTML va CSS</h3>
+<pre data-lang="html" data-title="todo/index.html"><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vazifalarim</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="ilova">
+    <h1>📝 Vazifalarim</h1>
+
+    <form id="forma">
+      <input id="kiritish" placeholder="Yangi vazifa..." maxlength="80" autocomplete="off">
+      <button>Qo'shish</button>
+    </form>
+    <p id="xato" class="xato"></p>
+
+    <div class="filtrlar">
+      <button data-filtr="hammasi" class="faol">Hammasi</button>
+      <button data-filtr="faol">Faol</button>
+      <button data-filtr="bajarilgan">Bajarilgan</button>
+    </div>
+
+    <ul id="royxat"></ul>
+
+    <footer class="pastki">
+      <span id="hisob"></span>
+      <button id="tozalash">Bajarilganlarni o'chirish</button>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html></pre>
+<h3>2-qadam: JavaScript — bosqichma-bosqich</h3>
+<pre data-lang="js" data-title="todo/app.js">// ========== 1. HOLAT (ma'lumotlar) ==========
+let vazifalar = JSON.parse(localStorage.getItem("vazifalar")) || [];
+let filtr = "hammasi";
+
+// ========== 2. ELEMENTLAR ==========
+const forma = document.querySelector("#forma");
+const kiritish = document.querySelector("#kiritish");
+const royxat = document.querySelector("#royxat");
+const xato = document.querySelector("#xato");
+const hisob = document.querySelector("#hisob");
+
+// ========== 3. AMALLAR (holatni o'zgartiradi) ==========
+function qoshish(matn) {
+  vazifalar.push({ id: Date.now(), matn: matn, bajarildi: false });
+  yangilash();
+}
+
+function belgilash(id) {
+  vazifalar = vazifalar.map(v => v.id === id ? { ...v, bajarildi: !v.bajarildi } : v);
+  yangilash();
+}
+
+function ochirish(id) {
+  vazifalar = vazifalar.filter(v => v.id !== id);
+  yangilash();
+}
+
+function yangilash() {
+  localStorage.setItem("vazifalar", JSON.stringify(vazifalar));  // saqlash
+  render();                                                         // chizish
+}
+
+// ========== 4. CHIZISH (holatdan sahifa) ==========
+function render() {
+  royxat.innerHTML = "";                         // eski ro'yxatni tozalash
+
+  const korinadigan = vazifalar.filter(v => {
+    if (filtr === "faol") return !v.bajarildi;
+    if (filtr === "bajarilgan") return v.bajarildi;
+    return true;
+  });
+
+  if (korinadigan.length === 0) {
+    royxat.innerHTML = '<li class="bosh">Bu yerda hozircha hech narsa yo\'q 🎉</li>';
+  }
+
+  korinadigan.forEach(v => {
+    const li = document.createElement("li");
+    if (v.bajarildi) li.classList.add("bajarildi");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = v.bajarildi;
+    checkbox.addEventListener("change", () => belgilash(v.id));
+
+    const span = document.createElement("span");
+    span.textContent = v.matn;                   // ✅ textContent — xavfsiz
+
+    const ochirishTugma = document.createElement("button");
+    ochirishTugma.textContent = "🗑";
+    ochirishTugma.title = "O'chirish";
+    ochirishTugma.addEventListener("click", () => ochirish(v.id));
+
+    li.append(checkbox, span, ochirishTugma);
+    royxat.append(li);
+  });
+
+  const qolgan = vazifalar.filter(v => !v.bajarildi).length;
+  hisob.textContent = `${qolgan} ta vazifa qoldi`;
+}
+
+// ========== 5. HODISALAR ==========
+forma.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const matn = kiritish.value.trim();
+
+  // Validatsiya
+  if (matn === "") {
+    xato.textContent = "⚠️ Vazifa matnini kiriting";
+    return;
+  }
+  if (vazifalar.some(v => v.matn.toLowerCase() === matn.toLowerCase())) {
+    xato.textContent = "⚠️ Bunday vazifa allaqachon bor";
+    return;
+  }
+
+  xato.textContent = "";
+  qoshish(matn);
+  kiritish.value = "";
+  kiritish.focus();
+});
+
+document.querySelectorAll("[data-filtr]").forEach(tugma => {
+  tugma.addEventListener("click", () => {
+    filtr = tugma.dataset.filtr;                 // data-filtr atributining qiymati
+    document.querySelectorAll("[data-filtr]").forEach(t => t.classList.remove("faol"));
+    tugma.classList.add("faol");
+    render();
+  });
+});
+
+document.querySelector("#tozalash").addEventListener("click", () => {
+  vazifalar = vazifalar.filter(v => !v.bajarildi);
+  yangilash();
+});
+
+// ========== 6. BOSHLASH ==========
+render();</pre>
+<h3>3-qadam: dizayn</h3>
+<pre data-lang="css" data-title="todo/style.css">* { box-sizing: border-box; }
+body { font-family: "Segoe UI", sans-serif; background: #eef2ff; margin: 0; padding: 40px 16px; }
+.ilova { max-width: 480px; margin: 0 auto; background: white; padding: 28px; border-radius: 18px;
+         box-shadow: 0 15px 35px rgba(79,70,229,.12); }
+h1 { margin-top: 0; text-align: center; }
+#forma { display: flex; gap: 8px; }
+#forma input { flex: 1; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; }
+#forma input:focus { border-color: #4f46e5; outline: none; }
+#forma button { padding: 0 18px; border: none; border-radius: 10px; background: #4f46e5; color: white; font-weight: 600; cursor: pointer; }
+.xato { color: #dc2626; min-height: 1.2em; margin: 6px 0; font-size: 14px; }
+.filtrlar { display: flex; gap: 6px; margin-bottom: 10px; }
+.filtrlar button { border: 1px solid #e5e7eb; background: white; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.filtrlar button.faol { background: #4f46e5; color: white; border-color: #4f46e5; }
+#royxat { list-style: none; padding: 0; margin: 0; }
+#royxat li { display: flex; align-items: center; gap: 10px; padding: 12px 4px; border-bottom: 1px solid #f3f4f6; }
+#royxat li span { flex: 1; }
+#royxat li.bajarildi span { text-decoration: line-through; color: #9ca3af; }
+#royxat li button { border: none; background: none; cursor: pointer; font-size: 18px; opacity: .4; transition: opacity .2s; }
+#royxat li:hover button { opacity: 1; }
+#royxat li.bosh { justify-content: center; color: #9ca3af; }
+.pastki { display: flex; justify-content: space-between; margin-top: 14px; font-size: 14px; color: #6b7280; }
+.pastki button { border: none; background: none; color: #6b7280; text-decoration: underline; cursor: pointer; }</pre>
+<p>Uchala faylni bitta papkada yarating va Live Server bilan oching. Vazifalar qo'shing, sahifani yangilang — ular <b>saqlanib qoladi</b> (localStorage).</p>
+<div class="callout tip"><span class="t">Tushunish uchun tajriba</span>
+DevTools → <b>Application</b> → <b>Local Storage</b> ni oching. Vazifa qo'shganingizda <code>vazifalar</code> kaliti ostidagi JSON qanday o'zgarishini kuzating.</div>
+
+<h2>2-loyiha: Mini test tizimi (12-loyiha)</h2>
+<p>Savollar <b>ma'lumot</b> sifatida massivda saqlanadi — yangi savol qo'shish uchun kodni o'zgartirish shart emas, faqat massivga qo'shish kifoya.</p>
+<pre data-lang="html" data-title="test.html" data-play><!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini test</title>
+<style>
+  body { font-family: "Segoe UI", sans-serif; background: #f1f5f9; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+  .test { background: white; width: min(480px, 92vw); padding: 28px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+  .progress { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-bottom: 18px; }
+  .progress div { height: 100%; background: #4f46e5; width: 0; transition: width .4s; }
+  .raqam { color: #6b7280; font-size: 14px; }
+  h2 { margin: 6px 0 16px; font-size: 1.25rem; }
+  .variant { display: block; width: 100%; text-align: left; padding: 12px 14px; margin: 8px 0; border: 2px solid #e5e7eb;
+             border-radius: 10px; background: white; font-size: 16px; cursor: pointer; transition: .2s; }
+  .variant:hover:not(:disabled) { border-color: #4f46e5; background: #eef2ff; }
+  .variant.togri { border-color: #22c55e; background: #dcfce7; }
+  .variant.notogri { border-color: #ef4444; background: #fee2e2; }
+  #keyingi { margin-top: 14px; padding: 12px 22px; border: none; border-radius: 10px; background: #4f46e5; color: white; font-size: 16px; cursor: pointer; }
+  .yashirin { display: none; }
+  .natija { text-align: center; }
+  .natija .ball { font-size: 3rem; font-weight: 800; color: #4f46e5; }
+</style>
+</head>
+<body>
+<div class="test">
+  <div class="progress"><div id="chiziq"></div></div>
+  <div id="savolBloki">
+    <div class="raqam" id="raqam"></div>
+    <h2 id="savol"></h2>
+    <div id="variantlar"></div>
+    <button id="keyingi" class="yashirin">Keyingi →</button>
+  </div>
+  <div id="natijaBloki" class="natija yashirin"></div>
+</div>
+
+<script>
+  const SAVOLLAR = [
+    { savol: "Sahifa tuzilishini yaratuvchi til qaysi?", variantlar: ["CSS", "HTML", "JavaScript", "Python"], togri: 1 },
+    { savol: "Doim ishlatilishi kerak bo'lgan taqqoslash operatori?", variantlar: ["=", "==", "===", "=>"], togri: 2 },
+    { savol: "Massiv oxiriga element qo'shuvchi metod?", variantlar: ["pop()", "push()", "shift()", "add()"], togri: 1 },
+    { savol: "Elementni CSS selektori bilan topuvchi metod?", variantlar: ["querySelector", "findElement", "getCSS", "select"], togri: 0 },
+    { savol: "17 % 5 nechaga teng?", variantlar: ["3", "3.4", "2", "12"], togri: 2 },
+  ];
+
+  let joriy = 0;
+  let ball = 0;
+
+  const raqamEl = document.querySelector("#raqam");
+  const savolEl = document.querySelector("#savol");
+  const variantlarEl = document.querySelector("#variantlar");
+  const keyingiEl = document.querySelector("#keyingi");
+  const chiziqEl = document.querySelector("#chiziq");
+
+  function savolniKorsat() {
+    const s = SAVOLLAR[joriy];
+    raqamEl.textContent = `Savol ${joriy + 1} / ${SAVOLLAR.length}`;
+    savolEl.textContent = s.savol;
+    chiziqEl.style.width = `${(joriy / SAVOLLAR.length) * 100}%`;
+    keyingiEl.classList.add("yashirin");
+    variantlarEl.innerHTML = "";
+
+    s.variantlar.forEach((matn, i) => {
+      const tugma = document.createElement("button");
+      tugma.className = "variant";
+      tugma.textContent = matn;
+      tugma.addEventListener("click", () => javobBer(i, tugma));
+      variantlarEl.append(tugma);
+    });
+  }
+
+  function javobBer(tanlangan, tugma) {
+    const togri = SAVOLLAR[joriy].togri;
+    const hammasi = variantlarEl.querySelectorAll(".variant");
+    hammasi.forEach(t => t.disabled = true);            // qayta bosib bo'lmasin
+
+    if (tanlangan === togri) {
+      ball++;
+      tugma.classList.add("togri");
+    } else {
+      tugma.classList.add("notogri");
+      hammasi[togri].classList.add("togri");            // to'g'ri javobni ko'rsatamiz
+    }
+    keyingiEl.classList.remove("yashirin");
+  }
+
+  keyingiEl.addEventListener("click", () => {
+    joriy++;
+    if (joriy < SAVOLLAR.length) savolniKorsat();
+    else natijaniKorsat();
+  });
+
+  function natijaniKorsat() {
+    chiziqEl.style.width = "100%";
+    document.querySelector("#savolBloki").classList.add("yashirin");
+    const foiz = Math.round((ball / SAVOLLAR.length) * 100);
+    const izoh = foiz >= 86 ? "A'lo! 🏆" : foiz >= 60 ? "Yaxshi! 👍" : "Yana mashq qiling 📚";
+    const blok = document.querySelector("#natijaBloki");
+    blok.classList.remove("yashirin");
+    blok.innerHTML = `<p>Natijangiz</p><div class="ball">${ball}/${SAVOLLAR.length}</div>
+                      <p>${foiz}% — ${izoh}</p><button id="qayta">Qaytadan boshlash</button>`;
+    document.querySelector("#qayta").addEventListener("click", () => {
+      joriy = 0; ball = 0;
+      blok.classList.add("yashirin");
+      document.querySelector("#savolBloki").classList.remove("yashirin");
+      savolniKorsat();
+    });
+  }
+
+  savolniKorsat();
+</script>
+</body>
+</html></pre>
+<p><b>Kengaytirish g'oyalari:</b></p>
+<ol class="steps">
+  <li>O'zingiz 10 ta savol yozing (HTML, CSS, JS bo'yicha).</li>
+  <li>Savollar va variantlar har safar <b>aralashtirilib</b> chiqsin (Maslahat: <code>arr.sort(() =&gt; Math.random() - 0.5)</code>; variantlarni aralashtirganda to'g'ri javob indeksini ham yangilashni unutmang!).</li>
+  <li>Har bir savolga 20 soniyalik taymer qo'shing (<code>setInterval</code>). Vaqt tugasa — javob noto'g'ri hisoblanadi.</li>
+  <li>Eng yaxshi natijani <code>localStorage</code> da saqlang va "Rekord: 9/10" deb ko'rsating.</li>
+</ol>
+
+<h2>Forma validatsiyasi: real vaqtda tekshirish</h2>
+<pre data-lang="html" data-play><style>
+  body { font-family: sans-serif; padding: 20px; }
+  .maydon { margin-bottom: 14px; }
+  input { padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; width: 260px; }
+  .maydon.xato input { border-color: #ef4444; }
+  .maydon.ok input { border-color: #22c55e; }
+  small { display: block; color: #ef4444; min-height: 1em; }
+</style>
+<form id="royxatdan">
+  <div class="maydon"><input name="email" placeholder="Email"><small></small></div>
+  <div class="maydon"><input name="parol" type="password" placeholder="Parol"><small></small></div>
+  <button>Ro'yxatdan o'tish</button>
+</form>
+<script>
+  const qoidalar = {
+    email: v => /^\S+@\S+\.\S+$/.test(v) ? "" : "Email noto'g'ri",
+    parol: v => v.length < 8 ? "Kamida 8 belgi" : !/\d/.test(v) ? "Kamida bitta raqam bo'lsin" : "",
+  };
+  const forma = document.querySelector("#royxatdan");
+
+  function tekshir(input) {
+    const xato = qoidalar[input.name](input.value);
+    const maydon = input.closest(".maydon");
+    maydon.querySelector("small").textContent = xato;
+    maydon.classList.toggle("xato", xato !== "");
+    maydon.classList.toggle("ok", xato === "");
+    return xato === "";
+  }
+
+  forma.addEventListener("input", e => tekshir(e.target));
+  forma.addEventListener("submit", e => {
+    e.preventDefault();
+    const hammasiOk = [...forma.elements].filter(el => el.name).map(tekshir).every(Boolean);
+    if (hammasiOk) alert("✅ Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+  });
+</script></pre>
+<p><code>/^\S+@\S+\.\S+$/</code> — <b>muntazam ifoda (regex)</b>: "bo'sh joysiz belgilar, @, belgilar, nuqta, belgilar". Regex'lar matnni naqsh bo'yicha tekshirish uchun ishlatiladi.</p>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Holatni o'zgartirib, <code>render()</code> ni chaqirishni unutish — massiv o'zgardi, lekin ekran eski holicha.</li>
+  <li>❌ <code>localStorage</code> ga massivni <code>JSON.stringify</code>siz saqlash — <code>"[object Object]"</code> saqlanib qoladi.</li>
+  <li>❌ <code>render()</code> da ro'yxatni tozalamaslik (<code>innerHTML = ""</code>) — har safar elementlar ikki baravar ko'payadi.</li>
+  <li>❌ Foydalanuvchi matnini <code>innerHTML</code> bilan qo'shish — XSS xavfi. <code>textContent</code>!</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">"Holat → Chizish" usulida tugma bosilganda birinchi nima o'zgaradi?</p><ol>
+<li>Sahifadagi HTML</li><li>CSS fayl</li><li>Ma'lumotlar massivi (holat)</li><li>localStorage</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Massivni localStorage'da saqlash uchun avval nima qilinadi?</p><ol>
+<li><code>JSON.stringify()</code> bilan matnga aylantiriladi</li><li><code>toString()</code> chaqiriladi</li><li>Hech narsa, to'g'ridan-to'g'ri saqlanadi</li><li><code>Number()</code> bilan songa aylantiriladi</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>&lt;button data-filtr="faol"&gt;</code> dagi qiymatni JS'da qanday o'qiysiz?</p><ol>
+<li><code>tugma.filtr</code></li><li><code>tugma.data</code></li><li><code>tugma.value</code></li><li><code>tugma.dataset.filtr</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Vazifani o'chirishning eng qulay usuli (id bo'yicha)?</p><ol>
+<li><code>vazifalar.pop(id)</code></li><li><code>vazifalar = vazifalar.filter(v =&gt; v.id !== id)</code></li><li><code>delete vazifalar[id]</code></li><li><code>vazifalar.remove(id)</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa (bob yakunlovchi loyiha)</h3>
+<p>Quyidagilardan <b>birini</b> tanlab, to'liq ilova yarating va GitHub + Netlify'ga joylang:</p>
+<ol>
+  <li><b>Xarajatlar hisobchisi:</b> xarajat nomi, summasi va toifasi qo'shiladi; jami summa va toifalar bo'yicha yig'indi ko'rsatiladi; localStorage.</li>
+  <li><b>Lug'at o'yini:</b> inglizcha so'z ko'rsatiladi, foydalanuvchi tarjimasini yozadi; ball va "qiyin so'zlar" ro'yxati.</li>
+  <li><b>Kutubxona katalogi:</b> kitoblar kartochkalari, qidiruv maydoni (real vaqtda filtr), janr bo'yicha filtr, "o'qildi" belgisi.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>🎉 II bob yakunlandi!</h3>
+<ul>
+  <li>Loyiha: reja → dizayn → ma'lumot tuzilmasi → hodisalar → kichik qadamlar.</li>
+  <li>"Holat → Chizish": hodisa holatni o'zgartiradi, <code>render()</code> sahifani holatdan chizadi, <code>localStorage</code> saqlaydi.</li>
+  <li>Siz endi interaktiv veb-ilovalar yarata olasiz. Keyingi bobda <b>server tomoni</b>ga o'tamiz — Python va ma'lumotlar bazalari!</li>
+</ul>
+</div>

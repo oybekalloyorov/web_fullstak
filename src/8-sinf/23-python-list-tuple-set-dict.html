@@ -1,0 +1,296 @@
+<!-- title: Ma'lumot tuzilmalari: list, tuple, set va dictionary | desc: Ro'yxat (list) va uning metodlari, kesish (slicing), list comprehension; o'zgarmas tuple; takrorlanmas set; kalit-qiymatli dictionary; qaysi birini qachon tanlash; o'quvchilar ma'lumotlarini boshqarish dasturi. | icon: 📚 | level: 1 soat · nazariy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python'ning to'rtta asosiy "konteyneri": <b>list</b>, <b>tuple</b>, <b>set</b>, <b>dict</b>;</li>
+  <li>Har birining xususiyatlari va qachon qaysi birini tanlash kerakligini;</li>
+  <li>Ro'yxatlarni kesish (slicing) va list comprehension;</li>
+  <li>O'quvchilar ma'lumotlarini boshqaruvchi dasturni (16-loyiha).</li>
+</ul>
+</div>
+
+<h2>To'rt tuzilma — bir qarashda</h2>
+<div class="table-wrap"><table>
+<tr><th>Tuzilma</th><th>Yozilishi</th><th>Tartiblangan?</th><th>O'zgartirish mumkinmi?</th><th>Takrorlanish?</th><th>JS'dagi o'xshashi</th></tr>
+<tr><td><b>list</b> (ro'yxat)</td><td><code>[1, 2, 3]</code></td><td>✅ Ha</td><td>✅ Ha</td><td>✅ Mumkin</td><td>Array</td></tr>
+<tr><td><b>tuple</b> (kortej)</td><td><code>(1, 2, 3)</code></td><td>✅ Ha</td><td>❌ Yo'q</td><td>✅ Mumkin</td><td>—</td></tr>
+<tr><td><b>set</b> (to'plam)</td><td><code>{1, 2, 3}</code></td><td>❌ Yo'q</td><td>✅ Ha</td><td>❌ Yo'q</td><td>Set</td></tr>
+<tr><td><b>dict</b> (lug'at)</td><td><code>{"ism": "Ali"}</code></td><td>✅ Ha</td><td>✅ Ha</td><td>Kalitlar — yo'q</td><td>Object</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatishlar</span>
+<b>list</b> — xarid ro'yxati: tartibi bor, qo'shish-o'chirish mumkin, bir narsa ikki marta yozilishi mumkin.<br>
+<b>tuple</b> — tug'ilgan sana (kun, oy, yil): bir marta yoziladi va o'zgarmaydi.<br>
+<b>set</b> — sinfdagi o'quvchilar ismlari to'plami: har biri faqat bir marta, tartibi ahamiyatsiz.<br>
+<b>dict</b> — lug'at yoki telefon kitobi: so'z (kalit) bo'yicha ma'nosini (qiymatni) darhol topasiz.</div>
+
+<h2>List — ro'yxat</h2>
+<pre data-lang="python">fanlar = ["matematika", "fizika", "informatika"]
+print(fanlar[0])          # matematika — indeks 0 dan
+print(fanlar[-1])         # informatika — MANFIY indeks: oxiridan sanaydi
+print(len(fanlar))        # 3 — elementlar soni
+
+fanlar.append("tarix")            # oxiriga qo'shish (JS: push)
+fanlar.insert(1, "kimyo")         # 1-o'ringa qo'yish
+fanlar.remove("fizika")           # qiymati bo'yicha o'chirish
+oxirgi = fanlar.pop()             # oxirgisini olib tashlash va qaytarish
+fanlar[0] = "algebra"             # o'zgartirish
+print(fanlar)                     # ['algebra', 'kimyo', 'informatika']
+
+print("kimyo" in fanlar)          # True — bormi?
+print(fanlar.index("kimyo"))      # 1 — qaysi o'rinda?</pre>
+<h3>Sonlar ro'yxati bilan ishlash</h3>
+<pre data-lang="python">ballar = [78, 95, 62, 88, 95, 71]
+print(sum(ballar))                # 489 — yig'indi
+print(max(ballar), min(ballar))   # 95 62
+print(sum(ballar) / len(ballar))  # 81.5 — o'rtacha
+print(ballar.count(95))           # 2 — necha marta uchraydi
+
+ballar.sort()                     # o'sish tartibida (asl ro'yxatni o'zgartiradi)
+print(ballar)
+ballar.sort(reverse=True)         # kamayish tartibida
+print(sorted(["olma", "anor", "behi"]))   # yangi saralangan ro'yxat qaytaradi</pre>
+<pre data-lang="output">489
+95 62
+81.5
+2
+[62, 71, 78, 88, 95, 95]
+['anor', 'behi', 'olma']</pre>
+<h3>Kesish (slicing) — Python'ning "super kuchi"</h3>
+<pre data-lang="python">harflar = ["a", "b", "c", "d", "e", "f"]
+#            0    1    2    3    4    5
+print(harflar[1:4])     # ['b', 'c', 'd']   — 1 dan 4 gacha (4 kirmaydi)
+print(harflar[:3])      # ['a', 'b', 'c']   — boshidan
+print(harflar[3:])      # ['d', 'e', 'f']   — oxirigacha
+print(harflar[-2:])     # ['e', 'f']        — oxirgi ikkitasi
+print(harflar[::2])     # ['a', 'c', 'e']   — har ikkinchisi
+print(harflar[::-1])    # teskari tartibda!
+print("Python"[::-1])   # nohtyP — satrlarda ham ishlaydi</pre>
+<h3>Aylanib chiqish</h3>
+<pre data-lang="python">oquvchilar = ["Ali", "Vali", "Gani"]
+for ism in oquvchilar:
+    print(ism)
+
+for i, ism in enumerate(oquvchilar, start=1):    # raqam bilan
+    print(f"{i}. {ism}")</pre>
+<h3>List comprehension — qisqa va kuchli</h3>
+<p>Mavjud ro'yxatdan yangisini bitta qatorda yaratish (JS'dagi <code>map</code> va <code>filter</code> ning birlashmasi):</p>
+<pre data-lang="python">sonlar = [1, 2, 3, 4, 5, 6]
+
+kvadratlar = [x * x for x in sonlar]             # [1, 4, 9, 16, 25, 36]
+juftlar = [x for x in sonlar if x % 2 == 0]      # [2, 4, 6]
+ismlar = ["ali", "vali"]
+kattalar = [i.capitalize() for i in ismlar]      # ['Ali', 'Vali']
+
+# Oddiy sikl bilan xuddi shu:
+kvadratlar2 = []
+for x in sonlar:
+    kvadratlar2.append(x * x)</pre>
+
+<h2>Tuple — o'zgarmas ro'yxat</h2>
+<pre data-lang="python">sana = (1, 9, 2026)               # kun, oy, yil
+koordinata = (41.31, 69.28)       # Toshkent kengligi va uzunligi
+print(sana[2])                    # 2026
+# sana[0] = 5                     # ❌ TypeError: tuple o'zgartirilmaydi
+
+kun, oy, yil = sana               # "ochish" (unpacking)
+print(f"{kun}.{oy}.{yil}")
+
+a, b = 5, 10
+a, b = b, a                       # qiymatlarni almashtirish — aslida tuple!
+print(a, b)                       # 10 5</pre>
+<p><b>Qachon tuple?</b> Ma'lumot o'zgarmasligi kerak bo'lsa: sanalar, koordinatalar, RGB ranglar <code>(255, 0, 0)</code>, haftaning kunlari. Tuple list'dan biroz tezroq
+va "tasodifan o'zgartirib qo'yish"dan himoya qiladi.</p>
+
+<h2>Set — takrorlanmas to'plam</h2>
+<pre data-lang="python">ranglar = {"qizil", "yashil", "qizil", "ko'k"}
+print(ranglar)              # {'yashil', 'ko'k', 'qizil'} — takror o'chdi, tartib kafolatlanmaydi
+ranglar.add("sariq")
+ranglar.discard("yashil")
+print("qizil" in ranglar)   # True — set'da qidirish juda tez
+
+# Takrorlarni olib tashlashning eng oson usuli
+royxat = [1, 2, 2, 3, 3, 3, 4]
+print(list(set(royxat)))    # [1, 2, 3, 4]
+
+# To'plamlar ustida amallar (matematikadagi kabi)
+futbol = {"Ali", "Vali", "Sardor"}
+shaxmat = {"Vali", "Malika", "Sardor"}
+print(futbol & shaxmat)     # kesishma — ikkalasida ham: {'Vali', 'Sardor'}
+print(futbol | shaxmat)     # birlashma — hammasi
+print(futbol - shaxmat)     # ayirma — faqat futbolda: {'Ali'}</pre>
+<div class="callout warn">Bo'sh set — <code>set()</code>. <code>{}</code> yozsangiz bo'sh <b>dict</b> yaratiladi!</div>
+
+<h2>Dictionary — kalit: qiymat</h2>
+<p>Eng ko'p ishlatiladigan tuzilma. Ma'lumotni <b>nomi (kaliti)</b> bo'yicha saqlaydi va darhol topadi.</p>
+<pre data-lang="python">oquvchi = {
+    "ism": "Dilnoza",
+    "yosh": 14,
+    "sinf": "8-A",
+    "fanlar": ["matematika", "ingliz tili"],
+}
+
+print(oquvchi["ism"])                    # Dilnoza
+print(oquvchi.get("telefon"))            # None — kalit yo'q bo'lsa xato bermaydi
+print(oquvchi.get("telefon", "yo'q"))    # standart qiymat bilan
+
+oquvchi["yosh"] = 15                     # o'zgartirish
+oquvchi["shahar"] = "Andijon"            # yangi kalit qo'shish
+del oquvchi["sinf"]                      # o'chirish
+print("ism" in oquvchi)                  # True — kalit bormi?
+
+for kalit, qiymat in oquvchi.items():    # kalit va qiymatni birga
+    print(f"{kalit}: {qiymat}")
+
+print(list(oquvchi.keys()))
+print(list(oquvchi.values()))</pre>
+<div class="callout danger"><code>oquvchi["telefon"]</code> — kalit yo'q bo'lsa <code>KeyError</code> xatosi. Ishonchingiz komil bo'lmasa, <code>.get()</code> ishlating.</div>
+<h3>Dict bilan sanash — klassik masala</h3>
+<pre data-lang="python">matn = "olma nok olma uzum nok olma"
+sanoq = {}
+for soz in matn.split():
+    sanoq[soz] = sanoq.get(soz, 0) + 1
+print(sanoq)        # {'olma': 3, 'nok': 2, 'uzum': 1}</pre>
+<h3>Ichma-ich tuzilmalar — real ma'lumot</h3>
+<pre data-lang="python">sinf = [
+    {"ism": "Ali", "baholar": {"matematika": 5, "fizika": 4}},
+    {"ism": "Zarina", "baholar": {"matematika": 5, "fizika": 5}},
+]
+print(sinf[1]["baholar"]["fizika"])     # 5
+
+for o in sinf:
+    ortacha = sum(o["baholar"].values()) / len(o["baholar"])
+    print(f"{o['ism']}: {ortacha}")</pre>
+<p>Bu ko'rinish JavaScript'dagi obyektlar massiviga (18-mavzu) va internetdagi <b>JSON</b> formatiga juda o'xshaydi — 39-mavzuda API yaratganimizda aynan shu ishlatiladi.</p>
+
+<h2>Qaysi birini tanlash kerak?</h2>
+<div class="table-wrap"><table>
+<tr><th>Vazifa</th><th>Tanlov</th></tr>
+<tr><td>Tartibli, o'zgaradigan ro'yxat (vazifalar, xabarlar)</td><td><b>list</b></td></tr>
+<tr><td>O'zgarmas guruh (sana, koordinata)</td><td><b>tuple</b></td></tr>
+<tr><td>Faqat noyob qiymatlar, tez "bormi?" tekshiruvi</td><td><b>set</b></td></tr>
+<tr><td>Nom bo'yicha qidirish (login → parol, so'z → tarjima)</td><td><b>dict</b></td></tr>
+<tr><td>Ko'p obyekt, har birining xususiyatlari</td><td><b>list ichida dict</b></td></tr>
+</table></div>
+
+<h2>Amaliy mashg'ulot: o'quvchilar ma'lumotlarini boshqarish (16-loyiha)</h2>
+<pre data-lang="python" data-title="oquvchilar.py">oquvchilar = {
+    "ali": {"ism": "Ali Valiyev", "sinf": "8-A", "baholar": [5, 4, 5]},
+    "zarina": {"ism": "Zarina Karimova", "sinf": "8-B", "baholar": [5, 5, 4]},
+}
+
+def ortacha(baholar):
+    return round(sum(baholar) / len(baholar), 2) if baholar else 0
+
+def royxat():
+    if not oquvchilar:
+        print("Ro'yxat bo'sh")
+        return
+    print(f"\n{'Login':<10}{'Ism':<20}{'Sinf':<6}{'O‘rtacha':>8}")
+    print("-" * 44)
+    for login, o in oquvchilar.items():
+        print(f"{login:<10}{o['ism']:<20}{o['sinf']:<6}{ortacha(o['baholar']):>8}")
+
+def qoshish():
+    login = input("Login: ").strip().lower()
+    if login in oquvchilar:
+        print("❌ Bunday login band")
+        return
+    ism = input("To'liq ism: ").strip()
+    sinf = input("Sinf: ").strip()
+    oquvchilar[login] = {"ism": ism, "sinf": sinf, "baholar": []}
+    print("✅ Qo'shildi")
+
+def baho_qoyish():
+    login = input("Login: ").strip().lower()
+    if login not in oquvchilar:
+        print("❌ Topilmadi")
+        return
+    try:
+        baho = int(input("Baho (2–5): "))
+    except ValueError:
+        print("❌ Son kiriting")
+        return
+    if baho not in (2, 3, 4, 5):
+        print("❌ Baho 2 dan 5 gacha")
+        return
+    oquvchilar[login]["baholar"].append(baho)
+    print("✅ Baho qo'yildi")
+
+def statistika():
+    if not oquvchilar:
+        return
+    eng_yaxshi = max(oquvchilar.values(), key=lambda o: ortacha(o["baholar"]))
+    sinflar = {o["sinf"] for o in oquvchilar.values()}          # set comprehension
+    print(f"Jami o'quvchilar: {len(oquvchilar)}")
+    print(f"Sinflar: {', '.join(sorted(sinflar))}")
+    print(f"Eng yuqori o'rtacha: {eng_yaxshi['ism']} ({ortacha(eng_yaxshi['baholar'])})")
+
+MENYU = {
+    "1": ("Ro'yxatni ko'rish", royxat),
+    "2": ("O'quvchi qo'shish", qoshish),
+    "3": ("Baho qo'yish", baho_qoyish),
+    "4": ("Statistika", statistika),
+}
+
+while True:
+    print("\n===== O'QUVCHILAR TIZIMI =====")
+    for kalit, (nom, _) in MENYU.items():
+        print(f"{kalit}. {nom}")
+    print("0. Chiqish")
+    tanlov = input("Tanlang: ").strip()
+    if tanlov == "0":
+        print("Xayr!")
+        break
+    if tanlov in MENYU:
+        MENYU[tanlov][1]()          # dict'dan funksiyani olib, chaqiramiz
+    else:
+        print("❌ Noto'g'ri tanlov")</pre>
+<p><b>Kodni o'rganing:</b> o'quvchilar <b>dict</b>da (login bo'yicha tez topish), baholar <b>list</b>da, menyu ham <b>dict</b> (raqam → nom va funksiya <b>tuple</b>), sinflar <b>set</b>da (takrorlanmas).
+To'rtala tuzilma bitta dasturda!</p>
+<ol class="steps">
+  <li>"O'quvchini o'chirish" va "Ism bo'yicha qidirish" menyu bandlarini qo'shing.</li>
+  <li>Dastur yopilganda ma'lumot yo'qolmasligi uchun JSON faylga saqlang (24-mavzuda <code>json</code> modulini o'rganamiz — oldindan sinab ko'ring!).</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>IndexError: list index out of range</code> — mavjud bo'lmagan indeks (3 elementli ro'yxatda <code>[3]</code>).</li>
+  <li>❌ <code>KeyError</code> — dict'da yo'q kalit; <code>.get()</code> ishlating.</li>
+  <li>❌ <code>x = ro'yxat.sort()</code> — <code>sort()</code> hech narsa qaytarmaydi (<code>None</code>); yangi ro'yxat kerak bo'lsa <code>sorted()</code>.</li>
+  <li>❌ Bo'sh set uchun <code>{}</code> yozish — bu dict.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Qaysi tuzilmani yaratilgandan keyin o'zgartirib bo'lmaydi?</p><ol>
+<li>list</li><li>tuple</li><li>set</li><li>dict</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>[1, 2, 2, 3, 3]</code> dan takrorlarni olib tashlashning eng oson usuli?</p><ol>
+<li><code>sort()</code></li><li><code>tuple()</code></li><li><code>pop()</code></li><li><code>list(set(...))</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>a = [10, 20, 30, 40]; print(a[-1])</code> natijasi?</p><ol>
+<li>10</li><li>Xato</li><li>40</li><li>30</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q"><code>"Salom"[1:4]</code> natijasi?</p><ol>
+<li>"alo"</li><li>"Sal"</li><li>"alom"</li><li>"Salo"</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Telefon kitobi (ism → raqam) uchun eng mos tuzilma?</p><ol>
+<li>list</li><li>dict</li><li>tuple</li><li>set</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>[x * 2 for x in range(4)]</code> natijasi?</p><ol>
+<li>[2, 4, 6, 8]</li><li>[0, 1, 2, 3]</li><li>[0, 2, 4, 6]</li><li>8</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Lug'at:</b> 10 ta inglizcha-o'zbekcha so'zli dict yarating. Foydalanuvchi so'z kiritadi — tarjimasi chiqadi; yo'q bo'lsa, tarjimasini so'rab lug'atga qo'shadi.</li>
+  <li><b>Umumiy do'stlar:</b> ikki kishining do'stlari ro'yxatidan (set) umumiy do'stlarni va faqat birinchisining do'stlarini toping.</li>
+  <li><b>Harflar statistikasi:</b> kiritilgan matnda har bir harf necha marta uchrashini dict bilan hisoblang va eng ko'p uchragan 3 tasini chiqaring.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><b>list</b> <code>[]</code> — tartibli, o'zgaruvchan: <code>append</code>, <code>remove</code>, <code>pop</code>, <code>sort</code>, slicing <code>[a:b]</code>, <code>[-1]</code>.</li>
+  <li><b>tuple</b> <code>()</code> — o'zgarmas; unpacking: <code>a, b = (1, 2)</code>.</li>
+  <li><b>set</b> <code>{}</code> — takrorsiz; <code>&amp;</code> <code>|</code> <code>-</code> amallari.</li>
+  <li><b>dict</b> <code>{"k": v}</code> — kalit bo'yicha: <code>d["k"]</code>, <code>d.get("k")</code>, <code>.items()</code>, <code>.keys()</code>, <code>.values()</code>.</li>
+  <li>List comprehension: <code>[ifoda for x in to'plam if shart]</code>.</li>
+</ul>
+</div>

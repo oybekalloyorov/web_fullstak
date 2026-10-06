@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Box model va o&#x27;lcham birliklari. Flexbox va Grid — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Har bir element — quti: content, padding, border, margin; box-sizing; px, %, em, rem, vw, vh; display; Flexbox bilan bir o&#x27;lchamli va CSS Grid bilan ikki o&#x27;lchamli sahifa maketlari.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a class="active" href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📦</div><div><div class="crumb">08-mavzu · 31 tadan · I bob. HTML va CSS</div><h1>Box model va o&#x27;lcham birliklari. Flexbox va Grid</h1><p class="lead">Har bir element — quti: content, padding, border, margin; box-sizing; px, %, em, rem, vw, vh; display; Flexbox bilan bir o&#x27;lchamli va CSS Grid bilan ikki o&#x27;lchamli sahifa maketlari.</p><div class="hero-level">3 soat · 1 nazariy + 2 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Brauzer har bir elementni qanday "quti" sifatida ko'rishini (box model);</li>
+  <li><code>margin</code>, <code>padding</code>, <code>border</code> va <code>box-sizing</code> ni;</li>
+  <li>O'lcham birliklari: <code>px</code>, <code>%</code>, <code>em</code>, <code>rem</code>, <code>vw</code>, <code>vh</code>;</li>
+  <li><b>Flexbox</b> bilan menyu, kartalar qatori, markazlash;</li>
+  <li><b>CSS Grid</b> bilan butun sahifa maketi va galereya yaratishni.</li>
+</ul>
+<p>Bu kursdagi eng muhim CSS mavzusi — 3 soat ajratilgan. Shoshilmang, har bir misolni ▶ tugmasi bilan o'zgartirib ko'ring.</p>
+</div>
+
+<h2 id="box-model-har-bir-element-quti"><a class="anchor" href="#box-model-har-bir-element-quti">#</a>Box model — har bir element quti</h2>
+<p>Brauzer sahifadagi <b>har bir</b> elementni (sarlavha, paragraf, rasm, tugma) to'rtburchak quti sifatida chizadi. Bu quti 4 qatlamdan iborat:</p>
+<div class="diagram" style="text-align:center">
+  <div style="display:inline-block;padding:16px 22px;background:#fde68a66;border:2px dashed #d97706;border-radius:6px">
+    <b>margin</b> — tashqi bo'shliq (qo'shnilardan masofa)
+    <div style="margin-top:10px;padding:12px;background:#1f2937;color:#fff;border-radius:4px"><b>border</b> — chegara
+      <div style="margin-top:10px;padding:14px;background:#86efac;color:#14532d"><b>padding</b> — ichki bo'shliq
+        <div style="margin-top:10px;padding:14px 30px;background:#93c5fd;color:#1e3a8a;font-weight:700">content — mazmun (matn, rasm)</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: rasmli ramka</span>
+Devordagi rasmni tasavvur qiling. <b>Content</b> — rasmning o'zi. <b>Padding</b> — rasm atrofidagi oq qog'oz hoshiya (paspartu).
+<b>Border</b> — yog'och ramka. <b>Margin</b> — devorda shu ramka bilan qo'shni ramka orasidagi bo'sh joy.</div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .quti {
+    width: 250px;
+    padding: 20px;               /* ichki bo&#x27;shliq — fon rangi shu yerga ham tarqaladi */
+    border: 5px solid #4f46e5;
+    margin: 30px;                /* tashqi bo&#x27;shliq — har doim shaffof */
+    background: #e0e7ff;
+  }
+&lt;/style&gt;
+&lt;div class=&quot;quti&quot;&gt;Men qutiman. F12 bosib, meni tanlang va &quot;Computed&quot; panelidagi box model chizmasiga qarang!&lt;/div&gt;
+&lt;div class=&quot;quti&quot;&gt;Men ikkinchi qutiman&lt;/div&gt;</code></pre></div>
+<h3><code>padding</code> va <code>margin</code> yozish usullari</h3>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">padding: 20px;                 /* 4 tomon ham 20px */
+padding: 10px 20px;            /* tepa-past 10px, chap-o&#x27;ng 20px */
+padding: 10px 20px 30px;       /* tepa 10, chap-o&#x27;ng 20, past 30 */
+padding: 10px 20px 30px 40px;  /* tepa, o&#x27;ng, past, chap (soat strelkasi bo&#x27;yicha) */
+padding-top: 10px;             /* faqat bitta tomon: -top, -right, -bottom, -left */
+
+margin: 0 auto;                /* tepa-past 0, chap-o&#x27;ng auto → blokni GORIZONTAL MARKAZLASH */</code></pre></div>
+<div class="callout tip"><span class="t">Blokni markazga qo'yish</span>
+Kengligi berilgan blokni sahifa o'rtasiga qo'yish uchun: <code>width: 600px; margin: 0 auto;</code>. Brauzer chap va o'ng bo'shliqni teng taqsimlaydi.</div>
+
+<h3><code>box-sizing</code> — eng muhim bitta qator</h3>
+<p>Yuqoridagi <code>.quti</code> ning kengligi aslida necha piksel? <code>width: 250px</code> deb yozdik, lekin brauzer standart holatda <b>padding va border'ni qo'shib</b> hisoblaydi:</p>
+<p style="text-align:center"><code>250 + 20 + 20 (padding) + 5 + 5 (border) = <b>300px</b></code> 😕</p>
+<p>Bu hisob-kitobni juda chalkashtiradi. Yechim:</p>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* Har bir loyihaning CSS faylini shu qoida bilan boshlang */
+* {
+  box-sizing: border-box;   /* endi width = padding + border + content. 250px — haqiqatan 250px */
+}</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  div { width: 250px; padding: 20px; border: 5px solid; margin: 10px 0; }
+  .content-box { box-sizing: content-box; border-color: tomato; }
+  .border-box  { box-sizing: border-box;  border-color: green; }
+&lt;/style&gt;
+&lt;div class=&quot;content-box&quot;&gt;content-box: men 300px kenglikdaman&lt;/div&gt;
+&lt;div class=&quot;border-box&quot;&gt;border-box: men aynan 250px kenglikdaman&lt;/div&gt;</code></pre></div>
+
+<h3><code>display</code> xossasi</h3>
+<div class="table-wrap"><table>
+<tr><th>Qiymat</th><th>Xatti-harakat</th></tr>
+<tr><td><code>block</code></td><td>Yangi qatordan, butun kenglik; <code>width</code>/<code>height</code> ishlaydi (<code>div</code>, <code>p</code>, <code>h1</code>)</td></tr>
+<tr><td><code>inline</code></td><td>Qatorda, faqat mazmuncha; <code>width</code>/<code>height</code> va tepa-past <code>margin</code> <b>ishlamaydi</b> (<code>span</code>, <code>a</code>)</td></tr>
+<tr><td><code>inline-block</code></td><td>Qatorda turadi, lekin <code>width</code>/<code>height</code> ishlaydi (tugmalar uchun qulay)</td></tr>
+<tr><td><code>none</code></td><td>Element butunlay yashiriladi va joy egallamaydi</td></tr>
+<tr><td><code>flex</code> / <code>grid</code></td><td>Zamonaviy maket tizimlari (pastda)</td></tr>
+</table></div>
+
+<h2 id="olcham-birliklari"><a class="anchor" href="#olcham-birliklari">#</a>O'lcham birliklari</h2>
+<div class="table-wrap"><table>
+<tr><th>Birlik</th><th>Nimaga nisbatan</th><th>Misol</th><th>Qachon ishlatish</th></tr>
+<tr><td><code>px</code></td><td>Mutlaq (ekran pikseli)</td><td><code>border: 1px</code></td><td>Chegaralar, soyalar, mayda detallar</td></tr>
+<tr><td><code>%</code></td><td>Ota element o'lchamiga</td><td><code>width: 50%</code></td><td>Kengliklar</td></tr>
+<tr><td><code>em</code></td><td>Joriy elementning shrift o'lchamiga</td><td><code>padding: 0.5em 1em</code></td><td>Matn o'lchamiga mos padding (tugmalar)</td></tr>
+<tr><td><code>rem</code></td><td><b>Sahifa asosiy shrifti</b>ga (odatda 16px)</td><td><code>font-size: 1.5rem</code> = 24px</td><td><b>Shriftlar va bo'shliqlar</b></td></tr>
+<tr><td><code>vw</code></td><td>Ekran kengligining 1%</td><td><code>width: 100vw</code></td><td>Ekran kengligida bloklar</td></tr>
+<tr><td><code>vh</code></td><td>Ekran balandligining 1%</td><td><code>min-height: 100vh</code></td><td>To'liq ekranli bosh qism (hero)</td></tr>
+</table></div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  html { font-size: 16px; }
+  .ota { width: 400px; background: #e0e7ff; padding: 10px; }
+  .yarim { width: 50%; background: #a5b4fc; }            /* 400 ning 50% = 200px */
+  .rem { font-size: 1.5rem; }                             /* 16 × 1.5 = 24px */
+  .em-ota { font-size: 20px; }
+  .em { font-size: 2em; }                                 /* 20 × 2 = 40px */
+  .ekran { height: 20vh; background: #fbcfe8; margin-top: 10px; }
+&lt;/style&gt;
+&lt;div class=&quot;ota&quot;&gt;&lt;div class=&quot;yarim&quot;&gt;50% kenglik&lt;/div&gt;&lt;/div&gt;
+&lt;p class=&quot;rem&quot;&gt;1.5rem = 24px&lt;/p&gt;
+&lt;div class=&quot;em-ota&quot;&gt;Ota 20px — &lt;span class=&quot;em&quot;&gt;2em&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;ekran&quot;&gt;Ekran balandligining 20%i. Oynani kichraytirib ko&#x27;ring.&lt;/div&gt;</code></pre></div>
+
+<h2 id="flexbox-elementlarni-bir-qatorga-terish"><a class="anchor" href="#flexbox-elementlarni-bir-qatorga-terish">#</a>Flexbox — elementlarni bir qatorga terish</h2>
+<p><b>Flexbox</b> — elementlarni <b>bir yo'nalishda</b> (qator yoki ustun) joylashtirish tizimi. Navigatsiya menyusi, tugmalar qatori, kartalarni yonma-yon
+qo'yish, biror narsani markazga joylash — Flexbox'ning ishi.</p>
+<h3>Ikki asosiy tushuncha</h3>
+<ul>
+  <li><b>Flex konteyner</b> — <code>display: flex</code> berilgan <b>ota</b> element.</li>
+  <li><b>Flex elementlar</b> — uning <b>bevosita farzandlari</b>. Ular avtomatik ravishda bir qatorga tiziladi.</li>
+</ul>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .konteyner {
+    display: flex;               /* ⬅ shu bitta qator hammasini o&#x27;zgartiradi */
+    gap: 10px;                   /* elementlar orasidagi masofa */
+    background: #f1f5f9;
+    padding: 10px;
+  }
+  .element { background: #4f46e5; color: white; padding: 20px; border-radius: 8px; }
+&lt;/style&gt;
+&lt;div class=&quot;konteyner&quot;&gt;
+  &lt;div class=&quot;element&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;element&quot;&gt;2&lt;/div&gt;
+  &lt;div class=&quot;element&quot;&gt;3&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;display: flex ni o&#x27;chirib ko&#x27;ring — elementlar yana ustma-ust tushadi.&lt;/p&gt;</code></pre></div>
+<h3>Asosiy va kesishgan o'q</h3>
+<div class="analogy"><span class="t">O'xshatish: avtobus bekati</span>
+Odamlar bekatda navbatga turdi. Navbat yo'nalishi — <b>asosiy o'q</b> (main axis): <code>justify-content</code> odamlarni shu chiziq bo'ylab
+taqsimlaydi (boshida to'planish, o'rtada, oralari teng...). Navbatga perpendikulyar yo'nalish — <b>kesishgan o'q</b> (cross axis):
+<code>align-items</code> odamlarni bo'yi bo'yicha tekislaydi (tepasi, o'rtasi, pastki qismi bo'yicha).</div>
+<h3>Konteyner xossalari</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .k { display: flex; background: #f1f5f9; margin: 8px 0; padding: 8px; height: 90px; border-radius: 8px; }
+  .k div { background: #4f46e5; color: #fff; padding: 8px 14px; border-radius: 6px; }
+  .k div:nth-child(2) { padding: 22px 14px; }   /* ikkinchisi balandroq */
+
+  .k1 { justify-content: flex-start; }      /* boshida (standart) */
+  .k2 { justify-content: center; }          /* markazda */
+  .k3 { justify-content: flex-end; }        /* oxirida */
+  .k4 { justify-content: space-between; }   /* chetlarga yopishgan, oralari teng */
+  .k5 { justify-content: space-around; }    /* atrofida teng bo&#x27;shliq */
+  .k6 { justify-content: space-evenly; }    /* barcha bo&#x27;shliqlar teng */
+  .k7 { align-items: center; }              /* kesishgan o&#x27;q: vertikal markaz */
+  .k8 { align-items: flex-end; }            /* pastga tekislash */
+  .k9 { justify-content: center; align-items: center; }  /* ✨ to&#x27;liq markazlash */
+&lt;/style&gt;
+&lt;div class=&quot;k k1&quot;&gt;&lt;div&gt;flex-start&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k2&quot;&gt;&lt;div&gt;center&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k3&quot;&gt;&lt;div&gt;flex-end&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k4&quot;&gt;&lt;div&gt;space-between&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k5&quot;&gt;&lt;div&gt;space-around&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k6&quot;&gt;&lt;div&gt;space-evenly&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k7&quot;&gt;&lt;div&gt;align-items: center&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k8&quot;&gt;&lt;div&gt;align-items: flex-end&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k k9&quot;&gt;&lt;div&gt;to&#x27;liq markaz&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Xossa (konteynerga)</th><th>Qiymatlar</th><th>Vazifasi</th></tr>
+<tr><td><code>flex-direction</code></td><td><code>row</code> | <code>column</code> | <code>row-reverse</code> | <code>column-reverse</code></td><td>Asosiy o'q yo'nalishi (qator yoki ustun)</td></tr>
+<tr><td><code>justify-content</code></td><td><code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code></td><td>Asosiy o'q bo'yicha taqsimlash</td></tr>
+<tr><td><code>align-items</code></td><td><code>stretch</code> (standart), <code>flex-start</code>, <code>center</code>, <code>flex-end</code></td><td>Kesishgan o'q bo'yicha tekislash</td></tr>
+<tr><td><code>flex-wrap</code></td><td><code>nowrap</code> | <code>wrap</code></td><td>Sig'masa keyingi qatorga o'tsinmi</td></tr>
+<tr><td><code>gap</code></td><td><code>16px</code></td><td>Elementlar orasidagi masofa</td></tr>
+</table></div>
+<div class="callout warn"><code>flex-direction: column</code> qilinsa, o'qlar <b>almashadi</b>: endi <code>justify-content</code> vertikal, <code>align-items</code> esa gorizontal ishlaydi.</div>
+
+<h3>Element xossalari: <code>flex</code></h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .k { display: flex; gap: 8px; background: #f1f5f9; padding: 8px; margin: 8px 0; }
+  .k div { background: #4f46e5; color: #fff; padding: 14px; border-radius: 6px; }
+  .yon { flex: 0 0 150px; background: #f97316 !important; }  /* qat&#x27;iy 150px */
+  .asosiy { flex: 1; }                                         /* qolgan BARCHA joyni oladi */
+  .ikki { flex: 2; }                                           /* flex:1 dan 2 barobar ko&#x27;p joy */
+&lt;/style&gt;
+&lt;div class=&quot;k&quot;&gt;&lt;div class=&quot;yon&quot;&gt;Yon panel 150px&lt;/div&gt;&lt;div class=&quot;asosiy&quot;&gt;Asosiy qism — flex: 1&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;k&quot;&gt;&lt;div class=&quot;asosiy&quot;&gt;flex: 1&lt;/div&gt;&lt;div class=&quot;ikki&quot;&gt;flex: 2 (ikki barobar keng)&lt;/div&gt;&lt;div class=&quot;asosiy&quot;&gt;flex: 1&lt;/div&gt;&lt;/div&gt;</code></pre></div>
+
+<h2 id="css-grid-panjara-tor-maketi"><a class="anchor" href="#css-grid-panjara-tor-maketi">#</a>CSS Grid — panjara (to'r) maketi</h2>
+<p><b>Grid</b> — elementlarni <b>qator va ustunlar</b>dan iborat to'rga joylashtiradi (ikki o'lchamli). Butun sahifa maketi, rasm galereyasi,
+mahsulotlar katalogi uchun ideal.</p>
+<div class="analogy"><span class="t">O'xshatish: shaxmat taxtasi yoki Excel jadvali</span>
+Grid — bu katakli taxta. Siz avval nechta ustun va qator bo'lishini belgilaysiz, keyin elementlarni kataklarga joylashtirasiz. Ba'zi elementlar
+bir nechta katakni egallashi mumkin — Excel'dagi kataklarni birlashtirish kabi.</div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;   /* 3 ta teng ustun */
+    gap: 12px;
+  }
+  .grid div { background: #10b981; color: white; padding: 24px; border-radius: 8px; text-align: center; font-weight: bold; }
+&lt;/style&gt;
+&lt;div class=&quot;grid&quot;&gt;
+  &lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;
+  &lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;&lt;div&gt;6&lt;/div&gt;
+  &lt;div&gt;7&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+<h3><code>fr</code> birligi va <code>repeat()</code></h3>
+<ul>
+  <li><code>fr</code> (<i>fraction</i>) — <b>bo'sh joyning ulushi</b>. <code>1fr 2fr</code> — ikkinchi ustun birinchisidan 2 barobar keng.</li>
+  <li><code>repeat(4, 1fr)</code> = <code>1fr 1fr 1fr 1fr</code>.</li>
+  <li>Aralash: <code>grid-template-columns: 250px 1fr;</code> — chapda qat'iy 250px yon panel, qolgani asosiy qism.</li>
+</ul>
+<h3>✨ Sehrli qator: avtomatik moslashuvchi galereya</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .galereya {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .galereya img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; }
+&lt;/style&gt;
+&lt;div class=&quot;galereya&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a1/300&quot; alt=&quot;1&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a2/300&quot; alt=&quot;2&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a3/300&quot; alt=&quot;3&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a4/300&quot; alt=&quot;4&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a5/300&quot; alt=&quot;5&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a6/300&quot; alt=&quot;6&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a7/300&quot; alt=&quot;7&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/a8/300&quot; alt=&quot;8&quot;&gt;
+&lt;/div&gt;
+&lt;p&gt;&quot;⧉ Yangi oynada&quot; tugmasini bosib, oyna kengligini o&#x27;zgartiring — ustunlar soni o&#x27;zi o&#x27;zgaradi!&lt;/p&gt;</code></pre></div>
+<p><code>repeat(auto-fill, minmax(150px, 1fr))</code> — "har bir ustun kamida 150px bo'lsin, nechta sig'sa shuncha ustun qil, ortgan joyni teng
+taqsimla". Telefonda 2 ta, planshetda 4 ta, kompyuterda 6 ta ustun — hech qanday qo'shimcha kodsiz.</p>
+<h3>Elementni bir nechta katakka cho'zish</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .g { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .g div { background: #8b5cf6; color: #fff; padding: 20px; border-radius: 8px; text-align: center; }
+  .katta { grid-column: span 2; grid-row: span 2; background: #f97316 !important; }
+  .keng  { grid-column: 1 / 5; background: #0ea5e9 !important; }   /* 1-chiziqdan 5-chiziqqacha = 4 ustun */
+&lt;/style&gt;
+&lt;div class=&quot;g&quot;&gt;
+  &lt;div class=&quot;katta&quot;&gt;2×2 katta&lt;/div&gt;
+  &lt;div&gt;b&lt;/div&gt;&lt;div&gt;c&lt;/div&gt;&lt;div&gt;d&lt;/div&gt;&lt;div&gt;e&lt;/div&gt;
+  &lt;div class=&quot;keng&quot;&gt;Butun qator bo&#x27;ylab&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+<h3>Nomlangan hududlar — sahifa maketi</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: sans-serif; }
+  .sahifa {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 70px 1fr 50px;
+    grid-template-areas:
+      &quot;header header&quot;
+      &quot;aside  main&quot;
+      &quot;footer footer&quot;;
+    min-height: 100vh;
+    gap: 8px;
+  }
+  header { grid-area: header; background: #4f46e5; }
+  aside  { grid-area: aside;  background: #a5b4fc; }
+  main   { grid-area: main;   background: #e0e7ff; }
+  footer { grid-area: footer; background: #312e81; }
+  .sahifa &gt; * { padding: 16px; color: #111; font-weight: bold; }
+  header, footer { color: white !important; }
+&lt;/style&gt;
+&lt;div class=&quot;sahifa&quot;&gt;
+  &lt;header&gt;header&lt;/header&gt;
+  &lt;aside&gt;aside (yon panel)&lt;/aside&gt;
+  &lt;main&gt;main — asosiy mazmun&lt;/main&gt;
+  &lt;footer&gt;footer&lt;/footer&gt;
+&lt;/div&gt;</code></pre></div>
+<p><code>grid-template-areas</code> — maketni so'zlar bilan "chizish". Har bir qo'shtirnoq — bitta qator, har bir so'z — bitta ustun.</p>
+
+<h3>Flexbox yoki Grid?</h3>
+<div class="table-wrap"><table>
+<tr><th></th><th>Flexbox</th><th>Grid</th></tr>
+<tr><td>O'lcham</td><td>Bir o'lchamli: qator <b>yoki</b> ustun</td><td>Ikki o'lchamli: qator <b>va</b> ustun</td></tr>
+<tr><td>Eng yaxshi joyi</td><td>Menyu, tugmalar, kartaning ichi, markazlash</td><td>Sahifa maketi, galereya, katalog</td></tr>
+<tr><td>Qoida</td><td colspan="2">Ular raqobatchi emas! Sahifa skeleti — Grid, uning ichidagi kichik qismlar — Flexbox.</td></tr>
+</table></div>
+
+<h2 id="amaliy-mashgulot-portfolio-sayti-maketi-2-loyiha"><a class="anchor" href="#amaliy-mashgulot-portfolio-sayti-maketi-2-loyiha">#</a>Amaliy mashg'ulot: portfolio sayti maketi (2-loyiha)</h2>
+<ol class="steps">
+  <li>Yangi papka: <code>portfolio/</code>, ichida <code>index.html</code> va <code>style.css</code>.</li>
+  <li>HTML tuzilmasi (semantik!):
+<div class="code"><div class="code-head"><span>portfolio/index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;body&gt;
+  &lt;header class=&quot;header&quot;&gt;
+    &lt;a class=&quot;logo&quot; href=&quot;#&quot;&gt;Ali&lt;span&gt;.dev&lt;/span&gt;&lt;/a&gt;
+    &lt;nav class=&quot;menu&quot;&gt;
+      &lt;a href=&quot;#haqida&quot;&gt;Men haqimda&lt;/a&gt;
+      &lt;a href=&quot;#loyihalar&quot;&gt;Loyihalar&lt;/a&gt;
+      &lt;a href=&quot;#aloqa&quot;&gt;Aloqa&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section class=&quot;hero&quot;&gt;
+      &lt;h1&gt;Salom, men Ali — yosh veb-dasturchi&lt;/h1&gt;
+      &lt;p&gt;HTML, CSS va JavaScript o&#x27;rganyapman.&lt;/p&gt;
+      &lt;a class=&quot;tugma&quot; href=&quot;#loyihalar&quot;&gt;Ishlarimni ko&#x27;rish&lt;/a&gt;
+    &lt;/section&gt;
+
+    &lt;section id=&quot;loyihalar&quot;&gt;
+      &lt;h2&gt;Loyihalarim&lt;/h2&gt;
+      &lt;div class=&quot;loyihalar&quot;&gt;
+        &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Vizitka sayti&lt;/h3&gt;&lt;p&gt;HTML va CSS&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Dars jadvali&lt;/h3&gt;&lt;p&gt;HTML jadvallar&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;O&#x27;quvchi kartasi&lt;/h3&gt;&lt;p&gt;CSS dizayn&lt;/p&gt;&lt;/article&gt;
+        &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Kalkulyator&lt;/h3&gt;&lt;p&gt;Tez kunda...&lt;/p&gt;&lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;footer&quot;&gt;© 2026 Ali&lt;/footer&gt;
+&lt;/body&gt;</code></pre></div></li>
+  <li>CSS — har bir qoidani o'qib, nima qilayotganini tushunib yozing:
+<div class="code" data-play><div class="code-head"><span>Natijani sinab ko&#x27;ring</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: &quot;Segoe UI&quot;, Arial, sans-serif; color: #1f2937; line-height: 1.6; }
+
+/* HEADER: logo chapda, menyu o&#x27;ngda — Flexbox */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: #111; text-decoration: none; }
+.logo span { color: #4f46e5; }
+.menu { display: flex; gap: 24px; }
+.menu a { color: #374151; text-decoration: none; font-weight: 500; }
+
+/* HERO: to&#x27;liq markazlash — Flexbox ustun bo&#x27;yicha */
+.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+}
+.hero h1 { font-size: 2.4rem; max-width: 700px; }
+.tugma { background: #4f46e5; color: white; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 600; }
+
+/* LOYIHALAR: avtomatik moslashuvchi Grid */
+#loyihalar { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+#loyihalar h2 { text-align: center; margin-bottom: 30px; font-size: 2rem; }
+.loyihalar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.loyiha {
+  padding: 24px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0,0,0,.05);
+}
+.loyiha h3 { color: #4f46e5; margin-bottom: 6px; }
+
+.footer { text-align: center; padding: 24px; background: #111827; color: #9ca3af; }
+&lt;/style&gt;
+&lt;header class=&quot;header&quot;&gt;
+  &lt;a class=&quot;logo&quot; href=&quot;#&quot;&gt;Ali&lt;span&gt;.dev&lt;/span&gt;&lt;/a&gt;
+  &lt;nav class=&quot;menu&quot;&gt;&lt;a href=&quot;#haqida&quot;&gt;Men haqimda&lt;/a&gt;&lt;a href=&quot;#loyihalar&quot;&gt;Loyihalar&lt;/a&gt;&lt;a href=&quot;#aloqa&quot;&gt;Aloqa&lt;/a&gt;&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&quot;hero&quot;&gt;
+    &lt;h1&gt;Salom, men Ali — yosh veb-dasturchi&lt;/h1&gt;
+    &lt;p&gt;HTML, CSS va JavaScript o&#x27;rganyapman.&lt;/p&gt;
+    &lt;a class=&quot;tugma&quot; href=&quot;#loyihalar&quot;&gt;Ishlarimni ko&#x27;rish&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section id=&quot;loyihalar&quot;&gt;
+    &lt;h2&gt;Loyihalarim&lt;/h2&gt;
+    &lt;div class=&quot;loyihalar&quot;&gt;
+      &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Vizitka sayti&lt;/h3&gt;&lt;p&gt;HTML va CSS&lt;/p&gt;&lt;/article&gt;
+      &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Dars jadvali&lt;/h3&gt;&lt;p&gt;HTML jadvallar&lt;/p&gt;&lt;/article&gt;
+      &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;O&#x27;quvchi kartasi&lt;/h3&gt;&lt;p&gt;CSS dizayn&lt;/p&gt;&lt;/article&gt;
+      &lt;article class=&quot;loyiha&quot;&gt;&lt;h3&gt;Kalkulyator&lt;/h3&gt;&lt;p&gt;Tez kunda...&lt;/p&gt;&lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&quot;footer&quot;&gt;© 2026 Ali&lt;/footer&gt;</code></pre></div></li>
+  <li>"Men haqimda" bo'limini qo'shing: chapda rasmingiz, o'ngda matn — <b>Flexbox</b> bilan (<code>display:flex; gap:30px; align-items:center</code>).</li>
+  <li>"Ko'nikmalarim" bo'limini qo'shing: HTML, CSS, JavaScript, Python... nishonlari (badge) — <code>flex-wrap: wrap</code> bilan.</li>
+  <li><kbd>F12</kbd> → Elements'da <code>display: grid</code> yonidagi <b>grid</b> belgisini bosing — brauzer panjarani chizib ko'rsatadi. Flex uchun ham xuddi shunday.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>display: flex</code> ni <b>farzandga</b> yozish — u <b>otaga</b> (konteynerga) yoziladi.</li>
+  <li>❌ <code>justify-content: center</code> vertikal markazlamayapti — vertikal uchun <code>align-items</code> kerak (va konteynerning balandligi bo'lishi kerak!).</li>
+  <li>❌ <code>box-sizing: border-box</code> ni unutish — elementlar kutilganidan kengroq chiqib, qatorga sig'may qoladi.</li>
+  <li>❌ <code>inline</code> elementga (<code>a</code>, <code>span</code>) <code>width</code>/<code>height</code> berish — ishlamaydi; <code>display: inline-block</code> yoki <code>block</code> kerak.</li>
+  <li>❌ Grid'da <code>grid-template-columns: 1fr, 1fr</code> — vergul qo'yilmaydi: <code>1fr 1fr</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Element chegarasi bilan mazmuni orasidagi bo'shliq nima deyiladi?</p><ol>
+<li>margin</li><li>border</li><li>padding</li><li>gap</li></ol>
+<p class="explain">padding — ichki, margin — tashqi bo'shliq.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>width: 200px; padding: 10px; border: 5px solid;</code> + <code>box-sizing: border-box</code>. Elementning to'liq kengligi?</p><ol>
+<li>230px</li><li>200px</li><li>215px</li><li>210px</li></ol>
+<p class="explain">border-box'da width padding va border'ni o'z ichiga oladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Menyuda logotipni chapga, havolalarni o'ngga surish uchun konteynerga nima yoziladi?</p><ol>
+<li><code>display:flex; justify-content: space-between</code></li><li><code>display:flex; align-items: center</code></li><li><code>display:grid; gap: 10px</code></li><li><code>text-align: justify</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Root shrift 16px bo'lsa, <code>2rem</code> necha piksel?</p><ol>
+<li>2px</li><li>16px</li><li>18px</li><li>32px</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>grid-template-columns: 1fr 3fr;</code> — konteyner 800px bo'lsa (gap yo'q), birinchi ustun necha piksel?</p><ol>
+<li>400px</li><li>100px</li><li>200px</li><li>267px</li></ol>
+<p class="explain">Jami 4 ulush: 800/4 = 200px; ikkinchisi 600px.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Butun sahifa maketi (header, yon panel, asosiy qism, footer) uchun eng qulay vosita?</p><ol>
+<li>Faqat Flexbox</li><li>CSS Grid (grid-template-areas)</li><li>HTML jadval</li><li><code>float</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><a href="https://flexboxfroggy.com" target="_blank" rel="noopener">Flexbox Froggy</a> (24 daraja) va <a href="https://cssgridgarden.com" target="_blank" rel="noopener">Grid Garden</a> (28 daraja) o'yinlarini to'liq o'ting.</li>
+  <li>Portfolio saytingizni yakunlang: "Men haqimda" (Flex), "Loyihalar" (Grid), "Ko'nikmalar" (flex-wrap), "Aloqa" (forma) va footer.</li>
+  <li>Rasm galereyasi sahifasi yarating: 12 ta rasm, ulardan 2 tasi <code>span 2</code> bilan katta.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Box model: content + padding + border + margin. Har doim <code>* { box-sizing: border-box; }</code>.</li>
+  <li>Birliklar: <code>px</code> (aniq), <code>%</code> (otaga), <code>rem</code> (shriftlar), <code>vw/vh</code> (ekranga).</li>
+  <li>Flexbox (konteynerga <code>display:flex</code>): <code>justify-content</code> — asosiy o'q, <code>align-items</code> — kesishgan o'q, <code>gap</code>, <code>flex: 1</code>.</li>
+  <li>Grid: <code>grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))</code>, <code>span</code>, <code>grid-template-areas</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="07-css-background-border.html"><small>← Oldingi mavzu</small>CSS background va border xossalari</a><a class="next" href="09-pseudo-class-position.html"><small>Keyingi mavzu →</small>CSS pseudo-class va pseudo-elementlar. CSS position</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#box-model-har-bir-element-quti">Box model — har bir element quti</a></li><li><a href="#olcham-birliklari">O&#x27;lcham birliklari</a></li><li><a href="#flexbox-elementlarni-bir-qatorga-terish">Flexbox — elementlarni bir qatorga terish</a></li><li><a href="#css-grid-panjara-tor-maketi">CSS Grid — panjara (to&#x27;r) maketi</a></li><li><a href="#amaliy-mashgulot-portfolio-sayti-maketi-2-loyiha">Amaliy mashg&#x27;ulot: portfolio sayti maketi (2-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

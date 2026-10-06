@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DOM va hodisalar — Full-Stack Qo&#x27;llanma</title>
+<title>DOM va hodisalar — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖱️</div><div><div class="crumb">05-dars · 14 tadan</div><h1>DOM va hodisalar</h1><p class="lead">DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖱️</div><div><div class="crumb">05-dars · 14 tadan</div><h1>DOM va hodisalar</h1><p class="lead">DOM daraxti, elementlarni topish va o&#x27;zgartirish, hodisalar (events), bubbling va delegatsiya, formalar bilan ishlash, localStorage.</p><div class="hero-level">O&#x27;rta · ~120 daqiqa</div></div></div>
 
 <p>Oldingi darsda JavaScript tilini o'rgandik. Endi uni sahifa bilan bog'laymiz. <b>DOM (Document Object Model)</b> —
 brauzer HTML'dan quradigan va JavaScript orqali boshqarish mumkin bo'lgan <b>obyektlar daraxti</b>. Tugma bosilganda
@@ -52,7 +53,7 @@ oyna ochilishi, forma tekshirilishi, ro'yxatga element qo'shilishi — barchasi 
 
 <h2 id="dom-daraxti"><a class="anchor" href="#dom-daraxti">#</a>DOM daraxti</h2>
 <p>Quyidagi HTML:</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;body&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;body&gt;
   &lt;h1 id=&quot;title&quot;&gt;Vazifalar&lt;/h1&gt;
   &lt;ul class=&quot;list&quot;&gt;
     &lt;li&gt;Non olish&lt;/li&gt;
@@ -60,7 +61,7 @@ oyna ochilishi, forma tekshirilishi, ro'yxatga element qo'shilishi — barchasi 
   &lt;/ul&gt;
 &lt;/body&gt;</code></pre></div>
 <p>brauzerda shunday daraxtga aylanadi:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">document
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">document
 └── html
     ├── head
     └── body
@@ -81,7 +82,7 @@ DOM — "jonli" tuzilma. JavaScript uni o'zgartirsa, sahifa darhol yangilanadi, 
 DevTools'dagi <b>Elements</b> paneli manba kodni emas, aynan joriy DOM'ni ko'rsatadi.</div>
 
 <h2 id="elementlarni-topish"><a class="anchor" href="#elementlarni-topish">#</a>Elementlarni topish</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Zamonaviy va universal usul — CSS selektorlari bilan
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Zamonaviy va universal usul — CSS selektorlari bilan
 const title = document.querySelector(&#x27;#title&#x27;);          // birinchi mos element yoki null
 const firstItem = document.querySelector(&#x27;.list li&#x27;);
 const items = document.querySelectorAll(&#x27;.list li&#x27;);     // NodeList (barcha moslar)
@@ -106,7 +107,7 @@ list.children;                 // farzand elementlar</code></pre></div>
 
 <h2 id="elementlarni-ozgartirish"><a class="anchor" href="#elementlarni-ozgartirish">#</a>Elementlarni o'zgartirish</h2>
 <h3>Mazmun</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const el = document.querySelector(&#x27;#title&#x27;);
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const el = document.querySelector(&#x27;#title&#x27;);
 
 el.textContent = &#x27;Yangi sarlavha&#x27;;             // faqat matn — XAVFSIZ
 el.innerHTML = &#x27;Bugungi &lt;em&gt;vazifalar&lt;/em&gt;&#x27;;   // HTML sifatida talqin qilinadi — EHTIYOT BO&#x27;LING
@@ -121,7 +122,7 @@ izoh, ism yoki qidiruv so'zi orqali o'z skriptini boshqa foydalanuvchilar brauze
 Foydalanuvchi ma'lumoti uchun doim <code>textContent</code> dan foydalaning (14-darsda batafsil).</div>
 
 <h3>Atributlar va sinflar</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const img = document.querySelector(&#x27;img&#x27;);
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const img = document.querySelector(&#x27;img&#x27;);
 img.src = &#x27;yangi.jpg&#x27;;                         // standart atributlar xususiyat sifatida
 img.alt = &#x27;Tavsif&#x27;;
 img.setAttribute(&#x27;loading&#x27;, &#x27;lazy&#x27;);
@@ -147,7 +148,7 @@ el.style.setProperty(&#x27;--accent&#x27;, &#x27;#e11d48&#x27;);  // CSS o&#x27;
 getComputedStyle(el).fontSize;               // haqiqiy hisoblangan uslub</code></pre></div>
 
 <h3>Element yaratish, qo'shish va o'chirish</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const li = document.createElement(&#x27;li&#x27;);
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const li = document.createElement(&#x27;li&#x27;);
 li.textContent = &#x27;Yangi vazifa&#x27;;
 li.className = &#x27;task&#x27;;
 li.dataset.id = crypto.randomUUID();
@@ -176,7 +177,7 @@ Siklda har bir elementni alohida DOM'ga qo'shish har safar Layout'ni qayta hisob
 <h2 id="hodisalar-events"><a class="anchor" href="#hodisalar-events">#</a>Hodisalar (Events)</h2>
 <p><b>Hodisa</b> — brauzerda sodir bo'lgan narsa: bosish, klavish bosilishi, forma yuborilishi, sahifa yuklanishi, scroll.
 Biz hodisaga <b>tinglovchi (listener)</b> — funksiya biriktiramiz.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const btn = document.querySelector(&#x27;#save&#x27;);
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const btn = document.querySelector(&#x27;#save&#x27;);
 
 function saqlash(event) {
   console.log(&#x27;Hodisa turi:&#x27;, event.type);          // &#x27;click&#x27;
@@ -206,7 +207,7 @@ window.addEventListener(&#x27;scroll&#x27;, onScroll, { passive: true }); // scr
 </table></div>
 
 <h3>Standart xatti-harakatni to'xtatish</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
   e.preventDefault();       // sahifa qayta yuklanmasin — ma&#x27;lumotni JS orqali yuboramiz
 });
 
@@ -228,7 +229,7 @@ document.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
   <li><b>Target</b> — maqsad elementga yetadi;</li>
   <li><b>Bubbling</b> — maqsad elementdan <code>window</code> gacha yuqoriga "ko'tariladi" (pufakchadek).</li>
 </ol>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;div id=&quot;karta&quot;&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;div id=&quot;karta&quot;&gt;
   &lt;button id=&quot;tugma&quot;&gt;Bos&lt;/button&gt;
 &lt;/div&gt;
 &lt;script&gt;
@@ -246,7 +247,7 @@ document.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
 <h3>Hodisa delegatsiyasi (event delegation)</h3>
 <p>Bubbling tufayli 100 ta tugmaning har biriga tinglovchi qo'yish shart emas — <b>ularning umumiy otasiga bittasini</b>
 qo'yish yetarli. Bu usul dinamik qo'shilgan elementlar uchun ham avtomatik ishlaydi.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ❌ Har bir tugmaga alohida — yangi qo&#x27;shilgan elementlar ishlamaydi
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// ❌ Har bir tugmaga alohida — yangi qo&#x27;shilgan elementlar ishlamaydi
 document.querySelectorAll(&#x27;.delete-btn&#x27;).forEach(btn =&gt;
   btn.addEventListener(&#x27;click&#x27;, ...)
 );
@@ -263,7 +264,7 @@ document.querySelector(&#x27;#todo-list&#x27;).addEventListener(&#x27;click&#x27
 });</code></pre></div>
 
 <h2 id="formalar-bilan-ishlash"><a class="anchor" href="#formalar-bilan-ishlash">#</a>Formalar bilan ishlash</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const form = document.querySelector(&#x27;#signup&#x27;);
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const form = document.querySelector(&#x27;#signup&#x27;);
 
 form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
   e.preventDefault();
@@ -294,7 +295,7 @@ select.value;                  // tanlangan option value
 select.selectedOptions[0].text;</code></pre></div>
 
 <h2 id="brauzer-xotirasi-localstorage-va-sessionstorage"><a class="anchor" href="#brauzer-xotirasi-localstorage-va-sessionstorage">#</a>Brauzer xotirasi: localStorage va sessionStorage</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Faqat SATR saqlaydi — obyektlar uchun JSON kerak
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Faqat SATR saqlaydi — obyektlar uchun JSON kerak
 localStorage.setItem(&#x27;theme&#x27;, &#x27;dark&#x27;);
 localStorage.getItem(&#x27;theme&#x27;);          // &#x27;dark&#x27; (yoki yo&#x27;q bo&#x27;lsa null)
 localStorage.removeItem(&#x27;theme&#x27;);
@@ -319,7 +320,7 @@ const saved = JSON.parse(localStorage.getItem(&#x27;todos&#x27;) ?? &#x27;[]&#x2
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>To'liq Todo ilovasi (CRUD, filtr, localStorage)</h3></div><div class="ex-body">
 <p>Klassik, lekin DOM'ning deyarli barcha tushunchalarini qamrab oladigan loyiha. Arxitektura muhim: <b>holat (state)</b>
 alohida massivda saqlanadi, DOM esa har doim shu holatdan <b>chiziladi (render)</b>. Bu React'ning asosiy g'oyasi (12-dars).</p>
-<div class="code"><div class="code-head"><span>todo/index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<div class="code"><div class="code-head"><span>todo/index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;uz&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -351,7 +352,7 @@ alohida massivda saqlanadi, DOM esa har doim shu holatdan <b>chiziladi (render)<
   &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre></div>
-<div class="code"><div class="code-head"><span>todo/app.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ===== Holat (state) =====
+<div class="code"><div class="code-head"><span>todo/app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// ===== Holat (state) =====
 const STORAGE_KEY = &#x27;todos-v1&#x27;;
 let todos = load();
 let filter = &#x27;all&#x27;;
@@ -489,7 +490,7 @@ document.querySelector(&#x27;#clear-done&#x27;).addEventListener(&#x27;click&#x2
 });
 
 render();</code></pre></div>
-<div class="code"><div class="code-head"><span>todo/style.css</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-css">body { font-family: system-ui, sans-serif; background: #f1f5f9; margin: 0; }
+<div class="code"><div class="code-head"><span>todo/style.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">body { font-family: system-ui, sans-serif; background: #f1f5f9; margin: 0; }
 .app { max-width: 520px; margin: 48px auto; background: #fff; padding: 28px; border-radius: 16px; box-shadow: 0 10px 30px rgb(0 0 0 / .06); }
 #todo-form { display: flex; gap: 8px; }
 #todo-form input { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font: inherit; }
@@ -512,7 +513,7 @@ button { font: inherit; cursor: pointer; }
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Modal oyna (accessibility bilan)</h3></div><div class="ex-body">
 <p>HTML'ning o'rnatilgan <code>&lt;dialog&gt;</code> elementi fokusni boshqarish va <kbd>Esc</kbd> bilan yopishni o'zi bajaradi.</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;button id=&quot;open-modal&quot;&gt;Buyurtmani tasdiqlash&lt;/button&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;button id=&quot;open-modal&quot;&gt;Buyurtmani tasdiqlash&lt;/button&gt;
 
 &lt;dialog id=&quot;confirm-modal&quot; aria-labelledby=&quot;modal-title&quot;&gt;
   &lt;form method=&quot;dialog&quot;&gt;
@@ -559,7 +560,7 @@ button { font: inherit; cursor: pointer; }
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Real vaqtda forma validatsiyasi</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form id=&quot;register&quot; novalidate&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form id=&quot;register&quot; novalidate&gt;
   &lt;div class=&quot;field&quot;&gt;
     &lt;label for=&quot;username&quot;&gt;Foydalanuvchi nomi&lt;/label&gt;
     &lt;input id=&quot;username&quot; name=&quot;username&quot;&gt;
@@ -660,7 +661,7 @@ brauzerning standart xabarlarini o'chirib, o'zimiznikini ko'rsatishga imkon bera
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Tablar va akkordeon (FAQ) komponentlari</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;div class=&quot;tabs&quot; data-tabs&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;div class=&quot;tabs&quot; data-tabs&gt;
   &lt;div role=&quot;tablist&quot;&gt;
     &lt;button role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;p1&quot; id=&quot;t1&quot;&gt;Tavsif&lt;/button&gt;
     &lt;button role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;p2&quot; id=&quot;t2&quot; tabindex=&quot;-1&quot;&gt;Xususiyatlar&lt;/button&gt;
