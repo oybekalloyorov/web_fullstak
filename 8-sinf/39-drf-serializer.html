@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF&#x27;ni o&#x27;rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko&#x27;rinadigan API.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a class="active" href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔄</div><div><div class="crumb">39-mavzu · 42 tadan · V bob. DRF va deploy</div><h1>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</h1><p class="lead">API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF&#x27;ni o&#x27;rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko&#x27;rinadigan API.</p><div class="hero-level">2 soat · 1 nazariy + 1 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>API</b> nima va zamonaviy ilovalar nima uchun unga muhtojligini;</li>
+  <li><b>REST</b> arxitekturasi qoidalari va <b>JSON</b> formatini;</li>
+  <li>Django REST Framework'ni o'rnatish va sozlashni;</li>
+  <li><b>Serializer</b> — Python obyektlarini JSON'ga va aksincha aylantirishni;</li>
+  <li>API View'lar yozib, ularni brauzerda sinashni.</li>
+</ul>
+</div>
+
+<h2 id="api-nima"><a class="anchor" href="#api-nima">#</a>API nima?</h2>
+<p>IV bobda Django <b>HTML sahifalar</b> qaytardi — ularni faqat brauzer ko'rsata oladi. Lekin bugun bitta xizmatdan ko'plab "mijozlar" foydalanadi:</p>
+<ul>
+  <li>📱 Mobil ilova (Android, iOS) — unga HTML kerak emas, faqat <b>ma'lumot</b> kerak;</li>
+  <li>⚛️ React/Vue kabi frontend dasturlar — sahifani o'zi chizadi, serverdan faqat ma'lumot oladi;</li>
+  <li>🤖 Telegram bot, boshqa saytlar, aqlli soatlar...</li>
+</ul>
+<p><b>API</b> (Application Programming Interface — dasturlash interfeysi) — dasturlar bir-biri bilan "gaplashishi" uchun kelishilgan qoidalar. Veb-API — ma'lumotni
+<b>JSON</b> ko'rinishida beradigan URL'lar to'plami.</p>
+<div class="analogy"><span class="t">O'xshatish: restoran (yana!) va yetkazib berish</span>
+IV bobdagi sayt — restoran zali: taom chiroyli likopchada (HTML) beriladi. <b>API</b> — yetkazib berish xizmati: o'sha oshxona, o'sha taom, lekin konteynerda (JSON).
+Mijoz uni o'z uyida (mobil ilova, React sayt) o'zi xohlagan likopchaga soladi. Oshxona (back-end) bitta — mijozlar ko'p.</div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📱 Mobil ilova</div>
+    <div class="node">⚛️ React sayt</div>
+    <div class="node">🤖 Telegram bot</div>
+    <div class="arrow">⇄ JSON ⇄</div>
+    <div class="node">🔄 Django REST API<small>/api/maqolalar/</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🐘 PostgreSQL</div>
+  </div>
+</div>
+
+<h2 id="json-malumot-almashish-tili"><a class="anchor" href="#json-malumot-almashish-tili">#</a>JSON — ma'lumot almashish tili</h2>
+<p>24-mavzuda tanishgan <b>JSON</b> (JavaScript Object Notation) — API'larning asosiy formati. U Python'dagi dict/list'ga va JavaScript'dagi obyekt/massivga juda o'xshaydi:</p>
+<div class="code"><div class="code-head"><span>JSON</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
+  &quot;id&quot;: 5,
+  &quot;sarlavha&quot;: &quot;Bilimlar bellashuvi&quot;,
+  &quot;chop_etilgan&quot;: true,
+  &quot;korishlar&quot;: 128,
+  &quot;kategoriya&quot;: { &quot;id&quot;: 2, &quot;nomi&quot;: &quot;Tadbirlar&quot; },
+  &quot;teglar&quot;: [&quot;olimpiada&quot;, &quot;8-sinf&quot;],
+  &quot;rasm&quot;: null
+}</code></pre></div>
+<p>Qoidalar: kalitlar <b>qo'sh qo'shtirnoqda</b>; qiymatlar — matn, son, <code>true</code>/<code>false</code>, <code>null</code>, obyekt <code>{}</code> yoki massiv <code>[]</code>.</p>
+
+<h2 id="rest-arxitekturasi"><a class="anchor" href="#rest-arxitekturasi">#</a>REST arxitekturasi</h2>
+<p><b>REST</b> — API'ni tartibli va tushunarli loyihalash uslubi. Asosiy g'oya: hamma narsa — <b>resurs</b> (maqola, foydalanuvchi, mahsulot), har bir resursning o'z
+<b>URL</b>i bor, amallar esa <b>HTTP metodlari</b> bilan bildiriladi.</p>
+<div class="table-wrap"><table>
+<tr><th>Amal (CRUD)</th><th>HTTP metod</th><th>URL</th><th>Javob kodi</th></tr>
+<tr><td>Barcha maqolalar ro'yxati</td><td><code>GET</code></td><td><code>/api/maqolalar/</code></td><td><code>200 OK</code></td></tr>
+<tr><td>Bitta maqola</td><td><code>GET</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code> / <code>404</code></td></tr>
+<tr><td>Yangi maqola yaratish</td><td><code>POST</code></td><td><code>/api/maqolalar/</code></td><td><code>201 Created</code></td></tr>
+<tr><td>To'liq yangilash</td><td><code>PUT</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code></td></tr>
+<tr><td>Qisman yangilash</td><td><code>PATCH</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code></td></tr>
+<tr><td>O'chirish</td><td><code>DELETE</code></td><td><code>/api/maqolalar/5/</code></td><td><code>204 No Content</code></td></tr>
+</table></div>
+<ul>
+  <li>URL'da <b>ot</b> (resurs), ko'plikda: <code>/api/maqolalar/</code> ✅, <code>/api/getMaqola/</code> ❌, <code>/api/maqola/ochir/5/</code> ❌ — amal metod orqali bildiriladi.</li>
+  <li>Xatolar ham status kod bilan: <code>400</code> — noto'g'ri ma'lumot, <code>401</code> — tizimga kirilmagan, <code>403</code> — ruxsat yo'q, <code>404</code> — topilmadi.</li>
+</ul>
+
+<h2 id="drfni-ornatish"><a class="anchor" href="#drfni-ornatish">#</a>DRF'ni o'rnatish</h2>
+<p><b>Django REST Framework (DRF)</b> — Django'da API yaratish uchun eng mashhur kutubxona.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">pip install djangorestframework
+pip freeze &gt; requirements.txt</code></pre></div>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">INSTALLED_APPS = [
+    # ...
+    &quot;rest_framework&quot;,
+    &quot;blog&quot;,
+]
+
+REST_FRAMEWORK = {
+    &quot;DEFAULT_PERMISSION_CLASSES&quot;: [
+        &quot;rest_framework.permissions.IsAuthenticatedOrReadOnly&quot;,   # o&#x27;qish — hammaga, yozish — kirganlarga
+    ],
+}</code></pre></div>
+
+<h2 id="serializer-tarjimon"><a class="anchor" href="#serializer-tarjimon">#</a>Serializer — tarjimon</h2>
+<p>Bazadan olingan <code>Maqola</code> obyektini to'g'ridan-to'g'ri JSON qilib bo'lmaydi. <b>Serializer</b> ikki yo'nalishda ishlaydi:</p>
+<ul>
+  <li><b>Serializatsiya:</b> model obyekti → Python dict → JSON (javob yuborish uchun);</li>
+  <li><b>Deserializatsiya:</b> JSON → tekshirish (validatsiya) → model obyekti (kelgan ma'lumotni saqlash uchun).</li>
+</ul>
+<div class="analogy"><span class="t">Django Forms bilan o'xshashlik</span>
+Serializer — API uchun <b>Forma</b> (37-mavzu): u ham maydonlarni belgilaydi, ma'lumotni tekshiradi va saqlaydi. Farqi: forma HTML bilan, serializer JSON bilan ishlaydi.
+<code>Form</code> ↔ <code>Serializer</code>, <code>ModelForm</code> ↔ <code>ModelSerializer</code>.</div>
+<div class="code"><div class="code-head"><span>blog/serializers.py (yangi fayl)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework import serializers
+from .models import Kategoriya, Maqola
+
+
+class KategoriyaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kategoriya
+        fields = [&quot;id&quot;, &quot;nomi&quot;, &quot;slug&quot;]
+
+
+class MaqolaSerializer(serializers.ModelSerializer):
+    muallif = serializers.ReadOnlyField(source=&quot;muallif.username&quot;)        # faqat o&#x27;qish uchun
+    kategoriya_nomi = serializers.ReadOnlyField(source=&quot;kategoriya.nomi&quot;)
+
+    class Meta:
+        model = Maqola
+        fields = [&quot;id&quot;, &quot;sarlavha&quot;, &quot;matn&quot;, &quot;kategoriya&quot;, &quot;kategoriya_nomi&quot;,
+                  &quot;muallif&quot;, &quot;chop_etilgan&quot;, &quot;korishlar&quot;, &quot;yaratilgan&quot;]
+        read_only_fields = [&quot;korishlar&quot;, &quot;yaratilgan&quot;]
+
+    def validate_sarlavha(self, qiymat):                # Forms&#x27;dagi clean_sarlavha kabi
+        if len(qiymat.strip()) &lt; 5:
+            raise serializers.ValidationError(&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;)
+        return qiymat.strip()</code></pre></div>
+<h3>Shell'da sinab ko'ramiz</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from blog.models import Maqola
+from blog.serializers import MaqolaSerializer
+
+m = Maqola.objects.first()
+s = MaqolaSerializer(m)
+print(s.data)                                   # obyekt → dict
+
+s = MaqolaSerializer(Maqola.objects.all()[:2], many=True)   # ro&#x27;yxat uchun many=True
+print(s.data)
+
+# Kelgan ma&#x27;lumotni tekshirish
+s = MaqolaSerializer(data={&quot;sarlavha&quot;: &quot;Hi&quot;, &quot;matn&quot;: &quot;...&quot;, &quot;kategoriya&quot;: 1})
+print(s.is_valid())                             # False
+print(s.errors)                                 # {&#x27;sarlavha&#x27;: [&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;]}</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">{&#x27;id&#x27;: 1, &#x27;sarlavha&#x27;: &quot;Futbol bo&#x27;yicha g&#x27;alaba&quot;, &#x27;matn&#x27;: &#x27;...&#x27;, &#x27;kategoriya&#x27;: 1, &#x27;kategoriya_nomi&#x27;: &#x27;Sport&#x27;,
+ &#x27;muallif&#x27;: &#x27;admin&#x27;, &#x27;chop_etilgan&#x27;: True, &#x27;korishlar&#x27;: 12, &#x27;yaratilgan&#x27;: &#x27;2026-10-06T15:30:00+05:00&#x27;}
+False
+{&#x27;sarlavha&#x27;: [ErrorDetail(string=&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;, code=&#x27;invalid&#x27;)]}</code></pre></div>
+
+<h2 id="api-viewlar"><a class="anchor" href="#api-viewlar">#</a>API View'lar</h2>
+<h3>1-usul: <code>@api_view</code> — funksiya asosida</h3>
+<div class="code"><div class="code-head"><span>blog/api_views.py (yangi fayl)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import Maqola
+from .serializers import MaqolaSerializer
+
+
+@api_view([&quot;GET&quot;, &quot;POST&quot;])
+def maqolalar_api(request):
+    if request.method == &quot;GET&quot;:
+        maqolalar = Maqola.objects.filter(chop_etilgan=True)
+        serializer = MaqolaSerializer(maqolalar, many=True)
+        return Response(serializer.data)                             # 200 + JSON
+
+    # POST — yangi maqola
+    serializer = MaqolaSerializer(data=request.data)                 # request.data — kelgan JSON
+    if serializer.is_valid():
+        serializer.save(muallif=request.user)                        # muallifni o&#x27;zimiz beramiz
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view([&quot;GET&quot;])
+def maqola_api(request, id):
+    maqola = get_object_or_404(Maqola, id=id, chop_etilgan=True)
+    return Response(MaqolaSerializer(maqola).data)</code></pre></div>
+<h3>2-usul: <code>APIView</code> — klass asosida</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework.views import APIView
+
+class MaqolalarAPI(APIView):
+    def get(self, request):
+        serializer = MaqolaSerializer(Maqola.objects.filter(chop_etilgan=True), many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = MaqolaSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)        # xato bo&#x27;lsa — avtomatik 400
+        serializer.save(muallif=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from . import api_views
+
+urlpatterns += [
+    path(&quot;api/maqolalar/&quot;, api_views.maqolalar_api, name=&quot;api_maqolalar&quot;),
+    path(&quot;api/maqolalar/&lt;int:id&gt;/&quot;, api_views.maqola_api, name=&quot;api_maqola&quot;),
+]</code></pre></div>
+
+<h2 id="brauzerda-korinadigan-api"><a class="anchor" href="#brauzerda-korinadigan-api">#</a>Brauzerda ko'rinadigan API</h2>
+<p>Serverni ishga tushirib, <a href="http://127.0.0.1:8000/api/maqolalar/" target="_blank" rel="noopener">http://127.0.0.1:8000/api/maqolalar/</a> ni oching. DRF chiroyli,
+<b>interaktiv</b> sahifa ko'rsatadi: JSON javob, status kod va (tizimga kirgan bo'lsangiz) pastda POST qilish uchun forma. Bu API'ni sinashning eng oson usuli.</p>
+<p>Boshqa usullar:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Terminal orqali (curl)
+curl http://127.0.0.1:8000/api/maqolalar/
+curl http://127.0.0.1:8000/api/maqolalar/1/</code></pre></div>
+<div class="code"><div class="code-head"><span>JavaScript&#x27;dan (brauzer konsoli yoki frontend)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">fetch(&quot;http://127.0.0.1:8000/api/maqolalar/&quot;)
+  .then(javob =&gt; javob.json())
+  .then(maqolalar =&gt; {
+    maqolalar.forEach(m =&gt; console.log(m.sarlavha, &quot;—&quot;, m.muallif));
+  });</code></pre></div>
+<div class="callout tip">Professional dasturchilar API'ni sinash uchun <b>Postman</b> yoki VS Code'dagi <b>Thunder Client</b> kengaytmasidan foydalanadi: istalgan metod, sarlavha va JSON tana bilan so'rov yuborish mumkin.</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>DRF'ni o'rnating va sozlang.</li>
+  <li><code>serializers.py</code> yarating, shell'da serializatsiya va validatsiyani sinab ko'ring.</li>
+  <li><code>@api_view</code> bilan ikkita endpoint yarating va brauzerda oching.</li>
+  <li>Admin orqali tizimga kiring, so'ng brauzerdagi API sahifasida POST forma orqali yangi maqola yarating (JSON):
+<div class="code"><div class="code-head"><span>JSON</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
+  &quot;sarlavha&quot;: &quot;API orqali yaratilgan maqola&quot;,
+  &quot;matn&quot;: &quot;Bu maqola DRF yordamida qo&#x27;shildi!&quot;,
+  &quot;kategoriya&quot;: 1
+}</code></pre></div>
+  Javob kodi <code>201</code> ekanini tekshiring. Sarlavhani 3 belgili qilib yuboring — <code>400</code> va xato xabari.</li>
+  <li><code>/api/kategoriyalar/</code> endpointini yarating (<code>KategoriyaSerializer</code>), har bir kategoriyada maqolalar soni ham bo'lsin (Maslahat: <code>serializers.IntegerField(source="maqolalar.count", read_only=True)</code>).</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Object of type Maqola is not JSON serializable</code> — obyekt serializer'dan o'tkazilmagan.</li>
+  <li>❌ Ro'yxat uchun <code>many=True</code> unutilgan — <code>AttributeError</code>.</li>
+  <li>❌ <code>serializer.data</code> ni <code>is_valid()</code> dan oldin o'qish (data= bilan yaratilganda).</li>
+  <li>❌ <code>"rest_framework"</code> <code>INSTALLED_APPS</code> ga qo'shilmagan — brauzerdagi API sahifasi shablon xatosi beradi.</li>
+  <li>❌ POST so'rov <code>403</code> qaytaradi — tizimga kirilmagan (<code>IsAuthenticatedOrReadOnly</code>).</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">REST API'da yangi resurs yaratish uchun qaysi HTTP metod ishlatiladi?</p><ol>
+<li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Muvaffaqiyatli yaratilgan resurs uchun qaytariladigan status kod?</p><ol>
+<li>200 OK</li><li>204 No Content</li><li>201 Created</li><li>302 Found</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Serializer'ning vazifasi?</p><ol>
+<li>Model obyektlarini JSON'ga va JSON'ni tekshirilgan obyektlarga aylantirish</li><li>Bazaga ulanish</li><li>HTML shablon yaratish</li><li>URL'larni sozlash</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi URL REST qoidalariga mos?</p><ol>
+<li><code>/api/getAllMaqolalar/</code></li><li><code>/api/maqola/ochirish/5/</code></li><li><code>/api/maqolaYarat/</code></li><li><code>/api/maqolalar/5/</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Bir nechta obyektni serializatsiya qilish uchun qaysi parametr kerak?</p><ol>
+<li><code>all=True</code></li><li><code>many=True</code></li><li><code>list=True</code></li><li><code>multiple=True</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">DRF view'ida kelgan JSON ma'lumot qayerda?</p><ol>
+<li><code>request.POST</code></li><li><code>request.GET</code></li><li><code>request.data</code></li><li><code>request.json</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona loyihangiz (38-mavzu uyga vazifasi) uchun <code>KitobSerializer</code> va <code>/api/kitoblar/</code> (GET, POST) endpointini yarating.</li>
+  <li>Ochiq API'larni o'rganing: brauzerda <code>https://api.github.com/users/torvalds</code> ni oching. JSON tuzilmasini tahlil qilib, qaysi maydonlar borligini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>API — dasturlar orasidagi interfeys; veb-API JSON qaytaradi va ko'p mijozlarga xizmat qiladi.</li>
+  <li>REST: resurs — URL (ot, ko'plik), amal — HTTP metod (GET/POST/PUT/PATCH/DELETE), natija — status kod.</li>
+  <li>DRF: <code>pip install djangorestframework</code> + <code>INSTALLED_APPS</code>.</li>
+  <li><code>ModelSerializer</code> — model ↔ JSON; <code>validate_maydon()</code>; <code>many=True</code>; <code>is_valid()</code>, <code>save()</code>, <code>errors</code>.</li>
+  <li><code>@api_view</code> / <code>APIView</code> + <code>Response(data, status=...)</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="38-django-crud-loyiha.html"><small>← Oldingi mavzu</small>CRUD amallarini yaratish. CRUD asosida mini loyiha</a><a class="next" href="40-drf-crud-api.html"><small>Keyingi mavzu →</small>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#api-nima">API nima?</a></li><li><a href="#json-malumot-almashish-tili">JSON — ma&#x27;lumot almashish tili</a></li><li><a href="#rest-arxitekturasi">REST arxitekturasi</a></li><li><a href="#drfni-ornatish">DRF&#x27;ni o&#x27;rnatish</a></li><li><a href="#serializer-tarjimon">Serializer — tarjimon</a></li><li><a href="#api-viewlar">API View&#x27;lar</a></li><li><a href="#brauzerda-korinadigan-api">Brauzerda ko&#x27;rinadigan API</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

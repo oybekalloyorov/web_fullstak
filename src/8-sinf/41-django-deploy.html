@@ -1,0 +1,252 @@
+<!-- title: Django loyihasini serverga joylash (Deploy) | desc: Deploy nima, development va production farqi, hosting turlari; loyihani tayyorlash: DEBUG, SECRET_KEY, ALLOWED_HOSTS, gunicorn, whitenoise, dj-database-url, requirements.txt, collectstatic; Render'ga bosqichma-bosqich joylash, PostgreSQL, superuser; PythonAnywhere muqobili; deploy'dan keyingi tekshiruv. | icon: 🚀 | level: 2 soat · amaliy | bob: V bob. DRF va deploy -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Deploy</b> nima va "mening kompyuterimda ishlaydi" dan "internetda ishlaydi" ga qanday o'tishni;</li>
+  <li>Development va production muhitlari farqini;</li>
+  <li>Django loyihasini serverga tayyorlashni (xavfsizlik sozlamalari, statik fayllar, server dasturi);</li>
+  <li>Loyihani <b>Render</b> bulutli platformasiga PostgreSQL bilan bosqichma-bosqich joylashni (30-loyiha);</li>
+  <li>Joylangan saytni tekshirish va yangilashni.</li>
+</ul>
+</div>
+
+<h2>Deploy nima?</h2>
+<p>Hozirgacha blogimiz faqat sizning kompyuteringizda, <code>127.0.0.1:8000</code> da ishladi — uni hech kim ko'ra olmaydi. <b>Deploy</b> (joylash) — dasturni
+foydalanuvchilar ishlatishi uchun internetga ulangan <b>serverga</b> o'rnatish va ishga tushirish.</p>
+<div class="analogy"><span class="t">O'xshatish: oshxona va restoran</span>
+Uyda ovqat pishirish (development) — o'zingiz uchun, xato qilsangiz ham hech kim bilmaydi. Restoran ochish (production) — boshqa narsa: sanitariya qoidalari (xavfsizlik),
+katta oshxona (server), doimiy ish vaqti (24/7), ko'p mijozlarga bir vaqtda xizmat. Retsept bir xil, lekin talablar butunlay boshqa.</div>
+<div class="table-wrap"><table>
+<tr><th></th><th>Development (ishlab chiqish)</th><th>Production (ishchi muhit)</th></tr>
+<tr><td>Qayerda</td><td>Sizning kompyuteringiz</td><td>Internetdagi server</td></tr>
+<tr><td><code>DEBUG</code></td><td><code>True</code> — batafsil xatolar</td><td><b><code>False</code></b> — xatolar yashirin (xavfsizlik!)</td></tr>
+<tr><td>Server dasturi</td><td><code>runserver</code> (sinov uchun)</td><td><code>gunicorn</code> (ishonchli, tez)</td></tr>
+<tr><td>Statik fayllar</td><td>Django o'zi beradi</td><td><code>collectstatic</code> + WhiteNoise</td></tr>
+<tr><td>Maxfiy kalitlar</td><td><code>.env</code> fayl</td><td>Hosting'dagi muhit o'zgaruvchilari</td></tr>
+<tr><td>Manzil</td><td><code>127.0.0.1:8000</code></td><td><code>https://maktab-blog.onrender.com</code></td></tr>
+</table></div>
+
+<h2>Hosting turlari (Django uchun)</h2>
+<div class="table-wrap"><table>
+<tr><th>Platforma</th><th>Turi</th><th>Afzalligi</th><th>E'tibor bering</th></tr>
+<tr><td><b>Render</b></td><td>PaaS (bulut platformasi)</td><td>GitHub'dan avtomatik deploy, PostgreSQL, HTTPS bepul</td><td>Bepul tarifda sayt "uxlab qoladi" (birinchi ochilishi sekin); bepul baza muddati cheklangan</td></tr>
+<tr><td><b>Railway</b></td><td>PaaS</td><td>Juda oson, PostgreSQL bir tugma bilan</td><td>Bepul limit cheklangan</td></tr>
+<tr><td><b>PythonAnywhere</b></td><td>Python uchun maxsus hosting</td><td>O'quvchilar uchun eng oddiy, brauzerdan boshqarish</td><td>Bepul tarifda faqat SQLite/MySQL</td></tr>
+<tr><td><b>VPS</b> (DigitalOcean, mahalliy provayderlar)</td><td>Virtual server</td><td>To'liq nazorat</td><td>Hammasini o'zingiz sozlaysiz (Linux, Nginx)</td></tr>
+</table></div>
+<p><b>PaaS</b> (Platform as a Service) — server, operatsion tizim va tarmoqni platforma boshqaradi, siz faqat kodingizni berasiz. Bu darsda <b>Render</b> bilan ishlaymiz.
+Tariflar va bepul limitlar vaqt o'tishi bilan o'zgaradi — joylashdan oldin platforma saytida tekshiring.</p>
+
+<h2>1-bosqich: loyihani production uchun tayyorlash</h2>
+<h3>Kerakli paketlar</h3>
+<pre data-lang="bash">pip install gunicorn whitenoise dj-database-url
+pip freeze > requirements.txt</pre>
+<div class="table-wrap"><table>
+<tr><th>Paket</th><th>Vazifasi</th></tr>
+<tr><td><code>gunicorn</code></td><td>Production server dasturi (<code>runserver</code> o'rniga)</td></tr>
+<tr><td><code>whitenoise</code></td><td>Statik fayllarni (CSS, JS) tez va xavfsiz berish</td></tr>
+<tr><td><code>dj-database-url</code></td><td>Bazani bitta <code>DATABASE_URL</code> satridan sozlash</td></tr>
+</table></div>
+<div class="callout info"><code>gunicorn</code> Windows'da ishlamaydi — bu normal: u faqat serverda (Linux) ishga tushadi. Kompyuteringizda <code>runserver</code> dan foydalanishda davom eting.</div>
+
+<h3>settings.py — muhitga qarab sozlash</h3>
+<pre data-lang="python" data-title="config/settings.py">import os
+from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")                 # lokal kompyuterda .env, serverda — muhit o'zgaruvchilari
+
+# 🔐 Xavfsizlik
+SECRET_KEY = os.environ["SECRET_KEY"]          # o'rnatilmagan bo'lsa — xato (ataylab!)
+DEBUG = os.getenv("DEBUG", "False") == "True"  # standart — False
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS if h not in ("127.0.0.1", "localhost")]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",       # ⬅ SecurityMiddleware'dan keyin
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    # ... qolganlari o'zgarishsiz
+]
+
+# 🐘 Baza: serverda DATABASE_URL, lokal kompyuterda .env'dagi qiymatlar
+DATABASES = {
+    "default": dj_database_url.config(
+        default=f"postgres://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@"
+                f"{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME')}",
+        conn_max_age=600,
+    )
+}
+
+# 📁 Statik fayllar
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"                  # collectstatic shu yerga yig'adi
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+}
+
+# 🔒 Production'da qo'shimcha himoya
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True</pre>
+<div class="callout danger"><span class="t">Production'ning oltin qoidalari</span>
+<ol>
+  <li><b><code>DEBUG = False</code></b> — aks holda xato sahifasi buzg'unchiga kodingiz, sozlamalar va hatto parollar haqida ma'lumot beradi.</li>
+  <li><b><code>SECRET_KEY</code> maxfiy va yangi</b> — GitHub'dagi yoki darsdagi kalitni ishlatmang. Yangisini yarating:
+  <code>python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"</code></li>
+  <li><b><code>ALLOWED_HOSTS</code></b> — faqat sizning domeningiz.</li>
+</ol></div>
+<p>Lokal kompyuteringizdagi <code>.env</code> ga <code>DEBUG=True</code> qo'shib qo'ying — shunda kompyuteringizda ishlash qulay qoladi.</p>
+
+<h3>Build skripti</h3>
+<p>Server har deploy'da bajaradigan buyruqlar:</p>
+<pre data-lang="bash" data-title="build.sh (loyiha ildizida)">#!/usr/bin/env bash
+set -o errexit                      # biror buyruq xato bersa — to'xtash
+
+pip install -r requirements.txt
+python manage.py collectstatic --no-input
+python manage.py migrate</pre>
+<pre data-lang="bash">git update-index --chmod=+x build.sh    # Windows'da faylni "bajariladigan" qilish (Git orqali)
+# macOS/Linux: chmod +x build.sh</pre>
+
+<h3>Lokal tekshiruv</h3>
+<pre data-lang="bash">python manage.py check --deploy       # Django production uchun maslahatlar beradi
+python manage.py collectstatic        # staticfiles/ papkasi paydo bo'ladi (.gitignore ga qo'shing)</pre>
+<pre data-lang="text" data-title=".gitignore">venv/
+.env
+__pycache__/
+staticfiles/
+media/</pre>
+
+<h3>GitHub'ga push</h3>
+<pre data-lang="bash">git add .
+git commit -m "Production uchun tayyorlandi: gunicorn, whitenoise, dj-database-url"
+git push</pre>
+
+<h2>2-bosqich: Render'ga joylash</h2>
+<ol class="steps">
+  <li><a href="https://render.com" target="_blank" rel="noopener">render.com</a> da <b>GitHub akkauntingiz bilan</b> ro'yxatdan o'ting.</li>
+  <li><b>PostgreSQL bazasi yarating:</b> Dashboard → <b>New + → Postgres</b> → nom (<code>maktab-blog-db</code>), region (Frankfurt — O'zbekistonga yaqinroq), bepul tarif → <b>Create Database</b>.
+  Tayyor bo'lgach, <b>Internal Database URL</b> ni nusxalang (<code>postgresql://...</code>).</li>
+  <li><b>Web Service yarating:</b> <b>New + → Web Service</b> → GitHub repozitoriyangizni tanlang.
+    <div class="table-wrap"><table>
+      <tr><th>Maydon</th><th>Qiymat</th></tr>
+      <tr><td>Name</td><td><code>maktab-blog</code> (manzil: <code>maktab-blog.onrender.com</code>)</td></tr>
+      <tr><td>Language / Runtime</td><td>Python 3</td></tr>
+      <tr><td>Build Command</td><td><code>./build.sh</code></td></tr>
+      <tr><td>Start Command</td><td><code>gunicorn config.wsgi:application</code></td></tr>
+      <tr><td>Instance Type</td><td>Free</td></tr>
+    </table></div></li>
+  <li><b>Environment Variables</b> (muhit o'zgaruvchilari) bo'limida qo'shing:
+    <div class="table-wrap"><table>
+      <tr><th>Key</th><th>Value</th></tr>
+      <tr><td><code>SECRET_KEY</code></td><td>yangi yaratilgan uzun tasodifiy kalit</td></tr>
+      <tr><td><code>DEBUG</code></td><td><code>False</code></td></tr>
+      <tr><td><code>ALLOWED_HOSTS</code></td><td><code>maktab-blog.onrender.com</code></td></tr>
+      <tr><td><code>DATABASE_URL</code></td><td>2-qadamdagi Internal Database URL</td></tr>
+      <tr><td><code>PYTHON_VERSION</code></td><td>kompyuteringizdagi versiya, masalan <code>3.12.7</code></td></tr>
+    </table></div></li>
+  <li><b>Create Web Service</b> bosing. <b>Logs</b> oynasida jarayonni kuzating: paketlar o'rnatiladi → collectstatic → migrate → gunicorn ishga tushadi.
+  "<b>Your service is live 🎉</b>" yozuvini kuting (bir necha daqiqa).</li>
+  <li><b>Admin yaratish:</b> servis sahifasida <b>Shell</b> yorlig'i (agar tarifingizda mavjud bo'lsa) → <code>python manage.py createsuperuser</code>. Shell mavjud bo'lmasa, lokal kompyuterdan
+  <b>External Database URL</b> bilan bajarish mumkin: <code>.env</code> dagi baza sozlamalari o'rniga vaqtincha <code>DATABASE_URL=...external...</code> qo'yib,
+  <code>python manage.py createsuperuser</code> (keyin qaytaring!).</li>
+  <li>Saytingizni oching: <code>https://maktab-blog.onrender.com</code> 🎉 Havolani do'stlaringiz va ota-onangizga yuboring!</li>
+</ol>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">💻 git push</div><div class="arrow">→</div>
+    <div class="node">🐙 GitHub</div><div class="arrow">→ avtomatik →</div>
+    <div class="node">☁️ Render<small>build.sh → gunicorn</small></div><div class="arrow">⇄</div>
+    <div class="node">🐘 Render PostgreSQL</div>
+  </div>
+  <div class="diagram-caption">Har bir <code>git push</code> dan keyin Render saytni avtomatik qayta joylaydi (CI/CD)</div>
+</div>
+
+<h2>3-bosqich: deploy'dan keyin</h2>
+<h3>Tekshiruv ro'yxati</h3>
+<div class="table-wrap"><table>
+<tr><th>Tekshiruv</th><th>✓</th></tr>
+<tr><td>Bosh sahifa ochiladi, CSS ishlayapti (dizayn buzilmagan)</td><td>☐</td></tr>
+<tr><td><code>/admin/</code> ga kirish mumkin, maqola qo'shish ishlaydi</td><td>☐</td></tr>
+<tr><td>Ro'yxatdan o'tish, kirish, maqola yaratish/tahrirlash/o'chirish ishlaydi</td><td>☐</td></tr>
+<tr><td><code>/maqola/9999/</code> — chiroyli 404 sahifa (sariq Django xatosi EMAS!)</td><td>☐</td></tr>
+<tr><td><code>/api/maqolalar/</code> JSON qaytaradi</td><td>☐</td></tr>
+<tr><td>Manzilda 🔒 (HTTPS)</td><td>☐</td></tr>
+<tr><td>Telefonda to'g'ri ko'rinadi</td><td>☐</td></tr>
+<tr><td>40-mavzudagi JS front-end'ni Netlify'ga joylab, <code>API</code> manzilini Render'dagisiga almashtiring va <code>CORS_ALLOWED_ORIGINS</code> ga Netlify manzilini qo'shing</td><td>☐</td></tr>
+</table></div>
+<h3>Yangilash</h3>
+<pre data-lang="bash"># Kodni o'zgartirdingiz → lokal sinadingiz → yubordingiz
+git add .
+git commit -m "Izohlar funksiyasi qo'shildi"
+git push          # Render avtomatik qayta joylaydi; yangi migratsiyalar build.sh'da bajariladi</pre>
+<h3>Xatolarni topish</h3>
+<ul>
+  <li><b>Logs</b> — barcha xatolar shu yerda. "Build failed" bo'lsa — build log'ini, sayt 500 qaytarsa — runtime log'ini o'qing.</li>
+  <li><code>DisallowedHost</code> → <code>ALLOWED_HOSTS</code> da domen yo'q yoki xato yozilgan.</li>
+  <li>CSS yo'q (oddiy matn ko'rinishidagi sayt) → WhiteNoise middleware yoki <code>collectstatic</code> muammosi.</li>
+  <li><code>CSRF verification failed</code> (forma yuborishda) → <code>CSRF_TRUSTED_ORIGINS</code> da <code>https://</code> bilan domen yo'q.</li>
+  <li><code>ModuleNotFoundError</code> → paket <code>requirements.txt</code> ga yozilmagan (<code>pip freeze &gt; requirements.txt</code> ni unutgansiz).</li>
+  <li>Hech qachon muammoni "tuzatish" uchun serverda <code>DEBUG=True</code> qo'ymang!</li>
+</ul>
+<div class="callout warn"><span class="t">Media fayllar haqida</span>
+Bulutli platformalarning disk xotirasi ko'pincha <b>vaqtinchalik</b>: har deploy'da foydalanuvchilar yuklagan rasmlar o'chib ketishi mumkin. Haqiqiy loyihalarda media fayllar
+alohida xizmatda (Cloudinary, Amazon S3) saqlanadi. O'quv loyihasi uchun bu muammo emas, lekin buni bilib qo'ying.</div>
+
+<h2>Muqobil: PythonAnywhere (qisqacha)</h2>
+<ol class="steps">
+  <li><a href="https://www.pythonanywhere.com" target="_blank" rel="noopener">pythonanywhere.com</a> da bepul "Beginner" akkaunt oching.</li>
+  <li><b>Consoles → Bash</b>: <code>git clone https://github.com/USERNAME/maktab_blog.git</code>, virtual muhit yarating va <code>pip install -r requirements.txt</code>.</li>
+  <li><b>Web → Add a new web app → Manual configuration</b> → Python versiyasi. WSGI fayliga loyiha yo'li va <code>DJANGO_SETTINGS_MODULE = "config.settings"</code> ni yozing.</li>
+  <li>Bepul tarifda PostgreSQL yo'q — <code>DATABASE_URL</code> o'rniga SQLite (<code>sqlite:///db.sqlite3</code>) ishlatiladi. Static fayllar uchun <b>Web</b> sahifasida <code>/static/</code> → <code>staticfiles</code> papkasini ko'rsating.</li>
+  <li><b>Reload</b> — sayt <code>USERNAME.pythonanywhere.com</code> da.</li>
+</ol>
+
+<h2>Amaliy mashg'ulot (30-loyiha)</h2>
+<ol class="steps">
+  <li>Blog loyihangizni production uchun tayyorlang va <code>python manage.py check --deploy</code> ogohlantirishlarini o'qing.</li>
+  <li>Render'da PostgreSQL va Web Service yarating, loyihani joylang.</li>
+  <li>Tekshiruv ro'yxatidagi barcha bandlarni bajaring.</li>
+  <li>Kichik o'zgarish kiriting (masalan, footer matni), push qiling va avtomatik qayta joylashni kuzating.</li>
+  <li>README.md ga sayt havolasini, skrinshotlarni va "Qanday ishga tushirish" bo'limini qo'shing.</li>
+</ol>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Production serverda <code>DEBUG</code> qanday bo'lishi kerak va nima uchun?</p><ol>
+<li>True — xatolarni ko'rish uchun</li><li>False — xato sahifalari maxfiy ma'lumotlarni oshkor qilmasligi uchun</li><li>Ahamiyati yo'q</li><li>None</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Production'da <code>runserver</code> o'rniga ishlatiladigan server dasturi?</p><ol>
+<li>whitenoise</li><li>pip</li><li>psql</li><li>gunicorn</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Barcha statik fayllarni bitta papkaga yig'uvchi buyruq?</p><ol>
+<li><code>python manage.py collectstatic</code></li><li><code>python manage.py migrate</code></li><li><code>python manage.py static</code></li><li><code>pip install static</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Saytingiz <code>DisallowedHost</code> xatosini berdi. Sababi?</p><ol>
+<li>Baza ulanmagan</li><li>CSS topilmadi</li><li>Domen <code>ALLOWED_HOSTS</code> da yo'q</li><li>Parol noto'g'ri</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Maxfiy kalitlar (SECRET_KEY, baza paroli) production'da qayerda saqlanadi?</p><ol>
+<li>settings.py ichida</li><li>Hosting'ning muhit o'zgaruvchilarida (environment variables)</li><li>GitHub README'da</li><li>HTML shablonda</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Render'ga ulangan loyihani yangilash uchun nima qilinadi?</p><ol>
+<li>Serverga qayta ro'yxatdan o'tish</li><li>Loyihani o'chirib, qayta yaratish</li><li>O'zgarishlarni GitHub'ga <code>git push</code> qilish</li><li>Hech narsa — yangilab bo'lmaydi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>IV bob uyga vazifasidagi loyihangizni (kutubxona / talabalar / e'lonlar) ham internetga joylang.</li>
+  <li>Barcha joylangan loyihalaringiz havolalarini GitHub profilingizdagi README'ga va portfolio saytingizga qo'shing — bu sizning birinchi "rezyume"ingiz!</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Deploy — loyihani internetdagi serverga joylash; production ≠ development.</li>
+  <li>Tayyorlash: <code>DEBUG=False</code>, maxfiy <code>SECRET_KEY</code>, <code>ALLOWED_HOSTS</code>, <code>CSRF_TRUSTED_ORIGINS</code>; <code>gunicorn</code>, <code>whitenoise</code>, <code>dj-database-url</code>; <code>requirements.txt</code>.</li>
+  <li><code>build.sh</code>: install → collectstatic → migrate; start: <code>gunicorn config.wsgi:application</code>.</li>
+  <li>Render: Postgres + Web Service + Environment Variables → har <code>git push</code> da avtomatik deploy.</li>
+  <li>Muammolarni Logs orqali toping; serverda hech qachon <code>DEBUG=True</code> qo'ymang.</li>
+</ul>
+</div>

@@ -22,6 +22,20 @@ Har bir dars **batafsil nazariya**, **3–4 ta real amaliy misol**, **mustaqil m
 | 13 | Yakuniy loyiha | PostgreSQL + Express + JWT + React "Eslatmalar" ilovasi bosqichma-bosqich |
 | 14 | Deploy, xavfsizlik, test | Docker, Nginx, HTTPS, CI/CD, OWASP Top 10, node:test, Supertest, Vitest |
 
+## 8-sinf kursi
+
+`8-sinf/` bo'limi — rasmiy 8-sinf «Web Full-stack dasturlash» o'quv dasturi (66 soat) bo'yicha 42 ta mavzu,
+o'quv dasturidagi raqamlar bilan bir xil:
+
+- **I bob. HTML va CSS** (1–14): internet, HTML, CSS, Flexbox/Grid, responsiv dizayn, Figma, Git/GitHub, animatsiya, deploy, 1-nazorat ishi
+- **II bob. JavaScript asoslari** (15–20): o'zgaruvchilar, shartlar, sikllar, funksiyalar, massiv/obyekt, DOM/BOM, mini-loyiha
+- **III bob. Python va ma'lumotlar bazasi** (21–31): Python asoslari, OOP, PostgreSQL, SQL CRUD/JOIN/aggregatsiya, 2-nazorat ishi
+- **IV bob. Python, PostgreSQL va Django** (32–38): psycopg, Django MVT, ORM, admin, formalar, CRUD loyiha
+- **V bob. DRF va deploy** (39–42): serializer, CRUD API, deploy, 3-nazorat ishi va yakuniy loyiha
+
+Har mavzuda: maqsadlar, sodda nazariya va o'xshatishlar, kod misollari (ko'plari brauzerda ishga tushadi),
+amaliy qadamlar, tipik xatolar, testlar, uy vazifasi va xulosa.
+
 ## Saytni ochish
 
 - **Onlayn:** GitHub → Settings → Pages → *Deploy from a branch* → `main` / `(root)`.

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="So&#x27;rov va javob obyektlari, funksiya asosidagi view&#x27;lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL&#x27;lar, GET parametrlari, 404 va redirect, Class Based View&#x27;lar bilan tanishuv.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a class="active" href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🗺️</div><div><div class="crumb">34-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</h1><p class="lead">So&#x27;rov va javob obyektlari, funksiya asosidagi view&#x27;lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL&#x27;lar, GET parametrlari, 404 va redirect, Class Based View&#x27;lar bilan tanishuv.</p><div class="hero-level">2 soat · 1 nazariy + 1 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>View</b> — so'rovni qabul qilib, javob qaytaruvchi funksiya ekanini;</li>
+  <li>URL'larni view'larga bog'lash (<b>marshrutlash</b>) va ilovaga alohida <code>urls.py</code> yaratishni;</li>
+  <li>Manzildan qiymat olish: <code>/maqola/5/</code> → <code>id = 5</code>;</li>
+  <li>Qidiruv parametrlari (<code>?q=...</code>), 404 xatosi va qayta yo'naltirishni;</li>
+  <li>Funksiya va Class asosidagi view'lar farqini.</li>
+</ul>
+</div>
+
+<h2 id="sorov-va-javob"><a class="anchor" href="#sorov-va-javob">#</a>So'rov va javob</h2>
+<p>Har bir view — bu <b>funksiya</b>: u brauzerdan kelgan <b>so'rov (request)</b> obyektini oladi va <b>javob (response)</b> obyektini qaytaradi.</p>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.http import HttpResponse
+
+def salom(request):
+    # request — so&#x27;rov haqida hamma narsa: metod, manzil, foydalanuvchi, parametrlar...
+    print(request.method)          # &quot;GET&quot; yoki &quot;POST&quot;
+    print(request.path)            # &quot;/salom/&quot;
+    return HttpResponse(&quot;Salom!&quot;)  # javob — brauzerga qaytadigan matn/HTML</code></pre></div>
+<div class="analogy"><span class="t">O'xshatish: pochta oynasi</span>
+Pochtaga xat (so'rov) berasiz: unda kimdan, qayerga, nima so'ralgani yozilgan. Xodim (view) xatni o'qiydi, kerakli ishni qiladi va sizga javob xatini (response) qaytaradi.
+Har bir oyna (URL) o'z xizmatiga mas'ul.</div>
+<div class="table-wrap"><table>
+<tr><th><code>request</code> xossasi</th><th>Nima beradi</th></tr>
+<tr><td><code>request.method</code></td><td>So'rov turi: <code>"GET"</code> (sahifani ko'rish) yoki <code>"POST"</code> (forma yuborish)</td></tr>
+<tr><td><code>request.GET</code></td><td>Manzildagi parametrlar: <code>/qidiruv/?q=python</code> → <code>request.GET.get("q")</code></td></tr>
+<tr><td><code>request.POST</code></td><td>Formadan yuborilgan ma'lumotlar (37-mavzu)</td></tr>
+<tr><td><code>request.user</code></td><td>Tizimga kirgan foydalanuvchi</td></tr>
+<tr><td><code>request.path</code></td><td>So'ralgan manzil</td></tr>
+</table></div>
+
+<h2 id="url-marshrutlash"><a class="anchor" href="#url-marshrutlash">#</a>URL marshrutlash</h2>
+<p>Django har bir so'rov uchun <code>urlpatterns</code> ro'yxatini <b>yuqoridan pastga</b> ko'rib chiqadi va birinchi mos kelgan yo'lning view'ini chaqiradi.</p>
+<h3>Ilova uchun alohida urls.py</h3>
+<p>Barcha URL'larni bitta <code>config/urls.py</code> ga yozish katta loyihada chalkashadi. To'g'ri usul: har bir ilova o'z <code>urls.py</code> siga ega bo'ladi, asosiy fayl esa ularni <code>include</code> bilan ulaydi.</p>
+<div class="code"><div class="code-head"><span>blog/urls.py (yangi fayl yarating)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.urls import path
+from . import views
+
+app_name = &quot;blog&quot;                                     # nomlar maydoni
+
+urlpatterns = [
+    path(&quot;&quot;, views.bosh_sahifa, name=&quot;bosh&quot;),                          # /
+    path(&quot;haqida/&quot;, views.haqida, name=&quot;haqida&quot;),                      # /haqida/
+    path(&quot;maqola/&lt;int:id&gt;/&quot;, views.maqola, name=&quot;maqola&quot;),             # /maqola/5/
+    path(&quot;kategoriya/&lt;slug:nomi&gt;/&quot;, views.kategoriya, name=&quot;kategoriya&quot;),   # /kategoriya/sport/
+    path(&quot;qidiruv/&quot;, views.qidiruv, name=&quot;qidiruv&quot;),                   # /qidiruv/?q=...
+]</code></pre></div>
+<div class="code"><div class="code-head"><span>config/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path(&quot;admin/&quot;, admin.site.urls),
+    path(&quot;&quot;, include(&quot;blog.urls&quot;)),          # blog ilovasining barcha URL&#x27;lari
+]</code></pre></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">/maqola/5/</div><div class="arrow">→</div>
+    <div class="node">config/urls.py<small>"" → include("blog.urls")</small></div><div class="arrow">→</div>
+    <div class="node">blog/urls.py<small>"maqola/&lt;int:id&gt;/"</small></div><div class="arrow">→</div>
+    <div class="node">views.maqola(request, id=5)</div>
+  </div>
+</div>
+
+<h3>Path converterlar — manzildan qiymat olish</h3>
+<div class="table-wrap"><table>
+<tr><th>Converter</th><th>Nimaga mos keladi</th><th>Misol URL</th><th>View oladi</th></tr>
+<tr><td><code>&lt;int:id&gt;</code></td><td>Musbat butun son</td><td><code>/maqola/42/</code></td><td><code>id=42</code> (int)</td></tr>
+<tr><td><code>&lt;str:nom&gt;</code></td><td><code>/</code> dan boshqa har qanday matn</td><td><code>/user/ali/</code></td><td><code>nom="ali"</code></td></tr>
+<tr><td><code>&lt;slug:nomi&gt;</code></td><td>Lotin harf, raqam, <code>-</code>, <code>_</code></td><td><code>/kategoriya/maktab-hayoti/</code></td><td><code>nomi="maktab-hayoti"</code></td></tr>
+</table></div>
+<div class="callout tip"><b>Slug</b> — sarlavhaning URL uchun qulay ko'rinishi: "Maktab hayoti" → <code>maktab-hayoti</code>. Chiroyli manzillar SEO uchun foydali (11-mavzu).</div>
+
+<h2 id="viewlar-yozish"><a class="anchor" href="#viewlar-yozish">#</a>View'lar yozish</h2>
+<p>Hozircha ma'lumotlar bazasi o'rniga oddiy Python ro'yxatidan foydalanamiz (36-mavzuda haqiqiy modelga almashtiramiz):</p>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import redirect
+
+# Vaqtinchalik &quot;baza&quot;
+MAQOLALAR = [
+    {&quot;id&quot;: 1, &quot;sarlavha&quot;: &quot;Bilimlar bellashuvi&quot;, &quot;kategoriya&quot;: &quot;tadbirlar&quot;, &quot;matn&quot;: &quot;8-sinflar o&#x27;rtasida...&quot;},
+    {&quot;id&quot;: 2, &quot;sarlavha&quot;: &quot;Yangi kompyuter xonasi&quot;, &quot;kategoriya&quot;: &quot;maktab-hayoti&quot;, &quot;matn&quot;: &quot;20 ta kompyuter...&quot;},
+    {&quot;id&quot;: 3, &quot;sarlavha&quot;: &quot;Futbol bo&#x27;yicha g&#x27;alaba&quot;, &quot;kategoriya&quot;: &quot;sport&quot;, &quot;matn&quot;: &quot;Shahar chempionati...&quot;},
+]
+
+
+def bosh_sahifa(request):
+    html = &quot;&lt;h1&gt;Maktab blogi&lt;/h1&gt;&lt;ul&gt;&quot;
+    for m in MAQOLALAR:
+        html += f&#x27;&lt;li&gt;&lt;a href=&quot;/maqola/{m[&quot;id&quot;]}/&quot;&gt;{m[&quot;sarlavha&quot;]}&lt;/a&gt;&lt;/li&gt;&#x27;
+    html += &quot;&lt;/ul&gt;&quot;
+    return HttpResponse(html)
+
+
+def haqida(request):
+    return HttpResponse(&quot;&lt;h1&gt;Biz haqimizda&lt;/h1&gt;&lt;p&gt;5-maktab o&#x27;quvchilarining blogi.&lt;/p&gt;&quot;)
+
+
+def maqola(request, id):                       # id — URL&#x27;dagi &lt;int:id&gt; dan keladi
+    for m in MAQOLALAR:
+        if m[&quot;id&quot;] == id:
+            return HttpResponse(f&quot;&lt;h1&gt;{m[&#x27;sarlavha&#x27;]}&lt;/h1&gt;&lt;p&gt;{m[&#x27;matn&#x27;]}&lt;/p&gt;&lt;a href=&#x27;/&#x27;&gt;← Orqaga&lt;/a&gt;&quot;)
+    raise Http404(&quot;Bunday maqola topilmadi&quot;)    # 404 sahifa
+
+
+def kategoriya(request, nomi):
+    topilganlar = [m for m in MAQOLALAR if m[&quot;kategoriya&quot;] == nomi]
+    if not topilganlar:
+        return redirect(&quot;blog:bosh&quot;)            # bosh sahifaga qayta yo&#x27;naltirish
+    royxat = &quot;&quot;.join(f&quot;&lt;li&gt;{m[&#x27;sarlavha&#x27;]}&lt;/li&gt;&quot; for m in topilganlar)
+    return HttpResponse(f&quot;&lt;h1&gt;Kategoriya: {nomi}&lt;/h1&gt;&lt;ul&gt;{royxat}&lt;/ul&gt;&quot;)
+
+
+def qidiruv(request):
+    q = request.GET.get(&quot;q&quot;, &quot;&quot;).strip()        # /qidiruv/?q=futbol
+    natija = [m for m in MAQOLALAR if q.lower() in m[&quot;sarlavha&quot;].lower()] if q else []
+    return HttpResponse(f&quot;&lt;h1&gt;&#x27;{q}&#x27; bo&#x27;yicha {len(natija)} ta natija&lt;/h1&gt;&quot;)
+
+
+def api_maqolalar(request):
+    return JsonResponse({&quot;maqolalar&quot;: MAQOLALAR})    # JSON javob (39-mavzuga muqaddima)</code></pre></div>
+<p>Sinab ko'ring:</p>
+<ul>
+  <li><a href="http://127.0.0.1:8000/" target="_blank" rel="noopener">http://127.0.0.1:8000/</a> — ro'yxat</li>
+  <li><code>/maqola/2/</code> — maqola; <code>/maqola/99/</code> — 404</li>
+  <li><code>/kategoriya/sport/</code>; <code>/kategoriya/yoq/</code> — bosh sahifaga qaytaradi</li>
+  <li><code>/qidiruv/?q=futbol</code></li>
+</ul>
+<div class="callout warn"><span class="t">Diqqat</span>
+View ichida HTML'ni satr sifatida yozish — faqat o'rganish uchun. U noqulay va xavfli (foydalanuvchi matni tekshirilmay HTML'ga qo'shilyapti). Keyingi mavzuda
+HTML'ni <b>shablonlar</b>ga (templates) ko'chiramiz — Django ularda matnni avtomatik xavfsiz qiladi.</div>
+
+<h3>Nomlangan URL'lar</h3>
+<p>Har bir yo'lga <code>name=</code> berdik. Endi manzilni qo'lda yozish o'rniga nomi bo'yicha yasash mumkin:</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.urls import reverse
+
+reverse(&quot;blog:maqola&quot;, args=[5])     # &quot;/maqola/5/&quot;
+redirect(&quot;blog:haqida&quot;)              # /haqida/ ga yo&#x27;naltirish
+# Shablonlarda: {% url &#x27;blog:maqola&#x27; 5 %}  (35-mavzu)</code></pre></div>
+<p><b>Afzalligi:</b> kelajakda <code>"maqola/&lt;int:id&gt;/"</code> ni <code>"post/&lt;int:id&gt;/"</code> ga o'zgartirsangiz, faqat <code>urls.py</code> da bitta qator o'zgaradi —
+butun saytdagi havolalar o'zi yangilanadi.</p>
+
+<h3>HTTP status kodlari Django'da</h3>
+<div class="table-wrap"><table>
+<tr><th>Holat</th><th>Django'da</th><th>Kod</th></tr>
+<tr><td>Oddiy javob</td><td><code>HttpResponse(...)</code></td><td>200</td></tr>
+<tr><td>Topilmadi</td><td><code>raise Http404(...)</code> yoki <code>get_object_or_404</code> (36-mavzu)</td><td>404</td></tr>
+<tr><td>Qayta yo'naltirish</td><td><code>redirect("nom")</code></td><td>302</td></tr>
+<tr><td>JSON</td><td><code>JsonResponse({...})</code></td><td>200</td></tr>
+</table></div>
+
+<h2 id="class-based-view-cbv-klass-asosidagi-viewlar"><a class="anchor" href="#class-based-view-cbv-klass-asosidagi-viewlar">#</a>Class Based View (CBV) — klass asosidagi view'lar</h2>
+<p>Hozirgacha <b>funksiya asosidagi view</b> (Function Based View, FBV) yozdik. Django yana bir usulni taklif qiladi — view'ni <b>klass</b> sifatida yozish (25-mavzudagi OOP!).
+Ko'p uchraydigan vazifalar uchun Django tayyor klasslar beradi va siz ulardan <b>meros</b> olasiz.</p>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.views import View
+from django.views.generic import TemplateView
+
+class SalomView(View):
+    def get(self, request):                       # GET so&#x27;rov uchun metod
+        return HttpResponse(&quot;Salom, GET!&quot;)
+
+    def post(self, request):                      # POST so&#x27;rov uchun metod
+        return HttpResponse(&quot;Salom, POST!&quot;)
+
+
+class AloqaView(TemplateView):                    # tayyor klass: shablonni ko&#x27;rsatadi
+    template_name = &quot;blog/aloqa.html&quot;             # 35-mavzuda yaratamiz</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">path(&quot;salom/&quot;, views.SalomView.as_view(), name=&quot;salom&quot;),     # CBV uchun .as_view()</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th></th><th>FBV (funksiya)</th><th>CBV (klass)</th></tr>
+<tr><td>Yozilishi</td><td>Oddiy, aniq, boshlovchilar uchun tushunarli</td><td>Qisqa, lekin "sehr" ko'p</td></tr>
+<tr><td>GET/POST ajratish</td><td><code>if request.method == "POST":</code></td><td>Alohida <code>get()</code>, <code>post()</code> metodlar</td></tr>
+<tr><td>Qayta ishlatish</td><td>Qiyinroq</td><td>Meros orqali oson; tayyor <code>ListView</code>, <code>DetailView</code>, <code>CreateView</code>...</td></tr>
+</table></div>
+<p>Bu kursda asosan FBV ishlatamiz (tushunish oson), 38-mavzuda esa tayyor CBV'lar bilan CRUD qanchalik qisqa bo'lishini ko'rasiz.</p>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>blog/urls.py</code> yarating va <code>config/urls.py</code> da <code>include</code> qiling.</li>
+  <li>Yuqoridagi view'larni yozing va har bir manzilni brauzerda sinab ko'ring. <code>/maqola/abc/</code> ni ham oching — nima uchun 404? (<code>int</code> converter harflarni qabul qilmaydi.)</li>
+  <li>Bosh sahifadagi havolalarni <code>reverse("blog:maqola", args=[m["id"]])</code> bilan yasang.</li>
+  <li>Yangi yo'llar qo'shing:
+    <ul>
+      <li><code>/kalkulyator/&lt;int:a&gt;/&lt;int:b&gt;/</code> — ikki sonning yig'indisi, ayirmasi, ko'paytmasini ko'rsatsin;</li>
+      <li><code>/salom/&lt;str:ism&gt;/</code> — "Salom, Ali!" deb javob bersin;</li>
+      <li><code>/api/maqolalar/</code> — JSON qaytarsin (<code>JsonResponse</code>).</li>
+    </ul></li>
+  <li><code>/tasodifiy/</code> — tasodifiy maqolaga <code>redirect</code> qilsin (<code>random.choice</code>).</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Page not found (404)</code> — URL'da yakuniy <code>/</code> yo'q yoki yo'l <code>urlpatterns</code> da ro'yxatdan o'tmagan. Django xato sahifasida barcha mavjud yo'llar ro'yxatini ko'rsatadi — tekshiring.</li>
+  <li>❌ <code>maqola() got an unexpected keyword argument 'pk'</code> — URL'dagi nom (<code>&lt;int:pk&gt;</code>) va funksiya parametri (<code>id</code>) mos emas.</li>
+  <li>❌ View <code>return</code> qilmaydi — <code>The view didn't return an HttpResponse object</code>.</li>
+  <li>❌ <code>NoReverseMatch</code> — <code>reverse</code>/<code>redirect</code> dagi URL nomi noto'g'ri yoki <code>app_name:</code> unutilgan.</li>
+  <li>❌ CBV'da <code>.as_view()</code> unutilgan.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Django view'i nimani qabul qilib, nimani qaytaradi?</p><ol>
+<li>HTML qabul qilib, SQL qaytaradi</li><li>request (so'rov) qabul qilib, response (javob) qaytaradi</li><li>URL qabul qilib, model qaytaradi</li><li>Hech narsa qabul qilmaydi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>path("maqola/&lt;int:id&gt;/", views.maqola)</code> — <code>/maqola/7/</code> so'ralganda view nima oladi?</p><ol>
+<li><code>id="7"</code> (matn)</li><li>Hech narsa</li><li><code>id=7</code> (son)</li><li><code>maqola=7</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Ilova URL'larini asosiy <code>urls.py</code> ga ulash uchun?</p><ol>
+<li><code>include("blog.urls")</code></li><li><code>import blog</code></li><li><code>connect("blog")</code></li><li><code>urls.add(blog)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>/qidiruv/?q=futbol</code> dagi "futbol" ni view'da qanday olasiz?</p><ol>
+<li><code>request.POST["q"]</code></li><li><code>request.q</code></li><li><code>request.path</code></li><li><code>request.GET.get("q")</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Boshqa sahifaga qayta yo'naltiruvchi funksiya?</p><ol>
+<li><code>HttpResponse()</code></li><li><code>redirect()</code></li><li><code>Http404()</code></li><li><code>goto()</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Class Based View'ni URL'ga ulashda nima yoziladi?</p><ol>
+<li><code>views.SalomView</code></li><li><code>views.SalomView()</code></li><li><code>views.SalomView.as_view()</code></li><li><code>views.SalomView.get</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><code>pages</code> ilovasi (33-mavzu uyga vazifasi) uchun alohida <code>urls.py</code> yarating: <code>/haqida/</code>, <code>/aloqa/</code>, <code>/qoidalar/</code>.</li>
+  <li><code>/jadval/&lt;int:son&gt;/</code> — berilgan sonning 1–10 gacha ko'paytirish jadvalini HTML jadval sifatida qaytaruvchi view.</li>
+  <li><code>/yosh/&lt;int:yil&gt;/</code> — tug'ilgan yil bo'yicha yoshni hisoblovchi view; yil kelajakda bo'lsa — 404.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>View: <code>def view(request): return HttpResponse(...)</code>.</li>
+  <li>Ilovada <code>urls.py</code> + <code>app_name</code>; asosiy faylda <code>path("", include("blog.urls"))</code>.</li>
+  <li>Converterlar: <code>&lt;int:id&gt;</code>, <code>&lt;str:nom&gt;</code>, <code>&lt;slug:nomi&gt;</code> — view parametriga keladi.</li>
+  <li><code>request.GET.get("q")</code>, <code>raise Http404</code>, <code>redirect("app:nom")</code>, <code>JsonResponse</code>, <code>name=</code> + <code>reverse</code>.</li>
+  <li>CBV: <code>class V(View): def get(self, request)</code> → <code>V.as_view()</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="33-django-kirish.html"><small>← Oldingi mavzu</small>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a><a class="next" href="35-django-template-static.html"><small>Keyingi mavzu →</small>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#sorov-va-javob">So&#x27;rov va javob</a></li><li><a href="#url-marshrutlash">URL marshrutlash</a></li><li><a href="#viewlar-yozish">View&#x27;lar yozish</a></li><li><a href="#class-based-view-cbv-klass-asosidagi-viewlar">Class Based View (CBV) — klass asosidagi view&#x27;lar</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
