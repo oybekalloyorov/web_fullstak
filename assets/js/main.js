@@ -83,8 +83,8 @@
 
   // 8. O'qilgan darslarni belgilash
   const done = store.get('doneLessons2', []);
-  // Dars kaliti: 'darslar/01-...' yoki '8-sinf/05-...'
-  const slugOf = (href) => (href.match(/((?:darslar|8-sinf)\/\d[\w-]*)\.html/) || [])[1];
+  // Dars kaliti: 'darslar/01-...', '8-sinf/05-...' yoki 'cs/03-...'
+  const slugOf = (href) => (href.match(/((?:darslar|8-sinf|cs)\/\d[\w-]*)\.html/) || [])[1];
   const markDone = () => {
     $$('#lessonList a').forEach((a) => a.classList.toggle('done', done.includes(slugOf(a.href)) && !a.classList.contains('active')));
     $$('.cards .card').forEach((c) => c.classList.toggle('done', done.includes(slugOf(c.href))));

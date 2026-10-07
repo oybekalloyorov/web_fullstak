@@ -1,0 +1,222 @@
+<!-- title: Loyiha: Flowgorithm'da "Mini bankomat tizimi" | desc: Mini bankomat loyihasining maqsadi va ishlash mantig'i; menyu: balansni ko'rish, pul yechish, pul kiritish, chiqish; balans o'zgaruvchisi bilan ishlash; If orqali tanlovni va yetarli balansni tekshirish; While sikli bilan menyuni qayta ko'rsatish; PIN-kod, limit va tarix kabi kengaytmalar; test qilish. | icon: 🏧 | level: 2 dars · amaliy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li><b>Menyu asosidagi dastur</b> (menu-driven program) qurishni;</li>
+  <li>Dastur davomida <b>holat</b>ni (balans) saqlash va o'zgartirishni;</li>
+  <li>Biznes-qoidalarni tekshirishni: yetarli mablag', musbat summa, karrali summa;</li>
+  <li>Sikl + ichma-ich shartlarni katta loyihada birlashtirishni;</li>
+  <li>Murakkab dasturni <b>bosqichma-bosqich</b> qurish va test qilishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Loyiha rejasi (2 dars)</span><b>1-dars:</b> rejalashtirish, menyu sikli, balans va pul kiritish. <b>2-dars:</b> pul yechish
+(tekshiruvlar bilan), kengaytmalar (PIN, limit, statistika), test va himoya.</div>
+
+<h2>1-bosqich: bankomat qanday ishlaydi?</h2>
+<p>Haqiqiy bankomatni eslang: karta qo'yasiz → PIN → <b>menyu</b> → amal → yana menyu → ... → "Kartani oling". Dastur foydalanuvchi
+<b>"Chiqish"</b>ni tanlaguncha menyuni qayta-qayta ko'rsatadi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Menyu bandi</th><th>Nima qiladi</th><th>Tekshiruvlar</th></tr></thead>
+<tbody>
+<tr><td><b>1</b> — Balans</td><td>Joriy balansni ko'rsatadi</td><td>—</td></tr>
+<tr><td><b>2</b> — Pul yechish</td><td><code>balans = balans - summa</code></td><td>Summa &gt; 0; summa ≤ balans; 1000 ga karrali</td></tr>
+<tr><td><b>3</b> — Pul kiritish</td><td><code>balans = balans + summa</code></td><td>Summa &gt; 0</td></tr>
+<tr><td><b>4</b> — Chiqish</td><td>Siklni tugatadi</td><td>—</td></tr>
+<tr><td>boshqa</td><td>"Noto'g'ri tanlov"</td><td>—</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>O'zgaruvchi</th><th>Turi</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><code>balans</code></td><td>Integer</td><td>Hisobdagi pul — dasturning <b>holati</b>; boshida masalan 500 000</td></tr>
+<tr><td><code>tanlov</code></td><td>Integer</td><td>Menyu bandi</td></tr>
+<tr><td><code>summa</code></td><td>Integer</td><td>Yechiladigan / kiritiladigan miqdor</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: hamyon</span><code>balans</code> — hamyon. U dastur boshida bir marta to'ldiriladi va <b>sikldan tashqarida</b> e'lon
+qilinadi, shuning uchun menyu har safar qayta ko'rsatilganda ham ichidagi pul "esda qoladi". Agar uni sikl ichida <code>balans = 500000</code> desangiz —
+har safar hamyon "sehrli" tarzda qayta to'lib qoladi.</div>
+
+<h2>2-bosqich: menyu sikli</h2>
+<p>Menyu sikli uchun <b>While</b> ishlatamiz: <code>tanlov != 4</code> <b>ekan</b> — davom et. Boshida <code>tanlov = 0</code> qilib qo'yamiz, shunda sikl
+birinchi marta albatta boshlanadi.</p>
+<div class="fc-wrap"><div class="fc-title">bankomat.fprg — umumiy tuzilma</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer balans, summa</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer tanlov</div>
+  <div class="fc-s fc-asg"><small>Assign</small>balans = 500000</div>
+  <div class="fc-s fc-asg"><small>Assign</small>tanlov = 0</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">While tanlov != 4</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"1-Balans 2-Yechish 3-Kiritish 4-Chiqish"</div>
+      <div class="fc-s fc-in"><small>Input</small>tanlov</div>
+      <div class="fc-if"><div class="fc-s fc-cond">tanlov == 1</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">tanlov == 2</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False">
+              <div class="fc-if"><div class="fc-s fc-cond">tanlov == 3</div>
+                <div class="fc-branches"><div class="fc-br" data-label="False">
+                  <div class="fc-if"><div class="fc-s fc-cond">tanlov != 4</div>
+                    <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Xato tanlov"</div></div></div></div>
+                </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>3</small>KIRITISH</div></div></div></div>
+            </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>2</small>YECHISH</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Balans: " &amp; balans</div></div></div></div>
+    </div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Kartangizni oling. Xayr!"</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<p><b>YECHISH</b> va <b>KIRITISH</b> — hozircha "qora quti". Ularni alohida quramiz va keyin tegishli tarmoqqa joylaymiz. Bu — <b>yuqoridan pastga
+loyihalash</b>: avval umumiy skelet, keyin tafsilotlar.</p>
+
+<h2>3-bosqich: pul kiritish</h2>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">KIRITISH bloki</div><div class="fc">
+  <div class="fc-s fc-out"><small>Output</small>"Summa:"</div>
+  <div class="fc-s fc-in"><small>Input</small>summa</div>
+  <div class="fc-if"><div class="fc-s fc-cond">summa &gt; 0</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"Summa musbat bo'lsin"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>balans = balans + summa</div><div class="fc-s fc-out"><small>Output</small>"✅ Yangi balans: " &amp; balans</div></div></div></div>
+</div></div>
+<div>
+<p>Nega <code>summa &gt; 0</code> tekshiruvi? Agar foydalanuvchi <code>-100000</code> kiritsa, <code>balans + (-100000)</code> — bu aslida <b>yechish</b>, lekin
+hech qanday tekshiruvsiz! Bunday "teshik" haqiqiy bank tizimida jiddiy xavfsizlik zaifligi bo'lardi.</p>
+</div>
+</div>
+
+<h2>4-bosqich: pul yechish — eng muhim qism</h2>
+<p>Uchta qoida tekshiriladi, har biri o'z xabari bilan:</p>
+<div class="fc-wrap"><div class="fc-title">YECHISH bloki</div><div class="fc compact">
+  <div class="fc-s fc-out"><small>Output</small>"Summa:"</div>
+  <div class="fc-s fc-in"><small>Input</small>summa</div>
+  <div class="fc-if"><div class="fc-s fc-cond">summa &lt;= 0</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">summa % 1000 != 0</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">summa &gt; balans</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-asg"><small>Assign</small>balans = balans - summa</div><div class="fc-s fc-out"><small>Output</small>"✅ Oling: " &amp; summa</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Yetarli emas"</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Karrali emas"</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Xato summa"</div></div></div></div>
+</div></div>
+<div class="callout tip"><span class="t">"Himoya devorlari" usuli</span>Avval barcha <b>xato</b> holatlarni birma-bir chiqarib tashlaymiz; har bir devordan o'tgan
+summa tobora "toza" bo'lib boradi. Eng oxirgi False tarmoqqa faqat <b>barcha</b> tekshiruvdan o'tgan summa yetib keladi — faqat o'sha yerda balansni
+o'zgartiramiz. Bu pattern professional dasturlashda "guard clauses" deyiladi.</div>
+
+<h2>Natija</h2>
+<pre data-lang="output" data-title="Console">1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+1
+Balans: 500000
+1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+2
+Summa:
+700000
+Mablag' yetarli emas
+1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+2
+Summa:
+150500
+1000 ga karrali bo'lsin
+1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+2
+Summa:
+150000
+✅ Oling: 150000
+1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+3
+Summa:
+50000
+✅ Yangi balans: 400000
+1-Balans 2-Yechish 3-Kiritish 4-Chiqish
+4
+Kartangizni oling. Xayr!</pre>
+
+<h2>Brauzerda sinab ko'ring</h2>
+<pre data-lang="html" data-play><div style="font:16px sans-serif;max-width:420px;background:#0f172a;color:#e2e8f0;padding:16px;border-radius:14px">
+  <div style="font-weight:700;margin-bottom:8px">🏧 MINI BANKOMAT</div>
+  <div id="ekran" style="background:#1e293b;padding:10px;border-radius:8px;min-height:44px;font-family:monospace">Xush kelibsiz! Amalni tanlang.</div>
+  <input id="summa" type="number" placeholder="Summa" style="margin:10px 0;width:100%;box-sizing:border-box;font:inherit;padding:8px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+    <button onclick="amal(1)">1 · Balans</button><button onclick="amal(2)">2 · Yechish</button>
+    <button onclick="amal(3)">3 · Kiritish</button><button onclick="amal(4)">4 · Chiqish</button>
+  </div>
+</div>
+<script>
+let balans = 500000, faol = true;
+const ekran = document.getElementById('ekran');
+function amal(tanlov) {
+  if (!faol) return;
+  const summa = Number(document.getElementById('summa').value);
+  if (tanlov === 1) ekran.textContent = 'Balans: ' + balans.toLocaleString() + " so'm";
+  else if (tanlov === 2) {
+    if (summa <= 0) ekran.textContent = "❌ Noto'g'ri summa";
+    else if (summa % 1000 !== 0) ekran.textContent = "❌ 1000 ga karrali bo'lsin";
+    else if (summa > balans) ekran.textContent = "❌ Mablag' yetarli emas";
+    else { balans = balans - summa; ekran.textContent = '✅ Oling: ' + summa.toLocaleString() + " so'm"; }
+  } else if (tanlov === 3) {
+    if (summa > 0) { balans = balans + summa; ekran.textContent = '✅ Yangi balans: ' + balans.toLocaleString(); }
+    else ekran.textContent = "❌ Summa musbat bo'lsin";
+  } else { faol = false; ekran.textContent = 'Kartangizni oling. Xayr! 👋'; }
+}
+</script></pre>
+
+<h2>Kengaytmalar (yuqori ball uchun)</h2>
+<ol class="steps">
+  <li><b>PIN-kod:</b> menyudan oldin PIN so'rang; 3 marta xato — "Karta bloklandi" (25-loyiha mantiqi).</li>
+  <li><b>Kunlik limit:</b> <code>yechildi</code> o'zgaruvchisi; bir kunda 2 000 000 dan ortiq yechib bo'lmaydi.</li>
+  <li><b>Komissiya:</b> yechishda 1%: <code>balans = balans - summa - Int(summa / 100)</code> (yetarlilikni ham shu bilan tekshiring!).</li>
+  <li><b>Statistika:</b> chiqishda nechta amal bajarilgani, jami yechilgan va kiritilgan summa.</li>
+  <li><b>Telefon to'lovi:</b> 5-menyu bandi — raqam (String) va summa.</li>
+</ol>
+
+<h2>Test rejasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Harakat</th><th>Kutilgan natija</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1</td><td>Balans: 500000</td></tr>
+<tr><td>2</td><td>2 → 100000</td><td>Oling; balans 400000</td></tr>
+<tr><td>3</td><td>2 → 400000 (aynan balans)</td><td>Oling; balans 0 — <b>chegara</b></td></tr>
+<tr><td>4</td><td>2 → 1000 (balans 0)</td><td>Mablag' yetarli emas</td></tr>
+<tr><td>5</td><td>2 → -5000 / 0</td><td>Noto'g'ri summa</td></tr>
+<tr><td>6</td><td>2 → 2500</td><td>1000 ga karrali bo'lsin</td></tr>
+<tr><td>7</td><td>3 → -100</td><td>Summa musbat bo'lsin; balans o'zgarmadi</td></tr>
+<tr><td>8</td><td>7</td><td>Noto'g'ri tanlov; menyu qayta</td></tr>
+<tr><td>9</td><td>4</td><td>Xayr; dastur tugadi</td></tr>
+</tbody></table></div>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>balans = 500000</code> sikl ichida → ✅ Sikldan oldin; aks holda balans "tiklanib" qoladi.</li>
+  <li>❌ <code>tanlov</code> ga boshlang'ich qiymat bermaslik → ✅ While shartida "has no value" xatosi; <code>tanlov = 0</code>.</li>
+  <li>❌ Yetarlilikni tekshirmasdan yechish → ✅ Balans manfiy bo'lib ketadi.</li>
+  <li>❌ <code>summa &gt;= balans</code> → ✅ Aynan balansga teng summani yechish mumkin bo'lishi kerak: xato sharti <code>summa &gt; balans</code>.</li>
+  <li>❌ 4 tanlanganda ham "Noto'g'ri tanlov" chiqishi → ✅ Oxirgi If'da <code>tanlov != 4</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Balans o'zgaruvchisi qayerda boshlang'ich qiymat olishi kerak?</p><ol>
+<li>Menyu sikli ichida</li><li>Menyu siklidan oldin</li><li>Pul yechish blokida</li><li>Chiqishda</li></ol>
+<p class="explain">Holat butun dastur davomida saqlanishi kerak.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Balans 300 000. Qaysi summani yechib bo'ladi?</p><ol>
+<li>350 000</li><li>-50 000</li><li>120 500</li><li>300 000</li></ol>
+<p class="explain">Musbat, 1000 ga karrali va balansdan oshmaydi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Menyu foydalanuvchi "4" ni tanlaguncha takrorlanishi uchun shart?</p><ol>
+<li><code>While tanlov != 4</code></li><li><code>While tanlov == 4</code></li><li><code>For tanlov = 1 to 4</code></li><li><code>If tanlov == 4</code></li></ol>
+<p class="explain">"4 emas ekan — davom et".</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Bankomatning asosiy versiyasini yakunlab, test rejasining 9 ta holatidan o'tkazing.</li>
+  <li>Kamida 2 ta kengaytma qo'shing (PIN va statistika tavsiya etiladi).</li>
+  <li>GitHub'ga <code>bankomat/</code> papkasi: <code>.fprg</code>, sxema rasmi, README (menyu, qoidalar, testlar).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Menyu dasturi</dt><dd>While tanlov != chiqish → menyu → Input → If zinapoyasi.</dd>
+  <dt>Holat</dt><dd><code>balans</code> — sikldan oldin boshlanadi, butun dastur davomida saqlanadi.</dd>
+  <dt>Guard clauses</dt><dd>Avval barcha xatolarni chiqarib tashlash, keyin asosiy amal.</dd>
+  <dt>Biznes-qoidalar</dt><dd>Summa &gt; 0, karrali, ≤ balans.</dd>
+  <dt>Yuqoridan pastga loyihalash</dt><dd>Avval skelet, keyin bloklar tafsiloti.</dd>
+</dl>
+</div>

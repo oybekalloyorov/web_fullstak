@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Tarmoqlanuvchi algoritm va shartli bajarilish; Decision (If) bloki; taqqoslash operatorlari &gt; &lt; &gt;= &lt;= == !=; to&#x27;liq va qisqa If, ichma-ich shartlar; juft-toq son, musbat-manfiy son, bahoni aniqlash; mantiqiy operatorlar AND, OR, NOT va rostlik jadvallari. 9- va 10-loyihalar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a class="active" href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔀</div><div><div class="crumb">20-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</h1><p class="lead">Tarmoqlanuvchi algoritm va shartli bajarilish; Decision (If) bloki; taqqoslash operatorlari &gt; &lt; &gt;= &lt;= == !=; to&#x27;liq va qisqa If, ichma-ich shartlar; juft-toq son, musbat-manfiy son, bahoni aniqlash; mantiqiy operatorlar AND, OR, NOT va rostlik jadvallari. 9- va 10-loyihalar.</p><div class="hero-level">2 dars · 1 nazariy + 1 amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/20-tarmoqlanuvchi-algoritmlar.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu mavzuda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Tarmoqlanuvchi algoritm</b> nima va dastur qanday "qaror qabul qilishini";</li>
+  <li><b>If</b> (Decision) bloki: True va False yo'llari;</li>
+  <li>Oltita taqqoslash operatori: <code>&gt; &lt; &gt;= &lt;= == !=</code>;</li>
+  <li>Ichma-ich shartlar va "zinapoya" usuli (baho aniqlash);</li>
+  <li>Murakkab shartlar: <b>AND, OR, NOT</b> va rostlik jadvallari.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Dars rejasi (2 dars)</span><b>1-dars (nazariy):</b> shart, If, taqqoslash, ichma-ich shartlar, mantiqiy operatorlar.
+<b>2-dars (amaliy):</b> juft-toq, musbat-manfiy, baho, kirish nazorati — Flowgorithm'da qurish va test qilish.</div>
+
+<h2 id="tarmoqlanuvchi-algoritm-nima"><a class="anchor" href="#tarmoqlanuvchi-algoritm-nima">#</a>Tarmoqlanuvchi algoritm nima?</h2>
+<p><b>Tarmoqlanuvchi algoritm</b> — <b>shartga</b> qarab bir nechta yo'ldan biri tanlab bajariladigan algoritm. Chiziqli algoritm doim bir xil
+yo'ldan yursa, tarmoqlanuvchi algoritm <b>chorrahaga</b> keladi va vaziyatga qarab burilib ketadi.</p>
+<div class="analogy"><span class="t">O'xshatish: yo'l ayrisi</span>Siz velosipedda ketyapsiz va yo'l ikkiga ayrildi. Belgida: "Agar maktabga borsangiz — o'ngga,
+aks holda — chapga". Siz faqat <b>bitta</b> yo'ldan ketasiz, ikkinchisi bu safar bajarilmaydi. Keyin yo'llar yana bir joyda qo'shiladi.</div>
+<p>Hayotda: "<b>Agar</b> yomg'ir yog'sa — soyabon ol, <b>aks holda</b> — kepka kiy". Dasturlarda: "<b>Agar</b> parol to'g'ri bo'lsa — kirish,
+<b>aks holda</b> — xato xabari".</p>
+
+<h2 id="if-bloki"><a class="anchor" href="#if-bloki">#</a>If bloki</h2>
+<p>Flowgorithm'da shart <b>If</b> bloki (oltiburchak/romb) bilan yoziladi. Ichiga <b>shart</b> — natijasi <code>true</code> yoki <code>false</code> bo'ladigan
+ifoda yoziladi. Shart rost bo'lsa — <b>True</b> (o'ng) tarmoq, yolg'on bo'lsa — <b>False</b> (chap) tarmoq bajariladi.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">To'liq If (if–else)</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer harorat</div>
+  <div class="fc-s fc-in"><small>Input</small>harorat</div>
+  <div class="fc-if"><div class="fc-s fc-cond">harorat &lt; 10</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"Kurtka shart emas"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Kurtka kiying!"</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Yaxshi kun!"</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="fc-wrap"><div class="fc-title">Qisqa If (faqat True tarmoq)</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer ball</div>
+  <div class="fc-s fc-in"><small>Input</small>ball</div>
+  <div class="fc-if"><div class="fc-s fc-cond">ball == 100</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"🏆 Maksimal ball!"</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Ballingiz: " &amp; ball</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+</div>
+<p>Ikkinchi sxemada False tarmoq <b>bo'sh</b>: shart bajarilmasa, dastur shunchaki davom etadi. "Yaxshi kun!" va "Ballingiz" — If'dan
+<b>keyin</b> turibdi, shuning uchun har doim bajariladi.</p>
+
+<h2 id="taqqoslash-operatorlari"><a class="anchor" href="#taqqoslash-operatorlari">#</a>Taqqoslash operatorlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Operator</th><th>Ma'nosi</th><th>Misol</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td><code>&gt;</code></td><td>katta</td><td><code>7 &gt; 3</code></td><td><code>true</code></td></tr>
+<tr><td><code>&lt;</code></td><td>kichik</td><td><code>7 &lt; 3</code></td><td><code>false</code></td></tr>
+<tr><td><code>&gt;=</code></td><td>katta yoki teng</td><td><code>5 &gt;= 5</code></td><td><code>true</code></td></tr>
+<tr><td><code>&lt;=</code></td><td>kichik yoki teng</td><td><code>4 &lt;= 3</code></td><td><code>false</code></td></tr>
+<tr><td><code>==</code></td><td>teng</td><td><code>2 + 2 == 4</code></td><td><code>true</code></td></tr>
+<tr><td><code>!=</code></td><td>teng emas</td><td><code>"ali" != "Ali"</code></td><td><code>true</code> (katta-kichik harf farq qiladi)</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">= va == farqi</span>Ko'p tillarda <code>=</code> — qiymat berish (Assign), <code>==</code> — taqqoslash (If). Flowgorithm If ichida
+<code>=</code> ni ham taqqoslash deb tushunadi, lekin <b>doim <code>==</code> yozing</b> — Python, C++, JavaScript'da aynan shunday kerak bo'ladi.
+Flowgorithm "teng emas" uchun <code>&lt;&gt;</code> ni ham qabul qiladi.</div>
+<div class="callout tip"><span class="t">Chegara qiymatlar</span><code>&gt;</code> va <code>&gt;=</code> farqi — eng ko'p xato manbai. "18 yosh va undan katta" →
+<code>yosh &gt;= 18</code>. "18 dan katta" → <code>yosh &gt; 18</code> (18 kirmaydi!). Doim chegaradagi qiymat bilan test qiling.</div>
+
+<h2 id="klassik-masalalar"><a class="anchor" href="#klassik-masalalar">#</a>Klassik masalalar</h2>
+<h3>9-loyiha: juft yoki toq</h3>
+<p>Son 2 ga qoldiqsiz bo'linsa — juft. Qoldiq <code>%</code> amalidan foydalanamiz (18-mavzu).</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">juft_toq.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer son</div>
+  <div class="fc-s fc-out"><small>Output</small>"Son kiriting:"</div>
+  <div class="fc-s fc-in"><small>Input</small>son</div>
+  <div class="fc-if"><div class="fc-s fc-cond">son % 2 == 0</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>son &amp; " — toq"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>son &amp; " — juft"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">son = int(input(&quot;Son kiriting: &quot;))
+if son % 2 == 0:
+    print(son, &quot;— juft&quot;)
+else:
+    print(son, &quot;— toq&quot;)</code></pre></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Test</th><th><code>son % 2</code></th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td>14</td><td>0</td><td>juft ✅</td></tr>
+<tr><td>7</td><td>1</td><td>toq ✅</td></tr>
+<tr><td>0</td><td>0</td><td>juft ✅ (0 — juft son)</td></tr>
+<tr><td>-3</td><td>-1</td><td>toq ✅ (≠ 0)</td></tr>
+</tbody></table></div>
+<p>E'tibor bering: shart <code>son % 2 == 1</code> bo'lsa, manfiy toq sonlarda xato ishlaydi (<code>-3 % 2 = -1</code>). <code>== 0</code> bilan tekshirish ishonchliroq.</p>
+</div>
+</div>
+
+<h3>Musbat, manfiy yoki nol — ichma-ich If</h3>
+<p>Uch holat bor, bitta If esa faqat ikki yo'l beradi. Yechim — If ichiga yana If qo'yish (<b>ichma-ich shart</b>):</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">ishora.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real x</div>
+  <div class="fc-s fc-in"><small>Input</small>x</div>
+  <div class="fc-if"><div class="fc-s fc-cond">x &gt; 0</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">x &lt; 0</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"Nol"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Manfiy"</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Musbat"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code"><div class="code-head"><span>Python — elif bilan</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">x = float(input())
+if x &gt; 0:
+    print(&quot;Musbat&quot;)
+elif x &lt; 0:
+    print(&quot;Manfiy&quot;)
+else:
+    print(&quot;Nol&quot;)</code></pre></div>
+<p><b>Mantiq:</b> birinchi If "musbatmi?" deb so'raydi. Yo'q bo'lsa — qolgan ikki holat uchun ikkinchi If. <code>N</code> ta holat uchun <code>N − 1</code> ta If kerak.</p>
+</div>
+</div>
+
+<h3>10-loyiha: bahoni aniqlash — "zinapoya"</h3>
+<p>Foiz bo'yicha baho: <b>86–100 → 5 (a'lo)</b>, <b>71–85 → 4 (yaxshi)</b>, <b>56–70 → 3 (qoniqarli)</b>, <b>0–55 → 2 (qoniqarsiz)</b>.
+Shartlarni <b>yuqoridan pastga</b> tekshiramiz — har bir keyingi If'ga yetib kelgan bo'lsak, oldingi shartlar allaqachon yolg'on bo'lgan:</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">baho.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer f</div>
+  <div class="fc-s fc-in"><small>Input</small>f</div>
+  <div class="fc-if"><div class="fc-s fc-cond">f &gt;= 86</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">f &gt;= 71</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">f &gt;= 56</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"2"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"3"</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"4"</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"5"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Nega <code>f &gt;= 71 and f &lt;= 85</code> yozmadik?</b> Chunki ikkinchi If'ga faqat <code>f &gt;= 86</code> <b>yolg'on</b> bo'lganda kelamiz — demak,
+<code>f &lt; 86</code> allaqachon ma'lum. Zinapoya usuli shartlarni qisqa va xatosiz qiladi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Test</th><th>Kutilgan</th></tr></thead>
+<tbody>
+<tr><td>100, 86</td><td>5, 5 (chegara!)</td></tr>
+<tr><td>85, 71</td><td>4, 4</td></tr>
+<tr><td>70, 56</td><td>3, 3</td></tr>
+<tr><td>55, 0</td><td>2, 2</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Tartib muhim!</span>Agar avval <code>f &gt;= 56</code> ni tekshirsangiz, 95 ball ham "3" oladi — chunki 95 &gt;= 56 rost.
+Zinapoyada <b>eng qattiq</b> shartdan boshlang.</div>
+</div>
+</div>
+
+<h2 id="mantiqiy-operatorlar-and-or-not"><a class="anchor" href="#mantiqiy-operatorlar-and-or-not">#</a>Mantiqiy operatorlar: AND, OR, NOT</h2>
+<p>Ba'zan bitta shart yetmaydi: "yoshi 7 dan 18 gacha", "shanba <b>yoki</b> yakshanba". Shartlarni mantiqiy operatorlar bilan birlashtiramiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Operator</th><th>Flowgorithm</th><th>Ma'nosi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td><b>AND</b> (va)</td><td><code>and</code> yoki <code>&amp;&amp;</code></td><td><b>Ikkalasi ham</b> rost bo'lsa — rost</td><td><code>yosh &gt;= 7 and yosh &lt;= 18</code></td></tr>
+<tr><td><b>OR</b> (yoki)</td><td><code>or</code> yoki <code>||</code></td><td><b>Kamida bittasi</b> rost bo'lsa — rost</td><td><code>kun == 6 or kun == 7</code></td></tr>
+<tr><td><b>NOT</b> (emas)</td><td><code>not</code> yoki <code>!</code></td><td>Qiymatni <b>teskarisiga</b> aylantiradi</td><td><code>not (son % 2 == 0)</code> — toq</td></tr>
+</tbody></table></div>
+
+<h3>Rostlik jadvallari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>A</th><th>B</th><th>A <b>and</b> B</th><th>A <b>or</b> B</th><th><b>not</b> A</th></tr></thead>
+<tbody>
+<tr><td>true</td><td>true</td><td><b>true</b></td><td><b>true</b></td><td>false</td></tr>
+<tr><td>true</td><td>false</td><td>false</td><td><b>true</b></td><td>false</td></tr>
+<tr><td>false</td><td>true</td><td>false</td><td><b>true</b></td><td><b>true</b></td></tr>
+<tr><td>false</td><td>false</td><td>false</td><td>false</td><td><b>true</b></td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish</span><b>AND</b> — ketma-ket ulangan ikki kalit: chiroq yonishi uchun <b>ikkalasi</b> ham yoqilishi kerak.
+<b>OR</b> — parallel ulangan kalitlar: <b>bittasi</b> yoqilsa ham chiroq yonadi. <b>NOT</b> — "teskari" tugma.</div>
+
+<h3>Namuna: lagerga qabul</h3>
+<p>Yozgi IT-lagerga 12–16 yoshli va CS bahosi kamida 4 bo'lgan o'quvchilar qabul qilinadi. <b>Yoki</b> olimpiada g'olibi bo'lsa — yoshidan qat'i nazar.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">lager.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer yosh, baho</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Boolean golib</div>
+  <div class="fc-s fc-in"><small>Input</small>yosh</div>
+  <div class="fc-s fc-in"><small>Input</small>baho</div>
+  <div class="fc-s fc-in"><small>Input</small>golib</div>
+  <div class="fc-if"><div class="fc-s fc-cond">(yosh &gt;= 12 and yosh &lt;= 16 and baho &gt;= 4) or golib</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"Afsus, keyingi yil"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Qabul qilindingiz! 🎉"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="table-wrap"><table>
+<thead><tr><th>yosh</th><th>baho</th><th>golib</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td>14</td><td>5</td><td>false</td><td>✅ qabul</td></tr>
+<tr><td>14</td><td>3</td><td>false</td><td>❌ baho past</td></tr>
+<tr><td>18</td><td>5</td><td>false</td><td>❌ yosh katta</td></tr>
+<tr><td>10</td><td>3</td><td>true</td><td>✅ g'olib</td></tr>
+<tr><td>12</td><td>4</td><td>false</td><td>✅ chegara</td></tr>
+</tbody></table></div>
+</div>
+<div class="callout danger"><span class="t">Klassik xato</span><code>yosh &gt;= 12 and &lt;= 16</code> yoki <code>12 &lt;= yosh &lt;= 16</code> — <b>xato</b>! Har bir
+taqqoslash to'liq yoziladi: <code>yosh &gt;= 12 and yosh &lt;= 16</code>. Yana bir xato: <code>kun == 6 or 7</code> → to'g'risi <code>kun == 6 or kun == 7</code>.</div>
+
+<h2 id="2-dars-amaliy-topshiriqlar"><a class="anchor" href="#2-dars-amaliy-topshiriqlar">#</a>2-dars: amaliy topshiriqlar</h2>
+<ol class="steps">
+  <li><b>Kattasi:</b> ikki son kiritiladi — kattasini chiqaring; teng bo'lsa "Teng" deb yozing.</li>
+  <li><b>Uchtadan kattasi:</b> uch son — eng kattasi (maslahat: <code>a &gt;= b and a &gt;= c</code>).</li>
+  <li><b>Kabisa yili:</b> yil 4 ga bo'linsa va 100 ga bo'linmasa, <b>yoki</b> 400 ga bo'linsa — kabisa. Test: 2024 ✅, 1900 ❌, 2000 ✅.</li>
+  <li><b>Uchburchak mavjudmi?</b> Har bir tomon qolgan ikkitasi yig'indisidan kichik bo'lsa. Test: 3,4,5 ✅; 1,2,10 ❌.</li>
+  <li><b>Kirish narxi:</b> 7 yoshgacha — bepul, 7–17 — 10 000, 18–59 — 25 000, 60+ — 5 000 so'm.</li>
+  <li><b>Mini test (16-loyiha boshlanishi):</b> 3 ta savol bering, har bir to'g'ri javob uchun <code>ball = ball + 1</code>, oxirida natija.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ True va False tarmoqlarini adashtirish → ✅ Shartni ovoz chiqarib o'qing: "Son juftmi? — Ha (True) → juft".</li>
+  <li>❌ Zinapoyada tartibni buzish → ✅ Eng katta chegaradan boshlang.</li>
+  <li>❌ <code>&gt;</code> o'rniga <code>&gt;=</code> (yoki aksincha) → ✅ Chegaraviy qiymat bilan test.</li>
+  <li>❌ Matnni taqqoslashda katta-kichik harf → ✅ <code>"Ha" != "ha"</code>; foydalanuvchiga aniq ko'rsatma bering.</li>
+  <li>❌ If'dan keyingi umumiy blokni ikkala tarmoqqa takror qo'yish → ✅ Umumiy qism If'dan keyin, bir marta.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q"><code>x = 15</code> bo'lsa, <code>x &gt; 10 and x &lt; 15</code> natijasi?</p><ol>
+<li>true</li><li>false</li><li>15</li><li>Xato</li></ol>
+<p class="explain"><code>15 &lt; 15</code> yolg'on → AND ham yolg'on.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Son 3 ga ham, 5 ga ham bo'linishini tekshiruvchi shart?</p><ol>
+<li><code>n % 3 == 0 or n % 5 == 0</code></li><li><code>n / 15</code></li><li><code>n % 3 == 5</code></li><li><code>n % 3 == 0 and n % 5 == 0</code></li></ol>
+<p class="explain">"Ham ... ham" — AND.</p></div>
+<div class="quiz" data-answer="1"><p class="q">4 ta holatni ajratish uchun kamida nechta If kerak?</p><ol>
+<li>3</li><li>4</li><li>2</li><li>1</li></ol>
+<p class="explain">N holat — N−1 ta If.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>not (5 &gt; 3)</code> = ?</p><ol>
+<li>true</li><li>5</li><li>false</li><li>3</li></ol>
+<p class="explain">5 &gt; 3 rost, NOT uni yolg'onga aylantiradi.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Baho zinapoyasida birinchi qaysi shart tekshirilishi kerak?</p><ol>
+<li><code>f &gt;= 56</code></li><li><code>f &gt;= 86</code></li><li><code>f &gt;= 71</code></li><li><code>f &lt; 56</code></li></ol>
+<p class="explain">Eng qattiq shartdan boshlanadi, aks holda 95 ham "3" oladi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>9- va 10-loyihalarni yakunlab, har biri uchun 4 ta testli jadval tuzing va GitHub'ga joylang.</li>
+  <li><b>Svetofor:</b> rang kiritiladi (<code>"qizil"</code>, <code>"sariq"</code>, <code>"yashil"</code>) → tegishli ko'rsatma; boshqa so'z bo'lsa → "Noma'lum rang".</li>
+  <li><b>Fasl:</b> oy raqami (1–12) → fasl nomi (OR bilan: <code>oy == 12 or oy == 1 or oy == 2</code> → Qish). 1..12 dan tashqari → xato.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Tarmoqlanuvchi algoritm</dt><dd>Shartga qarab yo'l tanlanadi.</dd>
+  <dt>If</dt><dd>True (o'ng) / False (chap) tarmoq; keyin yo'llar qo'shiladi.</dd>
+  <dt>Taqqoslash</dt><dd><code>&gt; &lt; &gt;= &lt;= == !=</code> → natija Boolean.</dd>
+  <dt>Ichma-ich If</dt><dd>N holat — N−1 If; zinapoya: eng qattiq shartdan.</dd>
+  <dt>AND / OR / NOT</dt><dd>Ikkalasi ham / kamida bittasi / teskarisi.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="19-chiziqli-algoritmlar.html"><small>← Oldingi mavzu</small>Flowgorithm&#x27;da chiziqli algoritmlar</a><a class="next" href="21-takrorlanuvchi-algoritmlar.html"><small>Keyingi mavzu →</small>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#tarmoqlanuvchi-algoritm-nima">Tarmoqlanuvchi algoritm nima?</a></li><li><a href="#if-bloki">If bloki</a></li><li><a href="#taqqoslash-operatorlari">Taqqoslash operatorlari</a></li><li><a href="#klassik-masalalar">Klassik masalalar</a></li><li><a href="#mantiqiy-operatorlar-and-or-not">Mantiqiy operatorlar: AND, OR, NOT</a></li><li><a href="#2-dars-amaliy-topshiriqlar">2-dars: amaliy topshiriqlar</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

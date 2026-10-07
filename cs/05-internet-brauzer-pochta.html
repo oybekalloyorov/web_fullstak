@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internet, brauzerlar va elektron pochta bilan ishlash — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Internet va uning asosiy xizmatlari; Chrome, Edge, Firefox, Safari brauzerlari; qidiruv tizimlaridan samarali foydalanish; elektron pochta yaratish, xat yozish va fayl biriktirish; internet va pochtadan xavfsiz foydalanish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a class="active" href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📧</div><div><div class="crumb">05-mavzu · 26 tadan · I bob. Kompyuter savodxonligi va arxitekturasi</div><h1>Internet, brauzerlar va elektron pochta bilan ishlash</h1><p class="lead">Internet va uning asosiy xizmatlari; Chrome, Edge, Firefox, Safari brauzerlari; qidiruv tizimlaridan samarali foydalanish; elektron pochta yaratish, xat yozish va fayl biriktirish; internet va pochtadan xavfsiz foydalanish.</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/05-internet-brauzer-pochta.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Internet nima va uning asosiy xizmatlari;</li>
+  <li>Brauzer bilan samarali ishlash: yorliqlar, xatcho'plar, tarix, yuklanmalar;</li>
+  <li>Qidiruv tizimlarida kerakli ma'lumotni tez topish usullarini;</li>
+  <li>Gmail'da pochta yaratish, rasmiy xat yozish va fayl biriktirishni;</li>
+  <li>Internet va pochtadan xavfsiz foydalanish qoidalarini.</li>
+</ul>
+</div>
+
+<h2 id="internet-va-uning-xizmatlari"><a class="anchor" href="#internet-va-uning-xizmatlari">#</a>Internet va uning xizmatlari</h2>
+<p><b>Internet</b> — dunyodagi milliardlab kompyuter va qurilmalarni bog'lagan global tarmoqlar tarmog'i. Uning ishlash mexanizmini
+(IP, DNS, HTTP) 10-mavzuda chuqur o'rganamiz; bugun esa undan <b>foydalanuvchi</b> sifatida to'g'ri foydalanishni o'rganamiz.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Xizmat</th><th>Nima uchun</th><th>Misollar</th></tr></thead>
+<tbody>
+<tr><td>🌐 World Wide Web</td><td>Veb-saytlar va sahifalar</td><td>kun.uz, wikipedia.org</td></tr>
+<tr><td>📧 Elektron pochta</td><td>Rasmiy xatlar, hujjat yuborish</td><td>Gmail, Outlook, Mail.ru</td></tr>
+<tr><td>💬 Messenjerlar</td><td>Tezkor xabar va qo'ng'iroqlar</td><td>Telegram, WhatsApp</td></tr>
+<tr><td>📹 Video aloqa</td><td>Onlayn dars va uchrashuvlar</td><td>Zoom, Google Meet</td></tr>
+<tr><td>☁️ Bulutli xizmatlar</td><td>Fayllarni saqlash va birga ishlash</td><td>Google Drive, OneDrive (11-mavzu)</td></tr>
+<tr><td>🏛️ Davlat xizmatlari</td><td>Hujjatlar, arizalar</td><td>my.gov.uz</td></tr>
+</tbody></table></div>
+
+<h2 id="brauzerlar"><a class="anchor" href="#brauzerlar">#</a>Brauzerlar</h2>
+<p><b>Brauzer</b> — veb-sahifalarni ochib ko'rsatadigan dastur. Mashhurlari: <b>Google Chrome</b>, <b>Microsoft Edge</b> (Windows'da tayyor),
+<b>Mozilla Firefox</b> (ochiq kodli), <b>Safari</b> (Apple qurilmalarida), Yandex Browser, Opera.</p>
+<div class="callout info"><span class="t">Brauzer ≠ qidiruv tizimi ≠ internet</span>
+<b>Internet</b> — tarmoq; <b>brauzer</b> (Chrome) — sahifalarni ochuvchi dastur; <b>qidiruv tizimi</b> (Google, Yandex) — sayt bo'lib,
+boshqa saytlarni topishga yordam beradi. Chrome'ni ochish "Google'ga kirish" degani emas!</div>
+
+<h3>Brauzer oynasi va asosiy tugmalari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Element / amal</th><th>Tezkor tugma</th></tr></thead>
+<tbody>
+<tr><td>Manzil satri (URL) — sayt manzili yoki qidiruv so'zi yoziladi</td><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td></tr>
+<tr><td>Yangi yorliq (tab) / yorliqni yopish</td><td><kbd>Ctrl</kbd>+<kbd>T</kbd> / <kbd>Ctrl</kbd>+<kbd>W</kbd></td></tr>
+<tr><td>Yopilgan yorliqni qayta ochish</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td></tr>
+<tr><td>Orqaga / oldinga</td><td><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>Alt</kbd>+<kbd>→</kbd></td></tr>
+<tr><td>Sahifani yangilash</td><td><kbd>F5</kbd></td></tr>
+<tr><td>Sahifani xatcho'pga qo'shish</td><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td></tr>
+<tr><td>Tarix / Yuklanmalar</td><td><kbd>Ctrl</kbd>+<kbd>H</kbd> / <kbd>Ctrl</kbd>+<kbd>J</kbd></td></tr>
+<tr><td>Sahifadan so'z qidirish</td><td><kbd>Ctrl</kbd>+<kbd>F</kbd></td></tr>
+<tr><td>Kattalashtirish / kichraytirish</td><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>-</kbd></td></tr>
+<tr><td>Yashirin (inkognito) oyna</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Inkognito rejimi sizni "ko'rinmas" qilmaydi</span>
+Yashirin oyna faqat <b>sizning kompyuteringizda</b> tarix va parollarni saqlamaydi. Saytlar, provayder va maktab tarmog'i baribir
+qaysi saytga kirganingizni ko'rishi mumkin. Begona kompyuterda akkauntga kirish uchun qulay.</div>
+
+<h2 id="qidiruv-tizimlaridan-samarali-foydalanish"><a class="anchor" href="#qidiruv-tizimlaridan-samarali-foydalanish">#</a>Qidiruv tizimlaridan samarali foydalanish</h2>
+<p>Yaxshi qidiruvchi — kerakli ma'lumotni 10 soniyada topadigan odam. Asosiy usullar:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Usul</th><th>Misol</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td>Kalit so'zlar (savol emas)</td><td><code>Flowgorithm yuklab olish</code></td><td>Aniqroq natijalar</td></tr>
+<tr><td>Qo'shtirnoq — aniq ibora</td><td><code>"Muhammad al-Xorazmiy" algoritm</code></td><td>Aynan shu ibora bor sahifalar</td></tr>
+<tr><td>Minus — so'zni chiqarib tashlash</td><td><code>python -ilon</code></td><td>Ilon haqidagi sahifalarsiz</td></tr>
+<tr><td><code>site:</code> — faqat bitta saytda</td><td><code>site:uz.wikipedia.org kompyuter</code></td><td>Faqat o'zbekcha Vikipediyadan</td></tr>
+<tr><td><code>filetype:</code> — fayl turi</td><td><code>informatika darslik filetype:pdf</code></td><td>Faqat PDF fayllar</td></tr>
+<tr><td>"Rasmlar", "Video", "Yangiliklar" bo'limlari</td><td>—</td><td>Turi bo'yicha filtr</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Manbaga ishonish mumkinmi?</span>
+Ma'lumotni kamida <b>2–3 ta ishonchli manbada</b> tekshiring: rasmiy saytlar (<code>.gov.uz</code>, <code>.edu</code>), taniqli nashrlar, Vikipediya (manbalari
+bilan). Ishonchli axborotni aniqlash haqida 8-mavzuda batafsil.</div>
+
+<h2 id="elektron-pochta"><a class="anchor" href="#elektron-pochta">#</a>Elektron pochta</h2>
+<p><b>Elektron pochta (e-mail)</b> — internet orqali xat va fayllar yuborish xizmati. U rasmiy muloqot uchun asosiy vosita: ro'yxatdan o'tish,
+ishga ariza, o'qituvchiga uy vazifasi, olimpiadaga hujjat yuborish.</p>
+<h3>Pochta manzili tuzilishi</h3>
+<div class="code"><div class="code-head"><span>E-mail manzili</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">ali.valiyev2012 @ gmail.com
+└── foydalanuvchi nomi ──┘ └─ pochta xizmati (domen) ─┘</code></pre></div>
+<p><code>@</code> belgisi — "at" (inglizcha "da"), o'zbekchada "kuchukcha" deb ham ataladi. <kbd>Shift</kbd>+<kbd>2</kbd> bilan yoziladi.</p>
+<div class="callout info"><span class="t">Jiddiy manzil tanlang</span>
+<code>super_bola_2012@...</code> ❌ — kelajakda rezyume yuborishda noqulay. <code>ism.familiya@gmail.com</code> ✅. Google akkaunti
+13 yoshdan (O'zbekistonda) mustaqil ochiladi; yoshroq bo'lsangiz — ota-onangiz yordamida (Family Link).</div>
+
+<h3>Gmail akkaunti yaratish</h3>
+<ol class="steps">
+  <li><code>accounts.google.com/signup</code> sahifasini oching.</li>
+  <li>Ism, familiya, tug'ilgan sana va jinsingizni kiriting.</li>
+  <li>Manzil tanlang (band bo'lsa, Google variantlar taklif qiladi).</li>
+  <li><b>Kuchli parol</b> o'ylab toping: kamida 12 belgi, harf + raqam + belgi (14-mavzu). Parolni hech kimga aytmang!</li>
+  <li>Telefon raqamini qo'shing — parolni unutsangiz tiklash uchun kerak.</li>
+  <li>Ikki bosqichli tasdiqlashni (2FA) yoqing — 6- va 14-mavzularda batafsil.</li>
+</ol>
+
+<h3>Xat yozish: maydonlar</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Maydon</th><th>Ma'nosi</th></tr></thead>
+<tbody>
+<tr><td><b>Kimga (To)</b></td><td>Asosiy qabul qiluvchi</td></tr>
+<tr><td><b>Nusxa (Cc)</b></td><td>Xabardor bo'lishi kerak bo'lgan boshqalar — hamma ko'radi</td></tr>
+<tr><td><b>Yashirin nusxa (Bcc)</b></td><td>Boshqalar ko'rmaydigan qabul qiluvchilar (ommaviy xatlarda manzillarni yashirish uchun)</td></tr>
+<tr><td><b>Mavzu (Subject)</b></td><td>Xatning qisqa mazmuni — doim to'ldiring!</td></tr>
+<tr><td><b>Matn</b></td><td>Xatning o'zi</td></tr>
+<tr><td><b>📎 Biriktirma</b></td><td>Fayl (Gmail'da 25 MB gacha; kattasi Google Drive havolasi bo'lib ketadi)</td></tr>
+</tbody></table></div>
+<h3>Rasmiy xat namunasi</h3>
+<div class="code"><div class="code-head"><span>Rasmiy elektron xat</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">Kimga:  mentor.informatika@maktab5.uz
+Mavzu:  8-B sinf, Ali Valiyev — 1-loyiha (Kompyuter qurilmalari taqdimoti)
+
+Assalomu alaykum, hurmatli Nodira Karimovna!
+
+Sizga &quot;Kompyuterning asosiy qurilmalari&quot; mavzusidagi 1-loyiha taqdimotimni
+yuboryapman. Fayl xatga biriktirilgan (taqdimot.pptx, 4 MB).
+
+Agar qo&#x27;shimcha tuzatishlar kerak bo&#x27;lsa, xabar bersangiz, bajaraman.
+
+Hurmat bilan,
+Ali Valiyev
+8-&quot;B&quot; sinf o&#x27;quvchisi
++998 90 123 45 67</code></pre></div>
+<p>Tuzilma: <b>salom → maqsad → tafsilot → yakuniy so'z → imzo</b>. Smayliklar, "qisqartmalar" va katta harflar bilan baqirish ("SHOSHILINCH!!!") rasmiy xatda ishlatilmaydi.</p>
+
+<h3>Pochta bilan ishlash</h3>
+<ul>
+  <li><b>Javob berish (Reply)</b> — faqat yuboruvchiga; <b>Hammaga javob (Reply all)</b> — barcha qabul qiluvchilarga (ehtiyot bo'ling!);</li>
+  <li><b>Uzatish (Forward)</b> — xatni boshqa odamga yuborish;</li>
+  <li><b>Yorliqlar va papkalar</b>, <b>yulduzcha</b> — muhim xatlarni tartiblash;</li>
+  <li><b>Spam</b> papkasi — reklama va shubhali xatlar avtomatik tushadi.</li>
+</ul>
+
+<h2 id="xavfsizlik-qoidalari"><a class="anchor" href="#xavfsizlik-qoidalari">#</a>Xavfsizlik qoidalari</h2>
+<ul>
+  <li>🔒 Parol yoki karta raqamini faqat manzili <code>https://</code> bilan boshlanadigan va <b>to'g'ri yozilgan</b> saytlarga kiriting (<code>gmai1.com</code> ≠ <code>gmail.com</code>).</li>
+  <li>🎣 "Sovrin yutdingiz", "Akkauntingiz bloklanadi — darhol kiring" kabi xatlar — <b>fishing</b> (14-mavzu). Havolaga bosmang.</li>
+  <li>📎 Notanish odamdan kelgan biriktirmalarni (ayniqsa <code>.exe</code>, <code>.zip</code>, <code>.scr</code>) ochmang.</li>
+  <li>🚪 Begona kompyuterda ishlagach, akkauntdan <b>chiqing</b> (Sign out).</li>
+  <li>👨‍👩‍👦 Shubhali holatda — ota-ona yoki o'qituvchiga murojaat qiling.</li>
+</ul>
+
+<h2 id="amaliy-mashgulot-2-loyiha"><a class="anchor" href="#amaliy-mashgulot-2-loyiha">#</a>Amaliy mashg'ulot (2-loyiha)</h2>
+<ol class="steps">
+  <li>Gmail akkaunti yarating (yoki mavjudini tekshiring) va 2FA ni yoqing.</li>
+  <li>Brauzerda <code>uz.wikipedia.org</code>, <code>flowgorithm.org</code>, <code>github.com</code> saytlarini xatcho'plar paneliga qo'shing (<kbd>Ctrl</kbd>+<kbd>D</kbd>).</li>
+  <li>Qidiruv topshirig'i: (a) faqat <code>uz.wikipedia.org</code> dan "Muhammad al-Xorazmiy" maqolasini; (b) "algoritm" mavzusidagi PDF faylni toping.</li>
+  <li>Mentorga rasmiy xat yozing: mavzu, salom, maqsad, imzo bo'lsin; 3-mavzuda yaratgan <code>.txt</code> faylni biriktiring.</li>
+  <li>Sinfdoshingizga xatni <b>Cc</b> bilan, mentorga <b>Bcc</b> bilan yuborib, kim nimani ko'rishini tekshiring.</li>
+</ol>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Brauzer nima?</p><ol>
+<li>Qidiruv tizimi</li><li>Internetning o'zi</li><li>Veb-sahifalarni ochib ko'rsatuvchi dastur</li><li>Pochta xizmati</li></ol>
+<p class="explain">Chrome, Edge, Firefox — brauzerlar; Google — qidiruv tizimi.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Faqat bitta saytdan qidirish uchun qaysi operator ishlatiladi?</p><ol>
+<li><code>filetype:</code></li><li><code>site:</code></li><li>Qo'shtirnoq</li><li>Minus belgisi</li></ol>
+<p class="explain"><code>site:uz.wikipedia.org so'z</code> — faqat shu saytdan.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Boshqa qabul qiluvchilar ko'rmasligi kerak bo'lgan manzil qaysi maydonga yoziladi?</p><ol>
+<li>Kimga</li><li>Nusxa (Cc)</li><li>Mavzu</li><li>Yashirin nusxa (Bcc)</li></ol>
+<p class="explain">Bcc — yashirin nusxa.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Yopilgan yorliqni qayta ochish tugmalari?</p><ol>
+<li>Ctrl + Shift + T</li><li>Ctrl + T</li><li>Ctrl + W</li><li>Ctrl + D</li></ol>
+<p class="explain">Ctrl+T — yangi yorliq, Ctrl+W — yopish, Ctrl+D — xatcho'p.</p></div>
+<div class="quiz" data-answer="3"><p class="q">"Akkauntingiz bloklanadi, darhol shu havolaga kiring!" degan xat kelsa, nima qilish kerak?</p><ol>
+<li>Darhol havolaga bosish</li><li>Parolni javob xatida yuborish</li><li>Havolaga bosmasdan, rasmiy sayt orqali tekshirish va xatni spam deb belgilash</li><li>Do'stlarga uzatish</li></ol>
+<p class="explain">Bu odatiy fishing xati.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Ota-onangiz uchun "Elektron pochtadan xavfsiz foydalanish" bo'yicha 5 ta qoidadan iborat eslatma yozing va pochta orqali yuboring.</li>
+  <li>Qidiruv operatorlaridan foydalanib, 3 ta savolga javob toping va har birining manbasini (havolasini) yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Brauzer</dt><dd>Sahifalarni ochuvchi dastur: Chrome, Edge, Firefox, Safari.</dd>
+  <dt>Qidiruv</dt><dd>Kalit so'zlar, "aniq ibora", -so'z, site:, filetype:.</dd>
+  <dt>E-mail</dt><dd><code>foydalanuvchi@domen</code>; Kimga, Cc, Bcc, Mavzu, biriktirma.</dd>
+  <dt>Rasmiy xat</dt><dd>Mavzu → salom → maqsad → tafsilot → imzo.</dd>
+  <dt>Xavfsizlik</dt><dd>https, to'g'ri domen, notanish biriktirmalarni ochmaslik, 2FA.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="04-kompyuter-qurilmalari.html"><small>← Oldingi mavzu</small>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a><a class="next" href="06-kompyuter-xavfsizligi.html"><small>Keyingi mavzu →</small>Kompyuter xavfsizligi va antivirus dasturlari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#internet-va-uning-xizmatlari">Internet va uning xizmatlari</a></li><li><a href="#brauzerlar">Brauzerlar</a></li><li><a href="#qidiruv-tizimlaridan-samarali-foydalanish">Qidiruv tizimlaridan samarali foydalanish</a></li><li><a href="#elektron-pochta">Elektron pochta</a></li><li><a href="#xavfsizlik-qoidalari">Xavfsizlik qoidalari</a></li><li><a href="#amaliy-mashgulot-2-loyiha">Amaliy mashg&#x27;ulot (2-loyiha)</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

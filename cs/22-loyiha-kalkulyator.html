@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot; — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Kalkulyator loyihasining maqsadi va ishlash mantig&#x27;ini rejalashtirish; foydalanuvchidan ikki son va amal turini kiritish; If bloklari orqali tanlangan amalni aniqlash; qo&#x27;shish, ayirish, ko&#x27;paytirish, bo&#x27;lish; nolga bo&#x27;lish va noto&#x27;g&#x27;ri amal xatolarini tekshirish; menyu sikli bilan takroriy hisoblash; test rejasi va loyiha himoyasi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a class="active" href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧮</div><div><div class="crumb">22-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</h1><p class="lead">Kalkulyator loyihasining maqsadi va ishlash mantig&#x27;ini rejalashtirish; foydalanuvchidan ikki son va amal turini kiritish; If bloklari orqali tanlangan amalni aniqlash; qo&#x27;shish, ayirish, ko&#x27;paytirish, bo&#x27;lish; nolga bo&#x27;lish va noto&#x27;g&#x27;ri amal xatolarini tekshirish; menyu sikli bilan takroriy hisoblash; test rejasi va loyiha himoyasi.</p><div class="hero-level">2 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/22-loyiha-kalkulyator.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li>Loyihani <b>rejalashtirish</b>: maqsad, kirish, chiqish, cheklovlar;</li>
+  <li>Bir nechta If bilan foydalanuvchi <b>tanlovini</b> aniqlashni;</li>
+  <li><b>Xatolarni oldindan ko'rish</b>: nolga bo'lish, noto'g'ri amal;</li>
+  <li>Kalkulyatorni sikl bilan <b>qayta-qayta</b> ishlaydigan qilishni;</li>
+  <li>Loyihani <b>test qilish</b> va taqdim etishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Loyiha rejasi (2 dars)</span><b>1-dars:</b> rejalashtirish, 1-versiya (4 amal) va 2-versiya (xatolarni tekshirish).
+<b>2-dars:</b> 3-versiya (menyu sikli), qo'shimcha amallar, test jadvali, GitHub'ga joylash va himoya.</div>
+
+<h2 id="1-bosqich-rejalashtirish"><a class="anchor" href="#1-bosqich-rejalashtirish">#</a>1-bosqich: rejalashtirish</h2>
+<p>Professional dasturchilar kod yozishdan oldin <b>texnik topshiriq</b> tuzadi. Biz ham shunday qilamiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Savol</th><th>Javob</th></tr></thead>
+<tbody>
+<tr><td><b>Maqsad</b></td><td>Ikki son ustida 4 ta arifmetik amalni bajaruvchi dastur</td></tr>
+<tr><td><b>Kirish</b></td><td><code>a</code> (Real), <code>b</code> (Real), <code>amal</code> (String: <code>+ - * /</code>)</td></tr>
+<tr><td><b>Chiqish</b></td><td><code>a amal b = natija</code>, masalan <code>12 / 4 = 3</code></td></tr>
+<tr><td><b>Qayta ishlash</b></td><td>Amalga qarab mos formulani tanlash</td></tr>
+<tr><td><b>Xatolar</b></td><td>b = 0 bo'lganda bo'lish; noma'lum amal (<code>x</code>, <code>%</code>, bo'sh)</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: kassir</span>Kassirga ikkita narsa beriladi — pul va buyurtma. U buyurtmaga qarab (choy, qahva, sharbat)
+<b>tegishli</b> ishni bajaradi. Menyuda yo'q narsani so'rasangiz — "Bunday mahsulot yo'q" deydi, jim turmaydi. Bizning kalkulyator ham shunday
+bo'lishi kerak.</div>
+
+<h2 id="2-bosqich-1-versiya-tort-amal"><a class="anchor" href="#2-bosqich-1-versiya-tort-amal">#</a>2-bosqich: 1-versiya — to'rt amal</h2>
+<p>Amalni tanlash uchun "zinapoya" usulidagi If'lar (20-mavzu): <code>+</code> mi? Yo'q — <code>-</code> mi? Yo'q — <code>*</code> mi? ...</p>
+<div class="fc-wrap"><div class="fc-title">kalkulyator_v1.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real a, b, natija</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String amal</div>
+  <div class="fc-s fc-out"><small>Output</small>"1-son:"</div>
+  <div class="fc-s fc-in"><small>Input</small>a</div>
+  <div class="fc-s fc-out"><small>Output</small>"Amal (+ - * /):"</div>
+  <div class="fc-s fc-in"><small>Input</small>amal</div>
+  <div class="fc-s fc-out"><small>Output</small>"2-son:"</div>
+  <div class="fc-s fc-in"><small>Input</small>b</div>
+  <div class="fc-if"><div class="fc-s fc-cond">amal == "+"</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">amal == "-"</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">amal == "*"</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-asg"><small>Assign</small>natija = a / b</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>natija = a * b</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>natija = a - b</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>natija = a + b</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>a &amp; " " &amp; amal &amp; " " &amp; b &amp; " = " &amp; natija</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<p><b>Muammolar:</b> (1) <code>b = 0</code> va <code>/</code> — dastur xato bilan to'xtaydi. (2) Foydalanuvchi <code>x</code> yozsa — oxirgi False tarmoq <b>bo'lish</b>ni
+bajaradi! Chunki "+ emas, − emas, * emas" — bu hali "/" degani emas. Tuzatamiz.</p>
+
+<h2 id="3-bosqich-2-versiya-xatolarni-tekshirish"><a class="anchor" href="#3-bosqich-2-versiya-xatolarni-tekshirish">#</a>3-bosqich: 2-versiya — xatolarni tekshirish</h2>
+<p>Ikkita yangi qoida: <b>bo'lishdan oldin</b> <code>b != 0</code> ni tekshir; <b>oxirgi</b> False tarmoqda "noma'lum amal" xabari. Natija hisoblanganini
+bilish uchun Boolean <code>xato</code> bayrog'i (flag) ishlatamiz:</p>
+<div class="fc-wrap"><div class="fc-title">kalkulyator_v2.fprg — bo'lish qismi va bayroq</div><div class="fc compact">
+  <div class="fc-s fc-asg"><small>Assign</small>xato = false</div>
+  <div class="fc-s fc-out"><small>Output</small>"... + - * tekshiruvlari (v1 dagidek) ..."</div>
+  <div class="fc-if"><div class="fc-s fc-cond">amal == "/"</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-s fc-out"><small>Output</small>"Noma'lum amal: " &amp; amal</div>
+      <div class="fc-s fc-asg"><small>Assign</small>xato = true</div>
+    </div><div class="fc-br" data-label="True">
+      <div class="fc-if"><div class="fc-s fc-cond">b == 0</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-asg"><small>Assign</small>natija = a / b</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Nolga bo'lish mumkin emas!"</div><div class="fc-s fc-asg"><small>Assign</small>xato = true</div></div></div></div>
+    </div></div></div>
+  <div class="fc-if"><div class="fc-s fc-cond">not xato</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>a &amp; " " &amp; amal &amp; " " &amp; b &amp; " = " &amp; natija</div></div></div></div>
+</div></div>
+<div class="callout tip"><span class="t">Bayroq (flag) usuli</span>Boolean o'zgaruvchi — "bayroq": boshida tushirilgan (<code>false</code>), muammo bo'lsa
+ko'tariladi (<code>true</code>). Oxirida bayroqqa qarab natijani chiqaramiz yoki chiqarmaymiz. Bu usul 23–25-loyihalarda ham kerak bo'ladi.</div>
+
+<h2 id="4-bosqich-3-versiya-menyu-va-sikl"><a class="anchor" href="#4-bosqich-3-versiya-menyu-va-sikl">#</a>4-bosqich: 3-versiya — menyu va sikl</h2>
+<p>Haqiqiy kalkulyator bir hisobdan keyin yopilib qolmaydi. Dasturni <b>Do</b> sikliga o'raymiz: foydalanuvchi <code>"ha"</code> desa — davom etadi.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">kalkulyator_v3.fprg — tashqi tuzilma</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real a, b, natija</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String amal, javob</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Boolean xato</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">Do … While javob == "ha"</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"=== KALKULYATOR ==="</div>
+      <div class="fc-s fc-in"><small>Input</small>a, amal, b</div>
+      <div class="fc-s fc-asg"><small>Assign</small>hisoblash (v2)</div>
+      <div class="fc-s fc-out"><small>Output</small>"Yana? (ha/yo'q)"</div>
+      <div class="fc-s fc-in"><small>Input</small>javob</div>
+    </div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Xayr! 👋"</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">=== KALKULYATOR ===
+1-son:
+15
+Amal (+ - * /):
+*
+2-son:
+4
+15 * 4 = 60
+Yana? (ha/yo&#x27;q)
+ha
+=== KALKULYATOR ===
+1-son:
+9
+Amal (+ - * /):
+/
+2-son:
+0
+Nolga bo&#x27;lish mumkin emas!
+Yana? (ha/yo&#x27;q)
+yo&#x27;q
+Xayr! 👋</code></pre></div>
+<p class="fc-note">Flowgorithm'da har bir Input bloki bitta o'zgaruvchi oladi — sxemada qisqartirib bitta blokda ko'rsatildi; dasturingizda
+<code>a</code>, <code>amal</code>, <code>b</code> uchun alohida Output + Input juftliklarini qo'ying.</p>
+</div>
+</div>
+
+<h2 id="toliq-python-versiyasi"><a class="anchor" href="#toliq-python-versiyasi">#</a>To'liq Python versiyasi</h2>
+<p>Flowgorithm'ning Source Code Viewer'i bergan kodni soddalashtirsak, shunday bo'ladi:</p>
+<div class="code"><div class="code-head"><span>kalkulyator.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">javob = &quot;ha&quot;
+while javob == &quot;ha&quot;:
+    print(&quot;=== KALKULYATOR ===&quot;)
+    a = float(input(&quot;1-son: &quot;))
+    amal = input(&quot;Amal (+ - * /): &quot;)
+    b = float(input(&quot;2-son: &quot;))
+    xato = False
+    if amal == &quot;+&quot;:
+        natija = a + b
+    elif amal == &quot;-&quot;:
+        natija = a - b
+    elif amal == &quot;*&quot;:
+        natija = a * b
+    elif amal == &quot;/&quot;:
+        if b == 0:
+            print(&quot;Nolga bo&#x27;lish mumkin emas!&quot;)
+            xato = True
+        else:
+            natija = a / b
+    else:
+        print(&quot;Noma&#x27;lum amal:&quot;, amal)
+        xato = True
+    if not xato:
+        print(a, amal, b, &quot;=&quot;, natija)
+    javob = input(&quot;Yana? (ha/yo&#x27;q) &quot;)
+print(&quot;Xayr! 👋&quot;)</code></pre></div>
+
+<h2 id="brauzerda-sinab-koring"><a class="anchor" href="#brauzerda-sinab-koring">#</a>Brauzerda sinab ko'ring</h2>
+<p>Xuddi shu mantiq JavaScript'da — o'zingizning Flowgorithm natijalaringiz bilan solishtiring:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;div style=&quot;font:16px sans-serif;display:flex;gap:6px;flex-wrap:wrap;align-items:center&quot;&gt;
+  &lt;input id=&quot;a&quot; type=&quot;number&quot; value=&quot;12&quot; style=&quot;width:80px;font:inherit;padding:6px&quot;&gt;
+  &lt;select id=&quot;amal&quot; style=&quot;font:inherit;padding:6px&quot;&gt;&lt;option&gt;+&lt;/option&gt;&lt;option&gt;-&lt;/option&gt;&lt;option&gt;*&lt;/option&gt;&lt;option&gt;/&lt;/option&gt;&lt;option&gt;^&lt;/option&gt;&lt;option&gt;%&lt;/option&gt;&lt;/select&gt;
+  &lt;input id=&quot;b&quot; type=&quot;number&quot; value=&quot;4&quot; style=&quot;width:80px;font:inherit;padding:6px&quot;&gt;
+  &lt;button id=&quot;hisob&quot; style=&quot;font:inherit;padding:6px 12px&quot;&gt;=&lt;/button&gt;
+&lt;/div&gt;
+&lt;p id=&quot;natija&quot; style=&quot;font:20px monospace&quot;&gt;&lt;/p&gt;
+&lt;script&gt;
+document.getElementById(&#x27;hisob&#x27;).onclick = () =&gt; {
+  const a = Number(document.getElementById(&#x27;a&#x27;).value), b = Number(document.getElementById(&#x27;b&#x27;).value);
+  const amal = document.getElementById(&#x27;amal&#x27;).value;
+  let natija, xato = false;
+  if (amal === &#x27;+&#x27;) natija = a + b;
+  else if (amal === &#x27;-&#x27;) natija = a - b;
+  else if (amal === &#x27;*&#x27;) natija = a * b;
+  else if (amal === &#x27;/&#x27;) { if (b === 0) { xato = &#x27;Nolga bo\&#x27;lish mumkin emas!&#x27;; } else natija = a / b; }
+  else if (amal === &#x27;^&#x27;) natija = a ** b;
+  else if (amal === &#x27;%&#x27;) { if (b === 0) xato = &#x27;Nolga bo\&#x27;lish mumkin emas!&#x27;; else natija = a % b; }
+  document.getElementById(&#x27;natija&#x27;).textContent = xato ? &#x27;⚠️ &#x27; + xato : a + &#x27; &#x27; + amal + &#x27; &#x27; + b + &#x27; = &#x27; + natija;
+};
+&lt;/script&gt;</code></pre></div>
+
+<h2 id="5-bosqich-test-rejasi"><a class="anchor" href="#5-bosqich-test-rejasi">#</a>5-bosqich: test rejasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>a</th><th>amal</th><th>b</th><th>Kutilgan</th><th>Nimani tekshiradi</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>7</td><td>+</td><td>5</td><td>12</td><td>Qo'shish</td></tr>
+<tr><td>2</td><td>7</td><td>-</td><td>10</td><td>-3</td><td>Manfiy natija</td></tr>
+<tr><td>3</td><td>2.5</td><td>*</td><td>4</td><td>10</td><td>Kasr son</td></tr>
+<tr><td>4</td><td>7</td><td>/</td><td>2</td><td>3.5</td><td>Kasr natija</td></tr>
+<tr><td>5</td><td>7</td><td>/</td><td>0</td><td>"Nolga bo'lish mumkin emas!"</td><td>Xato holat ⚠️</td></tr>
+<tr><td>6</td><td>0</td><td>/</td><td>7</td><td>0</td><td>0 ni bo'lish — mumkin!</td></tr>
+<tr><td>7</td><td>7</td><td>x</td><td>2</td><td>"Noma'lum amal: x"</td><td>Noto'g'ri kiritish ⚠️</td></tr>
+<tr><td>8</td><td>—</td><td>—</td><td>—</td><td>"yo'q" → "Xayr!"</td><td>Sikldan chiqish</td></tr>
+</tbody></table></div>
+
+<h2 id="qoshimcha-imkoniyatlar-yuqori-ball-uchun"><a class="anchor" href="#qoshimcha-imkoniyatlar-yuqori-ball-uchun">#</a>Qo'shimcha imkoniyatlar (yuqori ball uchun)</h2>
+<ul>
+  <li><b>Daraja</b> (<code>^</code>), <b>qoldiq</b> (<code>%</code>, b ≠ 0), <b>ildiz</b> (<code>Sqrt(a)</code>, a ≥ 0 tekshiruvi bilan).</li>
+  <li>Hisoblashlar <b>soni</b>ni sanash va oxirida chiqarish: "Siz 5 ta amal bajardingiz".</li>
+  <li>Barcha natijalar <b>yig'indisi</b> yoki <b>oxirgi natija</b>ni keyingi hisobda <code>a</code> sifatida ishlatish ("xotira" tugmasi).</li>
+  <li>Amallarni raqamli menyu bilan tanlash: <code>1 — Qo'shish, 2 — Ayirish ...</code></li>
+</ul>
+
+<h2 id="loyiha-himoyasi"><a class="anchor" href="#loyiha-himoyasi">#</a>Loyiha himoyasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mezon</th><th>Ball</th></tr></thead>
+<tbody>
+<tr><td>4 amal to'g'ri ishlaydi</td><td>30</td></tr>
+<tr><td>Nolga bo'lish va noto'g'ri amal tekshirilgan</td><td>25</td></tr>
+<tr><td>Menyu sikli (qayta hisoblash)</td><td>15</td></tr>
+<tr><td>Test jadvali (kamida 8 test)</td><td>15</td></tr>
+<tr><td>Tushunarli xabarlar, GitHub'da README</td><td>10</td></tr>
+<tr><td>Qo'shimcha imkoniyat</td><td>5</td></tr>
+</tbody></table></div>
+<p>Himoyada 2 daqiqa: <b>1)</b> loyiha maqsadi; <b>2)</b> sxemani ko'rsatib, mantiqni tushuntirish; <b>3)</b> jonli demo: oddiy holat + xato holat;
+<b>4)</b> qaysi qiyinchilik bo'ldi va qanday hal qildingiz.</p>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Oxirgi False tarmoqda shartsiz bo'lish → ✅ Har bir amalni aniq tekshiring; qolgani — "Noma'lum amal".</li>
+  <li>❌ <code>amal</code> ni Integer qilish → ✅ <code>+</code> — belgi, demak String.</li>
+  <li>❌ <code>amal == +</code> (qo'shtirnoqsiz) → ✅ <code>amal == "+"</code>.</li>
+  <li>❌ Xato bo'lganda ham eski <code>natija</code> ni chiqarish → ✅ Bayroq bilan tekshirish.</li>
+  <li>❌ Do sharti <code>javob == "Ha"</code>, foydalanuvchi <code>ha</code> yozdi → ✅ Aniq ko'rsatma: "(ha/yo'q)".</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Nolga bo'lish tekshiruvi qayerda turishi kerak?</p><ol>
+<li>Dastur oxirida</li><li>Input'dan oldin</li><li>Bo'lish amalidan oldin</li><li>Kerak emas</li></ol>
+<p class="explain">Xato sodir bo'lishidan oldin tekshiramiz.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Kalkulyatorni qayta-qayta ishlatish uchun qaysi sikl qulay?</p><ol>
+<li>For 1 to 10</li><li>Do … While javob == "ha"</li><li>Sikl kerak emas</li><li>For 10 to 1</li></ol>
+<p class="explain">Kamida bir marta hisoblash kerak, keyin foydalanuvchi qaror qiladi.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>0 / 5</code> nima beradi?</p><ol>
+<li>Xato</li><li>5</li><li>Cheksizlik</li><li>0</li></ol>
+<p class="explain">Nolni bo'lish mumkin; nolga bo'lish mumkin emas.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kalkulyatorning 3-versiyasini yakunlab, kamida bitta qo'shimcha imkoniyat qo'shing.</li>
+  <li>Test jadvalini to'ldirib, skrinshotlar bilan GitHub'dagi <code>kalkulyator/README.md</code> ga joylang.</li>
+  <li>Sxemani <b>File → Export → Image</b> bilan rasmga olib, README'ga qo'shing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Rejalashtirish</dt><dd>Maqsad, kirish, chiqish, qayta ishlash, xatolar — kod yozishdan oldin.</dd>
+  <dt>Tanlov</dt><dd>Zinapoya If'lar; oxirgi tarmoq — "noma'lum".</dd>
+  <dt>Himoya</dt><dd>Bo'lishdan oldin <code>b == 0</code> tekshiruvi.</dd>
+  <dt>Bayroq</dt><dd>Boolean <code>xato</code>: natijani chiqarish-chiqarmaslikni hal qiladi.</dd>
+  <dt>Menyu sikli</dt><dd><code>Do … While javob == "ha"</code>.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="21-takrorlanuvchi-algoritmlar.html"><small>← Oldingi mavzu</small>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a><a class="next" href="23-loyiha-talaba-baholash.html"><small>Keyingi mavzu →</small>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#1-bosqich-rejalashtirish">1-bosqich: rejalashtirish</a></li><li><a href="#2-bosqich-1-versiya-tort-amal">2-bosqich: 1-versiya — to&#x27;rt amal</a></li><li><a href="#3-bosqich-2-versiya-xatolarni-tekshirish">3-bosqich: 2-versiya — xatolarni tekshirish</a></li><li><a href="#4-bosqich-3-versiya-menyu-va-sikl">4-bosqich: 3-versiya — menyu va sikl</a></li><li><a href="#toliq-python-versiyasi">To&#x27;liq Python versiyasi</a></li><li><a href="#brauzerda-sinab-koring">Brauzerda sinab ko&#x27;ring</a></li><li><a href="#5-bosqich-test-rejasi">5-bosqich: test rejasi</a></li><li><a href="#qoshimcha-imkoniyatlar-yuqori-ball-uchun">Qo&#x27;shimcha imkoniyatlar (yuqori ball uchun)</a></li><li><a href="#loyiha-himoyasi">Loyiha himoyasi</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git va GitHub bilan tanishuv: repository, commit, branch, README — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Versiyalarni boshqarish tizimi (VCS) nima; Git va GitHub farqi; repository, commit, branch va README; GitHub akkaunt yaratish va loyihani joylash; asosiy buyruqlar: init, add, commit, status, log, clone, push, pull. 6–8-loyihalar: portfolio repository.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a class="active" href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🐙</div><div><div class="crumb">12-mavzu · 26 tadan · II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</div><h1>Git va GitHub bilan tanishuv: repository, commit, branch, README</h1><p class="lead">Versiyalarni boshqarish tizimi (VCS) nima; Git va GitHub farqi; repository, commit, branch va README; GitHub akkaunt yaratish va loyihani joylash; asosiy buyruqlar: init, add, commit, status, log, clone, push, pull. 6–8-loyihalar: portfolio repository.</p><div class="hero-level">4 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/12-git-github.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu mavzuda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Versiyalarni boshqarish</b> (Version Control) nima uchun kerakligini;</li>
+  <li><b>Git</b> (dastur) va <b>GitHub</b> (sayt) farqini;</li>
+  <li>Repository, commit, branch, README tushunchalarini;</li>
+  <li>8 ta asosiy buyruq: <code>init</code>, <code>add</code>, <code>commit</code>, <code>status</code>, <code>log</code>, <code>clone</code>, <code>push</code>, <code>pull</code>;</li>
+  <li>GitHub'da <b>shaxsiy portfolio repository</b> yaratishni (6–8-loyihalar).</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Dars rejasi (4 dars)</span>
+<b>1-dars:</b> VCS, Git va GitHub, akkaunt ochish. <b>2-dars:</b> lokal repository: init, add, commit, status, log.
+<b>3-dars:</b> GitHub bilan ishlash: push, clone, pull, README. <b>4-dars:</b> branch va portfolio loyihasi.</div>
+
+<h2 id="muammo-yakuniy-variant-2-togrisi-docx"><a class="anchor" href="#muammo-yakuniy-variant-2-togrisi-docx">#</a>Muammo: "yakuniy_variant_2_TOG'RISI.docx"</h2>
+<p>Referat yozayotganingizda shunday fayllar paydo bo'lganmi?</p>
+<div class="code"><div class="code-head"><span>Tanish manzara</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">referat.docx
+referat_tuzatilgan.docx
+referat_oxirgi.docx
+referat_oxirgi_2.docx
+referat_ROSTDAN_OXIRGI.docx   ← qaysi biri to&#x27;g&#x27;ri? nima o&#x27;zgargan? kim o&#x27;zgartirgan?</code></pre></div>
+<p><b>Versiyalarni boshqarish tizimi</b> (VCS — Version Control System) bu muammoni hal qiladi: <b>bitta</b> papka, lekin uning har bir muhim
+holati "suratga olinib" saqlanadi. Istalgan vaqtda istalgan holatga qaytish, nima o'zgarganini ko'rish, bir necha kishi bilan birga
+ishlash mumkin.</p>
+<div class="analogy"><span class="t">O'xshatish: o'yindagi "saqlash nuqtalari"</span>
+Kompyuter o'yinida qiyin bosqichdan oldin "Save" qilasiz. Yutqazsangiz — boshidan emas, saqlangan joydan davom etasiz. Git'dagi har bir
+<b>commit</b> — xuddi shunday saqlash nuqtasi, faqat har biriga izoh yoziladi: "Bosh sahifa qo'shildi", "Xato tuzatildi".</div>
+
+<h2 id="git-va-github-farqi-nima"><a class="anchor" href="#git-va-github-farqi-nima">#</a>Git va GitHub — farqi nima?</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th><b>Git</b></th><th><b>GitHub</b></th></tr></thead>
+<tbody>
+<tr><td>Nima?</td><td>Kompyuteringizga o'rnatiladigan <b>dastur</b></td><td>Internetdagi <b>sayt / xizmat</b></td></tr>
+<tr><td>Vazifasi</td><td>Versiyalarni lokal saqlash va boshqarish</td><td>Repository'larni bulutda saqlash, ulashish, jamoaviy ishlash</td></tr>
+<tr><td>Internet</td><td>Kerak emas</td><td>Kerak</td></tr>
+<tr><td>Muallif</td><td>Linus Torvalds, 2005 (Linux muallifi)</td><td>2008-yil, hozir Microsoft'ga tegishli</td></tr>
+<tr><td>O'xshatish</td><td>📷 Fotoapparat</td><td>🖼️ Instagram — suratlar saqlanadigan va ko'rsatiladigan joy</td></tr>
+</tbody></table></div>
+<p>GitHub'ga o'xshash boshqa xizmatlar: <b>GitLab</b>, <b>Bitbucket</b>. GitHub — dunyodagi 100 milliondan ortiq dasturchining "portfoliosi".
+Ish beruvchilar ko'pincha birinchi bo'lib nomzodning GitHub profilini so'raydi.</p>
+
+<h2 id="asosiy-tushunchalar"><a class="anchor" href="#asosiy-tushunchalar">#</a>Asosiy tushunchalar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Atama</th><th>Ma'nosi</th><th>O'xshatish</th></tr></thead>
+<tbody>
+<tr><td><b>Repository</b> (repo)</td><td>Git kuzatadigan loyiha papkasi + uning butun tarixi (yashirin <code>.git</code> papkada)</td><td>Loyihaning "albomi"</td></tr>
+<tr><td><b>Commit</b></td><td>Fayllar holatining saqlangan surati + izoh + muallif + vaqt</td><td>Albomdagi bitta surat</td></tr>
+<tr><td><b>Branch</b> (tarmoq)</td><td>Asosiy ishni buzmasdan yangi g'oyani sinab ko'rish uchun alohida yo'nalish</td><td>Daftarning qoralama varag'i</td></tr>
+<tr><td><b>main</b></td><td>Asosiy (bosh) branch — doim ishlaydigan versiya</td><td>Toza ko'chirilgan nusxa</td></tr>
+<tr><td><b>README.md</b></td><td>Loyiha haqidagi "tanishtiruv" fayli; GitHub uni repo sahifasida ko'rsatadi</td><td>Kitobning muqovasi va annotatsiyasi</td></tr>
+<tr><td><b>Remote</b> (origin)</td><td>Repository'ning internetdagi (GitHub'dagi) nusxasi</td><td>Albomning bulutdagi nusxasi</td></tr>
+</tbody></table></div>
+
+<h2 id="gitning-uch-zonasi"><a class="anchor" href="#gitning-uch-zonasi">#</a>Git'ning uch zonasi</h2>
+<p>Git'ni tushunishning kaliti — faylning <b>uch holati</b>:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📝 Ishchi papka<small>Working directory — siz tahrirlaysiz</small></div>
+    <div class="arrow">git add →</div>
+    <div class="node">📦 Tayyorlov zonasi<small>Staging area — "qutiga solindi"</small></div>
+    <div class="arrow">git commit →</div>
+    <div class="node">🗄️ Repository<small>.git — tarix saqlandi</small></div>
+    <div class="arrow">git push →</div>
+    <div class="node">☁️ GitHub<small>remote (origin)</small></div>
+  </div>
+  <div class="diagram-caption">Pochta o'xshatishi: xat yozasiz (ishchi papka) → konvertga solasiz (add) → muhr bosasiz (commit) → pochtaga topshirasiz (push).</div>
+</div>
+
+<h2 id="1-qadam-ornatish-va-sozlash"><a class="anchor" href="#1-qadam-ornatish-va-sozlash">#</a>1-qadam: o'rnatish va sozlash</h2>
+<ol class="steps">
+  <li><code>git-scm.com</code> dan Git'ni yuklab o'rnating (Windows uchun barcha sozlamalarni standart qoldiring). U bilan birga <b>Git Bash</b> terminali keladi.</li>
+  <li><code>github.com</code> → <b>Sign up</b>. Foydalanuvchi nomini jiddiy tanlang (masalan, <code>alivaliyev-dev</code>) — bu sizning kelajakdagi portfoliongiz manzili.</li>
+  <li>Git'ga ismingiz va emailingizni bir marta aytib qo'ying (GitHub'dagi email bilan bir xil):</li>
+</ol>
+<div class="code"><div class="code-head"><span>Git Bash</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git config --global user.name &quot;Ali Valiyev&quot;
+git config --global user.email &quot;ali.valiyev@gmail.com&quot;
+git config --global init.defaultBranch main
+git --version          # tekshirish: git version 2.4x...</code></pre></div>
+
+<h2 id="2-qadam-lokal-repository-init-add-commit"><a class="anchor" href="#2-qadam-lokal-repository-init-add-commit">#</a>2-qadam: lokal repository — init, add, commit</h2>
+<div class="code"><div class="code-head"><span>Birinchi repository</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">mkdir portfolio          # papka yaratish
+cd portfolio             # papkaga kirish
+git init                 # Git&#x27;ni yoqish → yashirin .git papka paydo bo&#x27;ladi
+
+# index.html va README.md fayllarini yarating (VS Code yoki Bloknotda)
+
+git status               # holatni ko&#x27;rish: qizil — kuzatilmagan fayllar
+git add index.html       # bitta faylni tayyorlov zonasiga
+git add .                # yoki barcha o&#x27;zgargan fayllarni
+git status               # yashil — commit&#x27;ga tayyor
+git commit -m &quot;Portfolio: birinchi sahifa va README&quot;
+git log --oneline        # tarix</code></pre></div>
+<div class="code output"><div class="code-head"><span>git log --oneline natijasi</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">a3f9c21 (HEAD -&gt; main) Portfolio: birinchi sahifa va README</code></pre></div>
+<p>Har bir commit'ning noyob <b>identifikatori</b> (hash) bor — <code>a3f9c21</code>. <code>HEAD</code> — "siz hozir turgan joy".</p>
+
+<h3>Yaxshi commit xabari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>❌ Yomon</th><th>✅ Yaxshi</th></tr></thead>
+<tbody>
+<tr><td><code>update</code></td><td><code>Bosh sahifaga "Men haqimda" bo'limi qo'shildi</code></td></tr>
+<tr><td><code>asdfgh</code></td><td><code>Kalkulyatorda nolga bo'lish xatosi tuzatildi</code></td></tr>
+<tr><td><code>hammasi</code> (20 ta o'zgarish bitta commit'da)</td><td>Har bir mantiqiy o'zgarish — alohida commit</td></tr>
+</tbody></table></div>
+
+<h2 id="3-qadam-githubga-joylash-push"><a class="anchor" href="#3-qadam-githubga-joylash-push">#</a>3-qadam: GitHub'ga joylash — push</h2>
+<ol class="steps">
+  <li>GitHub'da <b>+ → New repository</b> → nom: <code>portfolio</code> → <b>Public</b> → README qo'shmang (bizda bor) → <b>Create repository</b>.</li>
+  <li>GitHub ko'rsatgan buyruqlarni Git Bash'da bajaring:</li>
+</ol>
+<div class="code"><div class="code-head"><span>Lokal repo&#x27;ni GitHub&#x27;ga ulash</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git remote add origin https://github.com/alivaliyev-dev/portfolio.git
+git branch -M main
+git push -u origin main      # birinchi marta -u bilan; keyin shunchaki: git push</code></pre></div>
+<div class="callout warn"><span class="t">Parol so'rasa</span>GitHub oddiy parolni qabul qilmaydi. Windows'da odatda brauzer oynasi ochilib, "Sign in with
+your browser" orqali kirasiz. Agar parol so'ralsa — GitHub'da <b>Settings → Developer settings → Personal access tokens</b> bo'limidan token
+yaratib, parol o'rniga o'shani kiriting.</div>
+<p>GitHub sahifasini yangilang — fayllaringiz va README matni ko'rinadi! 🎉</p>
+
+<h2 id="clone-va-pull-boshqa-kompyuterda-ishlash"><a class="anchor" href="#clone-va-pull-boshqa-kompyuterda-ishlash">#</a>clone va pull — boshqa kompyuterda ishlash</h2>
+<div class="code"><div class="code-head"><span>Uy kompyuterida</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git clone https://github.com/alivaliyev-dev/portfolio.git   # butun repo&#x27;ni yuklab olish (1 marta)
+cd portfolio
+# ... o&#x27;zgartirdingiz ...
+git add .
+git commit -m &quot;Loyihalar bo&#x27;limi qo&#x27;shildi&quot;
+git push</code></pre></div>
+<div class="code"><div class="code-head"><span>Ertasi kuni maktab kompyuterida</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">cd portfolio
+git pull          # GitHub&#x27;dagi yangi commit&#x27;larni olib kelish — ishni boshlashdan oldin DOIM!</code></pre></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🏫 Maktab PC</div>
+    <div class="arrow">push →</div>
+    <div class="node">☁️ GitHub</div>
+    <div class="arrow">→ pull</div>
+    <div class="node">🏠 Uy PC</div>
+  </div>
+  <div class="diagram-caption">Qoida: ishni <b>pull</b> bilan boshlang, <b>push</b> bilan tugating.</div>
+</div>
+
+<h2 id="4-qadam-branch-xavfsiz-tajriba"><a class="anchor" href="#4-qadam-branch-xavfsiz-tajriba">#</a>4-qadam: branch — xavfsiz tajriba</h2>
+<p>Saytga qorong'u rejim qo'shmoqchisiz, lekin ishlab turgan versiyani buzishdan qo'rqasiz. Yangi <b>branch</b> oching:</p>
+<div class="code"><div class="code-head"><span>Branch bilan ishlash</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git branch                      # branch&#x27;lar ro&#x27;yxati (* — hozirgisi)
+git switch -c dark-mode         # yangi branch yaratib, unga o&#x27;tish
+# ... style.css&#x27;ni o&#x27;zgartirasiz, commit qilasiz ...
+git add .
+git commit -m &quot;Qorong&#x27;u rejim qo&#x27;shildi&quot;
+git switch main                 # main&#x27;ga qaytish — o&#x27;zgarishlar bu yerda yo&#x27;q!
+git merge dark-mode             # tayyor bo&#x27;lsa — main&#x27;ga qo&#x27;shish
+git push</code></pre></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">main: A</div>
+    <div class="arrow">→</div>
+    <div class="node">main: B</div>
+    <div class="arrow">↘ dark-mode: C → D ↗</div>
+    <div class="node">main: merge</div>
+  </div>
+  <div class="diagram-caption">GitHub'da esa branch'larni <b>Pull Request</b> orqali birlashtirasiz — jamoa avval o'zgarishlarni ko'rib chiqadi.</div>
+</div>
+
+<h2 id="readme-md-loyihangizning-yuzi"><a class="anchor" href="#readme-md-loyihangizning-yuzi">#</a>README.md — loyihangizning yuzi</h2>
+<p>README <b>Markdown</b> tilida yoziladi — oddiy matn + bir necha belgi:</p>
+<div class="code"><div class="code-head"><span>README.md</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-markdown"># 👋 Salom, men Ali Valiyev
+
+8-sinf o&#x27;quvchisi, **Computer Science Foundation** kursida o&#x27;qiyman.
+
+## 🛠 Bilganlarim
+- Kompyuter savodxonligi, Google Workspace
+- Git va GitHub
+- Flowgorithm: algoritmlar va blok-sxemalar
+
+## 📂 Loyihalarim
+| Loyiha | Tavsif |
+|--------|--------|
+| [Kalkulyator](kalkulyator/) | Flowgorithm&#x27;da 4 amal |
+| [Parol generatori](parol/) | Kuchli parol algoritmi |
+
+## 📫 Aloqa
+Email: ali.valiyev@gmail.com</code></pre></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Markdown</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td><code># Sarlavha</code>, <code>## Kichik sarlavha</code></td><td>Sarlavhalar (1–6 daraja)</td></tr>
+<tr><td><code>**qalin**</code>, <code>*kursiv*</code></td><td><b>qalin</b>, <i>kursiv</i></td></tr>
+<tr><td><code>- element</code></td><td>Ro'yxat</td></tr>
+<tr><td><code>[matn](havola)</code></td><td>Havola</td></tr>
+<tr><td><code>![rasm](rasm.png)</code></td><td>Rasm</td></tr>
+<tr><td><code>`kod`</code></td><td><code>kod</code></td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Profil README</span>Foydalanuvchi nomingiz bilan bir xil nomli repo yarating (masalan <code>alivaliyev-dev/alivaliyev-dev</code>) —
+uning README'si GitHub profilingizning bosh sahifasida chiqadi. Zo'r portfolio!</div>
+
+<h2 id="buyruqlar-shpargalkasi"><a class="anchor" href="#buyruqlar-shpargalkasi">#</a>Buyruqlar shpargalkasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Buyruq</th><th>Nima qiladi</th></tr></thead>
+<tbody>
+<tr><td><code>git init</code></td><td>Papkada yangi repository yaratadi</td></tr>
+<tr><td><code>git status</code></td><td>Qaysi fayllar o'zgargan, qaysilari tayyor — holatni ko'rsatadi</td></tr>
+<tr><td><code>git add .</code></td><td>O'zgarishlarni tayyorlov zonasiga qo'shadi</td></tr>
+<tr><td><code>git commit -m "..."</code></td><td>Saqlash nuqtasi yaratadi</td></tr>
+<tr><td><code>git log --oneline</code></td><td>Commit'lar tarixini ko'rsatadi</td></tr>
+<tr><td><code>git clone URL</code></td><td>GitHub'dagi repo'ni kompyuterga ko'chiradi</td></tr>
+<tr><td><code>git push</code></td><td>Lokal commit'larni GitHub'ga yuboradi</td></tr>
+<tr><td><code>git pull</code></td><td>GitHub'dagi yangi commit'larni olib keladi</td></tr>
+<tr><td><code>git switch -c nom</code></td><td>Yangi branch yaratib o'tadi</td></tr>
+<tr><td><code>git merge nom</code></td><td>Branch'ni hozirgisiga qo'shadi</td></tr>
+<tr><td><code>git diff</code></td><td>Commit qilinmagan o'zgarishlarni qatorma-qator ko'rsatadi</td></tr>
+</tbody></table></div>
+
+<h2 id="6-8-loyihalar-portfolio-repository"><a class="anchor" href="#6-8-loyihalar-portfolio-repository">#</a>6–8-loyihalar: portfolio repository</h2>
+<div class="callout info"><span class="t">Topshiriq</span>
+<b>6-loyiha:</b> GitHub'da <code>portfolio</code> repository yarating: README.md (o'zingiz, bilimlaringiz, aloqa), <code>index.html</code>
+(oddiy tanishtiruv sahifasi). <b>7–8-loyihalar:</b> repo'da kamida <b>5 ta mazmunli commit</b> bo'lsin (har biri — bitta o'zgarish), bitta
+<b>branch</b> ochib, uni main'ga birlashtiring. Keyingi mavzulardagi Flowgorithm (<code>.fprg</code>) fayllaringizni ham shu repo'ga
+<code>flowgorithm/</code> papkasiga joylab boring. Havolani o'qituvchiga yuboring.</div>
+<p><b>Baholash:</b> README sifati (30%), commit'lar soni va xabarlari (30%), branch + merge (20%), fayllar tartibi (20%).</p>
+<div class="callout tip"><span class="t">Bonus: GitHub Pages</span>Repo → <b>Settings → Pages → Branch: main → Save</b>. Bir daqiqadan keyin
+<code>https://alivaliyev-dev.github.io/portfolio/</code> manzilida saytingiz butun dunyoga ochiladi!</div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>fatal: not a git repository</code> → ✅ Siz repo papkasida emassiz: <code>cd portfolio</code> qiling yoki <code>git init</code>.</li>
+  <li>❌ <code>nothing to commit</code> → ✅ Faylni saqlamagansiz yoki <code>git add</code> qilmagansiz.</li>
+  <li>❌ <code>git commit</code> dan keyin qora oyna (Vim) ochilib qoldi → ✅ <code>-m "xabar"</code> ni unutdingiz. Chiqish: <kbd>Esc</kbd>, keyin <code>:q!</code> va <kbd>Enter</kbd>.</li>
+  <li>❌ <code>rejected ... fetch first</code> push paytida → ✅ GitHub'da yangi commit bor: avval <code>git pull</code>, keyin <code>git push</code>.</li>
+  <li>❌ Parol, token, shaxsiy ma'lumotni repo'ga joylash → ✅ Public repo'ni butun dunyo ko'radi! Bunday fayllarni <code>.gitignore</code> ga yozing.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Git va GitHub farqi?</p><ol>
+<li>Ular bir xil narsa</li><li>Git — kompyuterdagi dastur, GitHub — repo'larni saqlovchi internet xizmati</li><li>GitHub — dastur, Git — sayt</li><li>Git faqat rasmlar uchun</li></ol>
+<p class="explain">Git lokal ishlaydi, GitHub — bulutdagi "uy".</p></div>
+<div class="quiz" data-answer="3"><p class="q">To'g'ri tartib qaysi?</p><ol>
+<li>commit → add → push</li><li>push → add → commit</li><li>add → commit → push</li><li>add → push → commit</li></ol>
+<p class="explain">Konvertga solish → muhr bosish → pochtaga topshirish.</p></div>
+<div class="quiz" data-answer="1"><p class="q">GitHub'dagi repo'ni kompyuterga birinchi marta yuklab olish buyrug'i?</p><ol>
+<li><code>git clone</code></li><li><code>git init</code></li><li><code>git push</code></li><li><code>git log</code></li></ol>
+<p class="explain">clone — butun repo va tarixini nusxalaydi; keyingi yangilanishlar — pull.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Asosiy versiyani buzmasdan yangi g'oyani sinash uchun nima ochiladi?</p><ol>
+<li>Commit</li><li>README</li><li>Remote</li><li>Branch</li></ol>
+<p class="explain">Branch — alohida ish yo'nalishi; tayyor bo'lsa merge qilinadi.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>git status</code> nima qiladi?</p><ol>
+<li>GitHub'ga yuboradi</li><li>Fayllar holatini ko'rsatadi: o'zgargan, tayyor, kuzatilmagan</li><li>Commit yaratadi</li><li>Repo'ni o'chiradi</li></ol>
+<p class="explain">Eng ko'p ishlatiladigan "nima bo'lyapti?" buyrug'i.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>6-loyiha: <code>portfolio</code> repo'ni yakunlang — README'da kamida 3 ta bo'lim, jadval va havola bo'lsin.</li>
+  <li><code>git log --oneline</code> natijasining skrinshotini oling — kamida 5 ta commit.</li>
+  <li>Sinfdoshingizning repo'sini <code>git clone</code> qilib, uning README'sini o'qing va unga GitHub'da ⭐ (Star) bosing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>VCS</dt><dd>Fayl versiyalarini saqlovchi va boshqaruvchi tizim.</dd>
+  <dt>Repository</dt><dd>Loyiha papkasi + butun tarixi (<code>.git</code>).</dd>
+  <dt>Commit</dt><dd>Izohli saqlash nuqtasi.</dd>
+  <dt>Branch</dt><dd>Alohida ish yo'nalishi; asosiysi — <code>main</code>.</dd>
+  <dt>README.md</dt><dd>Loyiha tavsifi, Markdown'da.</dd>
+  <dt>Asosiy sikl</dt><dd><code>pull → o'zgartirish → add → commit → push</code>.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="11-bulutli-xizmatlar.html"><small>← Oldingi mavzu</small>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a><a class="next" href="13-zamonaviy-it-yonalishlari.html"><small>Keyingi mavzu →</small>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#muammo-yakuniy-variant-2-togrisi-docx">Muammo: &quot;yakuniy_variant_2_TOG&#x27;RISI.docx&quot;</a></li><li><a href="#git-va-github-farqi-nima">Git va GitHub — farqi nima?</a></li><li><a href="#asosiy-tushunchalar">Asosiy tushunchalar</a></li><li><a href="#gitning-uch-zonasi">Git&#x27;ning uch zonasi</a></li><li><a href="#1-qadam-ornatish-va-sozlash">1-qadam: o&#x27;rnatish va sozlash</a></li><li><a href="#2-qadam-lokal-repository-init-add-commit">2-qadam: lokal repository — init, add, commit</a></li><li><a href="#3-qadam-githubga-joylash-push">3-qadam: GitHub&#x27;ga joylash — push</a></li><li><a href="#clone-va-pull-boshqa-kompyuterda-ishlash">clone va pull — boshqa kompyuterda ishlash</a></li><li><a href="#4-qadam-branch-xavfsiz-tajriba">4-qadam: branch — xavfsiz tajriba</a></li><li><a href="#readme-md-loyihangizning-yuzi">README.md — loyihangizning yuzi</a></li><li><a href="#buyruqlar-shpargalkasi">Buyruqlar shpargalkasi</a></li><li><a href="#6-8-loyihalar-portfolio-repository">6–8-loyihalar: portfolio repository</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!-- title: Kiberxavfsizlik va shaxsiy ma'lumotlarni himoya qilish asoslari | desc: Kiberxavfsizlik tushunchasi va asosiy xavf turlari; shaxsiy ma'lumotlar, raqamli iz va maxfiylik; kuchli parol, parol menejeri va 2FA; phishing, zararli havolalar va ijtimoiy muhandislik; qurilma, internet va bulutdan xavfsiz foydalanish. Interaktiv parol tekshirgich. | icon: 🛡️ | level: 1 dars · amaliy | bob: II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kiberxavfsizlikning uch ustuni (<b>CIA</b>) va asosiy xavf turlarini;</li>
+  <li>Qaysi ma'lumotlar <b>shaxsiy</b> ekanini va ularni qanday himoya qilishni;</li>
+  <li>Parol kuchini <b>matematik</b> tushunishni va parol menejeri, 2FA bilan akkauntni himoyalashni;</li>
+  <li>Phishing xatni 7 belgisi bo'yicha tanishni;</li>
+  <li>Ijtimoiy muhandislik hiylalarini va ulardan saqlanishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Eslatma</span>6-mavzuda viruslar, antivirus va parol asoslarini ko'rdik. Bu darsda <b>odam</b> va <b>akkaunt</b>
+xavfsizligiga chuqurroq kiramiz — chunki hujumlarning 80% dan ortig'i texnikani emas, aynan odamni aldashdan boshlanadi.</div>
+
+<h2>Kiberxavfsizlik nima?</h2>
+<p><b>Kiberxavfsizlik</b> — kompyuterlar, tarmoqlar, dasturlar va ma'lumotlarni ruxsatsiz kirish, o'g'irlash, buzish va o'chirishdan himoya
+qilish. U uchta maqsadga xizmat qiladi — <b>CIA triadasi</b>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Ustun</th><th>Ma'nosi</th><th>Buzilsa...</th></tr></thead>
+<tbody>
+<tr><td>🔒 <b>Confidentiality</b> — maxfiylik</td><td>Ma'lumotni faqat ruxsati borlar ko'radi</td><td>Yozishmalaringiz oshkor bo'ladi</td></tr>
+<tr><td>✅ <b>Integrity</b> — butunlik</td><td>Ma'lumot ruxsatsiz o'zgartirilmaydi</td><td>Kundalikdagi baho "o'zgarib qoladi"</td></tr>
+<tr><td>🟢 <b>Availability</b> — mavjudlik</td><td>Kerak bo'lganda tizim ishlaydi</td><td>Imtihon kuni sayt ochilmaydi (DDoS)</td></tr>
+</tbody></table></div>
+
+<h2>Asosiy xavf turlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Xavf</th><th>Qanday ishlaydi</th><th>Himoya</th></tr></thead>
+<tbody>
+<tr><td>🎣 <b>Phishing</b></td><td>Soxta xat/sayt orqali parol yoki karta ma'lumotini so'rash</td><td>Manzilni tekshirish, 2FA</td></tr>
+<tr><td>🎭 <b>Ijtimoiy muhandislik</b></td><td>Ishonch, qo'rquv, shoshilish orqali odamni aldash</td><td>"To'xta — o'yla — tekshir"</td></tr>
+<tr><td>🦠 <b>Zararli dastur</b></td><td>Virus, troyan, ransomware (fayllarni shifrlab, pul talab qiladi)</td><td>Rasmiy manbalar, yangilanish, antivirus</td></tr>
+<tr><td>🔑 <b>Parol hujumlari</b></td><td>Taxmin qilish (brute force), o'g'irlangan parollar bazasidan sinash</td><td>Uzun noyob parol, 2FA</td></tr>
+<tr><td>📶 <b>Ochiq Wi-Fi hujumlari</b></td><td>Soxta "Free_WiFi" tarmoq orqali trafikni kuzatish</td><td>HTTPS, muhim ishlarni mobil internetda</td></tr>
+<tr><td>🧾 <b>Ma'lumot sizishi</b></td><td>Saytning bazasi o'g'irlanadi — parolingiz ham</td><td>Har bir saytga boshqa parol</td></tr>
+</tbody></table></div>
+
+<h2>Shaxsiy ma'lumotlar va maxfiylik</h2>
+<p><b>Shaxsiy ma'lumot</b> — sizni aniqlash mumkin bo'lgan har qanday ma'lumot. O'zbekistonda bu "Shaxsga doir ma'lumotlar to'g'risida"gi qonun
+bilan himoyalanadi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>🔴 Hech qachon oshkor qilmang</th><th>🟡 Ehtiyot bo'ling</th><th>🟢 Odatda xavfsiz</th></tr></thead>
+<tbody>
+<tr><td>Parol, SMS-kod, PIN</td><td>To'liq ism + maktab + sinf</td><td>Sevimli kitob</td></tr>
+<tr><td>Karta raqami, CVV, amal muddati</td><td>Tug'ilgan sana</td><td>Hobbi</td></tr>
+<tr><td>Pasport / ID-karta rasmi</td><td>Uy manzili, real vaqtdagi joylashuv</td><td>Umumiy fikrlar</td></tr>
+<tr><td>Ota-onaning karta ma'lumoti</td><td>Telefon raqami</td><td>Maktab yutuqlari (manzilsiz)</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: boshqotirma bo'laklari</span>Bitta post'da maktab formasi, boshqasida uy oldidagi do'kon, uchinchisida
+"Ertaga butun oila bilan Samarqandga ketyapmiz!" — alohida xavfsiz ko'rinadi. Lekin yovuz niyatli odam bo'laklarni yig'sa, sizning
+<b>qayerda</b> o'qishingiz, <b>qayerda</b> yashashingiz va uy <b>qachon bo'sh</b> qolishini biladi.</div>
+<h3>Maxfiylik sozlamalari (Telegram, Instagram)</h3>
+<ul>
+  <li><b>Telefon raqami:</b> "Hech kim" yoki "Kontaktlarim".</li>
+  <li><b>Profil:</b> yopiq akkaunt; obunachilarni tasdiqlab qo'shish.</li>
+  <li><b>Geolokatsiya:</b> rasmlarga joylashuv qo'shishni o'chiring; "jonli joylashuv"ni faqat oila bilan.</li>
+  <li><b>Ilovalar ruxsatlari:</b> fonar ilovasiga kontaktlar va mikrofon nima uchun kerak? <b>Sozlamalar → Ilovalar → Ruxsatlar</b>.</li>
+</ul>
+
+<h2>Kuchli parol — matematika bilan</h2>
+<p>Xaker parolni taxmin qilish uchun kompyuterda soniyasiga <b>milliardlab</b> variantni sinaydi. Variantlar soni = <code>belgilar_soni<sup>uzunlik</sup></code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Parol</th><th>Belgilar to'plami</th><th>Variantlar</th><th>Taxminiy buzish vaqti*</th></tr></thead>
+<tbody>
+<tr><td><code>123456</code></td><td>10 (raqam)</td><td>10<sup>6</sup> = 1 million</td><td>Bir zumda (eng mashhur parol!)</td></tr>
+<tr><td><code>ali2010</code></td><td>36</td><td>~78 milliard</td><td>Soniyalar — lug'atda bor</td></tr>
+<tr><td><code>Kt7#mQ2p</code></td><td>~94</td><td>~6 × 10<sup>15</sup></td><td>Bir necha soat–kun</td></tr>
+<tr><td><code>Olma-Kitob-Daryo-77!</code></td><td>~94</td><td>~10<sup>39</sup></td><td>Milliardlab yil</td></tr>
+</tbody></table></div>
+<p class="fc-note">* soniyasiga 10 milliard urinish deb hisoblanganda.</p>
+<div class="callout tip"><span class="t">Xulosa: uzunlik — eng muhim</span>Har bir qo'shimcha belgi variantlarni ~94 marta oshiradi. Eng yaxshi usul —
+<b>parol-ibora</b> (passphrase): 4 ta tasodifiy so'z + raqam + belgi: <code>Bulut-Tarvuz-Velosiped-48!</code>. Eslash oson, buzish deyarli imkonsiz.</div>
+
+<h3>Interaktiv: parolingiz qanchalik kuchli?</h3>
+<p>Quyidagi tekshirgichda turli parollarni sinab ko'ring (haqiqiy parolingizni <b>yozmang</b>!). Bu 3-loyiha — "Kuchli parol generatori" uchun
+ham namuna.</p>
+<pre data-lang="html" data-play><input id="p" placeholder="Parolni yozing..." style="font:18px monospace;padding:8px;width:100%;box-sizing:border-box">
+<div id="bar" style="height:10px;border-radius:5px;margin:10px 0;background:#ddd"></div>
+<div id="info" style="font:15px sans-serif;line-height:1.6"></div>
+<button id="gen" style="font:15px sans-serif;padding:8px 14px;margin-top:6px">🎲 Kuchli parol yaratish</button>
+<script>
+const p = document.getElementById('p'), bar = document.getElementById('bar'), info = document.getElementById('info');
+function tekshir() {
+  const s = p.value;
+  let to = 0;                                   // belgilar to'plami hajmi
+  if (/[a-z]/.test(s)) to += 26;
+  if (/[A-Z]/.test(s)) to += 26;
+  if (/[0-9]/.test(s)) to += 10;
+  if (/[^a-zA-Z0-9]/.test(s)) to += 32;
+  const bit = s.length * Math.log2(to || 1);    // entropiya (bit)
+  const soniya = Math.pow(2, bit) / 1e10;       // 10 mlrd urinish/soniya
+  const vaqt = soniya < 1 ? 'bir zumda' : soniya < 3600 ? Math.round(soniya / 60) + ' daqiqa'
+    : soniya < 3.15e7 ? Math.round(soniya / 86400) + ' kun' : (soniya / 3.15e7).toExponential(1) + ' yil';
+  const rang = bit < 40 ? '#dc2626' : bit < 60 ? '#f59e0b' : '#16a34a';
+  bar.style.background = 'linear-gradient(90deg,' + rang + ' ' + Math.min(100, bit) + '%, #ddd 0)';
+  info.innerHTML = 'Uzunlik: <b>' + s.length + '</b> · To\'plam: <b>' + to + '</b> belgi · Entropiya: <b>' + Math.round(bit) +
+    ' bit</b><br>Taxminiy buzish vaqti: <b style="color:' + rang + '">' + vaqt + '</b>';
+}
+document.getElementById('gen').onclick = () => {
+  const sozlar = ['Olma','Bulut','Daryo','Kitob','Tarvuz','Yulduz','Velosiped','Chinor','Lola','Kompas','Shamol','Qalam'];
+  const t = () => sozlar[Math.floor(Math.random() * sozlar.length)];
+  p.value = t() + '-' + t() + '-' + t() + '-' + Math.floor(10 + Math.random() * 90) + '!';
+  tekshir();
+};
+p.oninput = tekshir; tekshir();
+</script></pre>
+
+<h3>Parol qoidalari</h3>
+<ol class="steps">
+  <li><b>Uzun:</b> kamida 12 belgi, yaxshisi 16+.</li>
+  <li><b>Noyob:</b> har bir sayt uchun boshqa parol. Bitta sayt buzilsa — qolganlari xavfsiz qoladi.</li>
+  <li><b>Shaxsiy emas:</b> ism, tug'ilgan yil, uy hayvoni nomi, <code>qwerty</code> — yo'q.</li>
+  <li><b>Parol menejeri:</b> Bitwarden, Google Password Manager — yuzlab parolni o'zi saqlaydi, siz faqat bitta bosh parolni eslaysiz.</li>
+  <li><b>Hech kimga aytmang</b> — eng yaqin do'stga ham. O'qituvchi, bank, Telegram xodimi hech qachon parol so'ramaydi.</li>
+</ol>
+
+<h2>Ikki bosqichli tasdiqlash (2FA)</h2>
+<p><b>2FA</b> — kirish uchun ikki xil "kalit" kerak: <b>bilgan</b> narsangiz (parol) + <b>sizdagi</b> narsa (telefon). Parol o'g'irlansa ham,
+xaker telefoningizsiz kira olmaydi.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🔑 Parol<small>1-bosqich: bilasiz</small></div>
+    <div class="arrow">+</div>
+    <div class="node">📱 Kod / tasdiq<small>2-bosqich: sizda bor</small></div>
+    <div class="arrow">=</div>
+    <div class="node">✅ Kirish</div>
+  </div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>2FA turi</th><th>Xavfsizlik</th><th>Izoh</th></tr></thead>
+<tbody>
+<tr><td>SMS-kod</td><td>⭐⭐</td><td>Hech bo'lmagandan yaxshi; SIM-kartani almashtirib o'g'irlash mumkin</td></tr>
+<tr><td>Autentifikator ilova (Google Authenticator, Microsoft Authenticator)</td><td>⭐⭐⭐⭐</td><td>Har 30 soniyada yangi 6 xonali kod, internetsiz ishlaydi</td></tr>
+<tr><td>Telegram "Bulutli parol"</td><td>⭐⭐⭐</td><td><b>Sozlamalar → Maxfiylik → Ikki bosqichli tasdiqlash</b> — albatta yoqing!</td></tr>
+<tr><td>Passkey / xavfsizlik kaliti</td><td>⭐⭐⭐⭐⭐</td><td>Barmoq izi yoki yuz bilan; phishing'ga chidamli</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Zaxira kodlar</span>2FA yoqqaningizda beriladigan <b>zaxira kodlarni</b> qog'ozga yozib, xavfsiz joyda saqlang —
+telefon yo'qolsa, akkauntga faqat ular bilan qaytasiz.</div>
+
+<h2>Phishing: soxta xatni qanday tanish mumkin?</h2>
+<pre data-lang="text" data-title="Shubhali xat namunasi">Kimdan:   Telegram Support <security@telegrarn-premium.xyz>
+Mavzu:    ⚠️ SHOSHILINCH! Akkauntingiz 24 soatda o'chiriladi
+
+Hurmatli foydalanuvchi!
+Akkauntingizdan shubhali faollik aniqlandi. O'chirilishining oldini olish uchun
+quyidagi havola orqali ma'lumotlaringizni tasdiqlang va SMS-kodni kiriting:
+
+    👉 http://telegram-verify-login.xyz/uz
+
+Bonus: tasdiqlaganlarga 3 oylik Premium BEPUL! 🎁</pre>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Qizil bayroq 🚩</th><th>Bu xatda</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Yuboruvchi manzili g'alati</td><td><code>telegrarn</code> — "m" o'rniga "r"+"n"; <code>.xyz</code> domeni</td></tr>
+<tr><td>2</td><td>Shoshiltirish, qo'rqitish</td><td>"SHOSHILINCH", "24 soatda o'chiriladi"</td></tr>
+<tr><td>3</td><td>Umumiy murojaat</td><td>"Hurmatli foydalanuvchi" — ismingiz yo'q</td></tr>
+<tr><td>4</td><td>Maxfiy ma'lumot so'rash</td><td>SMS-kod — hech qachon hech kimga!</td></tr>
+<tr><td>5</td><td>Shubhali havola</td><td>Rasmiy <code>telegram.org</code> emas, HTTPS ham yo'q</td></tr>
+<tr><td>6</td><td>Juda yaxshi taklif</td><td>"BEPUL Premium" — o'lja</td></tr>
+<tr><td>7</td><td>Imlo/uslub xatolari</td><td>Ko'pincha mashina tarjimasi</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Havolani tekshirish</span>Kompyuterda havola ustiga sichqonchani olib boring (bosmasdan!) — pastki chap burchakda haqiqiy
+manzil ko'rinadi. Telefonda havolani bosib turib, nusxa oling va manzilni o'qing. Shubha bo'lsa — saytga havola orqali emas, <b>o'zingiz</b>
+manzilni yozib kiring.</div>
+
+<h2>Ijtimoiy muhandislik</h2>
+<p><b>Ijtimoiy muhandislik</b> — texnikani emas, <b>odam psixologiyasini</b> "buzish". Hujumchi o'zini kimdir qilib ko'rsatadi va hissiyotlardan
+foydalanadi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Hiyla</th><th>Misol</th><th>To'g'ri javob</th></tr></thead>
+<tbody>
+<tr><td><b>Obro'</b> (o'zini rasmiy shaxs qilib ko'rsatish)</td><td>"Men bank xodimiman, kartangiz bloklandi, SMS-kodni ayting"</td><td>Go'shakni qo'ying, bankning rasmiy raqamiga o'zingiz qo'ng'iroq qiling</td></tr>
+<tr><td><b>Shoshilinch</b></td><td>"Do'stingman, telefonim o'chdi, tezda 50 ming tashlab yubor!"</td><td>Do'stga boshqa yo'l bilan (qo'ng'iroq) tekshiring</td></tr>
+<tr><td><b>Ochko'zlik</b></td><td>"Siz iPhone yutdingiz! Faqat yetkazish uchun 30 ming to'lang"</td><td>Qatnashmagan konkursda yutib bo'lmaydi</td></tr>
+<tr><td><b>Qiziqish</b></td><td>"Bu videoda sen borsan 😱 👉 havola"</td><td>Bosmang, yuboruvchidan so'rang</td></tr>
+<tr><td><b>Yordam so'rash</b></td><td>"Akkauntimga kod sening raqamingga keldi, aytib yuborasanmi?"</td><td>Bu sizning akkauntingizni o'g'irlash usuli!</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">Oltin qoida: "To'xta — o'yla — tekshir"</span>Har qanday xabar sizni <b>shoshiltirsa</b> va <b>parol, kod yoki pul</b>
+so'rasa — bu 99% firibgarlik. To'xtang, kattalardan maslahat so'rang, rasmiy kanal orqali tekshiring.</div>
+
+<h2>Qurilma, internet va bulutda xavfsizlik — chek-list</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>📱 Qurilma</th><th>🌐 Internet</th><th>☁️ Bulut va akkauntlar</th></tr></thead>
+<tbody>
+<tr><td>Ekran qulfi (PIN, barmoq izi)</td><td>Faqat HTTPS 🔒 saytlarga ma'lumot kiritish</td><td>Kuchli noyob parol + 2FA</td></tr>
+<tr><td>Tizim va ilovalarni yangilab turish</td><td>Ochiq Wi-Fi'da bank va login ishlarini qilmaslik</td><td>Begona kompyuterda "Sign out"</td></tr>
+<tr><td>Ilovalarni faqat Play Market / App Store'dan</td><td>Shubhali havola, "crack", "mod" fayllardan qochish</td><td>Ulashish ruxsatlarini tekshirish</td></tr>
+<tr><td>Zaxira nusxa (backup)</td><td>Reklama oynalaridagi "Viruslar topildi!" — yolg'on</td><td>"Faol seanslar"ni tekshirib, notanishini o'chirish</td></tr>
+</tbody></table></div>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>Akkaunt auditi:</b> Telegram'da <b>Sozlamalar → Qurilmalar</b> — barcha faol seanslarni ko'ring, notanishlarini yakunlang.</li>
+  <li>Telegram'da <b>ikki bosqichli tasdiqlash</b>ni yoqing (ota-ona bilan birga, zaxira email bilan).</li>
+  <li>Google akkauntda <code>myaccount.google.com/security</code> → <b>Xavfsizlik tekshiruvi</b>ni o'tkazing.</li>
+  <li>Yuqoridagi tekshirgich bilan 5 xil parolni sinab, natijalarni jadvalga yozing: qaysi omil eng ko'p ta'sir qildi?</li>
+  <li>Juftlikda: biringiz phishing xat "yozadi" (o'quv maqsadida, qog'ozda), ikkinchisi 7 ta qizil bayroqni topadi.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ "Mendan nima olishadi, men oddiy o'quvchiman" → ✅ Akkauntingiz orqali do'stlaringizdan pul so'rashadi, spam tarqatishadi.</li>
+  <li>❌ Barcha saytlarga bitta parol → ✅ Bitta sizish — hamma akkaunt ketadi.</li>
+  <li>❌ SMS-kodni "Telegram xodimiga" aytish → ✅ Kod — kalit. Uni hech kim so'ramaydi.</li>
+  <li>❌ "HTTPS bor — demak, sayt haqiqiy" → ✅ Phishing saytlarda ham 🔒 bo'ladi; domen nomini o'qing.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Eng kuchli parol qaysi?</p><ol>
+<li><code>Ali2010</code></li><li><code>qwerty123</code></li><li><code>Chinor-Kompas-Lola-58!</code></li><li><code>P@ss</code></li></ol>
+<p class="explain">Uzun parol-ibora — variantlar soni astronomik.</p></div>
+<div class="quiz" data-answer="2"><p class="q">"Do'stingiz" yozdi: "Raqamingga kod keldi, aytib yuborgin". Nima qilasiz?</p><ol>
+<li>Darhol aytaman — do'stim-ku</li><li>Aytmayman; bu mening akkauntimni o'g'irlash usuli, do'stga qo'ng'iroq qilib tekshiraman</li><li>Kodni stories'ga qo'yaman</li><li>Yarmini aytaman</li></ol>
+<p class="explain">Kod sizning akkauntingiz uchun keladi. Do'stning akkaunti allaqachon buzilgan bo'lishi mumkin.</p></div>
+<div class="quiz" data-answer="1"><p class="q">2FA nima uchun foydali?</p><ol>
+<li>Parol o'g'irlansa ham, ikkinchi kalitsiz (telefon) kirib bo'lmaydi</li><li>Internetni tezlashtiradi</li><li>Parolni esdan chiqarmaslikka yordam beradi</li><li>Virusni o'chiradi</li></ol>
+<p class="explain">Bilgan narsa + sizdagi narsa.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi biri phishing belgisi EMAS?</p><ol>
+<li>Shoshiltirish</li><li>G'alati yuboruvchi domeni</li><li>Parol so'rash</li><li>Xatda ismingiz to'g'ri yozilgani va hech narsa so'ralmagani</li></ol>
+<p class="explain">Qolgan uchtasi — klassik qizil bayroqlar.</p></div>
+<div class="quiz" data-answer="2"><p class="q">CIA triadasidagi "I" — Integrity nimani anglatadi?</p><ol>
+<li>Internet</li><li>Ma'lumot ruxsatsiz o'zgartirilmasligi (butunlik)</li><li>Interfeys</li><li>Tezlik</li></ol>
+<p class="explain">Confidentiality, Integrity, Availability.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Oila a'zolaringiz bilan "Xavfsizlik kuni" o'tkazing: kamida 2 ta akkauntda 2FA yoqing va zaxira kodlarni saqlang.</li>
+  <li>3-loyiha: "Kuchli parol generatori" algoritmini qadamlar ro'yxati sifatida yozing (keyin III bobda Flowgorithm'da quramiz).</li>
+  <li>5-loyiha uchun Canva'da "Internetda xavfsizlikning 7 qoidasi" infografikasini yarating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>CIA</dt><dd>Maxfiylik, butunlik, mavjudlik — xavfsizlikning uch maqsadi.</dd>
+  <dt>Kuchli parol</dt><dd>Uzun (12–16+), noyob, shaxsiy emas; parol-ibora + parol menejeri.</dd>
+  <dt>2FA</dt><dd>Parol + telefon/kod; autentifikator ilova SMS'dan ishonchliroq.</dd>
+  <dt>Phishing</dt><dd>Soxta xat/sayt orqali ma'lumot o'g'irlash; 7 ta qizil bayroq.</dd>
+  <dt>Ijtimoiy muhandislik</dt><dd>Odamni aldash: obro', shoshilish, ochko'zlik, qiziqish.</dd>
+  <dt>Qoida</dt><dd>To'xta — o'yla — tekshir. Kod va parol hech kimga aytilmaydi.</dd>
+</dl>
+</div>

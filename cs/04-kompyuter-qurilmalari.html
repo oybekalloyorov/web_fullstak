@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Tizim bloki, monitor, klaviatura, sichqoncha; tizim blokining ichki qismlari (protsessor, RAM, ona plata, HDD/SSD); printer, skaner, proyektor, veb-kamera, kolonka; kiritish, chiqarish va saqlash qurilmalari; ulash portlari va xavfsiz foydalanish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a class="active" href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖨️</div><div><div class="crumb">04-mavzu · 26 tadan · I bob. Kompyuter savodxonligi va arxitekturasi</div><h1>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</h1><p class="lead">Tizim bloki, monitor, klaviatura, sichqoncha; tizim blokining ichki qismlari (protsessor, RAM, ona plata, HDD/SSD); printer, skaner, proyektor, veb-kamera, kolonka; kiritish, chiqarish va saqlash qurilmalari; ulash portlari va xavfsiz foydalanish.</p><div class="hero-level">1 dars · nazariy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/04-kompyuter-qurilmalari.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kompyuterning asosiy qurilmalari va tizim bloki ichidagi qismlarni;</li>
+  <li>Qo'shimcha (periferik) qurilmalar: printer, skaner, proyektor, veb-kamera, kolonka;</li>
+  <li>Qurilmalarni vazifasiga ko'ra guruhlash: <b>kiritish, chiqarish, saqlash</b>;</li>
+  <li>Ulash portlari (USB, HDMI, Type-C...) va qurilmalarni to'g'ri ulashni;</li>
+  <li>Qurilmalardan xavfsiz va uzoq muddat foydalanish qoidalarini.</li>
+</ul>
+</div>
+
+<h2 id="asosiy-qurilmalar"><a class="anchor" href="#asosiy-qurilmalar">#</a>Asosiy qurilmalar</h2>
+<p>Statsionar kompyuter odatda to'rtta asosiy qurilmadan iborat — usiz kompyuter bilan to'liq ishlab bo'lmaydi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Qurilma</th><th>Vazifasi</th><th>Turi</th></tr></thead>
+<tbody>
+<tr><td>🖥️ <b>Tizim bloki</b></td><td>Kompyuterning "tanasi": protsessor, xotira, disklar shu yerda</td><td>Qayta ishlash va saqlash</td></tr>
+<tr><td>🖵 <b>Monitor</b></td><td>Matn, rasm va videoni ko'rsatadi</td><td>Chiqarish</td></tr>
+<tr><td>⌨️ <b>Klaviatura</b></td><td>Matn va buyruqlarni kiritadi</td><td>Kiritish</td></tr>
+<tr><td>🖱️ <b>Sichqoncha</b></td><td>Ekrandagi ko'rsatkichni boshqaradi</td><td>Kiritish</td></tr>
+</tbody></table></div>
+<p>Noutbukda bularning hammasi bitta korpusda: ekran — monitor, sensorli panel (touchpad) — sichqoncha.</p>
+
+<h2 id="tizim-blokining-ichki-qismlari"><a class="anchor" href="#tizim-blokining-ichki-qismlari">#</a>Tizim blokining ichki qismlari</h2>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🔌 Quvvat bloki<small>tok beradi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🟩 Ona plata<small>hammasini bog'laydi</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🧠 CPU + 🌀 sovutgich</div>
+    <div class="arrow">⇄</div>
+    <div class="node">⚡ RAM</div>
+    <div class="arrow">⇄</div>
+    <div class="node">💾 SSD / HDD</div>
+    <div class="arrow">⇄</div>
+    <div class="node">🎮 Videokarta</div>
+  </div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Qism</th><th>Vazifasi</th><th>Nimaga e'tibor berish kerak</th></tr></thead>
+<tbody>
+<tr><td><b>Ona plata</b> (motherboard)</td><td>Barcha qismlarni ulaydigan asosiy plata</td><td>Protsessor uyasi (socket) va RAM turi mos kelishi kerak</td></tr>
+<tr><td><b>Protsessor</b> (CPU)</td><td>Hisoblash va boshqarish</td><td>Yadrolar, GHz; ustida doim sovutgich (kuler) bo'ladi</td></tr>
+<tr><td><b>Tezkor xotira</b> (RAM)</td><td>Ishlayotgan dasturlar uchun vaqtinchalik xotira</td><td>Hajm (GB), turi (DDR4/DDR5)</td></tr>
+<tr><td><b>HDD / SSD</b></td><td>Fayllar va OT uchun doimiy xotira</td><td>Hajm (GB/TB), SSD — tezroq</td></tr>
+<tr><td><b>Videokarta</b> (GPU)</td><td>Tasvirni monitor uchun tayyorlaydi</td><td>O'yin va dizayn uchun alohida videokarta</td></tr>
+<tr><td><b>Quvvat bloki</b> (PSU)</td><td>220 V ni kerakli kuchlanishga aylantiradi</td><td>Quvvati (Vatt) yetarli bo'lishi</td></tr>
+<tr><td><b>Sovutish tizimi</b></td><td>Kulerlar qizib ketishdan saqlaydi</td><td>Chang to'planmasligi kerak</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: inson tanasi</span>
+Protsessor — miya, RAM — qisqa muddatli xotira ("hozir nima qilyapman"), SSD — uzoq muddatli xotira (bilimlar), ona plata — asab tizimi,
+quvvat bloki — yurak, sovutgich — terlash, monitor — yuz ifodasi, klaviatura va sichqoncha — qulog'imiz va ko'zimiz.</div>
+
+<h2 id="qurilmalarning-vazifasiga-kora-turlari"><a class="anchor" href="#qurilmalarning-vazifasiga-kora-turlari">#</a>Qurilmalarning vazifasiga ko'ra turlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>⬇️ Kiritish qurilmalari</th><th>⬆️ Chiqarish qurilmalari</th><th>💾 Saqlash qurilmalari</th></tr></thead>
+<tbody>
+<tr><td>Klaviatura</td><td>Monitor</td><td>HDD, SSD</td></tr>
+<tr><td>Sichqoncha, touchpad</td><td>Printer</td><td>Fleshka (USB)</td></tr>
+<tr><td>Skaner</td><td>Proyektor</td><td>Xotira kartasi (SD, microSD)</td></tr>
+<tr><td>Mikrofon</td><td>Kolonka, quloqchin</td><td>Tashqi disk</td></tr>
+<tr><td>Veb-kamera</td><td>Plotter (katta chizmalar)</td><td>Bulutli xotira (11-mavzu)</td></tr>
+<tr><td>Grafik planshet, joystik</td><td>VR ko'zoynak</td><td>Optik disk (CD/DVD — eskirgan)</td></tr>
+</tbody></table></div>
+<div class="callout info"><span class="t">Ikkala tomonlama qurilmalar</span>
+Ba'zi qurilmalar ham kiritadi, ham chiqaradi: <b>sensorli ekran</b> (bosish — kiritish, tasvir — chiqarish), <b>MFQ</b> (ko'p funksiyali qurilma:
+printer + skaner + nusxa ko'chiruvchi), <b>quloqchin-garnitura</b> (mikrofonli).</div>
+
+<h2 id="qoshimcha-periferik-qurilmalar"><a class="anchor" href="#qoshimcha-periferik-qurilmalar">#</a>Qo'shimcha (periferik) qurilmalar</h2>
+<h3>🖨️ Printer</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Ishlash usuli</th><th>Qachon</th></tr></thead>
+<tbody>
+<tr><td>Purkagichli (struyniy)</td><td>Mayda tomchi siyoh purkaydi</td><td>Rangli rasmlar, uy uchun</td></tr>
+<tr><td>Lazerli</td><td>Kukun (toner) issiqlik bilan qog'ozga yopishadi</td><td>Ko'p hujjat, tez va arzon bosma — ofis, maktab</td></tr>
+<tr><td>3D printer</td><td>Plastikni qatlam-qatlam eritib, buyum yasaydi</td><td>Maketlar, ehtiyot qismlar, robototexnika</td></tr>
+</tbody></table></div>
+<h3>📠 Skaner</h3>
+<p>Qog'ozdagi matn yoki rasmni raqamli faylga aylantiradi. <b>OCR</b> (matnni tanish) dasturi skanerlangan rasmdan tahrirlanadigan matn ajratib oladi.
+Bugun telefon kamerasi ham skaner vazifasini bajaradi (Google Lens, "Hujjatni skanerlash").</p>
+<h3>📽️ Proyektor</h3>
+<p>Tasvirni katta ekranga yoki devorga tushiradi. Asosiy ko'rsatkichlari: yorqinlik (lyumen) va o'lcham (piksel). Darsda taqdimot ko'rsatish uchun ishlatiladi.</p>
+<h3>📷 Veb-kamera va 🎤 mikrofon</h3>
+<p>Video qo'ng'iroqlar (Zoom, Google Meet, Telegram) va onlayn darslar uchun. Ko'rsatkichlari: 720p / 1080p sifat.</p>
+<h3>🔊 Kolonka va quloqchin</h3>
+<p>Ovozni chiqaradi. Simli (3,5 mm jak yoki USB) va simsiz (Bluetooth) turlari bor.</p>
+
+<h2 id="ulash-portlari"><a class="anchor" href="#ulash-portlari">#</a>Ulash portlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Port</th><th>Nima ulanadi</th><th>Belgisi</th></tr></thead>
+<tbody>
+<tr><td><b>USB-A</b></td><td>Fleshka, sichqoncha, klaviatura, printer</td><td>To'rtburchak, bir tomonlama</td></tr>
+<tr><td><b>USB-C (Type-C)</b></td><td>Zaryad, tashqi disk, monitor, telefon</td><td>Oval, ikki tomonlama — har qanday tomoni bilan ulanadi</td></tr>
+<tr><td><b>HDMI</b></td><td>Monitor, televizor, proyektor (tasvir + ovoz)</td><td>Trapetsiya shaklida</td></tr>
+<tr><td><b>DisplayPort / VGA</b></td><td>Monitor (VGA — eski, ko'k rangli)</td><td></td></tr>
+<tr><td><b>RJ-45 (Ethernet)</b></td><td>Simli internet (tarmoq kabeli)</td><td>Telefon simining kattaroq "akasi"</td></tr>
+<tr><td><b>3,5 mm audio jak</b></td><td>Quloqchin, kolonka, mikrofon</td><td>Yumaloq kichik teshik</td></tr>
+<tr><td><b>Bluetooth / Wi-Fi</b></td><td>Simsiz ulanish: quloqchin, sichqoncha, internet</td><td>Port emas — simsiz modul</td></tr>
+</tbody></table></div>
+<p>Yangi qurilma ulanganda Windows odatda <b>drayverni</b> avtomatik o'rnatadi ("Plug and Play" — ula va ishlat).</p>
+
+<h2 id="qurilmalardan-xavfsiz-foydalanish"><a class="anchor" href="#qurilmalardan-xavfsiz-foydalanish">#</a>Qurilmalardan xavfsiz foydalanish</h2>
+<ul>
+  <li>⚡ Kompyuterni <b>kuchlanish stabilizatori</b> yoki uzluksiz quvvat manbai (UPS) orqali ulang — elektr sakrashlari qurilmani buzadi.</li>
+  <li>💾 Fleshkani sug'urishdan oldin <b>"Qurilmani xavfsiz chiqarish"</b> (vazifalar panelidagi belgi) — aks holda fayllar buzilishi mumkin.</li>
+  <li>🌀 Noutbukni yumshoq yuzaga (ko'rpa, yostiq) qo'ymang — havo teshiklari yopilib, qizib ketadi.</li>
+  <li>🥤 Klaviatura yonida suyuqlik ichmang; ekranni maxsus salfetka bilan tozalang.</li>
+  <li>🔌 Tizim blokini ochishdan oldin <b>tokdan uzing</b>; ichki qismlarga statik zaryad zarar beradi.</li>
+  <li>👀 Ko'z salomatligi: <b>20-20-20 qoidasi</b> — har 20 daqiqada 20 soniya davomida 20 fut (6 m) uzoqqa qarang. Monitor ko'z darajasida, 50–70 sm masofada.</li>
+</ul>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>Sinfdagi kompyuterning barcha portlarini toping va qaysi biriga nima ulanganini yozing.</li>
+  <li><b>Qurilmalar dispetcheri</b> (Device Manager): Start → "Qurilmalar dispetcheri". Protsessor, disk, displey adapteri (videokarta) va tarmoq adapteri nomini yozing.</li>
+  <li>Fleshkani ulang, unga fayl nusxalang va <b>xavfsiz chiqarish</b> bilan uzing.</li>
+  <li>Quyidagi qurilmalarni guruhlarga ajrating: <i>sensorli ekran, skaner, proyektor, SSD, mikrofon, printer, fleshka, veb-kamera, MFQ</i>.</li>
+  <li><b>1-loyiha:</b> "Kompyuterning asosiy qurilmalari" interaktiv taqdimotini (PowerPoint yoki Google Slides) tayyorlang: har bir qurilma — bitta slayd (rasm, vazifa, turi, qiziq fakt), oxirida 3 ta savolli viktorina.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ "Tizim bloki — bu protsessor" → ✅ Tizim bloki — korpus; protsessor uning ichidagi bitta qism.</li>
+  <li>❌ Fleshkani ma'lumot yozilayotganda sug'urish → ✅ Avval "xavfsiz chiqarish".</li>
+  <li>❌ Monitorni "kompyuter ishlamayapti" deb o'ylash, aslida kabel ulanmagan → ✅ Avval kabellar va quvvatni tekshiring.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Quyidagilardan qaysi biri chiqarish qurilmasi?</p><ol>
+<li>Skaner</li><li>Proyektor</li><li>Mikrofon</li><li>Klaviatura</li></ol>
+<p class="explain">Proyektor tasvirni chiqaradi; qolganlari — kiritish qurilmalari.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Barcha qismlarni bir-biriga bog'lovchi asosiy plata qanday ataladi?</p><ol>
+<li>Videokarta</li><li>Quvvat bloki</li><li>Kuler</li><li>Ona plata</li></ol>
+<p class="explain">Ona plata (motherboard) — kompyuterning "asab tizimi".</p></div>
+<div class="quiz" data-answer="1"><p class="q">Monitor yoki proyektorni ulash uchun eng keng tarqalgan port?</p><ol>
+<li>HDMI</li><li>RJ-45</li><li>3,5 mm jak</li><li>Bluetooth</li></ol>
+<p class="explain">HDMI tasvir va ovozni birga uzatadi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Ham kiritish, ham chiqarish qurilmasi bo'la oladigani?</p><ol>
+<li>Printer</li><li>Sichqoncha</li><li>Sensorli ekran</li><li>Kolonka</li></ol>
+<p class="explain">Sensorli ekran bosishni qabul qiladi (kiritish) va tasvir ko'rsatadi (chiqarish).</p></div>
+<div class="quiz" data-answer="2"><p class="q">Ko'p hujjatni tez va arzon bosish uchun qaysi printer mos?</p><ol>
+<li>3D printer</li><li>Lazerli printer</li><li>Plotter</li><li>Purkagichli printer</li></ol>
+<p class="explain">Lazerli printer ofis va maktab uchun tejamkor.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>1-loyiha taqdimotini yakunlang va sinfda 3 daqiqada himoya qiling.</li>
+  <li>Uydagi kompyuter yoki noutbukning barcha portlarini rasmga oling va har birini nomlang.</li>
+  <li>"Ideal o'quvchi kompyuteri"ni yig'ing: internet-do'kondan protsessor, ona plata, RAM, SSD, korpus va quvvat blokini tanlab, umumiy narxini hisoblang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Asosiy qurilmalar</dt><dd>Tizim bloki, monitor, klaviatura, sichqoncha.</dd>
+  <dt>Tizim bloki ichida</dt><dd>Ona plata, CPU, RAM, SSD/HDD, videokarta, quvvat bloki, sovutgich.</dd>
+  <dt>Kiritish</dt><dd>Klaviatura, sichqoncha, skaner, mikrofon, veb-kamera.</dd>
+  <dt>Chiqarish</dt><dd>Monitor, printer, proyektor, kolonka.</dd>
+  <dt>Saqlash</dt><dd>HDD, SSD, fleshka, xotira kartasi, bulut.</dd>
+  <dt>Portlar</dt><dd>USB-A, USB-C, HDMI, RJ-45, 3,5 mm jak.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="03-axborot-birliklari-fayllar.html"><small>← Oldingi mavzu</small>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a><a class="next" href="05-internet-brauzer-pochta.html"><small>Keyingi mavzu →</small>Internet, brauzerlar va elektron pochta bilan ishlash</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#asosiy-qurilmalar">Asosiy qurilmalar</a></li><li><a href="#tizim-blokining-ichki-qismlari">Tizim blokining ichki qismlari</a></li><li><a href="#qurilmalarning-vazifasiga-kora-turlari">Qurilmalarning vazifasiga ko&#x27;ra turlari</a></li><li><a href="#qoshimcha-periferik-qurilmalar">Qo&#x27;shimcha (periferik) qurilmalar</a></li><li><a href="#ulash-portlari">Ulash portlari</a></li><li><a href="#qurilmalardan-xavfsiz-foydalanish">Qurilmalardan xavfsiz foydalanish</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

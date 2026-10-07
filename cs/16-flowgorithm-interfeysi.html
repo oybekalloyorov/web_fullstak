@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowgorithm interfeysi va blok-sxema elementlari — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Flowgorithm&#x27;ni o&#x27;rnatish; ishchi oyna va asboblar paneli; blok-sxema elementlari: Start/End (Main), Input, Output, Process (Assign), Declare, Decision (If); bloklarni joylash va ulash; dasturni ishga tushirish (Run), konsol, Variable Watch; xatolarni topish va tuzatish. Birinchi dastur: &quot;Salom, dunyo!&quot;.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a class="active" href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖱️</div><div><div class="crumb">16-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Flowgorithm interfeysi va blok-sxema elementlari</h1><p class="lead">Flowgorithm&#x27;ni o&#x27;rnatish; ishchi oyna va asboblar paneli; blok-sxema elementlari: Start/End (Main), Input, Output, Process (Assign), Declare, Decision (If); bloklarni joylash va ulash; dasturni ishga tushirish (Run), konsol, Variable Watch; xatolarni topish va tuzatish. Birinchi dastur: &quot;Salom, dunyo!&quot;.</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/16-flowgorithm-interfeysi.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Flowgorithm</b>'ni o'rnatish va ishchi oynasi bilan tanishishni;</li>
+  <li>Blok-sxemaning asosiy elementlari va ularning <b>shakllari</b>ni;</li>
+  <li>Blok qo'shish, tahrirlash, o'chirish va ulashni;</li>
+  <li>Dasturni ishga tushirish, natijani tekshirish va xatolarni tuzatishni;</li>
+  <li>Birinchi dasturingizni yaratib, <code>.fprg</code> faylga saqlashni.</li>
+</ul>
+</div>
+
+<h2 id="flowgorithm-nima"><a class="anchor" href="#flowgorithm-nima">#</a>Flowgorithm nima?</h2>
+<p><b>Flowgorithm</b> — blok-sxemalar asosida dastur tuzish uchun bepul o'quv muhiti. Uning eng katta afzalligi: chizgan blok-sxemangiz
+shunchaki rasm emas — u <b>haqiqiy dastur</b>, uni <b>ishga tushirish</b> mumkin! Bundan tashqari, Flowgorithm sxemangizni avtomatik ravishda
+Python, C++, Java, JavaScript kabi 30 dan ortiq tilga <b>tarjima</b> qilib ko'rsatadi.</p>
+<div class="analogy"><span class="t">O'xshatish: LEGO</span>Kod yozish — loydan haykal yasashga o'xshaydi: har bir harfni o'zingiz yozasiz, bitta vergul
+tushib qolsa — xato. Flowgorithm esa LEGO: tayyor bloklarni bir-biriga ulaysiz. Sintaksis xatosi deyarli bo'lmaydi — siz faqat
+<b>mantiq</b> haqida o'ylaysiz.</div>
+
+<h3>O'rnatish</h3>
+<ol class="steps">
+  <li>Rasmiy sayt: <code>flowgorithm.org</code> → <b>Download</b> bo'limi.</li>
+  <li>Windows uchun o'rnatuvchini (<code>.msi</code> yoki <code>.zip</code>) yuklab oling va ishga tushiring — <b>Next → Next → Install</b>.</li>
+  <li>Ish stoli yoki Pusk menyusidan <b>Flowgorithm</b>'ni oching.</li>
+</ol>
+<div class="callout info"><span class="t">macOS / Linux / Chromebook</span>Flowgorithm rasman Windows uchun. Boshqa tizimlarda Wine orqali ishlaydi
+yoki maktab kompyuterlaridan foydalaning.</div>
+
+<h2 id="ishchi-oyna"><a class="anchor" href="#ishchi-oyna">#</a>Ishchi oyna</h2>
+<p>Flowgorithm ochilganda ekranda bo'sh dastur ko'rinadi: ikkita oval — <b>Main</b> va <b>End</b>, ular strelka bilan ulangan.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Qism</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><b>Menyu</b> (File, Edit, Program, Tools, Help)</td><td>Saqlash, ochish, sozlamalar, eksport</td></tr>
+<tr><td><b>Asboblar paneli</b></td><td>Yangi, Ochish, Saqlash, ▶ <b>Run</b> (ishga tushirish), ⏸ Pause, ⏹ Stop, ⏭ <b>Step</b> (qadamma-qadam), kattalashtirish</td></tr>
+<tr><td><b>Ishchi maydon</b></td><td>Blok-sxema chiziladigan joy</td></tr>
+<tr><td><b>Console</b> (konsol oynasi)</td><td>Dastur ishlaganda ochiladi: chiqish matni va kiritish maydoni</td></tr>
+<tr><td><b>Variable Watch</b></td><td>O'zgaruvchilar qiymatlarini real vaqtda ko'rsatadi (Tools menyusi yoki asboblar paneli)</td></tr>
+<tr><td><b>Source Code Viewer</b></td><td>Sxemangizning Python / C++ / Java ... dagi kodi</td></tr>
+</tbody></table></div>
+
+<h2 id="blok-sxema-elementlari"><a class="anchor" href="#blok-sxema-elementlari">#</a>Blok-sxema elementlari</h2>
+<p>O'quv dasturidagi umumiy nomlar va Flowgorithm'dagi nomlari:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Umumiy nomi</th><th>Flowgorithm'da</th><th>Shakli</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><b>Start / End</b></td><td>Main / End</td><td>Oval (yumaloq to'rtburchak)</td><td>Dastur boshi va oxiri</td></tr>
+<tr><td><b>Input</b></td><td>Input</td><td>Parallelogramm (yashil)</td><td>Foydalanuvchidan ma'lumot olib, o'zgaruvchiga yozish</td></tr>
+<tr><td><b>Output</b></td><td>Output</td><td>Parallelogramm (ko'k)</td><td>Ekranga natija chiqarish</td></tr>
+<tr><td><b>Process</b></td><td>Assign</td><td>To'rtburchak</td><td>Hisoblash, o'zgaruvchiga qiymat berish</td></tr>
+<tr><td>—</td><td>Declare</td><td>To'rtburchak (yon chizig'i bilan)</td><td>O'zgaruvchi e'lon qilish (nomi va turi)</td></tr>
+<tr><td><b>Decision</b></td><td>If</td><td>Romb / oltiburchak</td><td>Shart tekshirish: True yoki False yo'l</td></tr>
+<tr><td>Sikl</td><td>While, For, Do</td><td>Oltiburchak</td><td>Takrorlash (21-mavzu)</td></tr>
+<tr><td>Izoh</td><td>Comment</td><td>Qavsli matn</td><td>Tushuntirish yozish, bajarilmaydi</td></tr>
+</tbody></table></div>
+
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">Barcha asosiy shakllar bir joyda</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String ism</div>
+  <div class="fc-s fc-out"><small>Output</small>"Ismingiz?"</div>
+  <div class="fc-s fc-in"><small>Input</small>ism</div>
+  <div class="fc-s fc-asg"><small>Assign</small>ism = "Salom, " &amp; ism</div>
+  <div class="fc-if"><div class="fc-s fc-cond">Len(ism) &gt; 10</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Uzun ism!"</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>ism</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Ranglar yordam beradi:</b> Flowgorithm'da har bir blok turi o'z rangida — kiritish (yashil), chiqarish (ko'k), hisoblash (sariq),
+shart (to'q sariq), sikl (binafsha). Sxemaga bir qarashda qaysi qism nima qilayotgani ko'rinadi.</p>
+<p><b>Strelkalar</b> bajarilish tartibini ko'rsatadi: yuqoridan pastga. Decision'dan keyin ikki yo'l: <b>True</b> (shart bajarildi) va
+<b>False</b> (bajarilmadi), keyin ular yana bitta yo'lga qo'shiladi.</p>
+<div class="callout tip"><span class="t">&amp; belgisi</span>Flowgorithm'da matnlarni ulash (birlashtirish) uchun <code>&amp;</code> ishlatiladi:
+<code>"Salom, " &amp; ism</code> → <code>Salom, Ali</code>.</div>
+</div>
+</div>
+
+<h2 id="bloklar-bilan-ishlash"><a class="anchor" href="#bloklar-bilan-ishlash">#</a>Bloklar bilan ishlash</h2>
+<ol class="steps">
+  <li><b>Blok qo'shish:</b> ikki blok orasidagi <b>strelka ustiga</b> sichqonchani bosing → bloklar menyusi chiqadi → keraklisini tanlang.</li>
+  <li><b>Tahrirlash:</b> blokni <b>ikki marta bosing</b> → oyna ochiladi, ichiga kerakli narsani yozing (o'zgaruvchi nomi, ifoda) → <b>OK</b>.</li>
+  <li><b>O'chirish:</b> blokni tanlab <kbd>Delete</kbd>.</li>
+  <li><b>Ko'chirish:</b> <kbd>Ctrl</kbd>+<kbd>X</kbd> (kesish) → kerakli strelkani bosib → <b>Paste</b> (yoki <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+  <li><b>Nusxa:</b> <kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>V</kbd>. Bekor qilish: <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</li>
+</ol>
+<div class="callout info"><span class="t">Ulash avtomatik</span>Flowgorithm'da strelkalarni qo'lda chizish shart emas — blok strelkaga qo'shilgani zahoti
+avtomatik ulanadi. Shuning uchun sxema doim "to'g'ri" tuzilgan bo'ladi: uzilib qolgan blok bo'lmaydi.</div>
+
+<h2 id="birinchi-dastur-salom-dunyo"><a class="anchor" href="#birinchi-dastur-salom-dunyo">#</a>Birinchi dastur: "Salom, dunyo!"</h2>
+<ol class="steps">
+  <li><b>File → New</b>. Main va End orasidagi strelkani bosing → <b>Output</b>.</li>
+  <li>Output blokini ikki marta bosing va yozing: <code>"Salom, dunyo!"</code> (qo'shtirnoq bilan — bu matn).</li>
+  <li>Asboblar panelidagi ▶ <b>Run</b> tugmasini bosing. Console oynasida natija chiqadi.</li>
+  <li><b>File → Save</b> → nom: <code>01_salom.fprg</code>. <code>.fprg</code> — Flowgorithm fayllari kengaytmasi.</li>
+</ol>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">01_salom.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-out"><small>Output</small>"Salom, dunyo!"</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Salom, dunyo!</code></pre></div>
+</div>
+
+<h3>Ikkinchi dastur: tanishuv</h3>
+<p>Endi dastur foydalanuvchidan ismini so'rasin. Buning uchun ism saqlanadigan "quti" — <b>o'zgaruvchi</b> kerak (18-mavzuda batafsil).</p>
+<ol class="steps">
+  <li><b>Declare</b> bloki qo'shing: Name: <code>ism</code>, Type: <b>String</b> (matn).</li>
+  <li><b>Output</b>: <code>"Ismingiz nima?"</code></li>
+  <li><b>Input</b>: <code>ism</code> — dastur to'xtab, foydalanuvchi yozishini kutadi.</li>
+  <li><b>Output</b>: <code>"Salom, " &amp; ism &amp; "! CS kursiga xush kelibsiz."</code></li>
+  <li>▶ Run → konsolda ismingizni yozib <kbd>Enter</kbd>.</li>
+</ol>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">02_tanishuv.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String ism</div>
+  <div class="fc-s fc-out"><small>Output</small>"Ismingiz nima?"</div>
+  <div class="fc-s fc-in"><small>Input</small>ism</div>
+  <div class="fc-s fc-out"><small>Output</small>"Salom, " &amp; ism &amp; "!"</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Ismingiz nima?
+Malika
+Salom, Malika! CS kursiga xush kelibsiz.</code></pre></div>
+<div class="code"><div class="code-head"><span>Python&#x27;dagi ko&#x27;rinishi</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">ism = &quot;&quot;
+print(&quot;Ismingiz nima?&quot;)
+ism = input()
+print(&quot;Salom, &quot; + ism + &quot;! CS kursiga xush kelibsiz.&quot;)</code></pre></div>
+</div>
+</div>
+
+<h2 id="dasturni-tekshirish-step-va-variable-watch"><a class="anchor" href="#dasturni-tekshirish-step-va-variable-watch">#</a>Dasturni tekshirish: Step va Variable Watch</h2>
+<p>Dastur noto'g'ri ishlasa, uni <b>qadamma-qadam</b> bajaring:</p>
+<ul>
+  <li>⏭ <b>Step</b> — har bosishda bitta blok bajariladi; bajarilayotgan blok rang bilan yoritiladi.</li>
+  <li><b>Variable Watch</b> oynasi — har bir o'zgaruvchining joriy qiymati. Qaysi qadamda qiymat "buzilganini" darhol ko'rasiz.</li>
+  <li><b>Tezlik</b> slayderi — Run paytida bloklar qanchalik tez bajarilishini sozlaydi (sekinlashtirib kuzatish uchun).</li>
+</ul>
+<div class="analogy"><span class="t">O'xshatish: futbol VAR'i</span>O'yin tez o'tadi, xatoni ko'rish qiyin. VAR epizodni sekin, kadrma-kadr ko'rsatadi — va
+qoidabuzarlik darhol aniqlanadi. Step + Variable Watch — dasturning VAR'i.</div>
+
+<h2 id="xatolarni-aniqlash-va-tuzatish"><a class="anchor" href="#xatolarni-aniqlash-va-tuzatish">#</a>Xatolarni aniqlash va tuzatish</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Xato xabari (ma'nosi)</th><th>Sababi</th><th>Tuzatish</th></tr></thead>
+<tbody>
+<tr><td>Variable <code>x</code> is not declared</td><td>O'zgaruvchi e'lon qilinmagan</td><td>Undan oldin <b>Declare</b> bloki qo'shing</td></tr>
+<tr><td>Variable <code>x</code> has no value</td><td>O'zgaruvchiga hali qiymat berilmagan</td><td>Avval Input yoki Assign bilan qiymat bering</td></tr>
+<tr><td>Type mismatch</td><td>Turi mos emas: Integer'ga matn yozilgan</td><td>To'g'ri tur tanlang yoki konvertatsiya: <code>ToInteger()</code></td></tr>
+<tr><td>Division by zero</td><td>Nolga bo'lish</td><td>If bilan tekshiring (22-mavzu)</td></tr>
+<tr><td>Ifoda xato (qizil chiziq)</td><td>Qavs yopilmagan, qo'shtirnoq yo'q</td><td>Matnni <code>"..."</code> ichiga oling, qavslarni sanang</td></tr>
+<tr><td>Natija noto'g'ri, lekin xato yo'q</td><td><b>Mantiqiy xato</b>: bloklar tartibi yoki formula noto'g'ri</td><td>Step + Variable Watch bilan kuzating</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Sintaktik va mantiqiy xato</span><b>Sintaktik xato</b> — "grammatika" xatosi, dastur umuman ishlamaydi va Flowgorithm
+o'zi ko'rsatadi. <b>Mantiqiy xato</b> — dastur ishlaydi, lekin noto'g'ri natija beradi (masalan, <code>a - b</code> o'rniga <code>a + b</code>).
+Uni faqat <b>test</b> qilib topasiz — shuning uchun natijani doim qo'lda hisoblangan javob bilan solishtiring.</div>
+
+<h2 id="foydali-sozlamalar"><a class="anchor" href="#foydali-sozlamalar">#</a>Foydali sozlamalar</h2>
+<ul>
+  <li><b>Tools → Layout Windows</b> yoki asboblar panelidagi tugmalar — konsol, Variable Watch va kodni yonma-yon joylash.</li>
+  <li><b>Tools → Chart Style</b> — blok-sxema ko'rinishini (rang, shakl uslubi) o'zgartirish.</li>
+  <li><b>File → Attributes</b> — dastur muallifi va tavsifi (loyihalarda to'ldiring!).</li>
+  <li><b>File → Export → Image</b> — sxemani rasm sifatida saqlash (taqdimot yoki README uchun).</li>
+</ul>
+
+<h2 id="amaliy-topshiriqlar"><a class="anchor" href="#amaliy-topshiriqlar">#</a>Amaliy topshiriqlar</h2>
+<ol class="steps">
+  <li><b>Vizitka:</b> 4 ta Output bilan ismingiz, sinfingiz, maktabingiz va sevimli faningizni chiqaring.</li>
+  <li><b>Salomlashuv:</b> foydalanuvchidan ism va shahar so'rab, <code>"Ali, Toshkentdan salom!"</code> ko'rinishida javob bering.</li>
+  <li><b>Xato ovchisi:</b> o'qituvchi bergan "buzilgan" <code>.fprg</code> faylni oching, Step bilan yurib, 3 ta xatoni toping va tuzating.</li>
+  <li>Barcha fayllarni 12-mavzudagi GitHub repo'ngizdagi <code>flowgorithm/</code> papkasiga commit qiling.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Output Salom</code> (qo'shtirnoqsiz) → ✅ Matn doim <code>"Salom"</code>; qo'shtirnoqsiz yozilsa — o'zgaruvchi deb qabul qilinadi.</li>
+  <li>❌ Declare'siz Input → ✅ Avval Declare, keyin Input.</li>
+  <li>❌ Matnni <code>+</code> bilan ulash → ✅ Flowgorithm'da <code>&amp;</code>.</li>
+  <li>❌ Faylni saqlamasdan yopish → ✅ <kbd>Ctrl</kbd>+<kbd>S</kbd> ni odat qiling.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Foydalanuvchidan ma'lumot olish qaysi blok bilan?</p><ol>
+<li>Output</li><li>Assign</li><li>Input</li><li>Declare</li></ol>
+<p class="explain">Input — kiritish (parallelogramm).</p></div>
+<div class="quiz" data-answer="1"><p class="q">Flowgorithm'da shart tekshiruvchi blok (Decision)?</p><ol>
+<li>If</li><li>Output</li><li>Main</li><li>Comment</li></ol>
+<p class="explain">If — True va False yo'llari.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Flowgorithm fayllari kengaytmasi?</p><ol>
+<li><code>.docx</code></li><li><code>.fprg</code></li><li><code>.py</code></li><li><code>.exe</code></li></ol>
+<p class="explain">.fprg — Flowgorithm program.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Dastur ishlayapti, lekin 5+3 ga 2 chiqaryapti. Bu qanday xato?</p><ol>
+<li>Sintaktik</li><li>Kompyuter buzilgan</li><li>Internet xatosi</li><li>Mantiqiy</li></ol>
+<p class="explain">Formulada <code>-</code> yozilgan. Test bilan topiladi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Process (hisoblash) bloki Flowgorithm'da qanday ataladi?</p><ol>
+<li>Input</li><li>Call</li><li>Assign</li><li>End</li></ol>
+<p class="explain">Assign — o'zgaruvchiga qiymat yoki hisoblash natijasini yozish.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Flowgorithm'ni uy kompyuteringizga o'rnating (yoki maktabda ishlang) va "Vizitka" dasturini yakunlang.</li>
+  <li>Dastur yozing: foydalanuvchidan sevimli taomi va rangini so'rab, ular bilan qiziqarli gap tuzib chiqarsin.</li>
+  <li>Sxemangizni <b>File → Export → Image</b> bilan rasmga saqlab, README'ga qo'shing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Flowgorithm</dt><dd>Blok-sxemani chizib, ishga tushiradigan o'quv muhiti; <code>.fprg</code>.</dd>
+  <dt>Main / End</dt><dd>Dastur boshi va oxiri (oval).</dd>
+  <dt>Input / Output</dt><dd>Kiritish / chiqarish (parallelogramm).</dd>
+  <dt>Assign</dt><dd>Process — hisoblash va qiymat berish.</dd>
+  <dt>If</dt><dd>Decision — shart: True / False.</dd>
+  <dt>Run, Step, Variable Watch</dt><dd>Ishga tushirish, qadamma-qadam bajarish, o'zgaruvchilarni kuzatish.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="15-algoritm-tushunchasi.html"><small>← Oldingi mavzu</small>Algoritm tushunchasi va algoritmik fikrlash</a><a class="next" href="17-dastur-buyruq-kod-mantiq.html"><small>Keyingi mavzu →</small>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#flowgorithm-nima">Flowgorithm nima?</a></li><li><a href="#ishchi-oyna">Ishchi oyna</a></li><li><a href="#blok-sxema-elementlari">Blok-sxema elementlari</a></li><li><a href="#bloklar-bilan-ishlash">Bloklar bilan ishlash</a></li><li><a href="#birinchi-dastur-salom-dunyo">Birinchi dastur: &quot;Salom, dunyo!&quot;</a></li><li><a href="#dasturni-tekshirish-step-va-variable-watch">Dasturni tekshirish: Step va Variable Watch</a></li><li><a href="#xatolarni-aniqlash-va-tuzatish">Xatolarni aniqlash va tuzatish</a></li><li><a href="#foydali-sozlamalar">Foydali sozlamalar</a></li><li><a href="#amaliy-topshiriqlar">Amaliy topshiriqlar</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

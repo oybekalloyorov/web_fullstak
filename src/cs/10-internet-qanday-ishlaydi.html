@@ -1,0 +1,205 @@
+<!-- title: Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS | desc: Internet va ma'lumot almashish jarayoni (paketlar, routerlar); IP-manzil, domen va hosting; DNS va domenni IP-manzilga bog'lash; brauzer sahifani ochish bosqichlari; HTTP va HTTPS, shifrlangan xavfsiz ulanish. | icon: 🌐 | level: 1 dars · nazariy | bob: II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Ma'lumot internet bo'ylab qanday "sayohat" qilishini: paketlar va routerlar;</li>
+  <li>IP-manzil, domen va hosting nima ekanini;</li>
+  <li>DNS domenni IP-manzilga qanday "tarjima" qilishini;</li>
+  <li>Brauzerga manzil yozib Enter bosgandan to sahifa chiqqunicha bo'ladigan barcha bosqichlarni;</li>
+  <li>HTTP va HTTPS farqini va xavfsiz ulanishni qanday tanishni.</li>
+</ul>
+</div>
+
+<h2>Internet — tarmoqlar tarmog'i</h2>
+<p><b>Internet</b> — dunyodagi millionlab kichik tarmoqlarni (uy, maktab, kompaniya, provayder tarmoqlari) bir-biriga bog'lagan <b>global tarmoq</b>.
+Ular mis simlar, <b>optik tolali kabellar</b> (shu jumladan okean tubidagi 1,4 million km dan ortiq kabellar!), Wi-Fi, mobil minoralar va
+sun'iy yo'ldoshlar orqali ulangan.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📱 Telefoningiz</div>
+    <div class="arrow">→</div>
+    <div class="node">📶 Uy routeri (Wi-Fi)</div>
+    <div class="arrow">→</div>
+    <div class="node">🏢 Provayder<small>Uztelecom, Beeline...</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🌍 Magistral kabellar<small>davlatlar aro</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🖧 Server<small>sayt joylashgan</small></div>
+  </div>
+</div>
+
+<h3>Paketlar va routerlar</h3>
+<p>Siz rasm yuborganingizda u <b>paketlarga</b> — mayda bo'laklarga (odatda ~1500 bayt) bo'linadi. Har bir paketda <b>qayerdan</b> va
+<b>qayerga</b> borishi (IP-manzillar) va tartib raqami yoziladi. <b>Router</b> — "chorraha boshqaruvchisi": har bir paketni manzilga yaqinroq
+yo'nalishga jo'natadi. Paketlar turli yo'llardan ketishi mumkin, manzilda esa yana tartib bilan yig'iladi.</p>
+<div class="analogy"><span class="t">O'xshatish: kitobni pochta orqali yuborish</span>
+Qalin kitobni bitta konvertga sig'dira olmaysiz — har bir sahifani alohida konvertga solib, raqamlab yuborasiz. Konvertlar turli pochta
+bo'limlari (routerlar) orqali ketadi, ba'zilari kechikadi. Qabul qiluvchi ularni raqam bo'yicha tartiblab, kitobni qayta tiklaydi.
+Biror konvert yo'qolsa — faqat shuni qayta so'raydi.</div>
+<p>Bu qoidalar to'plami <b>TCP/IP</b> deyiladi: <b>IP</b> — paketni manzilga yetkazish, <b>TCP</b> — paketlar yo'qolmasligi va tartibini ta'minlash.
+<b>Protokol</b> — kompyuterlar o'rtasida kelishilgan muloqot qoidalari.</p>
+
+<h2>IP-manzil</h2>
+<p><b>IP-manzil</b> — tarmoqqa ulangan har bir qurilmaning noyob raqamli manzili.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Versiya</th><th>Ko'rinishi</th><th>Manzillar soni</th></tr></thead>
+<tbody>
+<tr><td><b>IPv4</b></td><td><code>142.250.74.46</code> — 4 ta son, har biri 0–255</td><td>~4,3 milliard — yetmay qoldi!</td></tr>
+<tr><td><b>IPv6</b></td><td><code>2a00:1450:4001:82a::200e</code></td><td>Amalda cheksiz (3,4 × 10<sup>38</sup>)</td></tr>
+</tbody></table></div>
+<p>Uyingizdagi qurilmalar odatda <b>lokal (ichki)</b> IP-manzilga ega (<code>192.168.1.5</code>), router esa internetga bitta <b>tashqi</b> manzil
+bilan chiqadi. <code>127.0.0.1</code> — "o'zim" (localhost) manzili.</p>
+
+<h2>Domen nomi</h2>
+<p>Odamlar uchun raqamlarni eslab qolish qiyin, shuning uchun saytlarga <b>domen nomi</b> beriladi: <code>google.com</code>, <code>kun.uz</code>.</p>
+<pre data-lang="text" data-title="URL tuzilishi">  https://   www .  maktab  .  uz  / sinflar/8-sinf ?tab=jadval
+  └──┬──┘   └┬┘    └──┬──┘    └┬┘  └─────┬──────┘ └───┬────┘
+  protokol subdomen domen nomi zona  yo'l (sahifa)  parametr</pre>
+<ul>
+  <li><b>Zona (TLD)</b>: <code>.uz</code> — O'zbekiston, <code>.com</code> — tijorat, <code>.org</code> — tashkilotlar, <code>.edu</code> — ta'lim, <code>.gov</code> — davlat;</li>
+  <li>Domen <b>registrator</b>dan ijaraga olinadi (odatda 1 yilga) va har yili uzaytiriladi. <code>.uz</code> zonasini <b>cctld.uz</b> boshqaradi.</li>
+</ul>
+
+<h2>DNS — internetning telefon kitobi</h2>
+<p><b>DNS</b> (Domain Name System) — domen nomini IP-manzilga aylantiruvchi tizim.</p>
+<div class="analogy"><span class="t">O'xshatish: telefondagi kontaktlar</span>
+Do'stingizga qo'ng'iroq qilganda raqamni yodlab yozmaysiz — "Aziz" ni tanlaysiz, telefon raqamni o'zi topadi. DNS ham shunday:
+siz <code>kun.uz</code> deysiz, DNS uning IP-manzilini topib beradi.</div>
+<h3>DNS so'rovi bosqichma-bosqich</h3>
+<ol class="steps">
+  <li><b>Brauzer keshi:</b> "Bu saytga yaqinda kirganmidim? IP-manzili esimdami?" Ha bo'lsa — darhol ishlatadi.</li>
+  <li><b>Operatsion tizim keshi</b> tekshiriladi.</li>
+  <li><b>Rekursiv DNS server</b> (provayderingiznikini yoki <code>8.8.8.8</code> — Google, <code>1.1.1.1</code> — Cloudflare) so'raladi.</li>
+  <li>U kerak bo'lsa <b>ildiz (root) server</b> → <b>zona serveri</b> (<code>.uz</code>) → <b>domen serveri</b> (<code>kun.uz</code>) zanjiri bo'yicha javobni topadi.</li>
+  <li>Javob: <code>kun.uz → 185.x.x.x</code>. U ma'lum muddat (TTL) keshda saqlanadi.</li>
+</ol>
+<p>Butun jarayon odatda <b>bir necha millisoniya</b> davom etadi.</p>
+
+<h2>Hosting</h2>
+<p><b>Hosting</b> — sayt fayllari saqlanadigan va kechayu kunduz internetga ulangan serverdagi joy.</p>
+<div class="analogy"><span class="t">Uy, manzil va xarita</span>
+<b>Hosting</b> — uyning o'zi (ichida mebel — sayt fayllari), <b>domen</b> — uy manzili, <b>DNS</b> — manzil bo'yicha uyni topib beruvchi xarita,
+<b>IP-manzil</b> — uyning GPS koordinatalari.</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Hosting turi</th><th>Tavsif</th></tr></thead>
+<tbody>
+<tr><td>Bepul statik</td><td>GitHub Pages, Netlify — HTML/CSS/JS saytlar uchun (12-mavzuda GitHub bilan tanishamiz)</td></tr>
+<tr><td>Shared (umumiy)</td><td>Bitta serverda yuzlab sayt</td></tr>
+<tr><td>VPS</td><td>Serverning sizga ajratilgan virtual qismi</td></tr>
+<tr><td>Bulutli</td><td>AWS, Google Cloud, Azure — kerak bo'lsa avtomatik kengayadi</td></tr>
+</tbody></table></div>
+
+<h2>Brauzer va HTTP</h2>
+<p><b>Brauzer</b> — mijoz (client); u serverga <b>so'rov</b> (request) yuboradi, server <b>javob</b> (response) qaytaradi. Ular <b>HTTP</b>
+(HyperText Transfer Protocol) "tilida" gaplashadi.</p>
+<pre data-lang="http" data-title="Brauzer so'rovi (soddalashtirilgan)">GET /sinflar/8-sinf HTTP/1.1
+Host: www.maktab.uz
+User-Agent: Chrome/130
+Accept-Language: uz</pre>
+<pre data-lang="http" data-title="Server javobi">HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html><html>... sahifa kodi ...</html></pre>
+<div class="table-wrap"><table>
+<thead><tr><th>Status kod</th><th>Ma'nosi</th></tr></thead>
+<tbody>
+<tr><td><b>200</b> OK</td><td>Hammasi joyida</td></tr>
+<tr><td><b>301</b> / 302</td><td>Sahifa boshqa manzilga ko'chgan</td></tr>
+<tr><td><b>403</b> Forbidden</td><td>Ruxsat yo'q</td></tr>
+<tr><td><b>404</b> Not Found</td><td>Sahifa topilmadi</td></tr>
+<tr><td><b>500</b></td><td>Serverda xato</td></tr>
+</tbody></table></div>
+<p>Eslab qolish: <b>2xx</b> — muvaffaqiyat, <b>3xx</b> — yo'naltirish, <b>4xx</b> — mijoz xatosi, <b>5xx</b> — server xatosi.</p>
+
+<h2>HTTP va HTTPS</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>HTTP</th><th>HTTPS</th></tr></thead>
+<tbody>
+<tr><td>Ma'lumot</td><td>Ochiq holda uzatiladi</td><td><b>Shifrlangan</b> (TLS)</td></tr>
+<tr><td>Yo'lda o'qish</td><td>Mumkin (masalan, ochiq Wi-Fi'da)</td><td>Amalda imkonsiz</td></tr>
+<tr><td>Brauzerda</td><td>"Xavfsiz emas" ogohlantirishi</td><td>🔒 qulf belgisi</td></tr>
+<tr><td>Port</td><td>80</td><td>443</td></tr>
+</tbody></table></div>
+<p><b>HTTPS</b> = HTTP + <b>TLS</b> shifrlash. Server <b>sertifikat</b> ko'rsatadi — u saytning haqiqatan <code>bank.uz</code> ekanini tasdiqlaydi.
+Brauzer va server maxfiy kalit kelishib oladi va keyingi barcha ma'lumot shifrlanadi.</p>
+<div class="analogy"><span class="t">O'xshatish: ochiq otkritka va muhrlangan konvert</span>
+HTTP — ochiq otkritka: pochtachi ham, qo'shni ham o'qiy oladi. HTTPS — muhrlangan, faqat qabul qiluvchi ochadigan seyf-konvert.</div>
+<div class="callout warn"><span class="t">🔒 ≠ "sayt halol"</span>
+Qulf belgisi faqat <b>ulanish shifrlanganini</b> bildiradi. Firibgar sayt ham HTTPS bo'lishi mumkin. Domen nomini harfma-harf tekshiring:
+<code>paynne.uz</code>, <code>c1ick.uz</code> kabi soxta nomlar bor.</div>
+
+<h2>Hammasi birgalikda: Enter bosilgandan keyin</h2>
+<ol class="steps">
+  <li>Siz <code>https://maktab.uz</code> deb yozib Enter bosasiz.</li>
+  <li><b>DNS</b> <code>maktab.uz</code> ni IP-manzilga aylantiradi.</li>
+  <li>Brauzer shu IP-manzildagi serverga <b>TCP ulanish</b> o'rnatadi (443-port).</li>
+  <li><b>TLS</b> "qo'l siqish": sertifikat tekshiriladi, shifrlash kaliti kelishiladi.</li>
+  <li>Brauzer <b>HTTP so'rov</b> yuboradi: <code>GET /</code>.</li>
+  <li>Server (hosting) sahifani tayyorlab, <b>200 OK</b> + HTML qaytaradi.</li>
+  <li>Brauzer HTML'ni o'qiydi va CSS, rasmlar, JavaScript uchun <b>qo'shimcha so'rovlar</b> yuboradi.</li>
+  <li>Hammasini birlashtirib, sahifani ekranga <b>chizadi</b> (rendering).</li>
+</ol>
+<p>Bularning hammasi odatda <b>1 soniyadan kam</b> vaqtda bo'ladi!</p>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><kbd>Win</kbd>+<kbd>R</kbd> → <code>cmd</code> → Enter. Quyidagi buyruqlarni bajaring va natijani yozing:</li>
+</ol>
+<pre data-lang="bash" data-title="Buyruqlar qatori (cmd)">nslookup kun.uz          :: domenning IP-manzili (DNS so'rovi)
+ping google.com          :: server javob beradimi, necha millisoniyada
+tracert google.com       :: paket qaysi routerlardan o'tadi
+ipconfig                 :: kompyuteringizning lokal IP-manzili</pre>
+<ol class="steps" start="2">
+  <li>Chrome'da istalgan saytda <kbd>F12</kbd> → <b>Network</b> yorlig'i → <kbd>F5</kbd>. Har bir qator — alohida HTTP so'rov. Status ustunida 200 larni toping.</li>
+  <li>Manzil satridagi 🔒 belgisini bosing → <b>Sertifikat</b>: kim bergan, qachongacha amal qiladi?</li>
+  <li>Mavjud bo'lmagan sahifani oching (<code>github.com/bu-sahifa-yoq-12345</code>) va 404 ni Network panelida ko'ring.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xato tushunchalar</h2>
+<ul class="mistakes">
+  <li>❌ "Domen olsam, sayt tayyor" → ✅ Domen — faqat manzil; fayllar uchun hosting kerak.</li>
+  <li>❌ "Internet = Web" → ✅ Web — internet ustidagi xizmatlardan biri (pochta, messenjerlar ham bor).</li>
+  <li>❌ "HTTPS sayt — albatta ishonchli" → ✅ HTTPS faqat yo'ldagi shifrlashni kafolatlaydi.</li>
+  <li>❌ "Wi-Fi = Internet" → ✅ Wi-Fi — faqat qurilmani routerga simsiz ulash usuli.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">DNS'ning vazifasi nima?</p><ol>
+<li>Saytni chiroyli qilish</li><li>Domen nomini IP-manzilga aylantirish</li><li>Fayllarni saqlash</li><li>Viruslardan himoyalash</li></ol>
+<p class="explain">DNS — internetning "telefon kitobi".</p></div>
+<div class="quiz" data-answer="3"><p class="q">Paketlarni manzilga yaqinroq yo'nalishga jo'natuvchi qurilma?</p><ol>
+<li>Monitor</li><li>Printer</li><li>Router</li><li>Skaner</li></ol>
+<p class="explain">Router — tarmoq "chorrahalari"ni boshqaradi.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Server 404 qaytardi. Bu nima?</p><ol>
+<li>Muvaffaqiyat</li><li>Server xatosi</li><li>Sahifa ko'chgan</li><li>Sahifa topilmadi</li></ol>
+<p class="explain">4xx — mijoz tomonidagi xato; 404 — Not Found.</p></div>
+<div class="quiz" data-answer="1"><p class="q">HTTPS'dagi "S" va uning ma'nosi?</p><ol>
+<li>Secure — ma'lumot TLS bilan shifrlanadi</li><li>Speed — tezroq</li><li>Server — kuchliroq server</li><li>Simple — oddiyroq</li></ol>
+<p class="explain">HTTPS = HTTP + TLS shifrlash.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>https://blog.maktab.uz/maqolalar</code> da domen zonasi (TLD) qaysi?</p><ol>
+<li><code>blog</code></li><li><code>uz</code></li><li><code>maktab</code></li><li><code>maqolalar</code></li></ol>
+<p class="explain"><code>blog</code> — subdomen, <code>maktab</code> — domen nomi, <code>uz</code> — zona, <code>/maqolalar</code> — yo'l.</p></div>
+<div class="quiz" data-answer="3"><p class="q">IPv4 manzil qaysi ko'rinishda bo'ladi?</p><ol>
+<li><code>kun.uz</code></li><li><code>ali@gmail.com</code></li><li><code>192.168.1.10</code></li><li><code>https://</code></li></ol>
+<p class="explain">To'rtta son, har biri 0–255.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>"Enter bosilgandan keyin" jarayonining sxemasini chizing: mijoz, DNS, server, TLS, so'rov va javob — strelkalar bilan.</li>
+  <li>3 ta saytning IP-manzilini <code>nslookup</code> bilan toping va <code>ping</code> vaqtini solishtiring. Qaysi biri tezroq va nega (server qayerda joylashgan)?</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Internet</dt><dd>Tarmoqlar tarmog'i; ma'lumot paketlarda, routerlar orqali, TCP/IP qoidalari bilan.</dd>
+  <dt>IP-manzil</dt><dd>Qurilmaning raqamli manzili (IPv4, IPv6).</dd>
+  <dt>Domen</dt><dd>Eslab qolinadigan nom; zona: .uz, .com, .org.</dd>
+  <dt>DNS</dt><dd>Domen → IP; kesh → rekursiv server → root → zona → domen serveri.</dd>
+  <dt>Hosting</dt><dd>Sayt fayllari joylashgan server.</dd>
+  <dt>HTTP / HTTPS</dt><dd>So'rov–javob protokoli; HTTPS — TLS bilan shifrlangan (🔒, 443-port).</dd>
+</dl>
+</div>

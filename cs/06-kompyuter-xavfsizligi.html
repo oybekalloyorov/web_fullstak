@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kompyuter xavfsizligi va antivirus dasturlari — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Kompyuter xavfsizligi tushunchasi va qoidalari; zararli dasturlar: virus, trojan, spyware, ransomware; antivirus dasturlari; parol, 2FA va shaxsiy ma&#x27;lumotlarni himoya qilish; fleshka, internet va pochtadan xavfsiz foydalanish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a class="active" href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🛡️</div><div><div class="crumb">06-mavzu · 26 tadan · I bob. Kompyuter savodxonligi va arxitekturasi</div><h1>Kompyuter xavfsizligi va antivirus dasturlari</h1><p class="lead">Kompyuter xavfsizligi tushunchasi va qoidalari; zararli dasturlar: virus, trojan, spyware, ransomware; antivirus dasturlari; parol, 2FA va shaxsiy ma&#x27;lumotlarni himoya qilish; fleshka, internet va pochtadan xavfsiz foydalanish.</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/06-kompyuter-xavfsizligi.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kompyuter xavfsizligi nima va nimalarni himoya qilamiz;</li>
+  <li>Zararli dasturlar turlari: virus, qurt, trojan, spyware, ransomware, adware;</li>
+  <li>Kompyuter "kasal"ligi belgilari va antivirus qanday ishlashini;</li>
+  <li>Kuchli parol va ikki bosqichli tasdiqlash (2FA) ni;</li>
+  <li>Fleshka, internet va pochtadan xavfsiz foydalanish qoidalarini.</li>
+</ul>
+</div>
+
+<h2 id="kompyuter-xavfsizligi-nima"><a class="anchor" href="#kompyuter-xavfsizligi-nima">#</a>Kompyuter xavfsizligi nima?</h2>
+<p><b>Kompyuter xavfsizligi</b> — qurilma, dasturlar va ma'lumotlarni ruxsatsiz kirish, o'g'irlik, buzilish va yo'qolishdan himoya qilish.
+Mutaxassislar uni uchta asosiy maqsad bilan ifodalaydi — <b>CIA triadasi</b>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tamoyil</th><th>Ma'nosi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td>🔒 <b>Maxfiylik</b> (Confidentiality)</td><td>Ma'lumotni faqat ruxsati bor odam ko'radi</td><td>Telegram yozishmalaringizni begona o'qiy olmasligi</td></tr>
+<tr><td>✅ <b>Yaxlitlik</b> (Integrity)</td><td>Ma'lumot ruxsatsiz o'zgartirilmaydi</td><td>Elektron kundalikdagi bahoni hech kim o'zicha o'zgartira olmasligi</td></tr>
+<tr><td>🟢 <b>Foydalanish imkoniyati</b> (Availability)</td><td>Kerak paytda ma'lumot va xizmat ishlaydi</td><td>Imtihon kuni test tizimi ishlab turishi</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: uy xavfsizligi</span>
+Uyingizni himoya qilish uchun eshikni qulflaysiz (parol), kalitni begonaga bermaysiz (shaxsiy ma'lumot), signalizatsiya qo'yasiz (antivirus),
+qimmatbaho buyumlarni seyfda saqlaysiz (zaxira nusxa). Kompyuter xavfsizligi ham xuddi shunday — <b>bir nechta himoya qatlami</b>.</div>
+
+<h2 id="zararli-dasturlar-malware"><a class="anchor" href="#zararli-dasturlar-malware">#</a>Zararli dasturlar (malware)</h2>
+<p><b>Malware</b> (malicious software — yovuz niyatli dastur) — foydalanuvchiga zarar yetkazish, ma'lumot o'g'irlash yoki qurilmani boshqarib olish uchun yozilgan dastur.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Qanday ishlaydi</th><th>O'xshatish</th></tr></thead>
+<tbody>
+<tr><td>🦠 <b>Virus</b></td><td>Boshqa fayl yoki dasturga "yopishib" ko'payadi; fayl ishga tushganda faollashadi</td><td>Gripp virusi — kasal odamdan yuqadi</td></tr>
+<tr><td>🪱 <b>Qurt (worm)</b></td><td>Inson ishtirokisiz tarmoq orqali o'zi tarqaladi</td><td>Butun maktabga tez tarqaluvchi kasallik</td></tr>
+<tr><td>🐴 <b>Troyan (trojan)</b></td><td>Foydali dastur (o'yin, "bepul Office") qiyofasida keladi, ichida zararli kod</td><td>Troya oti — sovg'a ichida dushman askarlari</td></tr>
+<tr><td>🕵️ <b>Ayg'oqchi (spyware)</b></td><td>Yashirincha kuzatadi: parollar, yozishmalar, kamera</td><td>Eshik ortida tinglab turgan odam</td></tr>
+<tr><td>⌨️ <b>Keylogger</b></td><td>Klaviaturada bosilgan har bir tugmani yozib boradi</td><td>Yelkangiz ortidan parolingizni ko'chirib olayotgan odam</td></tr>
+<tr><td>🔐 <b>Ransomware</b> (to'lov talab qiluvchi)</td><td>Fayllarni shifrlab, ochish uchun pul talab qiladi</td><td>Uyingizni qulflab, kalit uchun pul so'rash</td></tr>
+<tr><td>📢 <b>Adware</b></td><td>Doimiy reklama oynalarini chiqaradi</td><td>Ko'chadagi to'xtovsiz reklama</td></tr>
+<tr><td>🤖 <b>Botnet</b></td><td>Minglab zararlangan kompyuterlar jinoyatchi buyrug'i bilan birga ishlaydi</td><td>"Zombi" qo'shini</td></tr>
+</tbody></table></div>
+<div class="callout danger"><span class="t">Haqiqiy voqea: WannaCry (2017)</span>
+Ransomware 150 dan ortiq davlatdagi 200 000+ kompyuterni zararladi: kasalxonalar, zavodlar, temir yo'llar to'xtab qoldi. Sabab — ko'p
+kompyuterlarda Windows <b>yangilanmagan</b> edi. Yangilanish bir necha oy oldin chiqqan, lekin o'rnatilmagan edi!</div>
+
+<h3>Zararli dastur qanday yuqadi?</h3>
+<ul>
+  <li>Noma'lum saytdan yuklangan "bepul" dasturlar, "crack", "keygen", o'yinlar uchun "chit"lar;</li>
+  <li>Pochta yoki messenjerdagi shubhali biriktirmalar va havolalar;</li>
+  <li>Begona fleshkalar (avtomatik ishga tushadigan fayllar);</li>
+  <li>Yangilanmagan operatsion tizim va brauzerlardagi zaifliklar;</li>
+  <li>Soxta reklama oynalari: "Kompyuteringizda 15 ta virus! Darhol tozalang" — o'zi virus.</li>
+</ul>
+<h3>Kompyuter zararlanganligi belgilari</h3>
+<ul>
+  <li>Kompyuter birdan juda sekinlashdi, ventilyator doim shovqin qiladi;</li>
+  <li>O'zidan-o'zi reklama oynalari ochiladi, brauzer bosh sahifasi o'zgardi;</li>
+  <li>Fayllar g'oyib bo'ldi yoki ochilmaydi, kengaytmasi g'alati o'zgardi;</li>
+  <li>Do'stlaringizga siz yubormagan xabarlar ketyapti;</li>
+  <li>Antivirus o'zidan-o'zi o'chib qoldi.</li>
+</ul>
+
+<h2 id="antivirus-dasturlari"><a class="anchor" href="#antivirus-dasturlari">#</a>Antivirus dasturlari</h2>
+<p><b>Antivirus</b> — zararli dasturlarni aniqlaydigan, bloklaydigan va o'chiradigan dastur.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Usul</th><th>Qanday ishlaydi</th></tr></thead>
+<tbody>
+<tr><td><b>Imzo (signatura) bo'yicha</b></td><td>Ma'lum viruslarning "barmoq izlari" bazasi bilan solishtiradi — shuning uchun bazani doim yangilash kerak</td></tr>
+<tr><td><b>Evristik / xulq-atvor tahlili</b></td><td>Shubhali harakatni kuzatadi: "bu dastur nega 1000 ta faylni shifrlayapti?"</td></tr>
+<tr><td><b>Real vaqt himoyasi</b></td><td>Har bir yuklangan va ochilgan faylni darhol tekshiradi</td></tr>
+<tr><td><b>Karantin</b></td><td>Shubhali faylni o'chirmasdan, xavfsiz "izolyatsiya"ga oladi</td></tr>
+</tbody></table></div>
+<p>Mashhur antiviruslar: <b>Microsoft Defender</b> (Windows'ga o'rnatilgan, bepul va yetarli), Kaspersky, ESET NOD32, Avast, Bitdefender.</p>
+<div class="callout warn"><span class="t">Ikkita antivirus — yaxshiroq emas</span>
+Bir vaqtda ikkita antivirus o'rnatilsa, ular bir-biriga xalaqit berib, kompyuterni sekinlashtiradi. Bitta ishonchli antivirus + yangilangan
+tizim + ehtiyotkorlik = yetarli himoya.</div>
+
+<h2 id="parol-va-2fa"><a class="anchor" href="#parol-va-2fa">#</a>Parol va 2FA</h2>
+<h3>Kuchli parol</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Zaif parol ❌</th><th>Nega zaif</th><th>Kuchli parol ✅</th></tr></thead>
+<tbody>
+<tr><td><code>123456</code>, <code>qwerty</code></td><td>Dunyodagi eng ko'p ishlatiladigan parollar — soniyalarda topiladi</td><td><code>Olma!Qovun7_Tarvuz</code></td></tr>
+<tr><td><code>Ali2012</code></td><td>Ism + tug'ilgan yil — ijtimoiy tarmoqdan topiladi</td><td><code>8-sinf#Flowgorithm2026!</code></td></tr>
+<tr><td><code>password</code></td><td>Lug'atdagi so'z</td><td>Uch tasodifiy so'z + raqam + belgi</td></tr>
+</tbody></table></div>
+<ul>
+  <li>Kamida <b>12 belgi</b>; katta-kichik harf, raqam va belgi (<code>! # _ ?</code>);</li>
+  <li>Har bir muhim akkaunt uchun <b>alohida</b> parol — bitta sayt buzilsa, qolganlari xavfsiz qoladi;</li>
+  <li>Parolni hech kimga aytmang, qog'ozga yozib monitorga yopishtirmang;</li>
+  <li>Ko'p parollarni eslab qolish uchun — <b>parol menejeri</b> (Google Password Manager, Bitwarden).</li>
+</ul>
+<h3>Ikki bosqichli tasdiqlash (2FA)</h3>
+<p><b>2FA</b> — parolga qo'shimcha ikkinchi tekshiruv: SMS-kod, autentifikator ilovasidagi kod yoki telefonda "Ha, bu men" tugmasi.
+Parol o'g'irlansa ham, buzg'unchi telefoningizsiz kira olmaydi.</p>
+<div class="analogy"><span class="t">O'xshatish: ikki qulfli eshik</span>
+Bitta kalitni (parolni) o'g'irlash mumkin, lekin ikkinchi qulf kaliti (telefon) doim cho'ntagingizda. Ikkalasini birdan o'g'irlash juda qiyin.</div>
+
+<h2 id="xavfsizlik-qoidalari"><a class="anchor" href="#xavfsizlik-qoidalari">#</a>Xavfsizlik qoidalari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Qayerda</th><th>Qoida</th></tr></thead>
+<tbody>
+<tr><td>💾 Fleshka</td><td>Begona fleshkani ulamang; ulagach avval antivirus bilan tekshiring (o'ng tugma → "Microsoft Defender bilan tekshirish")</td></tr>
+<tr><td>🌐 Internet</td><td>Faqat rasmiy saytlardan yuklab oling; "Yutib oldingiz!" reklamalarini bosmang; https va domen nomini tekshiring</td></tr>
+<tr><td>📧 Pochta</td><td>Notanish biriktirmalarni ochmang; havolani bosishdan oldin sichqonchani ustiga olib borib, haqiqiy manzilni ko'ring</td></tr>
+<tr><td>🔄 Yangilanishlar</td><td>Windows, brauzer va dasturlarni o'z vaqtida yangilang</td></tr>
+<tr><td>📦 Zaxira (backup)</td><td>Muhim fayllarni bulutga yoki tashqi diskka nusxalang — ransomware'dan eng yaxshi himoya</td></tr>
+<tr><td>📶 Ochiq Wi-Fi</td><td>Kafedagi ochiq Wi-Fi'da bankka yoki muhim akkauntlarga kirmang</td></tr>
+</tbody></table></div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>Start → <b>Windows xavfsizligi</b> (Windows Security) → <b>Viruslar va tahdidlardan himoya</b>. Himoya yoqiqmi, oxirgi yangilanish qachon bo'lganini tekshiring.</li>
+  <li><b>Tezkor tekshiruv</b> (Quick scan) ni ishga tushiring va natijani yozing.</li>
+  <li>Fleshkani o'ng tugma bilan bosib, alohida tekshiring.</li>
+  <li><b>Windows Update</b> da yangilanishlar bormi — tekshiring.</li>
+  <li>Gmail akkauntingizda <b>Xavfsizlik tekshiruvi</b> (<code>myaccount.google.com/security-checkup</code>) dan o'ting.</li>
+  <li>Daftarda o'zingiz uchun "kuchli parol yaratish formulasi"ni ishlab chiqing (parolning o'zini yozmang!). Bu 3-loyiha — "Kuchli parol generatori algoritmi" uchun asos bo'ladi.</li>
+</ol>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Foydali dastur qiyofasida kelib, ichida zararli kod olib kiruvchi dastur?</p><ol>
+<li>Qurt</li><li>Adware</li><li>Troyan</li><li>Antivirus</li></ol>
+<p class="explain">Troyan — Troya oti kabi "sovg'a" ichida keladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Fayllarni shifrlab, ochish uchun pul talab qiluvchi dastur?</p><ol>
+<li>Ransomware</li><li>Spyware</li><li>Keylogger</li><li>Brauzer</li></ol>
+<p class="explain">Ransomware'dan eng yaxshi himoya — muntazam zaxira nusxa va yangilanishlar.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi parol eng kuchli?</p><ol>
+<li><code>123456789</code></li><li><code>Ali2012</code></li><li><code>qwerty</code></li><li><code>Tog'_Daryo!Kitob42</code></li></ol>
+<p class="explain">Uzun, aralash belgili va shaxsiy ma'lumotsiz parol.</p></div>
+<div class="quiz" data-answer="2"><p class="q">2FA nima?</p><ol>
+<li>Ikkita antivirus</li><li>Paroldan tashqari ikkinchi tasdiqlash (SMS-kod, ilova)</li><li>Ikki marta parol yozish</li><li>Ikkita brauzer</li></ol>
+<p class="explain">2FA — parol o'g'irlansa ham akkauntni himoya qiladi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Antivirus bazasini nega muntazam yangilash kerak?</p><ol>
+<li>Kompyuter tezlashadi</li><li>Reklama yo'qoladi</li><li>Har kuni yangi viruslar paydo bo'ladi va ularning "imzolari" bazaga qo'shiladi</li><li>Shart emas</li></ol>
+<p class="explain">Eski baza yangi viruslarni tanimaydi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>4-loyiha:</b> "Kompyuter viruslari va antivirus dasturlari" mavzusida 6–8 slayddan iborat taqdimot (har bir zararli dastur turi, himoya usullari, haqiqiy voqea).</li>
+  <li>Oilangiz telefonlari va kompyuterida yangilanishlar va antivirus holatini tekshiring; ota-onangiz akkauntlarida 2FA yoqishga yordam bering.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>CIA</dt><dd>Maxfiylik, yaxlitlik, foydalanish imkoniyati.</dd>
+  <dt>Malware</dt><dd>Virus, qurt, troyan, spyware, keylogger, ransomware, adware.</dd>
+  <dt>Antivirus</dt><dd>Imzo va xulq-atvor bo'yicha aniqlaydi; bazani yangilab turing; bitta yetarli.</dd>
+  <dt>Parol</dt><dd>12+ belgi, aralash, har akkauntga alohida, hech kimga aytilmaydi.</dd>
+  <dt>2FA</dt><dd>Parol + telefon — ikki qulfli eshik.</dd>
+  <dt>Himoya</dt><dd>Yangilanishlar, rasmiy manbalar, zaxira nusxa, shubhali havola va fleshkalardan ehtiyot.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="05-internet-brauzer-pochta.html"><small>← Oldingi mavzu</small>Internet, brauzerlar va elektron pochta bilan ishlash</a><a class="next" href="07-klaviaturada-tez-yozish.html"><small>Keyingi mavzu →</small>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#kompyuter-xavfsizligi-nima">Kompyuter xavfsizligi nima?</a></li><li><a href="#zararli-dasturlar-malware">Zararli dasturlar (malware)</a></li><li><a href="#antivirus-dasturlari">Antivirus dasturlari</a></li><li><a href="#parol-va-2fa">Parol va 2FA</a></li><li><a href="#xavfsizlik-qoidalari">Xavfsizlik qoidalari</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

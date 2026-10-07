@@ -1,0 +1,189 @@
+<!-- title: Loyiha: Flowgorithm'da "Login va parol tekshirish tizimi" | desc: Login-parol tizimining maqsadi va ishlash mantig'i; oldindan belgilangan login va parol bilan solishtirish; AND bilan ikki shartni birga tekshirish; xato urinishlarni hisoblash va 3 urinishdan keyin bloklash; While sikli va Boolean bayroq; xavfsizlik nuqtai nazaridan tahlil; test qilish. | icon: 🔐 | level: 1 dars · amaliy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li>Autentifikatsiya (shaxsni tasdiqlash) mantig'ini;</li>
+  <li>Matnlarni solishtirish va <b>AND</b> bilan ikki shartni birga tekshirishni;</li>
+  <li><b>Urinishlar hisoblagichi</b> bilan 3 marta xatodan keyin bloklashni;</li>
+  <li>Sikldan ikki xil sabab bilan chiqish: <b>muvaffaqiyat</b> yoki <b>limit tugashi</b>;</li>
+  <li>Dasturni xavfsizlik nuqtai nazaridan tahlil qilishni (14-mavzu bilan bog'lab).</li>
+</ul>
+</div>
+
+<h2>1-bosqich: rejalashtirish</h2>
+<p>Telefoningiz, Telegram, kundalik.com — hammasi kirishda login va parol so'raydi. Bizning tizim:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Talab</th><th>Qanday amalga oshiriladi</th></tr></thead>
+<tbody>
+<tr><td>To'g'ri login va parol saqlanadi</td><td><code>togriLogin = "admin"</code>, <code>togriParol = "Qalam-2026!"</code></td></tr>
+<tr><td>Foydalanuvchi ikkalasini kiritadi</td><td>Input <code>login</code>, Input <code>parol</code></td></tr>
+<tr><td>Ikkalasi ham mos bo'lsa — kirish</td><td><code>login == togriLogin and parol == togriParol</code></td></tr>
+<tr><td>Xato bo'lsa — qolgan urinishlar soni</td><td><code>urinish = urinish + 1</code>, <code>3 - urinish</code></td></tr>
+<tr><td>3 marta xato — bloklash</td><td>Sikl sharti: <code>urinish &lt; 3</code></td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: telefon ekran qulfi</span>Telefon PIN-kodini bir necha marta noto'g'ri tersangiz, u "30 soniyadan keyin urinib
+ko'ring" deydi. Bu cheklov bo'lmasa, o'g'ri 0000 dan 9999 gacha barcha 10 000 variantni sinab chiqardi (<b>brute force</b>). Urinishlar limiti —
+oddiy, lekin juda kuchli himoya.</div>
+
+<h2>2-bosqich: blok-sxema</h2>
+<p>Sikl ikki holatda tugashi kerak: <b>kirdi</b> (muvaffaqiyat) yoki <b>urinishlar tugadi</b>. Buning uchun Boolean bayroq <code>kirdi</code> va hisoblagich
+<code>urinish</code> ni birga ishlatamiz:</p>
+<div class="fc-wrap"><div class="fc-title">login.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String login, parol, togriLogin, togriParol</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer urinish</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Boolean kirdi</div>
+  <div class="fc-s fc-asg"><small>Assign</small>togriLogin = "admin"</div>
+  <div class="fc-s fc-asg"><small>Assign</small>togriParol = "Qalam-2026!"</div>
+  <div class="fc-s fc-asg"><small>Assign</small>urinish = 0</div>
+  <div class="fc-s fc-asg"><small>Assign</small>kirdi = false</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">While urinish &lt; 3 and not kirdi</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"Login:"</div>
+      <div class="fc-s fc-in"><small>Input</small>login</div>
+      <div class="fc-s fc-out"><small>Output</small>"Parol:"</div>
+      <div class="fc-s fc-in"><small>Input</small>parol</div>
+      <div class="fc-if"><div class="fc-s fc-cond">login == togriLogin and parol == togriParol</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-s fc-asg"><small>Assign</small>urinish = urinish + 1</div>
+          <div class="fc-s fc-out"><small>Output</small>"❌ Xato! Qoldi: " &amp; (3 - urinish)</div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>kirdi = true</div></div></div></div>
+    </div></div>
+  <div class="fc-if"><div class="fc-s fc-cond">kirdi</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"🔒 Akkaunt bloklandi!"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"✅ Xush kelibsiz, " &amp; login &amp; "!"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+
+<h3>Mantiqni tahlil qilamiz</h3>
+<ul>
+  <li><b>Sikl sharti</b> <code>urinish &lt; 3 and not kirdi</code>: "urinish qolgan <b>va</b> hali kirilmagan ekan — so'rayver". Ikkalasidan biri buzilsa — chiqamiz.</li>
+  <li><b>Sikldan keyingi If</b>: nima uchun chiqdik? <code>kirdi</code> rost bo'lsa — muvaffaqiyat; aks holda urinishlar tugagan.</li>
+  <li><b>AND</b> muhim: faqat login to'g'ri, parol xato bo'lsa — kirish yo'q.</li>
+  <li>Matn taqqoslash <b>harf registriga sezgir</b>: <code>"Admin" != "admin"</code>. Parol uchun bu to'g'ri xatti-harakat.</li>
+</ul>
+
+<h2>Trassirovka</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Iteratsiya</th><th>Kiritildi</th><th>Shart (If)</th><th>urinish</th><th>kirdi</th><th>Chiqish</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>admin / qalam</td><td>false</td><td>1</td><td>false</td><td>❌ Xato! Qoldi: 2</td></tr>
+<tr><td>2</td><td>Admin / Qalam-2026!</td><td>false (A katta)</td><td>2</td><td>false</td><td>❌ Xato! Qoldi: 1</td></tr>
+<tr><td>3</td><td>admin / Qalam-2026!</td><td>true</td><td>2</td><td>true</td><td>—</td></tr>
+<tr><td>sikl tugadi</td><td></td><td></td><td></td><td></td><td>✅ Xush kelibsiz, admin!</td></tr>
+</tbody></table></div>
+
+<h2>Python va brauzer versiyasi</h2>
+<pre data-lang="py" data-title="login.py">TOGRI_LOGIN = "admin"
+TOGRI_PAROL = "Qalam-2026!"
+urinish = 0
+kirdi = False
+
+while urinish < 3 and not kirdi:
+    login = input("Login: ")
+    parol = input("Parol: ")
+    if login == TOGRI_LOGIN and parol == TOGRI_PAROL:
+        kirdi = True
+    else:
+        urinish += 1
+        print("❌ Xato! Qoldi:", 3 - urinish)
+
+if kirdi:
+    print(f"✅ Xush kelibsiz, {login}!")
+else:
+    print("🔒 Akkaunt bloklandi!")</pre>
+<pre data-lang="html" data-play><div style="font:16px sans-serif;max-width:320px;padding:16px;border:1px solid #cbd5e1;border-radius:12px">
+  <b>🔐 Tizimga kirish</b><br><small>(login: admin, parol: Qalam-2026!)</small>
+  <input id="l" placeholder="Login" style="display:block;width:100%;box-sizing:border-box;margin:8px 0;padding:8px;font:inherit">
+  <input id="p" type="password" placeholder="Parol" style="display:block;width:100%;box-sizing:border-box;margin:8px 0;padding:8px;font:inherit">
+  <button id="k" style="width:100%;padding:8px;font:inherit">Kirish</button>
+  <p id="x"></p>
+</div>
+<script>
+let urinish = 0, kirdi = false;
+document.getElementById('k').onclick = () => {
+  if (kirdi || urinish >= 3) return;
+  const login = document.getElementById('l').value, parol = document.getElementById('p').value;
+  const x = document.getElementById('x');
+  if (login === 'admin' && parol === 'Qalam-2026!') { kirdi = true; x.textContent = '✅ Xush kelibsiz, ' + login + '!'; }
+  else {
+    urinish = urinish + 1;
+    x.textContent = urinish >= 3 ? '🔒 Akkaunt bloklandi!' : '❌ Xato! Qoldi: ' + (3 - urinish);
+  }
+};
+</script></pre>
+
+<h2>Xavfsizlik tahlili: real tizimlar qanday ishlaydi?</h2>
+<p>Bizning o'quv dasturimizda parol <b>ochiq holda</b> dastur ichida yozilgan. Haqiqiy tizimlarda bu katta xato bo'lardi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Bizning dastur</th><th>Haqiqiy tizim</th></tr></thead>
+<tbody>
+<tr><td>Parol kodda ochiq: <code>"Qalam-2026!"</code></td><td>Parol <b>xesh</b> ko'rinishida saqlanadi (<code>a7f3...e91</code>) — bazani o'g'irlagan ham parolni bilmaydi</td></tr>
+<tr><td>Kiritilgan parol ekranda ko'rinadi</td><td><code>••••••</code> bilan yashiriladi</td></tr>
+<tr><td>"Login xato" / "Parol xato" ni ajratsak — xakerga yordam</td><td>Umumiy xabar: "Login yoki parol noto'g'ri"</td></tr>
+<tr><td>3 urinish — doimiy blok</td><td>Vaqtinchalik blok (30 s, 5 daq...), email orqali tiklash</td></tr>
+<tr><td>Faqat parol</td><td>Parol + 2FA kodi (14-mavzu)</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Nega xabar umumiy bo'lishi kerak?</span>Agar tizim "Bunday login yo'q" desa, xaker qaysi loginlar <b>mavjudligini</b> bilib
+oladi va faqat ularning parolini terishga kirishadi. Bizning dasturimiz ham umumiy "Xato!" xabarini beradi — to'g'ri yo'l.</div>
+
+<h2>Kengaytmalar</h2>
+<ol class="steps">
+  <li><b>Bir nechta foydalanuvchi:</b> 3 ta login-parol jufti (<code>OR</code> bilan): <code>(login == "ali" and parol == "...") or (login == "vali" and ...)</code>.</li>
+  <li><b>Ro'yxatdan o'tish:</b> avval foydalanuvchi o'z parolini yaratadi — parol kamida 8 belgi (<code>Len(parol) &gt;= 8</code>) bo'lmaguncha qayta so'rash (Do).</li>
+  <li><b>Parolni tasdiqlash:</b> yangi parol ikki marta kiritiladi va mos kelishi tekshiriladi.</li>
+  <li><b>Bankomat bilan birlashtirish:</b> 24-loyihaga PIN-kod qismini qo'shing — kirgandan keyingina menyu ochiladi.</li>
+  <li><b>Kuchli parol generatori (3-loyiha):</b> <code>Random</code> va <code>ToChar</code> bilan 12 belgili tasodifiy parol yaratish.</li>
+</ol>
+
+<h2>Test rejasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Kiritishlar</th><th>Kutilgan</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>To'g'ri / to'g'ri (1-urinishda)</td><td>Xush kelibsiz</td></tr>
+<tr><td>2</td><td>Xato, xato, to'g'ri</td><td>Qoldi: 2, Qoldi: 1, Xush kelibsiz</td></tr>
+<tr><td>3</td><td>3 marta xato</td><td>Qoldi: 2, 1, 0 → Bloklandi; 4-marta so'ralmaydi</td></tr>
+<tr><td>4</td><td>Login to'g'ri, parol xato</td><td>Xato (AND)</td></tr>
+<tr><td>5</td><td>Login xato, parol to'g'ri</td><td>Xato (AND)</td></tr>
+<tr><td>6</td><td><code>ADMIN</code> / to'g'ri parol</td><td>Xato (registr)</td></tr>
+<tr><td>7</td><td>Bo'sh login va parol</td><td>Xato</td></tr>
+</tbody></table></div>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>or</code> ishlatish → ✅ Faqat login to'g'ri bo'lsa ham kirib ketadi! <code>and</code> kerak.</li>
+  <li>❌ <code>urinish = urinish + 1</code> ni True tarmoqqa qo'yish → ✅ Faqat xato urinish sanaladi.</li>
+  <li>❌ Sikl sharti faqat <code>urinish &lt; 3</code> → ✅ To'g'ri kirgandan keyin ham login so'rayveradi; <code>and not kirdi</code>.</li>
+  <li>❌ Sikldan keyin tekshirmasdan "Xush kelibsiz" chiqarish → ✅ <code>If kirdi</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Login va parol ikkalasi ham to'g'ri bo'lishini tekshirish uchun qaysi operator?</p><ol>
+<li>or</li><li>not</li><li>and</li><li>&amp;</li></ol>
+<p class="explain">AND — ikkala shart ham rost bo'lishi kerak.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>urinish = 2</code>, <code>kirdi = false</code>. <code>urinish &lt; 3 and not kirdi</code> = ?</p><ol>
+<li>true — yana bir urinish bor</li><li>false</li><li>2</li><li>Xato</li></ol>
+<p class="explain">2 &lt; 3 rost, not false = true → true AND true.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Urinishlar limitining asosiy maqsadi?</p><ol>
+<li>Dasturni tezlashtirish</li><li>Xotirani tejash</li><li>Chiroyli ko'rinish</li><li>Parolni ko'r-ko'rona terib topishdan (brute force) himoya</li></ol>
+<p class="explain">Limitsiz har bir variantni sinab ko'rish mumkin bo'lardi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Asosiy loyihani 7 ta test bilan tekshiring va GitHub'ga joylang.</li>
+  <li>"Ro'yxatdan o'tish" kengaytmasini qo'shing: parol kamida 8 belgi va ikki marta kiritilganda mos kelsin.</li>
+  <li>README'da "Xavfsizlik tahlili" bo'limini yozing: dasturingizning 3 ta zaif tomoni va ularni real tizimda qanday tuzatish mumkin.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Autentifikatsiya</dt><dd>Login + parolni saqlangan qiymatlar bilan solishtirish.</dd>
+  <dt>AND</dt><dd>Ikkala ma'lumot ham to'g'ri bo'lishi shart.</dd>
+  <dt>Urinishlar hisoblagichi</dt><dd>Faqat xato urinishda +1; limit — brute force'ga qarshi.</dd>
+  <dt>Ikki chiqish sharti</dt><dd><code>While urinish &lt; 3 and not kirdi</code>, keyin <code>If kirdi</code>.</dd>
+  <dt>Real tizim</dt><dd>Xeshlangan parol, umumiy xato xabari, 2FA.</dd>
+</dl>
+</div>

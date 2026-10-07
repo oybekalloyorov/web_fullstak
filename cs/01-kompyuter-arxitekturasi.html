@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zamonaviy kompyuterlar va ularning arxitekturasi — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Kompyuter turlari va vazifalari, kompyuter arxitekturasi, protsessor, tezkor xotira va saqlash qurilmalari, kiritish-chiqarish qurilmalari, kompyuterning ishlash tamoyili va texnik ko&#x27;rsatkichlari.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a class="active" href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖥️</div><div><div class="crumb">01-mavzu · 26 tadan · I bob. Kompyuter savodxonligi va arxitekturasi</div><h1>Zamonaviy kompyuterlar va ularning arxitekturasi</h1><p class="lead">Kompyuter turlari va vazifalari, kompyuter arxitekturasi, protsessor, tezkor xotira va saqlash qurilmalari, kiritish-chiqarish qurilmalari, kompyuterning ishlash tamoyili va texnik ko&#x27;rsatkichlari.</p><div class="hero-level">1 dars · nazariy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/01-kompyuter-arxitekturasi.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kompyuter nima va u bugun qanday ko'rinishlarda uchrashini;</li>
+  <li>Har qanday kompyuterning "ichki tuzilishi" — arxitekturasini;</li>
+  <li>Protsessor, tezkor xotira (RAM) va saqlash qurilmalari (SSD/HDD) farqini;</li>
+  <li>Kompyuter ma'lumotni qanday qayta ishlashini: <b>kiritish → qayta ishlash → chiqarish</b>;</li>
+  <li>Kompyuter xarid qilishda texnik ko'rsatkichlarni (GHz, GB, TB) o'qishni.</li>
+</ul>
+</div>
+
+<h2 id="kompyuter-nima"><a class="anchor" href="#kompyuter-nima">#</a>Kompyuter nima?</h2>
+<p><b>Kompyuter</b> — ma'lumotni <b>qabul qiladigan</b>, berilgan dastur (ko'rsatmalar) asosida uni <b>qayta ishlaydigan</b>,
+natijani <b>saqlaydigan</b> va <b>chiqarib beradigan</b> elektron qurilma. Inglizcha <i>to compute</i> — "hisoblamoq" so'zidan olingan.</p>
+<p>Kompyuter o'zi "o'ylamaydi" — u faqat inson yozgan ko'rsatmalarni (dasturni) juda tez va xatosiz bajaradi. Zamonaviy protsessor
+bir soniyada <b>milliardlab</b> oddiy amalni bajara oladi.</p>
+<div class="analogy"><span class="t">O'xshatish: oshpaz</span>
+Kompyuterni juda tez ishlaydigan, lekin faqat retsept bo'yicha pishiradigan oshpaz deb tasavvur qiling. Masalliqlar — <b>kiritilgan ma'lumot</b>,
+retsept — <b>dastur</b>, oshpazning qo'llari — <b>protsessor</b>, stol — <b>tezkor xotira</b>, oshxona omborxonasi — <b>disk</b>,
+tayyor taom — <b>natija</b>. Retsept bo'lmasa, eng yaxshi oshpaz ham hech narsa pishira olmaydi.</div>
+
+<h3>Kompyuterlar tarixi — qisqacha</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Davr</th><th>Asosiy element</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td>1940–1950-yillar</td><td>Elektron lampalar — kompyuter butun xonani egallagan</td><td>ENIAC (30 tonna!)</td></tr>
+<tr><td>1950–1960-yillar</td><td>Tranzistorlar — hajm kichraydi</td><td>IBM 7090</td></tr>
+<tr><td>1960–1970-yillar</td><td>Integral mikrosxemalar</td><td>IBM System/360</td></tr>
+<tr><td>1970-yillardan</td><td>Mikroprotsessor — butun protsessor bitta chipda</td><td>Shaxsiy kompyuterlar, noutbuklar, smartfonlar</td></tr>
+</tbody></table></div>
+<p>Bugun cho'ntagingizdagi smartfon 1969-yilda insonni Oyga olib borgan "Apollon" kemasi kompyuteridan <b>millionlab marta</b> kuchliroq.</p>
+
+<h2 id="zamonaviy-kompyuter-turlari"><a class="anchor" href="#zamonaviy-kompyuter-turlari">#</a>Zamonaviy kompyuter turlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Xususiyati</th><th>Qayerda ishlatiladi</th></tr></thead>
+<tbody>
+<tr><td>🖥️ Statsionar (stol) kompyuter</td><td>Tizim bloki + monitor; kuchli, yangilash (upgrade) oson</td><td>Maktab, ofis, o'yinlar, dizayn</td></tr>
+<tr><td>💻 Noutbuk</td><td>Hammasi bitta korpusda, batareyada ishlaydi</td><td>O'qish, ish, safarda</td></tr>
+<tr><td>📱 Planshet va smartfon</td><td>Sensorli ekran, kichik va yengil</td><td>Kundalik hayot, aloqa</td></tr>
+<tr><td>🖧 Server</td><td>Kechayu kunduz ishlaydi, minglab foydalanuvchiga xizmat qiladi</td><td>Saytlar, Telegram, bank tizimlari</td></tr>
+<tr><td>🚀 Superkompyuter</td><td>Minglab protsessor birgalikda</td><td>Ob-havo prognozi, ilmiy hisoblar, sun'iy intellekt</td></tr>
+<tr><td>⌚ O'rnatilgan (embedded) kompyuter</td><td>Boshqa qurilma ichidagi kichik kompyuter</td><td>Kir yuvish mashinasi, avtomobil, aqlli soat</td></tr>
+</tbody></table></div>
+<div class="callout info">Noutbuklar ekran diagonali bo'yicha ham ajratiladi: <b>7–10″</b> — netbuk, <b>11–13″</b> — subnoutbuk (ultrabuk),
+<b>14–16″</b> — standart noutbuk, <b>17″ va undan katta</b> — stol kompyuterini almashtiruvchi kuchli noutbuklar. 1 dyuym (″) = 2,54 sm.</div>
+
+<h2 id="kompyuter-arxitekturasi"><a class="anchor" href="#kompyuter-arxitekturasi">#</a>Kompyuter arxitekturasi</h2>
+<p><b>Arxitektura</b> — kompyuterning asosiy qismlari qanday tuzilgani va bir-biri bilan qanday bog'langani. Deyarli barcha zamonaviy
+kompyuterlar 1945-yilda matematik <b>Jon fon Neyman</b> taklif qilgan tamoyil asosida ishlaydi: <b>dastur ham, ma'lumot ham bitta xotirada
+saqlanadi</b>, protsessor ularni xotiradan navbatma-navbat olib bajaradi.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">⌨️ Kiritish<small>klaviatura, sichqoncha, mikrofon</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🧠 Protsessor (CPU)<small>hisoblaydi va boshqaradi</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">⚡ Tezkor xotira (RAM)<small>hozir ishlayotgan dastur va ma'lumot</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">💾 Doimiy xotira (SSD/HDD)<small>fayllar va dasturlar saqlanadi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🖥️ Chiqarish<small>monitor, printer, kolonka</small></div>
+  </div>
+  <div class="diagram-caption">Fon Neyman arxitekturasi: barcha qismlar <b>ona plata</b> orqali bog'langan</div>
+</div>
+
+<h3>1. Protsessor (CPU) — kompyuterning "miyasi"</h3>
+<p><b>CPU</b> (Central Processing Unit — markaziy protsessor) barcha hisob-kitoblarni bajaradi va boshqa qurilmalarni boshqaradi.
+Uning ichida ikkita asosiy qism bor:</p>
+<ul>
+  <li><b>Arifmetik-mantiqiy qurilma (AMQ / ALU)</b> — qo'shish, ayirish, solishtirish kabi amallarni bajaradi;</li>
+  <li><b>Boshqaruv qurilmasi (CU)</b> — xotiradan navbatdagi buyruqni olib, uni bajarishni tashkil qiladi.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Ko'rsatkich</th><th>Ma'nosi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td><b>Takt chastotasi</b></td><td>Bir soniyadagi ish sikllari soni. 1 GHz = 1 milliard takt/soniya</td><td>3,6 GHz</td></tr>
+<tr><td><b>Yadrolar soni</b></td><td>Protsessor ichidagi mustaqil "ishchilar" — bir vaqtda bir nechta ish</td><td>6 yadro, 12 oqim</td></tr>
+<tr><td><b>Kesh xotira</b></td><td>Protsessor ichidagi juda tez, kichik xotira</td><td>16 MB L3</td></tr>
+<tr><td><b>Ishlab chiqaruvchi</b></td><td>Asosiy kompaniyalar</td><td>Intel (Core i3/i5/i7/i9), AMD (Ryzen 3/5/7/9), Apple (M1–M4)</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: yadrolar — oshpazlar</span>
+Bitta oshpaz (1 yadro) juda tez bo'lsa ham, palov, salat va choyni navbatma-navbat tayyorlaydi. To'rtta oshpaz (4 yadro) bir vaqtning
+o'zida to'rt xil ish qiladi. Shuning uchun ko'p yadroli protsessor bir vaqtda brauzer, musiqa va o'yinni sekinlashmasdan ishlata oladi.</div>
+
+<h3>2. Tezkor xotira (RAM) — ish stoli</h3>
+<p><b>RAM</b> (Random Access Memory — tezkor xotira, operativ xotira) hozir ochiq turgan dasturlar va ular ishlatayotgan ma'lumotlarni
+saqlaydi. U juda tez, lekin <b>uchuvchan</b>: kompyuter o'chirilsa, RAMdagi hamma narsa <b>o'chib ketadi</b>.</p>
+<ul>
+  <li>Hajmi: maktab kompyuteri uchun <b>4–8 GB</b>, o'yin va dasturlash uchun <b>16 GB</b> va undan ko'p.</li>
+  <li>RAM kam bo'lsa — ko'p yorliq ochilganda kompyuter "qotib" qoladi.</li>
+</ul>
+<div class="callout warn"><span class="t">Nega hujjatni saqlash kerak?</span>
+Word'da yozayotgan matningiz <b>saqlanmaguncha</b> faqat RAMda turadi. Elektr o'chsa — yo'qoladi. <kbd>Ctrl</kbd>+<kbd>S</kbd> bosganingizda
+u diskka (doimiy xotiraga) yoziladi. Tez-tez saqlashni odat qiling!</div>
+
+<h3>3. Doimiy xotira — HDD va SSD (omborxona)</h3>
+<p>Fayllar, rasmlar, o'rnatilgan dasturlar va operatsion tizimning o'zi <b>doimiy xotira</b>da saqlanadi — kompyuter o'chsa ham yo'qolmaydi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>HDD (qattiq disk)</th><th>SSD (qattiq holatdagi disk)</th></tr></thead>
+<tbody>
+<tr><td>Tuzilishi</td><td>Aylanuvchi magnit disklar va o'qish kallagi</td><td>Flesh-xotira mikrosxemalari, harakatlanuvchi qism yo'q</td></tr>
+<tr><td>Tezligi</td><td>~100–200 MB/s</td><td>500 MB/s dan 7000 MB/s gacha</td></tr>
+<tr><td>Narxi (1 GB uchun)</td><td>Arzonroq</td><td>Qimmatroq</td></tr>
+<tr><td>Zarbaga chidamliligi</td><td>Past — yiqilsa buzilishi mumkin</td><td>Yuqori</td></tr>
+<tr><td>Qachon</td><td>Katta arxivlar, filmlar</td><td>Operatsion tizim va dasturlar — kompyuter tez yonadi</td></tr>
+</tbody></table></div>
+<p>Flesh-xotira — fleshka (USB), xotira kartalari (microSD) va SSDlarda ishlatiladi. U RAMdan farqli o'laroq <b>doimiy</b>: tok o'chganda ham ma'lumot saqlanadi.</p>
+
+<h3>4. Ona plata — hammasini bog'lovchi "shahar ko'chalari"</h3>
+<p><b>Ona plata</b> (motherboard) — barcha qismlar ulanadigan katta plata. Protsessor, RAM, disklar, videokarta va portlar (USB, HDMI)
+shu yerda bir-biri bilan ma'lumot almashadi. Ma'lumot uzatiladigan "yo'llar" <b>shina</b> deyiladi.</p>
+
+<h3>5. Videokarta (GPU)</h3>
+<p><b>GPU</b> (Graphics Processing Unit) — tasvirni ekranga chiqaradi. Minglab kichik yadroga ega bo'lgani uchun o'yinlar, video montaj va
+<b>sun'iy intellektni o'qitish</b>da juda muhim. Oddiy kompyuterlarda u protsessor ichiga o'rnatilgan bo'ladi (integratsiyalashgan grafika).</p>
+
+<h3>6. Quvvat bloki</h3>
+<p>Rozetkadagi 220 V o'zgaruvchan tokni kompyuter qismlari uchun kerakli past kuchlanishga aylantiradi. Noutbukda bu vazifani zaryadlovchi va batareya bajaradi.</p>
+
+<h2 id="kompyuterning-ishlash-tamoyili"><a class="anchor" href="#kompyuterning-ishlash-tamoyili">#</a>Kompyuterning ishlash tamoyili</h2>
+<p>Har qanday kompyuter ishi to'rt bosqichli siklga asoslanadi:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">1. Kiritish<small>Input</small></div>
+    <div class="arrow">→</div>
+    <div class="node">2. Qayta ishlash<small>Process — CPU</small></div>
+    <div class="arrow">→</div>
+    <div class="node">3. Saqlash<small>Storage — RAM/SSD</small></div>
+    <div class="arrow">→</div>
+    <div class="node">4. Chiqarish<small>Output</small></div>
+  </div>
+</div>
+<p><b>Misol:</b> kalkulyatorda <code>25 × 4</code> ni hisoblash.</p>
+<ol class="steps">
+  <li><b>Kiritish:</b> klaviaturada <code>25</code>, <code>×</code>, <code>4</code> tugmalarini bosasiz — signal kompyuterga keladi.</li>
+  <li><b>Saqlash:</b> sonlar tezkor xotiraga (RAM) yoziladi.</li>
+  <li><b>Qayta ishlash:</b> protsessor ularni xotiradan olib, ko'paytiradi: <code>100</code>.</li>
+  <li><b>Chiqarish:</b> natija monitorga chiqadi.</li>
+</ol>
+<p>Kompyuter ichida hamma narsa — matn, rasm, musiqa, video — <b>0 va 1</b> lardan iborat ikkilik kodda saqlanadi
+(bu haqida 3-mavzuda batafsil). Chunki elektron sxema uchun ikki holatni ajratish oson: <b>tok bor (1)</b> yoki <b>tok yo'q (0)</b>.</p>
+
+<h2 id="kompyuterning-texnik-korsatkichlarini-oqish"><a class="anchor" href="#kompyuterning-texnik-korsatkichlarini-oqish">#</a>Kompyuterning texnik ko'rsatkichlarini o'qish</h2>
+<p>Do'konda noutbuk yorlig'ida shunday yozuvni ko'rasiz:</p>
+<div class="code"><div class="code-head"><span>Noutbuk xususiyatlari</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">Intel Core i5-1235U (10 yadro, 4.4 GHz gacha) / 16 GB DDR4 / 512 GB SSD / 15.6&quot; Full HD IPS / Intel Iris Xe / Windows 11</code></pre></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Qism</th><th>Nimani bildiradi</th></tr></thead>
+<tbody>
+<tr><td><code>Intel Core i5-1235U</code></td><td>Protsessor: Intel, o'rta daraja (i5), U — kam quvvat iste'mol qiluvchi noutbuk protsessori</td></tr>
+<tr><td><code>16 GB DDR4</code></td><td>Tezkor xotira 16 gigabayt</td></tr>
+<tr><td><code>512 GB SSD</code></td><td>Doimiy xotira — tezkor SSD disk</td></tr>
+<tr><td><code>15.6" Full HD IPS</code></td><td>Ekran diagonali 15,6 dyuym, 1920×1080 piksel, IPS — ranglar sifatli</td></tr>
+<tr><td><code>Intel Iris Xe</code></td><td>Integratsiyalashgan videokarta</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Maktab o'quvchisi uchun yaxshi kompyuter</span>
+Dasturlashni o'rganish uchun kamida <b>Core i3 / Ryzen 3</b>, <b>8 GB RAM</b> va <b>SSD</b> tavsiya etiladi. SSD — eng sezilarli tezlashtiruvchi qism:
+eski kompyuterga SSD qo'yilsa, u bir necha baravar tez yonadi.</div>
+
+<h3>Kompyuter yoqilganda nima bo'ladi?</h3>
+<ol class="steps">
+  <li>Quvvat tugmasi bosiladi — ona plataga tok keladi.</li>
+  <li><b>BIOS/UEFI</b> (ona platadagi kichik dastur) ishga tushadi va <b>POST</b> (Power-On Self-Test) — qurilmalarni tekshiradi: RAM, disk, klaviatura bormi?</li>
+  <li>Xato bo'lmasa, BIOS diskdan <b>operatsion tizim yuklovchisini</b> topadi.</li>
+  <li>Operatsion tizim (Windows) xotiraga yuklanadi va ish stoli paydo bo'ladi.</li>
+</ol>
+
+<h2 id="amaliy-mashgulot-kompyuteringizni-tanishtiring"><a class="anchor" href="#amaliy-mashgulot-kompyuteringizni-tanishtiring">#</a>Amaliy mashg'ulot: kompyuteringizni "tanishtiring"</h2>
+<ol class="steps">
+  <li><kbd>Win</kbd>+<kbd>Pause</kbd> yoki <b>Sozlamalar → Tizim → Haqida</b> (Settings → System → About) ni oching. Protsessor nomi, RAM hajmi va Windows versiyasini yozib oling.</li>
+  <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd> — <b>Vazifalar dispetcheri</b> (Task Manager) → <b>Unumdorlik</b> (Performance) yorlig'i. CPU, xotira va disk qancha band ekanini kuzating.</li>
+  <li>Brauzerda 10 ta yorliq oching va Task Manager'da RAM band bo'lishi qanday o'zgarganini kuzating.</li>
+  <li><b>Bu kompyuter</b> (This PC) ni ochib, disklar hajmi va bo'sh joyni yozing.</li>
+  <li>Natijalarni jadvalga to'ldiring va sinfdoshingiz kompyuteri bilan solishtiring:</li>
+</ol>
+<div class="table-wrap"><table>
+<thead><tr><th>Ko'rsatkich</th><th>Mening kompyuterim</th><th>Sinfdoshimniki</th></tr></thead>
+<tbody>
+<tr><td>Protsessor (nomi, yadrolar, GHz)</td><td></td><td></td></tr>
+<tr><td>RAM (GB)</td><td></td><td></td></tr>
+<tr><td>Disk turi va hajmi</td><td></td><td></td></tr>
+<tr><td>Operatsion tizim</td><td></td><td></td></tr>
+</tbody></table></div>
+
+<h2 id="kop-uchraydigan-xato-tushunchalar"><a class="anchor" href="#kop-uchraydigan-xato-tushunchalar">#</a>Ko'p uchraydigan xato tushunchalar</h2>
+<ul class="mistakes">
+  <li>❌ "Monitor — bu kompyuter" → ✅ Monitor faqat chiqarish qurilmasi; hisob-kitoblar tizim blokidagi protsessorda bajariladi.</li>
+  <li>❌ "RAM va disk — bir xil xotira" → ✅ RAM — vaqtinchalik va tez (ish stoli), disk — doimiy (omborxona).</li>
+  <li>❌ "GHz qancha katta bo'lsa, kompyuter shuncha tez" → ✅ Yadrolar soni, kesh, RAM va SSD ham juda muhim.</li>
+  <li>❌ "Kompyuter o'zi o'ylaydi" → ✅ Kompyuter faqat dastur ko'rsatmalarini bajaradi.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Kompyuterning "miyasi" deb qaysi qurilmaga aytiladi?</p><ol>
+<li>Monitor</li><li>Protsessor (CPU)</li><li>Klaviatura</li><li>Quvvat bloki</li></ol>
+<p class="explain">CPU barcha hisob-kitoblarni bajaradi va qurilmalarni boshqaradi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Kompyuter o'chirilganda qaysi xotiradagi ma'lumot yo'qoladi?</p><ol>
+<li>SSD</li><li>HDD</li><li>RAM</li><li>Fleshka</li></ol>
+<p class="explain">RAM — uchuvchan xotira, faqat tok bor paytda ma'lumot saqlaydi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Kompyuter ishining to'g'ri tartibi qaysi?</p><ol>
+<li>Kiritish → qayta ishlash → chiqarish</li><li>Chiqarish → kiritish → qayta ishlash</li><li>Qayta ishlash → kiritish → chiqarish</li><li>Saqlash → chiqarish → kiritish</li></ol>
+<p class="explain">Avval ma'lumot kiritiladi, protsessor uni qayta ishlaydi, natija chiqariladi (va kerak bo'lsa saqlanadi).</p></div>
+<div class="quiz" data-answer="4"><p class="q">SSD'ning HDD'dan asosiy afzalligi nima?</p><ol>
+<li>Har doim arzonroq</li><li>Hajmi har doim kattaroq</li><li>Aylanuvchi disklari bor</li><li>Ancha tez va zarbaga chidamli</li></ol>
+<p class="explain">SSD'da harakatlanuvchi qism yo'q — shuning uchun tez va mustahkam.</p></div>
+<div class="quiz" data-answer="2"><p class="q">"3,6 GHz" yozuvi protsessorning qaysi ko'rsatkichi?</p><ol>
+<li>Xotira hajmi</li><li>Takt chastotasi</li><li>Yadrolar soni</li><li>Ekran o'lchami</li></ol>
+<p class="explain">GHz — bir soniyadagi milliard takt.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Kompyuter yoqilganda qurilmalarni tekshiruvchi dastur qanday ataladi?</p><ol>
+<li>Antivirus</li><li>Brauzer</li><li>POST (BIOS ichida)</li><li>Excel</li></ol>
+<p class="explain">BIOS/UEFI yoqilganda POST — o'z-o'zini tekshirish dasturini ishga tushiradi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Uyingizdagi barcha "kompyuterlar"ni sanab chiqing (telefon, televizor, kir yuvish mashinasi...) va har biri qaysi turga kirishini yozing.</li>
+  <li>Internet-do'konlardan 3 ta noutbukni tanlab, protsessor, RAM, disk va narxini jadvalda solishtiring. Qaysi biri dasturlash uchun eng yaxshi va nega?</li>
+  <li><b>1-loyiha boshlanishi:</b> "Kompyuterning asosiy qurilmalari" mavzusida 5–7 slayddan iborat taqdimot rejasini tuzing (4-mavzuda yakunlaymiz).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Kompyuter</dt><dd>Ma'lumotni dastur asosida kirituvchi, qayta ishlovchi, saqlovchi va chiqaruvchi qurilma.</dd>
+  <dt>CPU</dt><dd>Protsessor — hisoblaydi va boshqaradi; ko'rsatkichlari: GHz, yadrolar, kesh.</dd>
+  <dt>RAM</dt><dd>Tezkor, vaqtinchalik xotira — kompyuter o'chsa tozalanadi.</dd>
+  <dt>SSD / HDD</dt><dd>Doimiy xotira; SSD tez, HDD arzon va katta.</dd>
+  <dt>Ona plata</dt><dd>Barcha qismlarni bog'lovchi asosiy plata.</dd>
+  <dt>Ishlash tamoyili</dt><dd>Kiritish → qayta ishlash → saqlash → chiqarish.</dd>
+  <dt>Fon Neyman</dt><dd>Dastur va ma'lumot bitta xotirada saqlanadi.</dd>
+</dl>
+</div>
+<nav class="pager"><span></span><a class="next" href="02-operatsion-tizimlar-windows.html"><small>Keyingi mavzu →</small>Operatsion tizimlar va Windows muhitida ishlash</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#kompyuter-nima">Kompyuter nima?</a></li><li><a href="#zamonaviy-kompyuter-turlari">Zamonaviy kompyuter turlari</a></li><li><a href="#kompyuter-arxitekturasi">Kompyuter arxitekturasi</a></li><li><a href="#kompyuterning-ishlash-tamoyili">Kompyuterning ishlash tamoyili</a></li><li><a href="#kompyuterning-texnik-korsatkichlarini-oqish">Kompyuterning texnik ko&#x27;rsatkichlarini o&#x27;qish</a></li><li><a href="#amaliy-mashgulot-kompyuteringizni-tanishtiring">Amaliy mashg&#x27;ulot: kompyuteringizni &quot;tanishtiring&quot;</a></li><li><a href="#kop-uchraydigan-xato-tushunchalar">Ko&#x27;p uchraydigan xato tushunchalar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

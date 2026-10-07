@@ -7,6 +7,7 @@ Qo'llanma saytini yig'uvchi skript (hech qanday tashqi kutubxona kerak emas).
   src/8-sinf/index.html       -> 8-sinf/index.html        (8-sinf kursi bosh sahifasi)
   src/8-sinf/NN-nom.html      -> 8-sinf/NN-nom.html       (8-sinf o'quv dasturi mavzulari)
   src/8-sinf/taqdimot/NN-nom.txt -> 8-sinf/taqdimot/NN-nom.html (taqdimotlar, slides.py orqali)
+  src/cs/NN-nom.html          -> cs/NN-nom.html           (8-sinf Computer Science Foundation kursi)
 
 Manba fayllarda:
   * Boshida meta-blok:   <!-- title: ... | desc: ... | icon: ... | level: ... | bob: ... -->
@@ -36,6 +37,12 @@ COURSES = [
         "name": "8-sinf: Web Full-stack kursi",
         "unit": "mavzu",
         "home": "8-sinf/index.html",
+    },
+    {
+        "dir": "cs",
+        "name": "8-sinf: Computer Science Foundation",
+        "unit": "mavzu",
+        "home": "cs/index.html",
     },
 ]
 

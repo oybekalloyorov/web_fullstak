@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Klaviatura tuzilishi va tugmalar guruhlari; to&#x27;g&#x27;ri o&#x27;tirish va barmoqlar joylashuvi; touch typing — 10 barmoqda ko&#x27;rmasdan yozish; tezlik (WPM) va aniqlikni oshirish mashqlari; matn terishda tezkor tugmalar va xatolarni tuzatish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a class="active" href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⌨️</div><div><div class="crumb">07-mavzu · 26 tadan · II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</div><h1>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</h1><p class="lead">Klaviatura tuzilishi va tugmalar guruhlari; to&#x27;g&#x27;ri o&#x27;tirish va barmoqlar joylashuvi; touch typing — 10 barmoqda ko&#x27;rmasdan yozish; tezlik (WPM) va aniqlikni oshirish mashqlari; matn terishda tezkor tugmalar va xatolarni tuzatish.</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/07-klaviaturada-tez-yozish.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Klaviaturaning tuzilishi va tugmalar guruhlarini;</li>
+  <li>To'g'ri o'tirish holati va 10 barmoqning "uy" qatoridagi joyini;</li>
+  <li>Touch typing — klaviaturaga qaramasdan yozish usulini;</li>
+  <li>Yozish tezligi (WPM) va aniqligini o'lchash va oshirishni;</li>
+  <li>Matn bilan ishlashda vaqtni tejaydigan tezkor tugmalarni.</li>
+</ul>
+</div>
+
+<h2 id="nega-tez-yozish-muhim"><a class="anchor" href="#nega-tez-yozish-muhim">#</a>Nega tez yozish muhim?</h2>
+<p>Dasturchi kunida minglab belgi yozadi: kod, xabarlar, hujjatlar. Ikki barmoq bilan klaviaturaga qarab yozadigan odam daqiqasiga
+<b>15–25 so'z</b> yozadi, 10 barmoqda ko'rmasdan yozadigan esa — <b>50–80 so'z</b>. Bu kuniga <b>1–2 soat</b> tejalgan vaqt!
+Eng muhimi — ko'z ekranda bo'ladi, fikr uzilmaydi.</p>
+<div class="analogy"><span class="t">O'xshatish: velosiped haydash</span>
+Boshida pedal, rul va muvozanat haqida o'ylaysiz, sekin va qiyin. Bir necha haftadan so'ng "avtomat" bo'lib qoladi — endi faqat yo'lga
+qaraysiz. Touch typing ham shunday: 2–4 hafta muntazam mashq — va barmoqlar tugmalarni o'zi "topadi".</div>
+
+<h2 id="klaviatura-tuzilishi"><a class="anchor" href="#klaviatura-tuzilishi">#</a>Klaviatura tuzilishi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Guruh</th><th>Tugmalar</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td>Harf-raqam</td><td>A–Z, 0–9, belgilar</td><td>Matn va raqam kiritish</td></tr>
+<tr><td>Boshqaruv</td><td><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>Win</kbd> <kbd>Esc</kbd></td><td>Boshqa tugmalar bilan birga buyruq beradi</td></tr>
+<tr><td>Funksional</td><td><kbd>F1</kbd>–<kbd>F12</kbd></td><td>F1 — yordam, F2 — nom o'zgartirish, F5 — yangilash, F11 — to'liq ekran</td></tr>
+<tr><td>Navigatsiya</td><td>Strelkalar, <kbd>Home</kbd> <kbd>End</kbd> <kbd>PgUp</kbd> <kbd>PgDn</kbd></td><td>Kursor va sahifada harakat</td></tr>
+<tr><td>Tahrirlash</td><td><kbd>Backspace</kbd> <kbd>Delete</kbd> <kbd>Insert</kbd> <kbd>Enter</kbd> <kbd>Tab</kbd></td><td>Matnni o'chirish, yangi qator, chekinish</td></tr>
+<tr><td>Raqamli blok (NumPad)</td><td>O'ng tomondagi raqamlar</td><td>Tez raqam kiritish (<kbd>Num Lock</kbd> yoqilganda)</td></tr>
+<tr><td>Holat tugmalari</td><td><kbd>Caps Lock</kbd> <kbd>Num Lock</kbd></td><td>Katta harflar / raqamli blok rejimi</td></tr>
+</tbody></table></div>
+<p>Klaviatura joylashuvi <b>QWERTY</b> deyiladi — yuqori harf qatorining birinchi 6 harfi bo'yicha. U 1870-yillarda yozuv mashinalari uchun yaratilgan.</p>
+<div class="callout info"><span class="t">Backspace va Delete farqi</span>
+<kbd>Backspace</kbd> — kursordan <b>chapdagi</b> belgini, <kbd>Delete</kbd> — kursordan <b>o'ngdagi</b> belgini o'chiradi.</div>
+
+<h2 id="togri-otirish-sogliq-uchun"><a class="anchor" href="#togri-otirish-sogliq-uchun">#</a>To'g'ri o'tirish — sog'liq uchun</h2>
+<ul>
+  <li>🪑 Orqa stul suyanchig'iga tekkan, oyoqlar polda, tizzalar 90°;</li>
+  <li>💪 Tirsaklar 90° atrofida, bilaklar bukilmagan va havoda "osilib" turadi;</li>
+  <li>🖥️ Monitorning yuqori cheti ko'z darajasida, masofa 50–70 sm;</li>
+  <li>⏸️ Har 30–40 daqiqada qisqa tanaffus: qo'l, bo'yin va ko'zlar uchun mashq.</li>
+</ul>
+
+<h2 id="uy-qatori-va-barmoqlar-joylashuvi"><a class="anchor" href="#uy-qatori-va-barmoqlar-joylashuvi">#</a>Uy qatori va barmoqlar joylashuvi</h2>
+<p>Touch typing'ning asosi — <b>uy qatori</b> (home row). Barmoqlar doim shu qatordan "chiqib", yana unga qaytadi:</p>
+<div class="code"><div class="code-head"><span>Uy qatori</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">  Chap qo&#x27;l:  A   S   D   [F]        O&#x27;ng qo&#x27;l:  [J]   K   L   ;
+              │   │   │    │                      │    │   │   │
+           jimjiloq │ o&#x27;rta ko&#x27;rsatkich       ko&#x27;rsatkich │ nomsiz jimjiloq
+                 nomsiz                                  o&#x27;rta
+  Bosh barmoqlar — Probel (Space) tugmasida</code></pre></div>
+<p><kbd>F</kbd> va <kbd>J</kbd> tugmalarida kichik <b>bo'rtiq</b> bor — qaramasdan ko'rsatkich barmoqlarni joyiga qo'yish uchun.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Barmoq</th><th>Chap qo'l tugmalari</th><th>O'ng qo'l tugmalari</th></tr></thead>
+<tbody>
+<tr><td>Ko'rsatkich</td><td>R T F G V B (4 5)</td><td>Y U H J N M (6 7)</td></tr>
+<tr><td>O'rta</td><td>E D C (3)</td><td>I K , (8)</td></tr>
+<tr><td>Nomsiz</td><td>W S X (2)</td><td>O L . (9)</td></tr>
+<tr><td>Jimjiloq</td><td>Q A Z (1), Shift, Tab, Caps</td><td>P ; / (0) ' [ ], Enter, Backspace, Shift</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Shift qoidasi</span>
+Katta harf yozganda <b>qarama-qarshi qo'l</b>ning <kbd>Shift</kbd>idan foydalaning: <code>J</code> uchun chap <kbd>Shift</kbd>, <code>F</code> uchun o'ng <kbd>Shift</kbd>.</div>
+
+<h2 id="tezlik-va-aniqlik"><a class="anchor" href="#tezlik-va-aniqlik">#</a>Tezlik va aniqlik</h2>
+<ul>
+  <li><b>WPM</b> (words per minute) — daqiqadagi so'zlar soni. Hisoblashda 1 so'z = <b>5 ta belgi</b> (probel bilan) deb olinadi.</li>
+  <li><b>CPM</b> — daqiqadagi belgilar soni. WPM = CPM / 5.</li>
+  <li><b>Aniqlik</b> — to'g'ri yozilgan belgilar foizi. 95% dan past bo'lsa — sekinlashing!</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Daraja</th><th>WPM</th></tr></thead>
+<tbody>
+<tr><td>Yangi boshlovchi</td><td>10–25</td></tr>
+<tr><td>O'rtacha foydalanuvchi</td><td>30–40</td></tr>
+<tr><td>Yaxshi (maqsad: 8-sinf oxiri)</td><td>40–60</td></tr>
+<tr><td>Professional</td><td>70+</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Avval aniqlik, keyin tezlik</span>
+Xato bilan tez yozish — noto'g'ri harakatni "yod olish". Sekin, lekin to'g'ri barmoq bilan yozing — tezlik o'zi keladi.</div>
+
+<h3>Mini trenajyor: tezligingizni o'lchang</h3>
+<p>▶ tugmasini bosing, matnni maydonga ko'chirib yozing. Dastur WPM va aniqlikni hisoblaydi.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;p id=&quot;namuna&quot; style=&quot;font:18px monospace;background:#eef2ff;padding:10px;border-radius:8px&quot;&gt;Algoritm - masalani yechish uchun aniq va tartibli qadamlar ketma-ketligi.&lt;/p&gt;
+&lt;textarea id=&quot;maydon&quot; rows=&quot;3&quot; style=&quot;width:100%;font:18px monospace&quot; placeholder=&quot;Shu yerga yozing... (birinchi tugma bosilganda vaqt boshlanadi)&quot;&gt;&lt;/textarea&gt;
+&lt;p id=&quot;natija&quot; style=&quot;font:16px sans-serif&quot;&gt;&lt;/p&gt;
+&lt;script&gt;
+  const namuna = document.querySelector(&quot;#namuna&quot;).textContent;
+  const maydon = document.querySelector(&quot;#maydon&quot;);
+  const natija = document.querySelector(&quot;#natija&quot;);
+  let boshlanish = null;
+
+  maydon.addEventListener(&quot;input&quot;, () =&gt; {
+    if (boshlanish === null) boshlanish = Date.now();
+    const yozilgan = maydon.value;
+    let togri = 0;
+    for (let i = 0; i &lt; yozilgan.length; i++) {
+      if (yozilgan[i] === namuna[i]) togri++;
+    }
+    const daqiqa = (Date.now() - boshlanish) / 60000;
+    const wpm = daqiqa &gt; 0 ? Math.round((yozilgan.length / 5) / daqiqa) : 0;
+    const aniqlik = yozilgan.length ? Math.round(togri / yozilgan.length * 100) : 100;
+    natija.textContent = `Tezlik: ${wpm} WPM · Aniqlik: ${aniqlik}% · ${yozilgan.length}/${namuna.length} belgi`;
+    if (yozilgan.length &gt;= namuna.length) natija.textContent += &quot;  🎉 Tayyor!&quot;;
+  });
+&lt;/script&gt;</code></pre></div>
+
+<h2 id="matn-terishda-tezkor-tugmalar"><a class="anchor" href="#matn-terishda-tezkor-tugmalar">#</a>Matn terishda tezkor tugmalar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tugmalar</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><kbd>Ctrl</kbd>+<kbd>←</kbd> / <kbd>→</kbd></td><td>Kursorni bir so'z chapga / o'ngga</td></tr>
+<tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Qator boshiga / oxiriga</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Home</kbd> / <kbd>End</kbd></td><td>Matn boshiga / oxiriga</td></tr>
+<tr><td><kbd>Shift</kbd>+strelka</td><td>Matnni belgilash</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd></td><td>So'zni belgilash</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Backspace</kbd></td><td>Butun so'zni o'chirish</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd>, <kbd>C</kbd>, <kbd>X</kbd>, <kbd>V</kbd>, <kbd>Z</kbd></td><td>Hammasi, nusxa, qirqish, joylash, bekor qilish</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd> / <kbd>I</kbd> / <kbd>U</kbd></td><td>Qalin / kursiv / tagiga chizilgan (Word, Docs)</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>V</kbd></td><td>Bufer tarixi — oldin nusxalangan narsalar</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>.</kbd></td><td>Emoji paneli 😀</td></tr>
+</tbody></table></div>
+<p><b>O'zbekcha belgilar:</b> Windows'da "O'zbek (lotin)" klaviaturasini qo'shing; <code>oʻ</code> va <code>gʻ</code> uchun to'g'ri belgi —
+<b>ʻ</b> (U+02BB). Oddiy yozishmada apostrof <code>'</code> ham qabul qilinadi.</p>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>To'g'ri o'tirish holatini sozlang; barmoqlarni uy qatoriga qo'ying, <kbd>F</kbd> va <kbd>J</kbd> bo'rtiqlarini toping.</li>
+  <li>Yuqoridagi trenajyorda boshlang'ich tezligingizni o'lchang va yozib qo'ying.</li>
+  <li>Trenajyor saytida 15 daqiqa mashq qiling: <code>keybr.com</code>, <code>typing.com</code>, <code>monkeytype.com</code> yoki <code>10fastfingers.com</code>.</li>
+  <li>Uy qatori mashqi (qaramasdan): <code>asdf jkl; asdf jkl; fjfj dkdk slsl a;a;</code> — 5 marta.</li>
+  <li>Guruhda <b>"Tezlik chempionati"</b>: bir xil matnni 1 daqiqada yozing; g'olib — aniqlik × tezlik eng yuqori bo'lgan o'quvchi.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Klaviaturaga qarab yozish → ✅ Ko'z ekranda; kerak bo'lsa klaviaturani qog'oz bilan yopib mashq qiling.</li>
+  <li>❌ Barcha harflarni bitta-ikkita barmoq bilan → ✅ Har bir barmoq o'z "hududida".</li>
+  <li>❌ Bilakni stolga qo'yib yozish → ✅ Bilaklar havoda, yelkalar bo'shashgan.</li>
+  <li>❌ Bir kunda 2 soat mashq qilib, keyin bir hafta tashlab qo'yish → ✅ Har kuni 15–20 daqiqa samaraliroq.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Uy qatorida chap ko'rsatkich barmoq qaysi tugmada turadi?</p><ol>
+<li>A</li><li>F</li><li>J</li><li>G</li></ol>
+<p class="explain">Chap ko'rsatkich — F, o'ng ko'rsatkich — J (ikkalasida bo'rtiq bor).</p></div>
+<div class="quiz" data-answer="3"><p class="q">WPM nimani bildiradi?</p><ol>
+<li>Xatolar soni</li><li>Klaviatura turi</li><li>Daqiqadagi so'zlar soni (1 so'z = 5 belgi)</li><li>Monitor o'lchami</li></ol>
+<p class="explain">Words Per Minute — yozish tezligi o'lchovi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Kursordan chapdagi belgini qaysi tugma o'chiradi?</p><ol>
+<li>Backspace</li><li>Delete</li><li>Insert</li><li>Esc</li></ol>
+<p class="explain">Delete esa o'ngdagi belgini o'chiradi.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Butun so'zni bir harakatda o'chirish uchun?</p><ol>
+<li>Ctrl + Z</li><li>Shift + Delete</li><li>Alt + F4</li><li>Ctrl + Backspace</li></ol>
+<p class="explain">Ctrl+Backspace — kursordan chapdagi butun so'z.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Touch typing o'rganishda eng to'g'ri strategiya qaysi?</p><ol>
+<li>Darhol maksimal tezlikda yozish</li><li>Avval aniqlik, keyin tezlik; har kuni qisqa mashq</li><li>Faqat ikki barmoq bilan</li><li>Klaviaturaga qarab yozish</li></ol>
+<p class="explain">To'g'ri harakat avtomatlashgach, tezlik o'zi oshadi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Bir hafta davomida har kuni 15 daqiqa trenajyorda mashq qiling va natijalarni jadvalga yozing (sana, WPM, aniqlik). Haftaning boshi va oxirini solishtiring.</li>
+  <li>Maqsad: kurs oxirigacha <b>35+ WPM</b>, aniqlik <b>95%+</b>.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Uy qatori</dt><dd>A S D F — J K L ; ; F va J da bo'rtiq; bosh barmoqlar — Probelda.</dd>
+  <dt>Touch typing</dt><dd>10 barmoqda, klaviaturaga qaramasdan yozish.</dd>
+  <dt>WPM</dt><dd>Daqiqadagi so'zlar (5 belgi = 1 so'z); aniqlik 95%+ bo'lsin.</dd>
+  <dt>Tezkor tugmalar</dt><dd>Ctrl+←/→, Home/End, Shift+strelka, Ctrl+Backspace, Win+V.</dd>
+  <dt>Sog'liq</dt><dd>To'g'ri o'tirish, bilaklar havoda, muntazam tanaffus.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="06-kompyuter-xavfsizligi.html"><small>← Oldingi mavzu</small>Kompyuter xavfsizligi va antivirus dasturlari</a><a class="next" href="08-raqamli-savodxonlik.html"><small>Keyingi mavzu →</small>Raqamli savodxonlik va raqamli madaniyat</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#nega-tez-yozish-muhim">Nega tez yozish muhim?</a></li><li><a href="#klaviatura-tuzilishi">Klaviatura tuzilishi</a></li><li><a href="#togri-otirish-sogliq-uchun">To&#x27;g&#x27;ri o&#x27;tirish — sog&#x27;liq uchun</a></li><li><a href="#uy-qatori-va-barmoqlar-joylashuvi">Uy qatori va barmoqlar joylashuvi</a></li><li><a href="#tezlik-va-aniqlik">Tezlik va aniqlik</a></li><li><a href="#matn-terishda-tezkor-tugmalar">Matn terishda tezkor tugmalar</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
