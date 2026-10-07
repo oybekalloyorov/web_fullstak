@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot; — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Login-parol tizimining maqsadi va ishlash mantig&#x27;i; oldindan belgilangan login va parol bilan solishtirish; AND bilan ikki shartni birga tekshirish; xato urinishlarni hisoblash va 3 urinishdan keyin bloklash; While sikli va Boolean bayroq; xavfsizlik nuqtai nazaridan tahlil; test qilish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a class="active" href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔐</div><div><div class="crumb">25-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</h1><p class="lead">Login-parol tizimining maqsadi va ishlash mantig&#x27;i; oldindan belgilangan login va parol bilan solishtirish; AND bilan ikki shartni birga tekshirish; xato urinishlarni hisoblash va 3 urinishdan keyin bloklash; While sikli va Boolean bayroq; xavfsizlik nuqtai nazaridan tahlil; test qilish.</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/25-loyiha-login-parol.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li>Autentifikatsiya (shaxsni tasdiqlash) mantig'ini;</li>
+  <li>Matnlarni solishtirish va <b>AND</b> bilan ikki shartni birga tekshirishni;</li>
+  <li><b>Urinishlar hisoblagichi</b> bilan 3 marta xatodan keyin bloklashni;</li>
+  <li>Sikldan ikki xil sabab bilan chiqish: <b>muvaffaqiyat</b> yoki <b>limit tugashi</b>;</li>
+  <li>Dasturni xavfsizlik nuqtai nazaridan tahlil qilishni (14-mavzu bilan bog'lab).</li>
+</ul>
+</div>
+
+<h2 id="1-bosqich-rejalashtirish"><a class="anchor" href="#1-bosqich-rejalashtirish">#</a>1-bosqich: rejalashtirish</h2>
+<p>Telefoningiz, Telegram, kundalik.com — hammasi kirishda login va parol so'raydi. Bizning tizim:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Talab</th><th>Qanday amalga oshiriladi</th></tr></thead>
+<tbody>
+<tr><td>To'g'ri login va parol saqlanadi</td><td><code>togriLogin = "admin"</code>, <code>togriParol = "Qalam-2026!"</code></td></tr>
+<tr><td>Foydalanuvchi ikkalasini kiritadi</td><td>Input <code>login</code>, Input <code>parol</code></td></tr>
+<tr><td>Ikkalasi ham mos bo'lsa — kirish</td><td><code>login == togriLogin and parol == togriParol</code></td></tr>
+<tr><td>Xato bo'lsa — qolgan urinishlar soni</td><td><code>urinish = urinish + 1</code>, <code>3 - urinish</code></td></tr>
+<tr><td>3 marta xato — bloklash</td><td>Sikl sharti: <code>urinish &lt; 3</code></td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: telefon ekran qulfi</span>Telefon PIN-kodini bir necha marta noto'g'ri tersangiz, u "30 soniyadan keyin urinib
+ko'ring" deydi. Bu cheklov bo'lmasa, o'g'ri 0000 dan 9999 gacha barcha 10 000 variantni sinab chiqardi (<b>brute force</b>). Urinishlar limiti —
+oddiy, lekin juda kuchli himoya.</div>
+
+<h2 id="2-bosqich-blok-sxema"><a class="anchor" href="#2-bosqich-blok-sxema">#</a>2-bosqich: blok-sxema</h2>
+<p>Sikl ikki holatda tugashi kerak: <b>kirdi</b> (muvaffaqiyat) yoki <b>urinishlar tugadi</b>. Buning uchun Boolean bayroq <code>kirdi</code> va hisoblagich
+<code>urinish</code> ni birga ishlatamiz:</p>
+<div class="fc-wrap"><div class="fc-title">login.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String login, parol, togriLogin, togriParol</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer urinish</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Boolean kirdi</div>
+  <div class="fc-s fc-asg"><small>Assign</small>togriLogin = "admin"</div>
+  <div class="fc-s fc-asg"><small>Assign</small>togriParol = "Qalam-2026!"</div>
+  <div class="fc-s fc-asg"><small>Assign</small>urinish = 0</div>
+  <div class="fc-s fc-asg"><small>Assign</small>kirdi = false</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">While urinish &lt; 3 and not kirdi</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"Login:"</div>
+      <div class="fc-s fc-in"><small>Input</small>login</div>
+      <div class="fc-s fc-out"><small>Output</small>"Parol:"</div>
+      <div class="fc-s fc-in"><small>Input</small>parol</div>
+      <div class="fc-if"><div class="fc-s fc-cond">login == togriLogin and parol == togriParol</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-s fc-asg"><small>Assign</small>urinish = urinish + 1</div>
+          <div class="fc-s fc-out"><small>Output</small>"❌ Xato! Qoldi: " &amp; (3 - urinish)</div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>kirdi = true</div></div></div></div>
+    </div></div>
+  <div class="fc-if"><div class="fc-s fc-cond">kirdi</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"🔒 Akkaunt bloklandi!"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"✅ Xush kelibsiz, " &amp; login &amp; "!"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+
+<h3>Mantiqni tahlil qilamiz</h3>
+<ul>
+  <li><b>Sikl sharti</b> <code>urinish &lt; 3 and not kirdi</code>: "urinish qolgan <b>va</b> hali kirilmagan ekan — so'rayver". Ikkalasidan biri buzilsa — chiqamiz.</li>
+  <li><b>Sikldan keyingi If</b>: nima uchun chiqdik? <code>kirdi</code> rost bo'lsa — muvaffaqiyat; aks holda urinishlar tugagan.</li>
+  <li><b>AND</b> muhim: faqat login to'g'ri, parol xato bo'lsa — kirish yo'q.</li>
+  <li>Matn taqqoslash <b>harf registriga sezgir</b>: <code>"Admin" != "admin"</code>. Parol uchun bu to'g'ri xatti-harakat.</li>
+</ul>
+
+<h2 id="trassirovka"><a class="anchor" href="#trassirovka">#</a>Trassirovka</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Iteratsiya</th><th>Kiritildi</th><th>Shart (If)</th><th>urinish</th><th>kirdi</th><th>Chiqish</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>admin / qalam</td><td>false</td><td>1</td><td>false</td><td>❌ Xato! Qoldi: 2</td></tr>
+<tr><td>2</td><td>Admin / Qalam-2026!</td><td>false (A katta)</td><td>2</td><td>false</td><td>❌ Xato! Qoldi: 1</td></tr>
+<tr><td>3</td><td>admin / Qalam-2026!</td><td>true</td><td>2</td><td>true</td><td>—</td></tr>
+<tr><td>sikl tugadi</td><td></td><td></td><td></td><td></td><td>✅ Xush kelibsiz, admin!</td></tr>
+</tbody></table></div>
+
+<h2 id="python-va-brauzer-versiyasi"><a class="anchor" href="#python-va-brauzer-versiyasi">#</a>Python va brauzer versiyasi</h2>
+<div class="code"><div class="code-head"><span>login.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">TOGRI_LOGIN = &quot;admin&quot;
+TOGRI_PAROL = &quot;Qalam-2026!&quot;
+urinish = 0
+kirdi = False
+
+while urinish &lt; 3 and not kirdi:
+    login = input(&quot;Login: &quot;)
+    parol = input(&quot;Parol: &quot;)
+    if login == TOGRI_LOGIN and parol == TOGRI_PAROL:
+        kirdi = True
+    else:
+        urinish += 1
+        print(&quot;❌ Xato! Qoldi:&quot;, 3 - urinish)
+
+if kirdi:
+    print(f&quot;✅ Xush kelibsiz, {login}!&quot;)
+else:
+    print(&quot;🔒 Akkaunt bloklandi!&quot;)</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;div style=&quot;font:16px sans-serif;max-width:320px;padding:16px;border:1px solid #cbd5e1;border-radius:12px&quot;&gt;
+  &lt;b&gt;🔐 Tizimga kirish&lt;/b&gt;&lt;br&gt;&lt;small&gt;(login: admin, parol: Qalam-2026!)&lt;/small&gt;
+  &lt;input id=&quot;l&quot; placeholder=&quot;Login&quot; style=&quot;display:block;width:100%;box-sizing:border-box;margin:8px 0;padding:8px;font:inherit&quot;&gt;
+  &lt;input id=&quot;p&quot; type=&quot;password&quot; placeholder=&quot;Parol&quot; style=&quot;display:block;width:100%;box-sizing:border-box;margin:8px 0;padding:8px;font:inherit&quot;&gt;
+  &lt;button id=&quot;k&quot; style=&quot;width:100%;padding:8px;font:inherit&quot;&gt;Kirish&lt;/button&gt;
+  &lt;p id=&quot;x&quot;&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;script&gt;
+let urinish = 0, kirdi = false;
+document.getElementById(&#x27;k&#x27;).onclick = () =&gt; {
+  if (kirdi || urinish &gt;= 3) return;
+  const login = document.getElementById(&#x27;l&#x27;).value, parol = document.getElementById(&#x27;p&#x27;).value;
+  const x = document.getElementById(&#x27;x&#x27;);
+  if (login === &#x27;admin&#x27; &amp;&amp; parol === &#x27;Qalam-2026!&#x27;) { kirdi = true; x.textContent = &#x27;✅ Xush kelibsiz, &#x27; + login + &#x27;!&#x27;; }
+  else {
+    urinish = urinish + 1;
+    x.textContent = urinish &gt;= 3 ? &#x27;🔒 Akkaunt bloklandi!&#x27; : &#x27;❌ Xato! Qoldi: &#x27; + (3 - urinish);
+  }
+};
+&lt;/script&gt;</code></pre></div>
+
+<h2 id="xavfsizlik-tahlili-real-tizimlar-qanday-ishlaydi"><a class="anchor" href="#xavfsizlik-tahlili-real-tizimlar-qanday-ishlaydi">#</a>Xavfsizlik tahlili: real tizimlar qanday ishlaydi?</h2>
+<p>Bizning o'quv dasturimizda parol <b>ochiq holda</b> dastur ichida yozilgan. Haqiqiy tizimlarda bu katta xato bo'lardi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Bizning dastur</th><th>Haqiqiy tizim</th></tr></thead>
+<tbody>
+<tr><td>Parol kodda ochiq: <code>"Qalam-2026!"</code></td><td>Parol <b>xesh</b> ko'rinishida saqlanadi (<code>a7f3...e91</code>) — bazani o'g'irlagan ham parolni bilmaydi</td></tr>
+<tr><td>Kiritilgan parol ekranda ko'rinadi</td><td><code>••••••</code> bilan yashiriladi</td></tr>
+<tr><td>"Login xato" / "Parol xato" ni ajratsak — xakerga yordam</td><td>Umumiy xabar: "Login yoki parol noto'g'ri"</td></tr>
+<tr><td>3 urinish — doimiy blok</td><td>Vaqtinchalik blok (30 s, 5 daq...), email orqali tiklash</td></tr>
+<tr><td>Faqat parol</td><td>Parol + 2FA kodi (14-mavzu)</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Nega xabar umumiy bo'lishi kerak?</span>Agar tizim "Bunday login yo'q" desa, xaker qaysi loginlar <b>mavjudligini</b> bilib
+oladi va faqat ularning parolini terishga kirishadi. Bizning dasturimiz ham umumiy "Xato!" xabarini beradi — to'g'ri yo'l.</div>
+
+<h2 id="kengaytmalar"><a class="anchor" href="#kengaytmalar">#</a>Kengaytmalar</h2>
+<ol class="steps">
+  <li><b>Bir nechta foydalanuvchi:</b> 3 ta login-parol jufti (<code>OR</code> bilan): <code>(login == "ali" and parol == "...") or (login == "vali" and ...)</code>.</li>
+  <li><b>Ro'yxatdan o'tish:</b> avval foydalanuvchi o'z parolini yaratadi — parol kamida 8 belgi (<code>Len(parol) &gt;= 8</code>) bo'lmaguncha qayta so'rash (Do).</li>
+  <li><b>Parolni tasdiqlash:</b> yangi parol ikki marta kiritiladi va mos kelishi tekshiriladi.</li>
+  <li><b>Bankomat bilan birlashtirish:</b> 24-loyihaga PIN-kod qismini qo'shing — kirgandan keyingina menyu ochiladi.</li>
+  <li><b>Kuchli parol generatori (3-loyiha):</b> <code>Random</code> va <code>ToChar</code> bilan 12 belgili tasodifiy parol yaratish.</li>
+</ol>
+
+<h2 id="test-rejasi"><a class="anchor" href="#test-rejasi">#</a>Test rejasi</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Kiritishlar</th><th>Kutilgan</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>To'g'ri / to'g'ri (1-urinishda)</td><td>Xush kelibsiz</td></tr>
+<tr><td>2</td><td>Xato, xato, to'g'ri</td><td>Qoldi: 2, Qoldi: 1, Xush kelibsiz</td></tr>
+<tr><td>3</td><td>3 marta xato</td><td>Qoldi: 2, 1, 0 → Bloklandi; 4-marta so'ralmaydi</td></tr>
+<tr><td>4</td><td>Login to'g'ri, parol xato</td><td>Xato (AND)</td></tr>
+<tr><td>5</td><td>Login xato, parol to'g'ri</td><td>Xato (AND)</td></tr>
+<tr><td>6</td><td><code>ADMIN</code> / to'g'ri parol</td><td>Xato (registr)</td></tr>
+<tr><td>7</td><td>Bo'sh login va parol</td><td>Xato</td></tr>
+</tbody></table></div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>or</code> ishlatish → ✅ Faqat login to'g'ri bo'lsa ham kirib ketadi! <code>and</code> kerak.</li>
+  <li>❌ <code>urinish = urinish + 1</code> ni True tarmoqqa qo'yish → ✅ Faqat xato urinish sanaladi.</li>
+  <li>❌ Sikl sharti faqat <code>urinish &lt; 3</code> → ✅ To'g'ri kirgandan keyin ham login so'rayveradi; <code>and not kirdi</code>.</li>
+  <li>❌ Sikldan keyin tekshirmasdan "Xush kelibsiz" chiqarish → ✅ <code>If kirdi</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Login va parol ikkalasi ham to'g'ri bo'lishini tekshirish uchun qaysi operator?</p><ol>
+<li>or</li><li>not</li><li>and</li><li>&amp;</li></ol>
+<p class="explain">AND — ikkala shart ham rost bo'lishi kerak.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>urinish = 2</code>, <code>kirdi = false</code>. <code>urinish &lt; 3 and not kirdi</code> = ?</p><ol>
+<li>true — yana bir urinish bor</li><li>false</li><li>2</li><li>Xato</li></ol>
+<p class="explain">2 &lt; 3 rost, not false = true → true AND true.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Urinishlar limitining asosiy maqsadi?</p><ol>
+<li>Dasturni tezlashtirish</li><li>Xotirani tejash</li><li>Chiroyli ko'rinish</li><li>Parolni ko'r-ko'rona terib topishdan (brute force) himoya</li></ol>
+<p class="explain">Limitsiz har bir variantni sinab ko'rish mumkin bo'lardi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Asosiy loyihani 7 ta test bilan tekshiring va GitHub'ga joylang.</li>
+  <li>"Ro'yxatdan o'tish" kengaytmasini qo'shing: parol kamida 8 belgi va ikki marta kiritilganda mos kelsin.</li>
+  <li>README'da "Xavfsizlik tahlili" bo'limini yozing: dasturingizning 3 ta zaif tomoni va ularni real tizimda qanday tuzatish mumkin.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Autentifikatsiya</dt><dd>Login + parolni saqlangan qiymatlar bilan solishtirish.</dd>
+  <dt>AND</dt><dd>Ikkala ma'lumot ham to'g'ri bo'lishi shart.</dd>
+  <dt>Urinishlar hisoblagichi</dt><dd>Faqat xato urinishda +1; limit — brute force'ga qarshi.</dd>
+  <dt>Ikki chiqish sharti</dt><dd><code>While urinish &lt; 3 and not kirdi</code>, keyin <code>If kirdi</code>.</dd>
+  <dt>Real tizim</dt><dd>Xeshlangan parol, umumiy xato xabari, 2FA.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="24-loyiha-mini-bankomat.html"><small>← Oldingi mavzu</small>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a><a class="next" href="26-yakuniy-nazorat.html"><small>Keyingi mavzu →</small>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#1-bosqich-rejalashtirish">1-bosqich: rejalashtirish</a></li><li><a href="#2-bosqich-blok-sxema">2-bosqich: blok-sxema</a></li><li><a href="#trassirovka">Trassirovka</a></li><li><a href="#python-va-brauzer-versiyasi">Python va brauzer versiyasi</a></li><li><a href="#xavfsizlik-tahlili-real-tizimlar-qanday-ishlaydi">Xavfsizlik tahlili: real tizimlar qanday ishlaydi?</a></li><li><a href="#kengaytmalar">Kengaytmalar</a></li><li><a href="#test-rejasi">Test rejasi</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

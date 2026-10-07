@@ -23,7 +23,8 @@ import tempfile
 import build
 
 ROOT = pathlib.Path(__file__).parent
-COMBINED = {"darslar": "full-stack-qollanma.pdf", "8-sinf": "8-sinf-web-fullstack-kursi.pdf"}
+COMBINED = {"darslar": "full-stack-qollanma.pdf", "8-sinf": "8-sinf-web-fullstack-kursi.pdf",
+            "cs": "8-sinf-computer-science.pdf"}
 
 
 def main():

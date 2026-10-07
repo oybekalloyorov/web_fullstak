@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot; — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Loyiha maqsadi va baholash mezonlarini aniqlash; davomat, uy vazifasi, amaliy ish va test ballarini kiritish; noto&#x27;g&#x27;ri ball kiritilishini Do sikli bilan tekshirish; umumiy ball va foizni hisoblash; If zinapoyasi bilan bahoni aniqlash: a&#x27;lo, yaxshi, qoniqarli, qoniqarsiz; butun sinf uchun statistika; test qilish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a class="active" href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🎓</div><div><div class="crumb">23-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</h1><p class="lead">Loyiha maqsadi va baholash mezonlarini aniqlash; davomat, uy vazifasi, amaliy ish va test ballarini kiritish; noto&#x27;g&#x27;ri ball kiritilishini Do sikli bilan tekshirish; umumiy ball va foizni hisoblash; If zinapoyasi bilan bahoni aniqlash: a&#x27;lo, yaxshi, qoniqarli, qoniqarsiz; butun sinf uchun statistika; test qilish.</p><div class="hero-level">2 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/23-loyiha-talaba-baholash.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li>Real hayotiy tizim uchun <b>baholash mezonlarini</b> loyihalashni;</li>
+  <li>Har bir kiritishni <b>tekshirish</b> (validatsiya) — noto'g'ri ballni qabul qilmaslikni;</li>
+  <li>Umumiy ball, foiz va bahoni hisoblashni;</li>
+  <li>Bitta o'quvchidan <b>butun sinfga</b> kengaytirish: sikl, hisoblagichlar, o'rtacha;</li>
+  <li>Avvalgi mavzulardagi barcha bilimlarni (o'zgaruvchi, shart, sikl) bitta loyihada birlashtirishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Loyiha rejasi (2 dars)</span><b>1-dars:</b> mezonlar, bitta o'quvchi uchun tizim (kiritish, tekshirish, hisob, baho).
+<b>2-dars:</b> butun sinf uchun statistika, test, GitHub va himoya.</div>
+
+<h2 id="1-bosqich-baholash-mezonlari"><a class="anchor" href="#1-bosqich-baholash-mezonlari">#</a>1-bosqich: baholash mezonlari</h2>
+<p>Tizimimiz to'rt komponentdan iborat — jami <b>100 ball</b>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponent</th><th>O'zgaruvchi</th><th>Maksimal ball</th><th>Ruxsat etilgan oraliq</th></tr></thead>
+<tbody>
+<tr><td>📅 Davomat</td><td><code>davomat</code></td><td>10</td><td>0–10</td></tr>
+<tr><td>🏠 Uyga vazifa</td><td><code>uy</code></td><td>20</td><td>0–20</td></tr>
+<tr><td>💻 Amaliy ish</td><td><code>amaliy</code></td><td>30</td><td>0–30</td></tr>
+<tr><td>📝 Test</td><td><code>test</code></td><td>40</td><td>0–40</td></tr>
+<tr><td><b>Jami</b></td><td><code>jami</code></td><td><b>100</b></td><td></td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Foiz</th><th>Baho</th><th>Matn</th></tr></thead>
+<tbody>
+<tr><td>86–100</td><td>5</td><td>A'lo</td></tr>
+<tr><td>71–85</td><td>4</td><td>Yaxshi</td></tr>
+<tr><td>56–70</td><td>3</td><td>Qoniqarli</td></tr>
+<tr><td>0–55</td><td>2</td><td>Qoniqarsiz</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Nega foiz?</span>Hozir maksimal ball 100 — foiz va ball bir xil. Lekin mezonlar o'zgarsa (masalan, maksimal 160 —
+bizning kurs kabi: 40 + 20 + 100), <code>foiz = jami / maks * 100</code> formulasi bahoni to'g'ri saqlab qoladi. Dasturni <b>moslashuvchan</b> qilish uchun
+<code>maks</code> ni alohida o'zgaruvchida saqlaymiz.</div>
+
+<h2 id="2-bosqich-kiritishni-tekshirish"><a class="anchor" href="#2-bosqich-kiritishni-tekshirish">#</a>2-bosqich: kiritishni tekshirish</h2>
+<p>Agar o'qituvchi adashib davomatga <code>95</code> yozsa, butun natija buziladi. "<b>Axlat kirsa — axlat chiqadi</b>" (Garbage In — Garbage Out)
+tamoyili. Har bir ball uchun Do sikli: oraliqdan tashqarida <b>ekan</b> — qayta so'raymiz.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">Bitta ballni tekshirib kiritish</div><div class="fc">
+  <div class="fc-loop"><div class="fc-s fc-cond">Do … While uy &lt; 0 or uy &gt; 20</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"Uyga vazifa (0–20):"</div>
+      <div class="fc-s fc-in"><small>Input</small>uy</div>
+      <div class="fc-if"><div class="fc-s fc-cond">uy &lt; 0 or uy &gt; 20</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"❌ Noto'g'ri! Qayta kiriting."</div></div></div></div>
+    </div></div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Uyga vazifa (0–20):
+25
+❌ Noto&#x27;g&#x27;ri! Qayta kiriting.
+Uyga vazifa (0–20):
+-3
+❌ Noto&#x27;g&#x27;ri! Qayta kiriting.
+Uyga vazifa (0–20):
+18</code></pre></div>
+<p>Sikl ichidagi If faqat <b>xabar</b> uchun: foydalanuvchi nega qayta so'ralayotganini bilishi kerak. Bunday blokni 4 marta (har bir komponent uchun)
+takrorlaymiz — faqat nomi va maksimumi o'zgaradi.</p>
+</div>
+</div>
+
+<h2 id="3-bosqich-hisoblash-va-baho"><a class="anchor" href="#3-bosqich-hisoblash-va-baho">#</a>3-bosqich: hisoblash va baho</h2>
+<div class="fc-wrap"><div class="fc-title">baholash.fprg — asosiy qism (kiritish bloklari qisqartirilgan)</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer davomat, uy, amaliy, test, jami, maks</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real foiz</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String ism, baho</div>
+  <div class="fc-s fc-asg"><small>Assign</small>maks = 100</div>
+  <div class="fc-s fc-in"><small>Input</small>ism</div>
+  <div class="fc-s fc-in"><small>Do-tekshiruv ×4</small>davomat, uy, amaliy, test</div>
+  <div class="fc-s fc-asg"><small>Assign</small>jami = davomat + uy + amaliy + test</div>
+  <div class="fc-s fc-asg"><small>Assign</small>foiz = jami / maks * 100</div>
+  <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 86</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 71</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 56</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-asg"><small>Assign</small>baho = "2 Qoniqarsiz"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "3 Qoniqarli"</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "4 Yaxshi"</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "5 A'lo"</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>ism &amp; ": " &amp; jami &amp; "/" &amp; maks &amp; " (" &amp; foiz &amp; "%) → " &amp; baho</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="callout info"><span class="t">Nega baho Assign'da, Output'da emas?</span>Har bir tarmoqda alohida Output qo'yish ham mumkin. Lekin bahoni o'zgaruvchiga
+yozib, <b>bitta</b> umumiy Output bilan chiqarish yaxshiroq: chiqish formatini o'zgartirmoqchi bo'lsangiz — 4 joyni emas, 1 joyni tuzatasiz. Bundan
+tashqari, <code>baho</code> qiymati keyin statistika uchun ham kerak bo'ladi.</div>
+
+<div class="code output"><div class="code-head"><span>Namuna natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Ism:
+Dilnoza
+Davomat (0–10):
+9
+Uyga vazifa (0–20):
+18
+Amaliy ish (0–30):
+26
+Test (0–40):
+33
+Dilnoza: 86/100 (86%) → 5 — A&#x27;lo</code></pre></div>
+
+<h2 id="4-bosqich-butun-sinf-uchun"><a class="anchor" href="#4-bosqich-butun-sinf-uchun">#</a>4-bosqich: butun sinf uchun</h2>
+<p>O'qituvchi 25 ta o'quvchini baholashi kerak — dasturni 25 marta ishga tushirmaydi. Butun hisobni <b>For</b> sikliga o'raymiz va statistika qo'shamiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Yangi o'zgaruvchi</th><th>Boshlang'ich</th><th>Siklda</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td><code>n</code></td><td>Input</td><td>—</td><td>O'quvchilar soni</td></tr>
+<tr><td><code>yigindi</code></td><td>0</td><td><code>yigindi = yigindi + foiz</code></td><td>Sinf o'rtachasi = <code>yigindi / n</code></td></tr>
+<tr><td><code>alo, yaxshi, qon, qonsiz</code></td><td>0</td><td>Tegishli tarmoqda <code>+ 1</code></td><td>Baholar taqsimoti</td></tr>
+<tr><td><code>eng, engIsm</code></td><td>-1, ""</td><td><code>foiz &gt; eng</code> bo'lsa yangilash</td><td>Sinf "yulduzi"</td></tr>
+</tbody></table></div>
+<div class="code"><div class="code-head"><span>Psevdokod</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">kiritish: n
+yigindi = 0;  alo = 0;  yaxshi = 0;  qon = 0;  qonsiz = 0;  eng = -1
+For i = 1 to n
+    kiritish (tekshiruv bilan): ism, davomat, uy, amaliy, test
+    jami = davomat + uy + amaliy + test
+    foiz = jami / maks * 100
+    yigindi = yigindi + foiz
+    agar foiz &gt;= 86:       baho = &quot;5&quot;;  alo = alo + 1
+    aks holda foiz &gt;= 71:  baho = &quot;4&quot;;  yaxshi = yaxshi + 1
+    aks holda foiz &gt;= 56:  baho = &quot;3&quot;;  qon = qon + 1
+    aks holda:             baho = &quot;2&quot;;  qonsiz = qonsiz + 1
+    agar foiz &gt; eng:  eng = foiz;  engIsm = ism
+    chiqar ism &amp; &quot; → &quot; &amp; baho
+chiqar &quot;Sinf o&#x27;rtachasi: &quot; &amp; ToFixed(yigindi / n, 1) &amp; &quot;%&quot;
+chiqar &quot;5: &quot; &amp; alo &amp; &quot;  4: &quot; &amp; yaxshi &amp; &quot;  3: &quot; &amp; qon &amp; &quot;  2: &quot; &amp; qonsiz
+chiqar &quot;Eng yuqori natija: &quot; &amp; engIsm &amp; &quot; (&quot; &amp; eng &amp; &quot;%)&quot;
+chiqar &quot;O&#x27;zlashtirish: &quot; &amp; ToFixed((alo + yaxshi + qon) / n * 100, 0) &amp; &quot;%&quot;</code></pre></div>
+
+<h2 id="pythonda"><a class="anchor" href="#pythonda">#</a>Python'da</h2>
+<div class="code"><div class="code-head"><span>baholash.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">def ball_ol(nom, maks):
+    &quot;&quot;&quot;Ballni 0..maks oralig&#x27;ida bo&#x27;lguncha qayta so&#x27;raydi.&quot;&quot;&quot;
+    while True:
+        x = int(input(f&quot;{nom} (0–{maks}): &quot;))
+        if 0 &lt;= x &lt;= maks:
+            return x
+        print(&quot;❌ Noto&#x27;g&#x27;ri! Qayta kiriting.&quot;)
+
+ism = input(&quot;Ism: &quot;)
+jami = (ball_ol(&quot;Davomat&quot;, 10) + ball_ol(&quot;Uyga vazifa&quot;, 20)
+        + ball_ol(&quot;Amaliy ish&quot;, 30) + ball_ol(&quot;Test&quot;, 40))
+foiz = jami / 100 * 100
+if foiz &gt;= 86:
+    baho = &quot;5 — A&#x27;lo&quot;
+elif foiz &gt;= 71:
+    baho = &quot;4 — Yaxshi&quot;
+elif foiz &gt;= 56:
+    baho = &quot;3 — Qoniqarli&quot;
+else:
+    baho = &quot;2 — Qoniqarsiz&quot;
+print(f&quot;{ism}: {jami}/100 ({foiz:.0f}%) → {baho}&quot;)</code></pre></div>
+<p>Python'da takrorlanuvchi kiritish <b>funksiya</b>ga (<code>ball_ol</code>) chiqarildi — bir marta yozib, 4 marta chaqiramiz. Flowgorithm'da ham
+funksiyalar bor (<b>Program → Add Function</b>) — qiziqqanlar uchun bonus topshiriq!</p>
+
+<h2 id="5-bosqich-test-qilish"><a class="anchor" href="#5-bosqich-test-qilish">#</a>5-bosqich: test qilish</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Davomat</th><th>Uy</th><th>Amaliy</th><th>Test</th><th>Kutilgan</th><th>Nima tekshiriladi</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>10</td><td>20</td><td>30</td><td>40</td><td>100% → 5</td><td>Maksimum</td></tr>
+<tr><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0% → 2</td><td>Minimum</td></tr>
+<tr><td>3</td><td>9</td><td>17</td><td>25</td><td>35</td><td>86% → 5</td><td>Chegara 86</td></tr>
+<tr><td>4</td><td>9</td><td>17</td><td>25</td><td>34</td><td>85% → 4</td><td>Chegara 85</td></tr>
+<tr><td>5</td><td>8</td><td>14</td><td>16</td><td>18</td><td>56% → 3</td><td>Chegara 56</td></tr>
+<tr><td>6</td><td>8</td><td>14</td><td>16</td><td>17</td><td>55% → 2</td><td>Chegara 55</td></tr>
+<tr><td>7</td><td>15 → 8</td><td>...</td><td></td><td></td><td>Qayta so'raydi</td><td>Validatsiya ⚠️</td></tr>
+<tr><td>8</td><td>-1 → 5</td><td>...</td><td></td><td></td><td>Qayta so'raydi</td><td>Manfiy ⚠️</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Chegaraviy testlar</span>Eng ko'p xato chegaralarda bo'ladi (<code>&gt;</code> va <code>&gt;=</code>). Shuning uchun har bir
+chegaraning <b>ikki tomonini</b> tekshiramiz: 86 va 85, 56 va 55.</div>
+
+<h2 id="loyiha-himoyasi-va-baholash"><a class="anchor" href="#loyiha-himoyasi-va-baholash">#</a>Loyiha himoyasi va baholash</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mezon</th><th>Ball</th></tr></thead>
+<tbody>
+<tr><td>To'rt komponent kiritiladi, jami va foiz to'g'ri</td><td>25</td></tr>
+<tr><td>Baho zinapoyasi to'g'ri (chegaralar!)</td><td>20</td></tr>
+<tr><td>Barcha kiritishlar validatsiya qilingan</td><td>20</td></tr>
+<tr><td>Butun sinf statistikasi</td><td>15</td></tr>
+<tr><td>Test jadvali (8+ test)</td><td>10</td></tr>
+<tr><td>GitHub README, tushunarli xabarlar</td><td>10</td></tr>
+</tbody></table></div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Do sharti noto'g'ri: <code>uy &gt;= 0 and uy &lt;= 20</code> → ✅ Do <b>noto'g'ri</b> holatda takrorlanadi: <code>uy &lt; 0 or uy &gt; 20</code>.</li>
+  <li>❌ <code>foiz</code> ni Integer qilish → ✅ Real (bo'lish natijasi).</li>
+  <li>❌ Statistika o'zgaruvchilarini sikl ichida nolga tenglash → ✅ Sikldan oldin.</li>
+  <li>❌ Sinf o'rtachasini <code>yigindi / 25</code> deb qotirib qo'yish → ✅ <code>yigindi / n</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Test bali 0–40 oralig'ida bo'lishi uchun Do sikli sharti qanday?</p><ol>
+<li><code>test &gt;= 0 and test &lt;= 40</code></li><li><code>test &lt; 0 or test &gt; 40</code></li><li><code>test == 40</code></li><li><code>test != 0</code></li></ol>
+<p class="explain">Do "noto'g'ri ekan" takrorlanadi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Jami 120, maksimal 160. Foiz?</p><ol>
+<li>120%</li><li>60%</li><li>75%</li><li>40%</li></ol>
+<p class="explain">120 / 160 × 100 = 75.</p></div>
+<div class="quiz" data-answer="1"><p class="q">"Garbage In — Garbage Out" nimani anglatadi?</p><ol>
+<li>Noto'g'ri kiritilgan ma'lumot noto'g'ri natija beradi</li><li>Dastur axlatni o'chiradi</li><li>Kompyuter tozalash kerak</li><li>Fayllarni savatga tashlash</li></ol>
+<p class="explain">Shuning uchun validatsiya kerak.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Bitta o'quvchi uchun to'liq versiyani (validatsiya bilan) yakunlang va 8 testdan o'tkazing.</li>
+  <li>Butun sinf versiyasini quring: o'rtacha, baholar taqsimoti, eng yuqori natija.</li>
+  <li>Bonus: mezonlarni o'quv dasturimizdagi tizimga moslang — joriy 40 + oraliq 20; 60 dan kamida 36 to'plasa "Yakuniy nazoratga ruxsat" chiqsin.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Validatsiya</dt><dd>Kiritishni tekshirish; Do … While noto'g'ri ekan.</dd>
+  <dt>Foiz</dt><dd><code>jami / maks * 100</code> — mezon o'zgarsa ham ishlaydi.</dd>
+  <dt>Zinapoya</dt><dd>86 → 71 → 56 → qolgani; baho o'zgaruvchiga yoziladi.</dd>
+  <dt>Statistika</dt><dd>Yig'uvchi, hisoblagichlar, maksimum — sikldan oldin boshlanadi.</dd>
+  <dt>Chegaraviy test</dt><dd>Har bir chegaraning ikki tomoni: 86/85, 56/55.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="22-loyiha-kalkulyator.html"><small>← Oldingi mavzu</small>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a><a class="next" href="24-loyiha-mini-bankomat.html"><small>Keyingi mavzu →</small>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#1-bosqich-baholash-mezonlari">1-bosqich: baholash mezonlari</a></li><li><a href="#2-bosqich-kiritishni-tekshirish">2-bosqich: kiritishni tekshirish</a></li><li><a href="#3-bosqich-hisoblash-va-baho">3-bosqich: hisoblash va baho</a></li><li><a href="#4-bosqich-butun-sinf-uchun">4-bosqich: butun sinf uchun</a></li><li><a href="#pythonda">Python&#x27;da</a></li><li><a href="#5-bosqich-test-qilish">5-bosqich: test qilish</a></li><li><a href="#loyiha-himoyasi-va-baholash">Loyiha himoyasi va baholash</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

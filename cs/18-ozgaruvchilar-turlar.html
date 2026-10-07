@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="O&#x27;zgaruvchi tushunchasi va vazifasi; ma&#x27;lumot turlari: Integer (butun son), Real (haqiqiy son), String (matn), Boolean (mantiqiy); Declare bilan o&#x27;zgaruvchi yaratish, Assign bilan qiymat berish, Input orqali kiritish; arifmetik amallar, amallar tartibi va o&#x27;rnatilgan funksiyalar (Int, Sqrt, Abs, Random, Len, ToInteger, ToString).">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a class="active" href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📦</div><div><div class="crumb">18-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</h1><p class="lead">O&#x27;zgaruvchi tushunchasi va vazifasi; ma&#x27;lumot turlari: Integer (butun son), Real (haqiqiy son), String (matn), Boolean (mantiqiy); Declare bilan o&#x27;zgaruvchi yaratish, Assign bilan qiymat berish, Input orqali kiritish; arifmetik amallar, amallar tartibi va o&#x27;rnatilgan funksiyalar (Int, Sqrt, Abs, Random, Len, ToInteger, ToString).</p><div class="hero-level">1 dars · amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/18-ozgaruvchilar-turlar.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>O'zgaruvchi</b> nima va u xotirada qanday saqlanishini;</li>
+  <li>To'rtta asosiy ma'lumot turi: <b>Integer, Real, String, Boolean</b>;</li>
+  <li><b>Declare</b>, <b>Assign</b> va <b>Input</b> bloklari bilan ishlashni;</li>
+  <li>Arifmetik amallar, ularning <b>tartibi</b>, butun bo'lish va qoldiq (<code>%</code>);</li>
+  <li>Flowgorithm'ning o'rnatilgan funksiyalaridan foydalanishni.</li>
+</ul>
+</div>
+
+<h2 id="ozgaruvchi-nima"><a class="anchor" href="#ozgaruvchi-nima">#</a>O'zgaruvchi nima?</h2>
+<p><b>O'zgaruvchi</b> — kompyuter xotirasidagi <b>nomlangan joy</b> (katak), unda ma'lumot saqlanadi va dastur davomida bu qiymat
+<b>o'zgarishi</b> mumkin.</p>
+<div class="analogy"><span class="t">O'xshatish: yorliqli quti</span>Omborxonada qutilar bor. Har birining <b>yorlig'i</b> (nomi) — <code>yosh</code>,
+<b>turi</b> — "faqat butun sonlar uchun", ichida esa <b>qiymat</b> — <code>14</code>. Qutidagi narsani almashtirish mumkin (yangi qiymat yozilsa,
+eskisi o'chadi), lekin yorliq va tur o'zgarmaydi. Kartoshka qutisiga suyuqlik quyib bo'lmaganidek, Integer qutiga matn yozib bo'lmaydi.</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>O'zgaruvchining 3 xususiyati</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td><b>Nomi</b> — unga murojaat qilish uchun</td><td><code>yosh</code>, <code>ism</code>, <code>umumiyBall</code></td></tr>
+<tr><td><b>Turi</b> — qanday ma'lumot sig'adi</td><td>Integer, Real, String, Boolean</td></tr>
+<tr><td><b>Qiymati</b> — hozir ichida nima bor</td><td><code>14</code>, <code>"Ali"</code>, <code>true</code></td></tr>
+</tbody></table></div>
+
+<h2 id="malumot-turlari"><a class="anchor" href="#malumot-turlari">#</a>Ma'lumot turlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Flowgorithm turi</th><th>Ma'nosi</th><th>Misollar</th><th>Qachon ishlatiladi</th><th>Python'da</th></tr></thead>
+<tbody>
+<tr><td><b>Integer</b></td><td>Butun son</td><td><code>14</code>, <code>-3</code>, <code>0</code>, <code>2026</code></td><td>Yosh, soni, ball, yil</td><td><code>int</code></td></tr>
+<tr><td><b>Real</b></td><td>Haqiqiy (kasr) son</td><td><code>3.14</code>, <code>-0.5</code>, <code>12750.0</code></td><td>Narx, o'rtacha, foiz, bo'yi</td><td><code>float</code></td></tr>
+<tr><td><b>String</b></td><td>Matn (belgilar qatori)</td><td><code>"Ali"</code>, <code>"8-A"</code>, <code>""</code></td><td>Ism, parol, xabar</td><td><code>str</code></td></tr>
+<tr><td><b>Boolean</b></td><td>Mantiqiy: rost yoki yolg'on</td><td><code>true</code>, <code>false</code></td><td>Kirdi/kirmadi, juftmi?</td><td><code>bool</code></td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">Diqqat: kasr belgisi — nuqta</span>Dasturlashda kasr <b>nuqta</b> bilan yoziladi: <code>3.14</code>, vergul bilan emas
+(<code>3,14</code> — xato).</div>
+<div class="callout tip"><span class="t">"14" va 14 farqi</span><code>14</code> — son, u bilan hisoblash mumkin: <code>14 + 1 = 15</code>.
+<code>"14"</code> — matn, ikki belgidan iborat. <code>"14" &amp; "1"</code> = <code>"141"</code> (yopishtirildi). Telefon raqami, pasport raqami — son
+ko'rinsa ham, aslida <b>String</b> (ular bilan hisoblash qilinmaydi va boshidagi 0 yo'qolmasligi kerak).</div>
+
+<h3>Turni qanday tanlash kerak?</h3>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">Faqat ha/yo'q?<small>→ Boolean</small></div>
+    <div class="arrow">yo'q →</div>
+    <div class="node">Hisoblanadimi?<small>yo'q → String</small></div>
+    <div class="arrow">ha →</div>
+    <div class="node">Kasr bo'lishi mumkinmi?<small>ha → Real</small></div>
+    <div class="arrow">yo'q →</div>
+    <div class="node">Integer</div>
+  </div>
+</div>
+
+<h2 id="ozgaruvchi-nomlash-qoidalari"><a class="anchor" href="#ozgaruvchi-nomlash-qoidalari">#</a>O'zgaruvchi nomlash qoidalari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Qoida</th><th>✅ To'g'ri</th><th>❌ Noto'g'ri</th></tr></thead>
+<tbody>
+<tr><td>Harf bilan boshlanadi</td><td><code>son1</code></td><td><code>1son</code></td></tr>
+<tr><td>Faqat harf, raqam, <code>_</code></td><td><code>umumiy_ball</code></td><td><code>umumiy-ball</code>, <code>ball%</code></td></tr>
+<tr><td>Bo'sh joy yo'q</td><td><code>tugilganYil</code></td><td><code>tug'ilgan yil</code></td></tr>
+<tr><td>Kalit so'z emas</td><td><code>natija</code></td><td><code>if</code>, <code>and</code>, <code>not</code></td></tr>
+<tr><td>Ma'noli bo'lsin</td><td><code>narx</code>, <code>soni</code></td><td><code>a1</code>, <code>xxx</code> (ishlaydi, lekin tushunarsiz)</td></tr>
+</tbody></table></div>
+<p>Ikki so'zli nomlar uchun ikki uslub: <code>umumiyBall</code> (camelCase) yoki <code>umumiy_ball</code> (snake_case). Bittasini tanlab, doim shunday yozing.
+Apostrof (<code>'</code>) nomlarda ishlatilmaydi: <code>tugilgan</code>.</p>
+
+<h2 id="uch-blok-declare-assign-input"><a class="anchor" href="#uch-blok-declare-assign-input">#</a>Uch blok: Declare, Assign, Input</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Blok</th><th>Vazifasi</th><th>Oynada nima yoziladi</th></tr></thead>
+<tbody>
+<tr><td><b>Declare</b></td><td>O'zgaruvchini yaratish (e'lon qilish)</td><td>Names: <code>a, b, summa</code> · Type: Integer · Array: ☐</td></tr>
+<tr><td><b>Assign</b></td><td>Qiymat berish yoki hisoblash natijasini yozish</td><td>Variable: <code>summa</code> · Expression: <code>a + b</code></td></tr>
+<tr><td><b>Input</b></td><td>Foydalanuvchi kiritgan qiymatni o'zgaruvchiga yozish</td><td>Variable: <code>a</code></td></tr>
+</tbody></table></div>
+<div class="callout info"><span class="t">"=" — tenglik emas, "yuklash"</span>Assign'dagi <code>summa = a + b</code> — "o'ng tomonni hisobla va natijani chap
+tomondagi qutiga sol" degani. Shuning uchun <code>i = i + 1</code> matematikada mantiqsiz, dasturlashda esa juda ko'p ishlatiladi: "<code>i</code> ni 1 ga
+oshir". Chap tomonda doim <b>bitta o'zgaruvchi</b> bo'ladi: <code>a + b = summa</code> — xato.</div>
+
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">turlar.fprg — har bir turdan bittadan</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer yosh</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real boy</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String ism</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Boolean katta</div>
+  <div class="fc-s fc-in"><small>Input</small>ism</div>
+  <div class="fc-s fc-in"><small>Input</small>yosh</div>
+  <div class="fc-s fc-in"><small>Input</small>boy</div>
+  <div class="fc-s fc-asg"><small>Assign</small>katta = yosh &gt;= 18</div>
+  <div class="fc-s fc-out"><small>Output</small>ism &amp; ", " &amp; yosh &amp; " yosh, " &amp; boy &amp; " m"</div>
+  <div class="fc-s fc-out"><small>Output</small>"Voyaga yetgan: " &amp; katta</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Ali
+14
+1.62
+Ali, 14 yosh, 1.62 m
+Voyaga yetgan: false</code></pre></div>
+<p><code>katta = yosh &gt;= 18</code> — taqqoslash natijasi <code>true</code> yoki <code>false</code> bo'ladi va Boolean o'zgaruvchiga yoziladi.</p>
+<p>Agar <code>yosh</code> so'ralganda <code>o'n to'rt</code> deb yozsangiz — Flowgorithm xato beradi: Integer qutiga matn sig'maydi.</p>
+</div>
+</div>
+
+<h2 id="arifmetik-amallar"><a class="anchor" href="#arifmetik-amallar">#</a>Arifmetik amallar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Amal</th><th>Flowgorithm</th><th>Misol</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td>Qo'shish</td><td><code>+</code></td><td><code>7 + 2</code></td><td><code>9</code></td></tr>
+<tr><td>Ayirish</td><td><code>-</code></td><td><code>7 - 2</code></td><td><code>5</code></td></tr>
+<tr><td>Ko'paytirish</td><td><code>*</code></td><td><code>7 * 2</code></td><td><code>14</code></td></tr>
+<tr><td>Bo'lish</td><td><code>/</code></td><td><code>7 / 2</code></td><td><code>3.5</code></td></tr>
+<tr><td>Qoldiq</td><td><code>%</code> yoki <code>mod</code></td><td><code>7 % 2</code></td><td><code>1</code></td></tr>
+<tr><td>Darajaga ko'tarish</td><td><code>^</code></td><td><code>2 ^ 3</code></td><td><code>8</code></td></tr>
+<tr><td>Matn ulash</td><td><code>&amp;</code></td><td><code>"8" &amp; "-A"</code></td><td><code>"8-A"</code></td></tr>
+</tbody></table></div>
+
+<h3>Qoldiq (%) — juda foydali amal</h3>
+<p><code>a % b</code> — <code>a</code> ni <code>b</code> ga bo'lgandagi <b>qoldiq</b>. 17 ta olmani 5 kishiga bo'lsak: har biriga 3 tadan, <b>2 ta qoladi</b> →
+<code>17 % 5 = 2</code>, <code>Int(17 / 5) = 3</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Vazifa</th><th>Ifoda</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td>Son juftmi?</td><td><code>n % 2 == 0</code></td><td><code>14 % 2 = 0</code> → juft</td></tr>
+<tr><td>Oxirgi raqam</td><td><code>n % 10</code></td><td><code>2026 % 10 = 6</code></td></tr>
+<tr><td>Oxirgi raqamsiz</td><td><code>Int(n / 10)</code></td><td><code>Int(2026 / 10) = 202</code></td></tr>
+<tr><td>Daqiqani soat:daqiqaga</td><td><code>Int(m / 60)</code> va <code>m % 60</code></td><td>135 daq → 2 soat 15 daq</td></tr>
+<tr><td>3 ga bo'linadimi?</td><td><code>n % 3 == 0</code></td><td><code>27 % 3 = 0</code> ✅</td></tr>
+</tbody></table></div>
+
+<h3>Amallar tartibi</h3>
+<p>Matematikadagidek: <b>1)</b> qavslar <code>( )</code> → <b>2)</b> daraja <code>^</code> → <b>3)</b> <code>* / %</code> → <b>4)</b> <code>+ -</code>. Bir xil darajadagilar
+chapdan o'ngga.</p>
+<div class="code"><div class="code-head"><span>Misollar</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">2 + 3 * 4        = 2 + 12        = 14
+(2 + 3) * 4      = 5 * 4         = 20
+(80 + 90 + 70) / 3               = 80      ← o&#x27;rtacha uchun qavs SHART!
+80 + 90 + 70 / 3 = 80 + 90 + 23.33 = 193.33  ← xato o&#x27;rtacha</code></pre></div>
+
+<h2 id="ornatilgan-funksiyalar"><a class="anchor" href="#ornatilgan-funksiyalar">#</a>O'rnatilgan funksiyalar</h2>
+<p>Flowgorithm'da tayyor funksiyalar bor — ularni ifoda ichida ishlatasiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Funksiya</th><th>Vazifasi</th><th>Misol → natija</th></tr></thead>
+<tbody>
+<tr><td><code>Abs(x)</code></td><td>Modul (absolyut qiymat)</td><td><code>Abs(-7)</code> → <code>7</code></td></tr>
+<tr><td><code>Int(x)</code></td><td>Butun qismi (kasrni tashlaydi)</td><td><code>Int(7.9)</code> → <code>7</code></td></tr>
+<tr><td><code>Sqrt(x)</code></td><td>Kvadrat ildiz</td><td><code>Sqrt(81)</code> → <code>9</code></td></tr>
+<tr><td><code>Random(n)</code></td><td>0 dan <code>n-1</code> gacha tasodifiy butun son</td><td><code>Random(10) + 1</code> → 1..10</td></tr>
+<tr><td><code>Len(s)</code></td><td>Matn uzunligi</td><td><code>Len("Salom")</code> → <code>5</code></td></tr>
+<tr><td><code>ToInteger(s)</code></td><td>Matnni butun songa</td><td><code>ToInteger("42")</code> → <code>42</code></td></tr>
+<tr><td><code>ToReal(s)</code></td><td>Matnni haqiqiy songa</td><td><code>ToReal("3.5")</code> → <code>3.5</code></td></tr>
+<tr><td><code>ToString(x)</code></td><td>Sonni matnga</td><td><code>ToString(15)</code> → <code>"15"</code></td></tr>
+<tr><td><code>ToFixed(x, n)</code></td><td>Sonni <code>n</code> xonali kasr bilan matnga</td><td><code>ToFixed(3.14159, 2)</code> → <code>"3.14"</code></td></tr>
+<tr><td><code>Sin, Cos, Tan, Log</code></td><td>Matematik funksiyalar</td><td><code>Log(1)</code> → <code>0</code></td></tr>
+</tbody></table></div>
+
+<h2 id="namuna-sonning-raqamlari"><a class="anchor" href="#namuna-sonning-raqamlari">#</a>Namuna: sonning raqamlari</h2>
+<p><b>Masala:</b> uch xonali son kiritiladi. Uning raqamlari va raqamlari yig'indisini toping. <code>385</code> → <code>3, 8, 5</code>, yig'indi <code>16</code>.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">raqamlar.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer n, yuz, on, bir, s</div>
+  <div class="fc-s fc-in"><small>Input</small>n</div>
+  <div class="fc-s fc-asg"><small>Assign</small>yuz = Int(n / 100)</div>
+  <div class="fc-s fc-asg"><small>Assign</small>on = Int(n / 10) % 10</div>
+  <div class="fc-s fc-asg"><small>Assign</small>bir = n % 10</div>
+  <div class="fc-s fc-asg"><small>Assign</small>s = yuz + on + bir</div>
+  <div class="fc-s fc-out"><small>Output</small>yuz &amp; ", " &amp; on &amp; ", " &amp; bir</div>
+  <div class="fc-s fc-out"><small>Output</small>"Yig'indi: " &amp; s</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="table-wrap"><table>
+<thead><tr><th>Ifoda</th><th>n = 385</th></tr></thead>
+<tbody>
+<tr><td><code>Int(385 / 100)</code></td><td><code>Int(3.85)</code> = <b>3</b></td></tr>
+<tr><td><code>Int(385 / 10) % 10</code></td><td><code>38 % 10</code> = <b>8</b></td></tr>
+<tr><td><code>385 % 10</code></td><td><b>5</b></td></tr>
+<tr><td><code>3 + 8 + 5</code></td><td><b>16</b></td></tr>
+</tbody></table></div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">n = int(input())
+yuz = n // 100        # Python&#x27;da // — butun bo&#x27;lish
+on = n // 10 % 10
+bir = n % 10
+print(yuz, on, bir)
+print(&quot;Yig&#x27;indi:&quot;, yuz + on + bir)</code></pre></div>
+</div>
+</div>
+
+<h2 id="amaliy-topshiriqlar"><a class="anchor" href="#amaliy-topshiriqlar">#</a>Amaliy topshiriqlar</h2>
+<ol class="steps">
+  <li><b>Anketa:</b> ism (String), sinf (Integer), o'rtacha baho (Real), sport bilan shug'ullanadimi (Boolean — <code>true/false</code> kiritiladi). Barchasini chiroyli chiqaring.</li>
+  <li><b>Vaqt:</b> soniyalar soni kiritiladi (masalan, 3725) → <code>1 soat 2 daqiqa 5 soniya</code>.</li>
+  <li><b>Tasodifiy zar:</b> <code>Random(6) + 1</code> bilan ikkita zar tashlang va yig'indisini chiqaring. Bir necha marta Run qiling.</li>
+  <li><b>Gipotenuza:</b> katetlar <code>a</code>, <code>b</code> → <code>c = Sqrt(a^2 + b^2)</code>. Test: 3, 4 → 5.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Narxni Integer qilish → ✅ 12500.50 kabi kasr bo'lishi mumkin bo'lsa — Real.</li>
+  <li>❌ <code>(a + b + c) / 3</code> ni Integer'ga yozish → ✅ Bo'lish natijasi kasr — Real o'zgaruvchi yoki <code>Int()</code>.</li>
+  <li>❌ <code>"yosh"</code> (qo'shtirnoqda) o'zgaruvchi o'rniga → ✅ Qo'shtirnoq — matn; o'zgaruvchi nomi qo'shtirnoqsiz yoziladi.</li>
+  <li>❌ Qavssiz o'rtacha → ✅ <code>(a + b) / 2</code>.</li>
+  <li>❌ <code>Random(10)</code> 1..10 beradi deb o'ylash → ✅ 0..9; 1..10 uchun <code>Random(10) + 1</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">O'quvchining bo'yi (1.62 m) uchun qaysi tur?</p><ol>
+<li>Integer</li><li>Real</li><li>String</li><li>Boolean</li></ol>
+<p class="explain">Kasr qismi bor — Real.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>23 % 5</code> nechaga teng?</p><ol>
+<li>4</li><li>4.6</li><li>3</li><li>5</li></ol>
+<p class="explain">23 = 5 × 4 + 3 → qoldiq 3.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Qaysi o'zgaruvchi nomi to'g'ri?</p><ol>
+<li><code>umumiy_ball</code></li><li><code>2ball</code></li><li><code>umumiy ball</code></li><li><code>ball%</code></li></ol>
+<p class="explain">Harf bilan boshlanadi, bo'sh joy va maxsus belgilar yo'q.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>2 + 3 * 2 ^ 2</code> = ?</p><ol>
+<li>100</li><li>20</li><li>36</li><li>14</li></ol>
+<p class="explain">Daraja: 2^2=4 → ko'paytma: 3×4=12 → 2+12=14.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>Random(6)</code> qaysi qiymatlarni qaytaradi?</p><ol>
+<li>1..6</li><li>0..5</li><li>0..6</li><li>Faqat 6</li></ol>
+<p class="explain">0 dan n−1 gacha. Zar uchun +1 qo'shiladi.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>i = i + 1</code> nima qiladi?</p><ol>
+<li>Xato — tenglama yechimsiz</li><li>i ni 1 ga tenglaydi</li><li>i ning qiymatini 1 ga oshiradi</li><li>Hech narsa</li></ol>
+<p class="explain">O'ng tomon hisoblanib, chapga yoziladi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>4 xonali son kiritiladi — raqamlarini teskari tartibda chiqaring (<code>2026</code> → <code>6202</code>).</li>
+  <li>Do'kon: mahsulot narxi (Real) va soni (Integer) → umumiy summa va 12% QQS bilan summa.</li>
+  <li>Har bir dasturni GitHub'dagi <code>flowgorithm/</code> papkasiga commit qiling.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>O'zgaruvchi</dt><dd>Nom + tur + qiymat; xotiradagi "quti".</dd>
+  <dt>Integer / Real</dt><dd>Butun / kasr son (kasr nuqta bilan).</dd>
+  <dt>String / Boolean</dt><dd>Matn <code>"..."</code> / <code>true</code>, <code>false</code>.</dd>
+  <dt>Declare → Input/Assign</dt><dd>Avval e'lon, keyin qiymat.</dd>
+  <dt>Amallar</dt><dd><code>+ - * / % ^ &amp;</code>; tartib: qavs → ^ → * / % → + -.</dd>
+  <dt>Funksiyalar</dt><dd><code>Int, Abs, Sqrt, Random, Len, ToInteger, ToString, ToFixed</code>.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="17-dastur-buyruq-kod-mantiq.html"><small>← Oldingi mavzu</small>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a><a class="next" href="19-chiziqli-algoritmlar.html"><small>Keyingi mavzu →</small>Flowgorithm&#x27;da chiziqli algoritmlar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#ozgaruvchi-nima">O&#x27;zgaruvchi nima?</a></li><li><a href="#malumot-turlari">Ma&#x27;lumot turlari</a></li><li><a href="#ozgaruvchi-nomlash-qoidalari">O&#x27;zgaruvchi nomlash qoidalari</a></li><li><a href="#uch-blok-declare-assign-input">Uch blok: Declare, Assign, Input</a></li><li><a href="#arifmetik-amallar">Arifmetik amallar</a></li><li><a href="#ornatilgan-funksiyalar">O&#x27;rnatilgan funksiyalar</a></li><li><a href="#namuna-sonning-raqamlari">Namuna: sonning raqamlari</a></li><li><a href="#amaliy-topshiriqlar">Amaliy topshiriqlar</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

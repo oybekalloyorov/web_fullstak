@@ -1,0 +1,171 @@
+<!-- title: Algoritm tushunchasi va algoritmik fikrlash | desc: Algoritm nima, vazifasi va kundalik hayotdagi misollar; asosiy xossalari: aniqlik, ketma-ketlik (diskretlik), natijaviylik, tushunarlilik, ommaviylik; algoritmni ifodalash usullari; algoritmik fikrlash va masalani bosqichlarga ajratish (dekompozitsiya). | icon: 🧩 | level: 1 dars · nazariy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Algoritm</b> nima va u nima uchun kerakligini;</li>
+  <li>Algoritmning asosiy xossalari: <b>aniqlik, ketma-ketlik, natijaviylik</b> (va yana ikkitasi);</li>
+  <li>Algoritmni ifodalashning 4 usulini: so'z, blok-sxema, psevdokod, dastur;</li>
+  <li>Algoritmik fikrlash: katta masalani kichik qadamlarga <b>ajratishni</b>.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">III bob haqida</span>Bu bobda biz <b>Flowgorithm</b> dasturi bilan ishlaymiz (o'quv dasturida "Flowalgorithm" deb ham
+yozilgan). U algoritmni <b>blok-sxema</b> ko'rinishida chizib, darhol ishga tushirish imkonini beradi — kod yozishdan oldin "dasturchidek
+o'ylashni" o'rganamiz.</div>
+
+<h2>Algoritm nima?</h2>
+<p><b>Algoritm</b> — qo'yilgan masalani yechish yoki maqsadga erishish uchun bajaruvchiga beriladigan <b>aniq</b> va <b>tartiblangan</b>
+ko'rsatmalar ketma-ketligi.</p>
+<p>So'z IX asrda yashagan buyuk vatandoshimiz <b>Muhammad ibn Muso al-Xorazmiy</b> nomidan kelib chiqqan: uning arifmetika haqidagi asari Yevropada
+lotincha "Algoritmi de numero Indorum" ("Al-Xorazmiy hind raqamlari haqida") deb tarjima qilingan. "Algebra" so'zi ham uning "Al-jabr" asaridan.</p>
+<div class="analogy"><span class="t">O'xshatish: oshpazlik retsepti</span>Retsept — algoritmning eng yaxshi namunasi: <b>kiruvchi ma'lumotlar</b> (masalliqlar),
+<b>qadamlar</b> (to'g'rash, qovurish, qaynatish), <b>natija</b> (osh). Qadamlar tartibini almashtirsangiz (guruchni yog' qizimasdan solsangiz) —
+natija buziladi.</div>
+
+<h3>Bajaruvchi</h3>
+<p>Algoritmni kim bajaradi? <b>Bajaruvchi</b> — odam, robot, kompyuter. Kompyuter juda tez, lekin <b>o'zi o'ylamaydi</b>: unga hamma narsani
+aniq aytish kerak. "Choyni shirinroq qil" — odam tushunadi, kompyuter — yo'q. "2 qoshiq shakar sol" — ikkalasi ham tushunadi.</p>
+
+<h2>Kundalik hayotdagi algoritmlar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Vaziyat</th><th>Kirish</th><th>Qadamlar (qisqacha)</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td>🍵 Choy damlash</td><td>Suv, choy, choynak</td><td>Suv qaynat → choynakni chayqa → choy sol → suv quy → 5 daqiqa kut</td><td>Damlangan choy</td></tr>
+<tr><td>🚦 Yo'lni kesib o'tish</td><td>Svetofor rangi</td><td><b>Agar</b> yashil bo'lsa — chap/o'ngga qara, o't; <b>aks holda</b> — kut</td><td>Xavfsiz o'tish</td></tr>
+<tr><td>🏧 Bankomatdan pul olish</td><td>Karta, PIN, summa</td><td>Karta → PIN → summa → tekshirish → pul</td><td>Naqd pul</td></tr>
+<tr><td>📞 Kontaktni qidirish</td><td>Ism</td><td>Ro'yxat boshidan har birini solishtir, <b>topilguncha takrorla</b></td><td>Telefon raqam</td></tr>
+</tbody></table></div>
+<p>E'tibor bering: ba'zi algoritmlarda <b>shart</b> ("agar ... bo'lsa") bor, ba'zilarida <b>takrorlash</b> ("... guncha takrorla"). Bular
+algoritmlarning uch turi — 19, 20, 21-mavzularda har birini alohida o'rganamiz:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">➡️ Chiziqli<small>qadamlar ketma-ket</small></div>
+    <div class="node">🔀 Tarmoqlanuvchi<small>shartga qarab tanlov</small></div>
+    <div class="node">🔁 Takrorlanuvchi<small>sikl</small></div>
+  </div>
+</div>
+
+<h2>Algoritmning xossalari</h2>
+<p>Har qanday ko'rsatmalar ro'yxati ham algoritm bo'lavermaydi. Haqiqiy algoritm quyidagi xossalarga ega bo'lishi kerak:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Xossa</th><th>Ma'nosi</th><th>❌ Buzilgan misol</th><th>✅ To'g'ri</th></tr></thead>
+<tbody>
+<tr><td><b>Aniqlik</b> (determinanlik)</td><td>Har bir qadam bir xil tushuniladi, ikki xil talqin yo'q</td><td>"Ozroq tuz sol"</td><td>"5 gramm tuz sol"</td></tr>
+<tr><td><b>Ketma-ketlik</b> (diskretlik)</td><td>Algoritm alohida qadamlardan iborat, ular qat'iy tartibda bajariladi</td><td>"Pishir va to'g'ra" (qaysi biri avval?)</td><td>"1. To'g'ra. 2. Pishir."</td></tr>
+<tr><td><b>Natijaviylik</b></td><td>Chekli qadamdan keyin albatta natija beradi va to'xtaydi</td><td>"Suv qaynaguncha kut" (plita o'chiq bo'lsa — cheksiz kutish)</td><td>"Plitani yoq, suv qaynaguncha kut"</td></tr>
+<tr><td><b>Tushunarlilik</b></td><td>Faqat bajaruvchi biladigan buyruqlardan iborat</td><td>Kompyuterga: "Chiroyli qilib chiz"</td><td>"Radiusi 50 px qizil doira chiz"</td></tr>
+<tr><td><b>Ommaviylik</b></td><td>Bir turdagi barcha masalalarga qo'llanadi (turli kirish qiymatlari bilan)</td><td>"5 va 7 ni qo'sh"</td><td>"Ixtiyoriy <code>a</code> va <code>b</code> ni qo'sh"</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Eslab qolish uchun</span>O'quv dasturidagi uchta asosiy xossa: <b>A</b>niqlik — <b>K</b>etma-ketlik — <b>N</b>atijaviylik
+→ "<b>AKN</b>". Qo'shimchasiga tushunarlilik va ommaviylik.</div>
+
+<h2>Algoritmni ifodalash usullari</h2>
+<p>Bitta algoritm — "ikki sonning kattasini topish" — to'rt xil ko'rinishda:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Usul</th><th>Ko'rinishi</th><th>Kimga qulay</th></tr></thead>
+<tbody>
+<tr><td><b>1. So'z bilan</b></td><td>"Ikki sonni ol. Birinchisi ikkinchisidan katta bo'lsa — birinchisini ayt, aks holda ikkinchisini."</td><td>Odamlar uchun</td></tr>
+<tr><td><b>2. Blok-sxema</b></td><td>Shakllar va strelkalar (pastda)</td><td>Ko'rgazmali, xatoni topish oson</td></tr>
+<tr><td><b>3. Psevdokod</b></td><td><code>agar a &gt; b u holda chiqar a aks holda chiqar b</code></td><td>Dasturchilar o'rtasida</td></tr>
+<tr><td><b>4. Dastur</b></td><td>Python, C++, JavaScript...</td><td>Kompyuter uchun</td></tr>
+</tbody></table></div>
+
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">Blok-sxema (Flowgorithm uslubida)</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer a, b</div>
+  <div class="fc-s fc-in"><small>Input</small>a</div>
+  <div class="fc-s fc-in"><small>Input</small>b</div>
+  <div class="fc-if"><div class="fc-s fc-cond">a &gt; b</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>b</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>a</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<pre data-lang="py" data-title="Xuddi shu — Python'da">a = int(input())
+b = int(input())
+if a > b:
+    print(a)
+else:
+    print(b)</pre>
+<p>Ko'rib turganingizdek, blok-sxemadagi har bir shakl dasturdagi bitta qatorga mos keladi. Flowgorithm'ni o'rgansangiz, istalgan dasturlash
+tiliga o'tish oson bo'ladi.</p>
+</div>
+</div>
+
+<h2>Algoritmik fikrlash</h2>
+<p><b>Algoritmik fikrlash</b> — muammoni kompyuter bajara oladigan aniq qadamlar ko'rinishida yechish qobiliyati. U to'rtta ko'nikmadan iborat:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Ko'nikma</th><th>Ma'nosi</th><th>Misol: "Sinf ekskursiyasini tashkil qilish"</th></tr></thead>
+<tbody>
+<tr><td>🧩 <b>Dekompozitsiya</b></td><td>Katta masalani kichik bo'laklarga ajratish</td><td>Joy tanlash, transport, pul yig'ish, ruxsat olish, ro'yxat</td></tr>
+<tr><td>🔍 <b>Qonuniyat topish</b></td><td>O'xshash qismlarni ko'rish</td><td>Har bir o'quvchi uchun bir xil: ruxsatnoma + to'lov</td></tr>
+<tr><td>🎯 <b>Abstraksiya</b></td><td>Muhim narsani ajratib, keraksiz tafsilotni tashlash</td><td>Avtobus rangi muhim emas, o'rinlar soni — muhim</td></tr>
+<tr><td>📋 <b>Algoritm tuzish</b></td><td>Qadamlarni to'g'ri tartibda yozish</td><td>1. Joy → 2. Narx → 3. Ruxsat → 4. Pul → 5. Avtobus</td></tr>
+</tbody></table></div>
+
+<h3>Mashq: dekompozitsiya</h3>
+<p>Masala: "O'quvchining chorak bahosini hisoblovchi dastur" (23-mavzuda Flowgorithm'da quramiz). Uni bo'laklarga ajratamiz:</p>
+<ol class="steps">
+  <li><b>Kirish:</b> qaysi ma'lumotlar kerak? → davomat, uy vazifasi, amaliy ish, test ballari.</li>
+  <li><b>Tekshirish:</b> ballar to'g'ri oraliqdami? (masalan, 0–25).</li>
+  <li><b>Hisoblash:</b> umumiy ball = hammasining yig'indisi; foiz = umumiy / maksimal × 100.</li>
+  <li><b>Qaror:</b> foiz ≥ 86 → "A'lo", ≥ 71 → "Yaxshi", ≥ 56 → "Qoniqarli", aks holda → "Qoniqarsiz".</li>
+  <li><b>Chiqish:</b> umumiy ball, foiz va bahoni ko'rsatish.</li>
+</ol>
+<p>Har bir bo'lak endi oddiy va tushunarli — buni dasturlash mumkin. Bu <b>"Kirish → Qayta ishlash → Chiqish"</b> modeli 17-mavzuning asosi.</p>
+
+<h2>Amaliy mashg'ulot: "Robot va o'quvchi" o'yini</h2>
+<ol class="steps">
+  <li>Juftlikka bo'lining: biri — <b>dasturchi</b>, ikkinchisi — <b>robot</b>.</li>
+  <li>Dasturchi qog'ozga "Sinf eshigidan chiqib, doskaga borib, bo'r olib, o'z ismingizni yozing" algoritmini yozadi.</li>
+  <li>Robot buyruqlarni <b>so'zma-so'z</b> bajaradi (o'zidan hech narsa qo'shmaydi!). "Yur" desa — qachon to'xtashni bilmaydi...</li>
+  <li>Xatolarni toping: qaysi xossa buzildi — aniqlik, ketma-ketlik yoki natijaviylik?</li>
+  <li>Algoritmni tuzatib, rollarni almashing.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ "Kompyuter o'zi tushunib oladi" → ✅ Kompyuter faqat aniq buyruqni bajaradi.</li>
+  <li>❌ Qadamlarni o'tkazib yuborish ("bu aniq-ku") → ✅ Bajaruvchi uchun hech narsa "aniq" emas.</li>
+  <li>❌ Tugamaydigan algoritm → ✅ To'xtash sharti doim bo'lishi kerak (natijaviylik).</li>
+  <li>❌ Faqat bitta holat uchun yozish ("5+7") → ✅ Har qanday kirish uchun ishlaydigan (ommaviylik).</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">"Algoritm" so'zi kimning nomidan kelib chiqqan?</p><ol>
+<li>Ibn Sino</li><li>Al-Xorazmiy</li><li>Mirzo Ulug'bek</li><li>Beruniy</li></ol>
+<p class="explain">Muhammad ibn Muso al-Xorazmiy — "Algoritmi" lotincha shakli.</p></div>
+<div class="quiz" data-answer="3"><p class="q">"Choyga ozroq shakar sol" qaysi xossani buzadi?</p><ol>
+<li>Ommaviylik</li><li>Natijaviylik</li><li>Aniqlik</li><li>Ketma-ketlik</li></ol>
+<p class="explain">"Ozroq" — har kim har xil tushunadi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Hech qachon tugamaydigan ko'rsatmalar qaysi xossani buzadi?</p><ol>
+<li>Natijaviylik</li><li>Tushunarlilik</li><li>Aniqlik</li><li>Diskretlik</li></ol>
+<p class="explain">Algoritm chekli qadamda natija berishi kerak.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Katta masalani kichik qismlarga ajratish nima deyiladi?</p><ol>
+<li>Abstraksiya</li><li>Kompilyatsiya</li><li>Sikl</li><li>Dekompozitsiya</li></ol>
+<p class="explain">Dekompozitsiya — algoritmik fikrlashning birinchi qadami.</p></div>
+<div class="quiz" data-answer="2"><p class="q">"Svetofor yashil bo'lsa o't, aks holda kut" — qaysi tur algoritm?</p><ol>
+<li>Chiziqli</li><li>Tarmoqlanuvchi</li><li>Takrorlanuvchi</li><li>Algoritm emas</li></ol>
+<p class="explain">Shartga qarab ikki yo'ldan biri tanlanadi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Ertalab uyg'ongandan maktabga yetib kelguncha bo'lgan algoritmingizni kamida 12 qadamda yozing. Unda kamida 1 ta shart va 1 ta takrorlash bo'lsin.</li>
+  <li>"Telefon zaryadsiz qoldi" muammosini dekompozitsiya qiling: qanday kichik masalalarga bo'linadi?</li>
+  <li>Ixtiyoriy oshpazlik retseptini topib, undagi aniqlik xossasini buzadigan 3 ta joyni toping va tuzating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Algoritm</dt><dd>Masalani yechish uchun aniq, tartiblangan ko'rsatmalar ketma-ketligi.</dd>
+  <dt>Bajaruvchi</dt><dd>Algoritmni bajaradigan odam, robot yoki kompyuter.</dd>
+  <dt>Xossalar</dt><dd>Aniqlik, ketma-ketlik (diskretlik), natijaviylik, tushunarlilik, ommaviylik.</dd>
+  <dt>Ifodalash</dt><dd>So'z, blok-sxema, psevdokod, dastur.</dd>
+  <dt>Turlari</dt><dd>Chiziqli, tarmoqlanuvchi, takrorlanuvchi.</dd>
+  <dt>Algoritmik fikrlash</dt><dd>Dekompozitsiya, qonuniyat, abstraksiya, algoritm tuzish.</dd>
+</dl>
+</div>

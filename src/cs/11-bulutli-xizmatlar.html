@@ -1,0 +1,234 @@
+<!-- title: Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi | desc: Bulutli texnologiya nima; Google Drive, OneDrive, Dropbox bilan ishlash; Google Docs, Sheets, Slides va Microsoft 365'da birgalikda ishlash; ulashish ruxsatlari; Microsoft To Do, Google Tasks va Trello bilan vazifalarni rejalashtirish. | icon: ☁️ | level: 3 dars · amaliy | bob: II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma -->
+
+<div class="goals">
+<h3>🎯 Bu mavzuda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Bulut</b> (cloud) nima ekanini va u fleshkadan nimasi bilan farq qilishini;</li>
+  <li>Google Drive, OneDrive va Dropbox'da fayl yuklash, papka tuzish, sinxronlash va tiklashni;</li>
+  <li>Google Docs, Sheets, Slides va Microsoft 365'da <b>bir vaqtda birgalikda</b> ishlashni;</li>
+  <li>Ulashish ruxsatlarini to'g'ri berishni: <b>ko'ruvchi</b>, <b>izoh qoldiruvchi</b>, <b>muharrir</b>;</li>
+  <li>Microsoft To Do, Google Tasks va Trello bilan vazifalarni rejalashtirishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Dars rejasi (3 dars)</span>
+<b>1-dars:</b> bulut tushunchasi, Drive / OneDrive / Dropbox. <b>2-dars:</b> Docs, Sheets, Slides va M365 — birgalikda hujjat tayyorlash.
+<b>3-dars:</b> vazifa boshqaruvi (To Do, Tasks, Trello) va guruh amaliyoti.</div>
+
+<h2>Bulut nima?</h2>
+<p><b>Bulutli xizmat</b> (cloud computing) — fayllaringiz, dasturlaringiz va hisob-kitoblaringiz <b>sizning kompyuteringizda emas</b>, balki
+internet orqali ulanadigan katta kompaniyalarning <b>ma'lumot markazlaridagi</b> (data center) serverlarda saqlanishi va ishlashi.
+"Bulut" — shunchaki chiroyli nom: aslida bu dunyoning turli joylaridagi minglab haqiqiy kompyuterlar.</p>
+<div class="analogy"><span class="t">O'xshatish: pulni yostiq ostida emas, bankda saqlash</span>
+Pulni uyda saqlasangiz — yo'qolishi, yonib ketishi mumkin, uni faqat uydan olasiz. Bankda saqlasangiz — himoyalangan, istalgan shahardagi
+bankomatdan olasiz, boshqalarga o'tkazasiz. Fleshka — "yostiq osti", bulut — "bank".</div>
+
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>💾 Fleshka / kompyuter diski</th><th>☁️ Bulut</th></tr></thead>
+<tbody>
+<tr><td>Kirish</td><td>Faqat shu qurilmadan</td><td>Istalgan qurilmadan (telefon, maktab kompyuteri, uy)</td></tr>
+<tr><td>Yo'qolish xavfi</td><td>Yo'qolsa, buzilsa — fayl ham ketadi</td><td>Serverlarda bir necha nusxada saqlanadi</td></tr>
+<tr><td>Birgalikda ishlash</td><td>Faylni nusxalab berish kerak</td><td>Havola orqali bir vaqtda ishlash mumkin</td></tr>
+<tr><td>Versiyalar</td><td>Odatda yo'q</td><td>Eski versiyani tiklash mumkin</td></tr>
+<tr><td>Internet</td><td>Kerak emas</td><td>Kerak (oflayn rejim cheklangan)</td></tr>
+<tr><td>Hajm</td><td>Fleshka sig'imi bilan</td><td>Bepul limit: Google 15 GB, OneDrive 5 GB, Dropbox 2 GB</td></tr>
+</tbody></table></div>
+
+<h3>Bulut xizmatlari turlari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Ma'nosi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td><b>SaaS</b> — Software as a Service</td><td>Tayyor dasturni brauzer orqali ishlatasiz</td><td>Gmail, Google Docs, Microsoft 365, Trello</td></tr>
+<tr><td><b>PaaS</b> — Platform as a Service</td><td>Dasturchiga dasturini joylash uchun tayyor platforma</td><td>Render, Heroku, Vercel</td></tr>
+<tr><td><b>IaaS</b> — Infrastructure as a Service</td><td>Ijaraga virtual server, disk, tarmoq</td><td>AWS, Microsoft Azure, Google Cloud</td></tr>
+</tbody></table></div>
+<p>Biz bu mavzuda <b>SaaS</b> bilan ishlaymiz — eng ko'p ishlatiladigan tur.</p>
+
+<h2>Bulutli saqlash: Google Drive, OneDrive, Dropbox</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Xizmat</th><th>Akkaunt</th><th>Bepul joy</th><th>Kuchli tomoni</th></tr></thead>
+<tbody>
+<tr><td><b>Google Drive</b></td><td>Google (Gmail) akkaunti</td><td>15 GB (Gmail va Foto bilan umumiy)</td><td>Docs/Sheets/Slides bilan to'liq integratsiya</td></tr>
+<tr><td><b>OneDrive</b></td><td>Microsoft akkaunti</td><td>5 GB</td><td>Windows'ga o'rnatilgan, Word/Excel/PowerPoint bilan</td></tr>
+<tr><td><b>Dropbox</b></td><td>Dropbox akkaunti</td><td>2 GB</td><td>Tez va ishonchli sinxronlash</td></tr>
+</tbody></table></div>
+
+<h3>Amaliy: Google Drive bilan ishlash</h3>
+<ol class="steps">
+  <li><b>Kirish:</b> <code>drive.google.com</code> → Google akkaunti bilan kiring.</li>
+  <li><b>Papka tuzish:</b> <b>+ Yangi → Papka</b> → nom: <code>8-sinf CS</code>. Ichida <code>Loyihalar</code>, <code>Uy vazifalari</code> papkalari.</li>
+  <li><b>Fayl yuklash:</b> <b>+ Yangi → Fayl yuklash</b> yoki faylni brauzer oynasiga <b>sudrab tashlang</b> (drag and drop).</li>
+  <li><b>Qidirish:</b> yuqoridagi qidiruv qatoriga fayl nomini yoki ichidagi so'zni yozing — Drive hatto rasm ichidagi matnni ham topadi.</li>
+  <li><b>Yulduzcha:</b> muhim faylni o'ng tugma → <b>Yulduzcha qo'shish</b> — "Yulduzchali" bo'limida tez topasiz.</li>
+  <li><b>Savat:</b> o'chirilgan fayl <b>30 kun</b> "Savat"da turadi — kerak bo'lsa <b>Tiklash</b> bosing.</li>
+  <li><b>Versiyalar:</b> fayl → o'ng tugma → <b>Fayl ma'lumoti → Versiyalarni boshqarish</b> — eski holatiga qaytarish mumkin.</li>
+</ol>
+
+<h3>Sinxronlash</h3>
+<p><b>Sinxronlash</b> — kompyuteringizdagi papka va bulutdagi papka avtomatik bir xil holatga keltirilishi. OneDrive Windows'ga o'rnatilgan:
+<b>Provodnik → OneDrive</b> papkasiga tashlagan har bir fayl bulutga ham chiqadi va telefonda ham paydo bo'ladi. Google uchun
+<b>Google Drive for desktop</b>, Dropbox uchun o'z ilovasi bor.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">💻 Maktab kompyuteri<small>faylni saqladingiz</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">☁️ Bulut<small>server</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">📱 Telefon<small>darhol paydo bo'ldi</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🏠 Uy kompyuteri<small>davom ettirasiz</small></div>
+  </div>
+  <div class="diagram-caption">Belgilar: ✅ — sinxronlangan, 🔄 — yuklanmoqda, ☁️ — faqat bulutda (joy tejaladi).</div>
+</div>
+
+<h2>Onlayn ofis: Docs, Sheets, Slides va Microsoft 365</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Vazifa</th><th>Google</th><th>Microsoft 365 (onlayn)</th></tr></thead>
+<tbody>
+<tr><td>Matn hujjati</td><td><b>Google Docs</b></td><td>Word</td></tr>
+<tr><td>Elektron jadval</td><td><b>Google Sheets</b></td><td>Excel</td></tr>
+<tr><td>Taqdimot</td><td><b>Google Slides</b></td><td>PowerPoint</td></tr>
+<tr><td>So'rovnoma, test</td><td>Google Forms</td><td>Microsoft Forms</td></tr>
+<tr><td>Saqlash</td><td>Google Drive</td><td>OneDrive</td></tr>
+</tbody></table></div>
+<p>Asosiy afzallik — <b>avtosaqlash</b> (Saqlash tugmasini bosish shart emas) va <b>real vaqtda birgalikda ishlash</b>: bir hujjatni 5 kishi bir vaqtda
+tahrirlaydi, har birining kursori o'z rangida ko'rinadi.</p>
+
+<h3>Birgalikda ishlash vositalari</h3>
+<ul>
+  <li><b>Izoh (Comment):</b> matnni belgilab → <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>M</kbd> → fikr yozing. <code>@ism</code> yozsangiz, o'sha odamga xabar boradi.</li>
+  <li><b>Taklif rejimi (Suggesting):</b> o'ng yuqorida ✏️ → <b>Taklif qilish</b>. O'zgarishlaringiz yashil rangda ko'rinadi, hujjat egasi <b>Qabul qilish</b> yoki <b>Rad etish</b> ni tanlaydi.</li>
+  <li><b>Versiyalar tarixi:</b> <b>Fayl → Versiyalar tarixi</b> — kim, qachon, nimani o'zgartirganini ko'rasiz va kerakli versiyani tiklaysiz.</li>
+  <li><b>Chat:</b> Sheets va Slides'da hujjat ichida yozishish mumkin.</li>
+</ul>
+
+<h3>Google Sheets'da tez formulalar</h3>
+<p>Sheets — Excel'ning onlayn "ukasi". Formulalar <code>=</code> bilan boshlanadi:</p>
+<pre data-lang="text" data-title="Google Sheets formulalari">=SUM(B2:B10)          → B2 dan B10 gacha yig'indi
+=AVERAGE(C2:C10)      → o'rtacha qiymat
+=MAX(C2:C10)          → eng katta qiymat
+=MIN(C2:C10)          → eng kichik qiymat
+=COUNT(C2:C10)        → nechta son bor
+=IF(D2>=60; "O'tdi"; "Qayta topshiradi")   → shart
+=ROUND(E2; 1)         → 1 xonagacha yaxlitlash</pre>
+<div class="callout tip"><span class="t">Maslahat</span>O'zbekcha yoki ruscha til sozlamasida formulada vergul o'rniga <b>nuqta-vergul</b> (<code>;</code>) ishlatiladi.
+Agar formula xato bersa — ajratgichni almashtirib ko'ring.</div>
+
+<h2>Ulashish ruxsatlari — eng muhim qism</h2>
+<p>Faylni ulashishda <b>kimga</b> va <b>qanday huquq</b> berishni o'zingiz tanlaysiz. Noto'g'ri ruxsat — fayl buzilishi yoki shaxsiy
+ma'lumot oshkor bo'lishi demak.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Rol</th><th>Ko'radi</th><th>Izoh yozadi</th><th>Tahrirlaydi</th><th>Qachon beriladi</th></tr></thead>
+<tbody>
+<tr><td>👁️ <b>Ko'ruvchi</b> (Viewer)</td><td>✅</td><td>❌</td><td>❌</td><td>Tayyor ishni ko'rsatish, e'lon, jadval</td></tr>
+<tr><td>💬 <b>Izoh qoldiruvchi</b> (Commenter)</td><td>✅</td><td>✅</td><td>❌</td><td>O'qituvchi yoki do'st tekshirishi uchun</td></tr>
+<tr><td>✏️ <b>Muharrir</b> (Editor)</td><td>✅</td><td>✅</td><td>✅</td><td>Faqat jamoa a'zolariga</td></tr>
+</tbody></table></div>
+<h3>Havola turlari</h3>
+<ul>
+  <li><b>Cheklangan</b> — faqat siz qo'shgan odamlar (email bo'yicha) ochadi. <b>Eng xavfsiz.</b></li>
+  <li><b>Havolasi bor har kim</b> — havolani olgan har qanday odam ochadi. Havola tarqalib ketsa — hamma ko'radi!</li>
+</ul>
+<div class="callout danger"><span class="t">Xavfsizlik qoidasi</span>"Havolasi bor har kim + Muharrir" — <b>eng xavfli</b> kombinatsiya: notanish odam hamma narsani
+o'chirib yuborishi mumkin. Pasport, telefon, manzil kabi shaxsiy ma'lumotli faylni hech qachon ochiq havola bilan ulashmang.</div>
+
+<h3>Amaliy: guruh hujjati</h3>
+<ol class="steps">
+  <li>Guruh sardori Google Docs'da <code>Guruh 3 — Kompyuter qurilmalari</code> hujjatini yaratadi.</li>
+  <li><b>Ulashish</b> → guruhdoshlar emailini kiritib, <b>Muharrir</b> roli beradi; o'qituvchiga — <b>Izoh qoldiruvchi</b>.</li>
+  <li>Har kim o'z bo'limini yozadi (sarlavha: <i>Kiritish qurilmalari</i>, <i>Chiqarish qurilmalari</i>...).</li>
+  <li>O'qituvchi izoh qoldiradi, guruh izohni bajarib, <b>Hal qilindi</b> ✓ ni bosadi.</li>
+  <li>Oxirida <b>Versiyalar tarixi</b> orqali kim qancha hissa qo'shganini ko'ring.</li>
+</ol>
+
+<h2>Vazifalarni boshqarish: To Do, Google Tasks, Trello</h2>
+<p>Loyihalar ko'paysa — "nimani, qachongacha, kim qiladi" ni boshda saqlash qiyin. Buning uchun <b>vazifa menejerlari</b> bor.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Ilova</th><th>Turi</th><th>Qachon qulay</th></tr></thead>
+<tbody>
+<tr><td><b>Microsoft To Do</b></td><td>Shaxsiy ro'yxat, "Mening kunim", eslatmalar</td><td>Kundalik uy vazifalari</td></tr>
+<tr><td><b>Google Tasks</b></td><td>Gmail va Calendar ichidagi oddiy ro'yxat</td><td>Muddati bor vazifalar kalendarda ko'rinadi</td></tr>
+<tr><td><b>Trello</b></td><td><b>Kanban</b> doska — kartochkalar ustunlarda</td><td>Jamoaviy loyihalar</td></tr>
+</tbody></table></div>
+
+<h3>Kanban usuli (Trello)</h3>
+<p>Trello doskasi ustunlardan iborat, har bir vazifa — <b>kartochka</b>. Ish bajarilgan sari kartochka chapdan o'ngga suriladi:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📋 Qilinadigan<small>To Do</small></div>
+    <div class="arrow">→</div>
+    <div class="node">⚙️ Jarayonda<small>Doing</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🔍 Tekshiruvda<small>Review</small></div>
+    <div class="arrow">→</div>
+    <div class="node">✅ Bajarildi<small>Done</small></div>
+  </div>
+</div>
+<p>Kartochkaga: <b>a'zo</b> (kim bajaradi), <b>muddat</b>, <b>yorliq</b> (rang), <b>checklist</b> (kichik qadamlar), <b>ilova</b> (fayl yoki Drive havolasi) qo'shiladi.</p>
+
+<div class="callout tip"><span class="t">SMART vazifa</span>Yaxshi vazifa — <b>aniq</b> (S), <b>o'lchanadigan</b> (M), <b>bajarsa bo'ladigan</b> (A), <b>maqsadga mos</b> (R)
+va <b>muddatli</b> (T). ❌ "Taqdimot qilish" → ✅ "Payshanba 18:00 gacha 6 slaydli 'Protsessor' taqdimotini Slides'da tayyorlash".</div>
+
+<h3>Amaliy: Trello'da loyiha doskasi</h3>
+<ol class="steps">
+  <li><code>trello.com</code> → ro'yxatdan o'ting → <b>Create board</b> → nom: <code>CS loyiha</code>.</li>
+  <li>4 ta ustun yarating: <i>Qilinadigan, Jarayonda, Tekshiruvda, Bajarildi</i>.</li>
+  <li>5–6 ta kartochka qo'shing: "Mavzu tanlash", "Ma'lumot to'plash", "Slaydlar", "Rasmlar", "Mashq qilish", "Taqdimot".</li>
+  <li>Guruhdoshlarni <b>Share</b> orqali qo'shib, har bir kartochkaga bajaruvchi va muddat belgilang.</li>
+  <li>Slides taqdimotining Drive havolasini kartochkaga biriktiring.</li>
+</ol>
+
+<h2>Bulut xavfsizligi</h2>
+<ul>
+  <li>Akkauntga <b>kuchli parol</b> va <b>ikki bosqichli tasdiqlash (2FA)</b> qo'ying (14-mavzuda batafsil).</li>
+  <li>Maktab yoki umumiy kompyuterda ishdan keyin <b>Chiqish</b> (Sign out) ni bosing, "Parolni saqlash" ga rozilik bermang.</li>
+  <li>Vaqti-vaqti bilan "Men bilan ulashilgan" va o'zingiz ulashgan fayllarni tekshirib, keraksiz ruxsatlarni olib tashlang.</li>
+  <li>Juda muhim fayllarning <b>zaxira nusxasini</b> boshqa joyda ham saqlang (3-2-1 qoidasi: 3 nusxa, 2 xil joy, 1 tasi boshqa binoda).</li>
+</ul>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Faylni har safar yangi nom bilan saqlash: <code>referat_oxirgi_ROSTDAN_oxirgi.docx</code> → ✅ Bitta fayl va <b>versiyalar tarixi</b>.</li>
+  <li>❌ Hammaga "Muharrir" berish → ✅ Minimal kerakli huquq: ko'pincha "Ko'ruvchi" yetarli.</li>
+  <li>❌ "Bulutda bo'lsa, internetsiz ham ochiladi" → ✅ Oflayn rejimni oldindan yoqish kerak.</li>
+  <li>❌ Begona kompyuterda akkauntdan chiqmaslik → ✅ Har doim Sign out.</li>
+  <li>❌ Trello'da "Ishlash" kabi noaniq kartochka → ✅ Aniq, muddatli, bajaruvchisi belgilangan vazifa.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Bulutli saqlashning asosiy afzalligi?</p><ol>
+<li>Internetsiz ishlaydi</li><li>Cheksiz bepul joy</li><li>Fayllarga istalgan qurilmadan kirish va birgalikda ishlash</li><li>Faqat bitta kompyuterda ochiladi</li></ol>
+<p class="explain">Fayllar serverda saqlangani uchun istalgan qurilmadan ochiladi.</p></div>
+<div class="quiz" data-answer="2"><p class="q">O'qituvchi hujjatni o'zgartirmasdan, faqat fikr yozishi kerak. Qaysi rol?</p><ol>
+<li>Muharrir</li><li>Izoh qoldiruvchi</li><li>Ko'ruvchi</li><li>Egasi</li></ol>
+<p class="explain">Commenter — ko'radi va izoh yozadi, lekin matnni o'zgartirmaydi.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Google Drive'da o'chirilgan fayl qancha vaqt "Savat"da turadi?</p><ol>
+<li>1 kun</li><li>7 kun</li><li>1 yil</li><li>30 kun</li></ol>
+<p class="explain">30 kun ichida tiklash mumkin.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Trello qaysi usulda ishlaydi?</p><ol>
+<li>Kanban — kartochkalar ustunlar bo'ylab suriladi</li><li>Elektron jadval</li><li>Matn muharriri</li><li>Video qo'ng'iroq</li></ol>
+<p class="explain">Qilinadigan → Jarayonda → Bajarildi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Gmail, Google Docs, Trello — bulut xizmatining qaysi turi?</p><ol>
+<li>IaaS</li><li>PaaS</li><li>SaaS</li><li>Hech qaysi</li></ol>
+<p class="explain">Software as a Service — tayyor dastur brauzer orqali.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Drive (yoki OneDrive)da <code>8-sinf CS</code> papka tuzilmasini yarating va 3 ta faylni joylang. Skrinshot oling.</li>
+  <li>Google Sheets'da "Mening haftalik xarajatlarim" jadvalini tuzing: kun, nima, summa. <code>SUM</code>, <code>AVERAGE</code>, <code>MAX</code> bilan hisoblang.</li>
+  <li>Trello yoki Microsoft To Do'da kelgusi haftaning 5 ta SMART vazifasini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Bulut</dt><dd>Internet orqali boshqa kompaniya serverlarida saqlash va ishlash.</dd>
+  <dt>SaaS / PaaS / IaaS</dt><dd>Tayyor dastur / platforma / infratuzilma xizmati.</dd>
+  <dt>Sinxronlash</dt><dd>Qurilma va bulutdagi fayllarni avtomatik bir xil holatda saqlash.</dd>
+  <dt>Ruxsatlar</dt><dd>Ko'ruvchi, Izoh qoldiruvchi, Muharrir; havola: cheklangan yoki ochiq.</dd>
+  <dt>Versiyalar tarixi</dt><dd>Hujjatning oldingi holatini ko'rish va tiklash.</dd>
+  <dt>Kanban</dt><dd>Vazifalar ustunlar bo'ylab: Qilinadigan → Jarayonda → Bajarildi.</dd>
+</dl>
+</div>

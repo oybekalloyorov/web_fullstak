@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Takrorlanuvchi algoritm va sikl tushunchasi; Flowgorithm sikl bloklari: For, While va Do; 1 dan N gacha sonlar, yig&#x27;indi, ko&#x27;paytma (faktorial), hisoblagich; kiritishni tekshirish; cheksiz sikl va boshqa xatolar. 13-, 18-, 19-loyihalar: davomat hisoblagichi, &quot;Tasodifiy son topish&quot; o&#x27;yini, kundalik xarajatlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a class="active" href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔁</div><div><div class="crumb">21-mavzu · 26 tadan · III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</div><h1>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</h1><p class="lead">Takrorlanuvchi algoritm va sikl tushunchasi; Flowgorithm sikl bloklari: For, While va Do; 1 dan N gacha sonlar, yig&#x27;indi, ko&#x27;paytma (faktorial), hisoblagich; kiritishni tekshirish; cheksiz sikl va boshqa xatolar. 13-, 18-, 19-loyihalar: davomat hisoblagichi, &quot;Tasodifiy son topish&quot; o&#x27;yini, kundalik xarajatlar.</p><div class="hero-level">2 dars · 1 nazariy + 1 amaliy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/21-takrorlanuvchi-algoritmlar.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu mavzuda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Sikl</b> nima va u nima uchun kerakligini;</li>
+  <li>Flowgorithm'dagi uchta sikl: <b>For</b>, <b>While</b>, <b>Do</b> — qachon qaysi biri;</li>
+  <li>Siklda <b>hisoblagich</b> va <b>yig'uvchi</b> (akkumulyator) o'zgaruvchilar bilan ishlashni;</li>
+  <li>1..N sonlar, yig'indi, ko'paytma, sanash masalalarini;</li>
+  <li>Cheksiz sikldan saqlanishni va siklni trassirovka qilishni.</li>
+</ul>
+</div>
+
+<h2 id="sikl-nima"><a class="anchor" href="#sikl-nima">#</a>Sikl nima?</h2>
+<p><b>Takrorlanuvchi algoritm</b> (sikl) — bir xil amallar ketma-ketligi <b>bir necha marta</b> bajariladigan algoritm. Takrorlanadigan qism
+<b>sikl tanasi</b>, bir marta bajarilishi esa <b>iteratsiya</b> deyiladi.</p>
+<div class="analogy"><span class="t">O'xshatish: stadion aylanasi</span>Jismoniy tarbiya o'qituvchisi: "Stadionni 5 marta aylanib yuguring!". Siz har aylanada
+xuddi shu yo'ldan yugurasiz va barmog'ingiz bilan sanaysiz: 1, 2, 3... 5 ga yetganda to'xtaysiz. Barmoq — <b>hisoblagich</b>, aylana —
+<b>sikl tanasi</b>, "5 ga yetguncha" — <b>to'xtash sharti</b>.</div>
+<p>Sikl bo'lmaganda 1 dan 100 gacha sonlarni chiqarish uchun 100 ta Output bloki kerak bo'lardi. Sikl bilan — <b>bitta</b>.</p>
+
+<h2 id="uch-xil-sikl"><a class="anchor" href="#uch-xil-sikl">#</a>Uch xil sikl</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Sikl</th><th>Qachon ishlatiladi</th><th>Shart qachon tekshiriladi</th><th>Kamida necha marta bajariladi</th></tr></thead>
+<tbody>
+<tr><td><b>For</b></td><td>Takrorlash soni <b>oldindan ma'lum</b> ("10 marta", "1 dan N gacha")</td><td>Har iteratsiyadan oldin (avtomatik)</td><td>0</td></tr>
+<tr><td><b>While</b></td><td>Soni noma'lum, "<b>... ekan</b>, takrorla"</td><td><b>Oldin</b> (tanadan avval)</td><td>0</td></tr>
+<tr><td><b>Do</b></td><td>Avval bir marta bajarish shart (menyu, kiritishni tekshirish)</td><td><b>Keyin</b> (tanadan so'ng)</td><td>1</td></tr>
+</tbody></table></div>
+
+<h2 id="for-sikli"><a class="anchor" href="#for-sikli">#</a>For sikli</h2>
+<p>Flowgorithm'da For blokini ikki marta bossangiz, quyidagilarni kiritasiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Maydon</th><th>Ma'nosi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td><b>Variable</b></td><td>Hisoblagich o'zgaruvchi (Integer, oldindan Declare qilingan)</td><td><code>i</code></td></tr>
+<tr><td><b>Start Value</b></td><td>Boshlang'ich qiymat</td><td><code>1</code></td></tr>
+<tr><td><b>End Value</b></td><td>Oxirgi qiymat (u ham kiradi!)</td><td><code>10</code></td></tr>
+<tr><td><b>Direction</b></td><td>Increasing (o'sish) yoki Decreasing (kamayish)</td><td>Increasing</td></tr>
+<tr><td><b>Step By</b></td><td>Qadam</td><td><code>1</code></td></tr>
+</tbody></table></div>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">1_dan_N.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer n, i</div>
+  <div class="fc-s fc-in"><small>Input</small>n</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">For i = 1 to n</div>
+    <div class="fc-body"><div class="fc-s fc-out"><small>Output</small>i</div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>n = 5</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">5
+1
+2
+3
+4
+5</code></pre></div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">n = int(input())
+for i in range(1, n + 1):   # n+1 — chunki range oxirini kiritmaydi
+    print(i)</code></pre></div>
+<p>Qadam va yo'nalishni o'zgartirsangiz: <code>For i = 10 to 0, Decreasing, Step 2</code> → <code>10 8 6 4 2 0</code>.</p>
+</div>
+</div>
+
+<h2 id="while-sikli"><a class="anchor" href="#while-sikli">#</a>While sikli</h2>
+<p><b>While</b> — "<b>shart rost ekan</b>, tanani takrorla". Shart har iteratsiyadan <b>oldin</b> tekshiriladi; boshidan yolg'on bo'lsa — tana bir marta
+ham bajarilmaydi. Hisoblagichni <b>o'zingiz</b> boshqarasiz.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">while_1_dan_5.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer i</div>
+  <div class="fc-s fc-asg"><small>Assign</small>i = 1</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">While i &lt;= 5</div>
+    <div class="fc-body"><div class="fc-s fc-out"><small>Output</small>i</div><div class="fc-s fc-asg"><small>Assign</small>i = i + 1</div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p>While sikli uchun <b>uch qism</b> shart:</p>
+<ol class="steps">
+  <li><b>Boshlash:</b> <code>i = 1</code> (sikldan oldin);</li>
+  <li><b>Shart:</b> <code>i &lt;= 5</code>;</li>
+  <li><b>O'zgartirish:</b> <code>i = i + 1</code> (tananing oxirida).</li>
+</ol>
+<div class="callout danger"><span class="t">Cheksiz sikl!</span><code>i = i + 1</code> ni unutsangiz, <code>i</code> doim 1 bo'lib qoladi, shart doim rost — dastur
+<b>hech qachon to'xtamaydi</b>. Flowgorithm'da ⏹ <b>Stop</b> tugmasini bosing. Bu algoritmning <b>natijaviylik</b> xossasini buzadi (15-mavzu).</div>
+</div>
+</div>
+
+<h2 id="do-sikli"><a class="anchor" href="#do-sikli">#</a>Do sikli</h2>
+<p><b>Do</b> — avval tanani bajaradi, keyin shartni tekshiradi; shart rost bo'lsa — yana takrorlaydi. Tana <b>kamida bir marta</b> bajariladi.
+Eng yaxshi qo'llanilishi — <b>kiritishni tekshirish</b>: "to'g'ri qiymat kiritilmaguncha qayta so'ra".</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">baho_kiritish.fprg — Do bilan tekshirish</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer baho</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">Do … While baho &lt; 1 or baho &gt; 5</div>
+    <div class="fc-body"><div class="fc-s fc-out"><small>Output</small>"Baho (1–5):"</div><div class="fc-s fc-in"><small>Input</small>baho</div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Qabul qilindi: " &amp; baho</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code output"><div class="code-head"><span>Console</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Baho (1–5):
+7
+Baho (1–5):
+0
+Baho (1–5):
+4
+Qabul qilindi: 4</code></pre></div>
+<p class="fc-note">Flowgorithm'da Do blokining sharti pastda, tanadan keyin chiziladi; bu yerda soddalik uchun yuqorida yozilgan.</p>
+<p>Shart — <b>noto'g'ri</b> qiymat sharti: "baho 1 dan kichik <b>yoki</b> 5 dan katta <b>ekan</b> — qayta so'ra".</p>
+</div>
+</div>
+
+<h2 id="siklning-ikki-yordamchisi"><a class="anchor" href="#siklning-ikki-yordamchisi">#</a>Siklning ikki "yordamchisi"</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Turi</th><th>Boshlang'ich qiymat</th><th>Siklda</th><th>Vazifa</th></tr></thead>
+<tbody>
+<tr><td><b>Hisoblagich</b> (counter)</td><td><code>soni = 0</code></td><td><code>soni = soni + 1</code></td><td>Nechta? — sanash</td></tr>
+<tr><td><b>Yig'uvchi</b> — yig'indi</td><td><code>s = 0</code></td><td><code>s = s + x</code></td><td>Jami qancha?</td></tr>
+<tr><td><b>Yig'uvchi</b> — ko'paytma</td><td><code>p = 1</code> (0 emas!)</td><td><code>p = p * x</code></td><td>Ko'paytma, faktorial, daraja</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: cho'chqacha (kopilka)</span>Yig'uvchi — cho'chqacha: avval bo'sh (<code>s = 0</code>), har kuni ichiga tanga tashlaysiz
+(<code>s = s + tanga</code>), oy oxirida sindirasiz — jami pul. Hisoblagich esa necha marta tanga tashlaganingizni sanaydi.</div>
+
+<h3>1 dan N gacha yig'indi</h3>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">yigindi.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer n, i, s</div>
+  <div class="fc-s fc-in"><small>Input</small>n</div>
+  <div class="fc-s fc-asg"><small>Assign</small>s = 0</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">For i = 1 to n</div>
+    <div class="fc-body"><div class="fc-s fc-asg"><small>Assign</small>s = s + i</div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Yig'indi: " &amp; s</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Trassirovka</b> (n = 4):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Iteratsiya</th><th>i</th><th>s = s + i</th></tr></thead>
+<tbody>
+<tr><td>boshida</td><td>—</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td>0 + 1 = 1</td></tr>
+<tr><td>2</td><td>2</td><td>1 + 2 = 3</td></tr>
+<tr><td>3</td><td>3</td><td>3 + 3 = 6</td></tr>
+<tr><td>4</td><td>4</td><td>6 + 4 = <b>10</b></td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Gauss usuli bilan tekshiring</span>1 + 2 + ... + n = <code>n × (n + 1) / 2</code>. n = 100 → 5050.
+Natijani formula bilan solishtirish — ajoyib test!</div>
+</div>
+</div>
+
+<h3>Ko'paytma: faktorial</h3>
+<p><code>n! = 1 × 2 × 3 × ... × n</code>. Masalan, <code>5! = 120</code>. 5 kishini qatorga necha xil usulda turg'izish mumkin? — 120 xil!</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">faktorial.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer n, i, p</div>
+  <div class="fc-s fc-in"><small>Input</small>n</div>
+  <div class="fc-s fc-asg"><small>Assign</small>p = 1</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">For i = 1 to n</div>
+    <div class="fc-body"><div class="fc-s fc-asg"><small>Assign</small>p = p * i</div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>n &amp; "! = " &amp; p</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">n = int(input())
+p = 1
+for i in range(1, n + 1):
+    p = p * i
+print(f&quot;{n}! = {p}&quot;)</code></pre></div>
+<p>Agar <code>p = 0</code> dan boshlasangiz — har qanday songa ko'paytirsangiz ham 0 qoladi. Ko'paytma uchun boshlang'ich qiymat — <b>1</b>.</p>
+</div>
+</div>
+
+<h3>Sikl + shart: sanash</h3>
+<p><b>Masala:</b> 1 dan N gacha nechta son 3 ga bo'linadi va ularning yig'indisi qancha?</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">uchga_bolinadi.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer n, i, soni, s</div>
+  <div class="fc-s fc-in"><small>Input</small>n</div>
+  <div class="fc-s fc-asg"><small>Assign</small>soni = 0</div>
+  <div class="fc-s fc-asg"><small>Assign</small>s = 0</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">For i = 1 to n</div>
+    <div class="fc-body">
+      <div class="fc-if"><div class="fc-s fc-cond">i % 3 == 0</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>soni = soni + 1</div><div class="fc-s fc-asg"><small>Assign</small>s = s + i</div></div></div></div>
+    </div></div>
+  <div class="fc-s fc-out"><small>Output</small>soni &amp; " ta, yig'indi " &amp; s</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="code output"><div class="code-head"><span>n = 10</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">10
+3 ta, yig&#x27;indi 18</code></pre></div>
+</div>
+<p>3, 6, 9 → 3 ta, 3 + 6 + 9 = 18 ✅. Sikl ichida If — eng ko'p uchraydigan kombinatsiya.</p>
+
+<h2 id="loyihalar"><a class="anchor" href="#loyihalar">#</a>Loyihalar</h2>
+<h3>18-loyiha: "Tasodifiy son topish" o'yini</h3>
+<p>Kompyuter 1..100 oralig'ida son o'ylaydi. O'yinchi taxmin qiladi, kompyuter "Kattaroq" yoki "Kichikroq" deb yo'naltiradi. Topilganda —
+urinishlar soni.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">topish_oyini.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer sir, taxmin, urinish</div>
+  <div class="fc-s fc-asg"><small>Assign</small>sir = Random(100) + 1</div>
+  <div class="fc-s fc-asg"><small>Assign</small>urinish = 0</div>
+  <div class="fc-s fc-asg"><small>Assign</small>taxmin = 0</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">While taxmin != sir</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"Taxminingiz (1–100):"</div>
+      <div class="fc-s fc-in"><small>Input</small>taxmin</div>
+      <div class="fc-s fc-asg"><small>Assign</small>urinish = urinish + 1</div>
+      <div class="fc-if"><div class="fc-s fc-cond">taxmin &lt; sir</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">taxmin &gt; sir</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Kichikroq ⬇"</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"Kattaroq ⬆"</div></div></div></div>
+    </div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Topdingiz! Urinishlar: " &amp; urinish</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p>Brauzerda sinab ko'ring — xuddi shu mantiq JavaScript'da:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;p id=&quot;m&quot; style=&quot;font:17px sans-serif&quot;&gt;Men 1 dan 100 gacha son o&#x27;yladim. Toping!&lt;/p&gt;
+&lt;input id=&quot;t&quot; type=&quot;number&quot; style=&quot;font:17px sans-serif;padding:6px;width:90px&quot;&gt;
+&lt;button id=&quot;b&quot; style=&quot;font:16px sans-serif;padding:6px 12px&quot;&gt;Tekshir&lt;/button&gt;
+&lt;script&gt;
+let sir = Math.floor(Math.random() * 100) + 1;   // Random(100) + 1
+let urinish = 0;
+document.getElementById(&#x27;b&#x27;).onclick = () =&gt; {
+  const taxmin = Number(document.getElementById(&#x27;t&#x27;).value);
+  urinish = urinish + 1;
+  const m = document.getElementById(&#x27;m&#x27;);
+  if (taxmin &lt; sir) m.textContent = taxmin + &#x27; — kattaroq ⬆&#x27;;
+  else if (taxmin &gt; sir) m.textContent = taxmin + &#x27; — kichikroq ⬇&#x27;;
+  else m.textContent = &#x27;🎉 Topdingiz! Urinishlar: &#x27; + urinish;
+};
+&lt;/script&gt;</code></pre></div>
+<div class="callout tip"><span class="t">Strategiya</span>Har safar oraliqning <b>o'rtasini</b> ayting (50 → 25 yoki 75 → ...). Shunda 100 tadan istalgan sonni
+ko'pi bilan <b>7</b> urinishda topasiz. Bu <b>binar qidiruv</b> — informatikadagi eng mashhur algoritmlardan biri.</div>
+</div>
+</div>
+
+<h3>19-loyiha: kundalik xarajatlar</h3>
+<p>Hafta (7 kun) davomidagi xarajatlar kiritiladi. Dastur jami, o'rtacha va eng katta xarajatni topadi.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">xarajatlar.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer kun</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real x, jami, eng</div>
+  <div class="fc-s fc-asg"><small>Assign</small>jami = 0</div>
+  <div class="fc-s fc-asg"><small>Assign</small>eng = 0</div>
+  <div class="fc-loop"><div class="fc-s fc-cond">For kun = 1 to 7</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>kun &amp; "-kun xarajati:"</div>
+      <div class="fc-s fc-in"><small>Input</small>x</div>
+      <div class="fc-s fc-asg"><small>Assign</small>jami = jami + x</div>
+      <div class="fc-if"><div class="fc-s fc-cond">x &gt; eng</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>eng = x</div></div></div></div>
+    </div></div>
+  <div class="fc-s fc-out"><small>Output</small>"Jami: " &amp; jami</div>
+  <div class="fc-s fc-out"><small>Output</small>"O'rtacha: " &amp; ToFixed(jami / 7, 0)</div>
+  <div class="fc-s fc-out"><small>Output</small>"Eng katta: " &amp; eng</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Maksimumni topish</b> algoritmi: "hozirgacha eng kattasi" ni eslab qolamiz (<code>eng</code>) va har yangi qiymatni u bilan solishtiramiz.
+Kattaroq bo'lsa — yangilaymiz.</p>
+<p><b>Kengaytirish:</b> kunlik limit (masalan, 30 000) kiritilsin va limitdan oshgan kunlar soni sanalsin.</p>
+</div>
+</div>
+
+<h3>13-loyiha: o'quvchilar davomati hisoblagichi</h3>
+<p>Sinfdagi o'quvchilar soni kiritiladi. Har biri uchun <code>1</code> (keldi) yoki <code>0</code> (kelmadi) kiritiladi. Dastur kelganlar, kelmaganlar soni va
+davomat foizini chiqaradi. Kiritishni <b>Do</b> bilan tekshiring (faqat 0 yoki 1).</p>
+<div class="code"><div class="code-head"><span>Psevdokod</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">kiritish: n
+keldi = 0
+For i = 1 to n
+    Do
+        chiqar i &amp; &quot;-o&#x27;quvchi (1/0):&quot;
+        kiritish: d
+    While d != 0 and d != 1
+    agar d == 1 bo&#x27;lsa: keldi = keldi + 1
+chiqar &quot;Keldi: &quot; &amp; keldi &amp; &quot;, kelmadi: &quot; &amp; (n - keldi)
+chiqar &quot;Davomat: &quot; &amp; ToFixed(keldi / n * 100, 1) &amp; &quot;%&quot;</code></pre></div>
+
+<h2 id="qaysi-siklni-tanlash-kerak"><a class="anchor" href="#qaysi-siklni-tanlash-kerak">#</a>Qaysi siklni tanlash kerak?</h2>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">Necha marta — ma'lummi?<small>ha → <b>For</b></small></div>
+    <div class="arrow">yo'q →</div>
+    <div class="node">Kamida 1 marta bajarilishi shartmi?<small>ha → <b>Do</b></small></div>
+    <div class="arrow">yo'q →</div>
+    <div class="node"><b>While</b></div>
+  </div>
+</div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ While'da hisoblagichni o'zgartirmaslik → ✅ Cheksiz sikl; tananing oxirida <code>i = i + 1</code>.</li>
+  <li>❌ Yig'uvchini sikl <b>ichida</b> nolga tenglash → ✅ <code>s = 0</code> sikldan <b>oldin</b>, aks holda har iteratsiyada o'chadi.</li>
+  <li>❌ Ko'paytma uchun <code>p = 0</code> → ✅ <code>p = 1</code>.</li>
+  <li>❌ Natijani sikl ichida chiqarish (har iteratsiyada chiqadi) → ✅ Yakuniy natija sikldan keyin.</li>
+  <li>❌ "Bittaga xato" (off-by-one): <code>i &lt; n</code> va <code>i &lt;= n</code> → ✅ Kichik n bilan trassirovka qiling.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Qaysi sikl tanasi kamida bir marta albatta bajariladi?</p><ol>
+<li>For</li><li>While</li><li>Do</li><li>Hech qaysi</li></ol>
+<p class="explain">Do'da shart tanadan keyin tekshiriladi.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>s = 0; For i = 1 to 4: s = s + i</code>. Natija?</p><ol>
+<li>4</li><li>10</li><li>24</li><li>0</li></ol>
+<p class="explain">1+2+3+4 = 10.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Faktorial uchun yig'uvchining boshlang'ich qiymati?</p><ol>
+<li>1</li><li>0</li><li>n</li><li>-1</li></ol>
+<p class="explain">0 ga ko'paytirilgan hamma narsa 0.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>i = 1; While i &lt;= 5: Output i</code> (boshqa blok yo'q). Nima bo'ladi?</p><ol>
+<li>1..5 chiqadi</li><li>Hech narsa chiqmaydi</li><li>Xato</li><li>Cheksiz sikl — 1 to'xtovsiz chiqadi</li></ol>
+<p class="explain">i o'zgarmaydi — shart doim rost.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>For i = 10 to 1, Decreasing, Step 3</code> qaysi qiymatlarni beradi?</p><ol>
+<li>10 9 8 ... 1</li><li>1 4 7 10</li><li>10 7 4 1</li><li>10 7 4</li></ol>
+<p class="explain">10 → 7 → 4 → 1 (1 ham kiradi).</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Ko'paytirish jadvali:</b> son kiritiladi → uning 1..10 gacha jadvali (<code>7 x 3 = 21</code>).</li>
+  <li><b>Raqamlar yig'indisi (While):</b> ixtiyoriy uzunlikdagi sonning raqamlari yig'indisi (<code>% 10</code> va <code>Int(n / 10)</code>, <code>n &gt; 0</code> ekan).</li>
+  <li>18- yoki 19-loyihani yakunlab, GitHub'ga joylang. O'yinni 3 marta o'ynab, urinishlar sonini README'ga yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Sikl</dt><dd>Takrorlanuvchi qism; bir marta bajarilishi — iteratsiya.</dd>
+  <dt>For</dt><dd>Soni ma'lum: o'zgaruvchi, boshi, oxiri, yo'nalish, qadam.</dd>
+  <dt>While</dt><dd>Shart oldin; boshlash + shart + o'zgartirish.</dd>
+  <dt>Do</dt><dd>Shart keyin; kamida 1 marta — kiritishni tekshirish.</dd>
+  <dt>Hisoblagich / yig'uvchi</dt><dd><code>soni = soni + 1</code>; <code>s = s + x</code> (s=0), <code>p = p * x</code> (p=1).</dd>
+  <dt>Cheksiz sikl</dt><dd>Shart hech qachon yolg'on bo'lmaydi — o'zgaruvchini o'zgartirishni unutmang.</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="20-tarmoqlanuvchi-algoritmlar.html"><small>← Oldingi mavzu</small>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a><a class="next" href="22-loyiha-kalkulyator.html"><small>Keyingi mavzu →</small>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#sikl-nima">Sikl nima?</a></li><li><a href="#uch-xil-sikl">Uch xil sikl</a></li><li><a href="#for-sikli">For sikli</a></li><li><a href="#while-sikli">While sikli</a></li><li><a href="#do-sikli">Do sikli</a></li><li><a href="#siklning-ikki-yordamchisi">Siklning ikki &quot;yordamchisi&quot;</a></li><li><a href="#loyihalar">Loyihalar</a></li><li><a href="#qaysi-siklni-tanlash-kerak">Qaysi siklni tanlash kerak?</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

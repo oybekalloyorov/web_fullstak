@@ -1,0 +1,182 @@
+<!-- title: Operatsion tizimlar va Windows muhitida ishlash | desc: Operatsion tizim tushunchasi va vazifalari; Windows, Linux, macOS, Android, iOS; ish stoli, Start menyusi, oynalar bilan ishlash; Sozlamalar va boshqaruv paneli; dasturlarni o'rnatish va o'chirish. | icon: 🪟 | level: 1 dars · nazariy | bob: I bob. Kompyuter savodxonligi va arxitekturasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Operatsion tizim nima va u kompyuterda qanday vazifalarni bajarishini;</li>
+  <li>Mashhur operatsion tizimlar: Windows, Linux, macOS, Android, iOS farqini;</li>
+  <li>Windows ish stoli, Start menyusi, vazifalar paneli va oynalar bilan ishlashni;</li>
+  <li>Sozlamalar (Settings) va Boshqaruv paneli bilan tanishishni;</li>
+  <li>Dasturlarni xavfsiz o'rnatish, ishga tushirish va o'chirishni.</li>
+</ul>
+</div>
+
+<h2>Operatsion tizim nima?</h2>
+<p><b>Operatsion tizim (OT, inglizcha OS — Operating System)</b> — kompyuter yoqilganda birinchi yuklanadigan va boshqa barcha dasturlar
+ishlashi uchun "zamin" yaratadigan asosiy dastur. U kompyuterning apparat qismini (protsessor, xotira, disk, printer) boshqaradi va
+foydalanuvchiga qulay muloqot oynasini taqdim etadi.</p>
+<div class="analogy"><span class="t">O'xshatish: maktab direktori</span>
+Maktabda o'qituvchilar (dasturlar) dars o'tadi, lekin qaysi xona kimga berilishini, qo'ng'iroq qachon chalinishini, kim qaysi jihozdan
+foydalanishini <b>direktor</b> (operatsion tizim) boshqaradi. Direktor bo'lmasa — hamma bir vaqtda bitta xonaga kirib, tartibsizlik bo'ladi.</div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🧑 Foydalanuvchi</div>
+    <div class="arrow">⇄</div>
+    <div class="node">📦 Dasturlar<small>brauzer, Word, o'yinlar</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🪟 Operatsion tizim<small>Windows, Linux, Android</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🔩 Apparat qismi<small>CPU, RAM, disk, ekran</small></div>
+  </div>
+  <div class="diagram-caption">Operatsion tizim — dasturlar va "temir" o'rtasidagi vositachi</div>
+</div>
+
+<h3>Operatsion tizimning asosiy vazifalari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Vazifa</th><th>Nima qiladi</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td>Jarayonlarni boshqarish</td><td>Protsessor vaqtini dasturlar o'rtasida taqsimlaydi</td><td>Musiqa tinglab, brauzerda ishlash</td></tr>
+<tr><td>Xotirani boshqarish</td><td>Har bir dasturga RAMdan joy ajratadi</td><td>Yangi yorliq ochilganda</td></tr>
+<tr><td>Fayl tizimi</td><td>Fayl va papkalarni diskda tartibli saqlaydi</td><td><code>C:\Users\Ali\Documents</code></td></tr>
+<tr><td>Qurilmalarni boshqarish</td><td>Drayverlar orqali printer, kamera, fleshka bilan ishlaydi</td><td>Fleshka ulanganda u avtomatik ochiladi</td></tr>
+<tr><td>Foydalanuvchi interfeysi</td><td>Oynalar, tugmalar, menyular</td><td>Ish stoli, Start menyusi</td></tr>
+<tr><td>Xavfsizlik</td><td>Foydalanuvchi akkauntlari, parollar, ruxsatlar</td><td>Windows'ga parol bilan kirish</td></tr>
+</tbody></table></div>
+<p><b>Drayver</b> — operatsion tizimga muayyan qurilma (printer, videokarta) bilan qanday "gaplashish"ni o'rgatuvchi kichik dastur.</p>
+
+<h2>Mashhur operatsion tizimlar</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>OT</th><th>Ishlab chiqaruvchi</th><th>Qurilmalar</th><th>Xususiyati</th></tr></thead>
+<tbody>
+<tr><td>🪟 <b>Windows</b></td><td>Microsoft</td><td>Kompyuter, noutbuk</td><td>Eng keng tarqalgan stol OT; o'yinlar va ofis dasturlari ko'p</td></tr>
+<tr><td>🍎 <b>macOS</b></td><td>Apple</td><td>MacBook, iMac</td><td>Faqat Apple kompyuterlarida; dizaynerlar orasida mashhur</td></tr>
+<tr><td>🐧 <b>Linux</b></td><td>Ochiq kodli hamjamiyat (Ubuntu, Fedora...)</td><td>Serverlar, kompyuterlar, superkompyuterlar</td><td>Bepul; internetdagi serverlarning katta qismi Linux'da</td></tr>
+<tr><td>🤖 <b>Android</b></td><td>Google (Linux asosida)</td><td>Smartfon, planshet, televizor</td><td>Dunyodagi eng ko'p qurilmali OT</td></tr>
+<tr><td>📱 <b>iOS / iPadOS</b></td><td>Apple</td><td>iPhone, iPad</td><td>Yopiq tizim, ilovalar faqat App Store'dan</td></tr>
+</tbody></table></div>
+<div class="callout info"><span class="t">Ochiq va yopiq kod</span>
+Linux — <b>ochiq kodli</b>: uning dastur kodini istalgan odam ko'rishi, o'zgartirishi va bepul tarqatishi mumkin. Windows va macOS — <b>yopiq</b>
+(tijorat) tizimlar. Web Full-stack yo'nalishida siz Linux serverlar bilan ko'p ishlaysiz.</div>
+
+<h2>Windows muhitida ishlash</h2>
+<h3>Ish stoli (Desktop) elementlari</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Element</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><b>Ish stoli</b></td><td>Asosiy ekran; yorliqlar (ikonkalar) va fon rasmi</td></tr>
+<tr><td><b>Yorliq (ярлык, shortcut)</b></td><td>Dastur yoki faylga tezkor havola — chap pastki burchagida kichik strelka bor. Yorliqni o'chirish dasturni o'chirmaydi!</td></tr>
+<tr><td><b>Vazifalar paneli (Taskbar)</b></td><td>Pastdagi chiziq: ochiq dasturlar, Start tugmasi, soat, til, tovush</td></tr>
+<tr><td><b>Start menyusi</b></td><td>Barcha dasturlar, qidiruv, sozlamalar, kompyuterni o'chirish</td></tr>
+<tr><td><b>Bildirishnomalar maydoni</b></td><td>O'ng pastda: Wi-Fi, batareya, tovush, sana va vaqt</td></tr>
+<tr><td><b>Savat (Recycle Bin)</b></td><td>O'chirilgan fayllar vaqtincha shu yerga tushadi</td></tr>
+</tbody></table></div>
+
+<h3>Oynalar bilan ishlash</h3>
+<p>Windows nomi ("derazalar") bejiz emas — har bir dastur o'z <b>oyna</b>sida ochiladi. Oynaning o'ng yuqori burchagida uchta tugma bor:</p>
+<ul>
+  <li><b>—</b> Yig'ish (minimize) — oyna vazifalar paneliga yashirinadi;</li>
+  <li><b>☐</b> Yoyish (maximize) — butun ekranni egallaydi;</li>
+  <li><b>✕</b> Yopish (close) — dastur yopiladi.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Tezkor tugma</th><th>Vazifasi</th></tr></thead>
+<tbody>
+<tr><td><kbd>Win</kbd></td><td>Start menyusini ochish</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>D</kbd></td><td>Ish stolini ko'rsatish (hamma oynalarni yig'ish)</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>Tab</kbd></td><td>Ochiq oynalar orasida o'tish</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>←</kbd> / <kbd>→</kbd></td><td>Oynani ekranning chap / o'ng yarmiga joylash</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>E</kbd></td><td>Provodnik (File Explorer) ni ochish</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>L</kbd></td><td>Kompyuterni qulflash (tanaffusga chiqayotganda!)</td></tr>
+<tr><td><kbd>Alt</kbd>+<kbd>F4</kbd></td><td>Joriy oynani yopish</td></tr>
+<tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd></td><td>Vazifalar dispetcheri — "qotgan" dasturni yopish</td></tr>
+<tr><td><kbd>Win</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td>Ekran rasmini (skrinshot) olish</td></tr>
+</tbody></table></div>
+<div class="callout tip">Ikkita oynani yonma-yon qo'yib ishlash — dasturchining eng sevimli usuli: chapda darslik, o'ngda kod muharriri.
+<kbd>Win</kbd>+<kbd>←</kbd> va <kbd>Win</kbd>+<kbd>→</kbd> bilan sinab ko'ring!</div>
+
+<h3>Sozlamalar va Boshqaruv paneli</h3>
+<p><b>Sozlamalar (Settings)</b> — <kbd>Win</kbd>+<kbd>I</kbd>. Bu yerda:</p>
+<ul>
+  <li><b>Tizim</b> — ekran yorqinligi, tovush, bildirishnomalar, "Haqida" (kompyuter xususiyatlari);</li>
+  <li><b>Shaxsiylashtirish</b> — fon rasmi, ranglar, tungi rejim;</li>
+  <li><b>Vaqt va til</b> — klaviatura tillari (o'zbekcha lotin, rus, ingliz qo'shish);</li>
+  <li><b>Hisoblar</b> — foydalanuvchilar va parollar;</li>
+  <li><b>Windows Update</b> — tizim yangilanishlari (xavfsizlik uchun muhim!);</li>
+  <li><b>Ilovalar</b> — o'rnatilgan dasturlar ro'yxati va ularni o'chirish.</li>
+</ul>
+<p><b>Boshqaruv paneli (Control Panel)</b> — eski uslubdagi sozlamalar oynasi; Start'da "Control Panel" deb qidirib topiladi.
+Ba'zi eski sozlamalar faqat shu yerda bor.</p>
+
+<h2>Dasturlarni o'rnatish va o'chirish</h2>
+<h3>O'rnatish</h3>
+<ol class="steps">
+  <li>Dasturni <b>faqat rasmiy saytdan</b> yoki <b>Microsoft Store</b>dan yuklab oling. Masalan: <code>flowgorithm.org</code>, <code>code.visualstudio.com</code>, <code>git-scm.com</code>.</li>
+  <li>Yuklangan <code>.exe</code> yoki <code>.msi</code> faylni ishga tushiring.</li>
+  <li>O'rnatuvchi (installer) savollarini <b>o'qib</b> javob bering. "Qo'shimcha dasturlar" (brauzer paneli, reklama) taklif qilinsa — belgini olib tashlang.</li>
+  <li>O'rnatish tugagach, dastur Start menyusida paydo bo'ladi.</li>
+</ol>
+<div class="callout danger"><span class="t">Xavfli manbalar</span>
+"Bepul yuklab olish", "crack", "keygen" kabi noma'lum saytlardagi dasturlar ko'pincha <b>virus</b> yoki ayg'oqchi dastur bilan keladi
+(6-mavzu). Pullik dasturning bepul muqobilini qidiring: masalan, Microsoft Office o'rniga <b>LibreOffice</b> yoki <b>Google Docs</b>.</div>
+<h3>O'chirish</h3>
+<ol class="steps">
+  <li><b>Sozlamalar → Ilovalar → O'rnatilgan ilovalar</b> (Apps → Installed apps).</li>
+  <li>Dasturni toping, yonidagi <b>⋯</b> tugmasi → <b>O'chirish</b> (Uninstall).</li>
+</ol>
+<p>Dastur papkasini qo'lda o'chirish to'g'ri emas — tizimda "chiqindi" qoladi.</p>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>Sozlamalarda klaviaturaga <b>O'zbek (lotin)</b> tilini qo'shing. Tillar orasida <kbd>Win</kbd>+<kbd>Probel</kbd> bilan almashing.</li>
+  <li>Ish stoli fon rasmini va mavzu rangini o'zgartiring; tungi rejimni yoqing.</li>
+  <li>Bloknot (Notepad) va Kalkulyatorni Start qidiruvi orqali oching. Ularni <kbd>Win</kbd>+<kbd>←</kbd>/<kbd>→</kbd> bilan yonma-yon joylang.</li>
+  <li><kbd>Alt</kbd>+<kbd>Tab</kbd> bilan oynalar orasida o'ting, <kbd>Win</kbd>+<kbd>D</kbd> bilan ish stoliga qayting.</li>
+  <li>Vazifalar dispetcherida eng ko'p xotira ishlatayotgan 3 ta dasturni aniqlang.</li>
+  <li>Mentor bilan birga <b>Flowgorithm</b> dasturini rasmiy saytdan o'rnating — III bobda kerak bo'ladi.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Ish stolidagi yorliqni o'chirib, "dastur o'chdi" deb o'ylash → ✅ Dastur faqat Sozlamalar → Ilovalar orqali o'chiriladi.</li>
+  <li>❌ Kompyuterni quvvat tugmasini uzoq bosib o'chirish → ✅ <b>Start → O'chirish</b>. Aks holda saqlanmagan ma'lumot va tizim fayllari buzilishi mumkin.</li>
+  <li>❌ Windows yangilanishlarini doim o'chirib qo'yish → ✅ Yangilanishlar xavfsizlik teshiklarini yopadi.</li>
+  <li>❌ Noma'lum saytdan dastur yuklash → ✅ Faqat rasmiy sayt yoki Microsoft Store.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Operatsion tizimning asosiy vazifasi nima?</p><ol>
+<li>Faqat o'yin o'ynash</li><li>Kompyuter resurslarini boshqarish va dasturlar uchun muhit yaratish</li><li>Internetga ulanish</li><li>Matn yozish</li></ol>
+<p class="explain">OT — dasturlar va apparat qismi o'rtasidagi "direktor".</p></div>
+<div class="quiz" data-answer="4"><p class="q">Quyidagilardan qaysi biri ochiq kodli operatsion tizim?</p><ol>
+<li>Windows</li><li>macOS</li><li>iOS</li><li>Linux</li></ol>
+<p class="explain">Linux'ning kodi ochiq va bepul tarqatiladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Ochiq oynalar orasida tez o'tish uchun qaysi tugmalar ishlatiladi?</p><ol>
+<li>Alt + Tab</li><li>Ctrl + C</li><li>Win + L</li><li>Alt + F4</li></ol>
+<p class="explain">Alt+Tab — oynalar almashinuvi; Win+L — qulflash; Alt+F4 — yopish.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Qurilma (printer) bilan ishlash uchun OTga kerak bo'ladigan kichik dastur?</p><ol>
+<li>Brauzer</li><li>Antivirus</li><li>Drayver</li><li>Arxivator</li></ol>
+<p class="explain">Drayver OTga qurilma bilan qanday ishlashni "o'rgatadi".</p></div>
+<div class="quiz" data-answer="2"><p class="q">Dasturni to'g'ri o'chirish usuli qaysi?</p><ol>
+<li>Ish stolidagi yorlig'ini o'chirish</li><li>Sozlamalar → Ilovalar → O'chirish</li><li>Papkasini savatga tashlash</li><li>Kompyuterni qayta yoqish</li></ol>
+<p class="explain">Shunda dastur barcha fayllari va sozlamalari bilan to'g'ri o'chiriladi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Oila a'zolaringiz ishlatadigan barcha qurilmalarda qaysi operatsion tizim borligini aniqlang va jadval tuzing.</li>
+  <li>Ushbu darsdagi 10 ta tezkor tugmani yod oling va har birini kamida 3 marta ishlatib ko'ring.</li>
+  <li>Windows, Linux va Android'ning 3 tadan afzalligi va kamchiligini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Operatsion tizim</dt><dd>Apparat va dasturlarni boshqaruvchi asosiy dastur.</dd>
+  <dt>Mashhur OTlar</dt><dd>Windows, macOS, Linux (ochiq kodli), Android, iOS.</dd>
+  <dt>Drayver</dt><dd>OTni qurilma bilan bog'lovchi dastur.</dd>
+  <dt>Windows interfeysi</dt><dd>Ish stoli, yorliqlar, Start menyusi, vazifalar paneli, oynalar.</dd>
+  <dt>Tezkor tugmalar</dt><dd>Alt+Tab, Win+D, Win+E, Win+L, Win+I, Ctrl+Shift+Esc.</dd>
+  <dt>Dasturlar</dt><dd>Faqat rasmiy manbadan o'rnating; Sozlamalar → Ilovalar orqali o'chiring.</dd>
+</dl>
+</div>

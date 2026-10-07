@@ -1,0 +1,167 @@
+<!-- title: Kompyuterning asosiy va qo'shimcha qurilmalari | desc: Tizim bloki, monitor, klaviatura, sichqoncha; tizim blokining ichki qismlari (protsessor, RAM, ona plata, HDD/SSD); printer, skaner, proyektor, veb-kamera, kolonka; kiritish, chiqarish va saqlash qurilmalari; ulash portlari va xavfsiz foydalanish. | icon: 🖨️ | level: 1 dars · nazariy | bob: I bob. Kompyuter savodxonligi va arxitekturasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kompyuterning asosiy qurilmalari va tizim bloki ichidagi qismlarni;</li>
+  <li>Qo'shimcha (periferik) qurilmalar: printer, skaner, proyektor, veb-kamera, kolonka;</li>
+  <li>Qurilmalarni vazifasiga ko'ra guruhlash: <b>kiritish, chiqarish, saqlash</b>;</li>
+  <li>Ulash portlari (USB, HDMI, Type-C...) va qurilmalarni to'g'ri ulashni;</li>
+  <li>Qurilmalardan xavfsiz va uzoq muddat foydalanish qoidalarini.</li>
+</ul>
+</div>
+
+<h2>Asosiy qurilmalar</h2>
+<p>Statsionar kompyuter odatda to'rtta asosiy qurilmadan iborat — usiz kompyuter bilan to'liq ishlab bo'lmaydi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Qurilma</th><th>Vazifasi</th><th>Turi</th></tr></thead>
+<tbody>
+<tr><td>🖥️ <b>Tizim bloki</b></td><td>Kompyuterning "tanasi": protsessor, xotira, disklar shu yerda</td><td>Qayta ishlash va saqlash</td></tr>
+<tr><td>🖵 <b>Monitor</b></td><td>Matn, rasm va videoni ko'rsatadi</td><td>Chiqarish</td></tr>
+<tr><td>⌨️ <b>Klaviatura</b></td><td>Matn va buyruqlarni kiritadi</td><td>Kiritish</td></tr>
+<tr><td>🖱️ <b>Sichqoncha</b></td><td>Ekrandagi ko'rsatkichni boshqaradi</td><td>Kiritish</td></tr>
+</tbody></table></div>
+<p>Noutbukda bularning hammasi bitta korpusda: ekran — monitor, sensorli panel (touchpad) — sichqoncha.</p>
+
+<h2>Tizim blokining ichki qismlari</h2>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🔌 Quvvat bloki<small>tok beradi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🟩 Ona plata<small>hammasini bog'laydi</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🧠 CPU + 🌀 sovutgich</div>
+    <div class="arrow">⇄</div>
+    <div class="node">⚡ RAM</div>
+    <div class="arrow">⇄</div>
+    <div class="node">💾 SSD / HDD</div>
+    <div class="arrow">⇄</div>
+    <div class="node">🎮 Videokarta</div>
+  </div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Qism</th><th>Vazifasi</th><th>Nimaga e'tibor berish kerak</th></tr></thead>
+<tbody>
+<tr><td><b>Ona plata</b> (motherboard)</td><td>Barcha qismlarni ulaydigan asosiy plata</td><td>Protsessor uyasi (socket) va RAM turi mos kelishi kerak</td></tr>
+<tr><td><b>Protsessor</b> (CPU)</td><td>Hisoblash va boshqarish</td><td>Yadrolar, GHz; ustida doim sovutgich (kuler) bo'ladi</td></tr>
+<tr><td><b>Tezkor xotira</b> (RAM)</td><td>Ishlayotgan dasturlar uchun vaqtinchalik xotira</td><td>Hajm (GB), turi (DDR4/DDR5)</td></tr>
+<tr><td><b>HDD / SSD</b></td><td>Fayllar va OT uchun doimiy xotira</td><td>Hajm (GB/TB), SSD — tezroq</td></tr>
+<tr><td><b>Videokarta</b> (GPU)</td><td>Tasvirni monitor uchun tayyorlaydi</td><td>O'yin va dizayn uchun alohida videokarta</td></tr>
+<tr><td><b>Quvvat bloki</b> (PSU)</td><td>220 V ni kerakli kuchlanishga aylantiradi</td><td>Quvvati (Vatt) yetarli bo'lishi</td></tr>
+<tr><td><b>Sovutish tizimi</b></td><td>Kulerlar qizib ketishdan saqlaydi</td><td>Chang to'planmasligi kerak</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">O'xshatish: inson tanasi</span>
+Protsessor — miya, RAM — qisqa muddatli xotira ("hozir nima qilyapman"), SSD — uzoq muddatli xotira (bilimlar), ona plata — asab tizimi,
+quvvat bloki — yurak, sovutgich — terlash, monitor — yuz ifodasi, klaviatura va sichqoncha — qulog'imiz va ko'zimiz.</div>
+
+<h2>Qurilmalarning vazifasiga ko'ra turlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>⬇️ Kiritish qurilmalari</th><th>⬆️ Chiqarish qurilmalari</th><th>💾 Saqlash qurilmalari</th></tr></thead>
+<tbody>
+<tr><td>Klaviatura</td><td>Monitor</td><td>HDD, SSD</td></tr>
+<tr><td>Sichqoncha, touchpad</td><td>Printer</td><td>Fleshka (USB)</td></tr>
+<tr><td>Skaner</td><td>Proyektor</td><td>Xotira kartasi (SD, microSD)</td></tr>
+<tr><td>Mikrofon</td><td>Kolonka, quloqchin</td><td>Tashqi disk</td></tr>
+<tr><td>Veb-kamera</td><td>Plotter (katta chizmalar)</td><td>Bulutli xotira (11-mavzu)</td></tr>
+<tr><td>Grafik planshet, joystik</td><td>VR ko'zoynak</td><td>Optik disk (CD/DVD — eskirgan)</td></tr>
+</tbody></table></div>
+<div class="callout info"><span class="t">Ikkala tomonlama qurilmalar</span>
+Ba'zi qurilmalar ham kiritadi, ham chiqaradi: <b>sensorli ekran</b> (bosish — kiritish, tasvir — chiqarish), <b>MFQ</b> (ko'p funksiyali qurilma:
+printer + skaner + nusxa ko'chiruvchi), <b>quloqchin-garnitura</b> (mikrofonli).</div>
+
+<h2>Qo'shimcha (periferik) qurilmalar</h2>
+<h3>🖨️ Printer</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Ishlash usuli</th><th>Qachon</th></tr></thead>
+<tbody>
+<tr><td>Purkagichli (struyniy)</td><td>Mayda tomchi siyoh purkaydi</td><td>Rangli rasmlar, uy uchun</td></tr>
+<tr><td>Lazerli</td><td>Kukun (toner) issiqlik bilan qog'ozga yopishadi</td><td>Ko'p hujjat, tez va arzon bosma — ofis, maktab</td></tr>
+<tr><td>3D printer</td><td>Plastikni qatlam-qatlam eritib, buyum yasaydi</td><td>Maketlar, ehtiyot qismlar, robototexnika</td></tr>
+</tbody></table></div>
+<h3>📠 Skaner</h3>
+<p>Qog'ozdagi matn yoki rasmni raqamli faylga aylantiradi. <b>OCR</b> (matnni tanish) dasturi skanerlangan rasmdan tahrirlanadigan matn ajratib oladi.
+Bugun telefon kamerasi ham skaner vazifasini bajaradi (Google Lens, "Hujjatni skanerlash").</p>
+<h3>📽️ Proyektor</h3>
+<p>Tasvirni katta ekranga yoki devorga tushiradi. Asosiy ko'rsatkichlari: yorqinlik (lyumen) va o'lcham (piksel). Darsda taqdimot ko'rsatish uchun ishlatiladi.</p>
+<h3>📷 Veb-kamera va 🎤 mikrofon</h3>
+<p>Video qo'ng'iroqlar (Zoom, Google Meet, Telegram) va onlayn darslar uchun. Ko'rsatkichlari: 720p / 1080p sifat.</p>
+<h3>🔊 Kolonka va quloqchin</h3>
+<p>Ovozni chiqaradi. Simli (3,5 mm jak yoki USB) va simsiz (Bluetooth) turlari bor.</p>
+
+<h2>Ulash portlari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Port</th><th>Nima ulanadi</th><th>Belgisi</th></tr></thead>
+<tbody>
+<tr><td><b>USB-A</b></td><td>Fleshka, sichqoncha, klaviatura, printer</td><td>To'rtburchak, bir tomonlama</td></tr>
+<tr><td><b>USB-C (Type-C)</b></td><td>Zaryad, tashqi disk, monitor, telefon</td><td>Oval, ikki tomonlama — har qanday tomoni bilan ulanadi</td></tr>
+<tr><td><b>HDMI</b></td><td>Monitor, televizor, proyektor (tasvir + ovoz)</td><td>Trapetsiya shaklida</td></tr>
+<tr><td><b>DisplayPort / VGA</b></td><td>Monitor (VGA — eski, ko'k rangli)</td><td></td></tr>
+<tr><td><b>RJ-45 (Ethernet)</b></td><td>Simli internet (tarmoq kabeli)</td><td>Telefon simining kattaroq "akasi"</td></tr>
+<tr><td><b>3,5 mm audio jak</b></td><td>Quloqchin, kolonka, mikrofon</td><td>Yumaloq kichik teshik</td></tr>
+<tr><td><b>Bluetooth / Wi-Fi</b></td><td>Simsiz ulanish: quloqchin, sichqoncha, internet</td><td>Port emas — simsiz modul</td></tr>
+</tbody></table></div>
+<p>Yangi qurilma ulanganda Windows odatda <b>drayverni</b> avtomatik o'rnatadi ("Plug and Play" — ula va ishlat).</p>
+
+<h2>Qurilmalardan xavfsiz foydalanish</h2>
+<ul>
+  <li>⚡ Kompyuterni <b>kuchlanish stabilizatori</b> yoki uzluksiz quvvat manbai (UPS) orqali ulang — elektr sakrashlari qurilmani buzadi.</li>
+  <li>💾 Fleshkani sug'urishdan oldin <b>"Qurilmani xavfsiz chiqarish"</b> (vazifalar panelidagi belgi) — aks holda fayllar buzilishi mumkin.</li>
+  <li>🌀 Noutbukni yumshoq yuzaga (ko'rpa, yostiq) qo'ymang — havo teshiklari yopilib, qizib ketadi.</li>
+  <li>🥤 Klaviatura yonida suyuqlik ichmang; ekranni maxsus salfetka bilan tozalang.</li>
+  <li>🔌 Tizim blokini ochishdan oldin <b>tokdan uzing</b>; ichki qismlarga statik zaryad zarar beradi.</li>
+  <li>👀 Ko'z salomatligi: <b>20-20-20 qoidasi</b> — har 20 daqiqada 20 soniya davomida 20 fut (6 m) uzoqqa qarang. Monitor ko'z darajasida, 50–70 sm masofada.</li>
+</ul>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>Sinfdagi kompyuterning barcha portlarini toping va qaysi biriga nima ulanganini yozing.</li>
+  <li><b>Qurilmalar dispetcheri</b> (Device Manager): Start → "Qurilmalar dispetcheri". Protsessor, disk, displey adapteri (videokarta) va tarmoq adapteri nomini yozing.</li>
+  <li>Fleshkani ulang, unga fayl nusxalang va <b>xavfsiz chiqarish</b> bilan uzing.</li>
+  <li>Quyidagi qurilmalarni guruhlarga ajrating: <i>sensorli ekran, skaner, proyektor, SSD, mikrofon, printer, fleshka, veb-kamera, MFQ</i>.</li>
+  <li><b>1-loyiha:</b> "Kompyuterning asosiy qurilmalari" interaktiv taqdimotini (PowerPoint yoki Google Slides) tayyorlang: har bir qurilma — bitta slayd (rasm, vazifa, turi, qiziq fakt), oxirida 3 ta savolli viktorina.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ "Tizim bloki — bu protsessor" → ✅ Tizim bloki — korpus; protsessor uning ichidagi bitta qism.</li>
+  <li>❌ Fleshkani ma'lumot yozilayotganda sug'urish → ✅ Avval "xavfsiz chiqarish".</li>
+  <li>❌ Monitorni "kompyuter ishlamayapti" deb o'ylash, aslida kabel ulanmagan → ✅ Avval kabellar va quvvatni tekshiring.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Quyidagilardan qaysi biri chiqarish qurilmasi?</p><ol>
+<li>Skaner</li><li>Proyektor</li><li>Mikrofon</li><li>Klaviatura</li></ol>
+<p class="explain">Proyektor tasvirni chiqaradi; qolganlari — kiritish qurilmalari.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Barcha qismlarni bir-biriga bog'lovchi asosiy plata qanday ataladi?</p><ol>
+<li>Videokarta</li><li>Quvvat bloki</li><li>Kuler</li><li>Ona plata</li></ol>
+<p class="explain">Ona plata (motherboard) — kompyuterning "asab tizimi".</p></div>
+<div class="quiz" data-answer="1"><p class="q">Monitor yoki proyektorni ulash uchun eng keng tarqalgan port?</p><ol>
+<li>HDMI</li><li>RJ-45</li><li>3,5 mm jak</li><li>Bluetooth</li></ol>
+<p class="explain">HDMI tasvir va ovozni birga uzatadi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Ham kiritish, ham chiqarish qurilmasi bo'la oladigani?</p><ol>
+<li>Printer</li><li>Sichqoncha</li><li>Sensorli ekran</li><li>Kolonka</li></ol>
+<p class="explain">Sensorli ekran bosishni qabul qiladi (kiritish) va tasvir ko'rsatadi (chiqarish).</p></div>
+<div class="quiz" data-answer="2"><p class="q">Ko'p hujjatni tez va arzon bosish uchun qaysi printer mos?</p><ol>
+<li>3D printer</li><li>Lazerli printer</li><li>Plotter</li><li>Purkagichli printer</li></ol>
+<p class="explain">Lazerli printer ofis va maktab uchun tejamkor.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>1-loyiha taqdimotini yakunlang va sinfda 3 daqiqada himoya qiling.</li>
+  <li>Uydagi kompyuter yoki noutbukning barcha portlarini rasmga oling va har birini nomlang.</li>
+  <li>"Ideal o'quvchi kompyuteri"ni yig'ing: internet-do'kondan protsessor, ona plata, RAM, SSD, korpus va quvvat blokini tanlab, umumiy narxini hisoblang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Asosiy qurilmalar</dt><dd>Tizim bloki, monitor, klaviatura, sichqoncha.</dd>
+  <dt>Tizim bloki ichida</dt><dd>Ona plata, CPU, RAM, SSD/HDD, videokarta, quvvat bloki, sovutgich.</dd>
+  <dt>Kiritish</dt><dd>Klaviatura, sichqoncha, skaner, mikrofon, veb-kamera.</dd>
+  <dt>Chiqarish</dt><dd>Monitor, printer, proyektor, kolonka.</dd>
+  <dt>Saqlash</dt><dd>HDD, SSD, fleshka, xotira kartasi, bulut.</dd>
+  <dt>Portlar</dt><dd>USB-A, USB-C, HDMI, RJ-45, 3,5 mm jak.</dd>
+</dl>
+</div>

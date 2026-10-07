@@ -1,0 +1,193 @@
+<!-- title: Axborot o'lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar | desc: Bit, bayt, KB, MB, GB, TB; ikkilik sanoq tizimi; fayl va kengaytmalar; Windows'da fayl va papkalar yaratish, nomlash, nusxalash, ko'chirish, o'chirish va tiklash; Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Delete, F2. | icon: 📁 | level: 1 dars · nazariy | bob: I bob. Kompyuter savodxonligi va arxitekturasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Kompyuter axborotni qanday ko'rinishda saqlashini (0 va 1);</li>
+  <li>Axborot o'lchov birliklarini: bit, bayt, KB, MB, GB, TB va ularni bir-biriga aylantirishni;</li>
+  <li>Fayl, papka va fayl kengaytmalari tushunchasini;</li>
+  <li>Provodnik (File Explorer) da fayl va papkalar bilan barcha amallarni;</li>
+  <li>Ishni bir necha baravar tezlashtiradigan tezkor tugmalarni (hot keys).</li>
+</ul>
+</div>
+
+<h2>Kompyuter axborotni qanday saqlaydi?</h2>
+<p>Kompyuter elektron sxemalardan iborat. Har bir kichik "kalit" (tranzistor) faqat ikki holatda bo'lishi mumkin: <b>tok bor</b> yoki <b>tok yo'q</b>.
+Shuning uchun kompyuter barcha axborotni faqat ikkita raqam — <b>1</b> va <b>0</b> yordamida ifodalaydi. Bu <b>ikkilik (binar) sanoq tizimi</b> deyiladi.</p>
+<div class="analogy"><span class="t">O'xshatish: chiroq kalitlari</span>
+Xonada 8 ta chiroq bor, har biri yoqiq (1) yoki o'chiq (0). Ularning turli kombinatsiyasi bilan 256 xil "signal" berish mumkin.
+Kompyuter ham har bir harf, rang yoki tovushni shunday yoqiq-o'chiq kalitlar kombinatsiyasi bilan yozadi.</div>
+
+<h3>Bit va bayt</h3>
+<ul>
+  <li><b>Bit</b> (binary digit) — eng kichik axborot birligi: bitta <code>0</code> yoki <code>1</code>.</li>
+  <li><b>Bayt</b> = <b>8 bit</b>. Bitta baytda 2<sup>8</sup> = <b>256</b> xil qiymat saqlash mumkin (0 dan 255 gacha).</li>
+</ul>
+<p>Masalan, lotin harfi <code>A</code> kompyuterda <code>01000001</code> (o'nlik sanoqda 65) bo'lib saqlanadi. Bu kodlar jadvali <b>ASCII</b>, 
+zamonaviy kengaytirilgani esa — <b>Unicode (UTF-8)</b> deyiladi: unda o'zbekcha <code>oʻ</code>, kirill harflari va hatto emoji 😀 ham bor.</p>
+
+<h3>Ikkilik sondan o'nlik songa</h3>
+<p>Har bir xona o'ngdan chapga 1, 2, 4, 8, 16, 32, 64, 128 qiymatga ega. Qaysi xonada <code>1</code> bo'lsa, o'sha qiymatlar qo'shiladi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Xona qiymati</th><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
+<tbody>
+<tr><td><code>00001101</code></td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+</tbody></table></div>
+<p><code>00001101</code> = 8 + 4 + 1 = <b>13</b>. Teskarisi: 13 ni 2 ga ketma-ket bo'lib, qoldiqlarni pastdan yuqoriga yozamiz:
+13 → 1, 6 → 0, 3 → 1, 1 → 1 ⇒ <code>1101</code>.</p>
+
+<h2>Axborot o'lchov birliklari</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Birlik</th><th>Qisqa</th><th>Qiymati</th><th>Taxminan nima sig'adi</th></tr></thead>
+<tbody>
+<tr><td>Bit</td><td>bit</td><td>0 yoki 1</td><td>"Ha" yoki "yo'q" javobi</td></tr>
+<tr><td>Bayt</td><td>B</td><td>8 bit</td><td>Bitta harf</td></tr>
+<tr><td>Kilobayt</td><td>KB</td><td>1024 bayt</td><td>Yarim betlik matn</td></tr>
+<tr><td>Megabayt</td><td>MB</td><td>1024 KB</td><td>Bitta qo'shiq (~4 MB), sifatli rasm (~3 MB)</td></tr>
+<tr><td>Gigabayt</td><td>GB</td><td>1024 MB</td><td>Bitta film (~1–4 GB)</td></tr>
+<tr><td>Terabayt</td><td>TB</td><td>1024 GB</td><td>~250 000 ta rasm yoki ~500 ta film</td></tr>
+<tr><td>Petabayt</td><td>PB</td><td>1024 TB</td><td>Katta kompaniyalar ma'lumotlar markazi</td></tr>
+</tbody></table></div>
+<div class="callout info"><span class="t">Nega 1000 emas, 1024?</span>
+Kompyuter ikkilik tizimda ishlaydi: 1024 = 2<sup>10</sup>. Lekin disk ishlab chiqaruvchilari ko'pincha 1 GB = 1000 MB deb hisoblaydi —
+shuning uchun "1 TB" disk Windows'da taxminan <b>931 GB</b> ko'rinadi. Bu xato emas, hisoblash usuli farqi.</div>
+
+<h3>Birliklarni aylantirish</h3>
+<p>Kattaroq birlikka o'tish — <b>1024 ga bo'lish</b>, kichikroqqa o'tish — <b>1024 ga ko'paytirish</b> (bitdan baytga esa 8 ga bo'linadi).</p>
+<pre data-lang="text" data-title="Misollar">3 KB  = 3 × 1024 = 3072 bayt
+2 GB  = 2 × 1024 = 2048 MB
+40 bit = 40 / 8 = 5 bayt
+5120 MB = 5120 / 1024 = 5 GB
+Telefoningiz xotirasi 128 GB, har bir rasm 4 MB:
+128 × 1024 / 4 = 32 768 ta rasm sig'adi</pre>
+<div class="callout warn"><span class="t">Internet tezligi — bitlarda!</span>
+Provayder "100 Mbit/s" desa, bu <b>megabit</b>. Fayl yuklash tezligi megabaytda: 100 / 8 ≈ <b>12,5 MB/s</b>. Kichik <code>b</code> — bit,
+katta <code>B</code> — bayt: <code>Mbps</code> ≠ <code>MBps</code>.</div>
+
+<h2>Fayl va papka</h2>
+<p><b>Fayl</b> — diskda nom bilan saqlangan ma'lumotlar to'plami: hujjat, rasm, qo'shiq, dastur. <b>Papka (yig'ma jild, folder)</b> —
+fayllar va boshqa papkalarni guruhlash uchun "quti".</p>
+<div class="analogy"><span class="t">O'xshatish: kutubxona</span>
+Disk — kutubxona binosi, papkalar — javonlar va bo'limlar ("Badiiy adabiyot → O'zbek adiblari"), fayllar — kitoblar. Kitobning
+manzili — <b>yo'l (path)</b>: <code>C:\Kutubxona\Badiiy\Qodiriy\Otkan_kunlar.pdf</code>.</div>
+
+<h3>Fayl nomi va kengaytmasi</h3>
+<p>Fayl nomi ikki qismdan iborat: <code>insho</code><b>.</b><code>docx</code>. Nuqtadan keyingi qism — <b>kengaytma</b>; u fayl turini va
+qaysi dastur bilan ochilishini bildiradi.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Tur</th><th>Kengaytmalar</th><th>Qaysi dastur ochadi</th></tr></thead>
+<tbody>
+<tr><td>Matn hujjatlari</td><td><code>.txt</code> <code>.docx</code> <code>.pdf</code> <code>.odt</code></td><td>Bloknot, Word, PDF o'quvchi, LibreOffice</td></tr>
+<tr><td>Jadvallar</td><td><code>.xlsx</code> <code>.csv</code></td><td>Excel, Google Sheets</td></tr>
+<tr><td>Taqdimotlar</td><td><code>.pptx</code></td><td>PowerPoint, Google Slides</td></tr>
+<tr><td>Rasmlar</td><td><code>.jpg</code> <code>.png</code> <code>.gif</code> <code>.svg</code> <code>.webp</code></td><td>Rasmlar ko'ruvchisi, brauzer</td></tr>
+<tr><td>Audio</td><td><code>.mp3</code> <code>.wav</code> <code>.ogg</code></td><td>Musiqa pleyeri</td></tr>
+<tr><td>Video</td><td><code>.mp4</code> <code>.avi</code> <code>.mkv</code></td><td>Video pleyer</td></tr>
+<tr><td>Arxivlar</td><td><code>.zip</code> <code>.rar</code> <code>.7z</code></td><td>Siqilgan fayllar; Windows .zip ni o'zi ochadi</td></tr>
+<tr><td>Dasturlar</td><td><code>.exe</code> <code>.msi</code></td><td>Ishga tushadigan fayl — ehtiyot bo'ling!</td></tr>
+<tr><td>Dastur kodlari</td><td><code>.html</code> <code>.css</code> <code>.js</code> <code>.py</code> <code>.fprg</code></td><td>VS Code; <code>.fprg</code> — Flowgorithm fayli</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Kengaytmalarni ko'rinadigan qiling</span>
+Provodnikda <b>Ko'rinish (View) → Ko'rsatish → Fayl nomi kengaytmalari</b> belgisini yoqing. Shunda <code>rasm.jpg.exe</code> kabi
+yashirin virus-fayllarni darhol ajratasiz (6-mavzu).</div>
+
+<h3>Fayl nomlash qoidalari</h3>
+<ul>
+  <li>Windows'da quyidagi belgilar ishlatilmaydi: <code>\ / : * ? " &lt; &gt; |</code></li>
+  <li>Mazmunli nom bering: <code>Doc1.docx</code> ❌ → <code>Informatika_uy_vazifasi_3.docx</code> ✅</li>
+  <li>Sanani boshida yil bilan yozsangiz, fayllar o'zi tartiblanadi: <code>2026-10-02_hisobot.docx</code></li>
+  <li>Dasturlash loyihalarida: kichik harflar, bo'sh joysiz, lotincha — <code>mening-saytim</code>.</li>
+</ul>
+
+<h3>Yo'l (path)</h3>
+<pre data-lang="text" data-title="Windows yo'li">C:\Users\Ali\Documents\Maktab\Informatika\algoritm.fprg
+│  └─ foydalanuvchi papkasi ─┘  └─ papkalar ──────┘ └─ fayl ─┘
+└─ disk</pre>
+
+<h2>Provodnik (File Explorer) bilan ishlash</h2>
+<p>Provodnik — <kbd>Win</kbd>+<kbd>E</kbd>. Chap panelda: <b>Ish stoli, Yuklanmalar (Downloads), Hujjatlar, Rasmlar, Bu kompyuter</b>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Amal</th><th>Sichqoncha bilan</th><th>Tezkor tugma</th></tr></thead>
+<tbody>
+<tr><td>Yangi papka</td><td>O'ng tugma → Yangi → Papka</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td></tr>
+<tr><td>Nomini o'zgartirish</td><td>O'ng tugma → Nomini o'zgartirish</td><td><kbd>F2</kbd></td></tr>
+<tr><td>Nusxalash</td><td>O'ng tugma → Nusxalash</td><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td></tr>
+<tr><td>Qirqib olish (ko'chirish uchun)</td><td>O'ng tugma → Qirqib olish</td><td><kbd>Ctrl</kbd>+<kbd>X</kbd></td></tr>
+<tr><td>Joylashtirish</td><td>O'ng tugma → Joylashtirish</td><td><kbd>Ctrl</kbd>+<kbd>V</kbd></td></tr>
+<tr><td>Oxirgi amalni bekor qilish</td><td>—</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td></tr>
+<tr><td>Bekor qilinganini qaytarish</td><td>—</td><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td></tr>
+<tr><td>Hammasini belgilash</td><td>—</td><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td></tr>
+<tr><td>Savatga o'chirish</td><td>O'ng tugma → O'chirish</td><td><kbd>Delete</kbd></td></tr>
+<tr><td>Butunlay o'chirish (savatsiz!)</td><td>—</td><td><kbd>Shift</kbd>+<kbd>Delete</kbd></td></tr>
+<tr><td>Qidirish</td><td>Yuqori o'ngdagi qidiruv maydoni</td><td><kbd>Ctrl</kbd>+<kbd>F</kbd></td></tr>
+<tr><td>Bir nechtasini tanlash</td><td><kbd>Ctrl</kbd> bosib turib bitta-bitta bosish</td><td><kbd>Shift</kbd> — ketma-ket guruh</td></tr>
+</tbody></table></div>
+<div class="analogy"><span class="t">Nusxalash va ko'chirish farqi</span>
+<b>Nusxalash</b> (<kbd>Ctrl</kbd>+<kbd>C</kbd> → <kbd>Ctrl</kbd>+<kbd>V</kbd>) — kitobni ksero qilib, nusxasini boshqa javonga qo'yish: asl kitob joyida qoladi.
+<b>Ko'chirish</b> (<kbd>Ctrl</kbd>+<kbd>X</kbd> → <kbd>Ctrl</kbd>+<kbd>V</kbd>) — kitobning o'zini boshqa javonga olib o'tish.</div>
+<h3>O'chirilgan faylni tiklash</h3>
+<ol class="steps">
+  <li>Ish stolidagi <b>Savat (Recycle Bin)</b> ni oching.</li>
+  <li>Kerakli faylni o'ng tugma bilan bosing → <b>Tiklash (Restore)</b>. Fayl asl joyiga qaytadi.</li>
+  <li>Agar <kbd>Shift</kbd>+<kbd>Delete</kbd> bilan yoki fleshkadan o'chirilgan bo'lsa — savatga tushmaydi. Ehtiyot bo'ling!</li>
+</ol>
+
+<h2>Amaliy mashg'ulot: "Mening o'quv arxivim"</h2>
+<ol class="steps">
+  <li><b>Hujjatlar</b> papkasida <code>Maktab_2026</code> papkasini yarating (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>).</li>
+  <li>Uning ichida <code>Informatika</code>, <code>Matematika</code>, <code>Ingliz_tili</code>, <code>Loyihalar</code> papkalarini yarating.</li>
+  <li><code>Informatika</code> ichida Bloknot bilan <code>1-dars_eslatma.txt</code> fayl yarating va darsdagi 5 ta tezkor tugmani yozing. Saqlang (<kbd>Ctrl</kbd>+<kbd>S</kbd>).</li>
+  <li>Faylni <kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>V</kbd> bilan <code>Loyihalar</code> papkasiga nusxalang, so'ng <kbd>F2</kbd> bilan nomini <code>nusxa.txt</code> qiling.</li>
+  <li><code>nusxa.txt</code> ni o'chiring, keyin Savatdan tiklang. Yana o'chiring va <kbd>Ctrl</kbd>+<kbd>Z</kbd> bilan bekor qiling.</li>
+  <li>Kengaytmalarni ko'rinadigan qiling va papkadagi fayllarni turi va hajmi bo'yicha tartiblang (<b>Ko'rinish → Tafsilotlar</b>).</li>
+  <li>Papkani o'ng tugma → <b>Siqilgan ZIP papkaga yuborish</b> orqali arxivlang va arxiv hajmini asl papka hajmi bilan solishtiring.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Barcha fayllarni ish stolida saqlash → ✅ Mavzu bo'yicha papkalar tuzilmasi yarating.</li>
+  <li>❌ Fayl kengaytmasini o'zgartirib, turini "o'zgartirdim" deb o'ylash (<code>rasm.png</code> → <code>rasm.pdf</code>) → ✅ Tur faqat dastur orqali "Boshqacha saqlash" bilan o'zgaradi.</li>
+  <li>❌ "Mbit" va "MB" ni adashtirish → ✅ 1 bayt = 8 bit.</li>
+  <li>❌ <kbd>Shift</kbd>+<kbd>Delete</kbd> ni bilmasdan bosish → ✅ Bu savatsiz, butunlay o'chiradi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">1 bayt necha bitga teng?</p><ol>
+<li>2</li><li>4</li><li>8</li><li>1024</li></ol>
+<p class="explain">1 bayt = 8 bit; 1 KB = 1024 bayt.</p></div>
+<div class="quiz" data-answer="2"><p class="q">4 GB necha MB?</p><ol>
+<li>400</li><li>4096</li><li>4000 000</li><li>0,004</li></ol>
+<p class="explain">4 × 1024 = 4096 MB.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Ikkilik son <code>1010</code> o'nlik sanoqda nechaga teng?</p><ol>
+<li>4</li><li>8</li><li>12</li><li>10</li></ol>
+<p class="explain">8 + 0 + 2 + 0 = 10.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Fayl nomini o'zgartirish uchun qaysi tugma bosiladi?</p><ol>
+<li>F2</li><li>F5</li><li>Ctrl + N</li><li>Delete</li></ol>
+<p class="explain">F2 — nomini o'zgartirish (rename).</p></div>
+<div class="quiz" data-answer="3"><p class="q">Faylni ko'chirish (asl joyidan olib o'tish) uchun qaysi tugmalar ketma-ketligi to'g'ri?</p><ol>
+<li>Ctrl+C → Ctrl+V</li><li>Ctrl+Z → Ctrl+Y</li><li>Ctrl+X → Ctrl+V</li><li>Ctrl+A → Delete</li></ol>
+<p class="explain">Ctrl+X — qirqib olish, Ctrl+V — joylashtirish.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>dars.py</code> faylidagi <code>.py</code> nima?</p><ol>
+<li>Papka nomi</li><li>Kengaytma — fayl turi (Python kodi)</li><li>Fayl hajmi</li><li>Disk nomi</li></ol>
+<p class="explain">Kengaytma fayl turini va qaysi dastur bilan ochilishini bildiradi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Hisoblang: (a) 7 GB necha MB? (b) 32 768 bit necha KB? (c) 256 GB'li fleshkaga 1,5 GB'li nechta film sig'adi?</li>
+  <li>O'z ismingizning birinchi 3 harfi ASCII kodini internetdan topib, ikkilik sanoqqa aylantiring.</li>
+  <li>Uydagi kompyuter yoki telefoningizda fayllarni tartibga keltiring: kamida 4 ta mavzuli papka va mazmunli fayl nomlari.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Bit / bayt</dt><dd>0 yoki 1 / 8 bit. Kompyuter hamma narsani ikkilik kodda saqlaydi.</dd>
+  <dt>Birliklar</dt><dd>KB → MB → GB → TB, har biri oldingisidan 1024 marta katta.</dd>
+  <dt>Fayl</dt><dd>Nom + kengaytma (<code>.docx</code>, <code>.jpg</code>, <code>.exe</code>, <code>.fprg</code>).</dd>
+  <dt>Yo'l (path)</dt><dd>Fayl manzili: <code>C:\Users\Ali\Documents\fayl.txt</code>.</dd>
+  <dt>Tezkor tugmalar</dt><dd>Ctrl+C / X / V / Z / A, F2, Delete, Shift+Delete, Ctrl+Shift+N.</dd>
+  <dt>Savat</dt><dd>O'chirilgan fayllar shu yerdan tiklanadi.</dd>
+</dl>
+</div>

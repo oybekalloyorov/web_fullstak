@@ -117,7 +117,7 @@ h2:hover .anchor { opacity: .6; text-decoration: none; }
 .lesson ul, .lesson ol { padding-left: 1.4em; }
 .lesson li { margin: .3em 0; }
 :not(pre) > code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; background: var(--surface-2);
-  border: 1px solid var(--border); padding: .1em .38em; border-radius: 5px; }
+  border: 1px solid var(--border); padding: .1em .38em; border-radius: 5px; overflow-wrap: anywhere; }
 kbd { font-family: "JetBrains Mono", monospace; font-size: .82em; padding: .1em .45em; border: 1px solid var(--border);
   border-bottom-width: 3px; border-radius: 5px; background: var(--surface); }
 hr { border: none; border-top: 1px solid var(--border); margin: 2.5em 0; }
@@ -350,3 +350,58 @@ tr:last-child td { border-bottom: none; }
 .btn-slides { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; background: var(--accent, #4f46e5); color: #fff; border: 1px solid transparent; }
 .btn-slides:hover { filter: brightness(1.08); }
 .btn-slides.ghost { background: transparent; color: var(--text); border-color: var(--border); }
+
+/* ===== Flowgorithm blok-sxemalari (CS kursi) =====
+   <div class="fc"> ichida: .fc-term (Main/End), .fc-decl (Declare), .fc-asg (Assign), .fc-in (Input),
+   .fc-out (Output), .fc-if (shart: .fc-cond + .fc-branches > .fc-br[data-label]), .fc-loop (sikl: .fc-cond + .fc-body) */
+.fc-wrap { margin: 1.4em 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow-x: auto; }
+.fc-wrap > .fc-title { padding: 8px 14px; font-size: 13px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.fc { --fc-line: #94a3b8; display: flex; flex-direction: column; align-items: center; padding: 18px 16px 22px; min-width: max-content; font-family: "JetBrains Mono", Consolas, monospace; font-size: 13.5px; }
+.fc > * + *, .fc-br > * + *, .fc-body > * + * { margin-top: 26px; position: relative; }
+.fc > * + *::before, .fc-br > * + *::before, .fc-body > * + *::before {
+  content: ""; position: absolute; left: 50%; top: -26px; height: 20px; border-left: 2px solid var(--fc-line); transform: translateX(-1px);
+}
+.fc > * + *::after, .fc-br > * + *::after, .fc-body > * + *::after {
+  content: ""; position: absolute; left: 50%; top: -8px; transform: translateX(-5px);
+  border: 5px solid transparent; border-top: 7px solid var(--fc-line); border-bottom: 0;
+}
+.fc-s { position: relative; padding: 8px 18px; min-width: 120px; text-align: center; color: #1f2937; line-height: 1.35; white-space: pre; }
+.fc-s small { display: block; font-family: "Inter", sans-serif; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; opacity: .7; }
+.fc-term { background: #e2e8f0; border: 2px solid #64748b; border-radius: 999px; font-weight: 700; min-width: 90px; font-family: "Inter", sans-serif; }
+.fc-decl { background: #fef9c3; border: 2px solid #ca8a04; box-shadow: inset 6px 0 0 #fde68a; }
+.fc-asg { background: #fef3c7; border: 2px solid #d97706; }
+.fc-in, .fc-out { padding: 10px 32px; background: center / 100% 100% no-repeat; }
+.fc-in { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpolygon points='7%2C1 99%2C1 93%2C39 1%2C39' fill='%23bbf7d0' stroke='%2316a34a' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+.fc-out { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpolygon points='7%2C1 99%2C1 93%2C39 1%2C39' fill='%23bfdbfe' stroke='%232563eb' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+.fc-cond { padding: 11px 38px; font-weight: 600; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpolygon points='9%2C1 91%2C1 99%2C20 91%2C39 9%2C39 1%2C20' fill='%23fed7aa' stroke='%23ea580c' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.fc-loop > .fc-cond { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpolygon points='9%2C1 91%2C1 99%2C20 91%2C39 9%2C39 1%2C20' fill='%23e9d5ff' stroke='%239333ea' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+.fc-loop > .fc-cond::after { content: "↺ takrorlanadi"; position: absolute; left: 50%; top: calc(100% + 3px); margin-left: 8px; font: 700 11px "Inter", sans-serif; color: #9333ea; white-space: nowrap; }
+.fc, .fc *, pre code, code { font-variant-ligatures: none; }
+.fc-if, .fc-loop { display: flex; flex-direction: column; align-items: center; }
+.fc-branches { display: flex; gap: 34px; align-items: flex-start; margin-top: 0; padding: 30px 14px 16px; border: 2px solid var(--fc-line); border-bottom-width: 2px; border-radius: 0 0 10px 10px; border-top: 2px solid var(--fc-line); position: relative; }
+.fc-if > .fc-branches { margin-top: 0 !important; }
+.fc-if > .fc-branches::before, .fc-if > .fc-branches::after { display: none; }
+.fc-br { display: flex; flex-direction: column; align-items: center; position: relative; min-width: 130px; }
+.fc-br::before { content: attr(data-label); position: absolute; top: -27px; left: 50%; transform: translateX(-50%); font-family: "Inter", sans-serif; font-size: 11.5px; font-weight: 800; padding: 1px 8px; border-radius: 6px; background: var(--surface); }
+.fc-br[data-label="True"]::before, .fc-br[data-label="Ha"]::before { color: #16a34a; }
+.fc-br[data-label="False"]::before, .fc-br[data-label="Yo'q"]::before { color: #dc2626; }
+.fc-br:empty::after { content: "—"; color: var(--muted); font-family: "Inter", sans-serif; }
+.fc-body { display: flex; flex-direction: column; align-items: center; margin-top: 0 !important; padding: 26px 22px 18px; border: 2px dashed #a855f7; border-top: 0; border-radius: 0 0 12px 12px; position: relative; }
+.fc-loop > .fc-body::before, .fc-loop > .fc-body::after { display: none; }
+.fc-body > :first-child::before { content: ""; position: absolute; left: 50%; top: -22px; height: 16px; border-left: 2px solid var(--fc-line); }
+.fc-loop > .fc-body > .fc-back { position: absolute; left: -2px; bottom: -22px; font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700; color: #a855f7; }
+.fc-note { font-family: "Inter", sans-serif; font-size: 12.5px; color: var(--muted); text-align: center; margin-top: 6px; }
+.fc-pair { display: flex; flex-wrap: wrap; gap: 0 20px; align-items: flex-start; }
+.fc-pair > * { flex: 1 1 300px; min-width: 0; }
+.fc-pair > .fc-wrap { flex: 0 0 auto; max-width: 100%; }
+@media (max-width: 600px) { .fc { font-size: 12px; padding: 14px 8px 18px; } .fc-s { min-width: 0; padding: 7px 12px; } .fc-in, .fc-out { padding: 9px 22px; } .fc-cond { padding: 10px 26px; } .fc-branches { gap: 14px; padding-left: 6px; padding-right: 6px; } .fc-br { min-width: 90px; } }
+@media print { .fc-wrap { break-inside: avoid; } }
+.lesson h1, .lesson h2, .lesson h3 { overflow-wrap: break-word; }
+/* Ichma-ich shartlari ko'p, keng blok-sxemalar uchun ixcham ko'rinish */
+.fc.compact { font-size: 11.5px; padding: 14px 6px 18px; }
+.fc.compact .fc-s { min-width: 0; padding: 6px 8px; }
+.fc.compact .fc-in, .fc.compact .fc-out { padding: 8px 20px; }
+.fc.compact .fc-cond { padding: 9px 22px; }
+.fc.compact .fc-branches { gap: 8px; padding: 28px 4px 12px; }
+.fc.compact .fc-br { min-width: 70px; }
+.fc.compact .fc-body { padding: 24px 10px 14px; }

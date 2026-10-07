@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS — 8-sinf: Computer Science Foundation</title>
+<meta name="description" content="Internet va ma&#x27;lumot almashish jarayoni (paketlar, routerlar); IP-manzil, domen va hosting; DNS va domenni IP-manzilga bog&#x27;lash; brauzer sahifani ochish bosqichlari; HTTP va HTTPS, shifrlangan xavfsiz ulanish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a><a class="active" href="../cs/index.html">8-sinf: Computer Science Foundation</a></nav>
+    <div class="side-title">8-sinf: Computer Science Foundation</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. Kompyuter savodxonligi va arxitekturasi</li>
+<li><a href="../cs/01-kompyuter-arxitekturasi.html"><span class="num">01</span>Zamonaviy kompyuterlar va ularning arxitekturasi</a></li>
+<li><a href="../cs/02-operatsion-tizimlar-windows.html"><span class="num">02</span>Operatsion tizimlar va Windows muhitida ishlash</a></li>
+<li><a href="../cs/03-axborot-birliklari-fayllar.html"><span class="num">03</span>Axborot o&#x27;lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar</a></li>
+<li><a href="../cs/04-kompyuter-qurilmalari.html"><span class="num">04</span>Kompyuterning asosiy va qo&#x27;shimcha qurilmalari</a></li>
+<li><a href="../cs/05-internet-brauzer-pochta.html"><span class="num">05</span>Internet, brauzerlar va elektron pochta bilan ishlash</a></li>
+<li><a href="../cs/06-kompyuter-xavfsizligi.html"><span class="num">06</span>Kompyuter xavfsizligi va antivirus dasturlari</a></li>
+<li class="side-group">II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</li>
+<li><a href="../cs/07-klaviaturada-tez-yozish.html"><span class="num">07</span>Klaviaturada tez va to&#x27;g&#x27;ri yozish ko&#x27;nikmalari</a></li>
+<li><a href="../cs/08-raqamli-savodxonlik.html"><span class="num">08</span>Raqamli savodxonlik va raqamli madaniyat</a></li>
+<li><a href="../cs/09-raqamli-transformatsiya.html"><span class="num">09</span>Raqamli transformatsiya tushunchasi</a></li>
+<li><a class="active" href="../cs/10-internet-qanday-ishlaydi.html"><span class="num">10</span>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</a></li>
+<li><a href="../cs/11-bulutli-xizmatlar.html"><span class="num">11</span>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></li>
+<li><a href="../cs/12-git-github.html"><span class="num">12</span>Git va GitHub bilan tanishuv: repository, commit, branch, README</a></li>
+<li><a href="../cs/13-zamonaviy-it-yonalishlari.html"><span class="num">13</span>Zamonaviy IT yo&#x27;nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity</a></li>
+<li><a href="../cs/14-kiberxavfsizlik.html"><span class="num">14</span>Kiberxavfsizlik va shaxsiy ma&#x27;lumotlarni himoya qilish asoslari</a></li>
+<li class="side-group">III bob. Algoritmlash, Flowgorithm va dasturlash asoslari</li>
+<li><a href="../cs/15-algoritm-tushunchasi.html"><span class="num">15</span>Algoritm tushunchasi va algoritmik fikrlash</a></li>
+<li><a href="../cs/16-flowgorithm-interfeysi.html"><span class="num">16</span>Flowgorithm interfeysi va blok-sxema elementlari</a></li>
+<li><a href="../cs/17-dastur-buyruq-kod-mantiq.html"><span class="num">17</span>Dasturlash tushunchalari: dastur, buyruq, kod va mantiq</a></li>
+<li><a href="../cs/18-ozgaruvchilar-turlar.html"><span class="num">18</span>Flowgorithm&#x27;da o&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../cs/19-chiziqli-algoritmlar.html"><span class="num">19</span>Flowgorithm&#x27;da chiziqli algoritmlar</a></li>
+<li><a href="../cs/20-tarmoqlanuvchi-algoritmlar.html"><span class="num">20</span>Flowgorithm&#x27;da tarmoqlanuvchi algoritmlar va shartlar</a></li>
+<li><a href="../cs/21-takrorlanuvchi-algoritmlar.html"><span class="num">21</span>Flowgorithm&#x27;da takrorlanuvchi algoritmlar va sikllar</a></li>
+<li><a href="../cs/22-loyiha-kalkulyator.html"><span class="num">22</span>Loyiha: Flowgorithm&#x27;da &quot;Kalkulyator&quot;</a></li>
+<li><a href="../cs/23-loyiha-talaba-baholash.html"><span class="num">23</span>Loyiha: Flowgorithm&#x27;da &quot;Talaba baholash tizimi&quot;</a></li>
+<li><a href="../cs/24-loyiha-mini-bankomat.html"><span class="num">24</span>Loyiha: Flowgorithm&#x27;da &quot;Mini bankomat tizimi&quot;</a></li>
+<li><a href="../cs/25-loyiha-login-parol.html"><span class="num">25</span>Loyiha: Flowgorithm&#x27;da &quot;Login va parol tekshirish tizimi&quot;</a></li>
+<li><a href="../cs/26-yakuniy-nazorat.html"><span class="num">26</span>Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌐</div><div><div class="crumb">10-mavzu · 26 tadan · II bob. Zamonaviy IT yo&#x27;nalishlari va raqamli infratuzilma</div><h1>Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS</h1><p class="lead">Internet va ma&#x27;lumot almashish jarayoni (paketlar, routerlar); IP-manzil, domen va hosting; DNS va domenni IP-manzilga bog&#x27;lash; brauzer sahifani ochish bosqichlari; HTTP va HTTPS, shifrlangan xavfsiz ulanish.</p><div class="hero-level">1 dars · nazariy</div><div class="hero-actions"><a class="btn-slides ghost" href="pdf/10-internet-qanday-ishlaydi.pdf" download>📄 PDF yuklab olish</a></div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Ma'lumot internet bo'ylab qanday "sayohat" qilishini: paketlar va routerlar;</li>
+  <li>IP-manzil, domen va hosting nima ekanini;</li>
+  <li>DNS domenni IP-manzilga qanday "tarjima" qilishini;</li>
+  <li>Brauzerga manzil yozib Enter bosgandan to sahifa chiqqunicha bo'ladigan barcha bosqichlarni;</li>
+  <li>HTTP va HTTPS farqini va xavfsiz ulanishni qanday tanishni.</li>
+</ul>
+</div>
+
+<h2 id="internet-tarmoqlar-tarmogi"><a class="anchor" href="#internet-tarmoqlar-tarmogi">#</a>Internet — tarmoqlar tarmog'i</h2>
+<p><b>Internet</b> — dunyodagi millionlab kichik tarmoqlarni (uy, maktab, kompaniya, provayder tarmoqlari) bir-biriga bog'lagan <b>global tarmoq</b>.
+Ular mis simlar, <b>optik tolali kabellar</b> (shu jumladan okean tubidagi 1,4 million km dan ortiq kabellar!), Wi-Fi, mobil minoralar va
+sun'iy yo'ldoshlar orqali ulangan.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📱 Telefoningiz</div>
+    <div class="arrow">→</div>
+    <div class="node">📶 Uy routeri (Wi-Fi)</div>
+    <div class="arrow">→</div>
+    <div class="node">🏢 Provayder<small>Uztelecom, Beeline...</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🌍 Magistral kabellar<small>davlatlar aro</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🖧 Server<small>sayt joylashgan</small></div>
+  </div>
+</div>
+
+<h3>Paketlar va routerlar</h3>
+<p>Siz rasm yuborganingizda u <b>paketlarga</b> — mayda bo'laklarga (odatda ~1500 bayt) bo'linadi. Har bir paketda <b>qayerdan</b> va
+<b>qayerga</b> borishi (IP-manzillar) va tartib raqami yoziladi. <b>Router</b> — "chorraha boshqaruvchisi": har bir paketni manzilga yaqinroq
+yo'nalishga jo'natadi. Paketlar turli yo'llardan ketishi mumkin, manzilda esa yana tartib bilan yig'iladi.</p>
+<div class="analogy"><span class="t">O'xshatish: kitobni pochta orqali yuborish</span>
+Qalin kitobni bitta konvertga sig'dira olmaysiz — har bir sahifani alohida konvertga solib, raqamlab yuborasiz. Konvertlar turli pochta
+bo'limlari (routerlar) orqali ketadi, ba'zilari kechikadi. Qabul qiluvchi ularni raqam bo'yicha tartiblab, kitobni qayta tiklaydi.
+Biror konvert yo'qolsa — faqat shuni qayta so'raydi.</div>
+<p>Bu qoidalar to'plami <b>TCP/IP</b> deyiladi: <b>IP</b> — paketni manzilga yetkazish, <b>TCP</b> — paketlar yo'qolmasligi va tartibini ta'minlash.
+<b>Protokol</b> — kompyuterlar o'rtasida kelishilgan muloqot qoidalari.</p>
+
+<h2 id="ip-manzil"><a class="anchor" href="#ip-manzil">#</a>IP-manzil</h2>
+<p><b>IP-manzil</b> — tarmoqqa ulangan har bir qurilmaning noyob raqamli manzili.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Versiya</th><th>Ko'rinishi</th><th>Manzillar soni</th></tr></thead>
+<tbody>
+<tr><td><b>IPv4</b></td><td><code>142.250.74.46</code> — 4 ta son, har biri 0–255</td><td>~4,3 milliard — yetmay qoldi!</td></tr>
+<tr><td><b>IPv6</b></td><td><code>2a00:1450:4001:82a::200e</code></td><td>Amalda cheksiz (3,4 × 10<sup>38</sup>)</td></tr>
+</tbody></table></div>
+<p>Uyingizdagi qurilmalar odatda <b>lokal (ichki)</b> IP-manzilga ega (<code>192.168.1.5</code>), router esa internetga bitta <b>tashqi</b> manzil
+bilan chiqadi. <code>127.0.0.1</code> — "o'zim" (localhost) manzili.</p>
+
+<h2 id="domen-nomi"><a class="anchor" href="#domen-nomi">#</a>Domen nomi</h2>
+<p>Odamlar uchun raqamlarni eslab qolish qiyin, shuning uchun saytlarga <b>domen nomi</b> beriladi: <code>google.com</code>, <code>kun.uz</code>.</p>
+<div class="code"><div class="code-head"><span>URL tuzilishi</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">  https://   www .  maktab  .  uz  / sinflar/8-sinf ?tab=jadval
+  └──┬──┘   └┬┘    └──┬──┘    └┬┘  └─────┬──────┘ └───┬────┘
+  protokol subdomen domen nomi zona  yo&#x27;l (sahifa)  parametr</code></pre></div>
+<ul>
+  <li><b>Zona (TLD)</b>: <code>.uz</code> — O'zbekiston, <code>.com</code> — tijorat, <code>.org</code> — tashkilotlar, <code>.edu</code> — ta'lim, <code>.gov</code> — davlat;</li>
+  <li>Domen <b>registrator</b>dan ijaraga olinadi (odatda 1 yilga) va har yili uzaytiriladi. <code>.uz</code> zonasini <b>cctld.uz</b> boshqaradi.</li>
+</ul>
+
+<h2 id="dns-internetning-telefon-kitobi"><a class="anchor" href="#dns-internetning-telefon-kitobi">#</a>DNS — internetning telefon kitobi</h2>
+<p><b>DNS</b> (Domain Name System) — domen nomini IP-manzilga aylantiruvchi tizim.</p>
+<div class="analogy"><span class="t">O'xshatish: telefondagi kontaktlar</span>
+Do'stingizga qo'ng'iroq qilganda raqamni yodlab yozmaysiz — "Aziz" ni tanlaysiz, telefon raqamni o'zi topadi. DNS ham shunday:
+siz <code>kun.uz</code> deysiz, DNS uning IP-manzilini topib beradi.</div>
+<h3>DNS so'rovi bosqichma-bosqich</h3>
+<ol class="steps">
+  <li><b>Brauzer keshi:</b> "Bu saytga yaqinda kirganmidim? IP-manzili esimdami?" Ha bo'lsa — darhol ishlatadi.</li>
+  <li><b>Operatsion tizim keshi</b> tekshiriladi.</li>
+  <li><b>Rekursiv DNS server</b> (provayderingiznikini yoki <code>8.8.8.8</code> — Google, <code>1.1.1.1</code> — Cloudflare) so'raladi.</li>
+  <li>U kerak bo'lsa <b>ildiz (root) server</b> → <b>zona serveri</b> (<code>.uz</code>) → <b>domen serveri</b> (<code>kun.uz</code>) zanjiri bo'yicha javobni topadi.</li>
+  <li>Javob: <code>kun.uz → 185.x.x.x</code>. U ma'lum muddat (TTL) keshda saqlanadi.</li>
+</ol>
+<p>Butun jarayon odatda <b>bir necha millisoniya</b> davom etadi.</p>
+
+<h2 id="hosting"><a class="anchor" href="#hosting">#</a>Hosting</h2>
+<p><b>Hosting</b> — sayt fayllari saqlanadigan va kechayu kunduz internetga ulangan serverdagi joy.</p>
+<div class="analogy"><span class="t">Uy, manzil va xarita</span>
+<b>Hosting</b> — uyning o'zi (ichida mebel — sayt fayllari), <b>domen</b> — uy manzili, <b>DNS</b> — manzil bo'yicha uyni topib beruvchi xarita,
+<b>IP-manzil</b> — uyning GPS koordinatalari.</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Hosting turi</th><th>Tavsif</th></tr></thead>
+<tbody>
+<tr><td>Bepul statik</td><td>GitHub Pages, Netlify — HTML/CSS/JS saytlar uchun (12-mavzuda GitHub bilan tanishamiz)</td></tr>
+<tr><td>Shared (umumiy)</td><td>Bitta serverda yuzlab sayt</td></tr>
+<tr><td>VPS</td><td>Serverning sizga ajratilgan virtual qismi</td></tr>
+<tr><td>Bulutli</td><td>AWS, Google Cloud, Azure — kerak bo'lsa avtomatik kengayadi</td></tr>
+</tbody></table></div>
+
+<h2 id="brauzer-va-http"><a class="anchor" href="#brauzer-va-http">#</a>Brauzer va HTTP</h2>
+<p><b>Brauzer</b> — mijoz (client); u serverga <b>so'rov</b> (request) yuboradi, server <b>javob</b> (response) qaytaradi. Ular <b>HTTP</b>
+(HyperText Transfer Protocol) "tilida" gaplashadi.</p>
+<div class="code"><div class="code-head"><span>Brauzer so&#x27;rovi (soddalashtirilgan)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-http">GET /sinflar/8-sinf HTTP/1.1
+Host: www.maktab.uz
+User-Agent: Chrome/130
+Accept-Language: uz</code></pre></div>
+<div class="code"><div class="code-head"><span>Server javobi</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-http">HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+
+&lt;!DOCTYPE html&gt;&lt;html&gt;... sahifa kodi ...&lt;/html&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Status kod</th><th>Ma'nosi</th></tr></thead>
+<tbody>
+<tr><td><b>200</b> OK</td><td>Hammasi joyida</td></tr>
+<tr><td><b>301</b> / 302</td><td>Sahifa boshqa manzilga ko'chgan</td></tr>
+<tr><td><b>403</b> Forbidden</td><td>Ruxsat yo'q</td></tr>
+<tr><td><b>404</b> Not Found</td><td>Sahifa topilmadi</td></tr>
+<tr><td><b>500</b></td><td>Serverda xato</td></tr>
+</tbody></table></div>
+<p>Eslab qolish: <b>2xx</b> — muvaffaqiyat, <b>3xx</b> — yo'naltirish, <b>4xx</b> — mijoz xatosi, <b>5xx</b> — server xatosi.</p>
+
+<h2 id="http-va-https"><a class="anchor" href="#http-va-https">#</a>HTTP va HTTPS</h2>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>HTTP</th><th>HTTPS</th></tr></thead>
+<tbody>
+<tr><td>Ma'lumot</td><td>Ochiq holda uzatiladi</td><td><b>Shifrlangan</b> (TLS)</td></tr>
+<tr><td>Yo'lda o'qish</td><td>Mumkin (masalan, ochiq Wi-Fi'da)</td><td>Amalda imkonsiz</td></tr>
+<tr><td>Brauzerda</td><td>"Xavfsiz emas" ogohlantirishi</td><td>🔒 qulf belgisi</td></tr>
+<tr><td>Port</td><td>80</td><td>443</td></tr>
+</tbody></table></div>
+<p><b>HTTPS</b> = HTTP + <b>TLS</b> shifrlash. Server <b>sertifikat</b> ko'rsatadi — u saytning haqiqatan <code>bank.uz</code> ekanini tasdiqlaydi.
+Brauzer va server maxfiy kalit kelishib oladi va keyingi barcha ma'lumot shifrlanadi.</p>
+<div class="analogy"><span class="t">O'xshatish: ochiq otkritka va muhrlangan konvert</span>
+HTTP — ochiq otkritka: pochtachi ham, qo'shni ham o'qiy oladi. HTTPS — muhrlangan, faqat qabul qiluvchi ochadigan seyf-konvert.</div>
+<div class="callout warn"><span class="t">🔒 ≠ "sayt halol"</span>
+Qulf belgisi faqat <b>ulanish shifrlanganini</b> bildiradi. Firibgar sayt ham HTTPS bo'lishi mumkin. Domen nomini harfma-harf tekshiring:
+<code>paynne.uz</code>, <code>c1ick.uz</code> kabi soxta nomlar bor.</div>
+
+<h2 id="hammasi-birgalikda-enter-bosilgandan-keyin"><a class="anchor" href="#hammasi-birgalikda-enter-bosilgandan-keyin">#</a>Hammasi birgalikda: Enter bosilgandan keyin</h2>
+<ol class="steps">
+  <li>Siz <code>https://maktab.uz</code> deb yozib Enter bosasiz.</li>
+  <li><b>DNS</b> <code>maktab.uz</code> ni IP-manzilga aylantiradi.</li>
+  <li>Brauzer shu IP-manzildagi serverga <b>TCP ulanish</b> o'rnatadi (443-port).</li>
+  <li><b>TLS</b> "qo'l siqish": sertifikat tekshiriladi, shifrlash kaliti kelishiladi.</li>
+  <li>Brauzer <b>HTTP so'rov</b> yuboradi: <code>GET /</code>.</li>
+  <li>Server (hosting) sahifani tayyorlab, <b>200 OK</b> + HTML qaytaradi.</li>
+  <li>Brauzer HTML'ni o'qiydi va CSS, rasmlar, JavaScript uchun <b>qo'shimcha so'rovlar</b> yuboradi.</li>
+  <li>Hammasini birlashtirib, sahifani ekranga <b>chizadi</b> (rendering).</li>
+</ol>
+<p>Bularning hammasi odatda <b>1 soniyadan kam</b> vaqtda bo'ladi!</p>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><kbd>Win</kbd>+<kbd>R</kbd> → <code>cmd</code> → Enter. Quyidagi buyruqlarni bajaring va natijani yozing:</li>
+</ol>
+<div class="code"><div class="code-head"><span>Buyruqlar qatori (cmd)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">nslookup kun.uz          :: domenning IP-manzili (DNS so&#x27;rovi)
+ping google.com          :: server javob beradimi, necha millisoniyada
+tracert google.com       :: paket qaysi routerlardan o&#x27;tadi
+ipconfig                 :: kompyuteringizning lokal IP-manzili</code></pre></div>
+<ol class="steps" start="2">
+  <li>Chrome'da istalgan saytda <kbd>F12</kbd> → <b>Network</b> yorlig'i → <kbd>F5</kbd>. Har bir qator — alohida HTTP so'rov. Status ustunida 200 larni toping.</li>
+  <li>Manzil satridagi 🔒 belgisini bosing → <b>Sertifikat</b>: kim bergan, qachongacha amal qiladi?</li>
+  <li>Mavjud bo'lmagan sahifani oching (<code>github.com/bu-sahifa-yoq-12345</code>) va 404 ni Network panelida ko'ring.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xato-tushunchalar"><a class="anchor" href="#kop-uchraydigan-xato-tushunchalar">#</a>Ko'p uchraydigan xato tushunchalar</h2>
+<ul class="mistakes">
+  <li>❌ "Domen olsam, sayt tayyor" → ✅ Domen — faqat manzil; fayllar uchun hosting kerak.</li>
+  <li>❌ "Internet = Web" → ✅ Web — internet ustidagi xizmatlardan biri (pochta, messenjerlar ham bor).</li>
+  <li>❌ "HTTPS sayt — albatta ishonchli" → ✅ HTTPS faqat yo'ldagi shifrlashni kafolatlaydi.</li>
+  <li>❌ "Wi-Fi = Internet" → ✅ Wi-Fi — faqat qurilmani routerga simsiz ulash usuli.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">DNS'ning vazifasi nima?</p><ol>
+<li>Saytni chiroyli qilish</li><li>Domen nomini IP-manzilga aylantirish</li><li>Fayllarni saqlash</li><li>Viruslardan himoyalash</li></ol>
+<p class="explain">DNS — internetning "telefon kitobi".</p></div>
+<div class="quiz" data-answer="3"><p class="q">Paketlarni manzilga yaqinroq yo'nalishga jo'natuvchi qurilma?</p><ol>
+<li>Monitor</li><li>Printer</li><li>Router</li><li>Skaner</li></ol>
+<p class="explain">Router — tarmoq "chorrahalari"ni boshqaradi.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Server 404 qaytardi. Bu nima?</p><ol>
+<li>Muvaffaqiyat</li><li>Server xatosi</li><li>Sahifa ko'chgan</li><li>Sahifa topilmadi</li></ol>
+<p class="explain">4xx — mijoz tomonidagi xato; 404 — Not Found.</p></div>
+<div class="quiz" data-answer="1"><p class="q">HTTPS'dagi "S" va uning ma'nosi?</p><ol>
+<li>Secure — ma'lumot TLS bilan shifrlanadi</li><li>Speed — tezroq</li><li>Server — kuchliroq server</li><li>Simple — oddiyroq</li></ol>
+<p class="explain">HTTPS = HTTP + TLS shifrlash.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>https://blog.maktab.uz/maqolalar</code> da domen zonasi (TLD) qaysi?</p><ol>
+<li><code>blog</code></li><li><code>uz</code></li><li><code>maktab</code></li><li><code>maqolalar</code></li></ol>
+<p class="explain"><code>blog</code> — subdomen, <code>maktab</code> — domen nomi, <code>uz</code> — zona, <code>/maqolalar</code> — yo'l.</p></div>
+<div class="quiz" data-answer="3"><p class="q">IPv4 manzil qaysi ko'rinishda bo'ladi?</p><ol>
+<li><code>kun.uz</code></li><li><code>ali@gmail.com</code></li><li><code>192.168.1.10</code></li><li><code>https://</code></li></ol>
+<p class="explain">To'rtta son, har biri 0–255.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>"Enter bosilgandan keyin" jarayonining sxemasini chizing: mijoz, DNS, server, TLS, so'rov va javob — strelkalar bilan.</li>
+  <li>3 ta saytning IP-manzilini <code>nslookup</code> bilan toping va <code>ping</code> vaqtini solishtiring. Qaysi biri tezroq va nega (server qayerda joylashgan)?</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Internet</dt><dd>Tarmoqlar tarmog'i; ma'lumot paketlarda, routerlar orqali, TCP/IP qoidalari bilan.</dd>
+  <dt>IP-manzil</dt><dd>Qurilmaning raqamli manzili (IPv4, IPv6).</dd>
+  <dt>Domen</dt><dd>Eslab qolinadigan nom; zona: .uz, .com, .org.</dd>
+  <dt>DNS</dt><dd>Domen → IP; kesh → rekursiv server → root → zona → domen serveri.</dd>
+  <dt>Hosting</dt><dd>Sayt fayllari joylashgan server.</dd>
+  <dt>HTTP / HTTPS</dt><dd>So'rov–javob protokoli; HTTPS — TLS bilan shifrlangan (🔒, 443-port).</dd>
+</dl>
+</div>
+<nav class="pager"><a class="prev" href="09-raqamli-transformatsiya.html"><small>← Oldingi mavzu</small>Raqamli transformatsiya tushunchasi</a><a class="next" href="11-bulutli-xizmatlar.html"><small>Keyingi mavzu →</small>Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#internet-tarmoqlar-tarmogi">Internet — tarmoqlar tarmog&#x27;i</a></li><li><a href="#ip-manzil">IP-manzil</a></li><li><a href="#domen-nomi">Domen nomi</a></li><li><a href="#dns-internetning-telefon-kitobi">DNS — internetning telefon kitobi</a></li><li><a href="#hosting">Hosting</a></li><li><a href="#brauzer-va-http">Brauzer va HTTP</a></li><li><a href="#http-va-https">HTTP va HTTPS</a></li><li><a href="#hammasi-birgalikda-enter-bosilgandan-keyin">Hammasi birgalikda: Enter bosilgandan keyin</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xato-tushunchalar">Ko&#x27;p uchraydigan xato tushunchalar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

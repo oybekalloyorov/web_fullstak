@@ -50,13 +50,26 @@ pip install python-pptx     # faqat PowerPoint fayllari uchun
 python3 slides.py           # HTML + PPTX taqdimotlarni qayta yasaydi
 ```
 
+## 8-sinf: Computer Science Foundation
+
+`cs/` bo'limi — 8-sinf «Computer Science Foundation» o'quv dasturi (I chorak, 36 mashg'ulot) bo'yicha 26 ta mavzu:
+
+- **I bob. Kompyuter savodxonligi va arxitekturasi** (1–6): arxitektura, Windows, axborot birliklari va fayllar, qurilmalar, internet va pochta, xavfsizlik
+- **II bob. IT yo'nalishlari va raqamli infratuzilma** (7–14): tez yozish, raqamli savodxonlik, transformatsiya, IP/DNS/HTTPS, bulut, Git/GitHub, IT yo'nalishlari, kiberxavfsizlik
+- **III bob. Algoritmlash va Flowgorithm** (15–26): algoritm, Flowgorithm interfeysi, o'zgaruvchilar, chiziqli/tarmoqlanuvchi/takrorlanuvchi algoritmlar,
+  loyihalar (kalkulyator, talaba baholash, mini bankomat, login-parol) va yakuniy nazorat (25 test + 5 ochiq topshiriq)
+
+Flowgorithm blok-sxemalari HTML/CSS komponenti sifatida chiziladi (`.fc` — `assets/css/style.css` oxirida tavsiflangan).
+Butun kurs PDF: `cs/pdf/8-sinf-computer-science.pdf`.
+
 ## PDF fayllar
 
 Har bir dars sahifasida **«📄 PDF yuklab olish»** tugmasi bor. Bundan tashqari:
 
 - `darslar/pdf/full-stack-qollanma.pdf` — "Full-stack qo'llanma" to'liq (xatcho'plar bilan);
 - `8-sinf/pdf/8-sinf-web-fullstack-kursi.pdf` — 8-sinf kursi to'liq;
-- `8-sinf/taqdimot/pdf/` — taqdimotlarning PDF ko'rinishi.
+- `8-sinf/taqdimot/pdf/` — taqdimotlarning PDF ko'rinishi;
+- `cs/pdf/8-sinf-computer-science.pdf` — Computer Science Foundation kursi to'liq.
 
 PDF'larda test javoblari har bir dars oxiridagi «Test javoblari» bo'limida beriladi.
 Qayta yasash (Node.js + Playwright kerak):

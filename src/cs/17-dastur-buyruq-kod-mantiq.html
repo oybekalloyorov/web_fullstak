@@ -1,0 +1,243 @@
+<!-- title: Dasturlash tushunchalari: dastur, buyruq, kod va mantiq | desc: Dastur tushunchasi va vazifasi; buyruq, kod va algoritm o'rtasidagi bog'liqlik; dasturlash tillari darajalari, kompilyator va interpretator; dastur mantiqi: Kirish → Qayta ishlash → Chiqish (IPO); Flowgorithm'da dastur mantiqini ifodalash va bir sxemani Python, C++, JavaScript'ga tarjima qilish. 11-loyiha: yoshni hisoblash. | icon: 💡 | level: 1 dars · amaliy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Algoritm, buyruq, kod</b> va <b>dastur</b> o'rtasidagi farq va bog'liqlikni;</li>
+  <li>Kompyuter dasturni qanday "tushunishini": mashina kodi, kompilyator, interpretator;</li>
+  <li>Har qanday dasturning asosi — <b>Kirish → Qayta ishlash → Chiqish</b> modelini;</li>
+  <li>Flowgorithm'da oddiy dasturlarni yaratish va <b>tahlil qilishni</b>;</li>
+  <li>Bitta blok-sxema turli tillarda qanday ko'rinishini.</li>
+</ul>
+</div>
+
+<h2>To'rt tushuncha — bitta zanjir</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tushuncha</th><th>Ta'rif</th><th>Oshxona o'xshatishi</th></tr></thead>
+<tbody>
+<tr><td>🧠 <b>Algoritm</b></td><td>Masalani yechish g'oyasi, qadamlar rejasi (tilga bog'liq emas)</td><td>Oshpazning boshidagi retsept</td></tr>
+<tr><td>👉 <b>Buyruq</b> (komanda)</td><td>Bajaruvchiga beriladigan bitta ko'rsatma</td><td>"Piyozni to'g'ra"</td></tr>
+<tr><td>📝 <b>Kod</b></td><td>Buyruqlarning dasturlash tilida yozilgan matni</td><td>Retseptning qog'ozga yozilgan matni (o'zbekcha, ruscha...)</td></tr>
+<tr><td>💾 <b>Dastur</b></td><td>Kompyuter bajara oladigan, ma'lum vazifani hal qiluvchi kodlar majmuasi</td><td>Tayyor retseptlar kitobi — olib, bajarsa bo'ladi</td></tr>
+</tbody></table></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">💭 Masala</div>
+    <div class="arrow">→</div>
+    <div class="node">🧠 Algoritm<small>reja</small></div>
+    <div class="arrow">→</div>
+    <div class="node">📊 Blok-sxema<small>Flowgorithm</small></div>
+    <div class="arrow">→</div>
+    <div class="node">📝 Kod<small>Python, C++...</small></div>
+    <div class="arrow">→</div>
+    <div class="node">💾 Dastur<small>ishlaydi!</small></div>
+  </div>
+</div>
+
+<h2>Kompyuter kodni qanday tushunadi?</h2>
+<p>Protsessor (1-mavzu) faqat <b>mashina kodi</b>ni — 0 va 1 lardan iborat buyruqlarni tushunadi. Odam uchun bu juda noqulay, shuning uchun
+<b>dasturlash tillari</b> yaratilgan:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Daraja</th><th>Misol</th><th>Kim uchun qulay</th></tr></thead>
+<tbody>
+<tr><td><b>Mashina kodi</b></td><td><code>10110000 01100001</code></td><td>Faqat protsessor</td></tr>
+<tr><td><b>Past darajali til</b> (Assembler)</td><td><code>MOV AL, 61h</code></td><td>Tizim dasturchilari</td></tr>
+<tr><td><b>Yuqori darajali til</b></td><td><code>print("Salom")</code> (Python)</td><td>Odamlar — ingliz tiliga yaqin</td></tr>
+<tr><td><b>Vizual dasturlash</b></td><td>Flowgorithm, Scratch</td><td>Boshlovchilar — bloklar bilan</td></tr>
+</tbody></table></div>
+<p>Yuqori darajali kodni mashina kodiga "tarjimon" o'giradi:</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th><b>Kompilyator</b></th><th><b>Interpretator</b></th></tr></thead>
+<tbody>
+<tr><td>Qanday ishlaydi</td><td>Butun dasturni oldindan tarjima qilib, tayyor fayl (<code>.exe</code>) yaratadi</td><td>Dasturni qatorma-qator o'qib, darhol bajaradi</td></tr>
+<tr><td>O'xshatish</td><td>Kitobni to'liq tarjima qilib chop etish</td><td>Sinxron tarjimon — gapirgan zahoti tarjima</td></tr>
+<tr><td>Tillar</td><td>C, C++, Go, Rust</td><td>Python, JavaScript, <b>Flowgorithm</b></td></tr>
+</tbody></table></div>
+
+<h2>Dastur mantiqi: Kirish → Qayta ishlash → Chiqish</h2>
+<p>Kalkulyatordan tortib Telegram'gacha — har qanday dastur uch qismdan iborat. Bu <b>IPO modeli</b> (Input — Process — Output):</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">⌨️ Kirish (Input)<small>ma'lumot olish</small></div>
+    <div class="arrow">→</div>
+    <div class="node">⚙️ Qayta ishlash (Process)<small>hisoblash, tekshirish</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🖥️ Chiqish (Output)<small>natijani ko'rsatish</small></div>
+  </div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Dastur</th><th>Kirish</th><th>Qayta ishlash</th><th>Chiqish</th></tr></thead>
+<tbody>
+<tr><td>Kalkulyator</td><td>2 son, amal</td><td>Hisoblash</td><td>Natija</td></tr>
+<tr><td>Ob-havo ilovasi</td><td>Shahar, sana</td><td>Serverdan ma'lumot olish</td><td>Harorat, ikonka</td></tr>
+<tr><td>Navigator</td><td>Qayerdan, qayerga</td><td>Eng qisqa yo'lni topish</td><td>Xarita, vaqt</td></tr>
+<tr><td>Kundalik.com</td><td>Login, parol</td><td>Tekshirish, baholarni topish</td><td>Baholar jadvali</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Dastur yozishdan oldin uchta savol</span>
+1) <b>Nima beriladi?</b> (kirish) 2) <b>Nima topish kerak?</b> (chiqish) 3) <b>Qanday topiladi?</b> (formula, qoida). Bu savollarga javob bergach,
+blok-sxema o'z-o'zidan chiziladi.</div>
+
+<h2>Namuna 1: kvadrat yuzasi va perimetri</h2>
+<p><b>Masala:</b> kvadrat tomoni berilgan. Yuza va perimetrni toping. <b>Kirish:</b> <code>a</code>. <b>Chiqish:</b> <code>S</code>, <code>P</code>.
+<b>Formula:</b> <code>S = a × a</code>, <code>P = 4 × a</code>.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">kvadrat.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real a, s, p</div>
+  <div class="fc-s fc-out"><small>Output</small>"Tomonni kiriting:"</div>
+  <div class="fc-s fc-in"><small>Input</small>a</div>
+  <div class="fc-s fc-asg"><small>Assign</small>s = a * a</div>
+  <div class="fc-s fc-asg"><small>Assign</small>p = 4 * a</div>
+  <div class="fc-s fc-out"><small>Output</small>"Yuza: " &amp; s</div>
+  <div class="fc-s fc-out"><small>Output</small>"Perimetr: " &amp; p</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Tahlil (IPO):</b></p>
+<ul>
+  <li><b>Kirish:</b> 1 ta Input — <code>a</code>.</li>
+  <li><b>Qayta ishlash:</b> 2 ta Assign — formulalar.</li>
+  <li><b>Chiqish:</b> 2 ta Output.</li>
+</ul>
+<pre data-lang="output" data-title="Test: a = 5">Tomonni kiriting:
+5
+Yuza: 25
+Perimetr: 20</pre>
+<p>Qo'lda tekshiramiz: 5 × 5 = 25 ✅, 4 × 5 = 20 ✅.</p>
+</div>
+</div>
+
+<h2>Bitta sxema — ko'p til</h2>
+<p>Flowgorithm'da <b>Source Code Viewer</b> ni oching va tilni tanlang. Xuddi shu "kvadrat" dasturi:</p>
+<pre data-lang="py" data-title="Python">a = float(input("Tomonni kiriting: "))
+s = a * a
+p = 4 * a
+print("Yuza: " + str(s))
+print("Perimetr: " + str(p))</pre>
+<pre data-lang="cpp" data-title="C++">#include <iostream>
+using namespace std;
+
+int main() {
+    double a, s, p;
+    cout << "Tomonni kiriting:" << endl;
+    cin >> a;
+    s = a * a;
+    p = 4 * a;
+    cout << "Yuza: " << s << endl;
+    cout << "Perimetr: " << p << endl;
+    return 0;
+}</pre>
+<pre data-lang="js" data-title="JavaScript">let a = Number(prompt("Tomonni kiriting:"));
+let s = a * a;
+let p = 4 * a;
+console.log("Yuza: " + s);
+console.log("Perimetr: " + p);</pre>
+<p><b>Xulosa:</b> tillarning "grammatikasi" (sintaksisi) har xil, lekin <b>mantiq</b> bir xil: kiritish → ikkita hisoblash → ikkita chiqarish.
+Mantiqni o'rgangan odam istalgan tilni tez o'rganadi.</p>
+
+<h2>Namuna 2 (11-loyiha): yoshni hisoblash</h2>
+<p><b>Masala:</b> foydalanuvchi tug'ilgan yilini kiritadi, dastur uning yoshini va 18 yoshga to'lishiga necha yil qolganini chiqaradi.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">yosh.fprg</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer yil, joriy, yosh</div>
+  <div class="fc-s fc-asg"><small>Assign</small>joriy = 2026</div>
+  <div class="fc-s fc-out"><small>Output</small>"Tug'ilgan yilingiz?"</div>
+  <div class="fc-s fc-in"><small>Input</small>yil</div>
+  <div class="fc-s fc-asg"><small>Assign</small>yosh = joriy - yil</div>
+  <div class="fc-s fc-out"><small>Output</small>"Siz " &amp; yosh &amp; " yoshdasiz"</div>
+  <div class="fc-if"><div class="fc-s fc-cond">yosh &lt; 18</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-out"><small>Output</small>"Siz kattasiz!"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"18 ga " &amp; (18 - yosh) &amp; " yil qoldi"</div></div></div></div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<pre data-lang="output" data-title="Test: 2012">Tug'ilgan yilingiz?
+2012
+Siz 14 yoshdasiz
+18 ga 4 yil qoldi</pre>
+<p><b>Tahlil:</b></p>
+<ul>
+  <li><code>joriy</code> — <b>konstanta</b> vazifasini bajaradi: yil o'zgarsa, faqat bitta joyni tuzatamiz.</li>
+  <li>Bu yerda yangi element — <b>If</b>: dastur <b>qaror qabul qiladi</b> (20-mavzu).</li>
+  <li><code>(18 - yosh)</code> — chiqarish ichida ham hisoblash mumkin.</li>
+</ul>
+<div class="callout info"><span class="t">Aniqroq variant</span>Flowgorithm'da joriy yilni avtomatik olish uchun <code>joriy = ...</code> o'rniga qo'lda
+kiritish ham mumkin. Tug'ilgan oy hali kelmagan bo'lsa, yosh 1 ga kam — buni hisobga olish uchun oyni ham so'rash kerak. Sinab ko'ring!</div>
+</div>
+</div>
+
+<h2>Dasturni tahlil qilish (o'qish) mashqi</h2>
+<p>Quyidagi sxema nima qiladi? Avval o'zingiz o'ylang, keyin javobni oching.</p>
+<div class="fc-wrap"><div class="fc-title">sirli.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer x, y, t</div>
+  <div class="fc-s fc-in"><small>Input</small>x</div>
+  <div class="fc-s fc-in"><small>Input</small>y</div>
+  <div class="fc-s fc-asg"><small>Assign</small>t = x</div>
+  <div class="fc-s fc-asg"><small>Assign</small>x = y</div>
+  <div class="fc-s fc-asg"><small>Assign</small>y = t</div>
+  <div class="fc-s fc-out"><small>Output</small>x &amp; " " &amp; y</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<details><summary>Javob</summary>
+<p>Dastur ikki o'zgaruvchining qiymatini <b>almashtiradi</b> (swap). <code>x = 3, y = 8</code> kiritilsa → <code>8 3</code> chiqadi. <code>t</code> —
+yordamchi "bo'sh stakan": ikki stakandagi sharbatni almashtirish uchun uchinchi stakan kerak bo'lganidek.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Qadam</th><th>x</th><th>y</th><th>t</th></tr></thead>
+<tbody>
+<tr><td>Input'lardan keyin</td><td>3</td><td>8</td><td>—</td></tr>
+<tr><td><code>t = x</code></td><td>3</td><td>8</td><td>3</td></tr>
+<tr><td><code>x = y</code></td><td>8</td><td>8</td><td>3</td></tr>
+<tr><td><code>y = t</code></td><td>8</td><td>3</td><td>3</td></tr>
+</tbody></table></div>
+<p>Bunday jadval <b>trassirovka jadvali</b> deyiladi — dasturni qog'ozda "qo'lda bajarish". Variable Watch aynan shuni avtomatik qiladi.</p>
+</details>
+
+<h2>Amaliy topshiriqlar</h2>
+<ol class="steps">
+  <li><b>To'rtburchak:</b> uzunlik va eni kiritilsin → yuza va perimetr.</li>
+  <li><b>Daqiqalar:</b> soat kiritilsin → necha daqiqa va necha soniya ekanini chiqaring.</li>
+  <li><b>Yosh+:</b> "Yoshni hisoblash" dasturiga "100 yoshga qaysi yilda to'lasiz?" ni qo'shing.</li>
+  <li>Har bir dastur uchun IPO jadvalini (kirish, qayta ishlash, chiqish) daftaringizga yozing va Source Code Viewer'da Python kodini ko'chirib oling.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ "Algoritm va dastur — bir narsa" → ✅ Algoritm — g'oya, dastur — uning kompyuter tilidagi ifodasi.</li>
+  <li>❌ Hisoblashni Input'dan oldin qo'yish → ✅ Avval kirish, keyin qayta ishlash — tartib muhim!</li>
+  <li>❌ Natijani tekshirmaslik → ✅ Har doim kamida 2–3 ta test, qo'lda hisoblangan javob bilan solishtirish.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">IPO modelida "P" nimani bildiradi?</p><ol>
+<li>Print</li><li>Process — qayta ishlash</li><li>Program</li><li>Password</li></ol>
+<p class="explain">Input → Process → Output.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Dasturni qatorma-qator o'qib, darhol bajaradigan tarjimon?</p><ol>
+<li>Kompilyator</li><li>Protsessor</li><li>Brauzer</li><li>Interpretator</li></ol>
+<p class="explain">Python, JavaScript, Flowgorithm — interpretatsiya qilinadi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Protsessor bevosita qaysi tilni tushunadi?</p><ol>
+<li>Mashina kodi (0 va 1)</li><li>Python</li><li>O'zbek tili</li><li>Flowgorithm</li></ol>
+<p class="explain">Qolganlari tarjima qilinadi.</p></div>
+<div class="quiz" data-answer="3"><p class="q"><code>t = x; x = y; y = t</code> ketma-ketligi nima qiladi?</p><ol>
+<li>Qo'shadi</li><li>Ikkalasini nolga tenglaydi</li><li>x va y qiymatlarini almashtiradi</li><li>Xato beradi</li></ol>
+<p class="explain">Klassik "swap" algoritmi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Doira radiusi berilgan: uzunlik (<code>2 × 3.14 × r</code>) va yuzani (<code>3.14 × r × r</code>) hisoblovchi dastur. Python kodini ham ko'chirib oling.</li>
+  <li>Kundalik hayotdagi 3 ta ilovani IPO jadvali bilan tahlil qiling.</li>
+  <li>"Sirli" sxema uchun <code>x = -4, y = 10</code> bilan trassirovka jadvalini to'ldiring.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Algoritm → kod → dastur</dt><dd>G'oya → tildagi matn → bajariladigan mahsulot.</dd>
+  <dt>Buyruq</dt><dd>Bitta ko'rsatma.</dd>
+  <dt>Kompilyator / interpretator</dt><dd>Butun dasturni oldindan / qatorma-qator tarjima qilish.</dd>
+  <dt>IPO</dt><dd>Kirish → Qayta ishlash → Chiqish.</dd>
+  <dt>Trassirovka</dt><dd>Dasturni qadamma-qadam qog'ozda bajarib, o'zgaruvchilarni kuzatish.</dd>
+</dl>
+</div>

@@ -1,0 +1,246 @@
+<!-- title: Flowgorithm'da chiziqli algoritmlar | desc: Chiziqli algoritm tushunchasi va bajarilish ketma-ketligi; Input, Process (Assign) va Output bloklari; yig'indi, ayirma, ko'paytma, bo'linma; formulalar: yuza, perimetr, foiz, o'rtacha qiymat; valyuta konvertori (12-loyiha) va matematik formulalar (17-loyiha); test qilish va xatolarni tuzatish. | icon: ➡️ | level: 1 dars · amaliy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Chiziqli algoritm</b> nima va qadamlar qanday tartibda bajarilishini;</li>
+  <li>Input → Assign → Output "skeletini" har qanday formulaga qo'llashni;</li>
+  <li>Yig'indi, ayirma, ko'paytma, bo'linma; yuza, perimetr, foiz, o'rtacha qiymatni hisoblashni;</li>
+  <li><b>Valyuta konvertori</b> va formulalar dasturini yaratishni;</li>
+  <li>Dasturni <b>test jadvali</b> bilan tekshirishni.</li>
+</ul>
+</div>
+
+<h2>Chiziqli algoritm nima?</h2>
+<p><b>Chiziqli algoritm</b> — barcha qadamlar <b>yuqoridan pastga</b>, <b>bittadan</b>, <b>hech qanday shartsiz</b> va <b>takrorlashsiz</b> bajariladigan algoritm.
+Har bir blok aniq bir marta bajariladi.</p>
+<div class="analogy"><span class="t">O'xshatish: konveyer</span>Zavod konveyerida mahsulot bir stanoktan keyingisiga o'tadi: kesish → bo'yash → qadoqlash.
+Hech bir bosqich o'tkazib yuborilmaydi va tartib o'zgarmaydi. Chiziqli algoritm — xuddi shu konveyer.</div>
+
+<h3>Universal "skelet"</h3>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">Har qanday chiziqli dastur shabloni</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>o'zgaruvchilar</div>
+  <div class="fc-s fc-out"><small>Output</small>"Nimani kiritish kerak?"</div>
+  <div class="fc-s fc-in"><small>Input</small>kiruvchi ma'lumotlar</div>
+  <div class="fc-s fc-asg"><small>Assign</small>natija = formula</div>
+  <div class="fc-s fc-out"><small>Output</small>"Natija: " &amp; natija</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<ol class="steps">
+  <li><b>E'lon qil</b> — qaysi qutilar kerak, qaysi turda?</li>
+  <li><b>So'ra</b> — foydalanuvchiga nima kiritish kerakligini ayt (Output). Bu <b>"so'rov matni"</b> — usiz foydalanuvchi bo'sh konsolga qarab turadi.</li>
+  <li><b>Ol</b> — Input.</li>
+  <li><b>Hisobla</b> — Assign(lar).</li>
+  <li><b>Ko'rsat</b> — tushunarli izoh bilan Output.</li>
+</ol>
+</div>
+</div>
+
+<h2>1. To'rt arifmetik amal</h2>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">tort_amal.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real a, b</div>
+  <div class="fc-s fc-out"><small>Output</small>"Ikki son kiriting:"</div>
+  <div class="fc-s fc-in"><small>Input</small>a</div>
+  <div class="fc-s fc-in"><small>Input</small>b</div>
+  <div class="fc-s fc-out"><small>Output</small>a &amp; " + " &amp; b &amp; " = " &amp; (a + b)</div>
+  <div class="fc-s fc-out"><small>Output</small>a &amp; " - " &amp; b &amp; " = " &amp; (a - b)</div>
+  <div class="fc-s fc-out"><small>Output</small>a &amp; " * " &amp; b &amp; " = " &amp; (a * b)</div>
+  <div class="fc-s fc-out"><small>Output</small>a &amp; " / " &amp; b &amp; " = " &amp; (a / b)</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<pre data-lang="output" data-title="Test: 12 va 4">Ikki son kiriting:
+12
+4
+12 + 4 = 16
+12 - 4 = 8
+12 * 4 = 48
+12 / 4 = 3</pre>
+<div class="callout warn"><span class="t">b = 0 bo'lsa?</span>Oxirgi qatorda <b>nolga bo'lish</b> xatosi chiqadi. Chiziqli algoritm buni oldini ololmaydi —
+buning uchun <b>shart</b> kerak (20- va 22-mavzular).</div>
+<p>Ifodani <code>( )</code> ichiga olish muhim: <code>"=" &amp; a + b</code> da avval matn ulanishi mumkin; <code>(a + b)</code> esa avval hisoblanishini kafolatlaydi.</p>
+</div>
+</div>
+
+<h2>2. Geometriya: yuza va perimetr</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Shakl</th><th>Kirish</th><th>Yuza</th><th>Perimetr</th></tr></thead>
+<tbody>
+<tr><td>To'g'ri to'rtburchak</td><td><code>a, b</code></td><td><code>a * b</code></td><td><code>2 * (a + b)</code></td></tr>
+<tr><td>Kvadrat</td><td><code>a</code></td><td><code>a ^ 2</code></td><td><code>4 * a</code></td></tr>
+<tr><td>Uchburchak (asos, balandlik)</td><td><code>a, h</code></td><td><code>a * h / 2</code></td><td>— (uch tomon kerak)</td></tr>
+<tr><td>Doira</td><td><code>r</code></td><td><code>3.14159 * r ^ 2</code></td><td><code>2 * 3.14159 * r</code></td></tr>
+<tr><td>Trapetsiya</td><td><code>a, b, h</code></td><td><code>(a + b) / 2 * h</code></td><td>—</td></tr>
+</tbody></table></div>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">xona.fprg — xonaga kafel</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real uzun, en, yuza, narx, jami</div>
+  <div class="fc-s fc-out"><small>Output</small>"Xona uzunligi va eni (m):"</div>
+  <div class="fc-s fc-in"><small>Input</small>uzun</div>
+  <div class="fc-s fc-in"><small>Input</small>en</div>
+  <div class="fc-s fc-out"><small>Output</small>"1 m² kafel narxi:"</div>
+  <div class="fc-s fc-in"><small>Input</small>narx</div>
+  <div class="fc-s fc-asg"><small>Assign</small>yuza = uzun * en</div>
+  <div class="fc-s fc-asg"><small>Assign</small>jami = yuza * narx * 1.1</div>
+  <div class="fc-s fc-out"><small>Output</small>"Yuza: " &amp; yuza &amp; " m²"</div>
+  <div class="fc-s fc-out"><small>Output</small>"Kafel (10% zaxira): " &amp; jami</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<p><b>Hayotiy masala:</b> ta'mirlashda kafel 10% ko'proq olinadi (singan, kesilgan bo'laklar uchun). <code>* 1.1</code> — "10% qo'shish" ning qisqa yo'li.</p>
+<pre data-lang="output" data-title="Test: 5 × 4, 85000 so'm">Yuza: 20 m²
+Kafel (10% zaxira): 1870000</pre>
+<p>Qo'lda: 20 × 85 000 = 1 700 000; +10% = 1 870 000 ✅</p>
+</div>
+</div>
+
+<h2>3. Foiz hisoblash</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Savol</th><th>Formula</th><th>Misol</th></tr></thead>
+<tbody>
+<tr><td>Sonning <code>p</code> foizi qancha?</td><td><code>son * p / 100</code></td><td>200 000 ning 15% = <b>30 000</b></td></tr>
+<tr><td><code>a</code> soni <code>b</code> ning necha foizi?</td><td><code>a / b * 100</code></td><td>18 to'g'ri javob / 25 savol = <b>72%</b></td></tr>
+<tr><td>Chegirmadan keyingi narx</td><td><code>narx * (1 - p / 100)</code></td><td>150 000, 20% chegirma → <b>120 000</b></td></tr>
+<tr><td>Ustamadan keyingi narx</td><td><code>narx * (1 + p / 100)</code></td><td>100 000 + 12% QQS → <b>112 000</b></td></tr>
+<tr><td>O'zgarish foizi</td><td><code>(yangi - eski) / eski * 100</code></td><td>40 kg → 46 kg: <b>+15%</b></td></tr>
+</tbody></table></div>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">chegirma.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real narx, foiz, tejaldi, yangi</div>
+  <div class="fc-s fc-in"><small>Input</small>narx</div>
+  <div class="fc-s fc-in"><small>Input</small>foiz</div>
+  <div class="fc-s fc-asg"><small>Assign</small>tejaldi = narx * foiz / 100</div>
+  <div class="fc-s fc-asg"><small>Assign</small>yangi = narx - tejaldi</div>
+  <div class="fc-s fc-out"><small>Output</small>"Tejaldi: " &amp; tejaldi</div>
+  <div class="fc-s fc-out"><small>Output</small>"To'lanadi: " &amp; yangi</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<pre data-lang="output" data-title="Test: 250000, 30%">250000
+30
+Tejaldi: 75000
+To'lanadi: 175000</pre>
+</div>
+
+<h2>4. O'rtacha qiymat</h2>
+<p><b>O'rtacha arifmetik</b> = barcha qiymatlar yig'indisi ÷ ularning soni. Masalan, haftalik harorat yoki choraklik baholar.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">ortacha.fprg — 3 ta fan bahosi</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer mat, fiz, inf</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real ortacha</div>
+  <div class="fc-s fc-in"><small>Input</small>mat</div>
+  <div class="fc-s fc-in"><small>Input</small>fiz</div>
+  <div class="fc-s fc-in"><small>Input</small>inf</div>
+  <div class="fc-s fc-asg"><small>Assign</small>ortacha = (mat + fiz + inf) / 3</div>
+  <div class="fc-s fc-out"><small>Output</small>"O'rtacha: " &amp; ToFixed(ortacha, 2)</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<pre data-lang="output" data-title="Test: 5, 4, 4">5
+4
+4
+O'rtacha: 4.33</pre>
+<p><code>ToFixed(ortacha, 2)</code> — 4.333333 ni chiroyli <code>4.33</code> ko'rinishida chiqaradi.</p>
+<p><code>ortacha</code> — <b>Real</b>: 13 / 3 kasr son. Uni Integer qilsangiz, Flowgorithm xato beradi.</p>
+</div>
+</div>
+
+<h2>5. Loyiha (12): valyuta konvertori</h2>
+<p><b>Masala:</b> foydalanuvchi so'mdagi summani kiritadi. Dastur uni dollar, yevro va rublga o'giradi. Kurslar dastur boshida o'zgaruvchilarda
+saqlanadi — kurs o'zgarsa, faqat bitta joyni tuzatamiz.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">valyuta.fprg</div><div class="fc">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real usd, eur, rub, som</div>
+  <div class="fc-s fc-asg"><small>Assign</small>usd = 12650</div>
+  <div class="fc-s fc-asg"><small>Assign</small>eur = 13700</div>
+  <div class="fc-s fc-asg"><small>Assign</small>rub = 155</div>
+  <div class="fc-s fc-out"><small>Output</small>"Summa (so'm):"</div>
+  <div class="fc-s fc-in"><small>Input</small>som</div>
+  <div class="fc-s fc-out"><small>Output</small>"$ " &amp; ToFixed(som / usd, 2)</div>
+  <div class="fc-s fc-out"><small>Output</small>"€ " &amp; ToFixed(som / eur, 2)</div>
+  <div class="fc-s fc-out"><small>Output</small>"₽ " &amp; ToFixed(som / rub, 2)</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div>
+<pre data-lang="output" data-title="Test: 1 000 000 so'm">Summa (so'm):
+1000000
+$ 79.05
+€ 72.99
+₽ 6451.61</pre>
+<div class="callout info"><span class="t">Kurslar</span>Bu yerdagi kurslar — namuna. Haqiqiy kursni <code>cbu.uz</code> (O'zbekiston Markaziy banki) saytidan oling.</div>
+<p><b>Kengaytirish g'oyalari:</b> teskari konvertatsiya (dollar → so'm); bank komissiyasi (1%); 21-mavzudan keyin — menyu orqali valyutani tanlash.</p>
+</div>
+</div>
+
+<h2>6. Loyiha (17): matematik formulalar</h2>
+<p>Fizika va matematikadan formulalar — chiziqli algoritm uchun ideal mashq:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Masala</th><th>Formula (Flowgorithm)</th><th>Test</th></tr></thead>
+<tbody>
+<tr><td>Tezlik</td><td><code>v = s / t</code></td><td>120 km, 2 soat → 60 km/soat</td></tr>
+<tr><td>Celsius → Fahrenheit</td><td><code>f = c * 9 / 5 + 32</code></td><td>100 °C → 212 °F</td></tr>
+<tr><td>Tana massasi indeksi (BMI)</td><td><code>bmi = m / (h ^ 2)</code></td><td>50 kg, 1.6 m → 19.53</td></tr>
+<tr><td>Pifagor teoremasi</td><td><code>c = Sqrt(a ^ 2 + b ^ 2)</code></td><td>6, 8 → 10</td></tr>
+<tr><td>Kvadrat tenglama diskriminanti</td><td><code>d = b ^ 2 - 4 * a * c</code></td><td>1, -5, 6 → 1</td></tr>
+<tr><td>Oddiy foiz (omonat)</td><td><code>jami = s * (1 + p / 100 * yil)</code></td><td>1 000 000, 20%, 2 yil → 1 400 000</td></tr>
+</tbody></table></div>
+
+<h2>Test qilish va xatolarni tuzatish</h2>
+<p>Dastur ishlashi — hali to'g'ri ishlashi degani emas. <b>Test jadvali</b> tuzing:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Kirish</th><th>Kutilgan natija (qo'lda)</th><th>Dastur natijasi</th><th>Holat</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Oddiy: <code>a=5, b=4</code></td><td>Yuza 20, P 18</td><td>20, 18</td><td>✅</td></tr>
+<tr><td>2</td><td>Kasr: <code>a=2.5, b=4</code></td><td>Yuza 10, P 13</td><td>10, 13</td><td>✅</td></tr>
+<tr><td>3</td><td>Chegara: <code>a=0, b=7</code></td><td>Yuza 0, P 14</td><td>0, 14</td><td>✅</td></tr>
+<tr><td>4</td><td>Noto'g'ri: <code>a=-3</code></td><td>Xato xabari kerak</td><td>-12</td><td>⚠️ shart kerak (20-mavzu)</td></tr>
+</tbody></table></div>
+<ul class="mistakes">
+  <li>❌ Hisoblash Input'dan oldin → ✅ "Variable has no value" — tartibni tekshiring.</li>
+  <li>❌ <code>(a + b) / 2</code> o'rniga <code>a + b / 2</code> → ✅ Qavslar!</li>
+  <li>❌ Foizni <code>* 15</code> deb yozish → ✅ <code>* 15 / 100</code> yoki <code>* 0.15</code>.</li>
+  <li>❌ Natijani izohsiz chiqarish (<code>Output s</code>) → ✅ <code>"Yuza: " &amp; s &amp; " m²"</code> — foydalanuvchi nima ekanini bilsin.</li>
+  <li>❌ So'rov matnisiz Input → ✅ Avval Output bilan nima kiritishni ayting.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Chiziqli algoritmning asosiy belgisi?</p><ol>
+<li>Shartlar ko'p</li><li>Ba'zi qadamlar takrorlanadi</li><li>Barcha qadamlar ketma-ket, bir martadan bajariladi</li><li>Bloklar tasodifiy tartibda</li></ol>
+<p class="explain">Shartsiz va takrorsiz — konveyer kabi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">300 000 so'mlik kurtkaga 25% chegirma. Yangi narx formulasi?</p><ol>
+<li><code>narx * (1 - 25 / 100)</code></li><li><code>narx - 25</code></li><li><code>narx * 25</code></li><li><code>narx / 25</code></li></ol>
+<p class="explain">300 000 × 0.75 = 225 000.</p></div>
+<div class="quiz" data-answer="4"><p class="q">Uch son o'rtachasi uchun to'g'ri ifoda?</p><ol>
+<li><code>a + b + c / 3</code></li><li><code>a + b + c * 3</code></li><li><code>(a + b + c) * 3</code></li><li><code>(a + b + c) / 3</code></li></ol>
+<p class="explain">Avval yig'indi (qavs), keyin bo'lish.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Doira yuzasi uchun Flowgorithm ifodasi?</p><ol>
+<li><code>2 * 3.14 * r</code></li><li><code>3.14 * r ^ 2</code></li><li><code>3.14 + r ^ 2</code></li><li><code>r / 3.14</code></li></ol>
+<p class="explain">S = πr².</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Telefon to'lovi:</b> oylik tarif, qo'shimcha daqiqalar soni va 1 daqiqa narxi → umumiy to'lov.</li>
+  <li><b>Yo'l:</b> masofa (km), 100 km ga yoqilg'i sarfi (l), 1 litr narxi → safar narxi.</li>
+  <li><b>Valyuta+:</b> 12-loyihaga teskari yo'nalish (dollardan so'mga) qo'shing va test jadvalini 4 ta test bilan to'ldiring.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Chiziqli algoritm</dt><dd>Qadamlar ketma-ket, shartsiz, takrorsiz.</dd>
+  <dt>Skelet</dt><dd>Declare → Output (so'rov) → Input → Assign → Output (natija).</dd>
+  <dt>Foiz</dt><dd><code>son * p / 100</code>; chegirma <code>* (1 - p/100)</code>.</dd>
+  <dt>O'rtacha</dt><dd><code>(a + b + c) / 3</code> — qavs shart, natija Real.</dd>
+  <dt>Test jadvali</dt><dd>Oddiy, kasr, chegara va noto'g'ri qiymatlar bilan tekshirish.</dd>
+</dl>
+</div>

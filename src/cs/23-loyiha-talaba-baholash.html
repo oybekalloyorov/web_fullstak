@@ -1,0 +1,223 @@
+<!-- title: Loyiha: Flowgorithm'da "Talaba baholash tizimi" | desc: Loyiha maqsadi va baholash mezonlarini aniqlash; davomat, uy vazifasi, amaliy ish va test ballarini kiritish; noto'g'ri ball kiritilishini Do sikli bilan tekshirish; umumiy ball va foizni hisoblash; If zinapoyasi bilan bahoni aniqlash: a'lo, yaxshi, qoniqarli, qoniqarsiz; butun sinf uchun statistika; test qilish. | icon: 🎓 | level: 2 dars · amaliy | bob: III bob. Algoritmlash, Flowgorithm va dasturlash asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu loyihada nimani o'rganasiz</h3>
+<ul>
+  <li>Real hayotiy tizim uchun <b>baholash mezonlarini</b> loyihalashni;</li>
+  <li>Har bir kiritishni <b>tekshirish</b> (validatsiya) — noto'g'ri ballni qabul qilmaslikni;</li>
+  <li>Umumiy ball, foiz va bahoni hisoblashni;</li>
+  <li>Bitta o'quvchidan <b>butun sinfga</b> kengaytirish: sikl, hisoblagichlar, o'rtacha;</li>
+  <li>Avvalgi mavzulardagi barcha bilimlarni (o'zgaruvchi, shart, sikl) bitta loyihada birlashtirishni.</li>
+</ul>
+</div>
+
+<div class="callout info"><span class="t">Loyiha rejasi (2 dars)</span><b>1-dars:</b> mezonlar, bitta o'quvchi uchun tizim (kiritish, tekshirish, hisob, baho).
+<b>2-dars:</b> butun sinf uchun statistika, test, GitHub va himoya.</div>
+
+<h2>1-bosqich: baholash mezonlari</h2>
+<p>Tizimimiz to'rt komponentdan iborat — jami <b>100 ball</b>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponent</th><th>O'zgaruvchi</th><th>Maksimal ball</th><th>Ruxsat etilgan oraliq</th></tr></thead>
+<tbody>
+<tr><td>📅 Davomat</td><td><code>davomat</code></td><td>10</td><td>0–10</td></tr>
+<tr><td>🏠 Uyga vazifa</td><td><code>uy</code></td><td>20</td><td>0–20</td></tr>
+<tr><td>💻 Amaliy ish</td><td><code>amaliy</code></td><td>30</td><td>0–30</td></tr>
+<tr><td>📝 Test</td><td><code>test</code></td><td>40</td><td>0–40</td></tr>
+<tr><td><b>Jami</b></td><td><code>jami</code></td><td><b>100</b></td><td></td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Foiz</th><th>Baho</th><th>Matn</th></tr></thead>
+<tbody>
+<tr><td>86–100</td><td>5</td><td>A'lo</td></tr>
+<tr><td>71–85</td><td>4</td><td>Yaxshi</td></tr>
+<tr><td>56–70</td><td>3</td><td>Qoniqarli</td></tr>
+<tr><td>0–55</td><td>2</td><td>Qoniqarsiz</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Nega foiz?</span>Hozir maksimal ball 100 — foiz va ball bir xil. Lekin mezonlar o'zgarsa (masalan, maksimal 160 —
+bizning kurs kabi: 40 + 20 + 100), <code>foiz = jami / maks * 100</code> formulasi bahoni to'g'ri saqlab qoladi. Dasturni <b>moslashuvchan</b> qilish uchun
+<code>maks</code> ni alohida o'zgaruvchida saqlaymiz.</div>
+
+<h2>2-bosqich: kiritishni tekshirish</h2>
+<p>Agar o'qituvchi adashib davomatga <code>95</code> yozsa, butun natija buziladi. "<b>Axlat kirsa — axlat chiqadi</b>" (Garbage In — Garbage Out)
+tamoyili. Har bir ball uchun Do sikli: oraliqdan tashqarida <b>ekan</b> — qayta so'raymiz.</p>
+<div class="fc-pair">
+<div class="fc-wrap"><div class="fc-title">Bitta ballni tekshirib kiritish</div><div class="fc">
+  <div class="fc-loop"><div class="fc-s fc-cond">Do … While uy &lt; 0 or uy &gt; 20</div>
+    <div class="fc-body">
+      <div class="fc-s fc-out"><small>Output</small>"Uyga vazifa (0–20):"</div>
+      <div class="fc-s fc-in"><small>Input</small>uy</div>
+      <div class="fc-if"><div class="fc-s fc-cond">uy &lt; 0 or uy &gt; 20</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False"></div><div class="fc-br" data-label="True"><div class="fc-s fc-out"><small>Output</small>"❌ Noto'g'ri! Qayta kiriting."</div></div></div></div>
+    </div></div>
+</div></div>
+<div>
+<pre data-lang="output" data-title="Console">Uyga vazifa (0–20):
+25
+❌ Noto'g'ri! Qayta kiriting.
+Uyga vazifa (0–20):
+-3
+❌ Noto'g'ri! Qayta kiriting.
+Uyga vazifa (0–20):
+18</pre>
+<p>Sikl ichidagi If faqat <b>xabar</b> uchun: foydalanuvchi nega qayta so'ralayotganini bilishi kerak. Bunday blokni 4 marta (har bir komponent uchun)
+takrorlaymiz — faqat nomi va maksimumi o'zgaradi.</p>
+</div>
+</div>
+
+<h2>3-bosqich: hisoblash va baho</h2>
+<div class="fc-wrap"><div class="fc-title">baholash.fprg — asosiy qism (kiritish bloklari qisqartirilgan)</div><div class="fc compact">
+  <div class="fc-s fc-term">Main</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Integer davomat, uy, amaliy, test, jami, maks</div>
+  <div class="fc-s fc-decl"><small>Declare</small>Real foiz</div>
+  <div class="fc-s fc-decl"><small>Declare</small>String ism, baho</div>
+  <div class="fc-s fc-asg"><small>Assign</small>maks = 100</div>
+  <div class="fc-s fc-in"><small>Input</small>ism</div>
+  <div class="fc-s fc-in"><small>Do-tekshiruv ×4</small>davomat, uy, amaliy, test</div>
+  <div class="fc-s fc-asg"><small>Assign</small>jami = davomat + uy + amaliy + test</div>
+  <div class="fc-s fc-asg"><small>Assign</small>foiz = jami / maks * 100</div>
+  <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 86</div>
+    <div class="fc-branches"><div class="fc-br" data-label="False">
+      <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 71</div>
+        <div class="fc-branches"><div class="fc-br" data-label="False">
+          <div class="fc-if"><div class="fc-s fc-cond">foiz &gt;= 56</div>
+            <div class="fc-branches"><div class="fc-br" data-label="False"><div class="fc-s fc-asg"><small>Assign</small>baho = "2 Qoniqarsiz"</div></div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "3 Qoniqarli"</div></div></div></div>
+        </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "4 Yaxshi"</div></div></div></div>
+    </div><div class="fc-br" data-label="True"><div class="fc-s fc-asg"><small>Assign</small>baho = "5 A'lo"</div></div></div></div>
+  <div class="fc-s fc-out"><small>Output</small>ism &amp; ": " &amp; jami &amp; "/" &amp; maks &amp; " (" &amp; foiz &amp; "%) → " &amp; baho</div>
+  <div class="fc-s fc-term">End</div>
+</div></div>
+<div class="callout info"><span class="t">Nega baho Assign'da, Output'da emas?</span>Har bir tarmoqda alohida Output qo'yish ham mumkin. Lekin bahoni o'zgaruvchiga
+yozib, <b>bitta</b> umumiy Output bilan chiqarish yaxshiroq: chiqish formatini o'zgartirmoqchi bo'lsangiz — 4 joyni emas, 1 joyni tuzatasiz. Bundan
+tashqari, <code>baho</code> qiymati keyin statistika uchun ham kerak bo'ladi.</div>
+
+<pre data-lang="output" data-title="Namuna natija">Ism:
+Dilnoza
+Davomat (0–10):
+9
+Uyga vazifa (0–20):
+18
+Amaliy ish (0–30):
+26
+Test (0–40):
+33
+Dilnoza: 86/100 (86%) → 5 — A'lo</pre>
+
+<h2>4-bosqich: butun sinf uchun</h2>
+<p>O'qituvchi 25 ta o'quvchini baholashi kerak — dasturni 25 marta ishga tushirmaydi. Butun hisobni <b>For</b> sikliga o'raymiz va statistika qo'shamiz:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Yangi o'zgaruvchi</th><th>Boshlang'ich</th><th>Siklda</th><th>Natija</th></tr></thead>
+<tbody>
+<tr><td><code>n</code></td><td>Input</td><td>—</td><td>O'quvchilar soni</td></tr>
+<tr><td><code>yigindi</code></td><td>0</td><td><code>yigindi = yigindi + foiz</code></td><td>Sinf o'rtachasi = <code>yigindi / n</code></td></tr>
+<tr><td><code>alo, yaxshi, qon, qonsiz</code></td><td>0</td><td>Tegishli tarmoqda <code>+ 1</code></td><td>Baholar taqsimoti</td></tr>
+<tr><td><code>eng, engIsm</code></td><td>-1, ""</td><td><code>foiz &gt; eng</code> bo'lsa yangilash</td><td>Sinf "yulduzi"</td></tr>
+</tbody></table></div>
+<pre data-lang="text" data-title="Psevdokod">kiritish: n
+yigindi = 0;  alo = 0;  yaxshi = 0;  qon = 0;  qonsiz = 0;  eng = -1
+For i = 1 to n
+    kiritish (tekshiruv bilan): ism, davomat, uy, amaliy, test
+    jami = davomat + uy + amaliy + test
+    foiz = jami / maks * 100
+    yigindi = yigindi + foiz
+    agar foiz >= 86:       baho = "5";  alo = alo + 1
+    aks holda foiz >= 71:  baho = "4";  yaxshi = yaxshi + 1
+    aks holda foiz >= 56:  baho = "3";  qon = qon + 1
+    aks holda:             baho = "2";  qonsiz = qonsiz + 1
+    agar foiz > eng:  eng = foiz;  engIsm = ism
+    chiqar ism & " → " & baho
+chiqar "Sinf o'rtachasi: " & ToFixed(yigindi / n, 1) & "%"
+chiqar "5: " & alo & "  4: " & yaxshi & "  3: " & qon & "  2: " & qonsiz
+chiqar "Eng yuqori natija: " & engIsm & " (" & eng & "%)"
+chiqar "O'zlashtirish: " & ToFixed((alo + yaxshi + qon) / n * 100, 0) & "%"</pre>
+
+<h2>Python'da</h2>
+<pre data-lang="py" data-title="baholash.py">def ball_ol(nom, maks):
+    """Ballni 0..maks oralig'ida bo'lguncha qayta so'raydi."""
+    while True:
+        x = int(input(f"{nom} (0–{maks}): "))
+        if 0 <= x <= maks:
+            return x
+        print("❌ Noto'g'ri! Qayta kiriting.")
+
+ism = input("Ism: ")
+jami = (ball_ol("Davomat", 10) + ball_ol("Uyga vazifa", 20)
+        + ball_ol("Amaliy ish", 30) + ball_ol("Test", 40))
+foiz = jami / 100 * 100
+if foiz >= 86:
+    baho = "5 — A'lo"
+elif foiz >= 71:
+    baho = "4 — Yaxshi"
+elif foiz >= 56:
+    baho = "3 — Qoniqarli"
+else:
+    baho = "2 — Qoniqarsiz"
+print(f"{ism}: {jami}/100 ({foiz:.0f}%) → {baho}")</pre>
+<p>Python'da takrorlanuvchi kiritish <b>funksiya</b>ga (<code>ball_ol</code>) chiqarildi — bir marta yozib, 4 marta chaqiramiz. Flowgorithm'da ham
+funksiyalar bor (<b>Program → Add Function</b>) — qiziqqanlar uchun bonus topshiriq!</p>
+
+<h2>5-bosqich: test qilish</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Davomat</th><th>Uy</th><th>Amaliy</th><th>Test</th><th>Kutilgan</th><th>Nima tekshiriladi</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>10</td><td>20</td><td>30</td><td>40</td><td>100% → 5</td><td>Maksimum</td></tr>
+<tr><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0% → 2</td><td>Minimum</td></tr>
+<tr><td>3</td><td>9</td><td>17</td><td>25</td><td>35</td><td>86% → 5</td><td>Chegara 86</td></tr>
+<tr><td>4</td><td>9</td><td>17</td><td>25</td><td>34</td><td>85% → 4</td><td>Chegara 85</td></tr>
+<tr><td>5</td><td>8</td><td>14</td><td>16</td><td>18</td><td>56% → 3</td><td>Chegara 56</td></tr>
+<tr><td>6</td><td>8</td><td>14</td><td>16</td><td>17</td><td>55% → 2</td><td>Chegara 55</td></tr>
+<tr><td>7</td><td>15 → 8</td><td>...</td><td></td><td></td><td>Qayta so'raydi</td><td>Validatsiya ⚠️</td></tr>
+<tr><td>8</td><td>-1 → 5</td><td>...</td><td></td><td></td><td>Qayta so'raydi</td><td>Manfiy ⚠️</td></tr>
+</tbody></table></div>
+<div class="callout tip"><span class="t">Chegaraviy testlar</span>Eng ko'p xato chegaralarda bo'ladi (<code>&gt;</code> va <code>&gt;=</code>). Shuning uchun har bir
+chegaraning <b>ikki tomonini</b> tekshiramiz: 86 va 85, 56 va 55.</div>
+
+<h2>Loyiha himoyasi va baholash</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mezon</th><th>Ball</th></tr></thead>
+<tbody>
+<tr><td>To'rt komponent kiritiladi, jami va foiz to'g'ri</td><td>25</td></tr>
+<tr><td>Baho zinapoyasi to'g'ri (chegaralar!)</td><td>20</td></tr>
+<tr><td>Barcha kiritishlar validatsiya qilingan</td><td>20</td></tr>
+<tr><td>Butun sinf statistikasi</td><td>15</td></tr>
+<tr><td>Test jadvali (8+ test)</td><td>10</td></tr>
+<tr><td>GitHub README, tushunarli xabarlar</td><td>10</td></tr>
+</tbody></table></div>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Do sharti noto'g'ri: <code>uy &gt;= 0 and uy &lt;= 20</code> → ✅ Do <b>noto'g'ri</b> holatda takrorlanadi: <code>uy &lt; 0 or uy &gt; 20</code>.</li>
+  <li>❌ <code>foiz</code> ni Integer qilish → ✅ Real (bo'lish natijasi).</li>
+  <li>❌ Statistika o'zgaruvchilarini sikl ichida nolga tenglash → ✅ Sikldan oldin.</li>
+  <li>❌ Sinf o'rtachasini <code>yigindi / 25</code> deb qotirib qo'yish → ✅ <code>yigindi / n</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Test bali 0–40 oralig'ida bo'lishi uchun Do sikli sharti qanday?</p><ol>
+<li><code>test &gt;= 0 and test &lt;= 40</code></li><li><code>test &lt; 0 or test &gt; 40</code></li><li><code>test == 40</code></li><li><code>test != 0</code></li></ol>
+<p class="explain">Do "noto'g'ri ekan" takrorlanadi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Jami 120, maksimal 160. Foiz?</p><ol>
+<li>120%</li><li>60%</li><li>75%</li><li>40%</li></ol>
+<p class="explain">120 / 160 × 100 = 75.</p></div>
+<div class="quiz" data-answer="1"><p class="q">"Garbage In — Garbage Out" nimani anglatadi?</p><ol>
+<li>Noto'g'ri kiritilgan ma'lumot noto'g'ri natija beradi</li><li>Dastur axlatni o'chiradi</li><li>Kompyuter tozalash kerak</li><li>Fayllarni savatga tashlash</li></ol>
+<p class="explain">Shuning uchun validatsiya kerak.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Bitta o'quvchi uchun to'liq versiyani (validatsiya bilan) yakunlang va 8 testdan o'tkazing.</li>
+  <li>Butun sinf versiyasini quring: o'rtacha, baholar taqsimoti, eng yuqori natija.</li>
+  <li>Bonus: mezonlarni o'quv dasturimizdagi tizimga moslang — joriy 40 + oraliq 20; 60 dan kamida 36 to'plasa "Yakuniy nazoratga ruxsat" chiqsin.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<dl class="glossary">
+  <dt>Validatsiya</dt><dd>Kiritishni tekshirish; Do … While noto'g'ri ekan.</dd>
+  <dt>Foiz</dt><dd><code>jami / maks * 100</code> — mezon o'zgarsa ham ishlaydi.</dd>
+  <dt>Zinapoya</dt><dd>86 → 71 → 56 → qolgani; baho o'zgaruvchiga yoziladi.</dd>
+  <dt>Statistika</dt><dd>Yig'uvchi, hisoblagichlar, maksimum — sikldan oldin boshlanadi.</dd>
+  <dt>Chegaraviy test</dt><dd>Har bir chegaraning ikki tomoni: 86/85, 56/55.</dd>
+</dl>
+</div>
