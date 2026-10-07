@@ -50,6 +50,23 @@ pip install python-pptx     # faqat PowerPoint fayllari uchun
 python3 slides.py           # HTML + PPTX taqdimotlarni qayta yasaydi
 ```
 
+## PDF fayllar
+
+Har bir dars sahifasida **«📄 PDF yuklab olish»** tugmasi bor. Bundan tashqari:
+
+- `darslar/pdf/full-stack-qollanma.pdf` — "Full-stack qo'llanma" to'liq (xatcho'plar bilan);
+- `8-sinf/pdf/8-sinf-web-fullstack-kursi.pdf` — 8-sinf kursi to'liq;
+- `8-sinf/taqdimot/pdf/` — taqdimotlarning PDF ko'rinishi.
+
+PDF'larda test javoblari har bir dars oxiridagi «Test javoblari» bo'limida beriladi.
+Qayta yasash (Node.js + Playwright kerak):
+
+```bash
+npm i playwright && npx playwright install chromium
+pip install pypdf            # umumiy PDF'dagi xatcho'plar uchun
+python3 build.py && python3 slides.py && python3 pdf.py
+```
+
 ## Saytni ochish
 
 - **Onlayn:** GitHub → Settings → Pages → *Deploy from a branch* → `main` / `(root)`.

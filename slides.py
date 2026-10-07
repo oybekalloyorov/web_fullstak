@@ -288,6 +288,7 @@ def deck_html(deck, prev_d, next_d):
   <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
   <a class="ctl" href="../{deck["slug"]}.html" title="Dars matni">📖</a>
   <a class="ctl" href="pptx/{deck["slug"]}.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <a class="ctl" href="pdf/{deck["slug"]}.pdf" title="PDF faylini yuklab olish" download>⬇ PDF</a>
   <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
   <span class="counter" id="counter">1 / 1</span>
   <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
@@ -317,7 +318,7 @@ def index_html(decks):
             f'<div class="ix-card"><div class="ix-num">{d["num"]}</div><div class="ix-main">'
             f'<a class="ix-title" href="{d["slug"]}.html">{d["meta"].get("icon", "")} {html.escape(d["meta"].get("title", ""))}</a>'
             f'<div class="ix-meta">{len(d["slides"]) + 2} ta slayd · <a href="{d["slug"]}.html">▶ Ochish</a> · '
-            f'<a href="pptx/{d["slug"]}.pptx" download>⬇ PPTX</a> · <a href="../{d["slug"]}.html">📖 Dars matni</a></div></div></div>'
+            f'<a href="pptx/{d["slug"]}.pptx" download>⬇ PPTX</a> · <a href="pdf/{d["slug"]}.pdf" download>⬇ PDF</a> · <a href="../{d["slug"]}.html">📖 Dars matni</a></div></div></div>'
             for d in ds)
         parts.append(f'<h2 style="--accent:#{BOB_COLORS[key]}">{html.escape(bob)}</h2><div class="ix-grid">{cards}</div>')
     total = sum(len(d["slides"]) + 2 for d in decks)
@@ -338,7 +339,7 @@ def index_html(decks):
   <a class="ix-back" href="../index.html">← 8-sinf kursiga qaytish</a>
   <h1>🎞️ 8-sinf taqdimotlari</h1>
   <p class="ix-lead">Har bir mavzu uchun alohida taqdimot: <b>{len(decks)} ta taqdimot, {total} ta slayd</b>.
-  Brauzerda ochib darsda ko'rsating yoki PowerPoint (.pptx) faylini yuklab oling.</p>
+  Brauzerda ochib darsda ko'rsating yoki PowerPoint (.pptx) / PDF faylini yuklab oling.</p>
   <div class="ix-help">
     <b>Boshqaruv:</b> <kbd>→</kbd>/<kbd>Probel</kbd> keyingi · <kbd>←</kbd> oldingi · <kbd>F</kbd> to'liq ekran ·
     <kbd>N</kbd> o'qituvchi izohlari · <kbd>Home</kbd>/<kbd>End</kbd> boshi/oxiri · telefonda — suring.

@@ -21,7 +21,7 @@
     var tooBig = function () {
       return slide.scrollHeight > slide.clientHeight + 1 ||
         Array.prototype.some.call(body.querySelectorAll('.col'), function (c) { return c.scrollHeight > c.clientHeight + 1; }) ||
-        Array.prototype.some.call(body.querySelectorAll('pre'), function (p) { return p.scrollWidth > p.clientWidth + 1; });
+        Array.prototype.some.call(body.querySelectorAll('pre, pre code'), function (p) { return p.scrollWidth > p.clientWidth + 1; });
     };
     while (tooBig() && size > 14) {
       size -= 1;
