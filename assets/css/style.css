@@ -258,8 +258,34 @@ tr:last-child td { border-bottom: none; }
   .ex-head { flex-wrap: wrap; }
 }
 @media print {
-  .topbar, .sidebar, .toc, .pager, .progress, .copy { display: none !important; }
-  .layout { display: block; }
+  @page { size: A4; margin: 14mm 13mm 16mm; }
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --surface: #fff; --surface-2: #f3f4f8; --text: #1c2233; --muted: #5d6680;
+    --border: #d9dde8; --accent: #4f46e5; --accent-soft: #eef0ff;
+    --info-bg: #e8f6fd; --tip-bg: #eafaf0; --warn-bg: #fff6e6; --danger-bg: #fdeeee;
+    --shadow: none; color-scheme: light;
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; font-size: 10.5pt; }
+  .topbar, .sidebar, .toc, .pager, .progress, .copy, .run, .overlay, .playground,
+  .hero-actions, .quiz-score, .menu-btn, .anchor { display: none !important; }
+  .layout { display: block; max-width: none; }
+  .content { padding: 0; }
+  .lesson { max-width: none; }
+  thead { display: table-header-group; }
+  .lesson-hero { break-after: avoid; }
+  h2, h3 { break-after: avoid; }
+  .code, .callout, .analogy, .quiz, .diagram, .mistakes li, tr, figure { break-inside: avoid; }
+  .code pre { white-space: pre-wrap; word-break: break-word; }
+  a { color: inherit; text-decoration: none; }
+  .quiz .explain, .js .quiz .explain { display: none !important; }
+  .js .quiz li { cursor: default; }
+  details { border-color: var(--border); }
+  .pdf-javoblar { break-before: page; }
+  .pdf-keyingi { break-before: page; }
+  .pdf-javoblar ol { padding-left: 1.4em; }
+  .pdf-javoblar li { margin: 6px 0; break-inside: avoid; }
+  .pdf-javoblar .izoh { color: var(--muted); }
 }
 
 /* ===== 8-sinf kursi uchun qo'shimcha komponentlar ===== */
@@ -320,7 +346,7 @@ tr:last-child td { border-bottom: none; }
 .mistakes li { margin: .5em 0; }
 
 /* Dars sahifasidagi taqdimot tugmalari */
-.hero-slides { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .btn-slides { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; background: var(--accent, #4f46e5); color: #fff; border: 1px solid transparent; }
 .btn-slides:hover { filter: brightness(1.08); }
 .btn-slides.ghost { background: transparent; color: var(--text); border-color: var(--border); }

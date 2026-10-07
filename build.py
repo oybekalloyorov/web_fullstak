@@ -260,9 +260,12 @@ def build_course(course):
         if meta.get("bob"):
             crumb += f' · {html.escape(meta["bob"])}'
         level = f'<div class="hero-level">{html.escape(meta["level"])}</div>' if meta.get("level") else ""
+        actions = f'<a class="btn-slides ghost" href="pdf/{l["slug"]}.pdf" download>📄 PDF yuklab olish</a>'
         if (SRC / course["dir"] / "taqdimot" / f"{l['slug']}.txt").exists():
-            level += (f'<div class="hero-slides"><a class="btn-slides" href="taqdimot/{l["slug"]}.html">🎞️ Taqdimotni ochish</a>'
-                      f'<a class="btn-slides ghost" href="taqdimot/pptx/{l["slug"]}.pptx" download>⬇ PowerPoint (.pptx)</a></div>')
+            actions = (f'<a class="btn-slides" href="taqdimot/{l["slug"]}.html">🎞️ Taqdimotni ochish</a>'
+                       f'<a class="btn-slides ghost" href="taqdimot/pptx/{l["slug"]}.pptx" download>⬇ PowerPoint (.pptx)</a>'
+                       + actions)
+        level += f'<div class="hero-actions">{actions}</div>'
         header = (
             f'<div class="lesson-hero"><div class="hero-icon">{meta.get("icon", "📘")}</div>'
             f'<div><div class="crumb">{crumb}</div>'

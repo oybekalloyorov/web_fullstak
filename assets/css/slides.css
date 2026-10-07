@@ -64,7 +64,7 @@ code { font-family: "JetBrains Mono", Consolas, monospace; }
 .s-code { border-radius: 14px; overflow: hidden; background: #282c34; flex: none; }
 .s-code-head { font-size: 15px; font-weight: 700; color: #9ca3af; padding: 8px 16px 0; letter-spacing: .03em; }
 .s-code pre { margin: 0; padding: 8px 18px 14px; overflow: hidden; }
-.s-code pre code { background: none !important; color: #e6e6e6; padding: 0; font-size: .7em; line-height: 1.45; white-space: pre; }
+.s-code pre code { display: block; overflow: hidden !important; background: none !important; color: #e6e6e6; padding: 0; font-size: .7em; line-height: 1.45; white-space: pre; }
 .s-code.out { background: #f1f5f9; border: 1.5px solid #cbd5e1; }
 .s-code.out pre code { color: var(--ink); }
 .s-code.out .s-code-head { color: #64748b; }
