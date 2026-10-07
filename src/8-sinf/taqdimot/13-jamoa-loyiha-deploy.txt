@@ -1,0 +1,163 @@
+# Bugun nimani o'rganamiz?
+- Dasturchilar **jamoada** qanday ishlaydi
+- Loyihani **rejalashtirish** va vazifalarni taqsimlash
+- Git **branch**, **merge** va **konflikt**
+- GitHub'da hamkorlik va **Pull Request**
+- Saytni **Netlify** va **Vercel**'ga joylash
+---
+# Nima uchun jamoada ishlash muhim?
+- Telegram, Click kabi ilovalarni **yuzlab** dasturchilar birga yaratgan
+- Eng qadrli ko'nikma: vazifani bo'lishish, boshqalar kodini tushunish, kelishish
+> **Futbol jamoasi:** hamma to'p ortidan yugursa — yutqazadi. Har kimning o'z o'rni bor. Kimdir header, kimdir galereya, kimdir forma yozadi — oxirida bitta saytga birlashadi.
+---
+# Jamoaviy loyiha bosqichlari
+1. **G'oya:** sayt nima haqida, kimlar uchun?
+2. **Reja:** kichik vazifalar ro'yxati
+3. **Rollar:** har vazifaga mas'ul
+4. **Kelishuvlar:** ranglar, shriftlar, fayl va class nomlari
+5. **Ishlab chiqish:** har kim o'z branch'ida
+6. **Code review:** bir-birining kodini tekshirish
+7. **Merge va deploy**
+---
+# Kanban doskasi
+| 📝 Qilinishi kerak | ⏳ Jarayonda | ✅ Tayyor |
+|---|---|---|
+| Galereya — Madina | Header va menyu — Sardor | Ranglar tanlandi — hamma |
+| Aloqa formasi — Javohir | | Papka tuzilmasi — Sardor |
+- Vositalar: **GitHub Projects**, Trello yoki sinf doskasi + stikerlar
+---
+# Git branch — parallel ish
+> **Daraxt shoxlari:** `main` — tana. Har dasturchi o'z vazifasi uchun shox o'stiradi. Ish tugagach shox tanaga "payvand" qilinadi (merge). Shoxdagi xato tanaga zarar bermaydi.
+```text
+             o──o──o        ← feature/galereya (Madina)
+            /        \
+main  o──o──o──────────o──o  ← merge
+            \            /
+             o──o──o───o     ← feature/forma (Javohir)
+```
+---
+# Branch buyruqlari
+```bash
+git branch                       # barcha branch'lar (* — joriysi)
+git switch -c feature/galereya   # yangi branch yaratib o'tish
+# ... ishlash, git add, git commit ...
+git switch main                  # asosiy branch'ga qaytish
+git merge feature/galereya       # birlashtirish
+```
+- `main` da doim **ishlaydigan** kod turadi
+---
+# Konflikt — ikki kishi bitta qatorni o'zgartirsa
+```text
+<<<<<<< HEAD
+<h1>Bizning maktab</h1>
+=======
+<h1>5-maktab rasmiy sayti</h1>
+>>>>>>> feature/forma
+```
+- `HEAD` dan `=======` gacha — **sizning** variant
+- `=======` dan `>>>>>>>` gacha — **birlashtirilayotgan** variant
+1. Jamoa bilan kelishib, keraklisini qoldiring
+2. Barcha belgilarni o'chiring
+3. `git add .` → `git commit`
+! Konfliktni kamaytirish: har kim **turli fayllarda** ishlasin, tez-tez `git pull`
+---
+# GitHub'da hamkorlik
+- **Hamkor qo'shish:** Settings → Collaborators → Add people
+- **Pull Request** — "mening branch'imni main'ga qo'shing" degan so'rov:
+1. `git push -u origin feature/galereya`
+2. GitHub'da **"Compare & pull request"**
+3. Sarlavha, tavsif, skrinshot yozing
+4. Jamoadoshlar **Files changed** da izoh qoldiradi
+5. Tuzatib push qilasiz — PR avtomatik yangilanadi
+6. **Merge pull request** → hamma `git pull`
+---
+# Code review madaniyati
+- **Kodni** tanqid qiling, odamni emas: "Bu yerda alt yo'q" ✅ — "Sen hech narsa bilmaysan" ❌
+- **Maqtashni** unutmang: "Animatsiya zo'r chiqibdi! 👍"
+- **Taklif** sifatida yozing: "Bu yerda Grid ishlatsak qanday bo'ladi?"
+---
+# Deploy: Netlify va Vercel
+| | Netlify | Vercel |
+|---|---|---|
+| Narxi | Bepul (shaxsiy) | Bepul (shaxsiy) |
+| Manzil | `nom.netlify.app` | `nom.vercel.app` |
+| HTTPS | Avtomatik | Avtomatik |
+| GitHub | Har push'da yangilanadi | Har push'da yangilanadi |
+| O'ziga xos | Drag & Drop, formalar | React/Next.js uchun qulay |
+---
+# Netlify: sudrab tashlash
+1. **app.netlify.com/drop** ni oching
+2. Sayt papkasini (ichida `index.html`) maydonga sudrab tashlang
+3. Bir necha soniyada: `https://tasodifiy-nom-123.netlify.app`
+4. **Change site name** → `maktab5-samarqand.netlify.app`
+---
+# GitHub orqali deploy (professional)
+1. Netlify/Vercel'ga **GitHub akkaunti** bilan kiring
+2. **Import an existing project** → repozitoriyani tanlang
+3. HTML/CSS uchun sozlama kerak emas → **Deploy**
+4. Endi har `git push` → sayt **avtomatik** yangilanadi
+= Bu — CI/CD (uzluksiz yetkazib berish) ning eng oddiy ko'rinishi
+- O'z domeningiz: **Add custom domain** + DNS yozuvlari (1-mavzu)
+---
+## Amaliy mashg'ulot
+8-loyiha: 3–4 kishilik jamoada "Bizning sinf" sayti
+---
+# Amaliyot: "Bizning sinf"
+```text
+bizning-sinf/
+├── index.html        ← Sardor
+├── oquvchilar.html   ← 2-a'zo
+├── galereya.html     ← 3-a'zo
+├── aloqa.html        ← 4-a'zo
+├── css/umumiy.css    ← kelishib yoziladi
+└── rasmlar/
+```
+::
+1. Sardor repo yaratadi, hamkorlarni qo'shadi
+2. `README.md` — kelishuvlar
+3. Har kim: `clone` → o'z branch'i → 3+ commit → push
+4. **Pull Request** + izoh + merge
+5. Netlify/Vercel'ga ulash
+6. Telefonda tekshirish → **Issue**
+7. 3 daqiqalik taqdimot
+---
+# Ko'p uchraydigan xatolar
+- ❌ Hamma `main` ga to'g'ridan-to'g'ri push — bir-birining ishini o'chiradi
+- ❌ Ish boshida `git pull` qilmaslik — katta konflikt
+- ❌ `<<<<<<<` belgilarini faylda qoldirish
+- ❌ Netlify'da "Page not found" — `sayt/sayt/index.html`; `index.html` ildizda bo'lsin
+---
+? Asosiy koddan alohida, mustaqil ishlash uchun Git'da nima yaratiladi?
+o Commit
++ Branch
+o Clone
+o Remote
+---
+? O'z branch'ingizni asosiy kodga qo'shishni so'rash nima deyiladi?
+o Push Request
+o Merge Commit
+o Issue
++ Pull Request
+---
+? Konflikt qachon yuzaga keladi?
++ Ikki branch'da bitta qator turlicha o'zgartirilganda
+o Internet uzilganda
+o Fayl o'chirilganda
+o Juda ko'p commit qilinganda
+---
+? Netlify'ga GitHub orqali ulangan saytni yangilash uchun nima qilish kerak?
+o Papkani qayta yuklash
+o Netlify'ga xat yozish
++ Shunchaki `git push`
+o Saytni o'chirib qayta yaratish
+---
+# 🏠 Uyga vazifa
+1. Jamoaviy loyihadagi qismingizni **PR** orqali birlashtiring
+2. Portfolioni **Netlify**'ga (GitHub orqali) joylang
+3. Sinfdoshingiz repozitoriyasida hurmat bilan **Issue** oching
+---
+# ✅ Yodda tuting
+- Jamoa: reja → rollar → kelishuvlar → branch → review → merge → deploy
+- `git switch -c nom`, `git merge nom`; konfliktda belgilarni o'chirib add + commit
+- GitHub: Collaborators, Pull Request, Issues, Projects
+- Netlify / Vercel: bepul, HTTPS, har push'da avtomatik yangilanish

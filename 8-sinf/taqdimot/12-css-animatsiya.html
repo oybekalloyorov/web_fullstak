@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12-mavzu: CSS animatsiyalar va transformatsiyalar — taqdimot</title>
+<meta name="description" content="transform (translate, scale, rotate, skew), transition bilan silliq o&#x27;tishlar, @keyframes va animation xossalari; interaktiv tugmalar, yuklanish belgisi, kartalar effektlari.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#E2552B">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">✨</div><div class="cover-kicker">12-mavzu · I bob. HTML va CSS</div><h1>CSS animatsiyalar va transformatsiyalar</h1><p>transform (translate, scale, rotate, skew), transition bilan silliq o&#x27;tishlar, @keyframes va animation xossalari; interaktiv tugmalar, yuklanish belgisi, kartalar effektlari.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Siljitish, kattalashtirish, burish — <b>transform</b></li><li class="lv0">Holat o&#x27;zgarganda silliq o&#x27;tish — <b>transition</b></li><li class="lv0">O&#x27;zi harakatlanuvchi animatsiya — <b>@keyframes + animation</b></li><li class="lv0">Effektlar: &quot;tirik&quot; tugmalar, yuklanish belgisi, paydo bo&#x27;luvchi kartalar</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Transform — shaklni o&#x27;zgartirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.t1 { transform: translateX(30px); }           /* o&#x27;ngga */
+.t2 { transform: translateY(-20px); }          /* tepaga */
+.t3 { transform: scale(1.3); }                 /* kattalashtirish */
+.t5 { transform: rotate(45deg); }              /* burish */
+.t6 { transform: skew(15deg); }                /* qiyshaytirish */
+.t7 { transform: rotate(-10deg) scale(1.1); }  /* birga */</code></pre></div><table class="s-table"><thead><tr><th>Funksiya</th><th>Vazifasi</th></tr></thead><tbody><tr><td><code>translate(x, y)</code></td><td>Siljitish</td></tr><tr><td><code>scale(n)</code></td><td>1 = asl o&#x27;lcham, 1.1 = 10% katta</td></tr><tr><td><code>rotate(deg)</code></td><td>Burish</td></tr><tr><td><code>skew(deg)</code></td><td>Qiyshaytirish</td></tr></tbody></table><ul class="s-list"><li class="lv0">Boshqa elementlarga <b>ta&#x27;sir qilmaydi</b>; <code>transform-origin</code> — qaysi nuqtadan</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Transition — silliq o&#x27;tish</h2></header><div class="s-body"><div class="col"><div class="s-box analogy"><span class="ico">💡</span><div><b>Chiroq:</b> oddiy chiroq bir zumda yonadi; kinoteatr chiroqlari asta-sekin. Siz boshlang&#x27;ich va oxirgi holatni berasiz — oradagi &quot;kadrlar&quot;ni brauzer chizadi.</div></div><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.tugma {
+  background: #4f46e5;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.tugma:hover {
+  background: #db2777;
+  transform: scale(1.1);
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>transition sintaksisi</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">transition: background-color 0.3s ease 0s;
+/*          │                │    │    └ kechikish (delay)
+            │                │    └ tezlik egri chizig&#x27;i
+            │                └ davomiylik (s, ms)
+            └ qaysi xossa (all — hammasi)          */</code></pre></div><table class="s-table"><thead><tr><th>Egri chiziq</th><th>Xatti-harakat</th></tr></thead><tbody><tr><td><code>linear</code></td><td>Bir tekis (robotdek)</td></tr><tr><td><code>ease</code></td><td>Sekin → tez → sekin (standart, tabiiy)</td></tr><tr><td><code>ease-in</code> / <code>ease-out</code></td><td>Sekin boshlanadi / sekin tugaydi</td></tr></tbody></table><div class="s-box warn"><span class="ico">⚠️</span><div><code>transition</code> ni <b>oddiy holatga</b> yozing, <code>:hover</code> ga emas — aks holda qaytishi keskin bo&#x27;ladi</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Animation: 1-qadam — @keyframes &quot;ssenariy&quot;</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">@keyframes sakrash {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+/* Ikki bosqich bo&#x27;lsa: */
+@keyframes paydo {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}</code></pre></div><ul class="s-list"><li class="lv0"><code>transition</code> — faqat holat o&#x27;zgarganda, A → B</li><li class="lv0"><code>animation</code> — <b>o&#x27;zi boshlanadi</b>, ko&#x27;p bosqichli, cheksiz takrorlanishi mumkin</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Animation: 2-qadam — elementga qo&#x27;llash</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.top { animation: sakrash 1s ease-in-out infinite; }
+/* nomi | davomiylik | tezlik | takror */</code></pre></div><table class="s-table"><thead><tr><th>Xossa</th><th>Qiymatlar</th></tr></thead><tbody><tr><td><code>animation-duration</code></td><td><code>2s</code>, <code>500ms</code></td></tr><tr><td><code>animation-iteration-count</code></td><td><code>1</code>, <code>3</code>, <code>infinite</code></td></tr><tr><td><code>animation-direction</code></td><td><code>normal</code> <code>reverse</code> <code>alternate</code></td></tr><tr><td><code>animation-delay</code></td><td><code>0.5s</code></td></tr><tr><td><code>animation-fill-mode</code></td><td><code>forwards</code> — oxirgi holatda qolish</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Misol: yuklanish belgisi (spinner)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.spinner {
+  width: 50px; height: 50px;
+  border: 5px solid #e0e7ff;
+  border-top-color: #4f46e5;   /* faqat tepa qismi rangli */
+  border-radius: 50%;
+  animation: aylan 0.8s linear infinite;
+}
+@keyframes aylan {
+  to { transform: rotate(360deg); }
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Misol: paydo bo&#x27;luvchi kartalar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">@keyframes paydo {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.karta {
+  animation: paydo 0.6s ease both;
+  transition: transform .25s, box-shadow .25s;
+}
+.karta:nth-child(2) { animation-delay: 0.15s; }
+.karta:nth-child(3) { animation-delay: 0.3s; }
+.karta:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(79,70,229,.25);
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Misol: porlovchi tugma</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.porla {
+  background: linear-gradient(90deg, #4f46e5, #db2777, #4f46e5);
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: oqim 3s linear infinite;
+  transition: transform .2s;
+}
+.porla:hover  { transform: scale(1.06); }
+.porla:active { transform: scale(.96); }
+@keyframes oqim { to { background-position: -200% 0; } }</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Unumdorlik va foydalanuvchilar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Eng tez xossalar: <b><code>transform</code></b> va <b><code>opacity</code></b></li><li class="lv0"><code>width</code>, <code>top</code>, <code>margin</code> animatsiyasi sahifani sekinlashtiradi</li><li class="lv0"><b>Me&#x27;yorni</b> saqlang — hamma narsa sakrasa, ko&#x27;z charchaydi</li></ul><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}</code></pre></div><ul class="s-list"><li class="lv0">Ba&#x27;zi odamlarda harakatdan bosh aylanadi — ularni hurmat qiling</li></ul></div></div></section>
+<section class="slide" data-notes="Maslahat: sayyorani o&#x27;zidan katta shaffof doira ichiga qo&#x27;ying va doirani aylantiring."><header class="s-head"><h2>Amaliyot: portfolio jonlanadi</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Barcha tugma va havolalarga silliq <code>:hover</code> (<code>transition</code>)</div></div><div class="s-step"><span class="n">2</span><div>Loyiha kartalari hover&#x27;da <b>8px ko&#x27;tarilsin</b>, soya kuchaysin</div></div><div class="s-step"><span class="n">3</span><div>Hero sarlavha va tugma pastdan <b>&quot;paydo&quot;</b> bo&#x27;lsin (kechikish bilan)</div></div><div class="s-step"><span class="n">4</span><div>Profil rasmiga <b>&quot;nafas olish&quot;</b>: <code>scale(1) → 1.03 → 1</code>, 4s, cheksiz</div></div><div class="s-step"><span class="n">5</span><div>☀️ Ijodiy: faqat CSS bilan <b>&quot;Quyosh tizimi&quot;</b> — 2 sayyora turli tezlikda aylanadi</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ Ikkita <code>transform</code> qatori — ikkinchisi birinchisini o&#x27;chiradi; bittada yozing: <code>rotate(10deg) scale(1.2)</code></li><li class="lv0">❌ <code>transition: all</code> hamma joyda — kutilmagan xossalar ham animatsiya bo&#x27;ladi</li><li class="lv0">❌ <code>@keyframes aylanish</code> va <code>animation: aylanis</code> — nomlar mos emas</li><li class="lv0">❌ <code>display: none</code> ni animatsiya qilish — <code>opacity</code> va <code>visibility</code> ishlating</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Elementni 1.2 barobar kattalashtiruvchi kod?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>transform: size(1.2)</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>zoom: 120px</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>transform: scale(1.2)</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>transform: grow(20%)</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Hover effekti silliq bo&#x27;lishi uchun <code>transition</code> qayerga yoziladi?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span>Elementning oddiy holatiga</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Faqat <code>:hover</code> ga</span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>@keyframes</code> ichiga</span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>body</code> ga</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Animatsiyani cheksiz takrorlash uchun qaysi qiymat?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>repeat</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>loop</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>forever</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>infinite</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Qaysi xossalarni animatsiya qilish eng tez (unumdor)?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>width</code> va <code>height</code></span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>transform</code> va <code>opacity</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>margin</code> va <code>padding</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>top</code> va <code>left</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>&quot;Quyosh tizimi&quot;ni yakunlang</div></div><div class="s-step"><span class="n">2</span><div>3 xil spinner: aylanuvchi doira, sakrovchi 3 nuqta, to&#x27;lib boruvchi chiziq</div></div><div class="s-step"><span class="n">3</span><div><b>Flip card</b>: kartani 180° aylantirib orqa tomonini ko&#x27;rsatish (<code>rotateY</code>, <code>backface-visibility</code>)</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>transform</code>: translate, scale, rotate, skew</li><li class="lv0"><code>transition: xossa vaqt tezlik;</code> — oddiy holatga yoziladi</li><li class="lv0"><code>@keyframes nom { 0% {} 100% {} }</code> + <code>animation: nom 2s infinite;</code></li><li class="lv0">Unumdorlik: <code>transform</code> va <code>opacity</code></li><li class="lv0">Me&#x27;yorni saqlang, <code>prefers-reduced-motion</code> ni hurmat qiling</li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>13. Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>12-css-animatsiya.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../12-css-animatsiya.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/12-css-animatsiya.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "11-git-github-seo.html", "next": "13-jamoa-loyiha-deploy.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

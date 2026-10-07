@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>33-mavzu: Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish — taqdimot</title>
+<meta name="description" content="Framework nima va nima uchun Django, MVT arxitekturasi, so&#x27;rovning Django ichidagi yo&#x27;li, o&#x27;rnatish, startproject va startapp, loyiha fayllari, settings.py, runserver, PostgreSQL&#x27;ga ulash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#1F7A4D">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🌿</div><div class="cover-kicker">33-mavzu · IV bob. Python, PostgreSQL va Django</div><h1>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</h1><p>Framework nima va nima uchun Django, MVT arxitekturasi, so&#x27;rovning Django ichidagi yo&#x27;li, o&#x27;rnatish, startproject va startapp, loyiha fayllari, settings.py, runserver, PostgreSQL&#x27;ga ulash.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes="Shu darsdan 38-mavzugacha bitta haqiqiy loyiha — &quot;Maktab blogi&quot;ni bosqichma-bosqich quramiz."><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Framework</b> nima va nega <b>Django</b></li><li class="lv0"><b>MVT</b> arxitekturasi</li><li class="lv0">So&#x27;rov Django ichida qanday yo&#x27;l bosadi</li><li class="lv0">Loyiha (<b>project</b>) va ilova (<b>app</b>) yaratish</li><li class="lv0">Loyihani <b>PostgreSQL</b>&#x27;ga ulash</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Framework nima?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Veb-sayt uchun kerak: so&#x27;rovlar, URL&#x27;lar, HTML, formalar, login, parollar, admin panel... Noldan — <b>oylar</b>!</li></ul><div class="s-big">Framework — sinalgan tayyor &quot;karkas&quot;: siz faqat loyihangizga xos qismni yozasiz</div><div class="s-box analogy"><span class="ico">💡</span><div><b>Uy qurish:</b> noldan dastur — g&#x27;ishtni o&#x27;zingiz pishirish. Framework — tayyor karkas (poydevor, devor, quvurlar) ustida xonalarni bezash. Tezroq, xavfsizroq, sifatliroq.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Nima uchun Django?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">🔋 <b>&quot;Batareyalar bilan birga&quot;</b> — admin panel, foydalanuvchilar, formalar, ORM tayyor</li><li class="lv0">🔐 <b>Xavfsiz</b> — SQL injection, XSS, CSRF&#x27;dan avtomatik himoya</li><li class="lv0">📈 <b>Masshtablanadi</b> — Instagram, Pinterest, Spotify, Mozilla</li><li class="lv0">📚 Ajoyib hujjatlar, katta jamiyat</li></ul><div class="s-big">&quot;Muddati bor perfeksionistlar uchun veb-framework&quot;</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>MVT arxitekturasi</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Qism</th><th>Fayl</th><th>Vazifasi</th><th>Restoranda</th></tr></thead><tbody><tr><td><b>Model</b></td><td><code>models.py</code></td><td>Ma&#x27;lumot va baza</td><td>Ombor</td></tr><tr><td><b>View</b></td><td><code>views.py</code></td><td>Mantiq: so&#x27;rov → javob</td><td>Oshpaz</td></tr><tr><td><b>Template</b></td><td><code>templates/*.html</code></td><td>Ko&#x27;rinish (HTML)</td><td>Likopcha va bezak</td></tr><tr><td><b>URL</b></td><td><code>urls.py</code></td><td>Manzil → View</td><td>Ofitsiant</td></tr></tbody></table><ul class="s-list"><li class="lv0">MVC&#x27;dagi Controller = Django&#x27;dagi <b>View</b>; MVC&#x27;dagi View = Django&#x27;dagi <b>Template</b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>So&#x27;rovning Django ichidagi yo&#x27;li</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">🌐 Brauzer: GET /maqolalar/5/
+     │
+     ▼
+🗺️ urls.py:  &quot;/maqolalar/5/&quot; → maqola_view
+     │
+     ▼
+⚙️ View: maqola_view(id=5)  ⇄  🗄️ Model: Maqola.objects.get(id=5) → PostgreSQL
+     │
+     ▼ ma&#x27;lumot
+🎨 Template: maqola.html + ma&#x27;lumot
+     │
+     ▼ tayyor HTML
+🌐 Brauzer</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Loyiha va ilova</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Loyiha (project)</b> — butun sayt: umumiy sozlamalar, asosiy URL&#x27;lar. <b>Bitta</b></li><li class="lv0"><b>Ilova (app)</b> — mustaqil qism, bitta vazifa: <code>blog</code>, <code>accounts</code>, <code>shop</code>. <b>Bir nechta</b></li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>Maktab binosi:</b> loyiha — bino (umumiy qoidalar, qo&#x27;ng&#x27;iroq). Ilovalar — xonalar: kutubxona, sport zali, oshxona. Har biri o&#x27;z ishini qiladi, lekin bitta binoda.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>O&#x27;rnatish va loyiha yaratish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Terminal</div><pre><code class="language-bash">mkdir maktab_blog &amp;&amp; cd maktab_blog
+python -m venv venv
+venv\Scripts\activate
+pip install django &quot;psycopg[binary]&quot; python-dotenv
+
+django-admin startproject config .     # nuqta — joriy papkada!
+python manage.py runserver             # http://127.0.0.1:8000 🚀
+python manage.py startapp blog</code></pre></div><div class="s-code"><div class="s-code-head">config/settings.py</div><pre><code class="language-python">INSTALLED_APPS = [
+    &quot;django.contrib.admin&quot;,
+    # ...
+    &quot;blog&quot;,          # ⬅ ilovamizni ro&#x27;yxatdan o&#x27;tkazamiz
+]</code></pre></div><ul class="s-list"><li class="lv0"><code>runserver</code> — faqat ishlab chiqish uchun; to&#x27;xtatish — <b>Ctrl+C</b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Loyiha tuzilmasi</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">maktab_blog/
+├── manage.py            ← boshqaruv buyruqlari
+├── venv/                ← virtual muhit (GitHub&#x27;ga emas)
+├── config/              ← LOYIHA
+│   ├── settings.py      ← barcha sozlamalar
+│   ├── urls.py          ← asosiy URL&#x27;lar
+│   └── wsgi.py          ← serverga joylash (41-mavzu)
+└── blog/                ← ILOVA
+    ├── migrations/      ← baza o&#x27;zgarishlari tarixi
+    ├── admin.py         ← admin panel (37)
+    ├── models.py        ← modellar (36)
+    └── views.py         ← view&#x27;lar (34)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>manage.py buyruqlari</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Buyruq</th><th>Vazifasi</th></tr></thead><tbody><tr><td><code>runserver</code></td><td>Serverni ishga tushirish</td></tr><tr><td><code>startapp nom</code></td><td>Yangi ilova</td></tr><tr><td><code>makemigrations</code></td><td>Model o&#x27;zgarishlaridan migratsiya</td></tr><tr><td><code>migrate</code></td><td>Migratsiyalarni bazaga qo&#x27;llash</td></tr><tr><td><code>createsuperuser</code></td><td>Admin foydalanuvchi</td></tr><tr><td><code>shell</code></td><td>Loyiha ichida Python konsoli</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>settings.py — asosiy sozlamalar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / &quot;.env&quot;)
+
+SECRET_KEY = os.getenv(&quot;SECRET_KEY&quot;)                 # MAXFIY!
+DEBUG = os.getenv(&quot;DEBUG&quot;, &quot;True&quot;) == &quot;True&quot;         # serverda False
+ALLOWED_HOSTS = os.getenv(&quot;ALLOWED_HOSTS&quot;, &quot;127.0.0.1,localhost&quot;).split(&quot;,&quot;)
+
+LANGUAGE_CODE = &quot;uz&quot;
+TIME_ZONE = &quot;Asia/Tashkent&quot;</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div><code>SECRET_KEY</code> — GitHub&#x27;ga yuklanmaydi; <code>DEBUG = True</code> — faqat o&#x27;rganishda, internetda <b>doim False</b></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>PostgreSQL&#x27;ga ulash</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">.env</div><pre><code class="language-ini">SECRET_KEY=uzun-tasodifiy-satr
+DEBUG=True
+DB_NAME=maktab_blog
+DB_USER=postgres
+DB_PASSWORD=SIZNING_PAROLINGIZ
+DB_HOST=localhost
+DB_PORT=5432</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">settings.py</div><pre><code class="language-python">DATABASES = {
+    &quot;default&quot;: {
+        &quot;ENGINE&quot;: &quot;django.db.backends.postgresql&quot;,
+        &quot;NAME&quot;: os.getenv(&quot;DB_NAME&quot;),
+        &quot;USER&quot;: os.getenv(&quot;DB_USER&quot;),
+        &quot;PASSWORD&quot;: os.getenv(&quot;DB_PASSWORD&quot;),
+        &quot;HOST&quot;: os.getenv(&quot;DB_HOST&quot;),
+        &quot;PORT&quot;: os.getenv(&quot;DB_PORT&quot;),
+    }
+}</code></pre></div><ul class="s-list"><li class="lv0">Keyin: <code>python manage.py migrate</code> — Django o&#x27;z jadvallarini yaratadi (<code>auth_user</code>, <code>django_session</code>...)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Birinchi sahifa</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/views.py</div><pre><code class="language-python">from django.http import HttpResponse
+
+def bosh_sahifa(request):
+    return HttpResponse(&quot;Maktab blogiga xush kelibsiz! 🎉&quot;)</code></pre></div><div class="s-code"><div class="s-code-head">config/urls.py</div><pre><code class="language-python">from django.contrib import admin
+from django.urls import path
+from blog import views
+
+urlpatterns = [
+    path(&quot;admin/&quot;, admin.site.urls),
+    path(&quot;&quot;, views.bosh_sahifa),      # bosh sahifa
+]</code></pre></div><ul class="s-list"><li class="lv0">Bosh sahifani yangilang — raketa o&#x27;rnida sizning xabaringiz!</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>venv → Django → <code>config</code> → <code>blog</code> → PostgreSQL → <code>migrate</code> → birinchi sahifa</div></div><div class="s-step"><span class="n">2</span><div><code>pip freeze &gt; requirements.txt</code></div></div><div class="s-step"><span class="n">3</span><div>Git + GitHub (<code>.env</code> va <code>venv</code> <b>yuklanmasin</b>!)</div></div><div class="s-step"><span class="n">4</span><div>Ataylab xato qiling (<code>HttpRespons</code>) — Django&#x27;ning <b>sariq xato sahifasini</b> o&#x27;qing</div></div><div class="s-step"><span class="n">5</span><div><code>python manage.py</code> — mavjud buyruqlar ro&#x27;yxati</div></div><div class="s-code"><div class="s-code-head">.gitignore</div><pre><code class="language-plaintext">venv/
+.env
+__pycache__/
+*.pyc
+db.sqlite3</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>No module named &#x27;django&#x27;</code> — venv faol emas (terminalda <code>(venv)</code> yo&#x27;q)</li><li class="lv0">❌ <code>startproject config</code> (nuqtasiz) — <code>config/config/</code> papkasi</li><li class="lv0">❌ Ilova <code>INSTALLED_APPS</code> ga qo&#x27;shilmagan</li><li class="lv0">❌ <code>That port is already in use</code> — server boshqa terminalda ishlayapti</li><li class="lv0">❌ <code>password authentication failed</code> — <code>.env</code> paroli xato</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Django&#x27;ning arxitekturasi qanday ataladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>MVC</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>REST</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>MVT (Model–View–Template)</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>CRUD</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Ma&#x27;lumotlar tuzilmasi va baza bilan ishlash qaysi qismda?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>View</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>Model</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Template</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>URL</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Yaratilgan ilovani loyihaga qayerda ro&#x27;yxatdan o&#x27;tkazamiz?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>urls.py</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>views.py</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>manage.py</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>settings.py</code> → <code>INSTALLED_APPS</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Internetdagi (production) saytda <code>DEBUG</code> qanday bo&#x27;lishi kerak?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>True</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>False</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Ahamiyati yo&#x27;q</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>None</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Ikkinchi ilova <code>pages</code> — &quot;Biz haqimizda&quot; sahifasi (<code>/haqida/</code>)</div></div><div class="s-step"><span class="n">2</span><div>MVT ni o&#x27;z hayotiy o&#x27;xshatishingiz bilan chizib tushuntiring (restoran emas!)</div></div><div class="s-step"><span class="n">3</span><div>Django rasmiy qo&#x27;llanmasining 1-qismini o&#x27;qing</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Framework — tayyor karkas; Django — xavfsiz, &quot;batareyalar bilan birga&quot;</li><li class="lv0"><b>MVT:</b> Model — View — Template + URL</li><li class="lv0"><code>startproject config .</code> → <code>startapp blog</code> → <code>INSTALLED_APPS</code></li><li class="lv0"><code>runserver</code> — ishlab chiqish serveri; <code>migrate</code> — jadvallar</li><li class="lv0">PostgreSQL: <code>DATABASES</code>; maxfiy qiymatlar — <code>.env</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>34. Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>33-django-kirish.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../33-django-kirish.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/33-django-kirish.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "32-python-postgresql.html", "next": "34-django-url-view.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

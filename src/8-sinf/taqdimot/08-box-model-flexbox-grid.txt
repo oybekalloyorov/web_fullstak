@@ -1,0 +1,285 @@
+# Bugun nimani o'rganamiz?
+- **Box model:** har bir element — quti
+- `margin`, `padding`, `border`, `box-sizing`
+- O'lcham birliklari: `px` `%` `em` `rem` `vw` `vh`
+- **Flexbox:** menyu, kartalar qatori, markazlash
+- **CSS Grid:** sahifa maketi va galereya
+note: Bu kursdagi eng muhim CSS mavzusi — 3 soat. 1-soat: box model va birliklar; 2-soat: Flexbox; 3-soat: Grid va amaliyot.
+---
+## Box model
+Brauzer har bir elementni to'rtburchak quti sifatida chizadi
+---
+# Qutining 4 qatlami
+```text
+┌──────────────── margin (tashqi bo'shliq) ────────────────┐
+│  ┌──────────────── border (chegara) ─────────────────┐   │
+│  │  ┌──────────── padding (ichki bo'shliq) ───────┐  │   │
+│  │  │                                              │  │   │
+│  │  │          content — mazmun (matn, rasm)       │  │   │
+│  │  │                                              │  │   │
+│  │  └──────────────────────────────────────────────┘  │   │
+│  └────────────────────────────────────────────────────┘   │
+└───────────────────────────────────────────────────────────┘
+```
+> **Rasmli ramka:** content — rasm, padding — oq hoshiya, border — yog'och ramka, margin — devordagi qo'shni ramkagacha masofa.
+---
+# padding va margin yozish usullari
+```css
+padding: 20px;                 /* 4 tomon */
+padding: 10px 20px;            /* tepa-past | chap-o'ng */
+padding: 10px 20px 30px;       /* tepa | chap-o'ng | past */
+padding: 10px 20px 30px 40px;  /* tepa o'ng past chap */
+padding-top: 10px;             /* bitta tomon */
+
+margin: 0 auto;                /* blokni GORIZONTAL markazlash */
+```
+- `padding` — ichki bo'shliq, **fon rangi** shu yerga ham tarqaladi
+- `margin` — tashqi bo'shliq, **doim shaffof**
+- Markazlash: `width: 600px; margin: 0 auto;`
+---
+# box-sizing — eng muhim bitta qator
+- `width: 250px` + `padding: 20px` + `border: 5px` = aslida **300px** 😕
+```css
+/* Har bir loyihaning CSS faylini shu bilan boshlang */
+* {
+  box-sizing: border-box;
+}
+```
+= border-box: width = content + padding + border → 250px haqiqatan 250px
+---
+# display xossasi
+| Qiymat | Xatti-harakat |
+|---|---|
+| `block` | Yangi qatordan, butun kenglik; `width/height` ishlaydi |
+| `inline` | Qatorda; `width/height` **ishlamaydi** |
+| `inline-block` | Qatorda turadi, lekin `width/height` ishlaydi |
+| `none` | Butunlay yashirin, joy egallamaydi |
+| `flex` / `grid` | Zamonaviy maket tizimlari |
+---
+# O'lcham birliklari
+| Birlik | Nimaga nisbatan | Qachon |
+|---|---|---|
+| `px` | Ekran pikseli | Chegara, soya |
+| `%` | Ota element | Kengliklar |
+| `em` | Joriy shrift o'lchami | Tugma padding'i |
+| `rem` | Sahifa shrifti (16px) | **Shrift va bo'shliqlar** |
+| `vw` | Ekran kengligining 1% | Ekran kengligidagi blok |
+| `vh` | Ekran balandligining 1% | `min-height: 100vh` hero |
+- `1.5rem` = 16 × 1.5 = **24px**; ota 20px bo'lsa `2em` = **40px**
+---
+## Flexbox
+Elementlarni bir yo'nalishda — qator yoki ustunga terish
+---
+# Flexbox: bitta qator hammasini o'zgartiradi
+```css
+.konteyner {
+  display: flex;    /* ⬅ farzandlar bir qatorga tiziladi */
+  gap: 10px;        /* oralaridagi masofa */
+}
+```
+- **Flex konteyner** — `display: flex` berilgan **ota**
+- **Flex elementlar** — uning bevosita farzandlari
+- Menyu, tugmalar qatori, kartalar, markazlash — Flexbox'ning ishi
+---
+# Ikki o'q
+```text
+        asosiy o'q (main axis) — justify-content
+   ─────────────────────────────────────────────▶
+   ┌─────┐   ┌─────┐   ┌─────┐
+   │  1  │   │  2  │   │  3  │      │ kesishgan o'q
+   └─────┘   └─────┘   └─────┘      │ (cross axis)
+                                     ▼ align-items
+```
+> **Avtobus bekati:** navbat yo'nalishi — asosiy o'q; `justify-content` odamlarni shu chiziq bo'ylab taqsimlaydi. `align-items` — ularni bo'yi bo'yicha tekislaydi.
+---
+# justify-content va align-items
+| Xossa | Qiymatlar |
+|---|---|
+| `justify-content` | `flex-start` `center` `flex-end` `space-between` `space-around` `space-evenly` |
+| `align-items` | `stretch` (standart) `flex-start` `center` `flex-end` |
+| `flex-direction` | `row` `column` `row-reverse` |
+| `flex-wrap` | `nowrap` `wrap` — sig'masa keyingi qatorga |
+| `gap` | `16px` |
+```css
+/* ✨ To'liq markazlash */
+.k { display: flex; justify-content: center; align-items: center; }
+```
+! `flex-direction: column` da o'qlar almashadi: `justify-content` vertikal ishlaydi
+---
+# Element xossasi: flex
+```css
+.k      { display: flex; gap: 8px; }
+.yon    { flex: 0 0 150px; }   /* qat'iy 150px */
+.asosiy { flex: 1; }           /* qolgan BARCHA joy */
+.ikki   { flex: 2; }           /* flex:1 dan 2 barobar keng */
+```
+```text Natija
+┌──yon 150px──┐┌────────── asosiy (flex: 1) ──────────┐
+┌─ flex:1 ─┐┌──────── flex:2 ────────┐┌─ flex:1 ─┐
+```
+---
+## CSS Grid
+Qator va ustunlardan iborat to'r — ikki o'lchamli maket
+---
+# Grid asoslari
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;  /* 3 ta teng ustun */
+  gap: 12px;
+}
+```
+::
+- `fr` — bo'sh joy **ulushi**: `1fr 2fr` — ikkinchisi 2 barobar keng
+- `repeat(4, 1fr)` = `1fr 1fr 1fr 1fr`
+- `250px 1fr` — qat'iy yon panel + qolgani
+> **Shaxmat taxtasi / Excel:** avval nechta ustun va qatorligini belgilaysiz, keyin elementlarni kataklarga joylaysiz.
+---
+# ✨ Sehrli qator: moslashuvchi galereya
+```css
+.galereya {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.galereya img { width: 100%; height: 120px; object-fit: cover; }
+```
+- "Har ustun **kamida 150px**, nechta sig'sa shuncha, ortgan joyni teng taqsimla"
+- Telefonda 2, planshetda 4, kompyuterda 6 ustun — **qo'shimcha kodsiz**
+---
+# Elementni bir nechta katakka cho'zish
+```css
+.g     { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.katta { grid-column: span 2; grid-row: span 2; }  /* 2×2 */
+.keng  { grid-column: 1 / 5; }                     /* 1-chiziqdan 5-chiziqqacha */
+```
+```text Natija
+┌───────────┬─────┬─────┐
+│           │  b  │  c  │
+│  2×2      ├─────┼─────┤
+│  katta    │  d  │  e  │
+├───────────┴─────┴─────┤
+│     butun qator       │
+└───────────────────────┘
+```
+---
+# Nomlangan hududlar — sahifa maketi
+```css
+.sahifa {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 70px 1fr 50px;
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer footer";
+  min-height: 100vh;
+}
+header { grid-area: header; }
+aside  { grid-area: aside; }
+main   { grid-area: main; }
+footer { grid-area: footer; }
+```
+::
+- Maketni **so'zlar bilan chizish**
+- Har bir qo'shtirnoq — bitta qator
+- Har bir so'z — bitta ustun
+---
+# Flexbox yoki Grid?
+| | Flexbox | Grid |
+|---|---|---|
+| O'lcham | Bir o'lchamli | Ikki o'lchamli |
+| Eng yaxshi joyi | Menyu, tugmalar, kartaning ichi, markazlash | Sahifa maketi, galereya, katalog |
+= Raqobatchi emas: skelet — Grid, ichidagi qismlar — Flexbox
+---
+## Amaliy mashg'ulot
+2-loyiha: portfolio sayti maketi
+---
+# Amaliyot: header — Flexbox
+```css
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.header {
+  display: flex;
+  justify-content: space-between;  /* logo chapda, menyu o'ngda */
+  align-items: center;
+  padding: 16px 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.menu { display: flex; gap: 24px; }
+
+.hero {
+  min-height: 70vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+}
+```
+---
+# Amaliyot: loyihalar — Grid
+```css
+.loyihalar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  padding: 60px 40px;
+}
+.karta {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+```
+1. "Men haqimda": rasm + matn — `display:flex; gap:30px; align-items:center`
+2. "Ko'nikmalar" nishonlari — `flex-wrap: wrap`
+3. F12 → Elements: `grid` / `flex` belgisini bosing — brauzer to'rni chizadi
+---
+# Ko'p uchraydigan xatolar
+- ❌ `display: flex` ni **farzandga** yozish — u **otaga** yoziladi
+- ❌ `justify-content: center` vertikal markazlamaydi — `align-items` kerak (va balandlik!)
+- ❌ `box-sizing: border-box` unutilgan — elementlar qatorga sig'maydi
+- ❌ `a`, `span` ga `width/height` — `inline-block` yoki `block` kerak
+- ❌ `grid-template-columns: 1fr, 1fr` — vergul **qo'yilmaydi**
+---
+? Element chegarasi bilan mazmuni orasidagi bo'shliq nima deyiladi?
+o margin
+o border
++ padding
+o gap
+---
+? `width:200px; padding:10px; border:5px solid;` + `box-sizing: border-box`. To'liq kenglik?
+o 230px
++ 200px
+o 215px
+o 210px
+---
+? Logotipni chapga, menyuni o'ngga surish uchun konteynerga nima yoziladi?
++ `display:flex; justify-content: space-between`
+o `display:flex; align-items: center`
+o `display:grid; gap: 10px`
+o `text-align: justify`
+---
+? `grid-template-columns: 1fr 3fr;` — konteyner 800px (gap yo'q). Birinchi ustun necha piksel?
+o 400px
+o 100px
++ 200px
+o 267px
+---
+? Root shrift 16px bo'lsa, `2rem` necha piksel?
+o 2px
+o 16px
+o 18px
++ 32px
+---
+# 🏠 Uyga vazifa
+1. **Flexbox Froggy** (24 daraja) va **Grid Garden** (28 daraja) o'yinlari
+2. Portfolio: "Men haqimda" (Flex), "Loyihalar" (Grid), "Ko'nikmalar" (`flex-wrap`), "Aloqa", footer
+3. 12 rasmli galereya: 2 tasi `span 2` bilan katta
+---
+# ✅ Yodda tuting
+- Box model: content + padding + border + margin
+- Har doim `* { box-sizing: border-box; }`
+- Birliklar: `px`, `%`, `rem` (shrift), `vw/vh` (ekran)
+- Flexbox: `justify-content` — asosiy o'q, `align-items` — kesishgan o'q, `gap`, `flex: 1`
+- Grid: `repeat(auto-fill, minmax(200px, 1fr))`, `span`, `grid-template-areas`

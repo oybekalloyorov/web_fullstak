@@ -1,0 +1,187 @@
+# Nazorat ishi qanday o'tadi?
+| Qism | Mazmuni | Ball |
+|---|---|---|
+| 1-qism | 25 ta yopiq test × 3 ball | 75 |
+| 2-qism | 5 ta ochiq savol / amaliy topshiriq × 5 ball | 25 |
+| **Jami** | Vaqt: 80 daqiqa (test — 30, amaliy — 50) | **100** |
+- Har bir testda **bitta** to'g'ri javob
+- Bugun: takrorlash → namunaviy savollar → amaliy topshiriqlar → baholash
+---
+## Takrorlash
+I bobning 13 ta mavzusi — eng muhim tushunchalar
+---
+# HTML: 1–5-mavzular
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| Internet, DNS | Mijoz-server, IP, domen, DNS, hosting, HTTPS, 200/404/500 |
+| HTML tuzilishi | Teg, element, atribut, skelet, `head`/`body`, h1–h6 |
+| Jadval, forma | `ul/ol/li`, `tr/td/th`, `colspan/rowspan`, input turlari, `name`, `label` |
+| Havolalar, media | `href`, `target`, nisbiy yo'l `../`, `#id`, `img alt`, `video controls` |
+| Semantika | `header nav main section article aside footer`; blok va inline |
+---
+# CSS: 6–9-mavzular
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| CSS asoslari | 3 ulash usuli, selektorlar, ustuvorlik: inline > id > class > teg |
+| Fon va chegara | `background-size: cover/contain`, gradient, `border-radius: 50%`, `box-shadow` |
+| Box model | margin/padding/border, `box-sizing: border-box`, `rem`, `vh` |
+| Flex va Grid | `justify-content`, `align-items`, `repeat(3, 1fr)`, `fr` |
+| Pseudo, position | `:hover`, `:nth-child`, `::after`, relative + absolute, `z-index` |
+---
+# 10–13-mavzular
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| Responsiv | `viewport`, `@media (max-width)`, mobile-first → `min-width` |
+| Git, SEO | `init → add → commit → push`, GitHub Pages, `title`, `description` |
+| Animatsiya | `transform`, `transition` (oddiy holatga!), `@keyframes`, `infinite` |
+| Jamoa, deploy | branch, merge, konflikt, Pull Request, Netlify/Vercel |
+---
+## Namunaviy testlar
+Birga yechamiz — avval o'ylang, keyin javobni ko'ring
+---
+? Server "500" kodini qaytardi. Bu nimani bildiradi?
+o Sahifa topilmadi
+o Muvaffaqiyatli
+o Sahifa ko'chirilgan
++ Serverda ichki xato
+---
+? Jadval katagini ikki qator balandligida birlashtiruvchi atribut?
+o `colspan="2"`
+o `merge="2"`
+o `height="2"`
++ `rowspan="2"`
+---
+? `sahifalar/aloqa.html` dan `rasmlar/logo.png` ga to'g'ri yo'l?
+o `rasmlar/logo.png`
++ `../rasmlar/logo.png`
+o `/sahifalar/rasmlar/logo.png`
+o `C:/rasmlar/logo.png`
+---
+? Qaysi selektor eng kuchli (ustuvor)?
+o `p`
+o `.matn`
+o `div p`
++ `#asosiy`
+---
+? `box-sizing: border-box` nima qiladi?
+o Chegarani yashiradi
+o Elementni markazga qo'yadi
+o Margin'ni nolga tenglaydi
++ `width` ichiga padding va border'ni ham qo'shadi
+---
+? 3 ta teng ustunli Grid qaysi?
+o `grid-columns: 3`
+o `grid-template-columns: 3fr`
++ `grid-template-columns: repeat(3, 1fr)`
+o `columns: 1fr, 1fr, 1fr`
+---
+? Ichidagi `absolute` elementlar unga nisbatan joylashishi uchun **otaga** nima beriladi?
+o `position: absolute`
++ `position: relative`
+o `position: static`
+o `display: block`
+---
+? Hover effekti silliq bo'lishi uchun ishlatiladigan xossa?
++ `transition`
+o `transform`
+o `animation-name`
+o `@keyframes`
+---
+## Amaliy qism
+5 ta topshiriq × 5 ball
+---
+# 1-topshiriq: nazariy savol
+= https://maktab.uz yozilganda sahifa ekranga chiqquncha nima bo'ladi?
+1. **DNS** domenni IP-manzilga aylantiradi
+2. Brauzer serverga **HTTPS** bilan ulanadi
+3. Brauzer **HTTP so'rov** yuboradi
+4. Server **200 + HTML** javob qaytaradi
+5. Brauzer CSS, rasm, JS ni qo'shimcha so'raydi
+6. Hammasini birlashtirib sahifani **chizadi**
+note: Baholash: 5 — barcha bosqichlar to'g'ri tartibda; 3–4 — 1–2 bosqich tushib qolgan; 1–2 — umumiy tasavvur.
+---
+# 2-topshiriq: 5 ta xatoni toping
+```html
+<head>
+  <title>Kutubxona
+</head>
+<body>
+  <h1>Kitoblarimiz</h1>
+  <img src="rasmlar/kitob.jpg">
+  <ul>
+    <li>O'tkan kunlar</li>
+    <li>Mehrobdan chayon
+  </ul>
+  <a href="www.kitob.uz">Kitob do'koni</a>
+  <p><strong>Telefon:</p></strong>
+</body>
+```
+::
+- `</title>` yopilmagan
+- `img` da `alt` yo'q
+- 2-`<li>` yopilmagan
+- `href` da `https://` yo'q
+- `strong` va `p` noto'g'ri tartibda yopilgan
+- ⭐ Bonus: `meta charset` va `viewport` yo'q
+---
+# 3-topshiriq: forma yarating
+- "Olimpiadaga ro'yxatdan o'tish": ism (majburiy), sinf (`select`), fan (`radio`), email, izoh, tugma
+```html
+<form action="/olimpiada" method="POST">
+  <label for="ism">To'liq ism</label>
+  <input type="text" id="ism" name="ism" required>
+  <label for="sinf">Sinf</label>
+  <select id="sinf" name="sinf"><option>7</option><option>8</option></select>
+  <label><input type="radio" name="fan" value="info"> Informatika</label>
+  <label><input type="radio" name="fan" value="fiz"> Fizika</label>
+  <input type="email" name="email" required>
+  <button type="submit">Yuborish</button>
+</form>
+```
+note: Baholash: forma va method — 1; maydon turlari — 2; label va name — 1; required va radio'larda bir xil name — 1.
+---
+# 4–5-topshiriqlar: Flexbox va Grid
+```css 4: Flex header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menyu { display: flex; gap: 24px; }
+.menyu a { transition: color .3s; }
+.menyu a:hover { color: #fbbf24; }
+```
+::
+```css 5: Responsiv kartalar
+.kartalar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.karta {
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+}
+@media (max-width: 768px) {
+  .kartalar { grid-template-columns: 1fr; }
+}
+```
+---
+# Baholash shkalasi
+| Ball | Natija | Tavsiya |
+|---|---|---|
+| 86–100 | A'lo | II bobga tayyorsiz! |
+| 71–85 | Yaxshi | Xato qilgan mavzularni qayta ko'ring |
+| 60–70 | Qoniqarli | Amaliy topshiriqlarni qayta bajaring (8, 10-mavzular) |
+| 0–59 | Qoniqarsiz | Mentor bilan qo'shimcha mashg'ulot |
+---
+# Nazoratga tayyorgarlik maslahatlari
+- Saytdagi 14-mavzu sahifasida **25 ta testni** yechib, natijani ko'ring
+- Xato qilgan mavzu sahifasini **qayta o'qing**
+- Forma, Flexbox header, Grid kartalarni **qo'lda** (nusxasiz) yozib mashq qiling
+- Kodni yozgach **brauzerda tekshiring**: F12 → Console xatolarsiz bo'lsin
+---
+# 🎉 I bob yakunlandi!
+= Siz endi semantik, chiroyli, animatsiyali va moslashuvchan sahifalar yarata olasiz
+- Kodni **GitHub**'da saqlaysiz, **Netlify/Vercel**'ga joylaysiz
+- **Keyingi bob:** sahifalarga "jon" beramiz — **JavaScript**!

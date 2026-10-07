@@ -1,0 +1,211 @@
+# Bugun nimani o'rganamiz?
+- Django'ning tayyor **admin paneli** va uni sozlash
+- **Django Forms:** ma'lumotni qabul qilish, tekshirish, saqlash
+- **CSRF** hujumi va `{% csrf_token %}`
+- O'z **validatsiya** qoidalaringiz
+- **Ro'yxatdan o'tish va kirish** tizimi (24–25-loyihalar)
+---
+# Django Admin — tayyor boshqaruv paneli
+```bash
+python manage.py createsuperuser
+# Username: admin   Password: ******** (ko'rinmaydi — normal)
+```
+```python blog/admin.py
+from django.contrib import admin
+from .models import Kategoriya, Maqola
+
+admin.site.register(Kategoriya)
+admin.site.register(Maqola)
+```
+- **http://127.0.0.1:8000/admin/** — qo'shish, tahrirlash, o'chirish — **bir qator kod yozmasdan!**
+- Ro'yxatda obyektlar `__str__` matni bilan ko'rinadi
+---
+# Admin'ni sozlash
+```python
+@admin.register(Kategoriya)
+class KategoriyaAdmin(admin.ModelAdmin):
+    list_display = ["nomi", "slug"]
+    prepopulated_fields = {"slug": ("nomi",)}
+
+@admin.register(Maqola)
+class MaqolaAdmin(admin.ModelAdmin):
+    list_display = ["sarlavha", "kategoriya", "muallif", "chop_etilgan", "korishlar"]
+    list_filter = ["chop_etilgan", "kategoriya", "yaratilgan"]
+    search_fields = ["sarlavha", "matn"]
+    list_editable = ["chop_etilgan"]
+    readonly_fields = ["korishlar"]
+```
+| Sozlama | Vazifasi |
+|---|---|
+| `list_display` | Ro'yxatdagi ustunlar |
+| `list_filter` / `search_fields` | Filtrlar / qidiruv |
+| `list_editable` | Ro'yxatning o'zida tahrirlash |
+| `prepopulated_fields` | Slug avtomatik |
+---
+# Django Forms — nima uchun?
+- Admin — faqat ma'murlar uchun; oddiy foydalanuvchilarga **sayt ichida** forma kerak
+- Brauzerdagi tekshiruvni chetlab o'tish oson — **server ham tekshirishi shart**
+1. **HTML yaratadi** — input, label avtomatik
+2. **Tekshiradi** — majburiy maydon, email, uzunlik, o'z qoidalaringiz
+3. **Tozalaydi** — kerakli turga aylantiradi va xavfsiz qiladi
+---
+# Oddiy Form: "Aloqa"
+```python blog/forms.py
+from django import forms
+
+class AloqaForm(forms.Form):
+    ism = forms.CharField(label="Ismingiz", max_length=100)
+    email = forms.EmailField(label="Email")
+    mavzu = forms.ChoiceField(choices=[("taklif", "Taklif"), ("xato", "Xato haqida")])
+    xabar = forms.CharField(widget=forms.Textarea(attrs={"rows": 5}), min_length=10)
+
+    def clean_ism(self):                       # o'z tekshiruvimiz
+        ism = self.cleaned_data["ism"].strip()
+        if any(b.isdigit() for b in ism):
+            raise forms.ValidationError("Ismda raqam bo'lmasligi kerak")
+        return ism
+```
+---
+# View: forma sxemasi
+```python
+from django.contrib import messages
+
+def aloqa(request):
+    if request.method == "POST":
+        form = AloqaForm(request.POST)
+        if form.is_valid():                         # ✅ tekshiruvdan o'tdi
+            data = form.cleaned_data
+            messages.success(request, "Rahmat! Xabaringiz yuborildi.")
+            return redirect("blog:aloqa")           # qayta yuborilmasin
+    else:
+        form = AloqaForm()                          # GET — bo'sh forma
+    return render(request, "blog/aloqa.html", {"form": form})
+```
+```text
+GET → bo'sh forma  →  POST → Form(request.POST) → is_valid()?
+                                   ✅ saqlash → redirect   ❌ xatolar bilan qayta
+```
+---
+# Shablon va CSRF
+```django
+<form method="post">
+  {% csrf_token %}         {# ⬅ MAJBURIY #}
+  {{ form.as_p }}          {# barcha maydonlar, xatolar bilan #}
+  <button type="submit">Yuborish</button>
+</form>
+```
+> **CSRF** — yovuz sayt **sizning brauzeringiz nomidan** boshqa saytga yashirin forma yuboradi ("barcha maqolalarni o'chir"). `{% csrf_token %}` yashirin maxfiy kod qo'shadi — Django faqat shu kod to'g'ri bo'lsa qabul qiladi.
+! Usiz: **403 Forbidden — CSRF verification failed**
+---
+# ModelForm — modeldan avtomatik forma
+```python
+class MaqolaForm(forms.ModelForm):
+    class Meta:
+        model = Maqola
+        fields = ["sarlavha", "kategoriya", "matn"]
+        widgets = {"matn": forms.Textarea(attrs={"rows": 8})}
+
+@login_required
+def maqola_yozish(request):
+    if request.method == "POST":
+        form = MaqolaForm(request.POST)
+        if form.is_valid():
+            maqola = form.save(commit=False)     # hali bazaga yozilmadi
+            maqola.muallif = request.user        # formada yo'q maydon
+            maqola.save()
+            return redirect(maqola)              # get_absolute_url
+    else:
+        form = MaqolaForm()
+    return render(request, "blog/yozish.html", {"form": form})
+```
+---
+## Ro'yxatdan o'tish va kirish
+Django'da foydalanuvchilar tizimi tayyor
+---
+# Kirish va chiqish — tayyor view'lar
+```python config/urls.py
+path("accounts/", include("django.contrib.auth.urls")),   # login/, logout/, ...
+```
+```python settings.py
+LOGIN_REDIRECT_URL = "blog:bosh"
+LOGOUT_REDIRECT_URL = "blog:bosh"
+LOGIN_URL = "login"
+```
+- Shablon: `templates/registration/login.html` — `{% csrf_token %}` + `{{ form.as_p }}`
+---
+# Ro'yxatdan o'tish
+```python
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+
+def royxatdan_otish(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()              # parol avtomatik xeshlanadi
+            login(request, user)
+            return redirect("blog:bosh")
+    else:
+        form = UserCreationForm()
+    return render(request, "blog/royxat.html", {"form": form})
+```
+---
+# Menyu: foydalanuvchi holatiga qarab
+```django base.html
+{% if user.is_authenticated %}
+  👤 {{ user.username }} · <a href="{% url 'blog:yozish' %}">✍️ Maqola yozish</a>
+  <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Chiqish</button></form>
+{% else %}
+  <a href="{% url 'login' %}">Kirish</a> · <a href="{% url 'blog:royxat' %}">Ro'yxatdan o'tish</a>
+{% endif %}
+```
+! Parollar ochiq saqlanmaydi — `pbkdf2_sha256$...` xesh. Hatto admin ham parolni bilmaydi!
+---
+# Amaliyot
+1. Admin'ni sozlang, 5 ta maqola qo'shing; filtr, qidiruv, ommaviy amal
+2. "Aloqa" formasi — noto'g'ri ma'lumot bilan sinang; `{% csrf_token %}` ni olib 403 ni ko'ring
+3. `Xabar` modeli + ModelForm → admin'da ko'rinsin
+4. Ro'yxatdan o'tish va kirish/chiqish; menyu foydalanuvchi holatiga qarab o'zgarsin
+5. "Maqola yozish" (`@login_required`) — kirmasdan ochib ko'ring
+---
+# Ko'p uchraydigan xatolar
+- ❌ `CSRF verification failed` — `{% csrf_token %}` yoki `method="post"` yo'q
+- ❌ POST'dan keyin redirect yo'q — yangilansa qayta yuboriladi
+- ❌ `cleaned_data` ni `is_valid()` dan oldin ishlatish
+- ❌ Admin'da model yo'q — `admin.py` da ro'yxatdan o'tmagan
+- ❌ ModelForm'da `fields` ko'rsatilmagan
+---
+? Modelni admin panelda ko'rsatish uchun nima qilinadi?
+o settings.py ga qo'shiladi
++ `admin.py` da `admin.site.register(Model)`
+o Migratsiya qilinadi
+o Shablon yaratiladi
+---
+? POST formada majburiy bo'lgan xavfsizlik tegi?
++ `{% csrf_token %}`
+o `{% secure %}`
+o `{% load form %}`
+o `{% token %}`
+---
+? Forma ma'lumotlari to'g'riligini tekshiruvchi metod?
+o `form.save()`
+o `form.check()`
++ `form.is_valid()`
+o `form.validate()`
+---
+? View'ni faqat tizimga kirganlar uchun ochiq qiluvchi dekorator?
+o `@admin_only`
+o `@csrf_exempt`
+o `@staff`
++ `@login_required`
+---
+# 🏠 Uyga vazifa
+1. **Izohlar:** `Izoh` modeli (maqola, muallif, matn, sana); faqat kirganlar izoh qoldira oladi
+2. **Kutubxona admin'i:** muallif, janr, yil; filtr — janr va mavjudlik; qidiruv
+---
+# ✅ Yodda tuting
+- Admin: `createsuperuser`; `@admin.register` + `ModelAdmin`
+- GET → bo'sh forma; POST → `is_valid()` → `cleaned_data` / `save()` → **redirect**
+- `{% csrf_token %}` — har POST formada; `clean_maydon()` — o'z tekshiruvlar
+- `ModelForm` + `save(commit=False)`; `messages`
+- Auth: `auth.urls`, `UserCreationForm`, `login()`, `@login_required`

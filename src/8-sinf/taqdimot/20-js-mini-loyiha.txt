@@ -1,0 +1,186 @@
+# Bugun nimani o'rganamiz?
+- Loyihani boshlashdan oldin **rejalashtirish**
+- Professional usul: **"Holat → Chizish"** (render)
+- Formani JavaScript bilan **tekshirish**
+- **To-Do List** ilovasi (11-loyiha)
+- **Mini test tizimi** (12-loyiha)
+note: II bobning yakuni: o'zgaruvchilar, shartlar, sikllar, funksiyalar, massivlar, DOM va hodisalar bitta loyihada birlashadi.
+---
+# Loyihani qanday boshlash kerak?
+! Eng katta xato — darhol kod yozishga tushish
+1. **Nima qiladi?** Funksiyalar ro'yxati: qo'shish, belgilash, o'chirish
+2. **Qanday ko'rinadi?** Qog'ozga chizing: input, tugma, ro'yxat
+3. **Qanday ma'lumot?** Har vazifa — `{ id, matn, bajarildi }`; hammasi — massiv
+4. **Qaysi hodisalar?** submit → qo'shish; checkbox → belgilash; 🗑 → o'chirish
+5. **Kichik qadamlar** bilan yozing, har qadamdan keyin tekshiring
+---
+# "Holat → Chizish" usuli
+```text
+👆 Hodisa  ──▶  📦 Holat (massiv) o'zgaradi  ──▶  🎨 render()  ──▶  💾 localStorage
+ tugma bosildi     push / filter / map           sahifa massivdan     saqlash
+                                                  qayta chiziladi
+```
+> **Doska va daftar:** daftar — holat (haqiqiy ma'lumot), doska — ekran. O'qituvchi avval daftarni yangilaydi, keyin doskani artib, daftardagini qayta yozadi — ular hech qachon farq qilmaydi.
+- Aynan shu g'oya **React** kabi kutubxonalarning asosida
+---
+## 1-loyiha: To-Do List
+11-loyiha — localStorage bilan
+---
+# To-Do: holat va amallar
+```js
+// 1. HOLAT
+let vazifalar = JSON.parse(localStorage.getItem("vazifalar")) || [];
+
+// 2. AMALLAR — faqat holatni o'zgartiradi
+function qoshish(matn) {
+  vazifalar.push({ id: Date.now(), matn, bajarildi: false });
+  yangilash();
+}
+function almashtir(id) {
+  vazifalar = vazifalar.map(v =>
+    v.id === id ? { ...v, bajarildi: !v.bajarildi } : v);
+  yangilash();
+}
+function ochir(id) {
+  vazifalar = vazifalar.filter(v => v.id !== id);
+  yangilash();
+}
+function yangilash() {
+  localStorage.setItem("vazifalar", JSON.stringify(vazifalar));
+  render();
+}
+```
+---
+# To-Do: render() — holatdan chizish
+```js
+function render() {
+  royxat.innerHTML = "";                     // avval tozalash!
+  vazifalar.forEach(v => {
+    const li = document.createElement("li");
+    li.classList.toggle("bajarildi", v.bajarildi);
+    const span = document.createElement("span");
+    span.textContent = v.matn;               // XSS'dan himoya
+    const ochirish = document.createElement("button");
+    ochirish.textContent = "🗑";
+    ochirish.addEventListener("click", () => ochir(v.id));
+    span.addEventListener("click", () => almashtir(v.id));
+    li.append(span, ochirish);
+    royxat.append(li);
+  });
+  hisob.textContent = `${vazifalar.filter(v => !v.bajarildi).length} ta qoldi`;
+}
+```
+---
+# To-Do: forma hodisasi
+```js
+forma.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const matn = kiritish.value.trim();
+  if (matn.length < 3) { xato.textContent = "Kamida 3 ta belgi!"; return; }
+  qoshish(matn);
+  kiritish.value = "";
+});
+render();      // sahifa ochilganda — saqlangan vazifalarni chizish
+```
+- Validatsiya: kamida 3 belgi; `trim()` bo'sh joylarni olib tashlaydi
+---
+# To-Do: tekshiring
+- Vazifalar qo'shing, sahifani **yangilang** — ular saqlanib qoladi
+- Filtrlar: **hammasi / faol / bajarilgan** — `data-filtr` atributi va `dataset.filtr`
+- **DevTools → Application → Local Storage** — JSON qanday o'zgarishini kuzating
+```html
+<button data-filtr="faol">Faol</button>
+```
+```js
+tugma.dataset.filtr   // "faol"
+```
+---
+## 2-loyiha: Mini test tizimi
+12-loyiha — savollar ma'lumot sifatida massivda
+---
+# Mini test: ma'lumot va mantiq
+```js
+const savollar = [
+  { savol: "HTML nima?", variantlar: ["Dasturlash tili", "Belgilash tili", "Ma'lumotlar bazasi"], togri: 1 },
+  { savol: "Qaysi teg havola yaratadi?", variantlar: ["<a>", "<link>", "<href>"], togri: 0 },
+];
+let joriy = 0, ball = 0;
+
+function korsat() {
+  const s = savollar[joriy];
+  sarlavha.textContent = s.savol;
+  variantlarBox.innerHTML = "";
+  s.variantlar.forEach((v, i) => {
+    const b = document.createElement("button");
+    b.textContent = v;
+    b.addEventListener("click", () => javob(i));
+    variantlarBox.append(b);
+  });
+  progress.style.width = `${joriy / savollar.length * 100}%`;
+}
+```
+- Yangi savol qo'shish uchun **kod emas, faqat massiv** o'zgaradi
+---
+# Mini test: kengaytirish g'oyalari
+1. O'zingiz **10 ta savol** yozing (HTML, CSS, JS)
+2. Savollar va variantlarni **aralashtiring** (to'g'ri javob indeksini yangilashni unutmang!)
+3. Har savolga **20 soniyalik taymer** (`setInterval`)
+4. **Rekord** natijani `localStorage` da saqlang: "Rekord: 9/10"
+---
+# Forma validatsiyasi: real vaqtda
+```js
+const qoidalar = {
+  email: v => /^\S+@\S+\.\S+$/.test(v) ? "" : "Email noto'g'ri",
+  parol: v => v.length >= 8 ? "" : "Kamida 8 ta belgi",
+};
+
+input.addEventListener("input", () => {
+  const xato = qoidalar[input.name](input.value);
+  maydon.classList.toggle("xato", xato !== "");
+  maydon.classList.toggle("ok", xato === "");
+  maydon.querySelector("small").textContent = xato;
+});
+```
+- `/^\S+@\S+\.\S+$/` — **regex** (muntazam ifoda): matnni naqsh bo'yicha tekshirish
+---
+# Ko'p uchraydigan xatolar
+- ❌ Holat o'zgardi, lekin `render()` chaqirilmadi — ekran eski holicha
+- ❌ Massivni `JSON.stringify` siz saqlash → `"[object Object]"`
+- ❌ `render()` da `innerHTML = ""` yo'q — elementlar ikki baravar ko'payadi
+- ❌ Foydalanuvchi matni `innerHTML` bilan — XSS xavfi; `textContent`!
+---
+? "Holat → Chizish" usulida tugma bosilganda **birinchi** nima o'zgaradi?
+o Sahifadagi HTML
+o CSS fayl
++ Ma'lumotlar massivi (holat)
+o localStorage
+---
+? Massivni localStorage'da saqlash uchun avval nima qilinadi?
++ `JSON.stringify()` bilan matnga aylantiriladi
+o `toString()` chaqiriladi
+o Hech narsa
+o `Number()` bilan songa
+---
+? `<button data-filtr="faol">` dagi qiymatni JS'da qanday o'qiysiz?
+o `tugma.filtr`
+o `tugma.data`
+o `tugma.value`
++ `tugma.dataset.filtr`
+---
+? Vazifani id bo'yicha o'chirishning eng qulay usuli?
+o `vazifalar.pop(id)`
++ `vazifalar = vazifalar.filter(v => v.id !== id)`
+o `delete vazifalar[id]`
+o `vazifalar.remove(id)`
+---
+# 🏠 Bob yakunlovchi loyiha (bittasini tanlang)
+- 💰 **Xarajatlar hisobchisi:** nom, summa, toifa; jami va toifalar bo'yicha yig'indi
+- 📖 **Lug'at o'yini:** inglizcha so'z → tarjima; ball va "qiyin so'zlar"
+- 📚 **Kutubxona katalogi:** kartochkalar, real vaqtda qidiruv, janr filtri, "o'qildi"
+- GitHub + Netlify'ga joylang!
+---
+# 🎉 II bob yakunlandi!
+- Loyiha: **reja → dizayn → ma'lumot → hodisalar → kichik qadamlar**
+- **Holat → Chizish:** hodisa holatni o'zgartiradi, `render()` chizadi, `localStorage` saqlaydi
+= Siz endi interaktiv veb-ilovalar yarata olasiz!
+- **Keyingi bob:** server tomoni — **Python** va **ma'lumotlar bazalari**

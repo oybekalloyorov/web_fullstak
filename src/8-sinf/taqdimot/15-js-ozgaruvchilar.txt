@@ -1,0 +1,178 @@
+# Bugun nimani o'rganamiz?
+- **JavaScript** nima va HTML/CSS'dan farqi
+- Kodni sahifaga ulash va **brauzer konsoli**
+- **O'zgaruvchilar:** `let` va `const`
+- **Ma'lumot turlari:** matn, son, mantiqiy qiymat...
+- Birinchi **interaktiv dastur**
+---
+# JavaScript nima?
+= JavaScript — sahifaga harakat va mantiq qo'shuvchi dasturlash tili
+- Hisob-kitob, shartlar, takrorlanishlar bor — **haqiqiy** dasturlash tili
+> **"Aqlli uy":** HTML — devorlar, CSS — bo'yoq, JavaScript — elektr va avtomatika: tugma bosilsa chiroq yonadi, harorat pasaysa isitish yoqiladi.
+- Menyu ochilishi, forma tekshiruvi, kalkulyator, o'yinlar, yangi ma'lumot olish
+! JavaScript ≠ Java — "olma" va "olmos" kabi butunlay boshqa tillar
+---
+# JavaScript'ni ishga tushirish
+```js 1. Konsol: F12 → Console
+console.log("Salom, dunyo!");
+console.log(2 + 3);
+console.log("Men", 14, "yoshdaman");
+```
+```html 2. Alohida .js fayl ✅
+<body>
+  <h1>Sahifa</h1>
+  <script src="app.js"></script>  <!-- </body> dan oldin -->
+</body>
+```
+- `console.log()` — natijani konsolga chiqarish; dasturchining asosiy yordamchisi
+- Izohlar: `// bir qator`, `/* ko'p qator */`
+---
+# O'zgaruvchi — nomlangan quti
+> **Yorliqli qutilar:** "ism" qutisiga "Malika"ni, "yosh" qutisiga 14 ni soldingiz. Yorliq — o'zgaruvchi **nomi**, ichidagi narsa — **qiymati**.
+```js
+let ism = "Malika";
+let yosh = 14;
+console.log(yosh);     // 14
+yosh = 15;             // qiymatni o'zgartirish (let qayta yozilmaydi!)
+let shahar;
+console.log(shahar);   // undefined
+```
+- `=` — **tayinlash** ("o'ngdagini chapdagi qutiga sol"), tenglik emas!
+---
+# let, const va var
+```js
+const PI = 3.14;
+// PI = 5;          ❌ Xato! const o'zgarmaydi
+let ball = 0;
+ball = ball + 10;   // ✅ 10
+```
+| | const | let | var |
+|---|---|---|---|
+| O'zgartirish | ❌ | ✅ | ✅ |
+| Qachon | **Birinchi tanlov** | Qiymat o'zgarsa | Eski kod — ishlatmang |
+= Oltin qoida: avval const, kerak bo'lsa let
+---
+# O'zgaruvchilarni nomlash
+| Qoida | ✅ To'g'ri | ❌ Noto'g'ri |
+|---|---|---|
+| Harf, `$`, `_` bilan boshlanadi | `ism`, `_soni` | `1ism` |
+| Bo'sh joy va defis yo'q | `sinfRahbari` | `sinf rahbari`, `umumiy-ball` |
+| Maxsus so'zlar emas | `mening_let` | `let`, `if` |
+| Apostrof yo'q | `ogil` | `o'g'il` |
+- Katta-kichik harf farqlanadi: `ism` ≠ `Ism`
+- **camelCase:** `oquvchiSoni`, `dasturlashTili`
+- Mazmunli nomlar: `x` ❌ → `narx` ✅
+---
+# String — matn
+```js
+const ism = "Aziz";
+const familiya = 'Karimov';
+const shahar = `Toshkent`;           // backtick — eng qulayi
+
+console.log(ism + " " + familiya);   // Aziz Karimov
+const yosh = 14;
+console.log(`Ismim ${ism}, ${yosh} yoshdaman`);  // shablon satr
+
+console.log(ism.length);             // 4
+console.log(ism.toUpperCase());      // AZIZ
+console.log(familiya[0]);            // K — sanash 0 dan!
+```
+! `'O'zbekiston'` ❌ — apostrof satrni sindiradi. `"O'zbekiston"` yoki `` `O'zbekiston` `` ✅
+---
+# Number, Boolean, undefined, null
+```js
+const kasr = 3.14;           // kasr NUQTA bilan
+console.log(10 / 3);         // 3.3333333333333335
+console.log(10 / 0);         // Infinity
+console.log("olma" * 2);     // NaN — "son emas"
+
+const tizimgaKirgan = true;  // boolean: true / false
+console.log(5 > 3);          // true
+```
+- `undefined` — qiymat **hali berilmagan** (bo'sh quti)
+- `null` — qiymat **ataylab bo'sh**
+- Murakkab turlar: **Array** `[1, 2, 3]`, **Object** `{ ism: "Ali" }` — 18-mavzuda
+---
+# typeof va turlarni o'zgartirish
+```js
+typeof "Salom"    // "string"
+typeof 25         // "number"
+typeof true       // "boolean"
+typeof null       // "object" ← tarixiy xato!
+
+"5" + 3           // "53"  😮 matnga yopishadi
+"5" - 3           // 2
+Number("42") + 8  // 50
+parseInt("15px")  // 15
+```
+! Foydalanuvchi kiritgan ma'lumot **doim matn**. Hisoblashdan oldin `Number()`!
+---
+# Foydalanuvchi bilan muloqot
+```js
+const ism = prompt("Ismingiz nima?");
+const yil = Number(prompt("Qaysi yilda tug'ilgansiz?"));
+const yosh = 2026 - yil;
+alert(`Salom, ${ism}! Siz ${yosh} yoshdasiz.`);
+
+const tasdiq = confirm("Dasturlashni yoqtirasizmi?");
+```
+| Funksiya | Qaytaradi |
+|---|---|
+| `alert("...")` | Hech narsa — faqat xabar |
+| `prompt("...")` | Kiritilgan matn yoki `null` |
+| `confirm("...")` | `true` yoki `false` |
+---
+# Amaliyot
+1. `js-darslar/` — `index.html` + `app.js`
+2. **"Men haqimda":** 5 ta o'zgaruvchi + shablon satr bilan bitta gap
+3. **Yosh kalkulyatori:** yosh, 2030-yildagi yosh, necha kun yashagan
+4. **Do'kon cheki:** 3 ta mahsulot va umumiy summa
+5. **Tur detektivi:** 8 ta qiymat uchun `typeof` ni avval taxmin qiling, keyin tekshiring
+```js
+const narx = 5000, soni = 4;
+console.log(`Jami: ${narx * soni} so'm`);
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `SyntaxError` — qo'shtirnoq yopilmagan / apostrof satrni sindirgan
+- ❌ `ReferenceError: x is not defined` — nom noto'g'ri yoki e'lon qilinmagan
+- ❌ `Assignment to constant variable` — `const` ni o'zgartirish
+- ❌ `"10" + 5 = "105"` — `Number()` unutilgan
+- ❌ Bitta nomni ikki marta `let` bilan e'lon qilish
+> Konsoldagi qizil xabar — **yordamchi!** U xato turi va qatorini aytadi: `app.js:12`
+---
+? Qiymati o'zgarmaydigan o'zgaruvchi qaysi kalit so'z bilan e'lon qilinadi?
+o `let`
++ `const`
+o `var`
+o `fix`
+---
+? Qaysi o'zgaruvchi nomi to'g'ri?
+o `2sinf`
+o `umumiy-ball`
+o `sinf rahbari`
++ `oquvchilarSoni`
+---
+? `console.log("7" + 3)` natijasi?
+o 10
+o 4
++ "73"
+o Xato
+---
+? `prompt()` qanday turdagi qiymat qaytaradi?
+o Doim son
+o Boolean
++ Matn (string) yoki null
+o Massiv
+---
+# 🏠 Uyga vazifa
+1. **Valyuta:** dollarni so'rang, `const KURS = 12700` bo'yicha so'mga aylantiring
+2. **Doira:** radius → yuza (π·r²) va uzunlik (2·π·r); `Math.PI`
+3. **Ism:** harflar soni, KATTA harflarda, birinchi va oxirgi harf
+---
+# ✅ Yodda tuting
+- JavaScript — mantiq va harakat; `.js` fayl `</body>` oldidan
+- `console.log()` — F12 → Console
+- `const` — o'zgarmas, `let` — o'zgaruvchan; camelCase
+- Turlar: string, number, boolean, undefined, null; `typeof`
+- `` `Salom, ${ism}!` `` — shablon satr; kiritilgan ma'lumot → `Number()`

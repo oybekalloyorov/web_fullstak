@@ -1,0 +1,189 @@
+# Bugun nimani o'rganamiz?
+- **Havolalar** bilan sahifalarni bog'lash
+- **Absolyut** va **nisbiy** yo'llar (eng ko'p xato manbai!)
+- Sahifa ichidagi, email va telefon havolalari
+- Ko'p sahifali sayt va **navigatsiya menyusi**
+- **Rasm, audio, video**, YouTube videosini joylash
+---
+# Havola — webning "H" harfi
+```html
+<a href="https://uz.wikipedia.org">O'zbekcha Vikipediya</a>
+
+<a href="https://github.com" target="_blank" rel="noopener">
+  GitHub (yangi yorliqda)
+</a>
+```
+- `<a>` — anchor (langar); `href` — havola qayerga olib boradi
+- `target="_blank"` — yangi yorliqda ochadi
+- `rel="noopener"` — xavfsizlik uchun
+---
+# Absolyut va nisbiy yo'l
+- **Absolyut** — to'liq manzil: `https://www.w3schools.com/html/` → boshqa saytlar uchun
+- **Nisbiy** — joriy fayldan nisbatan → o'z saytingiz fayllari uchun
+```text Papka tuzilmasi
+mening-saytim/
+├── index.html
+├── haqida.html
+├── rasmlar/
+│   └── logo.png
+└── sahifalar/
+    ├── loyihalar.html
+    └── aloqa.html
+```
+---
+# Nisbiy yo'l: misollar
+| Qaysi fayldan | Qaysi faylga | Yo'l |
+|---|---|---|
+| `index.html` | `haqida.html` | `haqida.html` |
+| `index.html` | `rasmlar/logo.png` | `rasmlar/logo.png` |
+| `sahifalar/aloqa.html` | `index.html` | `../index.html` |
+| `sahifalar/aloqa.html` | `rasmlar/logo.png` | `../rasmlar/logo.png` |
+| `sahifalar/aloqa.html` | `sahifalar/loyihalar.html` | `loyihalar.html` |
+> **Maktab binosi:** "qo'shni sinfga o't" — nisbiy yo'l; "koridorga chiq (`../`), keyin kutubxonaga kir" — `../kutubxona/`; to'liq pochta manzili — absolyut yo'l.
+---
+# Eng ko'p uchraydigan xato
+! `C:\Users\Ali\Desktop\sayt\rasm.jpg` kabi kompyuterdagi yo'lni **yozmang** — hostingda ishlamaydi!
+- Har doim **nisbiy yo'l** ishlating
+- Fayl nomlarida bo'sh joy, katta harf, `o'` ishlatmang
+= Mening Rasmim.JPG ❌ → mening-rasmim.jpg ✅
+- Serverda `Men.JPG` va `men.jpg` — **ikki xil** fayl
+---
+# Boshqa havola turlari
+```html
+<!-- Sahifa ichidagi bo'limga -->
+<a href="#aloqa">Aloqa bo'limiga o'tish ↓</a>
+<section id="aloqa">...</section>
+
+<!-- Email va telefon -->
+<a href="mailto:maktab5@mail.uz">Bizga xat yozing</a>
+<a href="tel:+998901234567">+998 90 123 45 67</a>
+
+<!-- Faylni yuklab olish -->
+<a href="fayllar/jadval.pdf" download>Dars jadvali</a>
+```
+---
+# Navigatsiya menyusi
+```html
+<nav>
+  <ul>
+    <li><a href="index.html">Bosh sahifa</a></li>
+    <li><a href="haqida.html">Men haqimda</a></li>
+    <li><a href="loyihalar.html">Loyihalar</a></li>
+    <li><a href="aloqa.html">Aloqa</a></li>
+  </ul>
+</nav>
+```
+- Har bir sahifaning tepasida **bir xil** menyu
+- 8-mavzuda Flexbox bilan gorizontal menyuga aylantiramiz
+---
+# Rasmlar
+```html
+<img src="rasmlar/registon.jpg"
+     alt="Registon maydoni kechqurun chiroqlarda"
+     width="600" loading="lazy">
+```
+| Atribut | Vazifasi |
+|---|---|
+| `src` | Rasm fayli yo'li |
+| `alt` | Matnli tavsif — **majburiy!** |
+| `width` / `height` | O'lcham (faqat bittasini bering — proporsiya saqlanadi) |
+| `loading="lazy"` | Yaqinlashganda yuklanadi — sahifa tezroq |
+---
+# alt nima uchun muhim?
+- Rasm yuklanmasa — o'rnida **alt matni** ko'rinadi
+- Ko'zi ojizlarning **ekran o'quvchi** dasturlari shu matnni o'qiydi
+- **Google** rasm mazmunini alt orqali tushunadi (SEO)
+= alt="rasm" ❌ → alt="Registon maydoni kechqurun" ✅
+---
+# Rasm formatlari va figure
+| Format | Qachon |
+|---|---|
+| `.jpg` | Fotosuratlar |
+| `.png` | Shaffof fon, skrinshot |
+| `.svg` | Logotip, ikonka — har o'lchamda tiniq |
+| `.webp` | Zamonaviy, 25–35% yengil |
+::
+```html
+<figure>
+  <img src="rasmlar/hovli.jpg"
+       alt="Maktab hovlisi">
+  <figcaption>
+    1-rasm. Maktab hovlisi bahorda
+  </figcaption>
+</figure>
+```
+---
+# Audio, video va iframe
+```html
+<audio controls src="media/madhiya.mp3"></audio>
+
+<video controls width="640" poster="rasmlar/muqova.jpg">
+  <source src="media/tadbir.mp4" type="video/mp4">
+  Brauzeringiz videoni qo'llab-quvvatlamaydi.
+</video>
+
+<iframe width="560" height="315"
+  src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+```
+- `controls` — tugmalar; `autoplay` (faqat `muted` bilan), `loop`, `poster`
+- YouTube: **Ulashish → Joylashtirish** — tayyor iframe kodi
+---
+## Amaliy mashg'ulot
+1-loyiha: 3 sahifali shaxsiy vizitka sayti
+---
+# Amaliyot: vizitka sayti
+```text
+vizitka/
+├── index.html
+├── hobbilar.html
+├── aloqa.html
+└── rasmlar/
+```
+::
+1. Uchala sahifaga bir xil `nav` menyu
+2. `index.html`: ism, rasm (mazmunli `alt`), 2 paragraf
+3. `hobbilar.html`: 3 hobbi — `figure` + YouTube video
+4. `aloqa.html`: `mailto:`, `tel:`, ijtimoiy tarmoqlar (`_blank`)
+5. Barcha havolalarni bosib tekshiring
+---
+# Ko'p uchraydigan xatolar
+- ❌ Rasm ko'rinmayapti → fayl nomi, papka yoki `../` unutilgan
+- ❌ `href="www.google.com"` — `https://` siz bu **nisbiy** yo'l bo'lib qoladi
+- ❌ `alt` yozilmagan yoki `alt="rasm"`
+- ❌ 5–10 MB rasmlar — sahifa sekin; avval kichraytiring (squoosh.app)
+---
+? `sahifalar/aloqa.html` dan `index.html` (bir papka yuqorida) ga to'g'ri havola qaysi?
+o `index.html`
++ `../index.html`
+o `/sahifalar/index.html`
+o `sahifalar/index.html`
+---
+? Havolani yangi yorliqda ochish uchun qaysi atribut kerak?
+o `href="_new"`
+o `open="tab"`
++ `target="_blank"`
+o `rel="new"`
+---
+? Sahifadagi `id="narxlar"` bo'limiga o'tuvchi havola qaysi?
++ `<a href="#narxlar">`
+o `<a href="narxlar">`
+o `<a id="#narxlar">`
+o `<a href=".narxlar">`
+---
+? Logotip uchun eng mos rasm formati qaysi?
+o JPG
++ SVG
+o GIF
+o BMP
+---
+# 🏠 Uyga vazifa
+1. `sahifalar/kitoblar.html` qo'shing — ichki papkadan `../` bilan to'g'ri havolalar
+2. 3 ta sevimli kitob: muqova (`figure`), tavsif, tashqi havola
+3. Maktabingiz joylashuvini Google Xaritadan `iframe` bilan joylang
+---
+# ✅ Yodda tuting
+- `<a href>` — havola; `target="_blank"` — yangi yorliq
+- Tashqi saytga — **absolyut**, o'z fayllaringizga — **nisbiy**; `../` — bir papka yuqoriga
+- `#id`, `mailto:`, `tel:` — maxsus havolalar
+- `<img src alt>` — `alt` doim mazmunli
+- `<audio>`, `<video controls>`, `<iframe>` — media joylash

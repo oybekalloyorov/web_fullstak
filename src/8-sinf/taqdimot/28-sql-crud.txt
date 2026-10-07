@@ -1,0 +1,193 @@
+# Bugun nimani o'rganamiz?
+- **CRUD** — har qanday dasturning 4 asosiy amali
+- `INSERT` — qo'shish, `SELECT` — o'qish
+- `UPDATE` — o'zgartirish, `DELETE` — o'chirish
+- Eng xavfli xato: **WHERE'siz** UPDATE/DELETE
+- O'quvchilar bazasi (18-loyiha)
+---
+# CRUD nima?
+| Harf | Amal | SQL | Instagram'da | HTTP |
+|---|---|---|---|---|
+| **C**reate | Yaratish | `INSERT` | Post joylash | POST |
+| **R**ead | O'qish | `SELECT` | Lentani ko'rish | GET |
+| **U**pdate | Yangilash | `UPDATE` | Izohni tahrirlash | PUT/PATCH |
+| **D**elete | O'chirish | `DELETE` | Postni o'chirish | DELETE |
+- 27-mavzudagi `maktab` bazasi bilan ishlaymiz
+---
+# Create — INSERT
+```sql
+INSERT INTO sinflar (nomi, sinf_rahbari, xona)
+VALUES ('8-A', 'Karimova Nodira', 204);
+
+INSERT INTO sinflar (nomi, sinf_rahbari, xona) VALUES
+    ('8-B', 'Rasulov Akmal', 206),
+    ('8-V', 'Yusupova Malika', 210);
+
+INSERT INTO oquvchilar (ism, familiya, tugilgan_sana, email, sinf_id) VALUES
+    ('Ali',    'Valiyev',   '2012-03-15', 'ali@mail.uz',    1),
+    ('Zarina', 'Karimova',  '2012-07-02', 'zarina@mail.uz', 1),
+    ('Sardor', 'Qodirov',   '2012-05-30', NULL,             3);
+```
+- Ustunlar va qiymatlar **bir xil tartib va sonda**
+- `id` yozilmaydi — `SERIAL` o'zi beradi; `NULL` — "qiymat yo'q"
+---
+# Baza cheklovlarni tekshiradi
+```sql
+INSERT INTO oquvchilar (familiya) VALUES ('Aliyev');
+-- ❌ null value in column "ism" violates not-null constraint
+
+INSERT INTO oquvchilar (ism, familiya, email) VALUES ('Vali', 'Aliyev', 'ali@mail.uz');
+-- ❌ duplicate key value violates unique constraint
+
+INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES ('Vali', 'Aliyev', 99);
+-- ❌ violates foreign key constraint
+
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, 'Matematika', 7);
+-- ❌ violates check constraint
+```
+= Bu xatolar — yaxshi! Baza noto'g'ri ma'lumotga yo'l qo'ymaydi
+---
+# Read — SELECT
+```sql
+SELECT * FROM oquvchilar;                          -- hammasi
+SELECT ism, familiya FROM oquvchilar;              -- kerakli ustunlar
+
+SELECT ism || ' ' || familiya AS toliq_ism,        -- || birlashtirish, AS nom
+       EXTRACT(YEAR FROM AGE(tugilgan_sana)) AS yoshi
+FROM oquvchilar;
+```
+```output
+ toliq_ism         | yoshi
+-------------------+-------
+ Ali Valiyev       |    14
+ Zarina Karimova   |    14
+```
+---
+# WHERE — shart bo'yicha tanlash
+```sql
+SELECT * FROM oquvchilar WHERE sinf_id = 1;
+SELECT * FROM oquvchilar WHERE ism = 'Bobur';
+SELECT * FROM oquvchilar WHERE tugilgan_sana < '2012-01-01';
+SELECT * FROM oquvchilar WHERE sinf_id = 1 AND alochi = TRUE;
+SELECT * FROM oquvchilar WHERE sinf_id = 1 OR sinf_id = 2;
+SELECT * FROM oquvchilar WHERE email IS NULL;      -- = NULL emas!
+```
+- Operatorlar: `=` `<>` `<` `>` `<=` `>=`, `AND` `OR` `NOT`
+- `LIKE`, `IN`, `BETWEEN` — 30-mavzuda
+---
+# ORDER BY va LIMIT
+```sql
+SELECT ism, familiya FROM oquvchilar ORDER BY familiya;              -- A → Z
+SELECT ism, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana DESC;
+SELECT ism FROM oquvchilar ORDER BY sinf_id, familiya;              -- ikki daraja
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3;                      -- birinchi 3 ta
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3 OFFSET 3;             -- 2-sahifa
+```
+= SELECT → FROM → WHERE → ORDER BY → LIMIT
+- Tartib **qat'iy**: `WHERE` ni `ORDER BY` dan keyin yozib bo'lmaydi
+---
+# Update — UPDATE
+```sql
+UPDATE oquvchilar
+SET email = 'sardor@mail.uz'
+WHERE id = 5;
+
+UPDATE oquvchilar
+SET alochi = TRUE, telefon = '+998901234567'
+WHERE id = 2;
+
+UPDATE sinflar SET xona = xona + 100 WHERE nomi = '8-A';
+
+UPDATE oquvchilar SET sinf_id = 2 WHERE id = 6 RETURNING *;
+```
+---
+# Delete va ENG XAVFLI XATO
+```sql
+DELETE FROM oquvchilar WHERE id = 7;
+DELETE FROM baholar WHERE sana < '2026-01-01';
+
+UPDATE oquvchilar SET sinf_id = 1;   -- 😱 BARCHA o'quvchilar 8-A ga!
+DELETE FROM oquvchilar;              -- 😱 BARCHA o'quvchilar o'chdi!
+```
+! Baza "Ishonchingiz komilmi?" deb **so'ramaydi**
+= Avval xuddi shu WHERE bilan SELECT — keyin UPDATE/DELETE
+```sql
+SELECT * FROM baholar WHERE sana < '2026-01-01';   -- 1. tekshiring
+DELETE FROM baholar WHERE sana < '2026-01-01';     -- 2. keyin o'chiring
+```
+---
+# Tranzaksiya — "hammasi yoki hech biri"
+```sql
+BEGIN;
+UPDATE oquvchilar SET sinf_id = 3 WHERE id = 1;
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, 'Matematika', 5);
+COMMIT;            -- hammasini saqlash
+-- Xato bo'lsa: ROLLBACK;  — hammasi bekor qilinadi
+```
+> **Pul o'tkazmasi:** sizdan yechiladi **VA** do'stingizga tushadi. Orada elektr o'chsa — pul "yo'qolmasligi" uchun ikkalasi birga bajariladi yoki ikkalasi bekor qilinadi.
+---
+## Amaliy mashg'ulot
+18-loyiha: o'quvchilar bazasi
+---
+# Amaliyot: topshiriqlar
+1. Sinflar, o'quvchilar (+5 sinfdosh) va **20+ baho** qo'shing
+2. So'rovlar:
+  - To'liq ism, familiya bo'yicha tartibda
+  - 2-sinf o'quvchilari
+  - Eng yoshi katta 3 nafar
+  - Emaili kiritilmaganlar
+  - Informatikadan 5 olganlar
+3. Sardorga email qo'shing; Zarinani a'lochi qiling
+4. Bitta o'quvchini o'chiring (avval SELECT!) — baholari ham o'chdimi? Nega?
+---
+# Amaliyot: javoblar
+```sql
+SELECT ism || ' ' || familiya AS toliq_ism FROM oquvchilar ORDER BY familiya;
+SELECT * FROM oquvchilar WHERE sinf_id = 2;
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana LIMIT 3;
+SELECT ism, familiya FROM oquvchilar WHERE email IS NULL;
+SELECT * FROM baholar WHERE fan = 'Informatika' AND baho = 5;
+```
+- 4-savol javobi: **`ON DELETE CASCADE`** — baholar ham avtomatik o'chadi
+---
+# Ko'p uchraydigan xatolar
+- ❌ `WHERE email = NULL` — hech narsa qaytarmaydi; `IS NULL`
+- ❌ `WHERE ism = Ali` — qo'shtirnoqsiz: `column "ali" does not exist`
+- ❌ Ustunlar va qiymatlar soni mos emas
+- ❌ **WHERE'siz** UPDATE/DELETE — avval SELECT!
+---
+? CRUD'dagi "R" qaysi SQL buyrug'iga mos keladi?
+o INSERT
++ SELECT
+o UPDATE
+o REMOVE
+---
+? `DELETE FROM oquvchilar;` nima qiladi?
+o Faqat birinchi qatorni o'chiradi
+o Jadvalni o'chiradi
+o Xato beradi
++ Jadvaldagi BARCHA qatorlarni o'chiradi
+---
+? Emaili kiritilmagan o'quvchilarni topuvchi to'g'ri shart?
++ `WHERE email IS NULL`
+o `WHERE email = NULL`
+o `WHERE email = ''`
+o `WHERE NOT email`
+---
+? Natijani kamayish tartibida saralash uchun?
+o `ORDER BY ... ASC`
+o `SORT BY ... DOWN`
++ `ORDER BY ... DESC`
+o `ORDER DESC BY ...`
+---
+# 🏠 Uyga vazifa
+1. `dokon` bazasini to'ldiring: 3 toifa, 15 mahsulot, 5 mijoz
+2. Eng qimmat 5 ta; tugaganlar (`soni = 0`); 50 000 dan arzonlar alifbo tartibida
+3. "Kanselyariya" narxini 10% oshiring: `SET narx = narx * 1.1` — **avval SELECT!**
+---
+# ✅ Yodda tuting
+- CRUD: `INSERT`, `SELECT`, `UPDATE`, `DELETE`
+- `INSERT INTO t (a, b) VALUES (1, 'x');`
+- `SELECT ... FROM t WHERE ... ORDER BY u DESC LIMIT n;`
+- `UPDATE ... WHERE`, `DELETE ... WHERE` — WHERE'ni unutmang, avval SELECT!
+- `IS NULL`; tranzaksiya: `BEGIN ... COMMIT / ROLLBACK`

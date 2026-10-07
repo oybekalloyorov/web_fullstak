@@ -1,0 +1,195 @@
+# Bugun nimani o'rganamiz?
+- Holatga qarab uslub: **sichqoncha ustida, bosilganda, tanlanganda**
+- Birinchi, oxirgi, juft-toq elementlarni tanlash
+- HTML'siz "virtual" elementlar: `::before`, `::after`
+- Elementni aniq joyga qo'yish: **position**
+- Qatlamlar tartibi: **z-index**
+---
+# Pseudo-class — element holati
+- Bitta ikki nuqta bilan: `a:hover`
+> **Svetofor:** svetofor bitta, holati o'zgaradi. Tugma ham bitta: oddiy, ustida (`:hover`), bosilgan (`:active`), tanlangan (`:focus`).
+```css
+.tugma        { background: #4f46e5; cursor: pointer; }
+.tugma:hover  { background: #4338ca; }          /* sichqoncha ustida */
+.tugma:active { transform: scale(0.95); }       /* bosilgan payt */
+.tugma:focus  { outline: 3px solid #fbbf24; }   /* Tab bilan */
+input:focus   { border-color: #4f46e5; }
+```
+---
+# Havola holatlari
+```css
+a:link    { color: #2563eb; }   /* bosilmagan */
+a:visited { color: #7c3aed; }   /* ilgari bosilgan */
+a:hover   { color: #dc2626; }   /* ustida */
+a:active  { color: #ea580c; }   /* bosilgan payt */
+```
+= "LoVe HAte" — L → V → H → A tartibida yozing
+- `cursor: pointer` — ko'rsatkich "qo'l"ga aylanadi: bosiladigan narsalarga qo'ying
+---
+# Tuzilma bo'yicha tanlash
+| Selektor | Nimani tanlaydi |
+|---|---|
+| `:first-child` / `:last-child` | Birinchi / oxirgi farzand |
+| `:nth-child(3)` | 3-farzand |
+| `:nth-child(even)` / `(odd)` | Juft / toq — "zebra" jadval |
+| `:nth-child(3n)` | Har uchinchisi: 3, 6, 9... |
+| `:not(.x)` | `.x` bo'lmaganlar |
+| `:checked` | Belgilangan checkbox/radio |
+| `:valid` / `:invalid` | To'g'ri / noto'g'ri to'ldirilgan maydon |
+```css
+tr:nth-child(even) { background: #f1f5f9; }
+```
+---
+# Pseudo-element — virtual qism
+- Ikki marta ikki nuqta: `::before`, `::after`
+```css
+.majburiy::after { content: " *"; color: red; }
+.tel::before     { content: "📞 "; }
+
+h2.chiziqli::after {          /* sarlavha ostida bezak chiziq */
+  content: "";
+  display: block;
+  width: 60px; height: 4px;
+  background: #4f46e5;
+}
+p::first-letter { font-size: 2.5em; float: left; }
+input::placeholder { color: #94a3b8; }
+```
+! `content` xossasi **majburiy** (bo'sh bo'lsa ham). Faqat bezak uchun — muhim ma'lumot HTML'da bo'lsin.
+---
+## Position
+Elementni oqimdan chiqarib, aniq joyga qo'yish
+---
+# position qiymatlari
+| Qiymat | Xatti-harakat | Nimaga nisbatan |
+|---|---|---|
+| `static` | Standart, oddiy oqim | — |
+| `relative` | Oqimda qoladi | O'z asl joyiga; **langar** |
+| `absolute` | Oqimdan chiqadi | Eng yaqin positionli ajdodga |
+| `fixed` | Scrollda qimirlamaydi | Ekranga |
+| `sticky` | Chegaraga yetgach yopishadi | Scroll konteyneriga |
+- Joy: `top`, `right`, `bottom`, `left`
+---
+# relative + absolute — eng mashhur juftlik
+```css
+.karta {
+  position: relative;   /* ⬅ langar */
+}
+.chegirma {
+  position: absolute;   /* ⬅ kartaga nisbatan */
+  top: 12px;
+  left: 12px;
+  background: #ef4444;
+  color: white;
+}
+.sevimli {
+  position: absolute;
+  top: 12px; right: 12px;
+}
+```
+::
+> **Muzlatgich magniti:** `relative` karta — muzlatgich eshigi, `absolute` belgi — magnit. Eshik qayerga borsa, magnit ham birga ketadi.
+! Otada `position: relative` bo'lmasa — "magnit" butun sahifa burchagiga uchib ketadi!
+---
+# fixed va sticky
+```css
+.menyu {
+  position: sticky;
+  top: 0;               /* tepaga yetganda yopishadi */
+  z-index: 10;
+}
+.yuqoriga {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;          /* doim o'ng pastki burchakda */
+  border-radius: 50%;
+}
+```
+- `sticky` — yopishqoq menyu
+- `fixed` — "Yuqoriga" yoki chat tugmasi
+---
+# z-index — qatlamlar tartibi
+- Ustma-ust tushganda **kattasi yuqorida**
+- Faqat `position` berilgan (static emas) elementlarda ishlaydi
+```css
+.a { position: absolute; z-index: 1; }
+.b { position: absolute; z-index: 3; }  /* eng yuqorida */
+.c { position: absolute; z-index: 2; }
+```
+---
+## Amaliy mashg'ulot
+3-loyiha: maktab sahifasi
+---
+# Amaliyot: maktab sahifasi
+1. **Sticky header**: logo + menyu, havolalarga `:hover`
+2. **Hero**: fonda maktab rasmi, ustida sarlavha
+3. **Yangiliklar** kartalari (Grid) — burchakda `absolute` sana belgisi
+4. **Ustozlar**: doira rasmlar, `:hover` da rangli chegara
+5. **Dars jadvali**: `nth-child(even)` zebra + `tr:hover`
+6. **"Yuqoriga"** tugmasi — `fixed`
+7. Sarlavhalar ostida `::after` chiziq
+---
+# Amaliyot: yangilik kartasi
+```css
+.yangilik {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  transition: box-shadow .2s;
+}
+.yangilik:hover { box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+.yangilik .sana {
+  position: absolute; top: 12px; left: 12px;
+  background: white; border-radius: 8px;
+  padding: 4px 10px; font-weight: 800; color: #4f46e5;
+}
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `absolute` element sahifa burchagiga "uchdi" — otada `relative` yo'q
+- ❌ `::before` ko'rinmaydi — `content` yozilmagan
+- ❌ `sticky` ishlamaydi — `top: 0` yo'q yoki otada `overflow: hidden`
+- ❌ `z-index: 9999` ham yordam bermaydi — elementda `position` yo'q
+- ❌ `a :hover` (bo'sh joy bilan) — butunlay boshqa selektor
+---
+? Sichqoncha element ustiga kelganda ishlaydigan pseudo-class qaysi?
+o `:active`
++ `:hover`
+o `:focus`
+o `:over`
+---
+? Jadvalning faqat juft qatorlarini tanlash uchun?
+o `tr:even`
+o `tr:nth(2)`
+o `tr:first-child`
++ `tr:nth-child(even)`
+---
+? `::after` ishlashi uchun qaysi xossa majburiy?
++ `content`
+o `display`
+o `position`
+o `color`
+---
+? Scrollda ham ekranning bir joyida turadigan tugma uchun qaysi position?
+o relative
+o absolute
++ fixed
+o static
+---
+? Kartadagi "-20%" belgisi kartaga nisbatan joylashishi uchun **kartaga** nima beriladi?
+o `position: absolute`
++ `position: relative`
+o `position: fixed`
+o `z-index: 1`
+---
+# 🏠 Uyga vazifa
+1. Maktab sahifasini yakunlang: barcha `:hover`, `:focus` holatlari
+2. 5 xil tugma: `:hover`, `:active`, `:disabled` holatlari bilan
+3. Faqat CSS bilan **tooltip**: `position: absolute` + `:hover`
+---
+# ✅ Yodda tuting
+- Pseudo-class `:` — holat: `:hover` `:focus` `:active` `:nth-child()` `:not()`
+- Pseudo-element `::` — `::before` `::after` (`content` majburiy), `::first-letter`
+- `relative` — langar; `absolute` — langarga nisbatan; `fixed` — ekranga; `sticky` — yopishqoq
+- `z-index` — qatlamlar tartibi (faqat position berilganlarda)

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>28-mavzu: Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari — taqdimot</title>
+<meta name="description" content="CRUD konsepsiyasi; INSERT bilan qo&#x27;shish, SELECT bilan o&#x27;qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o&#x27;chirish; WHERE&#x27;siz UPDATE/DELETE xavfi; o&#x27;quvchilar bazasi loyihasi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">✏️</div><div class="cover-kicker">28-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</h1><p>CRUD konsepsiyasi; INSERT bilan qo&#x27;shish, SELECT bilan o&#x27;qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o&#x27;chirish; WHERE&#x27;siz UPDATE/DELETE xavfi; o&#x27;quvchilar bazasi loyihasi.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>CRUD</b> — har qanday dasturning 4 asosiy amali</li><li class="lv0"><code>INSERT</code> — qo&#x27;shish, <code>SELECT</code> — o&#x27;qish</li><li class="lv0"><code>UPDATE</code> — o&#x27;zgartirish, <code>DELETE</code> — o&#x27;chirish</li><li class="lv0">Eng xavfli xato: <b>WHERE&#x27;siz</b> UPDATE/DELETE</li><li class="lv0">O&#x27;quvchilar bazasi (18-loyiha)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>CRUD nima?</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Harf</th><th>Amal</th><th>SQL</th><th>Instagram&#x27;da</th><th>HTTP</th></tr></thead><tbody><tr><td><b>C</b>reate</td><td>Yaratish</td><td><code>INSERT</code></td><td>Post joylash</td><td>POST</td></tr><tr><td><b>R</b>ead</td><td>O&#x27;qish</td><td><code>SELECT</code></td><td>Lentani ko&#x27;rish</td><td>GET</td></tr><tr><td><b>U</b>pdate</td><td>Yangilash</td><td><code>UPDATE</code></td><td>Izohni tahrirlash</td><td>PUT/PATCH</td></tr><tr><td><b>D</b>elete</td><td>O&#x27;chirish</td><td><code>DELETE</code></td><td>Postni o&#x27;chirish</td><td>DELETE</td></tr></tbody></table><ul class="s-list"><li class="lv0">27-mavzudagi <code>maktab</code> bazasi bilan ishlaymiz</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Create — INSERT</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">INSERT INTO sinflar (nomi, sinf_rahbari, xona)
+VALUES (&#x27;8-A&#x27;, &#x27;Karimova Nodira&#x27;, 204);
+
+INSERT INTO sinflar (nomi, sinf_rahbari, xona) VALUES
+    (&#x27;8-B&#x27;, &#x27;Rasulov Akmal&#x27;, 206),
+    (&#x27;8-V&#x27;, &#x27;Yusupova Malika&#x27;, 210);
+
+INSERT INTO oquvchilar (ism, familiya, tugilgan_sana, email, sinf_id) VALUES
+    (&#x27;Ali&#x27;,    &#x27;Valiyev&#x27;,   &#x27;2012-03-15&#x27;, &#x27;ali@mail.uz&#x27;,    1),
+    (&#x27;Zarina&#x27;, &#x27;Karimova&#x27;,  &#x27;2012-07-02&#x27;, &#x27;zarina@mail.uz&#x27;, 1),
+    (&#x27;Sardor&#x27;, &#x27;Qodirov&#x27;,   &#x27;2012-05-30&#x27;, NULL,             3);</code></pre></div><ul class="s-list"><li class="lv0">Ustunlar va qiymatlar <b>bir xil tartib va sonda</b></li><li class="lv0"><code>id</code> yozilmaydi — <code>SERIAL</code> o&#x27;zi beradi; <code>NULL</code> — &quot;qiymat yo&#x27;q&quot;</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Baza cheklovlarni tekshiradi</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">INSERT INTO oquvchilar (familiya) VALUES (&#x27;Aliyev&#x27;);
+-- ❌ null value in column &quot;ism&quot; violates not-null constraint
+
+INSERT INTO oquvchilar (ism, familiya, email) VALUES (&#x27;Vali&#x27;, &#x27;Aliyev&#x27;, &#x27;ali@mail.uz&#x27;);
+-- ❌ duplicate key value violates unique constraint
+
+INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (&#x27;Vali&#x27;, &#x27;Aliyev&#x27;, 99);
+-- ❌ violates foreign key constraint
+
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, &#x27;Matematika&#x27;, 7);
+-- ❌ violates check constraint</code></pre></div><div class="s-big">Bu xatolar — yaxshi! Baza noto&#x27;g&#x27;ri ma&#x27;lumotga yo&#x27;l qo&#x27;ymaydi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Read — SELECT</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT * FROM oquvchilar;                          -- hammasi
+SELECT ism, familiya FROM oquvchilar;              -- kerakli ustunlar
+
+SELECT ism || &#x27; &#x27; || familiya AS toliq_ism,        -- || birlashtirish, AS nom
+       EXTRACT(YEAR FROM AGE(tugilgan_sana)) AS yoshi
+FROM oquvchilar;</code></pre></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext"> toliq_ism         | yoshi
+-------------------+-------
+ Ali Valiyev       |    14
+ Zarina Karimova   |    14</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>WHERE — shart bo&#x27;yicha tanlash</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT * FROM oquvchilar WHERE sinf_id = 1;
+SELECT * FROM oquvchilar WHERE ism = &#x27;Bobur&#x27;;
+SELECT * FROM oquvchilar WHERE tugilgan_sana &lt; &#x27;2012-01-01&#x27;;
+SELECT * FROM oquvchilar WHERE sinf_id = 1 AND alochi = TRUE;
+SELECT * FROM oquvchilar WHERE sinf_id = 1 OR sinf_id = 2;
+SELECT * FROM oquvchilar WHERE email IS NULL;      -- = NULL emas!</code></pre></div><ul class="s-list"><li class="lv0">Operatorlar: <code>=</code> <code>&lt;&gt;</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code>, <code>AND</code> <code>OR</code> <code>NOT</code></li><li class="lv0"><code>LIKE</code>, <code>IN</code>, <code>BETWEEN</code> — 30-mavzuda</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>ORDER BY va LIMIT</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT ism, familiya FROM oquvchilar ORDER BY familiya;              -- A → Z
+SELECT ism, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana DESC;
+SELECT ism FROM oquvchilar ORDER BY sinf_id, familiya;              -- ikki daraja
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3;                      -- birinchi 3 ta
+SELECT * FROM oquvchilar ORDER BY id LIMIT 3 OFFSET 3;             -- 2-sahifa</code></pre></div><div class="s-big">SELECT → FROM → WHERE → ORDER BY → LIMIT</div><ul class="s-list"><li class="lv0">Tartib <b>qat&#x27;iy</b>: <code>WHERE</code> ni <code>ORDER BY</code> dan keyin yozib bo&#x27;lmaydi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Update — UPDATE</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">UPDATE oquvchilar
+SET email = &#x27;sardor@mail.uz&#x27;
+WHERE id = 5;
+
+UPDATE oquvchilar
+SET alochi = TRUE, telefon = &#x27;+998901234567&#x27;
+WHERE id = 2;
+
+UPDATE sinflar SET xona = xona + 100 WHERE nomi = &#x27;8-A&#x27;;
+
+UPDATE oquvchilar SET sinf_id = 2 WHERE id = 6 RETURNING *;</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Delete va ENG XAVFLI XATO</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">DELETE FROM oquvchilar WHERE id = 7;
+DELETE FROM baholar WHERE sana &lt; &#x27;2026-01-01&#x27;;
+
+UPDATE oquvchilar SET sinf_id = 1;   -- 😱 BARCHA o&#x27;quvchilar 8-A ga!
+DELETE FROM oquvchilar;              -- 😱 BARCHA o&#x27;quvchilar o&#x27;chdi!</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div>Baza &quot;Ishonchingiz komilmi?&quot; deb <b>so&#x27;ramaydi</b></div></div><div class="s-big">Avval xuddi shu WHERE bilan SELECT — keyin UPDATE/DELETE</div><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT * FROM baholar WHERE sana &lt; &#x27;2026-01-01&#x27;;   -- 1. tekshiring
+DELETE FROM baholar WHERE sana &lt; &#x27;2026-01-01&#x27;;     -- 2. keyin o&#x27;chiring</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Tranzaksiya — &quot;hammasi yoki hech biri&quot;</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">BEGIN;
+UPDATE oquvchilar SET sinf_id = 3 WHERE id = 1;
+INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (1, &#x27;Matematika&#x27;, 5);
+COMMIT;            -- hammasini saqlash
+-- Xato bo&#x27;lsa: ROLLBACK;  — hammasi bekor qilinadi</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div><b>Pul o&#x27;tkazmasi:</b> sizdan yechiladi <b>VA</b> do&#x27;stingizga tushadi. Orada elektr o&#x27;chsa — pul &quot;yo&#x27;qolmasligi&quot; uchun ikkalasi birga bajariladi yoki ikkalasi bekor qilinadi.</div></div></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Amaliy mashg&#x27;ulot</h2><div class="sec-sub"><p>18-loyiha: o&#x27;quvchilar bazasi</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: topshiriqlar</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Sinflar, o&#x27;quvchilar (+5 sinfdosh) va <b>20+ baho</b> qo&#x27;shing</div></div><div class="s-step"><span class="n">2</span><div>So&#x27;rovlar:</div></div><ul class="s-list"><li class="lv1">To&#x27;liq ism, familiya bo&#x27;yicha tartibda</li><li class="lv1">2-sinf o&#x27;quvchilari</li><li class="lv1">Eng yoshi katta 3 nafar</li><li class="lv1">Emaili kiritilmaganlar</li><li class="lv1">Informatikadan 5 olganlar</li></ul><div class="s-step"><span class="n">3</span><div>Sardorga email qo&#x27;shing; Zarinani a&#x27;lochi qiling</div></div><div class="s-step"><span class="n">4</span><div>Bitta o&#x27;quvchini o&#x27;chiring (avval SELECT!) — baholari ham o&#x27;chdimi? Nega?</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: javoblar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT ism || &#x27; &#x27; || familiya AS toliq_ism FROM oquvchilar ORDER BY familiya;
+SELECT * FROM oquvchilar WHERE sinf_id = 2;
+SELECT ism, familiya, tugilgan_sana FROM oquvchilar ORDER BY tugilgan_sana LIMIT 3;
+SELECT ism, familiya FROM oquvchilar WHERE email IS NULL;
+SELECT * FROM baholar WHERE fan = &#x27;Informatika&#x27; AND baho = 5;</code></pre></div><ul class="s-list"><li class="lv0">4-savol javobi: <b><code>ON DELETE CASCADE</code></b> — baholar ham avtomatik o&#x27;chadi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>WHERE email = NULL</code> — hech narsa qaytarmaydi; <code>IS NULL</code></li><li class="lv0">❌ <code>WHERE ism = Ali</code> — qo&#x27;shtirnoqsiz: <code>column &quot;ali&quot; does not exist</code></li><li class="lv0">❌ Ustunlar va qiymatlar soni mos emas</li><li class="lv0">❌ <b>WHERE&#x27;siz</b> UPDATE/DELETE — avval SELECT!</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">CRUD&#x27;dagi &quot;R&quot; qaysi SQL buyrug&#x27;iga mos keladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>INSERT</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>SELECT</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>UPDATE</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>REMOVE</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>DELETE FROM oquvchilar;</code> nima qiladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Faqat birinchi qatorni o&#x27;chiradi</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Jadvalni o&#x27;chiradi</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Xato beradi</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>Jadvaldagi BARCHA qatorlarni o&#x27;chiradi</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Emaili kiritilmagan o&#x27;quvchilarni topuvchi to&#x27;g&#x27;ri shart?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>WHERE email IS NULL</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>WHERE email = NULL</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>WHERE email = &#x27;&#x27;</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>WHERE NOT email</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Natijani kamayish tartibida saralash uchun?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>ORDER BY ... ASC</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>SORT BY ... DOWN</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>ORDER BY ... DESC</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>ORDER DESC BY ...</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><code>dokon</code> bazasini to&#x27;ldiring: 3 toifa, 15 mahsulot, 5 mijoz</div></div><div class="s-step"><span class="n">2</span><div>Eng qimmat 5 ta; tugaganlar (<code>soni = 0</code>); 50 000 dan arzonlar alifbo tartibida</div></div><div class="s-step"><span class="n">3</span><div>&quot;Kanselyariya&quot; narxini 10% oshiring: <code>SET narx = narx * 1.1</code> — <b>avval SELECT!</b></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">CRUD: <code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code></li><li class="lv0"><code>INSERT INTO t (a, b) VALUES (1, &#x27;x&#x27;);</code></li><li class="lv0"><code>SELECT ... FROM t WHERE ... ORDER BY u DESC LIMIT n;</code></li><li class="lv0"><code>UPDATE ... WHERE</code>, <code>DELETE ... WHERE</code> — WHERE&#x27;ni unutmang, avval SELECT!</li><li class="lv0"><code>IS NULL</code>; tranzaksiya: <code>BEGIN ... COMMIT / ROLLBACK</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>29. Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>28-sql-crud.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../28-sql-crud.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/28-sql-crud.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "27-postgresql-jadval.html", "next": "29-sql-join-index-backup.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

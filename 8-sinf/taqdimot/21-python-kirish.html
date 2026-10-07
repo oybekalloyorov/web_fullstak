@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21-mavzu: Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish — taqdimot</title>
+<meta name="description" content="Back-end nima qiladi, algoritm va blok-sxema (Flowgorithm), Python&#x27;ni o&#x27;rnatish va VS Code, print va input, o&#x27;zgaruvchilar, int/float/str/bool, operatorlar, f-satrlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🐍</div><div class="cover-kicker">21-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</h1><p>Back-end nima qiladi, algoritm va blok-sxema (Flowgorithm), Python&#x27;ni o&#x27;rnatish va VS Code, print va input, o&#x27;zgaruvchilar, int/float/str/bool, operatorlar, f-satrlar.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Back-end</b> nima va front-end bilan qanday &quot;gaplashadi&quot;</li><li class="lv0"><b>Algoritm</b> va <b>blok-sxema</b></li><li class="lv0"><b>Python</b>&#x27;ni o&#x27;rnatish, birinchi dastur</li><li class="lv0"><code>print()</code> va <code>input()</code></li><li class="lv0">O&#x27;zgaruvchilar, turlar, operatorlar — JavaScript bilan taqqoslab</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Back-end nima?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Instagram&#x27;dagi milliardlab rasmlar <b>qayerda</b> saqlanadi?</li><li class="lv0">Parolingizni <b>kim</b> tekshiradi?</li><li class="lv0">Do&#x27;stingiz xabari sizga <b>qanday</b> yetib keladi?</li></ul><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">🖥️ Front-end  ⇄ so&#x27;rov / javob ⇄  ⚙️ Back-end  ⇄  🗄️ Ma&#x27;lumotlar bazasi
+HTML, CSS, JS                    Python, Django      PostgreSQL
+(brauzerda)                      (serverda)</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div><b>Restoran:</b> front-end — zal va ofitsiant; back-end — <b>oshxona</b> (retsept bo&#x27;yicha tayyorlaydi, omborga murojaat qiladi). Mijoz oshxonani ko&#x27;rmaydi, lekin usiz restoran ishlamaydi.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Algoritm va blok-sxema</h2></header><div class="s-body"><div class="col"><div class="s-big">Algoritm — masalani yechish uchun aniq, tartibli qadamlar</div><table class="s-table"><thead><tr><th>Shakl</th><th>Ma&#x27;nosi</th></tr></thead><tbody><tr><td>⬭ Oval</td><td>Boshlanish / Tugash</td></tr><tr><td>▱ Parallelogramm</td><td>Kiritish / Chiqarish</td></tr><tr><td>▭ To&#x27;rtburchak</td><td>Amal (hisoblash)</td></tr><tr><td>◇ Romb</td><td>Shart (ha / yo&#x27;q)</td></tr></tbody></table><ul class="s-list"><li class="lv0">Turlari: <b>chiziqli</b>, <b>tarmoqlanuvchi</b> (shart), <b>takrorlanuvchi</b> (sikl)</li><li class="lv0"><b>Flowgorithm</b> — blok-sxemani chizib ishga tushiradi va Python kodiga aylantiradi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Nima uchun Python?</h2></header><div class="s-body cols"><div class="col"><ul class="s-list"><li class="lv0"><b>Sodda sintaksis</b> — ingliz tiliga yaqin</li><li class="lv0"><b>Universal</b> — veb (Instagram back-endi Django&#x27;da!), sun&#x27;iy intellekt, Telegram botlar</li><li class="lv0"><b>Katta jamiyat</b> — minglab tayyor kutubxonalar</li></ul><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">let ism = &quot;Ali&quot;;
+if (ism === &quot;Ali&quot;) {
+  console.log(&quot;Salom, &quot; + ism);
+}</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">ism = &quot;Ali&quot;
+if ism == &quot;Ali&quot;:
+    print(&quot;Salom, &quot; + ism)</code></pre></div><ul class="s-list"><li class="lv0"><code>let</code> yo&#x27;q, <code>;</code> yo&#x27;q, <code>{ }</code> o&#x27;rniga <code>:</code> va <b>chekinish</b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Python&#x27;ni o&#x27;rnatish</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>python.org/downloads</b> — eng so&#x27;nggi versiya (3.12+)</div></div><div class="s-step"><span class="n">2</span><div>✅ <b>&quot;Add python.exe to PATH&quot;</b> — albatta belgilang!</div></div><div class="s-step"><span class="n">3</span><div>Terminalda tekshiring: <code>python --version</code></div></div><div class="s-step"><span class="n">4</span><div>VS Code → Extensions → <b>&quot;Python&quot;</b> (Microsoft)</div></div><div class="s-step"><span class="n">5</span><div><code>salom.py</code> fayli → ▶ yoki <code>python salom.py</code></div></div><div class="s-code"><div class="s-code-head">salom.py</div><pre><code class="language-python">print(&quot;Salom, dunyo!&quot;)
+print(&quot;Men Python o&#x27;rganyapman 🐍&quot;)</code></pre></div><ul class="s-list"><li class="lv0">Terminalda <code>python</code> → <code>&gt;&gt;&gt;</code> interaktiv rejim; chiqish: <code>exit()</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Chiqarish: print()</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">print(&quot;Salom&quot;)                  # matn
+print(2 + 3)                    # 5
+print(&quot;Yosh:&quot;, 14)              # vergul — orasiga bo&#x27;sh joy
+print(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, sep=&quot;-&quot;)   # A-B-C
+print(&quot;Bir&quot;, end=&quot; &quot;)           # yangi qatorga o&#x27;tmaydi
+print(&quot;qatorda&quot;)
+print(&quot;=&quot; * 20)                 # ====================</code></pre></div><ul class="s-list"><li class="lv0">Izohlar: <code># ...</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>O&#x27;zgaruvchilar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">ism = &quot;Malika&quot;         # kalit so&#x27;z kerak emas!
+yosh = 14
+boy = 1.62
+alochi = True
+yosh = yosh + 1
+a, b, c = 1, 2, 3      # bir nechtasini birdan</code></pre></div><ul class="s-list"><li class="lv0">Python uslubi — <b>snake_case</b>: <code>oquvchi_soni</code>, <code>umumiy_ball</code> (JS&#x27;da camelCase edi)</li><li class="lv0">O&#x27;zgarmaslar — KATTA harflar: <code>PI = 3.14</code>, <code>MAKS_BALL = 100</code></li><li class="lv0">Katta-kichik harf farq qiladi: <code>ism</code> ≠ <code>Ism</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ma&#x27;lumot turlari</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Tur</th><th>Nomi</th><th>Misol</th><th>JavaScript&#x27;da</th></tr></thead><tbody><tr><td><code>int</code></td><td>Butun son</td><td><code>14</code>, <code>1_000_000</code></td><td>number</td></tr><tr><td><code>float</code></td><td>Kasr</td><td><code>3.14</code></td><td>number</td></tr><tr><td><code>str</code></td><td>Matn</td><td><code>&quot;Salom&quot;</code></td><td>string</td></tr><tr><td><code>bool</code></td><td>Mantiqiy</td><td><code>True</code>, <code>False</code> (bosh harf katta!)</td><td>true/false</td></tr><tr><td><code>NoneType</code></td><td>Hech narsa</td><td><code>None</code></td><td>null</td></tr></tbody></table><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">type(14)      # &lt;class &#x27;int&#x27;&gt;
+type(&quot;salom&quot;) # &lt;class &#x27;str&#x27;&gt;</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Turlarni o&#x27;zgartirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">int(&quot;42&quot;) + 8         # 50
+float(&quot;3.5&quot;) * 2      # 7.0
+str(100) + &quot;%&quot;        # &quot;100%&quot;
+int(7.9)              # 7  — kasr tashlanadi
+round(7.9)            # 8
+round(3.14159, 2)     # 3.14
+
+&quot;Yosh: &quot; + 14         # ❌ TypeError!
+&quot;Yosh: &quot; + str(14)    # ✅</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div>JS&#x27;da <code>&quot;5&quot; + 3 = &quot;53&quot;</code> edi. Python bunday &quot;sehr&quot;ga yo&#x27;l qo&#x27;ymaydi — xato beradi. Bu yaxshi: xatolar yashirinib qolmaydi!</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Kiritish va f-satrlar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">ism = input(&quot;Ismingiz nima? &quot;)
+yosh = int(input(&quot;Yoshingiz nechada? &quot;))   # input DOIM str!
+print(f&quot;{ism}, 10 yildan keyin {yosh + 10} yoshda bo&#x27;lasiz&quot;)
+
+ball = 87.456
+print(f&quot;Yaxlitlangan: {ball:.1f}&quot;)   # 87.5
+narx = 1250000
+print(f&quot;Narxi: {narx:,} so&#x27;m&quot;)       # 1,250,000 so&#x27;m</code></pre></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext">Ismingiz nima? Dilshod
+Yoshingiz nechada? 14
+Dilshod, 10 yildan keyin 24 yoshda bo&#x27;lasiz</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Operatorlar</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">a, b = 17, 5
+a / b     # 3.4  oddiy bo&#x27;lish
+a // b    # 3    BUTUN bo&#x27;lish
+a % b     # 2    qoldiq
+a ** 2    # 289
+x += 1    # Python&#x27;da x++ YO&#x27;Q
+True and False   # False
+not True         # False</code></pre></div></div><div class="col"><table class="s-table"><thead><tr><th>Amal</th><th>JS</th><th>Python</th></tr></thead><tbody><tr><td>Teng</td><td><code>===</code></td><td><code>==</code></td></tr><tr><td>VA / YOKI / EMAS</td><td><code>&amp;&amp; || !</code></td><td><code>and or not</code></td></tr><tr><td>Butun bo&#x27;lish</td><td><code>Math.floor</code></td><td><code>//</code></td></tr><tr><td>+1</td><td><code>x++</code></td><td><code>x += 1</code></td></tr><tr><td>Rost</td><td><code>true</code></td><td><code>True</code></td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Anketa:</b> ism, familiya, yil, shahar → f-satrli &quot;vizitka&quot; (<code>&quot;*&quot; * 30</code> ramka)</div></div><div class="s-step"><span class="n">2</span><div><b>Do&#x27;kon:</b> daftar soni va berilgan pul → jami va qaytim</div></div><div class="s-step"><span class="n">3</span><div><b>Vaqt:</b> 135 daqiqa → &quot;2 soat 15 daqiqa&quot; (<code>//</code> va <code>%</code>)</div></div><div class="s-step"><span class="n">4</span><div><b>Harorat:</b> F = C × 9/5 + 32</div></div><div class="s-step"><span class="n">5</span><div><b>Blok-sxema:</b> uchburchak yuzi — avval chizing, keyin Python&#x27;da yozing</div></div><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">narx = 5500
+soni = int(input(&quot;Nechta daftar? &quot;))
+print(f&quot;Jami: {narx * soni:,} so&#x27;m&quot;)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>&#x27;python&#x27; is not recognized</code> — &quot;Add to PATH&quot; belgilanmagan</li><li class="lv0">❌ <code>TypeError: can only concatenate str</code> — matn + son; <code>str()</code> yoki f-satr</li><li class="lv0">❌ <code>int()</code> siz: <code>&quot;5&quot; * 3 = &quot;555&quot;</code></li><li class="lv0">❌ <code>true</code> — Python&#x27;da <code>True</code></li><li class="lv0">❌ <code>Print(...)</code> — katta P bilan</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Back-end&#x27;ning vazifasi qaysi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Tugma rangini o&#x27;zgartirish</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>Ma&#x27;lumotlarni serverda saqlash va parolni tekshirish</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Animatsiya yaratish</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Shriftni tanlash</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Blok-sxemada shart (ha/yo&#x27;q) qaysi shakl bilan belgilanadi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Oval</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>To&#x27;rtburchak</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>Romb</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Parallelogramm</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>print(17 // 5)</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span>3</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>3.4</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>2</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>85</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>input()</code> funksiyasi qanday turdagi qiymat qaytaradi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>int</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>float</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>bool</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>str</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Kalkulyator:</b> 2 son → <code>+ - * / // % **</code> natijalari jadvalda</div></div><div class="s-step"><span class="n">2</span><div><b>Pul jamg&#x27;arish:</b> necha oyda maqsadga yetiladi</div></div><div class="s-step"><span class="n">3</span><div><b>Uch xonali son</b> raqamlari yig&#x27;indisi: 345 → 12</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Back-end — serverdagi dastur; algoritm — aniq qadamlar; blok-sxema — chizmasi</li><li class="lv0"><code>.py</code> fayl, <code>python fayl.py</code>; o&#x27;rnatishda <b>&quot;Add to PATH&quot;</b></li><li class="lv0"><code>print()</code> — chiqarish, <code>input()</code> — kiritish (doim <code>str</code>!)</li><li class="lv0">Turlar: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>None</code>; nomlar — snake_case</li><li class="lv0"><code>// % **</code>, <code>and or not</code>; f-satr: <code>f&quot;{nom}&quot;</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>22. Python control flow: shartlar va sikllar. Fayllar bilan ishlash</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>21-python-kirish.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../21-python-kirish.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/21-python-kirish.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "20-js-mini-loyiha.html", "next": "22-python-shart-sikl-fayl.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

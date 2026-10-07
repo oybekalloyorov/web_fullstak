@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>32-mavzu: Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash — taqdimot</title>
+<meta name="description" content="Virtual muhit, psycopg kutubxonasi, ulanish, kursor, SQL so&#x27;rovlarni Python&#x27;dan bajarish, parametrli so&#x27;rovlar va SQL injection xavfi, commit va rollback, maxfiy sozlamalar; Python + PostgreSQL CRUD konsol dasturi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#1F7A4D">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🔌</div><div class="cover-kicker">32-mavzu · IV bob. Python, PostgreSQL va Django</div><h1>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</h1><p>Virtual muhit, psycopg kutubxonasi, ulanish, kursor, SQL so&#x27;rovlarni Python&#x27;dan bajarish, parametrli so&#x27;rovlar va SQL injection xavfi, commit va rollback, maxfiy sozlamalar; Python + PostgreSQL CRUD konsol dasturi.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Python dasturi bazaga qanday <b>&quot;gaplashadi&quot;</b></li><li class="lv0"><b>Virtual muhit</b> va <b>psycopg</b> kutubxonasi</li><li class="lv0">Ulanish, so&#x27;rov yuborish, natija olish</li><li class="lv0">Eng xavfli zaiflik — <b>SQL injection</b> va himoya</li><li class="lv0">Python + PostgreSQL CRUD konsol dasturi (20-loyiha)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Python va baza qanday bog&#x27;lanadi?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">III bobda SQL&#x27;ni pgAdmin&#x27;da <b>qo&#x27;lda</b> yozdik</li><li class="lv0">Haqiqiy ilovada SQL&#x27;ni <b>dastur</b> yuboradi: forma → Python → <code>INSERT</code></li></ul><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">🐍 Python dasturi  ──▶  🔌 psycopg  ── SQL (port 5432) ──▶  🐘 PostgreSQL
+  (sizning kodingiz)      (&quot;tarjimon&quot;)                        natija qatorlari</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div><b>Telefon qo&#x27;ng&#x27;irog&#x27;i:</b> ulanish — raqam terish; kursor — savol berib javob olish; commit — &quot;kelishdik, yozib qo&#x27;ying&quot;; close — go&#x27;shakni qo&#x27;yish.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Virtual muhit (venv)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Terminal</div><pre><code class="language-bash">mkdir maktab_app
+cd maktab_app
+python -m venv venv              # virtual muhit
+venv\Scripts\activate            # Windows
+source venv/bin/activate         # macOS / Linux
+pip install &quot;psycopg[binary]&quot;    # PostgreSQL kutubxonasi
+pip freeze &gt; requirements.txt    # paketlar ro&#x27;yxati</code></pre></div><ul class="s-list"><li class="lv0">Har loyiha o&#x27;z paketlarini alohida <b>&quot;quti&quot;</b>da saqlaydi</li><li class="lv0">Boshqa kompyuterda: <code>pip install -r requirements.txt</code></li></ul><div class="s-box warn"><span class="ico">⚠️</span><div><code>venv</code> papkasini GitHub&#x27;ga yuklamang (<code>.gitignore</code>)</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Birinchi ulanish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import psycopg
+
+with psycopg.connect(&quot;dbname=maktab user=postgres password=PAROL host=localhost&quot;) as conn:
+    with conn.cursor() as cur:
+        cur.execute(&quot;SELECT id, ism, familiya FROM oquvchilar ORDER BY familiya&quot;)
+        for qator in cur.fetchall():
+            print(qator)
+# with tugaganda: xato yo&#x27;q — commit, xato — rollback, ulanish yopiladi</code></pre></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext">(6, &#x27;Dilnoza&#x27;, &#x27;Aminova&#x27;)
+(4, &#x27;Madina&#x27;, &#x27;Ergasheva&#x27;)
+(2, &#x27;Zarina&#x27;, &#x27;Karimova&#x27;)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Kursor metodlari</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Metod</th><th>Vazifasi</th></tr></thead><tbody><tr><td><code>cur.execute(sql, params)</code></td><td>So&#x27;rovni bajarish</td></tr><tr><td><code>cur.fetchone()</code></td><td>Keyingi bitta qator (yoki <code>None</code>)</td></tr><tr><td><code>cur.fetchall()</code></td><td>Barcha qatorlar ro&#x27;yxati</td></tr><tr><td><code>cur.fetchmany(5)</code></td><td>Keyingi 5 ta qator</td></tr><tr><td><code>cur.rowcount</code></td><td>O&#x27;zgargan qatorlar soni</td></tr><tr><td><code>conn.commit()</code> / <code>conn.rollback()</code></td><td>Saqlash / bekor qilish</td></tr></tbody></table><div class="s-box warn"><span class="ico">⚠️</span><div><code>INSERT/UPDATE/DELETE</code> dan keyin commit bo&#x27;lmasa — o&#x27;zgarish <b>saqlanmaydi</b></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>⚠️ SQL injection — eng xavfli xato</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python"># ❌ HECH QACHON BUNDAY QILMANG
+ism = input(&quot;Ism: &quot;)
+cur.execute(f&quot;SELECT * FROM oquvchilar WHERE ism = &#x27;{ism}&#x27;&quot;)</code></pre></div><ul class="s-list"><li class="lv0">Buzg&#x27;unchi yozadi: <code>&#x27; OR &#x27;1&#x27;=&#x27;1</code></li></ul><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT * FROM oquvchilar WHERE ism = &#x27;&#x27; OR &#x27;1&#x27;=&#x27;1&#x27;   -- doim rost → HAMMA ma&#x27;lumot!</code></pre></div><ul class="s-list"><li class="lv0">Yoki: <code>&#x27;; DROP TABLE oquvchilar; --</code> → jadval o&#x27;chadi!</li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>Buyruq qog&#x27;ozi:</b> &quot;Ombordan ____ ni olib kel&quot;. Ayyor mijoz yozadi: &quot;olma. Keyin seyfdagi pullarni ham&quot;. Parametrli so&#x27;rov bo&#x27;sh joyni faqat <b>mahsulot nomi</b> deb tushunadi.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Parametrli so&#x27;rov</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">ism = input(&quot;Ism: &quot;)
+cur.execute(&quot;SELECT * FROM oquvchilar WHERE ism = %s&quot;, (ism,))   # (ism,) — tuple!
+
+cur.execute(
+    &quot;INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (%s, %s, %s)&quot;,
+    (&quot;Jasur&quot;, &quot;Rahimov&quot;, 2),
+)</code></pre></div><div class="s-big">SQL&#x27;ga kiradigan har qanday qiymat — faqat %s orqali</div><ul class="s-list"><li class="lv0"><code>%s</code> — barcha turlar uchun (son uchun ham), <b>qo&#x27;shtirnoqsiz</b></li><li class="lv0">f-string, <code>+</code>, <code>.format()</code> bilan SQL <b>yasamang</b>!</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>CRUD&#x27;ni Python&#x27;dan bajarish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">with psycopg.connect(DSN) as conn:
+    with conn.cursor() as cur:
+        cur.execute(
+            &quot;INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (%s, %s, %s) RETURNING id&quot;,
+            (&quot;Laylo&quot;, &quot;Usmonova&quot;, 1))
+        yangi_id = cur.fetchone()[0]                                # CREATE
+
+        cur.execute(&quot;SELECT ism, familiya FROM oquvchilar WHERE id = %s&quot;, (yangi_id,))
+        print(cur.fetchone())                                       # READ
+
+        cur.execute(&quot;UPDATE oquvchilar SET sinf_id = %s WHERE id = %s&quot;, (2, yangi_id))
+        print(&quot;O&#x27;zgardi:&quot;, cur.rowcount)                            # UPDATE
+
+        cur.execute(&quot;DELETE FROM oquvchilar WHERE id = %s&quot;, (yangi_id,))   # DELETE</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Natija dict ko&#x27;rinishida va .env</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from psycopg.rows import dict_row
+with psycopg.connect(DSN, row_factory=dict_row) as conn:
+    for r in conn.execute(&quot;SELECT id, ism FROM oquvchilar LIMIT 2&quot;).fetchall():
+        print(r[&quot;ism&quot;])                 # nom bilan — o&#x27;qilishi oson</code></pre></div><div class="s-code"><div class="s-code-head">.env</div><pre><code class="language-ini">DB_NAME=maktab
+DB_USER=postgres
+DB_PASSWORD=SIZNING_PAROLINGIZ
+DB_HOST=localhost</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">db.py</div><pre><code class="language-python">import os, psycopg
+from psycopg.rows import dict_row
+from dotenv import load_dotenv
+load_dotenv()
+
+def ulanish():
+    return psycopg.connect(
+        dbname=os.getenv(&quot;DB_NAME&quot;),
+        user=os.getenv(&quot;DB_USER&quot;),
+        password=os.getenv(&quot;DB_PASSWORD&quot;),
+        host=os.getenv(&quot;DB_HOST&quot;),
+        row_factory=dict_row,
+    )</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div>Parolni kodda yozib GitHub&#x27;ga yuklasangiz — butun dunyo ko&#x27;radi! <code>.env</code> → <code>.gitignore</code></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: CRUD dasturi (20-loyiha)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from db import ulanish
+
+def royxat():
+    with ulanish() as conn:
+        rows = conn.execute(&quot;&quot;&quot;
+            SELECT o.id, o.ism, o.familiya, s.nomi AS sinf,
+                   ROUND(AVG(b.baho), 2) AS ortacha
+            FROM oquvchilar o
+            LEFT JOIN sinflar s ON s.id = o.sinf_id
+            LEFT JOIN baholar b ON b.oquvchi_id = o.id
+            GROUP BY o.id, s.nomi ORDER BY o.familiya
+        &quot;&quot;&quot;).fetchall()
+    for r in rows:
+        print(f&quot;{r[&#x27;id&#x27;]:&lt;4}{r[&#x27;ism&#x27;]:&lt;12}{r[&#x27;familiya&#x27;]:&lt;14}{r[&#x27;sinf&#x27;] or &#x27;-&#x27;:&lt;6}{r[&#x27;ortacha&#x27;] or &#x27;-&#x27;}&quot;)
+
+def qidirish(soz):
+    with ulanish() as conn:
+        return conn.execute(
+            &quot;SELECT * FROM oquvchilar WHERE ism ILIKE %s OR familiya ILIKE %s&quot;,
+            (f&quot;%{soz}%&quot;, f&quot;%{soz}%&quot;)).fetchall()</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: topshiriqlar</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Dasturni ishga tushiring — pgAdmin&#x27;da o&#x27;zgarishlarni kuzating</div></div><div class="s-step"><span class="n">2</span><div>&quot;Qidirish&quot;ga <code>&#x27; OR &#x27;1&#x27;=&#x27;1</code> yozing — <b>teshik yo&#x27;qligiga</b> ishonch hosil qiling</div></div><div class="s-step"><span class="n">3</span><div><b>&quot;Sinf statistikasi&quot;</b> menyu bandi (GROUP BY)</div></div><div class="s-step"><span class="n">4</span><div><b>&quot;Tahrirlash&quot;</b> menyu bandi (UPDATE)</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>No module named &#x27;psycopg&#x27;</code> — venv faol emas yoki paket o&#x27;rnatilmagan</li><li class="lv0">❌ <code>connection refused</code> — server ishlamayapti yoki host/port xato</li><li class="lv0">❌ <code>(ism)</code> — bu tuple emas! To&#x27;g&#x27;risi <code>(ism,)</code></li><li class="lv0">❌ <code>&#x27;%s&#x27;</code> — qo&#x27;shtirnoq ichida; to&#x27;g&#x27;risi <code>%s</code></li><li class="lv0">❌ <code>commit</code> qilinmagan — ma&#x27;lumot &quot;yo&#x27;qoldi&quot;</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Python&#x27;dan PostgreSQL bilan ishlash uchun kutubxona?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>requests</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>psycopg</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>pygame</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>flask</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">INSERT dan keyin o&#x27;zgarishni saqlash uchun nima chaqiriladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>cur.save()</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>conn.close()</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>cur.fetchone()</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>conn.commit()</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">SQL injection&#x27;dan himoyalangan to&#x27;g&#x27;ri kod?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>cur.execute(&quot;... WHERE ism = %s&quot;, (ism,))</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>cur.execute(f&quot;... WHERE ism = &#x27;{ism}&#x27;&quot;)</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>cur.execute(&quot;... WHERE ism = &#x27;&quot; + ism + &quot;&#x27;&quot;)</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>cur.execute(&quot;... = {}&quot;.format(ism))</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Parol kabi maxfiy sozlamalarni qayerda saqlash to&#x27;g&#x27;ri?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Kod ichida, izoh bilan</span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>.env</code> faylida (GitHub&#x27;ga yuklanmaydi)</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>README faylida</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Baza nomida</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Do&#x27;kon dasturi:</b> mahsulotlar ro&#x27;yxati, qo&#x27;shish, narxni o&#x27;zgartirish, tugaganlar</div></div><div class="s-step"><span class="n">2</span><div><b>&quot;Buyurtma berish&quot;:</b> <code>buyurtmalar</code> + <code>buyurtma_tarkibi</code> ga yozish va ombordagi sonni kamaytirish — <b>bitta tranzaksiyada</b></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>python -m venv venv</code> → faollashtirish → <code>pip install &quot;psycopg[binary]&quot;</code></li><li class="lv0"><code>with psycopg.connect(...) as conn:</code> → <code>execute(sql, params)</code> → <code>fetchone/fetchall</code></li><li class="lv0">Faqat <b>parametrli</b> so&#x27;rovlar: <code>%s</code> + tuple</li><li class="lv0">Maxfiy sozlamalar — <code>.env</code> da, <code>.gitignore</code> ga qo&#x27;shilgan</li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>33. Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>32-python-postgresql.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../32-python-postgresql.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/32-python-postgresql.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "31-nazorat-ishi-2.html", "next": "33-django-kirish.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

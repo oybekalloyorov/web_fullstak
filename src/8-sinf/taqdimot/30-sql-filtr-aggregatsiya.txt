@@ -1,0 +1,182 @@
+# Bugun nimani o'rganamiz?
+- Murakkab shartlar: `IN`, `BETWEEN`, `LIKE`
+- `DISTINCT` va sahifalash
+- Agregat funksiyalar: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`
+- `GROUP BY` bilan guruhlash, `HAVING` bilan guruhlarni filtrlash
+- Haqiqiy **hisobotlar**: sinf o'rtachasi, eng ko'p sotilgan mahsulot
+---
+# WHERE operatorlari
+| Operator | Misol |
+|---|---|
+| `=`, `<>` | `fan <> 'Tarix'` |
+| `>`, `<`, `>=`, `<=` | `baho >= 4` |
+| `AND`, `OR`, `NOT` | `baho = 5 AND fan = 'Fizika'` |
+| `IN (...)` | `sinf_id IN (1, 3)` |
+| `BETWEEN a AND b` | `narx BETWEEN 10000 AND 50000` (chegaralar kiradi) |
+| `LIKE` / `ILIKE` | `ism LIKE 'A%'` |
+| `IS NULL` / `IS NOT NULL` | `email IS NOT NULL` |
+---
+# IN, BETWEEN va qavslar
+```sql
+SELECT * FROM baholar WHERE fan IN ('Matematika', 'Informatika', 'Fizika');
+SELECT * FROM baholar WHERE sana BETWEEN '2026-09-01' AND '2026-09-30';
+SELECT * FROM oquvchilar WHERE sinf_id NOT IN (1, 2);
+
+SELECT * FROM baholar
+WHERE (fan = 'Matematika' OR fan = 'Fizika') AND baho = 5;
+```
+! `AND` `OR` dan **oldin** bajariladi. Qavssiz: "Matematikadagi hammasi YOKI Fizikadagi 5 lar". Shubha bo'lsa — qavs qo'ying!
+---
+# LIKE — naqsh bo'yicha qidirish
+- `%` — istalgan sondagi belgilar; `_` — aynan **bitta** belgi
+```sql
+SELECT ism FROM oquvchilar WHERE ism LIKE 'D%';          -- D bilan boshlanadi
+SELECT ism FROM oquvchilar WHERE familiya LIKE '%ova';   -- "ova" bilan tugaydi
+SELECT ism FROM oquvchilar WHERE ism LIKE '%a%';         -- ichida "a"
+SELECT ism FROM oquvchilar WHERE ism LIKE '_li';         -- Ali
+SELECT ism FROM oquvchilar WHERE ism ILIKE 'zarina';     -- katta-kichik harfga qaramaydi
+SELECT DISTINCT fan FROM baholar ORDER BY fan;           -- takrorsiz
+```
+- Saytlardagi qidiruv ko'pincha `ILIKE '%so''z%'` bilan ishlaydi
+---
+# Agregat funksiyalar
+| Funksiya | Vazifasi |
+|---|---|
+| `COUNT(*)` | Qatorlar soni |
+| `COUNT(ustun)` | NULL bo'lmaganlar soni |
+| `COUNT(DISTINCT ustun)` | Noyob qiymatlar soni |
+| `SUM` / `AVG` | Yig'indi / o'rtacha |
+| `MIN` / `MAX` | Eng kichik / eng katta |
+```sql
+SELECT ROUND(AVG(baho), 2) AS ortacha, MAX(baho) AS eng_yuqori, MIN(baho) AS eng_past
+FROM baholar WHERE fan = 'Matematika';
+```
+---
+# GROUP BY — guruhlab hisoblash
+> **Rangli qalamlar:** aralash qalamlarni rangiga qarab uyumlarga ajratasiz (`GROUP BY rang`), keyin har uyumni sanaysiz (`COUNT`): qizil — 5, ko'k — 3.
+```sql
+SELECT fan, COUNT(*) AS baholar_soni, ROUND(AVG(baho), 2) AS ortacha
+FROM baholar
+GROUP BY fan
+ORDER BY ortacha DESC;
+```
+```output
+ fan         | baholar_soni | ortacha
+-------------+--------------+---------
+ Ona tili    |            2 |    4.50
+ Matematika  |            5 |    4.40
+ Informatika |            5 |    4.00
+```
+---
+# GROUP BY + JOIN
+```sql
+-- Har bir sinfda nechta o'quvchi
+SELECT s.nomi AS sinf, COUNT(o.id) AS oquvchilar_soni
+FROM sinflar s
+LEFT JOIN oquvchilar o ON o.sinf_id = s.id
+GROUP BY s.nomi;
+
+-- O'quvchilar reytingi
+SELECT o.ism || ' ' || o.familiya AS oquvchi, ROUND(AVG(b.baho), 2) AS ortacha
+FROM oquvchilar o
+JOIN baholar b ON b.oquvchi_id = o.id
+GROUP BY o.id, o.ism, o.familiya
+ORDER BY ortacha DESC;
+```
+! **Oltin qoida:** SELECT'dagi har bir ustun yo agregat ichida, yo GROUP BY'da bo'lishi kerak
+---
+# HAVING — guruhlarni filtrlash
+- `WHERE` — qatorlarni **guruhlashdan oldin**; `HAVING` — guruhlarni **hisobdan keyin**
+```sql
+SELECT oquvchi_id, COUNT(*) AS soni
+FROM baholar
+WHERE sana >= '2026-09-01'     -- 1) qatorlar filtri
+GROUP BY oquvchi_id            -- 2) guruhlash
+HAVING COUNT(*) >= 2           -- 3) guruhlar filtri
+ORDER BY soni DESC;            -- 4) saralash
+```
+---
+# SELECT'ning bajarilish tartibi
+| Yozilishi | Bajarilishi | Vazifasi |
+|---|---|---|
+| 1. `SELECT` | 5 | Qaysi ustunlar |
+| 2. `FROM / JOIN` | 1 | Qaysi jadvallar |
+| 3. `WHERE` | 2 | Qatorlar filtri |
+| 4. `GROUP BY` | 3 | Guruhlash |
+| 5. `HAVING` | 4 | Guruhlar filtri |
+| 6. `ORDER BY` | 6 | Saralash |
+| 7. `LIMIT` | 7 | Cheklash |
+- Shuning uchun `WHERE AVG(baho) > 4` — **xato**: o'rtacha hali hisoblanmagan!
+---
+# Amaliyot: hisobotlar
+- **Maktab:**
+  - Familiyasi "ov" bilan tugaydiganlar; 2012-yilda tug'ilganlar soni
+  - Har fan: soni, o'rtacha, min, max
+  - Har sinf o'rtacha bahosi (3 jadval)
+  - Kamida bitta "2" olganlar (takrorsiz); top-3 o'quvchi
+- **Do'kon:**
+  - Narxi 4 000 – 100 000 oralig'ida
+  - Har buyurtma summasi: `SUM(soni * narx)`
+  - Har mijoz: buyurtmalar soni va jami to'lov
+  - Eng ko'p sotilgan mahsulot; 50 000 dan oshgan buyurtmalar (`HAVING`)
+---
+# Amaliyot: namunaviy javoblar
+```sql
+-- Har bir sinf bo'yicha o'rtacha baho
+SELECT s.nomi, ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+ORDER BY ortacha DESC;
+
+-- Mijozlar statistikasi
+SELECT m.ism, COUNT(DISTINCT b.id) AS buyurtmalar,
+       COALESCE(SUM(t.soni * t.narx), 0) AS jami
+FROM mijozlar m
+LEFT JOIN buyurtmalar b      ON b.mijoz_id = m.id
+LEFT JOIN buyurtma_tarkibi t ON t.buyurtma_id = b.id
+GROUP BY m.id, m.ism;
+```
+- `COALESCE(qiymat, 0)` — NULL bo'lsa 0
+---
+# Ko'p uchraydigan xatolar
+- ❌ `column "o.ism" must appear in the GROUP BY clause`
+- ❌ `aggregate functions are not allowed in WHERE` → `HAVING`
+- ❌ `LIKE 'a%'` katta "A" ni topmaydi → `ILIKE`
+- ❌ `COUNT(ustun)` NULL'larni sanamaydi, `COUNT(*)` sanaydi
+---
+? "A" harfi bilan boshlanadigan ismlarni topuvchi shart?
+o `ism = 'A%'`
++ `ism LIKE 'A%'`
+o `ism LIKE '%A'`
+o `ism IN 'A'`
+---
+? "Har bir fan bo'yicha o'rtacha baho" uchun nima kerak?
++ `GROUP BY fan` + `AVG(baho)`
+o `ORDER BY fan`
+o `DISTINCT fan`
+o `WHERE fan = AVG`
+---
+? Guruhlarni hisob-kitobdan keyin filtrlash uchun qaysi kalit so'z?
+o WHERE
+o FILTER
+o LIMIT
++ HAVING
+---
+? `WHERE narx BETWEEN 100 AND 200` — 200 natijaga kiradimi?
+o Yo'q
++ Ha, chegaralar kiradi
+o Faqat 100 kiradi
+o Xato beradi
+---
+# 🏠 Uyga vazifa
+1. **Kutubxona hisobotlari:** eng ko'p o'qilgan kitob, eng faol o'quvchi, muallif kitoblari soni, kechikkan ijaralar, oylar bo'yicha ijaralar (`EXTRACT(MONTH FROM sana)`)
+2. **SQLBolt** saytida 1–12-darslar
+---
+# ✅ Yodda tuting
+- `IN`, `BETWEEN`, `LIKE / ILIKE`, `IS NULL`, `AND/OR/NOT` (qavslar!)
+- `DISTINCT`, `ORDER BY`, `LIMIT`
+- `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`; `ROUND`, `COALESCE`
+- `GROUP BY` — guruhlash; `HAVING` — guruh sharti; `WHERE` — qator sharti
+- FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT

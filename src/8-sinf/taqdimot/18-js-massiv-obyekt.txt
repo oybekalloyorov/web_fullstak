@@ -1,0 +1,222 @@
+# Bugun nimani o'rganamiz?
+- **Massiv** — ko'p qiymat bitta o'zgaruvchida
+- Qo'shish, o'chirish, qidirish, aylanib chiqish
+- Kuchli metodlar: `map`, `filter`, `find`, `reduce`
+- **Obyekt** — bitta narsaning xususiyatlari
+- **Obyektlar massivi** — real ma'lumotlar (14-loyiha)
+---
+# Massiv nima?
+> **Poyezd vagonlari:** har vagonda bitta qiymat. Raqamlash **0 dan** boshlanadi — bu **indeks**. Vagonlar soni — `length`.
+```js
+const mevalar = ["olma", "nok", "uzum", "anor"];
+//                 0       1       2       3
+
+mevalar[0]                    // "olma"
+mevalar.length                // 4
+mevalar[mevalar.length - 1]   // "anor" — OXIRGI
+mevalar[10]                   // undefined
+mevalar[1] = "shaftoli";      // o'zgartirish
+```
+---
+# Qo'shish va o'chirish
+```js
+const navbat = ["Ali", "Vali"];
+navbat.push("Gani");       // oxiriga
+navbat.unshift("Sobir");   // boshiga
+navbat.pop();              // oxiridan olish
+navbat.shift();            // boshidan olish
+
+const s = [10, 20, 30, 40, 50];
+s.splice(1, 2);            // [10, 40, 50]
+```
+::
+| Metod | Eslab qolish |
+|---|---|
+| `push(x)` | Navbat oxiriga turdi |
+| `pop()` | Oxirgisi chiqib ketdi |
+| `unshift(x)` | Oldinga o'tdi |
+| `shift()` | Birinchisi kirdi |
+| `splice(i, n)` | Kesib olish |
+---
+# Qidirish va boshqa metodlar
+```js
+const fanlar = ["matematika", "fizika", "informatika", "tarix"];
+fanlar.includes("fizika")       // true — bormi?
+fanlar.indexOf("informatika")   // 2
+fanlar.indexOf("kimyo")         // -1 — topilmadi
+fanlar.join(", ")               // matnga
+"a,b,c".split(",")              // matndan massivga
+fanlar.slice(1, 3)              // ["fizika", "informatika"]
+
+const sonlar = [5, 1, 10, 3];
+sonlar.sort((a, b) => a - b);   // [1, 3, 5, 10]
+```
+! `[5, 1, 10, 3].sort()` → `[1, 10, 3, 5]` 😱 — sonlar uchun doim `(a, b) => a - b`
+---
+# Massivni aylanib chiqish
+```js
+const ballar = [85, 92, 78, 95, 60];
+
+for (let i = 0; i < ballar.length; i++) {   // indeks kerak bo'lsa
+  console.log(i, ballar[i]);
+}
+
+for (const ball of ballar) {                // eng qulayi
+  console.log(ball);
+}
+
+ballar.forEach((ball, index) => {
+  console.log(`#${index}: ${ball}`);
+});
+```
+---
+# Masala: yig'indi, o'rtacha, eng katta
+```js
+const ballar = [85, 92, 78, 95, 60];
+let yigindi = 0;
+let eng = ballar[0];
+
+for (const b of ballar) {
+  yigindi += b;
+  if (b > eng) eng = b;
+}
+const ortacha = yigindi / ballar.length;
+console.log(`O'rtacha: ${ortacha.toFixed(1)}`);   // 82.0
+console.log(`Eng yuqori: ${eng}`);                 // 95
+console.log(Math.max(...ballar));                  // ... — yoyish
+```
+---
+# Kuchli massiv metodlari
+| Metod | Savol | Natija |
+|---|---|---|
+| `map` | Har birini qanday o'zgartiray? | Shuncha elementli yangi massiv |
+| `filter` | Qaysilari shartga mos? | Mos kelganlar massivi |
+| `find` | Mos **birinchisi**? | Bitta element / `undefined` |
+| `some` / `every` | Bittasi / hammasi mosmi? | `true` / `false` |
+| `reduce` | Bitta qiymatga yig'ish | Yig'indi va h.k. |
+> **Mevalar savati:** `map` — har birini to'g'rash, `filter` — pishganlarini tanlash, `find` — birinchi olmani olish, `reduce` — hammasidan bitta sharbat.
+---
+# map, filter, find, reduce
+```js
+const narxlar = [12000, 45000, 8000, 30000];
+
+narxlar.map(n => n * 0.9)              // [10800, 40500, 7200, 27000]
+narxlar.filter(n => n < 20000)         // [12000, 8000]
+narxlar.find(n => n > 25000)           // 45000
+narxlar.some(n => n > 40000)           // true
+narxlar.every(n => n > 5000)           // true
+narxlar.reduce((yig, n) => yig + n, 0) // 95000
+```
+- Asl massivni **o'zgartirmaydi** — yangi natija qaytaradi
+---
+# Obyektlar
+> **O'quvchi anketasi:** "Ism: Dilnoza", "Yosh: 14", "Sinf: 8-A" — har bir qator **kalit: qiymat** jufti.
+```js
+const oquvchi = {
+  ism: "Dilnoza",
+  yosh: 14,
+  sinf: "8-A",
+  fanlar: ["matematika", "ingliz tili"],
+};
+oquvchi.ism            // nuqta orqali
+oquvchi["sinf"]        // kvadrat qavs orqali
+oquvchi.yosh = 15;     // o'zgartirish
+oquvchi.shahar = "Namangan";   // qo'shish
+delete oquvchi.fanlar;         // o'chirish
+```
+---
+# Metodlar va this
+```js
+const hisob = {
+  egasi: "Jasur",
+  balans: 50000,
+  toldirish(summa) {
+    this.balans += summa;        // this — "shu obyekt"
+  },
+  yechish(summa) {
+    if (summa > this.balans) {
+      console.log("❌ Mablag' yetarli emas");
+      return;
+    }
+    this.balans -= summa;
+  },
+};
+hisob.toldirish(20000);
+hisob.yechish(100000);   // ❌ Mablag' yetarli emas
+```
+---
+# Obyektlar massivi — real ma'lumotlar
+```js
+const mahsulotlar = [
+  { nomi: "Daftar",  narx: 5000,   soni: 120 },
+  { nomi: "Ruchka",  narx: 3000,   soni: 0 },
+  { nomi: "Ryukzak", narx: 180000, soni: 7 },
+];
+
+const mavjud = mahsulotlar.filter(m => m.soni > 0).map(m => m.nomi);
+const topilgan = mahsulotlar.find(m => m.nomi === "Ryukzak");
+const qiymat = mahsulotlar.reduce((s, m) => s + m.narx * m.soni, 0);
+```
+- Mahsulotlar, o'quvchilar, xabarlar — hammasi shunday; serverdan keladigan **JSON** ham (39-mavzu)
+---
+# Amaliyot: baholar dasturi (14-loyiha)
+```js
+const oquvchilar = [
+  { ism: "Akmal",   ballar: [92, 85, 78] },
+  { ism: "Barno",   ballar: [67, 88, 95] },
+  { ism: "Davron",  ballar: [45, 52, 60] },
+  { ism: "Gulnoza", ballar: [98, 94, 91] },
+];
+const ortacha = s => s.reduce((a, b) => a + b, 0) / s.length;
+
+const natija = oquvchilar
+  .map(o => ({ ism: o.ism, ortacha: ortacha(o.ballar) }))
+  .sort((a, b) => b.ortacha - a.ortacha);
+
+natija.forEach((o, i) => console.log(`${i + 1}. ${o.ism} — ${o.ortacha.toFixed(1)}`));
+```
+1. 4-fan bahosini qo'shing
+2. `qosh(ism, ballar)` va `izla("barno")` funksiyalari
+---
+# Ko'p uchraydigan xatolar
+- ❌ `arr[1]` — bu **ikkinchi** element!
+- ❌ Oxirgisi `arr[arr.length]` emas, `arr[arr.length - 1]`
+- ❌ `map` ichida `{ }` bilan yozib `return` ni unutish → `[undefined, ...]`
+- ❌ `oquvchi.Ism` — kalit `ism` (katta-kichik harf!)
+- ❌ `reduce` da boshlang'ich qiymat `, 0` unutilgan
+---
+? `const a = [10, 20, 30];` — `a[1]` nimaga teng?
+o 10
++ 20
+o 30
+o undefined
+---
+? `[1, 2, 3, 4].filter(x => x % 2 === 0)` natijasi?
+o `[1, 3]`
+o `[2, 4, 6, 8]`
++ `[2, 4]`
+o `2`
+---
+? `[1, 2, 3].map(x => x * 10)` natijasi?
+o 60
+o `[1, 2, 3]`
+o 30
++ `[10, 20, 30]`
+---
+? Barcha sonlar yig'indisini bitta qiymatga yig'uvchi metod?
+o map
+o find
++ reduce
+o join
+---
+# 🏠 Uyga vazifa
+1. **Kitoblar javoni:** 6 kitob — o'qilmaganlar, eng qalini, 2000-yildan keyingilar, jami sahifalar
+2. **Takrorlarni olib tashlash:** `[1, 2, 2, 3, 1, 4]` → `[1, 2, 3, 4]`
+3. **So'zlar statistikasi:** `split(" ")`, eng uzun so'z, so'zlar soni
+---
+# ✅ Yodda tuting
+- Massiv `[a, b, c]`, indeks 0 dan; `push/pop/shift/unshift`, `includes`, `sort((a,b)=>a-b)`
+- Aylanish: `for`, `for...of`, `forEach`
+- `map` — o'zgartirish, `filter` — tanlash, `find` — birinchisi, `reduce` — yig'ish
+- Obyekt `{ kalit: qiymat }`; `obj.kalit`; metodlarda `this`
+- Obyektlar massivi — real ma'lumotlarning asosiy shakli

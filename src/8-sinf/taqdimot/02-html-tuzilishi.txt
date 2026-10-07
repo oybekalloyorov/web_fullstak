@@ -1,0 +1,177 @@
+# Bugun nimani o'rganamiz?
+- **HTML** nima va nima uchun kerak
+- **Teg, element, atribut** tushunchalari
+- Har bir sahifaning majburiy **skeleti**
+- Sarlavha, paragraf va matn formatlash teglari
+- VS Code'da **birinchi veb-sahifa** yaratish
+---
+# HTML nima?
+= HTML — veb-sahifa tuzilishini yaratuvchi belgilash tili
+- **H**yper**T**ext **M**arkup **L**anguage
+- Dasturlash tili **emas**: hisob-kitob ham, shart ham yo'q
+- Brauzerga faqat aytadi: "bu — sarlavha, bu — paragraf, bu — rasm"
+> **O'xshatish — uy:** HTML — g'isht va devorlar, CSS — bo'yoq va mebel, JavaScript — elektr va suv (harakat).
+note: Istalgan saytda Ctrl+U bosib, uning HTML kodini ko'rsating — hatto YouTube ham HTML'dan boshlanadi.
+---
+# Teg va element
+```html
+<p>Bu paragraf matni.</p>
+```
+- `<p>` — **ochuvchi teg**, `</p>` — **yopuvchi teg** (oldida `/`)
+- **Element** = ochuvchi teg + mazmun + yopuvchi teg
+- **Yolg'iz teglar** yopilmaydi: `<br>` `<hr>` `<img>` `<input>` `<meta>`
+---
+# Atribut — elementga qo'shimcha ma'lumot
+```html
+<a href="https://kun.uz" title="Yangiliklar">Kun.uz ga o'tish</a>
+```
+- Doim **ochuvchi tegda**, `nom="qiymat"` ko'rinishida
+| Atribut | Vazifasi |
+|---|---|
+| `id` | Yagona nom (takrorlanmaydi) |
+| `class` | Guruh nomi (CSS uchun) |
+| `title` | Sichqoncha ustiga kelganda izoh |
+| `lang` | Matn tili: `lang="uz"` |
+---
+# HTML hujjatining skeleti
+```html index.html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mening birinchi sahifam</title>
+</head>
+<body>
+  <h1>Salom, dunyo!</h1>
+  <p>Bu mening birinchi veb-sahifam.</p>
+</body>
+</html>
+```
+::
+- VS Code'da `!` + **Enter** — skelet o'zi yoziladi
+- `<!DOCTYPE html>` — "bu HTML5 hujjat"
+- `<head>` — ko'rinmaydigan ma'lumotlar
+- `charset="UTF-8"` — o', g', emoji to'g'ri chiqadi
+- `<title>` — brauzer yorlig'idagi nom
+- `<body>` — **ko'rinadigan** hamma narsa
+---
+# head va body
+> **O'xshatish — odam:** `<head>` — pasport (ismi, tili — ko'rinmaydi, lekin muhim). `<body>` — odamning o'zi: ko'rinishi, kiyimi, harakatlari.
+- Matnni `<head>` ichiga yozsangiz — **ko'rinmaydi**
+- `viewport` qatori — telefonda to'g'ri o'lcham uchun (10-mavzu)
+---
+# Ichma-ich joylashish (nesting)
+```html
+<!-- ✅ To'g'ri -->
+<p>Bu <strong>juda muhim</strong> gap.</p>
+
+<!-- ❌ Noto'g'ri -->
+<p>Bu <strong>juda muhim</p></strong> gap.
+```
+= Oxirgi ochilgan teg — birinchi yopiladi
+- Matryoshka qo'g'irchoqlari kabi
+- Ichki elementlarni 2 bo'sh joy bilan suring; **Shift+Alt+F** — avtomatik tartiblash
+---
+# Sarlavhalar: h1 dan h6 gacha
+```html
+<h1>Maktabimiz yangiliklari</h1>
+<h2>Sport</h2>
+<h3>Futbol bo'yicha musobaqa</h3>
+<p>8-"A" sinf jamoasi g'olib bo'ldi.</p>
+<h2>Fanlar</h2>
+<p>Olimpiadaga ro'yxatdan o'tish boshlandi.</p>
+```
+::
+- Sahifada odatda **bitta** `<h1>`
+- Darajalarni sakramang: h2 → h3, h4 emas
+- Sarlavha — **ma'no** (kitob mundarijasi), kattalik uchun CSS bor
+! HTML bo'sh joylarni "yutadi": 5 ta bo'sh joy = 1 ta. Yangi qator uchun `<br>`, abzats uchun yangi `<p>`.
+---
+# Matnni formatlash teglari
+| Teg | Vazifasi |
+|---|---|
+| `<strong>` / `<b>` | Qalin; strong — "bu muhim" ma'nosi ham |
+| `<em>` / `<i>` | Kursiv; em — urg'u |
+| `<mark>` | Marker (sariq fon) |
+| `<sub>` / `<sup>` | H₂O, x² |
+| `<br>` / `<hr>` | Yangi qator / ajratuvchi chiziq |
+| `<blockquote>` | Iqtibos |
+| `<!-- ... -->` | Izoh — brauzer ko'rsatmaydi |
+---
+# Maxsus belgilar (entities)
+| Yozilishi | Natija | Ma'nosi |
+|---|---|---|
+| `&lt;` | < | kichik belgisi |
+| `&gt;` | > | katta belgisi |
+| `&amp;` | & | "va" belgisi |
+| `&copy;` | © | mualliflik huquqi |
+| `&nbsp;` | ␣ | uzilmaydigan bo'sh joy |
+- `<` belgisi HTML'da "band" — u tegni boshlaydi
+---
+## Amaliy mashg'ulot
+"Men haqimda" sahifasini yaratamiz
+---
+# Amaliyot: "Men haqimda"
+1. `men-haqimda` papkasini yarating, VS Code'da oching
+2. `index.html` fayli → `!` + Enter → `lang="uz"`
+3. `<title>` ga ismingizni yozing
+4. `<body>` ga sarlavha, bo'limlar, paragraflar, iqtibos yozing
+5. **Ctrl+S** → faylni brauzerda oching
+6. **Live Server** kengaytmasi: saqlaganda brauzer o'zi yangilanadi
+---
+# Amaliyot: namuna kod
+```html
+<h1>Sardor Aliyev</h1>
+<p><em>8-"B" sinf o'quvchisi, kelajakdagi dasturchi</em></p>
+<hr>
+<h2>Men haqimda</h2>
+<p>Men <strong>Samarqand</strong> shahrida yashayman. 14 yoshdaman.<br>
+Bo'sh vaqtimda kitob o'qiyman va futbol o'ynayman.</p>
+<h2>Sevimli iqtibosim</h2>
+<blockquote>Har bir dasturchi bir paytlar yangi boshlovchi bo'lgan.</blockquote>
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ Yopuvchi tegni unutish: `<p>Matn` → keyingi matn ham paragrafda qoladi
+- ❌ `/` ni unutish: `<h1>Sarlavha<h1>`
+- ❌ Ko'rinadigan matnni `<head>` ga yozish
+- ❌ Faylni `index.html.txt` qilib saqlash
+- ❌ "Aqlli" qo'shtirnoq `“ ”` — doim oddiy `"` ishlating
+---
+? Foydalanuvchiga ko'rinadigan mazmun qaysi teg ichida yoziladi?
+o `<head>`
+o `<title>`
++ `<body>`
+o `<meta>`
+---
+? `<a href="https://kun.uz">` da `href` nima?
+o Teg
++ Atribut
+o Element
+o Izoh
+---
+? Qaysi kod to'g'ri yozilgan?
+o `<p><em>Salom</p></em>`
++ `<p><em>Salom</em></p>`
+o `<p><em>Salom<p></em>`
+o `<em><p>Salom</em></p>`
+---
+? Kodda ketma-ket 5 ta bo'sh joy yozsangiz, brauzer nechta ko'rsatadi?
+o 5 ta
+o Hech qancha
++ 1 ta
+o 10 ta
+---
+# 🏠 Uyga vazifa
+1. "Men haqimda" sahifasiga "Sevimli fanlarim" (h2) bo'limini qo'shing
+2. `retsept.html` — sevimli taom retsepti: sarlavha, kirish, "Masalliqlar", "Tayyorlash"
+3. `<sup>` va `<sub>` bilan 2 ta matematika va kimyo formulasini yozing
+---
+# ✅ Yodda tuting
+- HTML — sahifaning **tuzilishi**; belgilash tili
+- Element = ochuvchi teg + mazmun + yopuvchi teg
+- Atribut ochuvchi tegda: `nom="qiymat"`
+- Skelet: `<!DOCTYPE html>` → `<html>` → `<head>` + `<body>`
+- `h1–h6` — sarlavhalar, `p` — paragraf, `strong/em` — muhim/urg'u
+- Oxirgi ochilgan teg — birinchi yopiladi

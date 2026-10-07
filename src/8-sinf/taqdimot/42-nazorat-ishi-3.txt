@@ -1,0 +1,217 @@
+# Bugun: nazorat ishi va yakuniy loyiha
+| Qism | Mazmuni | Ball |
+|---|---|---|
+| 1-qism | 25 ta yopiq test × 3 ball | 75 |
+| 2-qism | 5 ta ochiq savol / amaliy topshiriq × 5 ball | 25 |
+| **Jami** | | **100** |
+- Keyin: **yakuniy loyiha** talablari, g'oyalar, baholash va taqdimot rejasi
+---
+## Takrorlash
+IV–V boblar: Django, DRF, Deploy
+---
+# Takrorlash rejasi
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| 32. Python + PostgreSQL | venv, psycopg, commit, parametrli so'rovlar, SQL injection |
+| 33–34. Django, URL, View | MVT, startapp, `INSTALLED_APPS`, `path`, `include`, converterlar, `Http404`, `redirect` |
+| 35. Template, static | `render`, `{{ }}`, `{% %}`, filtrlar, `extends/block/include`, `{% url %}`, `{% static %}` |
+| 36. Model, ORM | Maydonlar, `ForeignKey`, `makemigrations/migrate`, `filter/get/create`, lookups |
+| 37–38. Admin, Forms, CRUD | `ModelAdmin`, `ModelForm`, `is_valid`, `csrf_token`, `login_required`, `instance=`, `Paginator` |
+| 39–40. DRF | REST, status kodlar, Serializer, `ViewSet`, Router, permissions, CORS |
+| 41. Deploy | `DEBUG=False`, `SECRET_KEY`, `ALLOWED_HOSTS`, gunicorn, whitenoise, `collectstatic` |
+---
+## Namunaviy testlar
+Avval o'ylang — keyin javobni ko'ring
+---
+? SQL injection'dan himoyalangan so'rov qaysi?
+o `cur.execute(f"... WHERE ism='{ism}'")`
++ `cur.execute("... WHERE ism=%s", (ism,))`
+o `cur.execute("... WHERE ism='" + ism + "'")`
+o Hammasi xavfsiz
+---
+? `path("kitob/<int:pk>/", views.kitob)` — view qanday e'lon qilinadi?
+o `def kitob(request):`
+o `def kitob(pk):`
+o `def kitob(request, id):`
++ `def kitob(request, pk):`
+---
+? "Kitobning bitta muallifi, muallifning ko'p kitobi" — Kitob modelida qaysi maydon?
+o `ManyToManyField(Muallif)`
+o `CharField`
++ `ForeignKey(Muallif, on_delete=...)`
+o `OneToOneField`
+---
+? Narxi 50 000 dan kichik kitoblar?
+o `Kitob.objects.get(narx<50000)`
++ `Kitob.objects.filter(narx__lt=50000)`
+o `Kitob.objects.all(narx=50000)`
+o `Kitob.filter("narx < 50000")`
+---
+? REST API'da resursni o'chirish metodi va javob kodi?
+o GET, 200
+o POST, 201
++ DELETE, 204
+o PUT, 404
+---
+? Boshqa domendagi JS sayt API'ga murojaat qilishi uchun Django'da nima sozlanadi?
+o CSRF
+o ALLOWED_HOSTS
++ CORS (django-cors-headers)
+o WhiteNoise
+---
+? Internetdagi saytda qaysi sozlama **noto'g'ri**?
+o `DEBUG = False`
++ `DEBUG = True`
+o `ALLOWED_HOSTS = ["sayt.onrender.com"]`
+o `SECRET_KEY` muhit o'zgaruvchisida
+---
+## Amaliy qism
+5 ta topshiriq × 5 ball
+---
+# 1-topshiriq: /maqola/5/ ochilganda nima bo'ladi?
+1. So'rov Django'ga keladi
+2. **urls.py** `maqola/<int:id>/` ni topadi → view'ni `id=5` bilan chaqiradi
+3. **View** → **Model** (ORM): `get_object_or_404(Maqola, id=5)`; topilmasa — **404**
+4. View maqolani **Template**'ga beradi — `render(...)`
+5. Shablon to'ldiriladi → tayyor **HTML** brauzerga qaytadi
+note: Baholash: URL — 1; View — 1; Model/ORM — 1; Template/render — 1; ketma-ketlik va 404 holati — 1.
+---
+# 2-topshiriq: model va admin
+```python
+class Kitob(models.Model):
+    JANRLAR = [("roman", "Roman"), ("sheriyat", "She'riyat"), ("ilmiy", "Ilmiy")]
+    nomi = models.CharField(max_length=200)
+    muallif = models.CharField(max_length=100)
+    janr = models.CharField(max_length=20, choices=JANRLAR)
+    yil = models.PositiveIntegerField()
+    narx = models.DecimalField(max_digits=10, decimal_places=2)
+    mavjud = models.BooleanField(default=True)
+    qoshilgan = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nomi
+
+@admin.register(Kitob)
+class KitobAdmin(admin.ModelAdmin):
+    list_display = ["nomi", "muallif", "janr", "mavjud"]
+    list_filter = ["janr", "mavjud"]
+    search_fields = ["nomi", "muallif"]
+```
+---
+# 3-topshiriq: view va shablon
+```python
+def kitoblar(request):
+    q = request.GET.get("q", "").strip()
+    qs = Kitob.objects.filter(mavjud=True)
+    if q:
+        qs = qs.filter(nomi__icontains=q)
+    return render(request, "kutubxona/kitoblar.html", {"kitoblar": qs, "q": q})
+```
+```django
+{% extends "kutubxona/base.html" %}
+{% block content %}
+  <form><input name="q" value="{{ q }}"><button>Izlash</button></form>
+  <ul>
+    {% for k in kitoblar %}
+      <li><a href="{% url 'kutubxona:kitob' k.pk %}">{{ k.nomi }}</a> — {{ k.muallif }}</li>
+    {% empty %}
+      <li>Kitob topilmadi</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+```
+---
+# 4–5-topshiriqlar: API va deploy
+```python 4: DRF API
+class KitobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kitob
+        fields = "__all__"
+    def validate_narx(self, v):
+        if v <= 0:
+            raise serializers.ValidationError("Narx musbat bo'lsin")
+        return v
+
+class KitobViewSet(viewsets.ModelViewSet):
+    queryset = Kitob.objects.all()
+    serializer_class = KitobSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["nomi"]
+
+router = DefaultRouter()
+router.register("kitoblar", KitobViewSet)
+```
+::
+- **5: Deploy bosqichlari**
+1. `gunicorn`, `whitenoise`, `dj-database-url` + `requirements.txt`
+2. `DEBUG=False`, `SECRET_KEY` va baza — muhitdan; `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`
+3. `build.sh`: install → collectstatic → migrate; push
+4. Render: Postgres + Web Service, `gunicorn config.wsgi:application`
+5. Superuser, tekshiruv ro'yxati, Logs
+---
+# Baholash shkalasi
+| Ball | Natija |
+|---|---|
+| 86–100 | A'lo — kurs dasturini to'liq o'zlashtirgansiz |
+| 71–85 | Yaxshi |
+| 60–70 | Qoniqarli |
+| 0–59 | Qoniqarsiz — mentor bilan takrorlash |
+---
+## Yakuniy loyiha
+31-loyiha: kurs davomida o'rganilgan hamma narsa bitta loyihada
+---
+# Majburiy talablar
+| Qism | Talab |
+|---|---|
+| Front-end | Semantik HTML, o'z CSS dizayni, responsiv, JS interaktivlik |
+| Ma'lumotlar bazasi | PostgreSQL; 3+ model, kamida bitta `ForeignKey` |
+| Back-end | Django CRUD (5 sahifa), shablon merosi, formalar, admin |
+| Foydalanuvchilar | Ro'yxatdan o'tish / kirish; "faqat muallif" ruxsati |
+| API | Kamida bitta resurs uchun DRF API (GET + POST) |
+| Algoritmik qism | Statistika, reyting, hisob-kitob, filtrlash |
+| Git va deploy | 15+ mazmunli commit, README, internetga joylangan |
+- Individual yoki 2–3 kishilik jamoada
+---
+# Loyiha g'oyalari
+- 📚 **Maktab kutubxonasi:** katalog, ijara, jarima, eng ko'p o'qilganlar reytingi
+- 📝 **Onlayn test tizimi:** o'qituvchi test yaratadi, o'quvchilar yechadi, reyting
+- 🏫 **Sinf jurnali:** o'quvchilar, fanlar, baholar, davomat, hisobotlar
+- 🛒 **Maktab do'koni / yarmarka:** mahsulotlar, savat, buyurtmalar, ombor
+- 🎯 **To'garaklar portali:** joylar soni, ro'yxatdan o'tish, jadval
+- 💡 **O'z g'oyangiz** — mentor bilan kelishib
+---
+# Bajarish rejasi (4 hafta)
+1. **1-hafta — reja:** funksiyalar, ER-diagramma, Figma maket, GitHub + Kanban
+2. **2-hafta — back-end:** modellar, migratsiyalar, admin, CRUD, formalar
+3. **3-hafta — front-end:** shablonlar, dizayn, responsivlik, JS
+4. **4-hafta — API, sinov, deploy:** DRF, testlar, Render, README
+5. **Taqdimot**
+---
+# Baholash mezoni (100 ball)
+| Mezon | Ball |
+|---|---|
+| Funksionallik — barcha talablar xatosiz ishlaydi | 30 |
+| Kod sifati — nomlar, tuzilma, xavfsizlik (CSRF, ruxsatlar) | 20 |
+| Dizayn va qulaylik — chiroyli, responsiv | 15 |
+| Ma'lumotlar bazasi tuzilmasi | 10 |
+| Git, README va deploy | 10 |
+| Taqdimot — tushuntirish va savollarga javob | 15 |
+---
+# Taqdimot rejasi (5–7 daqiqa)
+1. **Muammo va g'oya** — kimga va nima uchun kerak? (30 soniya)
+2. **Jonli namoyish** — internetdagi sayt, asosiy ssenariylar (3 daqiqa)
+3. **Texnik tuzilma** — modellar diagrammasi, texnologiyalar (1–2 daqiqa)
+4. **Qiyinchiliklar va xulosalar** — eng qiyin muammo va yechim (1 daqiqa)
+5. **Savollarga javob**
+- Topshirish: GitHub repozitoriyasi yoki mentor tasdiqlagan platforma
+---
+# 🎓 Tabriklaymiz — kurs yakunlandi!
+= HTML → CSS → JavaScript → Python → PostgreSQL → Django → DRF → Deploy
+- 66 soatda birinchi tegdan internetda ishlaydigan **full-stack ilova**gacha
+- **Keyingi qadamlar:**
+  - "Full-stack qo'llanma" kursi: Node.js, Express, React
+  - Telegram botlar (Python + Aiogram)
+  - Yangi loyihalar — portfoliongizga yangi qadam
+  - Olimpiadalar, xakatonlar, IT-tanlovlar
+note: Omad! 🚀

@@ -1,0 +1,201 @@
+# Bugun nimani o'rganamiz?
+- Funksiya yaratish: `def`, parametrlar, `return`
+- Standart qiymat, nomlangan argumentlar, `lambda`
+- Kodni **modullarga** bo'lish va `import`
+- Standart kutubxonalar: `math`, `random`, `datetime`, `json`, `os`
+- `pip` bilan tashqi kutubxonalar
+---
+# Funksiyalar: def
+```python
+def salomlash(ism):
+    """Berilgan ism bilan salomlashadi."""     # docstring
+    print(f"Assalomu alaykum, {ism}!")
+
+salomlash("Madina")
+
+def tortburchak_yuzi(eni, boyi):
+    return eni * boyi
+
+yuza = tortburchak_yuzi(5, 3)          # 15
+```
+| JavaScript | Python |
+|---|---|
+| `function qosh(a, b) { return a + b; }` | `def qosh(a, b): return a + b` |
+| `const qosh = (a, b) => a + b;` | `qosh = lambda a, b: a + b` |
+---
+# Parametrlar turlari
+```python
+def darajaga(son, daraja=2):           # standart qiymat
+    return son ** daraja
+darajaga(5)        # 25
+darajaga(2, 10)    # 1024
+
+def anketa(ism, yosh, shahar="Toshkent"):
+    print(f"{ism}, {yosh} yosh, {shahar}")
+anketa(yosh=15, ism="Laylo", shahar="Xiva")   # nomlangan — tartib muhim emas
+
+def ortacha(*sonlar):                  # istalgan sonli argument → tuple
+    return sum(sonlar) / len(sonlar)
+ortacha(4, 5, 3, 5)                    # 4.25
+```
+---
+# lambda va scope
+```python
+kvadrat = lambda x: x * x
+kvadrat(7)    # 49
+
+oquvchilar = [("Ali", 85), ("Vali", 92), ("Gani", 78)]
+oquvchilar.sort(key=lambda o: o[1], reverse=True)   # ball bo'yicha
+
+maktab = "5-maktab"          # global
+def tanishtir():
+    ism = "Laylo"            # lokal
+    print(ism, maktab)       # ✅
+# print(ism)                 ❌ NameError
+```
+- **Yaxshi funksiya:** ma'lumotni parametrdan oladi, natijani `return` qiladi; bitta vazifa; nomi fe'l
+---
+# Modullar — kodni fayllarga bo'lish
+> **Asboblar qutisi:** usta har safar bolg'a yasamaydi — tayyor qutidan oladi. Modul — bir marta yozilgan funksiyalar to'plami.
+```python geometriya.py
+PI = 3.14159
+
+def doira_yuzi(r):
+    return PI * r ** 2
+```
+::
+```python main.py
+import geometriya
+geometriya.doira_yuzi(5)
+
+from geometriya import doira_yuzi
+doira_yuzi(5)
+
+import geometriya as g
+g.PI
+```
+---
+# if __name__ == "__main__":
+```python geometriya.py
+def doira_yuzi(r):
+    return 3.14159 * r ** 2
+
+if __name__ == "__main__":
+    # FAQAT fayl to'g'ridan-to'g'ri ishga tushirilganda bajariladi;
+    # import qilinganda — bajarilmaydi. Sinash uchun qulay.
+    print("Sinov:", doira_yuzi(2))
+```
+! O'z faylingizni `random.py`, `math.py` deb atamang — Python standart modul o'rniga sizning faylingizni oladi!
+---
+# math va random
+```python
+import math
+math.sqrt(144)        # 12.0
+math.pi               # 3.141592653589793
+math.ceil(4.1)        # 5
+math.factorial(5)     # 120
+math.gcd(24, 36)      # 12 — EKUB
+
+import random
+random.randint(1, 6)                          # 🎲 1..6
+random.choice(["tosh", "qaychi", "qog'oz"])   # bittasi
+random.sample(range(1, 50), 6)                # 6 ta takrorsiz — lotereya
+random.shuffle(royxat)                        # aralashtirish
+```
+---
+# datetime — sana va vaqt
+```python
+from datetime import datetime, date, timedelta
+
+hozir = datetime.now()
+hozir.strftime("%d.%m.%Y %H:%M")     # 06.10.2026 14:35
+
+tugilgan = date(2012, 3, 21)
+bugun = date.today()
+print("Yashagan kunlar:", (bugun - tugilgan).days)
+print("Bir haftadan keyin:", bugun + timedelta(days=7))
+```
+---
+# json — ma'lumotlarni saqlash
+```python
+import json
+oquvchilar = [{"ism": "Ali", "baho": 5}, {"ism": "Zarina", "baho": 4}]
+
+with open("oquvchilar.json", "w", encoding="utf-8") as f:
+    json.dump(oquvchilar, f, ensure_ascii=False, indent=2)
+
+with open("oquvchilar.json", encoding="utf-8") as f:
+    qayta = json.load(f)
+
+json.dumps({"ok": True})     # matnga: '{"ok": true}'
+json.loads('{"ok": true}')   # matndan dict'ga
+```
+- JSON — dasturlar o'rtasida ma'lumot almashishning eng mashhur formati
+- `ensure_ascii=False` — o'zbekcha harflar o'qiladigan holda; `indent=2` — chiroyli
+---
+# os va pip
+```python
+import os
+os.getcwd()                          # joriy papka
+os.listdir(".")                      # fayllar ro'yxati
+os.path.exists("oquvchilar.json")    # bormi?
+os.makedirs("hisobotlar", exist_ok=True)
+```
+```bash
+pip install requests     # PyPI'dan paket o'rnatish (500 000+ paket)
+pip install django       # 33-mavzuda!
+pip list
+```
+```python
+import requests
+javob = requests.get("https://api.github.com/users/torvalds")
+print(javob.json()["name"])   # Linus Torvalds
+```
+---
+# Amaliyot
+1. **O'z modulingiz** `yordamchi.py`: `son_sora(matn, eng_kichik, eng_katta)`, `tubmi(n)` → `main.py` da sinang
+2. **Lotereya:** `random.sample` + foydalanuvchi sonlari → set kesishmasi
+3. **Tug'ilgan kun:** necha kun yashadingiz, keyingisiga necha kun qoldi
+4. **16-loyihani** JSON'ga saqlaydigan qiling: ishga tushganda `json.load`, o'zgarishdan keyin `json.dump`
+---
+# Ko'p uchraydigan xatolar
+- ❌ Funksiyani e'lon qilishdan **oldin** chaqirish
+- ❌ `return` unutilgan → `None`
+- ❌ Faylni `random.py`, `math.py` deb atash
+- ❌ `ModuleNotFoundError: No module named 'requests'` → `pip install requests`
+---
+? Python'da funksiya qaysi kalit so'z bilan yaratiladi?
+o function
++ def
+o func
+o fn
+---
+? `def f(a, b=10): return a + b` — `f(5)` natijasi?
+o 5
+o Xato
++ 15
+o 10
+---
+? 1 dan 6 gacha tasodifiy butun son beruvchi kod?
++ `random.randint(1, 6)`
+o `random.random(6)`
+o `math.random(1, 6)`
+o `randint(6)`
+---
+? Python dict'ni JSON faylga yozuvchi funksiya?
+o `json.load()`
+o `json.read()`
+o `file.json()`
++ `json.dump()`
+---
+# 🏠 Uyga vazifa
+1. **Parol generatori:** `random` + `string` modullari
+2. **"Bugungi maslahat":** tasodifiy, JSON'da saqlanadi, bir kunda takrorlanmaydi
+3. `matn_yordamchi.py`: so'zlar soni, unlilar soni, palindrom tekshiruvi
+---
+# ✅ Yodda tuting
+- `def nom(param, standart=qiymat): return natija`; `*args`; `lambda x: ...`
+- Modul — `.py` fayl: `import`, `from ... import`, `as`
+- `if __name__ == "__main__":`
+- `math`, `random`, `datetime`, `json` (dump/load), `os`
+- `pip install nom`

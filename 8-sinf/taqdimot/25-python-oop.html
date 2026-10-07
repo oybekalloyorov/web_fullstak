@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>25-mavzu: Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari — taqdimot</title>
+<meta name="description" content="Klass va obyekt, __init__ va self, atributlar va metodlar, __str__, inkapsulyatsiya, merosxo&#x27;rlik (inheritance), polimorfizm; kutubxona boshqaruv tizimi loyihasi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🏗️</div><div class="cover-kicker">25-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</h1><p>Klass va obyekt, __init__ va self, atributlar va metodlar, __str__, inkapsulyatsiya, merosxo&#x27;rlik (inheritance), polimorfizm; kutubxona boshqaruv tizimi loyihasi.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Klass</b> va <b>obyekt</b> nima va nega kerak</li><li class="lv0"><code>__init__</code>, <code>self</code>, atributlar va metodlar</li><li class="lv0">OOP&#x27;ning uch ustuni: <b>inkapsulyatsiya, merosxo&#x27;rlik, polimorfizm</b></li><li class="lv0">Kutubxona boshqaruv tizimi (17-loyiha)</li></ul><div class="s-box warn"><span class="ico">⚠️</span><div>Django uchun juda muhim: modellar, formalar, view&#x27;lar — hammasi klasslar!</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Nima uchun OOP?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Ma&#x27;lumot (dict) va funksiyalar alohida — dastur kattalashganda chalkashadi</li></ul><div class="s-big">OOP — ma&#x27;lumot va unga tegishli amallarni bitta obyektda birlashtiradi</div><div class="s-box analogy"><span class="ico">💡</span><div><b>Avtomobil zavodi:</b> klass — chizma (&quot;rangi bor, yura oladi&quot;). Chizmaning o&#x27;zi yurmaydi! Obyekt — chizma asosida yasalgan haqiqiy mashina: qizil Cobalt, oq Malibu...</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Asosiy tushunchalar</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Tushuncha</th><th>Ma&#x27;nosi</th><th>Misol</th></tr></thead><tbody><tr><td><b>Klass</b></td><td>Shablon, chizma</td><td><code>Oquvchi</code></td></tr><tr><td><b>Obyekt</b></td><td>Klassdan yaratilgan nusxa</td><td><code>ali</code>, <code>zarina</code></td></tr><tr><td><b>Atribut</b></td><td>Xususiyat (ma&#x27;lumot)</td><td><code>ism</code>, <code>sinf</code>, <code>baholar</code></td></tr><tr><td><b>Metod</b></td><td>Bajara oladigan amal</td><td><code>baho_qosh()</code>, <code>ortacha()</code></td></tr></tbody></table><ul class="s-list"><li class="lv0">Siz OOP bilan allaqachon tanishsiz: <code>&quot;salom&quot;.upper()</code>, <code>royxat.append(5)</code> — bular metodlar!</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Birinchi klass</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class Oquvchi:                          # PascalCase
+    def __init__(self, ism, sinf):      # konstruktor
+        self.ism = ism                  # atributlar
+        self.sinf = sinf
+        self.baholar = []
+
+    def baho_qosh(self, baho):          # metod
+        self.baholar.append(baho)
+
+    def ortacha(self):
+        if not self.baholar:
+            return 0
+        return round(sum(self.baholar) / len(self.baholar), 2)
+
+ali = Oquvchi(&quot;Ali&quot;, &quot;8-A&quot;)             # obyekt yaratish
+ali.baho_qosh(5)
+ali.baho_qosh(4)
+print(ali.ortacha())                    # 4.5</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>__init__ va self</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>__init__</code> — <b>konstruktor</b>: <code>Oquvchi(&quot;Ali&quot;, &quot;8-A&quot;)</code> yozilganda avtomatik chaqiriladi va atributlarni to&#x27;ldiradi</li><li class="lv0"><code>self</code> — <b>&quot;shu obyektning o&#x27;zi&quot;</b>: <code>ali.baho_qosh(5)</code> da <code>self</code> = <code>ali</code>, <code>zarina.baho_qosh(5)</code> da — <code>zarina</code></li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>self — &quot;men&quot;:</b> har bir o&#x27;quvchi &quot;mening ismim&quot;, &quot;mening daftarim&quot; deydi. So&#x27;z bir xil, lekin har biri uchun boshqa narsa. <code>self.ism</code> — &quot;mening ismim&quot;.</div></div><div class="s-box warn"><span class="ico">⚠️</span><div>Har metodning birinchi parametri — <code>self</code>. Chaqirganda esa <code>self</code> berilmaydi — Python o&#x27;zi qo&#x27;yadi</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>__str__ — obyektni chiroyli chiqarish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class Kitob:
+    def __init__(self, nomi, muallif, yil):
+        self.nomi = nomi
+        self.muallif = muallif
+        self.yil = yil
+
+    def __str__(self):                  # print(obyekt) chaqirilganda
+        return f&quot;«{self.nomi}» — {self.muallif} ({self.yil})&quot;
+
+k = Kitob(&quot;O&#x27;tkan kunlar&quot;, &quot;Abdulla Qodiriy&quot;, 1926)
+print(k)    # «O&#x27;tkan kunlar» — Abdulla Qodiriy (1926)</code></pre></div><ul class="s-list"><li class="lv0"><code>__str__</code> siz: <code>&lt;__main__.Kitob object at 0x7f...&gt;</code> 😕</li><li class="lv0">Django modellarida <code>__str__</code> ni <b>albatta</b> yozamiz (36-mavzu)</li></ul></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>OOP&#x27;ning uch ustuni</h2><div class="sec-sub"><p>Inkapsulyatsiya · Merosxo&#x27;rlik · Polimorfizm</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>1. Inkapsulyatsiya — ichki ishlarni yashirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class BankHisobi:
+    def __init__(self, egasi, balans=0):
+        self.egasi = egasi
+        self._balans = balans       # _ — &quot;tashqaridan tegmang&quot;
+
+    def toldirish(self, summa):
+        if summa &lt;= 0:
+            print(&quot;❌ Summa musbat bo&#x27;lsin&quot;)
+            return
+        self._balans += summa
+
+    def yechish(self, summa):
+        if summa &gt; self._balans:
+            print(&quot;❌ Mablag&#x27; yetarli emas&quot;)
+            return
+        self._balans -= summa</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div><b>Bankomat:</b> pulni qo&#x27;lingiz bilan olmaysiz — faqat tugmalar (metodlar) orqali; bankomat qoidalarni tekshiradi.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>2. Merosxo&#x27;rlik (inheritance)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class Odam:
+    def __init__(self, ism, yosh):
+        self.ism = ism
+        self.yosh = yosh
+    def tanishtir(self):
+        return f&quot;Men {self.ism}, {self.yosh} yoshdaman&quot;
+
+class Oquvchi(Odam):                   # Odam&#x27;dan meros
+    def __init__(self, ism, yosh, sinf):
+        super().__init__(ism, yosh)    # ota konstruktori
+        self.sinf = sinf
+    def dars_qil(self):
+        return f&quot;{self.ism} uy vazifasini bajaryapti 📚&quot;
+
+m = Oquvchi(&quot;Madina&quot;, 14, &quot;8-A&quot;)
+m.tanishtir()    # meros olingan metod!</code></pre></div><ul class="s-list"><li class="lv0">Django&#x27;da: <code>class Kitob(models.Model):</code> — yuzlab imkoniyat &quot;tekinga&quot;</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>3. Polimorfizm — bir buyruq, turli xatti-harakat</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class Hayvon:
+    def ovoz(self):
+        return &quot;...&quot;
+
+class Mushuk(Hayvon):
+    def ovoz(self):
+        return &quot;Miyov 🐱&quot;
+
+class It(Hayvon):
+    def ovoz(self):
+        return &quot;Vov-vov 🐶&quot;
+
+for h in [Mushuk(), It()]:
+    print(h.ovoz())       # har biri o&#x27;zicha javob beradi</code></pre></div><ul class="s-list"><li class="lv0">Dastur obyektning <b>aniq turini bilmasa ham</b> ishlay oladi</li></ul></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Amaliy mashg&#x27;ulot</h2><div class="sec-sub"><p>17-loyiha: kutubxona boshqaruv tizimi</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: Kitob va Azo</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class Kitob:
+    def __init__(self, isbn, nomi, muallif, nusxa=1):
+        self.isbn, self.nomi, self.muallif = isbn, nomi, muallif
+        self.jami = self.mavjud = nusxa
+    def __str__(self):
+        return f&quot;[{self.isbn}] «{self.nomi}» ({self.mavjud}/{self.jami})&quot;
+
+class Azo:
+    MAKS_KITOB = 3
+    def __init__(self, raqam, ism):
+        self.raqam, self.ism = raqam, ism
+        self.qolida = []
+
+class Kutubxona:
+    def __init__(self, nomi):
+        self.nomi = nomi
+        self.kitoblar = {}           # isbn → Kitob
+        self.azolar = {}             # raqam → Azo
+    def ber(self, isbn, raqam): ...
+    def qaytar(self, isbn, raqam): ...   # kechiksa — jarima</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: topshiriqlar</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Kodni qatorma-qator o&#x27;qing — har klassning vazifasini o&#x27;z so&#x27;zlaringiz bilan yozing</div></div><div class="s-step"><span class="n">2</span><div><code>Azo</code> dan meros olgan <code>Oqituvchi</code>: <code>MAKS_KITOB = 10</code></div></div><div class="s-step"><span class="n">3</span><div><b>Menyu:</b> qo&#x27;shish, qidirish, berish, qaytarish, hisobot</div></div><div class="s-step"><span class="n">4</span><div><code>saqla()</code> va <code>yukla()</code> — JSON fayl bilan</div></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext">✅ «Sariq devni minib» Azizga berildi. Qaytarish: 15.09.2026
+❌ «Sariq devni minib» hozir mavjud emas
+⚠️ 5 kun kechikdi. Jarima: 5,000 so&#x27;m</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ Metodda <code>self</code> parametri unutilgan</li><li class="lv0">❌ Metod ichida <code>ism</code> (<code>self.ism</code> o&#x27;rniga) → <code>NameError</code></li><li class="lv0">❌ <code>_init_</code> — bitta pastki chiziq bilan; to&#x27;g&#x27;risi <code>__init__</code></li><li class="lv0">❌ Merosxo&#x27;r klassda <code>super().__init__(...)</code> unutilgan</li><li class="lv0">❌ <code>ali = Oquvchi</code> — qavssiz: bu klassning o&#x27;zi, obyekt emas</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Klass va obyekt o&#x27;rtasidagi munosabat qaysi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Obyekt — chizma, klass — mahsulot</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>Klass — chizma, obyekt — undan yaratilgan nusxa</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Ular bir xil narsa</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Klass — funksiya, obyekt — o&#x27;zgaruvchi</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Obyekt yaratilganda avtomatik chaqiriladigan metod?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>__str__</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>__main__</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>__init__</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>create</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>class It(Hayvon):</code> — bu qaysi OOP tamoyili?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Inkapsulyatsiya</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Polimorfizm</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Abstraksiya</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>Merosxo&#x27;rlik</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>print(obyekt)</code> qanday matn chiqarishini qaysi metod belgilaydi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>__init__</code></span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>__str__</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>__print__</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>show()</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Shakllar:</b> <code>Shakl</code> → <code>Doira</code>, <code>Tortburchak</code>, <code>Uchburchak</code> — <code>yuza()</code>, <code>perimetr()</code> (polimorfizm)</div></div><div class="s-step"><span class="n">2</span><div><b>Savat:</b> <code>Mahsulot</code> va <code>Savat</code> — qo&#x27;shish, o&#x27;chirish, jami, chegirma</div></div><div class="s-step"><span class="n">3</span><div><b>Sinf jurnali:</b> <code>Sinf</code> ichida <code>Oquvchi</code> lar; eng yaxshi o&#x27;quvchi, sinf o&#x27;rtachasi</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>class Nom:</code> — chizma; <code>obj = Nom(...)</code> — obyekt</li><li class="lv0"><code>__init__(self, ...)</code> — konstruktor; <code>self.atribut</code>; metodlarda birinchi — <code>self</code></li><li class="lv0"><code>__str__</code> — matn ko&#x27;rinishi</li><li class="lv0"><b>Inkapsulyatsiya</b> — metodlar orqali himoya</li><li class="lv0"><b>Merosxo&#x27;rlik</b> — <code>class B(A):</code> + <code>super().__init__()</code></li><li class="lv0"><b>Polimorfizm</b> — bir xil metod, turli xatti-harakat</li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>26. Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>25-python-oop.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../25-python-oop.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/25-python-oop.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "24-python-funksiya-modul.html", "next": "26-malumotlar-bazasi-kirish.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

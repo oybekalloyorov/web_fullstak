@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>39-mavzu: Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar — taqdimot</title>
+<meta name="description" content="API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF&#x27;ni o&#x27;rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko&#x27;rinadigan API.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#8E3FBF">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🔄</div><div class="cover-kicker">39-mavzu · V bob. DRF va deploy</div><h1>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</h1><p>API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF&#x27;ni o&#x27;rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko&#x27;rinadigan API.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>API</b> nima va nega zamonaviy ilovalarga kerak</li><li class="lv0"><b>REST</b> qoidalari va <b>JSON</b> formati</li><li class="lv0"><b>Django REST Framework</b>&#x27;ni o&#x27;rnatish</li><li class="lv0"><b>Serializer</b> — obyekt ↔ JSON</li><li class="lv0"><b>API View</b>&#x27;lar va ularni brauzerda sinash</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>API nima?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">IV bobda Django <b>HTML</b> qaytardi — uni faqat brauzer ko&#x27;rsatadi</li><li class="lv0">Bugun bitta xizmatdan ko&#x27;p mijoz foydalanadi: 📱 mobil ilova, ⚛️ React sayt, 🤖 Telegram bot</li></ul><div class="s-big">API — dasturlar bir-biri bilan &quot;gaplashishi&quot; uchun kelishilgan qoidalar</div><div class="s-box analogy"><span class="ico">💡</span><div><b>Yetkazib berish:</b> IV bobdagi sayt — restoran zali (taom likopchada — HTML). API — yetkazib berish: o&#x27;sha oshxona, o&#x27;sha taom, lekin konteynerda (<b>JSON</b>). Oshxona bitta — mijozlar ko&#x27;p.</div></div><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">📱 Mobil ilova  ┐
+⚛️ React sayt   ├─ JSON ─▶  🔄 Django REST API  ⇄  🐘 PostgreSQL
+🤖 Telegram bot ┘          /api/maqolalar/</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>JSON — ma&#x27;lumot almashish tili</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JSON</div><pre><code class="language-json">{
+  &quot;id&quot;: 5,
+  &quot;sarlavha&quot;: &quot;Bilimlar bellashuvi&quot;,
+  &quot;chop_etilgan&quot;: true,
+  &quot;korishlar&quot;: 128,
+  &quot;kategoriya&quot;: { &quot;id&quot;: 2, &quot;nomi&quot;: &quot;Tadbirlar&quot; },
+  &quot;teglar&quot;: [&quot;olimpiada&quot;, &quot;8-sinf&quot;],
+  &quot;rasm&quot;: null
+}</code></pre></div><ul class="s-list"><li class="lv0">Kalitlar — <b>qo&#x27;sh</b> qo&#x27;shtirnoqda</li><li class="lv0">Qiymatlar: matn, son, <code>true/false</code>, <code>null</code>, obyekt <code>{}</code>, massiv <code>[]</code></li><li class="lv0">Python&#x27;dagi dict/list va JS&#x27;dagi obyekt/massivga juda o&#x27;xshaydi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>REST arxitekturasi</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Amal</th><th>Metod</th><th>URL</th><th>Javob</th></tr></thead><tbody><tr><td>Ro&#x27;yxat</td><td><code>GET</code></td><td><code>/api/maqolalar/</code></td><td>200</td></tr><tr><td>Bitta</td><td><code>GET</code></td><td><code>/api/maqolalar/5/</code></td><td>200 / 404</td></tr><tr><td>Yaratish</td><td><code>POST</code></td><td><code>/api/maqolalar/</code></td><td><b>201</b> Created</td></tr><tr><td>To&#x27;liq yangilash</td><td><code>PUT</code></td><td><code>/api/maqolalar/5/</code></td><td>200</td></tr><tr><td>Qisman yangilash</td><td><code>PATCH</code></td><td><code>/api/maqolalar/5/</code></td><td>200</td></tr><tr><td>O&#x27;chirish</td><td><code>DELETE</code></td><td><code>/api/maqolalar/5/</code></td><td><b>204</b> No Content</td></tr></tbody></table><ul class="s-list"><li class="lv0">URL&#x27;da <b>ot</b>, ko&#x27;plikda: <code>/api/maqolalar/</code> ✅ — <code>/api/getMaqola/</code> ❌; amal — <b>metod</b> orqali</li><li class="lv0">Xatolar: <b>400</b> noto&#x27;g&#x27;ri ma&#x27;lumot, <b>401</b> kirilmagan, <b>403</b> ruxsat yo&#x27;q, <b>404</b> topilmadi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>DRF&#x27;ni o&#x27;rnatish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Terminal</div><pre><code class="language-bash">pip install djangorestframework
+pip freeze &gt; requirements.txt</code></pre></div><div class="s-code"><div class="s-code-head">settings.py</div><pre><code class="language-python">INSTALLED_APPS = [
+    # ...
+    &quot;rest_framework&quot;,
+    &quot;blog&quot;,
+]
+
+REST_FRAMEWORK = {
+    &quot;DEFAULT_PERMISSION_CLASSES&quot;: [
+        &quot;rest_framework.permissions.IsAuthenticatedOrReadOnly&quot;,   # o&#x27;qish — hammaga, yozish — kirganlarga
+    ],
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Serializer — tarjimon</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Serializatsiya:</b> model obyekti → dict → JSON (javob yuborish)</li><li class="lv0"><b>Deserializatsiya:</b> JSON → tekshirish → model obyekti (saqlash)</li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>Forma bilan o&#x27;xshash:</b> serializer — API uchun forma. U ham maydonlarni belgilaydi, tekshiradi va saqlaydi. <code>Form ↔ Serializer</code>, <code>ModelForm ↔ ModelSerializer</code>.</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>ModelSerializer</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/serializers.py</div><pre><code class="language-python">from rest_framework import serializers
+from .models import Maqola
+
+class MaqolaSerializer(serializers.ModelSerializer):
+    muallif = serializers.ReadOnlyField(source=&quot;muallif.username&quot;)
+    kategoriya_nomi = serializers.ReadOnlyField(source=&quot;kategoriya.nomi&quot;)
+
+    class Meta:
+        model = Maqola
+        fields = [&quot;id&quot;, &quot;sarlavha&quot;, &quot;matn&quot;, &quot;kategoriya&quot;, &quot;kategoriya_nomi&quot;,
+                  &quot;muallif&quot;, &quot;chop_etilgan&quot;, &quot;korishlar&quot;, &quot;yaratilgan&quot;]
+        read_only_fields = [&quot;korishlar&quot;, &quot;yaratilgan&quot;]
+
+    def validate_sarlavha(self, qiymat):
+        if len(qiymat.strip()) &lt; 5:
+            raise serializers.ValidationError(&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;)
+        return qiymat</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Shell&#x27;da sinash</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">m = Maqola.objects.first()
+MaqolaSerializer(m).data                                  # obyekt → dict
+MaqolaSerializer(Maqola.objects.all()[:2], many=True).data   # ro&#x27;yxat — many=True
+
+s = MaqolaSerializer(data={&quot;sarlavha&quot;: &quot;Hi&quot;, &quot;matn&quot;: &quot;...&quot;, &quot;kategoriya&quot;: 1})
+s.is_valid()     # False
+s.errors         # {&#x27;sarlavha&#x27;: [&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;]}</code></pre></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext">{&#x27;id&#x27;: 1, &#x27;sarlavha&#x27;: &quot;Futbol bo&#x27;yicha g&#x27;alaba&quot;, &#x27;kategoriya&#x27;: 1, &#x27;kategoriya_nomi&#x27;: &#x27;Sport&#x27;,
+ &#x27;muallif&#x27;: &#x27;admin&#x27;, &#x27;chop_etilgan&#x27;: True, &#x27;korishlar&#x27;: 12, &#x27;yaratilgan&#x27;: &#x27;2026-10-06T15:30:00+05:00&#x27;}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>API View: @api_view</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/api_views.py</div><pre><code class="language-python">from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view([&quot;GET&quot;, &quot;POST&quot;])
+def maqolalar_api(request):
+    if request.method == &quot;GET&quot;:
+        maqolalar = Maqola.objects.filter(chop_etilgan=True)
+        return Response(MaqolaSerializer(maqolalar, many=True).data)     # 200
+
+    serializer = MaqolaSerializer(data=request.data)                     # POST
+    if serializer.is_valid():
+        serializer.save(muallif=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED) # 201
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</code></pre></div><ul class="s-list"><li class="lv0">Kelgan JSON — <code>request.data</code> (<code>request.POST</code> emas!)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>API View: APIView (klass)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from rest_framework.views import APIView
+
+class MaqolalarAPI(APIView):
+    def get(self, request):
+        maqolalar = Maqola.objects.filter(chop_etilgan=True)
+        return Response(MaqolaSerializer(maqolalar, many=True).data)
+
+    def post(self, request):
+        serializer = MaqolaSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)     # xato → avtomatik 400
+        serializer.save(muallif=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)</code></pre></div><div class="s-code"><div class="s-code-head">blog/urls.py</div><pre><code class="language-python">path(&quot;api/maqolalar/&quot;, api_views.maqolalar_api, name=&quot;api_maqolalar&quot;),
+path(&quot;api/maqolalar/&lt;int:id&gt;/&quot;, api_views.maqola_api, name=&quot;api_maqola&quot;),</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>API&#x27;ni sinash</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>Brauzer:</b> <code>http://127.0.0.1:8000/api/maqolalar/</code> — DRF&#x27;ning chiroyli interaktiv sahifasi (JSON, status, POST forma)</li></ul><div class="s-code"><div class="s-code-head">curl</div><pre><code class="language-bash">curl http://127.0.0.1:8000/api/maqolalar/
+curl http://127.0.0.1:8000/api/maqolalar/1/</code></pre></div><div class="s-code"><div class="s-code-head">JavaScript (fetch)</div><pre><code class="language-javascript">fetch(&quot;http://127.0.0.1:8000/api/maqolalar/&quot;)
+  .then(javob =&gt; javob.json())
+  .then(maqolalar =&gt; maqolalar.forEach(m =&gt; console.log(m.sarlavha)));</code></pre></div><ul class="s-list"><li class="lv0">Professional vositalar: <b>Postman</b>, VS Code&#x27;dagi <b>Thunder Client</b></li></ul></div></div></section>
+<section class="slide" data-notes="5-topshiriq maslahati: serializers.IntegerField(source=&quot;maqolalar.count&quot;, read_only=True)"><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>DRF&#x27;ni o&#x27;rnating va sozlang</div></div><div class="s-step"><span class="n">2</span><div><code>serializers.py</code> — shell&#x27;da serializatsiya va validatsiya</div></div><div class="s-step"><span class="n">3</span><div><code>@api_view</code> bilan 2 ta endpoint</div></div><div class="s-step"><span class="n">4</span><div>Admin orqali kiring → brauzerdagi API&#x27;da <b>POST</b> → <b>201</b>; 3 belgili sarlavha → <b>400</b></div></div><div class="s-step"><span class="n">5</span><div><code>/api/kategoriyalar/</code> — har kategoriyada maqolalar soni</div></div><div class="s-code"><div class="s-code-head">JSON</div><pre><code class="language-json">{
+  &quot;sarlavha&quot;: &quot;API orqali yaratilgan maqola&quot;,
+  &quot;matn&quot;: &quot;Bu maqola DRF yordamida qo&#x27;shildi!&quot;,
+  &quot;kategoriya&quot;: 1
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>Object of type Maqola is not JSON serializable</code> — serializer&#x27;siz</li><li class="lv0">❌ Ro&#x27;yxat uchun <code>many=True</code> unutilgan</li><li class="lv0">❌ <code>serializer.data</code> ni <code>is_valid()</code> dan oldin o&#x27;qish</li><li class="lv0">❌ <code>&quot;rest_framework&quot;</code> <code>INSTALLED_APPS</code> da yo&#x27;q</li><li class="lv0">❌ POST → <b>403</b> — tizimga kirilmagan (<code>IsAuthenticatedOrReadOnly</code>)</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">REST API&#x27;da yangi resurs yaratish uchun qaysi HTTP metod?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>GET</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>POST</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>PUT</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>DELETE</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Muvaffaqiyatli yaratilgan resurs uchun status kod?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>200 OK</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>204 No Content</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>201 Created</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>302 Found</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Qaysi URL REST qoidalariga mos?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>/api/getAllMaqolalar/</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>/api/maqola/ochirish/5/</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>/api/maqolaYarat/</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>/api/maqolalar/5/</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">DRF view&#x27;ida kelgan JSON ma&#x27;lumot qayerda?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>request.POST</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>request.GET</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>request.data</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>request.json</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Kutubxona: <code>KitobSerializer</code> va <code>/api/kitoblar/</code> (GET, POST)</div></div><div class="s-step"><span class="n">2</span><div><code>https://api.github.com/users/torvalds</code> ni oching — JSON tuzilmasini tahlil qiling</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">API — dasturlar orasidagi interfeys; veb-API <b>JSON</b> qaytaradi</li><li class="lv0">REST: resurs — URL (ot, ko&#x27;plik), amal — <b>metod</b>, natija — <b>status kod</b></li><li class="lv0"><code>pip install djangorestframework</code> + <code>INSTALLED_APPS</code></li><li class="lv0"><code>ModelSerializer</code>; <code>validate_maydon()</code>; <code>many=True</code>; <code>is_valid()</code>, <code>save()</code>, <code>errors</code></li><li class="lv0"><code>@api_view</code> / <code>APIView</code> + <code>Response(data, status=...)</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>40. DRF yordamida REST API yaratish. CRUD API ishlab chiqish</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>39-drf-serializer.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../39-drf-serializer.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/39-drf-serializer.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "38-django-crud-loyiha.html", "next": "40-drf-crud-api.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

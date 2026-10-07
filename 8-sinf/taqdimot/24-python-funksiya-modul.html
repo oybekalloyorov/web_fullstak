@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>24-mavzu: Python funksiyalar, modullar va standart kutubxonalar — taqdimot</title>
+<meta name="description" content="def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko&#x27;rinish doirasi, docstring; o&#x27;z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🧰</div><div class="cover-kicker">24-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Python funksiyalar, modullar va standart kutubxonalar</h1><p>def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko&#x27;rinish doirasi, docstring; o&#x27;z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Funksiya yaratish: <code>def</code>, parametrlar, <code>return</code></li><li class="lv0">Standart qiymat, nomlangan argumentlar, <code>lambda</code></li><li class="lv0">Kodni <b>modullarga</b> bo&#x27;lish va <code>import</code></li><li class="lv0">Standart kutubxonalar: <code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code>, <code>os</code></li><li class="lv0"><code>pip</code> bilan tashqi kutubxonalar</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Funksiyalar: def</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">def salomlash(ism):
+    &quot;&quot;&quot;Berilgan ism bilan salomlashadi.&quot;&quot;&quot;     # docstring
+    print(f&quot;Assalomu alaykum, {ism}!&quot;)
+
+salomlash(&quot;Madina&quot;)
+
+def tortburchak_yuzi(eni, boyi):
+    return eni * boyi
+
+yuza = tortburchak_yuzi(5, 3)          # 15</code></pre></div><table class="s-table"><thead><tr><th>JavaScript</th><th>Python</th></tr></thead><tbody><tr><td><code>function qosh(a, b) { return a + b; }</code></td><td><code>def qosh(a, b): return a + b</code></td></tr><tr><td><code>const qosh = (a, b) =&gt; a + b;</code></td><td><code>qosh = lambda a, b: a + b</code></td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Parametrlar turlari</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">def darajaga(son, daraja=2):           # standart qiymat
+    return son ** daraja
+darajaga(5)        # 25
+darajaga(2, 10)    # 1024
+
+def anketa(ism, yosh, shahar=&quot;Toshkent&quot;):
+    print(f&quot;{ism}, {yosh} yosh, {shahar}&quot;)
+anketa(yosh=15, ism=&quot;Laylo&quot;, shahar=&quot;Xiva&quot;)   # nomlangan — tartib muhim emas
+
+def ortacha(*sonlar):                  # istalgan sonli argument → tuple
+    return sum(sonlar) / len(sonlar)
+ortacha(4, 5, 3, 5)                    # 4.25</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>lambda va scope</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">kvadrat = lambda x: x * x
+kvadrat(7)    # 49
+
+oquvchilar = [(&quot;Ali&quot;, 85), (&quot;Vali&quot;, 92), (&quot;Gani&quot;, 78)]
+oquvchilar.sort(key=lambda o: o[1], reverse=True)   # ball bo&#x27;yicha
+
+maktab = &quot;5-maktab&quot;          # global
+def tanishtir():
+    ism = &quot;Laylo&quot;            # lokal
+    print(ism, maktab)       # ✅
+# print(ism)                 ❌ NameError</code></pre></div><ul class="s-list"><li class="lv0"><b>Yaxshi funksiya:</b> ma&#x27;lumotni parametrdan oladi, natijani <code>return</code> qiladi; bitta vazifa; nomi fe&#x27;l</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Modullar — kodni fayllarga bo&#x27;lish</h2></header><div class="s-body cols"><div class="col"><div class="s-box analogy"><span class="ico">💡</span><div><b>Asboblar qutisi:</b> usta har safar bolg&#x27;a yasamaydi — tayyor qutidan oladi. Modul — bir marta yozilgan funksiyalar to&#x27;plami.</div></div><div class="s-code"><div class="s-code-head">geometriya.py</div><pre><code class="language-python">PI = 3.14159
+
+def doira_yuzi(r):
+    return PI * r ** 2</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">main.py</div><pre><code class="language-python">import geometriya
+geometriya.doira_yuzi(5)
+
+from geometriya import doira_yuzi
+doira_yuzi(5)
+
+import geometriya as g
+g.PI</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>if __name__ == &quot;__main__&quot;:</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">geometriya.py</div><pre><code class="language-python">def doira_yuzi(r):
+    return 3.14159 * r ** 2
+
+if __name__ == &quot;__main__&quot;:
+    # FAQAT fayl to&#x27;g&#x27;ridan-to&#x27;g&#x27;ri ishga tushirilganda bajariladi;
+    # import qilinganda — bajarilmaydi. Sinash uchun qulay.
+    print(&quot;Sinov:&quot;, doira_yuzi(2))</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div>O&#x27;z faylingizni <code>random.py</code>, <code>math.py</code> deb atamang — Python standart modul o&#x27;rniga sizning faylingizni oladi!</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>math va random</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import math
+math.sqrt(144)        # 12.0
+math.pi               # 3.141592653589793
+math.ceil(4.1)        # 5
+math.factorial(5)     # 120
+math.gcd(24, 36)      # 12 — EKUB
+
+import random
+random.randint(1, 6)                          # 🎲 1..6
+random.choice([&quot;tosh&quot;, &quot;qaychi&quot;, &quot;qog&#x27;oz&quot;])   # bittasi
+random.sample(range(1, 50), 6)                # 6 ta takrorsiz — lotereya
+random.shuffle(royxat)                        # aralashtirish</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>datetime — sana va vaqt</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from datetime import datetime, date, timedelta
+
+hozir = datetime.now()
+hozir.strftime(&quot;%d.%m.%Y %H:%M&quot;)     # 06.10.2026 14:35
+
+tugilgan = date(2012, 3, 21)
+bugun = date.today()
+print(&quot;Yashagan kunlar:&quot;, (bugun - tugilgan).days)
+print(&quot;Bir haftadan keyin:&quot;, bugun + timedelta(days=7))</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>json — ma&#x27;lumotlarni saqlash</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import json
+oquvchilar = [{&quot;ism&quot;: &quot;Ali&quot;, &quot;baho&quot;: 5}, {&quot;ism&quot;: &quot;Zarina&quot;, &quot;baho&quot;: 4}]
+
+with open(&quot;oquvchilar.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(oquvchilar, f, ensure_ascii=False, indent=2)
+
+with open(&quot;oquvchilar.json&quot;, encoding=&quot;utf-8&quot;) as f:
+    qayta = json.load(f)
+
+json.dumps({&quot;ok&quot;: True})     # matnga: &#x27;{&quot;ok&quot;: true}&#x27;
+json.loads(&#x27;{&quot;ok&quot;: true}&#x27;)   # matndan dict&#x27;ga</code></pre></div><ul class="s-list"><li class="lv0">JSON — dasturlar o&#x27;rtasida ma&#x27;lumot almashishning eng mashhur formati</li><li class="lv0"><code>ensure_ascii=False</code> — o&#x27;zbekcha harflar o&#x27;qiladigan holda; <code>indent=2</code> — chiroyli</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>os va pip</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import os
+os.getcwd()                          # joriy papka
+os.listdir(&quot;.&quot;)                      # fayllar ro&#x27;yxati
+os.path.exists(&quot;oquvchilar.json&quot;)    # bormi?
+os.makedirs(&quot;hisobotlar&quot;, exist_ok=True)</code></pre></div><div class="s-code"><div class="s-code-head">Terminal</div><pre><code class="language-bash">pip install requests     # PyPI&#x27;dan paket o&#x27;rnatish (500 000+ paket)
+pip install django       # 33-mavzuda!
+pip list</code></pre></div><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import requests
+javob = requests.get(&quot;https://api.github.com/users/torvalds&quot;)
+print(javob.json()[&quot;name&quot;])   # Linus Torvalds</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>O&#x27;z modulingiz</b> <code>yordamchi.py</code>: <code>son_sora(matn, eng_kichik, eng_katta)</code>, <code>tubmi(n)</code> → <code>main.py</code> da sinang</div></div><div class="s-step"><span class="n">2</span><div><b>Lotereya:</b> <code>random.sample</code> + foydalanuvchi sonlari → set kesishmasi</div></div><div class="s-step"><span class="n">3</span><div><b>Tug&#x27;ilgan kun:</b> necha kun yashadingiz, keyingisiga necha kun qoldi</div></div><div class="s-step"><span class="n">4</span><div><b>16-loyihani</b> JSON&#x27;ga saqlaydigan qiling: ishga tushganda <code>json.load</code>, o&#x27;zgarishdan keyin <code>json.dump</code></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ Funksiyani e&#x27;lon qilishdan <b>oldin</b> chaqirish</li><li class="lv0">❌ <code>return</code> unutilgan → <code>None</code></li><li class="lv0">❌ Faylni <code>random.py</code>, <code>math.py</code> deb atash</li><li class="lv0">❌ <code>ModuleNotFoundError: No module named &#x27;requests&#x27;</code> → <code>pip install requests</code></li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Python&#x27;da funksiya qaysi kalit so&#x27;z bilan yaratiladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>function</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>def</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>func</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>fn</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>def f(a, b=10): return a + b</code> — <code>f(5)</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>5</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Xato</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>15</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>10</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">1 dan 6 gacha tasodifiy butun son beruvchi kod?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>random.randint(1, 6)</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>random.random(6)</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>math.random(1, 6)</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>randint(6)</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Python dict&#x27;ni JSON faylga yozuvchi funksiya?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>json.load()</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>json.read()</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>file.json()</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>json.dump()</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Parol generatori:</b> <code>random</code> + <code>string</code> modullari</div></div><div class="s-step"><span class="n">2</span><div><b>&quot;Bugungi maslahat&quot;:</b> tasodifiy, JSON&#x27;da saqlanadi, bir kunda takrorlanmaydi</div></div><div class="s-step"><span class="n">3</span><div><code>matn_yordamchi.py</code>: so&#x27;zlar soni, unlilar soni, palindrom tekshiruvi</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>def nom(param, standart=qiymat): return natija</code>; <code>*args</code>; <code>lambda x: ...</code></li><li class="lv0">Modul — <code>.py</code> fayl: <code>import</code>, <code>from ... import</code>, <code>as</code></li><li class="lv0"><code>if __name__ == &quot;__main__&quot;:</code></li><li class="lv0"><code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code> (dump/load), <code>os</code></li><li class="lv0"><code>pip install nom</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>25. Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>24-python-funksiya-modul.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../24-python-funksiya-modul.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/24-python-funksiya-modul.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "23-python-list-tuple-set-dict.html", "next": "25-python-oop.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

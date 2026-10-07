@@ -1,0 +1,169 @@
+# Bugun nimani o'rganamiz?
+- **PostgreSQL** va **pgAdmin**'ni o'rnatish
+- Yangi ma'lumotlar bazasi yaratish
+- `CREATE TABLE` va ustun **turlarini** to'g'ri tanlash
+- **Cheklovlar:** `PRIMARY KEY`, `NOT NULL`, `UNIQUE`, `CHECK`, `REFERENCES`
+- Jadvalni o'zgartirish (`ALTER`) va o'chirish (`DROP`)
+---
+# PostgreSQL nima?
+= PostgreSQL 🐘 — eng ishonchli bepul, ochiq kodli relyatsion DBMS
+- Apple, Instagram, Spotify, Reddit ishlatadi; 35+ yillik tarix
+- **Server** sifatida fonda ishlaydi — dasturlar unga ulanib SQL yuboradi
+```text
+🖥️ pgAdmin / psql  ── SQL so'rov ──▶  🐘 PostgreSQL server  ──▶  🗄️ Bazalar
+  (siz yozasiz)                          (port 5432)              maktab, dokon
+```
+---
+# O'rnatish
+1. **postgresql.org/download** → installer (EDB)
+2. Komponentlar: **Server, pgAdmin 4, Command Line Tools**
+3. `postgres` foydalanuvchisi **parolini yozib qo'ying!**
+4. Port: **5432** — o'zgartirmang
+! O'rnatib bo'lmasa: **db-fiddle.com** (PostgreSQL) yoki **onecompiler.com/postgresql** — brauzerda ishlaydi
+---
+# pgAdmin va psql
+1. pgAdmin → **Servers → PostgreSQL** → parol
+2. **Databases** → o'ng tugma → **Create → Database** → `maktab`
+3. **Query Tool** → SQL yozing → **F5** bilan bajaring
+```sql psql
+CREATE DATABASE maktab;   -- baza yaratish
+\l                        -- bazalar ro'yxati
+\c maktab                 -- bazaga o'tish
+\dt                       -- jadvallar ro'yxati
+\d oquvchilar             -- jadval tuzilmasi
+\q                        -- chiqish
+```
+---
+# SQL yozish qoidalari
+- Har buyruq `;` bilan tugaydi
+- Kalit so'zlar — **KATTA**, nomlar — kichik (odat)
+- Matn — **bitta** qo'shtirnoqda: `'Ali'`; apostrof ikkilantiriladi: `'O''zbekiston'`
+- Izoh: `-- bir qator`, `/* ko'p qator */`
+- Nomlar: kichik lotin + pastki chiziq — `tugilgan_sana`
+---
+# Ma'lumot turlari
+| Tur | Nima uchun | Misol |
+|---|---|---|
+| `INTEGER` / `SMALLINT` | Butun son / kichik son | `14`, baho `5` |
+| `SERIAL` | Avtomatik 1, 2, 3... — **id uchun** | — |
+| `NUMERIC(10, 2)` | Aniq o'nlik — **pul** | `12500.50` |
+| `VARCHAR(n)` / `TEXT` | Cheklangan / cheksiz matn | ism / maqola |
+| `BOOLEAN` | Rost / yolg'on | `TRUE` |
+| `DATE` / `TIMESTAMP` | Sana / sana va vaqt | `'2012-03-15'` |
+---
+# Turni to'g'ri tanlash
+- **Pul** uchun `REAL` emas, `NUMERIC` — kasr sonlar aniq saqlanmaydi: 0.1 + 0.2 ≠ 0.3!
+- **Telefon** uchun `INTEGER` emas, `VARCHAR(20)` — `+` belgisi va boshidagi 0
+- **Sana**ni matn qilib saqlamang — `DATE` bilan solishtirish va hisoblash mumkin
+---
+# CREATE TABLE
+```sql
+CREATE TABLE sinflar (
+    id            SERIAL PRIMARY KEY,
+    nomi          VARCHAR(10) NOT NULL UNIQUE,
+    sinf_rahbari  VARCHAR(100),
+    xona          SMALLINT
+);
+
+CREATE TABLE oquvchilar (
+    id             SERIAL PRIMARY KEY,
+    ism            VARCHAR(50) NOT NULL,
+    familiya       VARCHAR(50) NOT NULL,
+    tugilgan_sana  DATE,
+    telefon        VARCHAR(20),
+    email          VARCHAR(100) UNIQUE,
+    alochi         BOOLEAN DEFAULT FALSE,
+    sinf_id        INTEGER REFERENCES sinflar(id),   -- tashqi kalit!
+    yaratilgan     TIMESTAMP DEFAULT NOW()
+);
+```
+---
+# Cheklovlar (constraints)
+| Cheklov | Ma'nosi |
+|---|---|
+| `PRIMARY KEY` | Noyob va bo'sh emas |
+| `NOT NULL` | Majburiy maydon |
+| `UNIQUE` | Takrorlanmas (bir xil email bo'lmaydi) |
+| `DEFAULT qiymat` | Berilmasa — shu qo'yiladi |
+| `CHECK (shart)` | `CHECK (baho BETWEEN 2 AND 5)` |
+| `REFERENCES t(u)` | Tashqi kalit |
+---
+# baholar jadvali va CASCADE
+```sql
+CREATE TABLE baholar (
+    id          SERIAL PRIMARY KEY,
+    oquvchi_id  INTEGER NOT NULL REFERENCES oquvchilar(id) ON DELETE CASCADE,
+    fan         VARCHAR(50) NOT NULL,
+    baho        SMALLINT NOT NULL CHECK (baho BETWEEN 2 AND 5),
+    sana        DATE NOT NULL DEFAULT CURRENT_DATE
+);
+```
+- `ON DELETE CASCADE` — o'quvchi o'chirilsa, baholari ham o'chadi (yetim yozuv qolmaydi)
+! Tartib: avval `sinflar`, keyin `oquvchilar`, keyin `baholar` — aks holda "relation does not exist"
+---
+# ALTER va DROP
+```sql
+ALTER TABLE oquvchilar ADD COLUMN manzil TEXT;
+ALTER TABLE oquvchilar RENAME COLUMN manzil TO yashash_joyi;
+ALTER TABLE oquvchilar ALTER COLUMN telefon TYPE VARCHAR(30);
+ALTER TABLE oquvchilar DROP COLUMN yashash_joyi;
+
+DROP TABLE baholar;          -- ⚠️ barcha ma'lumotlari bilan!
+```
+! `DROP TABLE` / `DROP DATABASE` — "Ctrl+Z" yo'q! Ikki marta o'ylang va zaxira nusxa oling (29-mavzu)
+---
+# Amaliyot
+1. PostgreSQL + pgAdmin'ni o'rnating (yoki db-fiddle.com)
+2. `maktab` bazasi → `sinflar`, `oquvchilar`, `baholar` jadvallari
+3. **Schemas → public → Tables** (F5) — jadvallarni ko'ring
+4. Mustaqil: `togaraklar` va `azoliklar` (N:M) jadvallari
+5. `jinsi` ustuni: faqat `'o''g''il'` yoki `'qiz'`
+```sql
+CREATE TABLE azoliklar (
+    oquvchi_id     INTEGER REFERENCES oquvchilar(id) ON DELETE CASCADE,
+    togarak_id     INTEGER REFERENCES togaraklar(id) ON DELETE CASCADE,
+    qoshilgan_sana DATE DEFAULT CURRENT_DATE,
+    PRIMARY KEY (oquvchi_id, togarak_id)    -- ikki marta yozilmasin
+);
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `relation "oquvchilar" does not exist` — jadval yo'q yoki boshqa bazadasiz
+- ❌ `syntax error at or near ")"` — oxirgi ustundan keyin ortiqcha vergul
+- ❌ `"Ali"` — qo'sh qo'shtirnoq ustun nomlari uchun; matn — `'Ali'`
+- ❌ `password authentication failed` — parol noto'g'ri
+---
+? Pul summasini saqlash uchun eng to'g'ri tur?
+o REAL
+o VARCHAR
++ NUMERIC(12, 2)
+o BOOLEAN
+---
+? Avtomatik 1, 2, 3... deb o'suvchi id ustuni uchun tur?
++ SERIAL
+o AUTO
+o COUNTER
+o TEXT
+---
+? Mavjud jadvalga yangi ustun qo'shuvchi buyruq?
+o `UPDATE TABLE ... ADD`
++ `ALTER TABLE ... ADD COLUMN`
+o `INSERT COLUMN`
+o `CREATE COLUMN`
+---
+? Telefon raqami (+998901234567) uchun eng mos tur?
+o INTEGER
+o NUMERIC
++ VARCHAR(20)
+o DATE
+---
+# 🏠 Uyga vazifa
+1. `dokon` bazasi: `toifalar`, `mahsulotlar` (narx — NUMERIC, soni ≥ 0, toifa_id FK), `mijozlar` (email UNIQUE)
+2. 26-mavzudagi **kutubxona** ER-diagrammasidan haqiqiy jadvallar
+---
+# ✅ Yodda tuting
+- PostgreSQL — server (5432); pgAdmin — grafik; psql — konsol
+- `CREATE DATABASE`, `CREATE TABLE nom (ustun TUR cheklovlar, ...)`
+- `SERIAL`, `INTEGER`, `NUMERIC`, `VARCHAR(n)`, `TEXT`, `BOOLEAN`, `DATE`, `TIMESTAMP`
+- `PRIMARY KEY`, `NOT NULL`, `UNIQUE`, `DEFAULT`, `CHECK`, `REFERENCES`
+- `ALTER TABLE` — o'zgartirish; `DROP TABLE` — qaytarib bo'lmaydi!

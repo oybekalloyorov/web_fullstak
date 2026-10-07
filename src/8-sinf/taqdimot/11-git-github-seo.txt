@@ -1,0 +1,168 @@
+# Bugun nimani o'rganamiz?
+- **Versiyalarni boshqarish** nima va nega kerak
+- Git buyruqlari: `init` `status` `add` `commit` `log`
+- **GitHub**'da repozitoriya va `push`
+- **GitHub Pages** — bepul hosting
+- **SEO** asoslari: Google'da yuqorida chiqish
+---
+# Versiyalarni boshqarish nima?
+- `referat.docx`, `referat_yangi.docx`, `referat_yangi_OXIRGI_2.docx`... Qaysi biri oxirgisi? 🤯
+= Git — loyihaning har bir saqlangan holatini eslab qoluvchi tizim
+> **O'yindagi "save":** qiyin bosqichdan oldin saqlaysiz, yutqazsangiz — o'sha nuqtaga qaytasiz. Git'dagi **commit** — xuddi shunday saqlash nuqtasi.
+---
+# Git nima beradi?
+- 📜 To'liq **tarix**: kim, qachon, nimani o'zgartirgan
+- ⏪ Xato qilsangiz — **oldingi holatga** qaytish
+- 👥 **Jamoa** bo'lib bir loyihada ishlash (13-mavzu)
+- ☁️ GitHub'da saqlash — kompyuter buzilsa ham loyiha yo'qolmaydi
+| | Git | GitHub |
+|---|---|---|
+| Nima | Dastur (kompyuterda) | Veb-sayt (github.com) |
+| Vazifasi | Versiyalarni saqlaydi | Loyihalarni internetda saqlaydi, ulashadi |
+| O'xshatish | Fotoapparat | Instagram |
+---
+# Git'ni o'rnatish va sozlash
+1. **git-scm.com** dan yuklab o'rnating (standart sozlamalar)
+2. VS Code: **Terminal → New Terminal** (Ctrl+`)
+3. Bir marta o'zingizni tanishtiring:
+```bash
+git --version
+git config --global user.name "Ismingiz Familiyangiz"
+git config --global user.email "sizning@gmail.com"
+```
+---
+# Uchta hudud
+```text
+📁 Ishchi papka  ── git add ──▶  📋 Staging  ── git commit ──▶  🗄️ Repozitoriya
+ (tahrirlayotgan     (suratga kiradigan        (saqlangan tarix)
+  fayllar)            fayllar)
+```
+> **Guruh surati:** ishchi papka — sinf xonasi; `git add` — suratga tushadiganlarni oldinga chaqirish; `git commit` — "chik!", surat albomga qo'shildi.
+---
+# Asosiy buyruqlar
+```bash
+git init                     # loyihada Git'ni yoqish (bir marta)
+git status                   # nima o'zgardi?
+git add index.html           # bitta faylni tayyorlash
+git add .                    # barcha o'zgarishlar
+git commit -m "Bosh sahifa va menyu qo'shildi"
+git log --oneline            # tarix
+```
+```output
+a3f9c2e Bosh sahifa va menyu qo'shildi
+1b7d004 Loyiha boshlandi
+```
+---
+# Yaxshi commit izohi
+= "fix", "o'zgarish", "asdf" ❌ → "Aloqa sahifasiga forma qo'shildi" ✅
+- Nima qilinganini **aniq** yozing
+- Kichik, mantiqiy qadamlar bilan **tez-tez** commit qiling
+- VS Code: **Source Control** paneli — `+` (add), izoh + ✓ (commit)
+---
+# GitHub'ga yuklash
+1. **github.com** da ro'yxatdan o'ting (nom — portfolio manzilingiz bo'ladi!)
+2. **+ → New repository** → nom: `portfolio`, Public → Create
+3. Terminalda:
+```bash
+git branch -M main
+git remote add origin https://github.com/USERNAME/portfolio.git
+git push -u origin main
+```
+4. Keyingi safar — uchta buyruq:
+```bash
+git add .
+git commit -m "Loyihalar bo'limi qo'shildi"
+git push
+```
+---
+# clone va pull
+```bash
+git clone https://github.com/USERNAME/portfolio.git   # yuklab olish
+git pull                                               # yangi o'zgarishlarni olish
+```
+- Maktabda ishladingiz → uyda `git pull` → davom etasiz
+! GitHub'ga **parollar**, shaxsiy ma'lumotlar, katta videolarni yuklamang — public repozitoriyani butun dunyo ko'radi
+---
+# Hosting: GitHub Pages
+1. Repozitoriyada **Settings → Pages**
+2. Source: **Deploy from a branch**, Branch: `main`, `/ (root)` → Save
+3. 1–2 daqiqadan so'ng: `https://USERNAME.github.io/portfolio/`
+! Bosh sahifa fayli aynan `index.html` bo'lishi kerak
+- 13-mavzuda: **Netlify** va **Vercel**
+---
+## SEO
+Google'da yuqorida chiqish — Search Engine Optimization
+---
+# SEO qoidalari
+| Qoida | Qanday |
+|---|---|
+| Mazmunli `<title>` | Har sahifada har xil, 50–60 belgi |
+| `meta description` | Natijadagi tavsif, 150–160 belgi |
+| Bitta `<h1>`, tartibli sarlavhalar | h1 → h2 → h3 |
+| Semantik teglar, rasmlarda `alt` | 4–5-mavzular |
+| Tushunarli manzillar | `/loyihalar.html` ✅ `/page1.html` ❌ |
+| Tezlik va mobilga moslik | Siqilgan rasmlar, responsiv |
+| **Sifatli mazmun** | Eng muhimi! |
+---
+# SEO: head va Lighthouse
+```html
+<head>
+  <title>Ali Valiyev — yosh veb-dasturchi portfoliosi</title>
+  <meta name="description"
+        content="8-sinf o'quvchisi Ali Valiyevning loyihalari: HTML, CSS va JavaScript.">
+  <html lang="uz">
+</head>
+```
+- **F12 → Lighthouse** → SEO + Performance → Analyze
+- **90+ ball** — a'lo natija; har bir muammo va yechim ko'rsatiladi
+---
+# Amaliyot (6 va 7-loyihalar)
+1. Git'ni o'rnating va sozlang
+2. `portfolio/` da `git init` → `git add .` → `git commit -m "..."`
+3. GitHub'da repozitoriya yarating va **push** qiling
+4. O'zgarish kiriting → yana add → commit → push; **commits** tarixini ko'ring
+5. **GitHub Pages**'ni yoqing va saytni telefondan oching
+6. `title` + `description` qo'shib, Lighthouse SEO ni **90+** ga yetkazing
+7. `README.md` — loyiha haqida qisqacha
+---
+# Ko'p uchraydigan xatolar
+- ❌ `git add` unutilgan → "nothing added to commit"
+- ❌ `git init` noto'g'ri papkada (butun Ish stoli!)
+- ❌ GitHub Pages ochilmaydi — bosh fayl `index.html` emas
+- ❌ Rasmlar ko'rinmaydi — `Logo.PNG` ≠ `logo.png`
+---
+? O'zgarishlarni "saqlash nuqtasi" sifatida tarixga yozuvchi buyruq?
+o `git add`
+o `git push`
++ `git commit`
+o `git init`
+---
+? Git va GitHub farqi nimada?
++ Git — kompyuterdagi dastur, GitHub — internetdagi sayt
+o Ular bir xil narsa
+o GitHub — dastur, Git — sayt
+o Git faqat internetda ishlaydi
+---
+? Lokal commit'larni GitHub'ga yuborish buyrug'i?
+o `git pull`
+o `git clone`
+o `git status`
++ `git push`
+---
+? SEO uchun foydali EMAS narsa qaysi?
+o Rasmlarda alt matni
+o Saytning telefonga moslashishi
++ Sahifada 5 ta h1 sarlavha
+o Tez yuklanish
+---
+# 🏠 Uyga vazifa
+1. Barcha loyihalarni alohida repozitoriyalarga joylang + GitHub Pages
+2. Har loyihada kamida **5 ta mazmunli commit**
+3. GitHub profilini bezang: rasm, bio, `USERNAME/USERNAME` profil README
+---
+# ✅ Yodda tuting
+- Git — versiyalar tizimi, GitHub — kodni internetda saqlash platformasi
+- Sikl: o'zgartirish → `git add .` → `git commit -m "..."` → `git push`
+- `git status`, `git log --oneline`, `git clone`, `git pull`
+- GitHub Pages: Settings → Pages → `main`
+- SEO: title, description, bitta h1, semantika, alt, tezlik, mobil, sifatli mazmun
