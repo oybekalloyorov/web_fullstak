@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web qanday ishlaydi — Full-Stack Qo&#x27;llanma</title>
+<title>Web qanday ishlaydi — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a class="active" href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌐</div><div><div class="crumb">01-dars · 14 tadan</div><h1>Web qanday ishlaydi</h1><p class="lead">Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌐</div><div><div class="crumb">01-dars · 14 tadan</div><h1>Web qanday ishlaydi</h1><p class="lead">Internet, mijoz-server modeli, DNS, HTTP protokoli, so&#x27;rov va javoblar, status kodlari hamda brauzer sahifani qanday chizishi.</p><div class="hero-level">Boshlang&#x27;ich · ~60 daqiqa</div></div></div>
 
 <p>Kod yozishni boshlashdan oldin eng muhim savolga javob topamiz: <b>brauzerga <code>google.com</code> deb yozib
 <kbd>Enter</kbd> bosganingizda aslida nima sodir bo'ladi?</b> Bu savolga chuqur javob bera olgan dasturchi
@@ -113,7 +114,7 @@ qo'shimcha texnologiyalar ishlatilishining sababi ham shu.</p>
 
 <h2 id="url-tuzilishi"><a class="anchor" href="#url-tuzilishi">#</a>URL tuzilishi</h2>
 <p><b>URL (Uniform Resource Locator)</b> — internetdagi resursning to'liq manzili. Uni qismlarga ajratib ko'ramiz:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">https://shop.example.uz:443/products/phones?brand=samsung&amp;sort=price#reviews
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">https://shop.example.uz:443/products/phones?brand=samsung&amp;sort=price#reviews
 └─┬──┘   └──────┬──────┘ └┬┘└──────┬──────┘ └──────────┬──────────┘ └──┬──┘
  sxema        host      port     yo&#x27;l (path)     so&#x27;rov satri (query)  fragment</code></pre></div>
 <div class="table-wrap"><table>
@@ -162,7 +163,7 @@ aylantiruvchi tizim.</p>
 Foydalanuvchi tizimga kirganini eslab qolish uchun cookie va tokenlar ishlatiladi (11-dars).</p>
 
 <h3>HTTP so'rovi (Request) tuzilishi</h3>
-<div class="code"><div class="code-head"><span>HTTP</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-http">POST /api/users HTTP/1.1
+<div class="code"><div class="code-head"><span>HTTP</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-http">POST /api/users HTTP/1.1
 Host: api.example.uz
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
@@ -179,7 +180,7 @@ Content-Length: 46
 </ol>
 
 <h3>HTTP javobi (Response) tuzilishi</h3>
-<div class="code"><div class="code-head"><span>HTTP</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-http">HTTP/1.1 201 Created
+<div class="code"><div class="code-head"><span>HTTP</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-http">HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 Location: /api/users/57
 Set-Cookie: session=abc123; HttpOnly; Secure
@@ -332,7 +333,7 @@ ko'rsatiladi. <b>Type</b> ustuni bo'yicha saralab, sahifa nechta rasm, skript va
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Terminal orqali HTTP so'rovlar yuborish (curl)</h3></div><div class="ex-body">
 <p><code>curl</code> — terminaldan HTTP so'rov yuboruvchi dastur. U Windows 10+, macOS va Linux'da o'rnatilgan bo'ladi.
 Brauzer "yashiradigan" narsalarni ko'rishning eng yaxshi usuli.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1. Oddiy GET so&#x27;rov — javob tanasini chiqaradi
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># 1. Oddiy GET so&#x27;rov — javob tanasini chiqaradi
 curl https://jsonplaceholder.typicode.com/users/1
 
 # 2. -i : javob sarlavhalarini ham ko&#x27;rsatish
@@ -353,7 +354,7 @@ curl -X POST https://jsonplaceholder.typicode.com/posts \
 # 6. Mavjud bo&#x27;lmagan resurs — 404 ni ko&#x27;rish
 curl -i https://jsonplaceholder.typicode.com/users/9999</code></pre></div>
 <p>5-buyruq natijasi:</p>
-<div class="code"><div class="code-head"><span>JSON</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-json">{
+<div class="code"><div class="code-head"><span>JSON</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
   &quot;title&quot;: &quot;Salom&quot;,
   &quot;body&quot;: &quot;Birinchi post&quot;,
   &quot;userId&quot;: 1,
@@ -364,7 +365,7 @@ siz 9-darsda o'zingiz yozasiz.</p>
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>DNS so'rovini qo'lda tekshirish</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Domen IP-manzilini bilish (Windows, macOS, Linux)
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Domen IP-manzilini bilish (Windows, macOS, Linux)
 nslookup github.com
 
 # Batafsil (macOS / Linux): A, MX, TXT yozuvlari
@@ -380,7 +381,7 @@ traceroute google.com     # macOS / Linux
 tracert google.com        # Windows</code></pre></div>
 <p><b>Tajriba:</b> o'z kompyuteringizdagi <code>hosts</code> faylini oching (Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>,
 macOS/Linux: <code>/etc/hosts</code>) va administrator huquqi bilan quyidagi qatorni qo'shing:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">127.0.0.1   mening-saytim.test</code></pre></div>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">127.0.0.1   mening-saytim.test</code></pre></div>
 <p>Endi brauzerda <code>http://mening-saytim.test</code> manzili sizning o'z kompyuteringizga (<code>localhost</code>) yo'naladi —
 chunki <code>hosts</code> fayli DNS'dan oldin tekshiriladi. Tajribadan keyin qatorni o'chirib qo'ying.</p>
 </div></div>
@@ -389,7 +390,7 @@ chunki <code>hosts</code> fayli DNS'dan oldin tekshiriladi. Tajribadan keyin qat
 <p>Server — bu sehr emas, shunchaki portni tinglab turuvchi dastur. Buni isbotlash uchun Node.js'ning o'rnatilgan
 <code>http</code> moduli bilan oddiy server yozamiz (Node.js 8-darsda batafsil o'rganiladi; hozir faqat
 <a href="https://nodejs.org" target="_blank" rel="noopener">o'rnating</a>).</p>
-<div class="code"><div class="code-head"><span>server.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const http = require(&#x27;http&#x27;);
+<div class="code"><div class="code-head"><span>server.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const http = require(&#x27;http&#x27;);
 
 const server = http.createServer((req, res) =&gt; {
   // Har bir kelgan so&#x27;rovni terminalga chiqaramiz
@@ -410,7 +411,7 @@ const server = http.createServer((req, res) =&gt; {
 
 server.listen(3000, () =&gt; console.log(&#x27;Server http://localhost:3000 da ishlayapti&#x27;));</code></pre></div>
 <p>Ishga tushirish:</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">node server.js
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">node server.js
 # Boshqa terminalda:
 curl -i http://localhost:3000/api/vaqt
 curl -i http://localhost:3000/yoq-sahifa</code></pre></div>

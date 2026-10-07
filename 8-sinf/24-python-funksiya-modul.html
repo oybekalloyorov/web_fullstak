@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python funksiyalar, modullar va standart kutubxonalar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko&#x27;rinish doirasi, docstring; o&#x27;z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a class="active" href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧰</div><div><div class="crumb">24-mavzu · 42 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Python funksiyalar, modullar va standart kutubxonalar</h1><p class="lead">def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko&#x27;rinish doirasi, docstring; o&#x27;z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python'da funksiya yaratish (<code>def</code>), parametrlar va <code>return</code>;</li>
+  <li>Standart qiymatli va nomlangan argumentlarni, <code>lambda</code>ni;</li>
+  <li>Kodni bir nechta faylga (modullarga) bo'lish va <code>import</code> qilishni;</li>
+  <li>Tayyor "asboblar qutisi" — standart kutubxonalarni: <code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code>, <code>os</code>;</li>
+  <li><code>pip</code> orqali internetdan qo'shimcha kutubxonalar o'rnatishni.</li>
+</ul>
+</div>
+
+<h2 id="funksiyalar"><a class="anchor" href="#funksiyalar">#</a>Funksiyalar</h2>
+<p>17-mavzuda JavaScript funksiyalarini o'rgandik. G'oya bir xil: <b>nomlangan, qayta ishlatiladigan kod bloki</b>. Python'da u <code>def</code> (define — aniqlash) bilan yaratiladi.</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">def salomlash(ism):
+    &quot;&quot;&quot;Berilgan ism bilan salomlashadi.&quot;&quot;&quot;      # docstring — funksiya hujjati
+    print(f&quot;Assalomu alaykum, {ism}!&quot;)
+
+salomlash(&quot;Madina&quot;)
+salomlash(&quot;Jasur&quot;)</code></pre></div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">def tortburchak_yuzi(eni, boyi):
+    return eni * boyi                 # natijani qaytaradi
+
+yuza = tortburchak_yuzi(5, 3)
+print(yuza)                            # 15
+print(tortburchak_yuzi(2, 2) + 10)     # 14</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>JavaScript</th><th>Python</th></tr>
+<tr><td><code>function qosh(a, b) { return a + b; }</code></td><td><code>def qosh(a, b):<br>&nbsp;&nbsp;&nbsp;&nbsp;return a + b</code></td></tr>
+<tr><td><code>const qosh = (a, b) =&gt; a + b;</code></td><td><code>qosh = lambda a, b: a + b</code></td></tr>
+</table></div>
+
+<h3>Parametrlar turlari</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python"># Standart qiymat
+def darajaga(son, daraja=2):
+    return son ** daraja
+
+print(darajaga(5))          # 25  — daraja=2 (standart)
+print(darajaga(2, 10))      # 1024
+
+# Nomlangan (kalitli) argumentlar — tartibni eslash shart emas
+def anketa(ism, yosh, shahar=&quot;Toshkent&quot;):
+    print(f&quot;{ism}, {yosh} yosh, {shahar}&quot;)
+
+anketa(&quot;Ali&quot;, 14)
+anketa(yosh=15, ism=&quot;Laylo&quot;, shahar=&quot;Xiva&quot;)
+
+# Istalgan sonli argumentlar
+def ortacha(*sonlar):              # *sonlar — barcha argumentlar tuple&#x27;ga yig&#x27;iladi
+    return sum(sonlar) / len(sonlar)
+
+print(ortacha(4, 5, 5, 3))          # 4.25
+
+# Bir nechta qiymat qaytarish (aslida tuple)
+def min_max(royxat):
+    return min(royxat), max(royxat)
+
+eng_kichik, eng_katta = min_max([7, 2, 9, 4])
+print(eng_kichik, eng_katta)        # 2 9</code></pre></div>
+
+<h3>lambda — kichik, nomsiz funksiya</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">kvadrat = lambda x: x * x
+print(kvadrat(7))                    # 49
+
+oquvchilar = [(&quot;Ali&quot;, 85), (&quot;Vali&quot;, 92), (&quot;Gani&quot;, 78)]
+oquvchilar.sort(key=lambda o: o[1], reverse=True)   # ball bo&#x27;yicha saralash
+print(oquvchilar)                    # [(&#x27;Vali&#x27;, 92), (&#x27;Ali&#x27;, 85), (&#x27;Gani&#x27;, 78)]</code></pre></div>
+<p><code>lambda</code> asosan saralash (<code>sort(key=...)</code>), <code>max(key=...)</code> kabi joylarda "bir martalik" funksiya sifatida ishlatiladi.</p>
+
+<h3>Ko'rinish doirasi (scope)</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">maktab = &quot;5-maktab&quot;           # global o&#x27;zgaruvchi
+
+def tanishtir():
+    ism = &quot;Laylo&quot;             # lokal — faqat funksiya ichida
+    print(ism, maktab)        # ✅ globalni o&#x27;qish mumkin
+
+tanishtir()
+# print(ism)                  # ❌ NameError</code></pre></div>
+<div class="callout tip"><span class="t">Yaxshi funksiya</span>
+Funksiya kerakli ma'lumotni <b>parametr orqali oladi</b> va natijani <b>return bilan qaytaradi</b>. Global o'zgaruvchilarni o'zgartiruvchi funksiyalar kodni chalkashtiradi.
+Har bir funksiya — bitta vazifa, nomi — fe'l: <code>hisobla_ortacha</code>, <code>tekshir_parol</code>.</div>
+
+<h2 id="modullar-kodni-fayllarga-bolish"><a class="anchor" href="#modullar-kodni-fayllarga-bolish">#</a>Modullar — kodni fayllarga bo'lish</h2>
+<p>Dastur kattalashgani sari hamma narsani bitta faylga yozish noqulay bo'ladi. <b>Modul</b> — bu shunchaki <code>.py</code> fayl. Undagi funksiyalarni boshqa faylda <code>import</code> bilan ishlatish mumkin.</p>
+<div class="analogy"><span class="t">O'xshatish: asboblar qutisi</span>
+Usta har safar bolg'a yasamaydi — tayyor qutidan oladi. Modul — sizning "asboblar qutingiz": bir marta yozilgan foydali funksiyalar to'plami.</div>
+<div class="code"><div class="code-head"><span>geometriya.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">PI = 3.14159
+
+def doira_yuzi(r):
+    return PI * r ** 2
+
+def doira_uzunligi(r):
+    return 2 * PI * r</code></pre></div>
+<div class="code"><div class="code-head"><span>main.py (xuddi shu papkada)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import geometriya                       # butun modulni ulash
+
+print(geometriya.doira_yuzi(5))
+print(geometriya.PI)
+
+from geometriya import doira_uzunligi   # faqat kerakli funksiyani
+print(doira_uzunligi(5))
+
+import geometriya as g                  # qisqa taxallus bilan
+print(g.doira_yuzi(1))</code></pre></div>
+<h3><code>if __name__ == "__main__":</code></h3>
+<div class="code"><div class="code-head"><span>geometriya.py (oxirida)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">if __name__ == &quot;__main__&quot;:
+    # Bu qism FAQAT fayl to&#x27;g&#x27;ridan-to&#x27;g&#x27;ri ishga tushirilganda bajariladi,
+    # boshqa fayl import qilganda — bajarilmaydi. Sinash (test) uchun qulay.
+    print(&quot;Sinov:&quot;, doira_yuzi(2))</code></pre></div>
+
+<h2 id="standart-kutubxona-batareyalar-bilan-birga"><a class="anchor" href="#standart-kutubxona-batareyalar-bilan-birga">#</a>Standart kutubxona — "batareyalar bilan birga"</h2>
+<p>Python bilan birga yuzlab tayyor modul keladi. Eng foydalilari:</p>
+<h3><code>math</code> — matematika</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import math
+print(math.sqrt(144))        # 12.0 — kvadrat ildiz
+print(math.pi)               # 3.141592653589793
+print(math.ceil(4.1))        # 5 — yuqoriga yaxlitlash
+print(math.floor(4.9))       # 4 — pastga
+print(math.factorial(5))     # 120
+print(math.gcd(24, 36))      # 12 — EKUB</code></pre></div>
+<h3><code>random</code> — tasodifiylik</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import random
+print(random.randint(1, 6))                    # 1..6 (ikkalasi ham kiradi) — o&#x27;yin kubigi
+print(random.random())                         # 0..1 oralig&#x27;idagi kasr
+print(random.choice([&quot;tosh&quot;, &quot;qaychi&quot;, &quot;qog&#x27;oz&quot;]))   # ro&#x27;yxatdan bittasi
+print(random.sample(range(1, 50), 6))          # 6 ta takrorlanmas son — lotereya
+royxat = [1, 2, 3, 4, 5]
+random.shuffle(royxat)                         # aralashtirish
+print(royxat)</code></pre></div>
+<h3><code>datetime</code> — sana va vaqt</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from datetime import datetime, date, timedelta
+
+hozir = datetime.now()
+print(hozir)                                    # 2026-10-06 14:35:12.123456
+print(hozir.strftime(&quot;%d.%m.%Y %H:%M&quot;))         # 06.10.2026 14:35 — formatlash
+print(hozir.year, hozir.month, hozir.day)
+
+tugilgan = date(2012, 3, 21)
+bugun = date.today()
+print(&quot;Yashagan kunlar:&quot;, (bugun - tugilgan).days)
+
+keyingi_hafta = bugun + timedelta(days=7)
+print(&quot;Bir haftadan keyin:&quot;, keyingi_hafta)</code></pre></div>
+<h3><code>json</code> — ma'lumotlarni saqlash va almashish</h3>
+<p><b>JSON</b> — dasturlar o'rtasida ma'lumot almashishning eng mashhur formati. Python dict/list ↔ JSON matn.</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import json
+
+oquvchilar = [{&quot;ism&quot;: &quot;Ali&quot;, &quot;baho&quot;: 5}, {&quot;ism&quot;: &quot;Zarina&quot;, &quot;baho&quot;: 4}]
+
+# Faylga saqlash
+with open(&quot;oquvchilar.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(oquvchilar, f, ensure_ascii=False, indent=2)
+
+# Fayldan o&#x27;qish
+with open(&quot;oquvchilar.json&quot;, encoding=&quot;utf-8&quot;) as f:
+    qayta = json.load(f)
+print(qayta[1][&quot;ism&quot;])          # Zarina
+
+# Matnga va matndan
+matn = json.dumps({&quot;ok&quot;: True})   # &#x27;{&quot;ok&quot;: true}&#x27;
+obj = json.loads(matn)</code></pre></div>
+<div class="code"><div class="code-head"><span>oquvchilar.json</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">[
+  {
+    &quot;ism&quot;: &quot;Ali&quot;,
+    &quot;baho&quot;: 5
+  },
+  {
+    &quot;ism&quot;: &quot;Zarina&quot;,
+    &quot;baho&quot;: 4
+  }
+]</code></pre></div>
+<div class="callout info"><code>ensure_ascii=False</code> — o'zbekcha harflar <code>‘</code> kabi kodlarga aylanmasdan, o'qiladigan holda saqlanadi. <code>indent=2</code> — chiroyli formatlash.</div>
+<h3><code>os</code> — fayllar va papkalar</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import os
+print(os.getcwd())                       # joriy papka
+print(os.listdir(&quot;.&quot;))                   # papkadagi fayllar ro&#x27;yxati
+print(os.path.exists(&quot;oquvchilar.json&quot;)) # fayl bormi?
+os.makedirs(&quot;hisobotlar&quot;, exist_ok=True) # papka yaratish</code></pre></div>
+
+<h2 id="pip-tashqi-kutubxonalar"><a class="anchor" href="#pip-tashqi-kutubxonalar">#</a>pip — tashqi kutubxonalar</h2>
+<p>Standart kutubxonadan tashqari, <a href="https://pypi.org" target="_blank" rel="noopener">PyPI</a> da 500 000 dan ortiq tayyor paket bor. Ular <code>pip</code> buyrug'i bilan o'rnatiladi:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">pip install requests          # internetdan ma&#x27;lumot olish
+pip install django            # 33-mavzuda!
+pip list                      # o&#x27;rnatilganlar ro&#x27;yxati
+pip uninstall requests</code></pre></div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import requests
+javob = requests.get(&quot;https://api.github.com/users/torvalds&quot;)
+print(javob.json()[&quot;name&quot;])     # Linus Torvalds</code></pre></div>
+<div class="callout warn"><span class="t">Virtual muhit (virtual environment)</span>
+Har bir loyiha uchun alohida "quti" yaratish tavsiya etiladi — shunda bir loyihaning paketlari boshqasiga xalaqit bermaydi. Buni 33-mavzuda Django o'rnatganda batafsil qilamiz:
+<code>python -m venv venv</code>.</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><b>O'z modulingiz.</b> <code>yordamchi.py</code> faylida quyidagi funksiyalarni yozing va <code>main.py</code> da import qilib sinang:
+<div class="code"><div class="code-head"><span>yordamchi.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">def son_sora(matn, eng_kichik=None, eng_katta=None):
+    &quot;&quot;&quot;To&#x27;g&#x27;ri butun son kiritilguncha so&#x27;raydi.&quot;&quot;&quot;
+    while True:
+        try:
+            son = int(input(matn))
+        except ValueError:
+            print(&quot;  Iltimos, butun son kiriting&quot;)
+            continue
+        if eng_kichik is not None and son &lt; eng_kichik:
+            print(f&quot;  Son {eng_kichik} dan kichik bo&#x27;lmasin&quot;)
+        elif eng_katta is not None and son &gt; eng_katta:
+            print(f&quot;  Son {eng_katta} dan katta bo&#x27;lmasin&quot;)
+        else:
+            return son
+
+def tubmi(n):
+    &quot;&quot;&quot;n tub son bo&#x27;lsa True qaytaradi.&quot;&quot;&quot;
+    if n &lt; 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def baho(ball):
+    if ball &gt;= 86: return 5
+    if ball &gt;= 71: return 4
+    if ball &gt;= 56: return 3
+    return 2
+
+
+if __name__ == &quot;__main__&quot;:
+    print([n for n in range(30) if tubmi(n)])</code></pre></div></li>
+  <li><b>Lotereya:</b> <code>random.sample</code> bilan 6 ta "yutuqli" son yarating, foydalanuvchidan 6 ta son so'rang (<code>son_sora</code> bilan, 1–49) va nechtasi to'g'ri kelganini ayting (set kesishmasi!).</li>
+  <li><b>Tug'ilgan kun hisoblagichi:</b> tug'ilgan sanani so'rab, necha kun yashaganingizni va keyingi tug'ilgan kuningizgacha necha kun qolganini <code>datetime</code> bilan hisoblang.</li>
+  <li><b>23-mavzudagi o'quvchilar dasturini</b> JSON faylga saqlaydigan qiling: dastur ishga tushganda <code>json.load</code>, har o'zgarishdan keyin <code>json.dump</code>.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Funksiyani e'lon qilishdan <b>oldin</b> chaqirish — Python faylni yuqoridan pastga o'qiydi.</li>
+  <li>❌ <code>return</code> unutilgan — funksiya <code>None</code> qaytaradi.</li>
+  <li>❌ O'z faylingizni standart modul nomi bilan atash: <code>random.py</code>, <code>math.py</code> — Python sizning faylingizni import qilib, xato beradi!</li>
+  <li>❌ <code>ModuleNotFoundError: No module named 'requests'</code> — paket o'rnatilmagan: <code>pip install requests</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Python'da funksiya qaysi kalit so'z bilan yaratiladi?</p><ol>
+<li><code>function</code></li><li><code>def</code></li><li><code>func</code></li><li><code>fn</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>def f(a, b=10): return a + b</code> — <code>f(5)</code> natijasi?</p><ol>
+<li>5</li><li>Xato</li><li>15</li><li>10</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">1 dan 6 gacha tasodifiy butun son beruvchi kod?</p><ol>
+<li><code>random.randint(1, 6)</code></li><li><code>random.random(6)</code></li><li><code>math.random(1, 6)</code></li><li><code>randint(6)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Python dict'ni JSON faylga yozuvchi funksiya?</p><ol>
+<li><code>json.load()</code></li><li><code>json.read()</code></li><li><code>file.json()</code></li><li><code>json.dump()</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Tashqi kutubxonani o'rnatish buyrug'i?</p><ol>
+<li><code>python get requests</code></li><li><code>pip install requests</code></li><li><code>import install requests</code></li><li><code>npm install requests</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Parol generatori:</b> <code>random</code> va <code>string</code> modullari yordamida berilgan uzunlikdagi (harf, raqam, belgi aralash) parol yaratuvchi funksiya.</li>
+  <li><b>Kunlik kvota:</b> "Bugungi maslahat" dasturi — 10 ta maslahatdan biri tasodifiy chiqsin, chiqqanlari JSON faylda saqlansin va bir kunda takrorlanmasin.</li>
+  <li>O'zingizning <code>matn_yordamchi.py</code> modulingizni yarating: so'zlar soni, unli harflar soni, palindrom tekshiruvi funksiyalari bilan.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>def nom(param, standart=qiymat): return natija</code>; nomlangan argumentlar; <code>*args</code>; <code>lambda x: ...</code>.</li>
+  <li>Modul — <code>.py</code> fayl: <code>import modul</code>, <code>from modul import f</code>, <code>import modul as m</code>; <code>if __name__ == "__main__":</code>.</li>
+  <li>Standart kutubxona: <code>math</code>, <code>random</code>, <code>datetime</code>, <code>json</code> (<code>dump/load</code>), <code>os</code>.</li>
+  <li>Tashqi paketlar: <code>pip install nom</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="23-python-list-tuple-set-dict.html"><small>← Oldingi mavzu</small>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a><a class="next" href="25-python-oop.html"><small>Keyingi mavzu →</small>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#funksiyalar">Funksiyalar</a></li><li><a href="#modullar-kodni-fayllarga-bolish">Modullar — kodni fayllarga bo&#x27;lish</a></li><li><a href="#standart-kutubxona-batareyalar-bilan-birga">Standart kutubxona — &quot;batareyalar bilan birga&quot;</a></li><li><a href="#pip-tashqi-kutubxonalar">pip — tashqi kutubxonalar</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

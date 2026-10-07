@@ -41,7 +41,7 @@
   // 4. Sintaksisni yoritish (highlight.js mavjud bo'lsa)
   if (window.hljs) {
     $$('.code code').forEach((el) => {
-      el.className = el.className.replace('language-jsx', 'language-javascript').replace('language-js', 'language-javascript');
+      el.className = el.className.replace(/\blanguage-jsx?\b/, 'language-javascript');
       try { hljs.highlightElement(el); } catch (e) {}
     });
   }
@@ -82,8 +82,9 @@
   });
 
   // 8. O'qilgan darslarni belgilash
-  const done = store.get('doneLessons', []);
-  const slugOf = (href) => (href.match(/darslar\/([\w-]+)\.html/) || [])[1];
+  const done = store.get('doneLessons2', []);
+  // Dars kaliti: 'darslar/01-...' yoki '8-sinf/05-...'
+  const slugOf = (href) => (href.match(/((?:darslar|8-sinf)\/\d[\w-]*)\.html/) || [])[1];
   const markDone = () => {
     $$('#lessonList a').forEach((a) => a.classList.toggle('done', done.includes(slugOf(a.href)) && !a.classList.contains('active')));
     $$('.cards .card').forEach((c) => c.classList.toggle('done', done.includes(slugOf(c.href))));
@@ -100,13 +101,95 @@
     btn.addEventListener('click', () => {
       const i = done.indexOf(current);
       i === -1 ? done.push(current) : done.splice(i, 1);
-      store.set('doneLessons', done);
+      store.set('doneLessons2', done);
       paint(); markDone();
     });
     const pager = $('.pager', lesson);
     lesson.insertBefore(btn, pager);
   }
   markDone();
+
+
+  // 9. "Sinab ko'rish" — HTML/CSS/JS kodini brauzerning o'zida tahrirlash va ishga tushirish
+  $$('.code[data-play] .run').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const block = btn.closest('.code');
+      let pg = block.nextElementSibling;
+      if (pg && pg.classList.contains('playground')) { pg.remove(); btn.textContent = '▶ Sinab ko\'rish'; return; }
+      const source = block.querySelector('code').innerText;
+      pg = document.createElement('div');
+      pg.className = 'playground';
+      pg.innerHTML = '<div class="pg-head"><span>✏️ Kodni o\'zgartiring — natija o\'ng tomonda darhol yangilanadi</span>' +
+        '<span><button type="button" data-act="reset">↺ Asl holiga</button> <button type="button" data-act="open">⧉ Yangi oynada</button></span></div>' +
+        '<div class="pg-body"><textarea spellcheck="false" aria-label="Kod muharriri"></textarea><iframe title="Natija" sandbox="allow-scripts allow-modals allow-forms allow-same-origin"></iframe></div>';
+      const ta = pg.querySelector('textarea');
+      const frame = pg.querySelector('iframe');
+      ta.value = source;
+      const lang = (block.querySelector('code').className.match(/language-(\w+)/) || [])[1];
+      const wrap = (code) => {
+        if (lang === 'css') return '<!doctype html><meta charset="utf-8"><style>' + code + '</style><body><h1>Sarlavha</h1><p>Paragraf matni</p><button>Tugma</button></body>';
+        if (lang === 'javascript' || lang === 'js') return '<!doctype html><meta charset="utf-8"><body style="font-family:system-ui"><pre id="out"></pre><script>' +
+          'const __o=document.getElementById("out");const __log=console.log;console.log=(...a)=>{__o.textContent+=a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" ")+"\\n";__log(...a)};' +
+          'window.onerror=(m)=>{__o.textContent+="❌ Xato: "+m+"\\n"};<\/script><script>' + code + '<\/script></body>';
+        return code.includes('<html') || code.includes('<!DOCTYPE') || code.includes('<!doctype') ? code : '<!doctype html><meta charset="utf-8">' + code;
+      };
+      let t;
+      const render = () => { frame.srcdoc = wrap(ta.value); };
+      ta.addEventListener('input', () => { clearTimeout(t); t = setTimeout(render, 350); });
+      ta.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = ta.selectionStart;
+          ta.setRangeText('  ', s, ta.selectionEnd, 'end');
+        }
+      });
+      pg.addEventListener('click', (e) => {
+        const act = e.target.dataset.act;
+        if (act === 'reset') { ta.value = source; render(); }
+        if (act === 'open') {
+          const url = URL.createObjectURL(new Blob([wrap(ta.value)], { type: 'text/html' }));
+          window.open(url, '_blank', 'noopener');
+        }
+      });
+      block.after(pg);
+      btn.textContent = '✕ Yopish';
+      render();
+    });
+  });
+
+  // 10. Interaktiv test savollari: <div class="quiz" data-answer="2"> (1 dan boshlab)
+  const quizzes = $$('.quiz');
+  if (quizzes.length) {
+    let right = 0, answered = 0;
+    let score = null;
+    if (quizzes.length >= 3) {
+      score = document.createElement('div');
+      score.className = 'quiz-score';
+      score.hidden = true;
+      quizzes[quizzes.length - 1].after(score);
+    }
+    quizzes.forEach((q) => {
+      const correct = Number(q.dataset.answer);
+      const items = $$('li', q);
+      items.forEach((li, i) => {
+        li.tabIndex = 0;
+        const choose = () => {
+          if (q.classList.contains('answered')) return;
+          q.classList.add('answered');
+          answered++;
+          if (i + 1 === correct) right++; else li.classList.add('wrong');
+          items[correct - 1] && items[correct - 1].classList.add('right');
+          if (score) {
+            score.hidden = false;
+            score.textContent = `Natija: ${right} / ${answered} to'g'ri` +
+              (answered === quizzes.length ? ` — ${right === quizzes.length ? 'A\'lo! 🏆' : right >= quizzes.length * 0.7 ? 'Yaxshi! 👍' : 'Mavzuni yana bir bor takrorlang 📖'}` : ` (jami ${quizzes.length} ta savol)`);
+          }
+        };
+        li.addEventListener('click', choose);
+        li.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+      });
+    });
+  }
 
   // Joriy darsni yon menyuda ko'rinadigan qilish
   const active = $('#lessonList a.active');

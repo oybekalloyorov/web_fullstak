@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="for, while, do...while sikllari, break va continue, cheksiz sikl xavfi; funksiya e&#x27;lon qilish, parametrlar, return, arrow funksiyalar, ko&#x27;rinish doirasi; kalkulyator va son topish o&#x27;yini.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a class="active" href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔁</div><div><div class="crumb">17-mavzu · 42 tadan · II bob. JavaScript asoslari</div><h1>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</h1><p class="lead">for, while, do...while sikllari, break va continue, cheksiz sikl xavfi; funksiya e&#x27;lon qilish, parametrlar, return, arrow funksiyalar, ko&#x27;rinish doirasi; kalkulyator va son topish o&#x27;yini.</p><div class="hero-level">2 soat · 1 nazariy + 1 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Bir xil ishni ko'p marta bajaruvchi <b>sikllarni</b>: <code>for</code>, <code>while</code>, <code>do...while</code>;</li>
+  <li>Siklni to'xtatish (<code>break</code>) va qadamni o'tkazib yuborish (<code>continue</code>);</li>
+  <li><b>Funksiya</b> — qayta ishlatiladigan kod bloki yaratishni;</li>
+  <li>Parametrlar, <code>return</code> va arrow funksiyalarni;</li>
+  <li>Kalkulyator va "Sonni top" o'yinini (9 va 10-loyihalar).</li>
+</ul>
+</div>
+
+<h2 id="nima-uchun-sikl-kerak"><a class="anchor" href="#nima-uchun-sikl-kerak">#</a>Nima uchun sikl kerak?</h2>
+<p>1 dan 100 gacha sonlarni chiqarish kerak. 100 qator <code>console.log</code> yozasizmi? Albatta yo'q! <b>Sikl</b> — kodni berilgan shart bajarilguncha
+<b>qayta-qayta</b> bajaruvchi konstruksiya.</p>
+<div class="analogy"><span class="t">O'xshatish: sport mashg'uloti</span>
+Murabbiy: "20 marta o'tirib-tur!" Siz har safar sanaysiz: 1, 2, 3... 20 ga yetganda to'xtaysiz. Bu — <code>for</code> sikli: boshlang'ich qiymat (1),
+shart (20 gacha) va qadam (har safar +1).</div>
+
+<h2 id="for-sikli"><a class="anchor" href="#for-sikli">#</a><code>for</code> sikli</h2>
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">for (boshlanish; shart; qadam) {
+  // takrorlanadigan kod (siklning &quot;tanasi&quot;)
+}</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">for (let i = 1; i &lt;= 5; i++) {
+  console.log(`${i}-marta o&#x27;tirib-turdim`);
+}
+console.log(&quot;Mashq tugadi! 💪&quot;);</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Qism</th><th>Kod</th><th>Ma'nosi</th></tr>
+<tr><td>Boshlanish</td><td><code>let i = 1</code></td><td>Hisoblagich 1 dan boshlanadi (bir marta bajariladi)</td></tr>
+<tr><td>Shart</td><td><code>i &lt;= 5</code></td><td>Har qadam oldidan tekshiriladi; <code>false</code> bo'lsa sikl tugaydi</td></tr>
+<tr><td>Qadam</td><td><code>i++</code></td><td>Har aylanishdan keyin i bittaga oshadi</td></tr>
+</table></div>
+<p><b>Qadamma-qadam:</b> i=1 → 1 ≤ 5? ha → chiqar → i=2 → ... → i=5 → chiqar → i=6 → 6 ≤ 5? yo'q → <b>tugadi</b>.</p>
+<h3>Turli sikllar</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Teskari sanash
+for (let i = 10; i &gt;= 1; i--) {
+  console.log(i);
+}
+console.log(&quot;🚀 Start!&quot;);
+
+// 2 qadam bilan: faqat juft sonlar
+for (let i = 2; i &lt;= 20; i += 2) {
+  console.log(i);
+}</code></pre></div>
+<h3>Yig'indi hisoblash — eng muhim namuna</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">let yigindi = 0;                // &quot;hamyon&quot; — avval bo&#x27;sh
+for (let i = 1; i &lt;= 100; i++) {
+  yigindi += i;                 // har bir sonni hamyonga qo&#x27;shamiz
+}
+console.log(`1 dan 100 gacha yig&#x27;indi: ${yigindi}`);   // 5050</code></pre></div>
+<p>Bu <b>akkumulyator</b> (yig'uvchi) namunasi: sikldan oldin 0 yoki bo'sh qiymatli o'zgaruvchi, sikl ichida unga qo'shib borish. Ko'p masalalarda kerak bo'ladi.</p>
+<h3>Ko'paytirish jadvali — sikl ichida sikl</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">for (let i = 1; i &lt;= 5; i++) {
+  let qator = &quot;&quot;;
+  for (let j = 1; j &lt;= 5; j++) {
+    qator += (i * j) + &quot;\t&quot;;      // \t — tabulyatsiya (bo&#x27;sh joy)
+  }
+  console.log(qator);
+}</code></pre></div>
+
+<h2 id="while-va-do-while"><a class="anchor" href="#while-va-do-while">#</a><code>while</code> va <code>do...while</code></h2>
+<p><code>while</code> — <b>nechta</b> qadam bo'lishini oldindan bilmaganimizda ishlatiladi: "shart rost ekan, takrorla".</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Pul jamg&#x27;arish: har oy 50 000 so&#x27;m, velosiped 400 000 so&#x27;m
+let jamgarma = 0;
+let oy = 0;
+while (jamgarma &lt; 400000) {
+  jamgarma += 50000;
+  oy++;
+}
+console.log(`${oy} oyda velosipedga pul yig&#x27;iladi 🚲`);</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// do...while — kamida BIR MARTA bajariladi, shart keyin tekshiriladi
+let parol;
+do {
+  parol = prompt(&quot;Kamida 6 belgili parol kiriting:&quot;);
+} while (parol !== null &amp;&amp; parol.length &lt; 6);
+console.log(parol ? &quot;Parol qabul qilindi ✅&quot; : &quot;Bekor qilindi&quot;);</code></pre></div>
+<div class="callout danger"><span class="t">Cheksiz sikl!</span>
+Agar shart <b>hech qachon</b> <code>false</code> bo'lmasa, sikl to'xtamaydi va brauzer "qotib" qoladi: <code>while (true) { }</code> yoki
+hisoblagichni oshirishni unutish: <code>let i = 0; while (i &lt; 5) { console.log(i); }</code> — <code>i++</code> yo'q! Shunday bo'lsa, brauzer yorlig'ini yoping.</div>
+
+<h3><code>break</code> va <code>continue</code></h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// break — siklni darhol TO&#x27;XTATISH
+for (let i = 1; i &lt;= 100; i++) {
+  if (i % 7 === 0 &amp;&amp; i % 5 === 0) {
+    console.log(`5 ga ham, 7 ga ham bo&#x27;linadigan birinchi son: ${i}`);
+    break;
+  }
+}
+
+// continue — joriy qadamni O&#x27;TKAZIB, keyingisiga o&#x27;tish
+for (let i = 1; i &lt;= 10; i++) {
+  if (i % 3 === 0) continue;     // 3 ga bo&#x27;linadiganlarni tashlab ketamiz
+  console.log(i);                // 1 2 4 5 7 8 10
+}</code></pre></div>
+
+<h2 id="funksiyalar"><a class="anchor" href="#funksiyalar">#</a>Funksiyalar</h2>
+<p><b>Funksiya</b> — nom berilgan, <b>qayta ishlatiladigan</b> kod bloki. Bir marta yozasiz — xohlagancha chaqirasiz.</p>
+<div class="analogy"><span class="t">O'xshatish: blender (mikser)</span>
+Blenderga meva <b>solasiz</b> (parametrlar), tugmani <b>bosasiz</b> (chaqirish), ichida maydalanadi (funksiya tanasi), va sizga <b>sharbat qaytaradi</b> (return).
+Har safar blender yasash shart emas — tayyor blenderdan foydalanasiz. Olma solsangiz — olma sharbati, banan solsangiz — banan sharbati.</div>
+<h3>Funksiya e'lon qilish va chaqirish</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// 1. E&#x27;lon qilish (yaratish) — hali hech narsa bajarilmaydi
+function salomlash() {
+  console.log(&quot;Assalomu alaykum!&quot;);
+  console.log(&quot;Darsga xush kelibsiz!&quot;);
+}
+
+// 2. Chaqirish — endi bajariladi
+salomlash();
+salomlash();   // xohlagancha marta</code></pre></div>
+<h3>Parametrlar — funksiyaga ma'lumot berish</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function salomlash(ism, sinf) {          // ism, sinf — parametrlar
+  console.log(`Salom, ${ism}! Siz ${sinf}-sinfdasiz.`);
+}
+
+salomlash(&quot;Aziza&quot;, 8);                   // &quot;Aziza&quot;, 8 — argumentlar
+salomlash(&quot;Bobur&quot;, 9);
+
+// Standart qiymat
+function xabar(matn, belgi = &quot;❗&quot;) {
+  console.log(belgi + &quot; &quot; + matn);
+}
+xabar(&quot;Ertaga nazorat ishi&quot;);            // ❗ Ertaga nazorat ishi
+xabar(&quot;Yangi dars&quot;, &quot;📢&quot;);                // 📢 Yangi dars</code></pre></div>
+<h3><code>return</code> — natija qaytarish</h3>
+<p><code>console.log</code> faqat ekranga chiqaradi. <code>return</code> esa natijani <b>qaytaradi</b> — uni o'zgaruvchiga saqlash va boshqa hisoblarda ishlatish mumkin.</p>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function kvadrat(son) {
+  return son * son;
+}
+
+const a = kvadrat(5);           // 25
+const b = kvadrat(3) + kvadrat(4);   // 9 + 16 = 25
+console.log(a, b);
+
+function bahoAniqla(ball) {
+  if (ball &gt;= 86) return 5;     // return funksiyani darhol TUGATADI
+  if (ball &gt;= 71) return 4;
+  if (ball &gt;= 56) return 3;
+  return 2;
+}
+console.log(bahoAniqla(92), bahoAniqla(60), bahoAniqla(30));</code></pre></div>
+<div class="callout info"><code>return</code> dan keyingi kod bajarilmaydi. <code>return</code>siz funksiya <code>undefined</code> qaytaradi.</div>
+
+<h3>Arrow (strelkali) funksiyalar — qisqa yozuv</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Oddiy funksiya
+function qoshish(a, b) {
+  return a + b;
+}
+
+// Arrow funksiya — xuddi shu narsa
+const qoshish2 = (a, b) =&gt; {
+  return a + b;
+};
+
+// Bitta ifoda bo&#x27;lsa — eng qisqa (return avtomatik)
+const qoshish3 = (a, b) =&gt; a + b;
+const ikkilantir = son =&gt; son * 2;      // bitta parametr — qavs ixtiyoriy
+
+console.log(qoshish(2, 3), qoshish2(2, 3), qoshish3(2, 3), ikkilantir(21));</code></pre></div>
+<p>Zamonaviy kodda arrow funksiyalar juda ko'p uchraydi, ayniqsa 18-mavzudagi massiv metodlari bilan.</p>
+
+<h3>Ko'rinish doirasi (scope)</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const maktab = &quot;5-maktab&quot;;          // global — hamma joyda ko&#x27;rinadi
+
+function tanishtir() {
+  const ism = &quot;Laylo&quot;;              // lokal — faqat funksiya ichida
+  console.log(`${ism}, ${maktab}`); // ✅ ikkalasi ham ko&#x27;rinadi
+}
+
+tanishtir();
+// console.log(ism);                // ❌ ReferenceError: ism is not defined</code></pre></div>
+<p>Funksiya ichida yaratilgan o'zgaruvchi — uning "shaxsiy xonasi". Tashqaridan unga kirib bo'lmaydi. Bu yaxshi: turli funksiyalar bir xil nomli o'zgaruvchilar bilan bir-biriga xalaqit bermaydi.</p>
+
+<h3>Yaxshi funksiya qoidalari</h3>
+<ul>
+  <li><b>Bitta funksiya — bitta vazifa.</b> <code>yuzaHisobla()</code> yuzani hisoblasin, chiqarmasin.</li>
+  <li><b>Nomi fe'l bilan:</b> <code>hisobla</code>, <code>tekshir</code>, <code>korsat</code>, <code>getBaho</code>.</li>
+  <li><b>Takrorlanadigan kodni funksiyaga chiqaring</b> (DRY — Don't Repeat Yourself).</li>
+</ul>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<h3>1. Kalkulyator (9-loyiha, konsol versiyasi)</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function hisobla(a, amal, b) {
+  switch (amal) {
+    case &quot;+&quot;: return a + b;
+    case &quot;-&quot;: return a - b;
+    case &quot;*&quot;: return a * b;
+    case &quot;/&quot;:
+      if (b === 0) return &quot;Nolga bo&#x27;lib bo&#x27;lmaydi!&quot;;
+      return a / b;
+    case &quot;%&quot;: return a % b;
+    case &quot;^&quot;: return a ** b;
+    default:  return &quot;Noma&#x27;lum amal&quot;;
+  }
+}
+
+let davom = true;
+while (davom) {
+  const a = Number(prompt(&quot;Birinchi son:&quot;));
+  const amal = prompt(&quot;Amal (+ - * / % ^):&quot;);
+  const b = Number(prompt(&quot;Ikkinchi son:&quot;));
+
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    alert(&quot;Iltimos, son kiriting!&quot;);
+  } else {
+    alert(`${a} ${amal} ${b} = ${hisobla(a, amal, b)}`);
+  }
+  davom = confirm(&quot;Yana hisoblaymizmi?&quot;);
+}</code></pre></div>
+<h3>2. "Sonni top" o'yini (10-loyiha)</h3>
+<div class="code" data-play><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const yashirinSon = Math.floor(Math.random() * 100) + 1;   // 1..100
+const MAKS_URINISH = 7;
+let urinish = 0;
+let topildi = false;
+
+alert(&quot;Men 1 dan 100 gacha son o&#x27;yladim. Topa olasizmi? Sizda 7 ta urinish bor!&quot;);
+
+while (urinish &lt; MAKS_URINISH &amp;&amp; !topildi) {
+  const javob = prompt(`${urinish + 1}-urinish. Sizning taxminingiz:`);
+  if (javob === null) break;                 // &quot;Bekor qilish&quot; bosildi
+  const son = Number(javob);
+  urinish++;
+
+  if (son === yashirinSon) {
+    topildi = true;
+    alert(`🎉 Topdingiz! Bu ${yashirinSon} edi. Urinishlar: ${urinish}`);
+  } else if (son &lt; yashirinSon) {
+    alert(&quot;⬆️ Kattaroq son o&#x27;ylang&quot;);
+  } else {
+    alert(&quot;⬇️ Kichikroq son o&#x27;ylang&quot;);
+  }
+}
+
+if (!topildi) alert(`😔 Urinishlar tugadi. Javob: ${yashirinSon}`);</code></pre></div>
+<p><b>Savol:</b> nima uchun 7 ta urinish 1–100 oralig'i uchun doim yetarli? (Maslahat: har safar o'rtadagi sonni ayting — oraliq ikki baravar qisqaradi. Bu <b>ikkilik qidiruv</b> algoritmi.)</p>
+<h3>3. Mustaqil topshiriqlar</h3>
+<ol class="steps">
+  <li><code>faktorial(n)</code> funksiyasini yozing: 5! = 1·2·3·4·5 = 120.</li>
+  <li><code>tubmi(n)</code> — son tub ekanini tekshiruvchi funksiya (faqat 1 ga va o'ziga bo'linadi). Uning yordamida 1–100 oralig'idagi barcha tub sonlarni chiqaring.</li>
+  <li><b>FizzBuzz</b> (dasturchilar suhbatida mashhur savol): 1 dan 30 gacha sonlarni chiqaring, lekin 3 ga bo'linsa "Fizz", 5 ga — "Buzz", ikkalasiga — "FizzBuzz".</li>
+  <li><code>yulduzlar(n)</code> — <code>n</code> qatorli uchburchak chizsin: <code>*</code>, <code>**</code>, <code>***</code>...</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Funksiyani e'lon qilib, chaqirishni unutish (yoki <code>salomlash</code> deb, qavssiz yozish).</li>
+  <li>❌ <code>return</code> o'rniga <code>console.log</code> — natijani boshqa hisoblarda ishlatib bo'lmaydi (<code>undefined</code>).</li>
+  <li>❌ Sikl shartida xato: <code>for (let i = 0; i &lt;= 10; i--)</code> — i kamayib boradi, shart doim rost → cheksiz sikl.</li>
+  <li>❌ <code>for (let i = 1; i &lt; 10; i++)</code> 10 ni ham chiqaradi deb o'ylash — <code>&lt;</code> va <code>&lt;=</code> farqiga e'tibor bering.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q"><code>for (let i = 0; i &lt; 5; i++)</code> sikli necha marta bajariladi?</p><ol>
+<li>4</li><li>6</li><li>5</li><li>Cheksiz</li></ol>
+<p class="explain">i = 0, 1, 2, 3, 4 → 5 marta.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Siklni darhol to'xtatuvchi kalit so'z?</p><ol>
+<li><code>break</code></li><li><code>continue</code></li><li><code>stop</code></li><li><code>return</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Kamida bir marta bajarilishi kafolatlangan sikl qaysi?</p><ol>
+<li><code>for</code></li><li><code>while</code></li><li><code>if</code></li><li><code>do...while</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>const f = x =&gt; x * 3; console.log(f(4));</code> natijasi?</p><ol>
+<li>7</li><li>12</li><li>43</li><li>undefined</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Funksiya natijasini chaqirgan joyga qaytaruvchi kalit so'z?</p><ol>
+<li><code>console.log</code></li><li><code>break</code></li><li><code>return</code></li><li><code>output</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Quyidagi kod nima chiqaradi? <code>let s = 0; for (let i = 1; i &lt;= 4; i++) s += i; console.log(s);</code></p><ol>
+<li>4</li><li>10</li><li>24</li><li>1234</li></ol>
+<p class="explain">1 + 2 + 3 + 4 = 10.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kalkulyatorga "tarix" qo'shing: barcha hisob-kitoblar bir satrga yig'ilib, oxirida ko'rsatilsin.</li>
+  <li>"Sonni top" o'yiniga qiyinlik darajasini qo'shing: oson (1–20, 5 urinish), o'rta (1–100, 7), qiyin (1–1000, 10).</li>
+  <li><code>raqamlarYigindisi(n)</code> funksiyasini yozing: 1234 → 1+2+3+4 = 10. (Maslahat: <code>% 10</code> va <code>Math.floor(n / 10)</code>.)</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>for (let i = 1; i &lt;= n; i++)</code> — necha marta takrorlash ma'lum bo'lsa; <code>while (shart)</code> — noma'lum bo'lsa; <code>do...while</code> — kamida bir marta.</li>
+  <li><code>break</code> — to'xtatish, <code>continue</code> — keyingi qadamga o'tish. Cheksiz sikldan ehtiyot bo'ling.</li>
+  <li>Funksiya: <code>function nom(param) { return natija; }</code> yoki <code>const nom = (param) =&gt; natija;</code></li>
+  <li><code>return</code> natija qaytaradi va funksiyani tugatadi. Funksiya ichidagi o'zgaruvchilar — lokal.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="16-js-operatorlar-shartlar.html"><small>← Oldingi mavzu</small>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a><a class="next" href="18-js-massiv-obyekt.html"><small>Keyingi mavzu →</small>Arraylar (massivlar) va obyektlar bilan ishlash</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#nima-uchun-sikl-kerak">Nima uchun sikl kerak?</a></li><li><a href="#for-sikli">for sikli</a></li><li><a href="#while-va-do-while">while va do...while</a></li><li><a href="#funksiyalar">Funksiyalar</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

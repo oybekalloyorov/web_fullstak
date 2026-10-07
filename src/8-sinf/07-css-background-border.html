@@ -1,0 +1,270 @@
+<!-- title: CSS background va border xossalari | desc: Fon rangi, fon rasmi, takrorlanish, joylashuv va o'lcham (cover/contain), gradientlar; chegaralar: qalinlik, uslub, rang, border-radius, box-shadow va outline. | icon: 🖼️ | level: 1 soat · amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Elementlarga fon rangi, fon rasmi va gradient berishni;</li>
+  <li>Fon rasmini to'g'ri joylashtirish va o'lchamlashni (<code>cover</code>, <code>contain</code>);</li>
+  <li>Chegaralar (border) yaratish, ularning uslublari va yumaloq burchaklarni;</li>
+  <li>Soyalar (<code>box-shadow</code>) bilan "kartochka" dizaynini yaratishni.</li>
+</ul>
+</div>
+
+<h2>Fon rangi — <code>background-color</code></h2>
+<pre data-lang="html" data-play><style>
+  body { background-color: #f1f5f9; }
+  .quti { background-color: #4f46e5; color: white; padding: 20px; }
+  .shaffof { background-color: rgba(79, 70, 229, 0.2); padding: 20px; }
+</style>
+<div class="quti">To'q ko'k fonli quti</div>
+<div class="shaffof">Yarim shaffof fonli quti (rgba)</div></pre>
+<div class="callout tip"><code>padding</code> — matn va chegara orasidagi ichki bo'shliq. Usiz matn fon chetiga yopishib qoladi. Batafsil — keyingi mavzuda.</div>
+
+<h2>Fon rasmi — <code>background-image</code></h2>
+<pre data-lang="html" data-play><style>
+  .banner {
+    height: 250px;
+    background-image: url("https://picsum.photos/seed/tog/1200/600");
+    background-size: cover;          /* rasmni butun maydonga yoyish */
+    background-position: center;     /* rasmning markazini ko'rsatish */
+    background-repeat: no-repeat;    /* takrorlamaslik */
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  }
+</style>
+<div class="banner">Tog'larga sayohat</div></pre>
+<div class="table-wrap"><table>
+<tr><th>Xossa</th><th>Qiymatlar</th><th>Vazifasi</th></tr>
+<tr><td><code>background-image</code></td><td><code>url("rasm.jpg")</code></td><td>Fon rasmi (yo'l nisbiy: CSS fayldan hisoblanadi!)</td></tr>
+<tr><td><code>background-repeat</code></td><td><code>repeat</code> | <code>no-repeat</code> | <code>repeat-x</code> | <code>repeat-y</code></td><td>Rasm kichik bo'lsa takrorlanishi</td></tr>
+<tr><td><code>background-position</code></td><td><code>center</code>, <code>top right</code>, <code>50% 20%</code></td><td>Rasmning qaysi qismi ko'rinadi</td></tr>
+<tr><td><code>background-size</code></td><td><code>cover</code> | <code>contain</code> | <code>200px 100px</code> | <code>50%</code></td><td>Rasm o'lchami</td></tr>
+<tr><td><code>background-attachment</code></td><td><code>scroll</code> | <code>fixed</code></td><td><code>fixed</code> — sahifa aylantirilganda fon joyida qoladi (parallax effekti)</td></tr>
+</table></div>
+<h3><code>cover</code> va <code>contain</code> farqi</h3>
+<pre data-lang="html" data-play><style>
+  .q { width: 300px; height: 150px; border: 3px solid #333; display: inline-block; margin: 8px;
+       background: #fde68a url("https://picsum.photos/seed/olma/400/400") no-repeat center; }
+  .cover { background-size: cover; }
+  .contain { background-size: contain; }
+</style>
+<div class="q cover"></div>
+<div class="q contain"></div>
+<p><b>cover</b> (chapda): butun qutini to'ldiradi, ortiqcha qismi kesiladi.<br>
+<b>contain</b> (o'ngda): rasm to'liq ko'rinadi, lekin bo'sh joy qolishi mumkin.</p></pre>
+<div class="analogy"><span class="t">O'xshatish</span>
+<b>cover</b> — telefonga devor qog'ozi (oboy) qo'yish: ekran to'ladi, rasmning chetlari kesiladi. <b>contain</b> — rasmni ramkaga qo'yish:
+rasm butunligicha ko'rinadi, lekin atrofida bo'sh joy qoladi.</div>
+<div class="callout warn"><span class="t">Fon rasmi yo'li</span>
+<code>url()</code> ichidagi yo'l <b>CSS faylga nisbatan</b> hisoblanadi. Agar CSS <code>css/style.css</code> da, rasm <code>rasmlar/fon.jpg</code> da bo'lsa:
+<code>url("../rasmlar/fon.jpg")</code>.</div>
+
+<h3>Qisqa yozuv (shorthand)</h3>
+<pre data-lang="css">/* Uzun yozuv */
+.banner {
+  background-color: #1e293b;
+  background-image: url("fon.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* Qisqa yozuv — hammasi bitta qatorda (size "/" belgisidan keyin) */
+.banner {
+  background: #1e293b url("fon.jpg") no-repeat center / cover;
+}</pre>
+
+<h2>Gradientlar</h2>
+<p><b>Gradient</b> — bir rangdan boshqasiga silliq o'tish. U ham fon rasmi sifatida ishlaydi.</p>
+<pre data-lang="html" data-play><style>
+  .g { height: 70px; margin: 8px 0; border-radius: 10px; color: white; font-weight: bold; padding: 10px; }
+  .g1 { background: linear-gradient(to right, #4f46e5, #06b6d4); }
+  .g2 { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6); }
+  .g3 { background: radial-gradient(circle, #fde047, #f97316); color: #333; }
+  .g4 { background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url("https://picsum.photos/seed/shahar/800/200") center / cover; }
+</style>
+<div class="g g1">linear-gradient: chapdan o'ngga</div>
+<div class="g g2">135° burchak ostida 3 ta rang</div>
+<div class="g g3">radial-gradient: markazdan atrofga</div>
+<div class="g g4">Rasm ustida qoraytiruvchi gradient — matn o'qilishi oson</div></pre>
+<p>Oxirgi usul juda ko'p ishlatiladi: rasm ustiga yarim shaffof qora qatlam qo'yilsa, oq matn har qanday rasmda ham yaxshi o'qiladi.</p>
+
+<h2>Chegaralar — <code>border</code></h2>
+<p>Chegara uchta qismdan iborat: <b>qalinlik</b>, <b>uslub</b> va <b>rang</b>.</p>
+<pre data-lang="html" data-play><style>
+  div { padding: 10px; margin: 10px 0; }
+  .b1 { border: 2px solid #4f46e5; }
+  .b2 { border: 3px dashed tomato; }
+  .b3 { border: 4px dotted green; }
+  .b4 { border: 6px double #333; }
+  .b5 { border: 6px groove #aaa; }
+  .b6 { border-bottom: 3px solid orange; }                /* faqat pastki */
+  .b7 { border-left: 6px solid #4f46e5; background: #eef2ff; }  /* "eslatma" uslubi */
+  .b8 { border-width: 1px 4px 8px 12px; border-style: solid; border-color: crimson; }  /* tepa o'ng past chap */
+</style>
+<div class="b1">solid — yaxlit chiziq</div>
+<div class="b2">dashed — shtrix</div>
+<div class="b3">dotted — nuqtali</div>
+<div class="b4">double — qo'sh chiziq</div>
+<div class="b5">groove — o'yilgan</div>
+<div class="b6">Faqat pastki chegara</div>
+<div class="b7">Chap tomonda qalin chiziq — eslatma bloki</div>
+<div class="b8">Har tomonda har xil qalinlik</div></pre>
+<div class="callout info"><span class="t">Soat strelkasi qoidasi</span>
+To'rt tomonli qiymatlar doim <b>tepa → o'ng → past → chap</b> tartibida yoziladi (soat strelkasi bo'yicha, 12 dan boshlab).
+Bu qoida <code>margin</code> va <code>padding</code> uchun ham amal qiladi.</div>
+
+<h3>Yumaloq burchaklar — <code>border-radius</code></h3>
+<pre data-lang="html" data-play><style>
+  .r { width: 120px; height: 120px; background: #4f46e5; color: white; display: inline-grid; place-items: center; margin: 6px; font-size: 13px; }
+  .r1 { border-radius: 10px; }
+  .r2 { border-radius: 30px; }
+  .r3 { border-radius: 50%; }                  /* doira! */
+  .r4 { border-radius: 40px 0 40px 0; }        /* barg shakli */
+  .r5 { width: 160px; height: 50px; border-radius: 999px; }  /* "tabletka" tugma */
+  img.avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 0 0 3px #4f46e5; }
+</style>
+<div class="r r1">10px</div>
+<div class="r r2">30px</div>
+<div class="r r3">50% — doira</div>
+<div class="r r4">barg</div>
+<div class="r r5">tabletka</div>
+<br>
+<img class="avatar" src="https://picsum.photos/seed/avatar/200" alt="Profil rasmi"></pre>
+<p><code>border-radius: 50%</code> + teng kenglik va balandlik = <b>doira</b>. Profil rasmlari aynan shunday qilinadi.</p>
+
+<h2>Soyalar — <code>box-shadow</code></h2>
+<pre data-lang="css">box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/*          │  │   │    └ rang (yarim shaffof qora — eng tabiiy ko'rinadi)
+            │  │   └ xiralik (blur) — qancha katta, shuncha yumshoq
+            │  └ pastga siljish (y)
+            └ o'ngga siljish (x)                                       */</pre>
+<pre data-lang="html" data-play><style>
+  body { background: #f1f5f9; font-family: sans-serif; }
+  .s { background: white; padding: 20px; margin: 18px; border-radius: 12px; display: inline-block; width: 180px; }
+  .s1 { box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .s2 { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .s3 { box-shadow: 0 20px 40px rgba(79,70,229,.35); }
+  .s4 { box-shadow: inset 0 2px 6px rgba(0,0,0,.2); }   /* ichki soya */
+</style>
+<div class="s s1">Yengil soya</div>
+<div class="s s2">O'rtacha soya</div>
+<div class="s s3">Rangli kuchli soya</div>
+<div class="s s4">Ichki soya (inset)</div></pre>
+<p><code>outline</code> — chegaraga o'xshaydi, lekin joy egallamaydi. Brauzer klaviatura bilan tanlangan elementni (<kbd>Tab</kbd>) shu bilan ko'rsatadi —
+uni <code>outline: none</code> bilan butunlay o'chirib qo'ymang, aks holda klaviaturadan foydalanuvchilar qayerdaligini bilmay qoladi.</p>
+
+<h2>Amaliy mashg'ulot: "O'quvchi kartochkasi"</h2>
+<p>Ko'plab zamonaviy saytlardagi "karta" (card) dizaynini o'rganilgan xossalar bilan yaratamiz.</p>
+<ol class="steps">
+  <li><code>karta.html</code> va <code>karta.css</code> fayllarini yarating, CSS'ni HTML'ga ulang.</li>
+  <li>HTML tuzilmasini yozing:
+<pre data-lang="html" data-title="karta.html"><body>
+  <article class="karta">
+    <div class="karta-fon"></div>
+    <img class="karta-avatar" src="https://picsum.photos/seed/oquvchi/200" alt="Malika Karimova surati">
+    <h2>Malika Karimova</h2>
+    <p class="karta-sinf">8-"A" sinf · Frontend yo'nalishi</p>
+    <p class="karta-matn">HTML va CSS bilan chiroyli sahifalar yaratishni yaxshi ko'raman.
+       Maqsadim — o'z maktabim uchun sayt yaratish.</p>
+    <a class="karta-tugma" href="#">Portfolioni ko'rish</a>
+  </article>
+</body></pre></li>
+  <li>CSS'ni yozing:
+<pre data-lang="html" data-title="Natijani sinab ko'ring" data-play><style>
+body {
+  background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px;
+}
+.karta {
+  width: 320px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(79, 70, 229, 0.2);
+  text-align: center;
+  padding-bottom: 28px;
+  overflow: hidden;              /* fon rasmi burchaklardan chiqib ketmasin */
+}
+.karta-fon {
+  height: 110px;
+  background: linear-gradient(rgba(79,70,229,.6), rgba(236,72,153,.6)),
+              url("https://picsum.photos/seed/kutubxona/640/220") center / cover;
+}
+.karta-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 5px solid white;
+  margin-top: -55px;             /* rasmni fonning ustiga "chiqarish" */
+  object-fit: cover;
+}
+.karta h2 { margin: 8px 0 0; color: #1e1b4b; }
+.karta-sinf { color: #6366f1; font-weight: 600; margin: 4px 0 12px; }
+.karta-matn { color: #4b5563; padding: 0 24px; line-height: 1.6; }
+.karta-tugma {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(to right, #4f46e5, #ec4899);
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(236, 72, 153, 0.35);
+}
+</style>
+<article class="karta">
+  <div class="karta-fon"></div>
+  <img class="karta-avatar" src="https://picsum.photos/seed/oquvchi/200" alt="Malika Karimova surati">
+  <h2>Malika Karimova</h2>
+  <p class="karta-sinf">8-"A" sinf · Frontend yo'nalishi</p>
+  <p class="karta-matn">HTML va CSS bilan chiroyli sahifalar yaratishni yaxshi ko'raman. Maqsadim — o'z maktabim uchun sayt yaratish.</p>
+  <a class="karta-tugma" href="#">Portfolioni ko'rish</a>
+</article></pre></li>
+  <li>O'z ma'lumotlaringiz va ranglaringiz bilan moslang. Soya, radius va gradient qiymatlarini o'zgartirib, natija qanday o'zgarishini kuzating.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Fon rasmi ko'rinmayapti — <code>url()</code> dagi yo'l CSS faylga nisbatan emas, HTML'ga nisbatan yozilgan. Yoki elementning <b>balandligi 0</b> (ichida mazmun yo'q va <code>height</code> berilmagan).</li>
+  <li>❌ <code>border: 2px red;</code> — uslub (<code>solid</code>) unutilgan, chegara ko'rinmaydi.</li>
+  <li>❌ Doira chiqmayapti — <code>width</code> va <code>height</code> teng emas, natijada oval bo'ladi.</li>
+  <li>❌ Juda qora, qattiq soya (<code>box-shadow: 5px 5px 0 black</code>) — zamonaviy dizaynda yumshoq, shaffof soyalar ishlatiladi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Fon rasmi butun maydonni to'ldirishi (ortig'i kesilishi) uchun qaysi qiymat kerak?</p><ol>
+<li><code>background-size: contain</code></li><li><code>background-size: cover</code></li><li><code>background-repeat: repeat</code></li><li><code>background-position: fill</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>border: 3px ____ blue;</code> — bo'sh joyga nima yozilsa shtrixli chiziq bo'ladi?</p><ol>
+<li><code>solid</code></li><li><code>dotted</code></li><li><code>double</code></li><li><code>dashed</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Kvadrat rasmni doiraga aylantirish uchun nima kerak?</p><ol>
+<li><code>border-radius: 50%</code></li><li><code>border: circle</code></li><li><code>shape: round</code></li><li><code>border-radius: 10px</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>margin: 10px 20px 30px 40px;</code> da chap tomon necha piksel?</p><ol>
+<li>10px</li><li>20px</li><li>40px</li><li>30px</li></ol>
+<p class="explain">Tartib: tepa (10) → o'ng (20) → past (30) → chap (40).</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>box-shadow: 0 10px 20px rgba(0,0,0,.2)</code> da <code>20px</code> nima?</p><ol>
+<li>O'ngga siljish</li><li>Xiralik (blur)</li><li>Pastga siljish</li><li>Soya rangi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Vizitka saytingiz bosh sahifasiga gradient ustidagi fon rasmli "banner" qo'shing (ismingiz va qisqa shiorga).</li>
+  <li>Sinfdoshlaringizdan 3 nafari uchun o'quvchi kartochkalarini yarating (har biri boshqa rang sxemasida).</li>
+  <li><a href="https://cssgradient.io" target="_blank" rel="noopener">cssgradient.io</a> saytida o'z gradientingizni yarating va ishlating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Fon: <code>background-color</code>, <code>background-image: url()</code>, <code>-repeat</code>, <code>-position</code>, <code>-size: cover/contain</code>; qisqasi — <code>background</code>.</li>
+  <li>Gradient: <code>linear-gradient(yo'nalish, rang1, rang2)</code>, <code>radial-gradient()</code>.</li>
+  <li>Chegara: <code>border: qalinlik uslub rang</code>; tomonlar tartibi — tepa, o'ng, past, chap.</li>
+  <li><code>border-radius</code> — yumaloq burchak (50% = doira); <code>box-shadow</code> — soya.</li>
+</ul>
+</div>

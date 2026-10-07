@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Nima uchun fayllar yetarli emas, ma&#x27;lumotlar bazasi va DBMS, jadval, ustun, qator, birlamchi kalit, tashqi kalit, bog&#x27;lanish turlari (1:1, 1:N, N:M), SQL nima, relyatsion va NoSQL bazalar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a class="active" href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🗄️</div><div><div class="crumb">26-mavzu · 42 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</h1><p class="lead">Nima uchun fayllar yetarli emas, ma&#x27;lumotlar bazasi va DBMS, jadval, ustun, qator, birlamchi kalit, tashqi kalit, bog&#x27;lanish turlari (1:1, 1:N, N:M), SQL nima, relyatsion va NoSQL bazalar.</p><div class="hero-level">1 soat · nazariy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Nima uchun ma'lumotlarni fayllarda emas, <b>ma'lumotlar bazasida</b> saqlash kerakligini;</li>
+  <li><b>Jadval, ustun, qator</b> tushunchalarini;</li>
+  <li><b>Birlamchi kalit</b> (Primary Key) va <b>tashqi kalit</b> (Foreign Key) nima ekanini;</li>
+  <li>Jadvallar o'rtasidagi <b>bog'lanish</b> turlarini;</li>
+  <li>SQL tili nima ekanini va relyatsion bazalar NoSQL'dan qanday farq qilishini.</li>
+</ul>
+</div>
+
+<h2 id="nima-uchun-malumotlar-bazasi-kerak"><a class="anchor" href="#nima-uchun-malumotlar-bazasi-kerak">#</a>Nima uchun ma'lumotlar bazasi kerak?</h2>
+<p>22–25-mavzularda ma'lumotlarni <code>.txt</code> va <code>.json</code> fayllarda saqladik. Kichik dastur uchun bu yetarli. Lekin tasavvur qiling:
+maktabingizdagi <b>2000 o'quvchi</b>, ularning baholari, davomati, ota-onalari, 100 o'qituvchi... Fayl bilan quyidagi muammolar paydo bo'ladi:</p>
+<ul>
+  <li>🐢 <b>Sekinlik:</b> "8-sinflar ichida matematikadan 5 olganlar" ni topish uchun butun faylni boshidan oxirigacha o'qish kerak.</li>
+  <li>💥 <b>Bir vaqtda yozish:</b> ikki o'qituvchi bir vaqtda baho qo'ysa, biri ikkinchisining yozuvini o'chirib yuborishi mumkin.</li>
+  <li>🤷 <b>Tartibsizlik:</b> kimdir yoshni "o'n to'rt" deb, kimdir 14 deb yozadi; baho 7 bo'lib qoladi. Fayl buni tekshirmaydi.</li>
+  <li>🔁 <b>Takrorlanish:</b> o'quvchining manzili har bir baho yozuvida qayta yoziladi; manzil o'zgarsa — hammasini topib tuzatish kerak.</li>
+  <li>🔐 <b>Xavfsizlik va zaxira:</b> kim nimani ko'ra olishi, nusxa olish, qayta tiklash — barchasini qo'lda qilish kerak.</li>
+</ul>
+<p><b>Ma'lumotlar bazasi (database)</b> — ma'lumotlarni <b>tartibli</b> saqlash, tez <b>qidirish</b>, <b>xavfsiz</b> va <b>to'g'ri</b> boshqarish uchun mo'ljallangan tizim.
+Uni boshqaruvchi dastur <b>DBMS</b> (Database Management System — MBBT, ma'lumotlar bazasini boshqarish tizimi) deyiladi: PostgreSQL, MySQL, SQLite, Oracle.</p>
+<div class="analogy"><span class="t">O'xshatish: kutubxona</span>
+Fayl — kitoblar tartibsiz uyilgan xona: kerakli kitobni topish uchun hammasini titkilaysiz. <b>Ma'lumotlar bazasi</b> — zamonaviy kutubxona: kitoblar javonlarda
+(jadvallar), har birining raqami bor (kalit), katalog bor (indeks), kutubxonachi (DBMS) qoidalarga rioya qilinishini nazorat qiladi va kitobni bir zumda topib beradi.</div>
+<p>Siz har kuni ma'lumotlar bazalaridan foydalanasiz: Telegram xabarlaringiz, Instagram postlari, bank kartangiz balansi, maktabning elektron kundaligi — hammasi bazada.</p>
+
+<h2 id="relyatsion-malumotlar-bazasi"><a class="anchor" href="#relyatsion-malumotlar-bazasi">#</a>Relyatsion ma'lumotlar bazasi</h2>
+<p>Eng keng tarqalgan baza turi — <b>relyatsion</b> (relation — munosabat, bog'lanish). Unda ma'lumotlar <b>jadvallarda</b> saqlanadi va jadvallar o'zaro <b>bog'lanadi</b>.</p>
+<h3>Jadval, ustun, qator</h3>
+<p><b>oquvchilar</b> jadvali:</p>
+<div class="table-wrap"><table>
+<tr><th>id</th><th>ism</th><th>familiya</th><th>tugilgan_sana</th><th>sinf_id</th></tr>
+<tr><td>1</td><td>Ali</td><td>Valiyev</td><td>2012-03-15</td><td>1</td></tr>
+<tr><td>2</td><td>Zarina</td><td>Karimova</td><td>2012-07-02</td><td>1</td></tr>
+<tr><td>3</td><td>Bobur</td><td>Toshmatov</td><td>2011-11-20</td><td>2</td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>Atama</th><th>Boshqa nomi</th><th>Ma'nosi</th><th>Misolda</th></tr>
+<tr><td><b>Jadval</b> (table)</td><td>munosabat</td><td>Bir turdagi obyektlar to'plami</td><td><code>oquvchilar</code></td></tr>
+<tr><td><b>Ustun</b> (column)</td><td>maydon, atribut</td><td>Xususiyat; har bir ustunning <b>ma'lumot turi</b> bor</td><td><code>ism</code> (matn), <code>tugilgan_sana</code> (sana)</td></tr>
+<tr><td><b>Qator</b> (row)</td><td>yozuv, record</td><td>Bitta obyekt haqidagi ma'lumot</td><td>Ali Valiyev haqidagi qator</td></tr>
+<tr><td><b>Katak</b></td><td>qiymat</td><td>Qator va ustun kesishmasi</td><td><code>"Zarina"</code></td></tr>
+</table></div>
+<p>Excel jadvaliga o'xshaydi, lekin muhim farqlar bor: har bir ustunda <b>faqat bir turdagi</b> ma'lumot bo'ladi (sana ustuniga matn yozib bo'lmaydi), baza
+<b>qoidalarni majburiy tekshiradi</b> va millionlab qatorlar bilan tez ishlaydi.</p>
+
+<h2 id="kalitlar"><a class="anchor" href="#kalitlar">#</a>Kalitlar</h2>
+<h3>Birlamchi kalit — Primary Key (PK)</h3>
+<p>Har bir qatorni <b>noyob</b> aniqlovchi ustun. Odatda <code>id</code> deb nomlanadi va avtomatik raqamlanadi (1, 2, 3...).</p>
+<ul>
+  <li><b>Noyob:</b> ikki qatorda bir xil bo'lishi mumkin emas.</li>
+  <li><b>Bo'sh bo'lmaydi</b> (NULL emas).</li>
+  <li><b>O'zgarmaydi.</b></li>
+</ul>
+<div class="analogy"><span class="t">Nima uchun ism yetarli emas?</span>
+Maktabda ikkita "Ali Valiyev" bo'lishi mumkin. Lekin ularning JSHSHIR (shaxsiy raqami) yoki pasport raqami har xil. Birlamchi kalit — qatorning "pasport raqami".</div>
+<h3>Tashqi kalit — Foreign Key (FK)</h3>
+<p>Boshqa jadvalning birlamchi kalitiga <b>havola</b> qiluvchi ustun. Yuqoridagi <code>sinf_id</code> — tashqi kalit, u <b>sinflar</b> jadvaliga ishora qiladi:</p>
+<div class="table-wrap"><table>
+<tr><th>id (PK)</th><th>nomi</th><th>sinf_rahbari</th><th>xona</th></tr>
+<tr><td>1</td><td>8-A</td><td>Karimova N.</td><td>204</td></tr>
+<tr><td>2</td><td>8-B</td><td>Rasulov A.</td><td>206</td></tr>
+</table></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">oquvchilar<small>id (PK), ism, ... , <b>sinf_id (FK)</b></small></div>
+    <div class="arrow">— sinf_id → id —</div>
+    <div class="node">sinflar<small><b>id (PK)</b>, nomi, sinf_rahbari, xona</small></div>
+  </div>
+  <div class="diagram-caption">Ali (sinf_id = 1) → 8-A sinfi, rahbari Karimova N., 204-xona</div>
+</div>
+<p><b>Nima uchun alohida jadval?</b> Agar sinf rahbari ismi har bir o'quvchi qatorida yozilsa va rahbar almashsa — 30 ta qatorni tuzatish kerak (va birortasini unutish oson).
+Alohida jadvalda esa — <b>bitta qator</b>. Bu tamoyil <b>"bitta fakt — bitta joyda"</b> deyiladi (normalizatsiya).</p>
+<div class="callout info">Baza tashqi kalitni <b>nazorat qiladi</b>: mavjud bo'lmagan <code>sinf_id = 99</code> ni yozishga yoki o'quvchilari bor sinfni o'chirishga ruxsat bermaydi.
+Bu <b>ma'lumotlar yaxlitligi</b> (data integrity) deyiladi — 29-mavzuda batafsil.</div>
+
+<h2 id="boglanish-turlari"><a class="anchor" href="#boglanish-turlari">#</a>Bog'lanish turlari</h2>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Ma'nosi</th><th>Misol</th><th>Qanday amalga oshiriladi</th></tr>
+<tr><td><b>Birga-bir (1:1)</b></td><td>Bir qatorga boshqa jadvaldan faqat bitta qator mos</td><td>O'quvchi ↔ uning shaxsiy kartochkasi</td><td>FK + noyoblik</td></tr>
+<tr><td><b>Birga-ko'p (1:N)</b></td><td>Bir qatorga ko'p qator mos</td><td>Bir sinfda ko'p o'quvchi; bir muallifning ko'p kitobi</td><td>"Ko'p" tomonda FK (<code>oquvchilar.sinf_id</code>)</td></tr>
+<tr><td><b>Ko'pga-ko'p (N:M)</b></td><td>Ikki tomonda ham ko'p</td><td>O'quvchi ko'p to'garakka qatnashadi, to'garakda ko'p o'quvchi</td><td><b>Oraliq jadval</b>: <code>azoliklar(oquvchi_id, togarak_id)</code></td></tr>
+</table></div>
+<p><b>Ko'pga-ko'p misol:</b></p>
+<div class="table-wrap"><table>
+<tr><th colspan="2">togaraklar</th><th></th><th colspan="2">azoliklar (oraliq)</th></tr>
+<tr><th>id</th><th>nomi</th><th></th><th>oquvchi_id</th><th>togarak_id</th></tr>
+<tr><td>1</td><td>Shaxmat</td><td></td><td>1 (Ali)</td><td>1 (Shaxmat)</td></tr>
+<tr><td>2</td><td>Robototexnika</td><td></td><td>1 (Ali)</td><td>2 (Robototexnika)</td></tr>
+<tr><td></td><td></td><td></td><td>2 (Zarina)</td><td>1 (Shaxmat)</td></tr>
+</table></div>
+<p>Ali ikkala to'garakda, Shaxmatda esa Ali va Zarina bor.</p>
+
+<h2 id="er-diagramma-bazani-loyihalash"><a class="anchor" href="#er-diagramma-bazani-loyihalash">#</a>ER-diagramma — bazani loyihalash</h2>
+<p>Baza yaratishdan oldin uning tuzilmasi chiziladi — <b>ER-diagramma</b> (Entity-Relationship: mavjudot-bog'lanish):</p>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">┌──────────────┐        ┌──────────────────┐        ┌────────────┐
+│   sinflar    │        │   oquvchilar     │        │   baholar  │
+├──────────────┤  1   N ├──────────────────┤  1   N ├────────────┤
+│ id  (PK)     │───────&lt;│ id  (PK)         │───────&lt;│ id  (PK)   │
+│ nomi         │        │ ism              │        │ oquvchi_id │ (FK)
+│ sinf_rahbari │        │ familiya         │        │ fan        │
+└──────────────┘        │ sinf_id   (FK)   │        │ baho       │
+                        └──────────────────┘        │ sana       │
+                                                    └────────────┘</code></pre></div>
+<p>Loyihalash qadamlari: (1) qanday <b>mavjudotlar</b> bor (o'quvchi, sinf, baho); (2) har birining <b>xususiyatlari</b>; (3) <b>kalitlar</b>; (4) <b>bog'lanishlar</b> va ularning turi.
+Bunday diagrammalarni <a href="https://dbdiagram.io" target="_blank" rel="noopener">dbdiagram.io</a> saytida chizish qulay.</p>
+
+<h2 id="sql-malumotlar-bazasi-tili"><a class="anchor" href="#sql-malumotlar-bazasi-tili">#</a>SQL — ma'lumotlar bazasi tili</h2>
+<p><b>SQL (Structured Query Language)</b> — relyatsion bazalar bilan "gaplashish" tili. U ingliz tiliga juda yaqin:</p>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- 8-A sinfidagi o&#x27;quvchilarning ism va familiyalarini alifbo tartibida ber
+SELECT ism, familiya
+FROM oquvchilar
+WHERE sinf_id = 1
+ORDER BY familiya;</code></pre></div>
+<p>Ko'rib turganingizdek, SQL'da "<b>qanday</b> qidirish"ni emas, "<b>nima</b> kerak"ligini yozasiz — qolganini DBMS o'zi hal qiladi. Keyingi 4 ta mavzuda SQL'ni chuqur o'rganamiz.</p>
+<div class="table-wrap"><table>
+<tr><th>SQL buyrug'i</th><th>Vazifasi</th><th>Mavzu</th></tr>
+<tr><td><code>CREATE TABLE</code></td><td>Jadval yaratish</td><td>27</td></tr>
+<tr><td><code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Qo'shish, o'qish, yangilash, o'chirish (CRUD)</td><td>28</td></tr>
+<tr><td><code>JOIN</code></td><td>Jadvallarni birlashtirish</td><td>29</td></tr>
+<tr><td><code>WHERE</code>, <code>GROUP BY</code>, <code>COUNT</code>, <code>AVG</code></td><td>Filtrlash va statistika</td><td>30</td></tr>
+</table></div>
+
+<h2 id="relyatsion-va-nosql-bazalar"><a class="anchor" href="#relyatsion-va-nosql-bazalar">#</a>Relyatsion va NoSQL bazalar</h2>
+<div class="table-wrap"><table>
+<tr><th></th><th>Relyatsion (SQL)</th><th>NoSQL</th></tr>
+<tr><td>Misollar</td><td><b>PostgreSQL</b>, MySQL, SQLite, Oracle</td><td>MongoDB, Redis, Firebase</td></tr>
+<tr><td>Tuzilma</td><td>Qat'iy jadvallar va ustunlar</td><td>Moslashuvchan hujjatlar (JSON'ga o'xshash)</td></tr>
+<tr><td>Bog'lanishlar</td><td>Kuchli (kalitlar, JOIN)</td><td>Cheklangan</td></tr>
+<tr><td>Qachon</td><td>Aksariyat ilovalar: maktab, bank, do'kon, ijtimoiy tarmoq</td><td>Tuzilmasi tez o'zgaradigan ma'lumotlar, kesh, real vaqt</td></tr>
+</table></div>
+<p>Bu kursda <b>PostgreSQL</b> bilan ishlaymiz: u bepul, ochiq kodli, juda ishonchli va Django bilan eng yaxshi ishlaydigan baza.</p>
+
+<h2 id="amaliy-mashgulot-qogozda-yoki-dbdiagram-ioda"><a class="anchor" href="#amaliy-mashgulot-qogozda-yoki-dbdiagram-ioda">#</a>Amaliy mashg'ulot (qog'ozda yoki dbdiagram.io'da)</h2>
+<ol class="steps">
+  <li><b>Kutubxona bazasi.</b> Mavjudotlar: kitoblar, mualliflar, o'quvchilar, ijaralar. Har biri uchun ustunlarni yozing, PK va FK'larni belgilang.
+  Savol: kitob va muallif o'rtasida qanday bog'lanish? (Bir kitobning bir nechta muallifi bo'lishi mumkinmi?)</li>
+  <li><b>Internet-do'kon.</b> Mijozlar, mahsulotlar, toifalar, buyurtmalar. Buyurtma va mahsulot o'rtasidagi bog'lanish qanday? Qanday oraliq jadval kerak?</li>
+  <li><b>Xatoni toping.</b> Quyidagi jadvalda qanday muammolar bor?
+<div class="table-wrap"><table>
+<tr><th>ism</th><th>sinf</th><th>sinf_rahbari</th><th>togaraklar</th></tr>
+<tr><td>Ali</td><td>8-A</td><td>Karimova N.</td><td>shaxmat, robototexnika</td></tr>
+<tr><td>Zarina</td><td>8-A</td><td>Karimova N</td><td>shaxmat</td></tr>
+<tr><td>Ali</td><td>8-B</td><td>Rasulov A.</td><td></td></tr>
+</table></div>
+<details><summary>Javob</summary>
+(1) Birlamchi kalit yo'q — ikki "Ali"ni ajratib bo'lmaydi. (2) Sinf rahbari takrorlanadi va har xil yozilgan ("Karimova N." va "Karimova N") — <code>sinflar</code> jadvali kerak.
+(3) Bir katakda bir nechta to'garak — qidirish qiyin; <code>togaraklar</code> va <code>azoliklar</code> jadvallari kerak (N:M).
+</details></li>
+</ol>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Jadvaldagi har bir qatorni noyob aniqlovchi ustun nima deyiladi?</p><ol>
+<li>Tashqi kalit</li><li>Indeks</li><li>Birlamchi kalit (Primary Key)</li><li>Ustun nomi</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>oquvchilar.sinf_id</code> ustuni <code>sinflar.id</code> ga ishora qiladi. U qanday kalit?</p><ol>
+<li>Birlamchi kalit</li><li>Tashqi kalit (Foreign Key)</li><li>Noyob kalit</li><li>Parol</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">"O'quvchi ko'p to'garakka, to'garakda ko'p o'quvchi" — bu qanday bog'lanish?</p><ol>
+<li>1:1</li><li>1:N</li><li>N:1</li><li>N:M (ko'pga-ko'p)</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Ko'pga-ko'p bog'lanish qanday amalga oshiriladi?</p><ol>
+<li>Oraliq (bog'lovchi) jadval orqali</li><li>Bitta katakka vergul bilan yozib</li><li>Ikki jadvalni bitta qilib</li><li>Faqat NoSQL'da mumkin</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Jadvaldagi bitta yozuv (masalan, bitta o'quvchi haqidagi ma'lumot) nima deyiladi?</p><ol>
+<li>Ustun</li><li>Kalit</li><li>Qator (row)</li><li>Sxema</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">SQL nima?</p><ol>
+<li>Ma'lumotlar bazasi dasturi</li><li>Relyatsion bazalar bilan ishlash tili</li><li>Python kutubxonasi</li><li>Hosting turi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Maktab elektron kundaligi uchun ER-diagramma chizing: o'quvchilar, sinflar, fanlar, o'qituvchilar, baholar, dars jadvali. Barcha PK, FK va bog'lanish turlarini ko'rsating.</li>
+  <li>Sevimli 2 ta ilovangiz (masalan, Telegram, YouTube) qanday jadvallarda ma'lumot saqlashi mumkinligini taxmin qilib yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Ma'lumotlar bazasi — tartibli, tez, xavfsiz saqlash; DBMS — uni boshqaruvchi dastur (PostgreSQL).</li>
+  <li>Relyatsion baza: jadval (table) → ustun (column, turi bor) → qator (row).</li>
+  <li>PK — qatorning noyob identifikatori; FK — boshqa jadval PK'siga havola.</li>
+  <li>Bog'lanishlar: 1:1, 1:N (FK "ko'p" tomonda), N:M (oraliq jadval).</li>
+  <li>"Bitta fakt — bitta joyda"; SQL — bazalar tili.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="25-python-oop.html"><small>← Oldingi mavzu</small>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a><a class="next" href="27-postgresql-jadval.html"><small>Keyingi mavzu →</small>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#nima-uchun-malumotlar-bazasi-kerak">Nima uchun ma&#x27;lumotlar bazasi kerak?</a></li><li><a href="#relyatsion-malumotlar-bazasi">Relyatsion ma&#x27;lumotlar bazasi</a></li><li><a href="#kalitlar">Kalitlar</a></li><li><a href="#boglanish-turlari">Bog&#x27;lanish turlari</a></li><li><a href="#er-diagramma-bazani-loyihalash">ER-diagramma — bazani loyihalash</a></li><li><a href="#sql-malumotlar-bazasi-tili">SQL — ma&#x27;lumotlar bazasi tili</a></li><li><a href="#relyatsion-va-nosql-bazalar">Relyatsion va NoSQL bazalar</a></li><li><a href="#amaliy-mashgulot-qogozda-yoki-dbdiagram-ioda">Amaliy mashg&#x27;ulot (qog&#x27;ozda yoki dbdiagram.io&#x27;da)</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

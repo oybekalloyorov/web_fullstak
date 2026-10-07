@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL — Full-Stack Qo&#x27;llanma</title>
+<title>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🗄️</div><div><div class="crumb">10-dars · 14 tadan</div><h1>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</h1><p class="lead">Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🗄️</div><div><div class="crumb">10-dars · 14 tadan</div><h1>Ma&#x27;lumotlar bazasi: SQL va PostgreSQL</h1><p class="lead">Relyatsion bazalar, jadvallar va bog&#x27;lanishlar, SQL (SELECT, JOIN, GROUP BY), indekslar, normalizatsiya, tranzaksiyalar, Node.js&#x27;dan PostgreSQL bilan ishlash, SQL injection va MongoDB bilan taqqoslash.</p><div class="hero-level">O&#x27;rta · ~150 daqiqa</div></div></div>
 
 <p>Oldingi darsda ma'lumotlarni JSON faylda saqladik. Bu yondashuv ming foydalanuvchida "yiqiladi": qidiruv sekin,
 bir vaqtdagi yozuvlar to'qnashadi, "shu muallifning 2020-yildan keyingi, narxi 50 mingdan arzon kitoblari"
@@ -83,7 +84,7 @@ orqali hujjatli ma'lumotlarni ham juda yaxshi saqlaydi.</div>
 </table></div>
 
 <h2 id="postgresqlni-ornatish"><a class="anchor" href="#postgresqlni-ornatish">#</a>PostgreSQL'ni o'rnatish</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Eng oson usul — Docker (14-dars):
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Eng oson usul — Docker (14-dars):
 docker run --name pg -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=kitoblar -p 5432:5432 -d postgres:17
 
 # Yoki: postgresql.org/download dan o&#x27;rnatuvchi; macOS: brew install postgresql@17
@@ -94,7 +95,7 @@ psql -h localhost -U postgres -d kitoblar
 <p>Grafik interfeys afzal bo'lsa: <b>pgAdmin</b>, <b>DBeaver</b>, <b>TablePlus</b> yoki VS Code kengaytmalari. Bulutda bepul PostgreSQL: Neon, Supabase.</p>
 
 <h2 id="sql-jadval-yaratish-ddl"><a class="anchor" href="#sql-jadval-yaratish-ddl">#</a>SQL: jadval yaratish (DDL)</h2>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE authors (
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE authors (
   id          SERIAL PRIMARY KEY,                -- avtomatik o&#x27;suvchi butun son (1, 2, 3...)
   name        TEXT NOT NULL,
   country     TEXT DEFAULT &#x27;O&#x27;&#x27;zbekiston&#x27;,       -- satr ichidagi &#x27; ikkilantiriladi
@@ -134,7 +135,7 @@ DROP TABLE IF EXISTS temp_data;</code></pre></div>
 <b>oxirgi himoya chizig'i</b>. Ilova kodida xato bo'lsa ham, baza manfiy narx yoki mavjud bo'lmagan muallifni saqlashga yo'l qo'ymaydi.</p>
 
 <h2 id="sql-malumot-bilan-ishlash-crud"><a class="anchor" href="#sql-malumot-bilan-ishlash-crud">#</a>SQL: ma'lumot bilan ishlash (CRUD)</h2>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- CREATE: qo&#x27;shish
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- CREATE: qo&#x27;shish
 INSERT INTO authors (name, born_year) VALUES
   (&#x27;Abdulla Qodiriy&#x27;, 1894),
   (&#x27;Cho&#x27;&#x27;lpon&#x27;, 1897),
@@ -164,7 +165,7 @@ DELETE FROM books WHERE stock = 0 AND published &lt; &#x27;1900-01-01&#x27;;</co
 
 <h2 id="join-jadvallarni-birlashtirish"><a class="anchor" href="#join-jadvallarni-birlashtirish">#</a>JOIN — jadvallarni birlashtirish</h2>
 <p>Relyatsion bazalarning asosiy kuchi. Kitob va muallif nomini birga olish:</p>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- INNER JOIN: faqat ikkala jadvalda mos keladigan qatorlar
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- INNER JOIN: faqat ikkala jadvalda mos keladigan qatorlar
 SELECT b.title, a.name AS author, b.price
 FROM books b
 JOIN authors a ON a.id = b.author_id
@@ -190,7 +191,7 @@ WHERE b.id IS NULL;</code></pre></div>
 </table></div>
 
 <h2 id="agregatsiya-group-by-va-having"><a class="anchor" href="#agregatsiya-group-by-va-having">#</a>Agregatsiya: GROUP BY va HAVING</h2>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- Umumiy statistika
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Umumiy statistika
 SELECT COUNT(*) AS jami, AVG(price)::int AS ortacha, MIN(price), MAX(price), SUM(price * stock) AS ombor_qiymati
 FROM books;
 
@@ -204,7 +205,7 @@ ORDER BY kitoblar DESC;
 
 -- Bajarilish tartibi: FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</code></pre></div>
 <h3>Subquery va CTE</h3>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- O&#x27;rtacha narxdan qimmat kitoblar
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- O&#x27;rtacha narxdan qimmat kitoblar
 SELECT title, price FROM books
 WHERE price &gt; (SELECT AVG(price) FROM books);
 
@@ -230,7 +231,7 @@ ORDER BY oy;</code></pre></div>
 <p>Muammolar: Ali telefonini o'zgartirsa, uni barcha buyurtmalarda yangilash kerak (birida unutilsa — ziddiyat);
 "Kitob A nechta sotildi?" degan savolga matnni parse qilmasdan javob berib bo'lmaydi. To'g'ri dizayn — har bir
 mavjudot alohida jadvalda, bog'lanishlar kalitlar orqali:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">customers(id, name, phone)
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">customers(id, name, phone)
 orders(id, customer_id → customers, status, total, created_at)
 order_items(order_id → orders, book_id → books, qty, price)   -- narx sotilgan paytdagi qiymat!</code></pre></div>
 <p><b>Asosiy qoidalar (1NF–3NF):</b> har bir katakda bitta qiymat (ro'yxat emas); har bir ustun to'liq birlamchi kalitga bog'liq;
@@ -240,7 +241,7 @@ kalit bo'lmagan ustunlar bir-biriga bog'liq emas. Amaliy qoida: <i>"bitta fakt �
 <h2 id="indekslar"><a class="anchor" href="#indekslar">#</a>Indekslar</h2>
 <p>Indekssiz baza <code>WHERE email = '...'</code> so'rovi uchun <b>har bir qatorni</b> tekshiradi (Seq Scan). Indeks — kitob oxiridagi
 alifbo ko'rsatkichi kabi: kerakli joyni darhol topadi (B-tree, O(log n)).</p>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE INDEX idx_books_author ON books(author_id);         -- JOIN va filtrlar uchun
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE INDEX idx_books_author ON books(author_id);         -- JOIN va filtrlar uchun
 CREATE UNIQUE INDEX idx_users_email ON users(lower(email)); -- katta-kichik harfsiz noyoblik
 CREATE INDEX idx_orders_user_date ON orders(user_id, created_at DESC); -- kompozit
 
@@ -255,7 +256,7 @@ EXPLAIN ANALYZE SELECT * FROM books WHERE author_id = 5;
 <h2 id="tranzaksiyalar-va-acid"><a class="anchor" href="#tranzaksiyalar-va-acid">#</a>Tranzaksiyalar va ACID</h2>
 <p><b>Tranzaksiya</b> — bir nechta amalni <b>"hammasi yoki hech biri"</b> tamoyili bilan bajarish. Klassik misol — pul o'tkazmasi:
 birinchi hisobdan yechildi, ikkinchisiga yozishda server o'chib qoldi — pul "yo'qoladi". Tranzaksiya buni oldini oladi.</p>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">BEGIN;
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">BEGIN;
   UPDATE accounts SET balance = balance - 500000 WHERE id = 1;
   UPDATE accounts SET balance = balance + 500000 WHERE id = 2;
 COMMIT;      -- ikkalasi birga saqlanadi
@@ -268,8 +269,8 @@ COMMIT;      -- ikkalasi birga saqlanadi
 </ul>
 
 <h2 id="node-jsdan-postgresql-bilan-ishlash"><a class="anchor" href="#node-jsdan-postgresql-bilan-ishlash">#</a>Node.js'dan PostgreSQL bilan ishlash</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install pg</code></pre></div>
-<div class="code"><div class="code-head"><span>src/db/pool.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install pg</code></pre></div>
+<div class="code"><div class="code-head"><span>src/db/pool.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import pg from &#x27;pg&#x27;;
 
 // Pool — tayyor ulanishlar to&#x27;plami (har so&#x27;rovga yangi ulanish ochish qimmat)
 export const pool = new pg.Pool({
@@ -278,7 +279,7 @@ export const pool = new pg.Pool({
 });
 
 export const query = (text, params) =&gt; pool.query(text, params);</code></pre></div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { query } from &#x27;./db/pool.js&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { query } from &#x27;./db/pool.js&#x27;;
 
 const { rows } = await query(&#x27;SELECT id, title, price FROM books WHERE price &lt; $1 ORDER BY price&#x27;, [100000]);
 console.log(rows);          // [{ id: 1, title: &quot;O&#x27;tkan kunlar&quot;, price: 65000 }, ...]
@@ -289,7 +290,7 @@ const { rows: [book] } = await query(
 );</code></pre></div>
 
 <h3>SQL injection — eng xavfli xato</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// ❌ HECH QACHON: foydalanuvchi ma&#x27;lumotini SQL satriga qo&#x27;shmang
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// ❌ HECH QACHON: foydalanuvchi ma&#x27;lumotini SQL satriga qo&#x27;shmang
 const email = req.body.email;            // hujumchi yuboradi:  &#x27; OR &#x27;1&#x27;=&#x27;1
 await query(`SELECT * FROM users WHERE email = &#x27;${email}&#x27;`);
 // Natijaviy SQL: SELECT * FROM users WHERE email = &#x27;&#x27; OR &#x27;1&#x27;=&#x27;1&#x27;  → BARCHA foydalanuvchilar!
@@ -306,7 +307,7 @@ tanlash kerak bo'lsa — oldindan belgilangan ruxsat ro'yxatidan (whitelist) foy
 <p>Xom SQL o'rniga ko'pincha <b>ORM</b> (Object-Relational Mapping) ishlatiladi: <b>Prisma</b>, <b>Drizzle</b>, <b>Sequelize</b>, <b>TypeORM</b>.
 Ular sxemani kodda tasvirlash, migratsiyalar va qulay API beradi. Lekin SQL'ni bilish baribir zarur — ORM qanday so'rov
 hosil qilayotganini tushunish va sekin so'rovlarni tuzatish uchun.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Prisma misoli — xuddi shu so&#x27;rov
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Prisma misoli — xuddi shu so&#x27;rov
 const books = await prisma.book.findMany({
   where: { price: { lt: 100000 }, author: { country: &quot;O&#x27;zbekiston&quot; } },
   include: { author: true },
@@ -317,7 +318,7 @@ const books = await prisma.book.findMany({
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Blog platformasi sxemasi va real so'rovlar</h3></div><div class="ex-body">
 <p>Foydalanuvchilar, postlar, izohlar, teglar (N:M) va layklar bo'lgan blog uchun to'liq sxema.</p>
-<div class="code"><div class="code-head"><span>blog/schema.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE users (
+<div class="code"><div class="code-head"><span>blog/schema.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE users (
   id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   username    TEXT NOT NULL UNIQUE CHECK (username ~ &#x27;^[a-z0-9_]{3,30}$&#x27;),
   email       TEXT NOT NULL,
@@ -366,7 +367,7 @@ CREATE TABLE likes (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (user_id, post_id)               -- bir foydalanuvchi bir postga bir marta
 );</code></pre></div>
-<div class="code"><div class="code-head"><span>blog/queries.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">-- 1. Bosh sahifa lentasi: muallif, izohlar va layklar soni, teglar
+<div class="code"><div class="code-head"><span>blog/queries.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- 1. Bosh sahifa lentasi: muallif, izohlar va layklar soni, teglar
 SELECT p.id, p.title, p.slug, p.published_at,
        u.username AS author,
        (SELECT COUNT(*) FROM comments c WHERE c.post_id = p.id) AS comments,
@@ -417,7 +418,7 @@ baza darajasida taqiqlaydi.</p>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Express API'ni JSON fayldan PostgreSQL'ga ko'chirish</h3></div><div class="ex-body">
 <p>9-darsdagi qatlamli arxitektura o'z samarasini beradi: <b>faqat service qatlami</b> o'zgaradi, routes va controllers tegilmaydi.</p>
-<div class="code"><div class="code-head"><span>migrations/001_books.sql</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE IF NOT EXISTS books (
+<div class="code"><div class="code-head"><span>migrations/001_books.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE IF NOT EXISTS books (
   id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title      TEXT NOT NULL,
   author     TEXT NOT NULL,
@@ -430,7 +431,7 @@ baza darajasida taqiqlaydi.</p>
   UNIQUE (title, author)
 );
 CREATE INDEX IF NOT EXISTS books_genre_idx ON books (genre);</code></pre></div>
-<div class="code"><div class="code-head"><span>src/services/books.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { query } from &#x27;../db/pool.js&#x27;;
+<div class="code"><div class="code-head"><span>src/services/books.service.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { query } from &#x27;../db/pool.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 const SORT_SQL = {                    // whitelist — dinamik ORDER BY uchun xavfsiz usul
@@ -514,7 +515,7 @@ UUID formatida bo'lmagan <code>id</code> kelsa, PostgreSQL <code>22P02</code> xa
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Buyurtma berish tranzaksiyasi (ombor, pool client, qulflash)</h3></div><div class="ex-body">
 <p>Buyurtma: (1) har bir kitob omborda yetarlimi, (2) ombordan ayirish, (3) buyurtma va uning qatorlarini yozish. Agar biror
 qadam muvaffaqiyatsiz bo'lsa — <b>hech narsa</b> o'zgarmasligi kerak.</p>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">CREATE TABLE orders (
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE orders (
   id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   user_id    BIGINT NOT NULL,
   total      INTEGER NOT NULL,
@@ -528,7 +529,7 @@ CREATE TABLE order_items (
   price    INTEGER NOT NULL,
   PRIMARY KEY (order_id, book_id)
 );</code></pre></div>
-<div class="code"><div class="code-head"><span>src/services/orders.service.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import { pool } from &#x27;../db/pool.js&#x27;;
+<div class="code"><div class="code-head"><span>src/services/orders.service.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import { pool } from &#x27;../db/pool.js&#x27;;
 import { HttpError } from &#x27;../utils/errors.js&#x27;;
 
 // Qayta ishlatiladigan tranzaksiya yordamchisi
@@ -592,9 +593,9 @@ bir xil bo'lgani uchun "deadlock" ehtimoli kamayadi. Xato tashlansa — <code>RO
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Taqqoslash uchun: xuddi shu model MongoDB + Mongoose'da</h3></div><div class="ex-body">
 <p>NoSQL yondashuvni his qilish uchun blog postini MongoDB'da modellashtiramiz. Bu yerda izohlar post hujjati <b>ichiga joylanadi</b>.</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">npm install mongoose
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">npm install mongoose
 # docker run -d --name mongo -p 27017:27017 mongo:8</code></pre></div>
-<div class="code"><div class="code-head"><span>models/Post.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
+<div class="code"><div class="code-head"><span>models/Post.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
 
 const commentSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: &#x27;User&#x27;, required: true },
@@ -616,7 +617,7 @@ postSchema.index({ tags: 1, createdAt: -1 });
 postSchema.virtual(&#x27;likeCount&#x27;).get(function () { return this.likes.length; });
 
 export const Post = mongoose.model(&#x27;Post&#x27;, postSchema);</code></pre></div>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import mongoose from &#x27;mongoose&#x27;;
 import { Post } from &#x27;./models/Post.js&#x27;;
 
 await mongoose.connect(&#x27;mongodb://localhost:27017/blog&#x27;);
@@ -667,7 +668,7 @@ const stats = await Post.aggregate([
   <li>3-misoldagi <code>placeOrder</code> ni sinang: ikki terminaldan bir vaqtda oxirgi nusxani sotib olishga harakat qiling. <code>FOR UPDATE</code> olib tashlansa nima bo'ladi?</li>
 </ol>
 <details><summary>4-mashq uchun test ma'lumot</summary>
-<div class="code"><div class="code-head"><span>SQL</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-sql">INSERT INTO books (title, author, price, stock, genre)
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">INSERT INTO books (title, author, price, stock, genre)
 SELECT &#x27;Kitob &#x27; || g, &#x27;Muallif &#x27; || (g % 500), (random() * 200000 + 10000)::int, (random() * 50)::int,
        (ARRAY[&#x27;roman&#x27;,&#x27;ilmiy&#x27;,&#x27;bolalar&#x27;,&#x27;dasturlash&#x27;,&#x27;tarix&#x27;])[1 + g % 5]
 FROM generate_series(1, 100000) g;</code></pre></div>

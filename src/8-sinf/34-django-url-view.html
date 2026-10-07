@@ -1,0 +1,234 @@
+<!-- title: Django URL va View komponentlari. URL va View yordamida sahifalar yaratish | desc: So'rov va javob obyektlari, funksiya asosidagi view'lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL'lar, GET parametrlari, 404 va redirect, Class Based View'lar bilan tanishuv. | icon: 🗺️ | level: 2 soat · 1 nazariy + 1 amaliy | bob: IV bob. Python, PostgreSQL va Django -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>View</b> — so'rovni qabul qilib, javob qaytaruvchi funksiya ekanini;</li>
+  <li>URL'larni view'larga bog'lash (<b>marshrutlash</b>) va ilovaga alohida <code>urls.py</code> yaratishni;</li>
+  <li>Manzildan qiymat olish: <code>/maqola/5/</code> → <code>id = 5</code>;</li>
+  <li>Qidiruv parametrlari (<code>?q=...</code>), 404 xatosi va qayta yo'naltirishni;</li>
+  <li>Funksiya va Class asosidagi view'lar farqini.</li>
+</ul>
+</div>
+
+<h2>So'rov va javob</h2>
+<p>Har bir view — bu <b>funksiya</b>: u brauzerdan kelgan <b>so'rov (request)</b> obyektini oladi va <b>javob (response)</b> obyektini qaytaradi.</p>
+<pre data-lang="python" data-title="blog/views.py">from django.http import HttpResponse
+
+def salom(request):
+    # request — so'rov haqida hamma narsa: metod, manzil, foydalanuvchi, parametrlar...
+    print(request.method)          # "GET" yoki "POST"
+    print(request.path)            # "/salom/"
+    return HttpResponse("Salom!")  # javob — brauzerga qaytadigan matn/HTML</pre>
+<div class="analogy"><span class="t">O'xshatish: pochta oynasi</span>
+Pochtaga xat (so'rov) berasiz: unda kimdan, qayerga, nima so'ralgani yozilgan. Xodim (view) xatni o'qiydi, kerakli ishni qiladi va sizga javob xatini (response) qaytaradi.
+Har bir oyna (URL) o'z xizmatiga mas'ul.</div>
+<div class="table-wrap"><table>
+<tr><th><code>request</code> xossasi</th><th>Nima beradi</th></tr>
+<tr><td><code>request.method</code></td><td>So'rov turi: <code>"GET"</code> (sahifani ko'rish) yoki <code>"POST"</code> (forma yuborish)</td></tr>
+<tr><td><code>request.GET</code></td><td>Manzildagi parametrlar: <code>/qidiruv/?q=python</code> → <code>request.GET.get("q")</code></td></tr>
+<tr><td><code>request.POST</code></td><td>Formadan yuborilgan ma'lumotlar (37-mavzu)</td></tr>
+<tr><td><code>request.user</code></td><td>Tizimga kirgan foydalanuvchi</td></tr>
+<tr><td><code>request.path</code></td><td>So'ralgan manzil</td></tr>
+</table></div>
+
+<h2>URL marshrutlash</h2>
+<p>Django har bir so'rov uchun <code>urlpatterns</code> ro'yxatini <b>yuqoridan pastga</b> ko'rib chiqadi va birinchi mos kelgan yo'lning view'ini chaqiradi.</p>
+<h3>Ilova uchun alohida urls.py</h3>
+<p>Barcha URL'larni bitta <code>config/urls.py</code> ga yozish katta loyihada chalkashadi. To'g'ri usul: har bir ilova o'z <code>urls.py</code> siga ega bo'ladi, asosiy fayl esa ularni <code>include</code> bilan ulaydi.</p>
+<pre data-lang="python" data-title="blog/urls.py (yangi fayl yarating)">from django.urls import path
+from . import views
+
+app_name = "blog"                                     # nomlar maydoni
+
+urlpatterns = [
+    path("", views.bosh_sahifa, name="bosh"),                          # /
+    path("haqida/", views.haqida, name="haqida"),                      # /haqida/
+    path("maqola/<int:id>/", views.maqola, name="maqola"),             # /maqola/5/
+    path("kategoriya/<slug:nomi>/", views.kategoriya, name="kategoriya"),   # /kategoriya/sport/
+    path("qidiruv/", views.qidiruv, name="qidiruv"),                   # /qidiruv/?q=...
+]</pre>
+<pre data-lang="python" data-title="config/urls.py">from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("blog.urls")),          # blog ilovasining barcha URL'lari
+]</pre>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">/maqola/5/</div><div class="arrow">→</div>
+    <div class="node">config/urls.py<small>"" → include("blog.urls")</small></div><div class="arrow">→</div>
+    <div class="node">blog/urls.py<small>"maqola/&lt;int:id&gt;/"</small></div><div class="arrow">→</div>
+    <div class="node">views.maqola(request, id=5)</div>
+  </div>
+</div>
+
+<h3>Path converterlar — manzildan qiymat olish</h3>
+<div class="table-wrap"><table>
+<tr><th>Converter</th><th>Nimaga mos keladi</th><th>Misol URL</th><th>View oladi</th></tr>
+<tr><td><code>&lt;int:id&gt;</code></td><td>Musbat butun son</td><td><code>/maqola/42/</code></td><td><code>id=42</code> (int)</td></tr>
+<tr><td><code>&lt;str:nom&gt;</code></td><td><code>/</code> dan boshqa har qanday matn</td><td><code>/user/ali/</code></td><td><code>nom="ali"</code></td></tr>
+<tr><td><code>&lt;slug:nomi&gt;</code></td><td>Lotin harf, raqam, <code>-</code>, <code>_</code></td><td><code>/kategoriya/maktab-hayoti/</code></td><td><code>nomi="maktab-hayoti"</code></td></tr>
+</table></div>
+<div class="callout tip"><b>Slug</b> — sarlavhaning URL uchun qulay ko'rinishi: "Maktab hayoti" → <code>maktab-hayoti</code>. Chiroyli manzillar SEO uchun foydali (11-mavzu).</div>
+
+<h2>View'lar yozish</h2>
+<p>Hozircha ma'lumotlar bazasi o'rniga oddiy Python ro'yxatidan foydalanamiz (36-mavzuda haqiqiy modelga almashtiramiz):</p>
+<pre data-lang="python" data-title="blog/views.py">from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import redirect
+
+# Vaqtinchalik "baza"
+MAQOLALAR = [
+    {"id": 1, "sarlavha": "Bilimlar bellashuvi", "kategoriya": "tadbirlar", "matn": "8-sinflar o'rtasida..."},
+    {"id": 2, "sarlavha": "Yangi kompyuter xonasi", "kategoriya": "maktab-hayoti", "matn": "20 ta kompyuter..."},
+    {"id": 3, "sarlavha": "Futbol bo'yicha g'alaba", "kategoriya": "sport", "matn": "Shahar chempionati..."},
+]
+
+
+def bosh_sahifa(request):
+    html = "<h1>Maktab blogi</h1><ul>"
+    for m in MAQOLALAR:
+        html += f'<li><a href="/maqola/{m["id"]}/">{m["sarlavha"]}</a></li>'
+    html += "</ul>"
+    return HttpResponse(html)
+
+
+def haqida(request):
+    return HttpResponse("<h1>Biz haqimizda</h1><p>5-maktab o'quvchilarining blogi.</p>")
+
+
+def maqola(request, id):                       # id — URL'dagi <int:id> dan keladi
+    for m in MAQOLALAR:
+        if m["id"] == id:
+            return HttpResponse(f"<h1>{m['sarlavha']}</h1><p>{m['matn']}</p><a href='/'>← Orqaga</a>")
+    raise Http404("Bunday maqola topilmadi")    # 404 sahifa
+
+
+def kategoriya(request, nomi):
+    topilganlar = [m for m in MAQOLALAR if m["kategoriya"] == nomi]
+    if not topilganlar:
+        return redirect("blog:bosh")            # bosh sahifaga qayta yo'naltirish
+    royxat = "".join(f"<li>{m['sarlavha']}</li>" for m in topilganlar)
+    return HttpResponse(f"<h1>Kategoriya: {nomi}</h1><ul>{royxat}</ul>")
+
+
+def qidiruv(request):
+    q = request.GET.get("q", "").strip()        # /qidiruv/?q=futbol
+    natija = [m for m in MAQOLALAR if q.lower() in m["sarlavha"].lower()] if q else []
+    return HttpResponse(f"<h1>'{q}' bo'yicha {len(natija)} ta natija</h1>")
+
+
+def api_maqolalar(request):
+    return JsonResponse({"maqolalar": MAQOLALAR})    # JSON javob (39-mavzuga muqaddima)</pre>
+<p>Sinab ko'ring:</p>
+<ul>
+  <li><a href="http://127.0.0.1:8000/" target="_blank" rel="noopener">http://127.0.0.1:8000/</a> — ro'yxat</li>
+  <li><code>/maqola/2/</code> — maqola; <code>/maqola/99/</code> — 404</li>
+  <li><code>/kategoriya/sport/</code>; <code>/kategoriya/yoq/</code> — bosh sahifaga qaytaradi</li>
+  <li><code>/qidiruv/?q=futbol</code></li>
+</ul>
+<div class="callout warn"><span class="t">Diqqat</span>
+View ichida HTML'ni satr sifatida yozish — faqat o'rganish uchun. U noqulay va xavfli (foydalanuvchi matni tekshirilmay HTML'ga qo'shilyapti). Keyingi mavzuda
+HTML'ni <b>shablonlar</b>ga (templates) ko'chiramiz — Django ularda matnni avtomatik xavfsiz qiladi.</div>
+
+<h3>Nomlangan URL'lar</h3>
+<p>Har bir yo'lga <code>name=</code> berdik. Endi manzilni qo'lda yozish o'rniga nomi bo'yicha yasash mumkin:</p>
+<pre data-lang="python">from django.urls import reverse
+
+reverse("blog:maqola", args=[5])     # "/maqola/5/"
+redirect("blog:haqida")              # /haqida/ ga yo'naltirish
+# Shablonlarda: {% url 'blog:maqola' 5 %}  (35-mavzu)</pre>
+<p><b>Afzalligi:</b> kelajakda <code>"maqola/&lt;int:id&gt;/"</code> ni <code>"post/&lt;int:id&gt;/"</code> ga o'zgartirsangiz, faqat <code>urls.py</code> da bitta qator o'zgaradi —
+butun saytdagi havolalar o'zi yangilanadi.</p>
+
+<h3>HTTP status kodlari Django'da</h3>
+<div class="table-wrap"><table>
+<tr><th>Holat</th><th>Django'da</th><th>Kod</th></tr>
+<tr><td>Oddiy javob</td><td><code>HttpResponse(...)</code></td><td>200</td></tr>
+<tr><td>Topilmadi</td><td><code>raise Http404(...)</code> yoki <code>get_object_or_404</code> (36-mavzu)</td><td>404</td></tr>
+<tr><td>Qayta yo'naltirish</td><td><code>redirect("nom")</code></td><td>302</td></tr>
+<tr><td>JSON</td><td><code>JsonResponse({...})</code></td><td>200</td></tr>
+</table></div>
+
+<h2>Class Based View (CBV) — klass asosidagi view'lar</h2>
+<p>Hozirgacha <b>funksiya asosidagi view</b> (Function Based View, FBV) yozdik. Django yana bir usulni taklif qiladi — view'ni <b>klass</b> sifatida yozish (25-mavzudagi OOP!).
+Ko'p uchraydigan vazifalar uchun Django tayyor klasslar beradi va siz ulardan <b>meros</b> olasiz.</p>
+<pre data-lang="python" data-title="blog/views.py">from django.views import View
+from django.views.generic import TemplateView
+
+class SalomView(View):
+    def get(self, request):                       # GET so'rov uchun metod
+        return HttpResponse("Salom, GET!")
+
+    def post(self, request):                      # POST so'rov uchun metod
+        return HttpResponse("Salom, POST!")
+
+
+class AloqaView(TemplateView):                    # tayyor klass: shablonni ko'rsatadi
+    template_name = "blog/aloqa.html"             # 35-mavzuda yaratamiz</pre>
+<pre data-lang="python" data-title="blog/urls.py">path("salom/", views.SalomView.as_view(), name="salom"),     # CBV uchun .as_view()</pre>
+<div class="table-wrap"><table>
+<tr><th></th><th>FBV (funksiya)</th><th>CBV (klass)</th></tr>
+<tr><td>Yozilishi</td><td>Oddiy, aniq, boshlovchilar uchun tushunarli</td><td>Qisqa, lekin "sehr" ko'p</td></tr>
+<tr><td>GET/POST ajratish</td><td><code>if request.method == "POST":</code></td><td>Alohida <code>get()</code>, <code>post()</code> metodlar</td></tr>
+<tr><td>Qayta ishlatish</td><td>Qiyinroq</td><td>Meros orqali oson; tayyor <code>ListView</code>, <code>DetailView</code>, <code>CreateView</code>...</td></tr>
+</table></div>
+<p>Bu kursda asosan FBV ishlatamiz (tushunish oson), 38-mavzuda esa tayyor CBV'lar bilan CRUD qanchalik qisqa bo'lishini ko'rasiz.</p>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>blog/urls.py</code> yarating va <code>config/urls.py</code> da <code>include</code> qiling.</li>
+  <li>Yuqoridagi view'larni yozing va har bir manzilni brauzerda sinab ko'ring. <code>/maqola/abc/</code> ni ham oching — nima uchun 404? (<code>int</code> converter harflarni qabul qilmaydi.)</li>
+  <li>Bosh sahifadagi havolalarni <code>reverse("blog:maqola", args=[m["id"]])</code> bilan yasang.</li>
+  <li>Yangi yo'llar qo'shing:
+    <ul>
+      <li><code>/kalkulyator/&lt;int:a&gt;/&lt;int:b&gt;/</code> — ikki sonning yig'indisi, ayirmasi, ko'paytmasini ko'rsatsin;</li>
+      <li><code>/salom/&lt;str:ism&gt;/</code> — "Salom, Ali!" deb javob bersin;</li>
+      <li><code>/api/maqolalar/</code> — JSON qaytarsin (<code>JsonResponse</code>).</li>
+    </ul></li>
+  <li><code>/tasodifiy/</code> — tasodifiy maqolaga <code>redirect</code> qilsin (<code>random.choice</code>).</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Page not found (404)</code> — URL'da yakuniy <code>/</code> yo'q yoki yo'l <code>urlpatterns</code> da ro'yxatdan o'tmagan. Django xato sahifasida barcha mavjud yo'llar ro'yxatini ko'rsatadi — tekshiring.</li>
+  <li>❌ <code>maqola() got an unexpected keyword argument 'pk'</code> — URL'dagi nom (<code>&lt;int:pk&gt;</code>) va funksiya parametri (<code>id</code>) mos emas.</li>
+  <li>❌ View <code>return</code> qilmaydi — <code>The view didn't return an HttpResponse object</code>.</li>
+  <li>❌ <code>NoReverseMatch</code> — <code>reverse</code>/<code>redirect</code> dagi URL nomi noto'g'ri yoki <code>app_name:</code> unutilgan.</li>
+  <li>❌ CBV'da <code>.as_view()</code> unutilgan.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Django view'i nimani qabul qilib, nimani qaytaradi?</p><ol>
+<li>HTML qabul qilib, SQL qaytaradi</li><li>request (so'rov) qabul qilib, response (javob) qaytaradi</li><li>URL qabul qilib, model qaytaradi</li><li>Hech narsa qabul qilmaydi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>path("maqola/&lt;int:id&gt;/", views.maqola)</code> — <code>/maqola/7/</code> so'ralganda view nima oladi?</p><ol>
+<li><code>id="7"</code> (matn)</li><li>Hech narsa</li><li><code>id=7</code> (son)</li><li><code>maqola=7</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Ilova URL'larini asosiy <code>urls.py</code> ga ulash uchun?</p><ol>
+<li><code>include("blog.urls")</code></li><li><code>import blog</code></li><li><code>connect("blog")</code></li><li><code>urls.add(blog)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>/qidiruv/?q=futbol</code> dagi "futbol" ni view'da qanday olasiz?</p><ol>
+<li><code>request.POST["q"]</code></li><li><code>request.q</code></li><li><code>request.path</code></li><li><code>request.GET.get("q")</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Boshqa sahifaga qayta yo'naltiruvchi funksiya?</p><ol>
+<li><code>HttpResponse()</code></li><li><code>redirect()</code></li><li><code>Http404()</code></li><li><code>goto()</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Class Based View'ni URL'ga ulashda nima yoziladi?</p><ol>
+<li><code>views.SalomView</code></li><li><code>views.SalomView()</code></li><li><code>views.SalomView.as_view()</code></li><li><code>views.SalomView.get</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><code>pages</code> ilovasi (33-mavzu uyga vazifasi) uchun alohida <code>urls.py</code> yarating: <code>/haqida/</code>, <code>/aloqa/</code>, <code>/qoidalar/</code>.</li>
+  <li><code>/jadval/&lt;int:son&gt;/</code> — berilgan sonning 1–10 gacha ko'paytirish jadvalini HTML jadval sifatida qaytaruvchi view.</li>
+  <li><code>/yosh/&lt;int:yil&gt;/</code> — tug'ilgan yil bo'yicha yoshni hisoblovchi view; yil kelajakda bo'lsa — 404.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>View: <code>def view(request): return HttpResponse(...)</code>.</li>
+  <li>Ilovada <code>urls.py</code> + <code>app_name</code>; asosiy faylda <code>path("", include("blog.urls"))</code>.</li>
+  <li>Converterlar: <code>&lt;int:id&gt;</code>, <code>&lt;str:nom&gt;</code>, <code>&lt;slug:nomi&gt;</code> — view parametriga keladi.</li>
+  <li><code>request.GET.get("q")</code>, <code>raise Http404</code>, <code>redirect("app:nom")</code>, <code>JsonResponse</code>, <code>name=</code> + <code>reverse</code>.</li>
+  <li>CBV: <code>class V(View): def get(self, request)</code> → <code>V.as_view()</code>.</li>
+</ul>
+</div>

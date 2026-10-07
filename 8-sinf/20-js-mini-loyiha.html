@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Loyihani rejalashtirish, &quot;holat → chizish&quot; usuli, forma tekshirish; To-Do List (localStorage bilan), mini test tizimi va interaktiv komponentlar — bosqichma-bosqich.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a class="active" href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧩</div><div><div class="crumb">20-mavzu · 42 tadan · II bob. JavaScript asoslari</div><h1>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</h1><p class="lead">Loyihani rejalashtirish, &quot;holat → chizish&quot; usuli, forma tekshirish; To-Do List (localStorage bilan), mini test tizimi va interaktiv komponentlar — bosqichma-bosqich.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Loyihani boshlashdan oldin <b>rejalashtirishni</b>;</li>
+  <li>Professional usul: ma'lumotni <b>massivda</b> saqlab, sahifani undan <b>chizish</b> (render);</li>
+  <li>Formani JavaScript bilan tekshirish (validatsiya);</li>
+  <li>To'liq <b>To-Do List</b> ilovasini (11-loyiha);</li>
+  <li><b>Mini test tizimi</b>ni (12-loyiha) yaratishni.</li>
+</ul>
+<p>Bu dars — II bobning yakuni: o'zgaruvchilar, shartlar, sikllar, funksiyalar, massivlar, DOM va hodisalar bitta loyihada birlashadi.</p>
+</div>
+
+<h2 id="loyihani-qanday-boshlash-kerak"><a class="anchor" href="#loyihani-qanday-boshlash-kerak">#</a>Loyihani qanday boshlash kerak?</h2>
+<p>Yangi boshlovchilarning eng katta xatosi — darhol kod yozishga tushish. Tajribali dasturchi avval <b>o'ylaydi</b>:</p>
+<ol class="steps">
+  <li><b>Nima qilishi kerak?</b> Funksiyalar ro'yxatini yozing: "vazifa qo'shish", "bajarildi deb belgilash", "o'chirish"...</li>
+  <li><b>Qanday ko'rinadi?</b> Qog'ozga chizib oling: input, tugma, ro'yxat.</li>
+  <li><b>Qanday ma'lumot saqlanadi?</b> Har bir vazifa — obyekt: <code>{ id, matn, bajarildi }</code>; hammasi — massiv.</li>
+  <li><b>Qaysi hodisalar bor?</b> Forma yuborildi → qo'shish; checkbox bosildi → belgilash; 🗑 bosildi → o'chirish.</li>
+  <li><b>Kichik qadamlar bilan yozing</b> va har qadamdan keyin tekshiring.</li>
+</ol>
+
+<h2 id="holat-chizish-usuli"><a class="anchor" href="#holat-chizish-usuli">#</a>"Holat → Chizish" usuli</h2>
+<p>Ro'yxatga element qo'shganda ham, o'chirganda ham DOM'ni qo'lda "yamash" chalkashlikka olib keladi. Professional usul:</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">👆 Hodisa<small>tugma bosildi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">📦 Holat (massiv) o'zgaradi<small>push / filter / map</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🎨 render()<small>sahifa massivdan qaytadan chiziladi</small></div>
+    <div class="arrow">→</div>
+    <div class="node">💾 saqlash<small>localStorage</small></div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: doska va daftar</span>
+Daftar — <b>holat</b> (haqiqiy ma'lumot). Doska — <b>ekran</b>. O'qituvchi doskaga to'g'ridan-to'g'ri yozib-o'chirib o'tirmaydi: avval daftarni yangilaydi,
+keyin doskani artib, daftardagini qaytadan yozadi. Shunda doska va daftar hech qachon farq qilmaydi.</div>
+<p>Aynan shu g'oya React kabi zamonaviy kutubxonalarning asosida yotadi.</p>
+
+<h2 id="1-loyiha-to-do-list-11-loyiha"><a class="anchor" href="#1-loyiha-to-do-list-11-loyiha">#</a>1-loyiha: To-Do List (11-loyiha)</h2>
+<h3>1-qadam: HTML va CSS</h3>
+<div class="code"><div class="code-head"><span>todo/index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Vazifalarim&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;ilova&quot;&gt;
+    &lt;h1&gt;📝 Vazifalarim&lt;/h1&gt;
+
+    &lt;form id=&quot;forma&quot;&gt;
+      &lt;input id=&quot;kiritish&quot; placeholder=&quot;Yangi vazifa...&quot; maxlength=&quot;80&quot; autocomplete=&quot;off&quot;&gt;
+      &lt;button&gt;Qo&#x27;shish&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;p id=&quot;xato&quot; class=&quot;xato&quot;&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;filtrlar&quot;&gt;
+      &lt;button data-filtr=&quot;hammasi&quot; class=&quot;faol&quot;&gt;Hammasi&lt;/button&gt;
+      &lt;button data-filtr=&quot;faol&quot;&gt;Faol&lt;/button&gt;
+      &lt;button data-filtr=&quot;bajarilgan&quot;&gt;Bajarilgan&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;ul id=&quot;royxat&quot;&gt;&lt;/ul&gt;
+
+    &lt;footer class=&quot;pastki&quot;&gt;
+      &lt;span id=&quot;hisob&quot;&gt;&lt;/span&gt;
+      &lt;button id=&quot;tozalash&quot;&gt;Bajarilganlarni o&#x27;chirish&lt;/button&gt;
+    &lt;/footer&gt;
+  &lt;/main&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<h3>2-qadam: JavaScript — bosqichma-bosqich</h3>
+<div class="code"><div class="code-head"><span>todo/app.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// ========== 1. HOLAT (ma&#x27;lumotlar) ==========
+let vazifalar = JSON.parse(localStorage.getItem(&quot;vazifalar&quot;)) || [];
+let filtr = &quot;hammasi&quot;;
+
+// ========== 2. ELEMENTLAR ==========
+const forma = document.querySelector(&quot;#forma&quot;);
+const kiritish = document.querySelector(&quot;#kiritish&quot;);
+const royxat = document.querySelector(&quot;#royxat&quot;);
+const xato = document.querySelector(&quot;#xato&quot;);
+const hisob = document.querySelector(&quot;#hisob&quot;);
+
+// ========== 3. AMALLAR (holatni o&#x27;zgartiradi) ==========
+function qoshish(matn) {
+  vazifalar.push({ id: Date.now(), matn: matn, bajarildi: false });
+  yangilash();
+}
+
+function belgilash(id) {
+  vazifalar = vazifalar.map(v =&gt; v.id === id ? { ...v, bajarildi: !v.bajarildi } : v);
+  yangilash();
+}
+
+function ochirish(id) {
+  vazifalar = vazifalar.filter(v =&gt; v.id !== id);
+  yangilash();
+}
+
+function yangilash() {
+  localStorage.setItem(&quot;vazifalar&quot;, JSON.stringify(vazifalar));  // saqlash
+  render();                                                         // chizish
+}
+
+// ========== 4. CHIZISH (holatdan sahifa) ==========
+function render() {
+  royxat.innerHTML = &quot;&quot;;                         // eski ro&#x27;yxatni tozalash
+
+  const korinadigan = vazifalar.filter(v =&gt; {
+    if (filtr === &quot;faol&quot;) return !v.bajarildi;
+    if (filtr === &quot;bajarilgan&quot;) return v.bajarildi;
+    return true;
+  });
+
+  if (korinadigan.length === 0) {
+    royxat.innerHTML = &#x27;&lt;li class=&quot;bosh&quot;&gt;Bu yerda hozircha hech narsa yo\&#x27;q 🎉&lt;/li&gt;&#x27;;
+  }
+
+  korinadigan.forEach(v =&gt; {
+    const li = document.createElement(&quot;li&quot;);
+    if (v.bajarildi) li.classList.add(&quot;bajarildi&quot;);
+
+    const checkbox = document.createElement(&quot;input&quot;);
+    checkbox.type = &quot;checkbox&quot;;
+    checkbox.checked = v.bajarildi;
+    checkbox.addEventListener(&quot;change&quot;, () =&gt; belgilash(v.id));
+
+    const span = document.createElement(&quot;span&quot;);
+    span.textContent = v.matn;                   // ✅ textContent — xavfsiz
+
+    const ochirishTugma = document.createElement(&quot;button&quot;);
+    ochirishTugma.textContent = &quot;🗑&quot;;
+    ochirishTugma.title = &quot;O&#x27;chirish&quot;;
+    ochirishTugma.addEventListener(&quot;click&quot;, () =&gt; ochirish(v.id));
+
+    li.append(checkbox, span, ochirishTugma);
+    royxat.append(li);
+  });
+
+  const qolgan = vazifalar.filter(v =&gt; !v.bajarildi).length;
+  hisob.textContent = `${qolgan} ta vazifa qoldi`;
+}
+
+// ========== 5. HODISALAR ==========
+forma.addEventListener(&quot;submit&quot;, (e) =&gt; {
+  e.preventDefault();
+  const matn = kiritish.value.trim();
+
+  // Validatsiya
+  if (matn === &quot;&quot;) {
+    xato.textContent = &quot;⚠️ Vazifa matnini kiriting&quot;;
+    return;
+  }
+  if (vazifalar.some(v =&gt; v.matn.toLowerCase() === matn.toLowerCase())) {
+    xato.textContent = &quot;⚠️ Bunday vazifa allaqachon bor&quot;;
+    return;
+  }
+
+  xato.textContent = &quot;&quot;;
+  qoshish(matn);
+  kiritish.value = &quot;&quot;;
+  kiritish.focus();
+});
+
+document.querySelectorAll(&quot;[data-filtr]&quot;).forEach(tugma =&gt; {
+  tugma.addEventListener(&quot;click&quot;, () =&gt; {
+    filtr = tugma.dataset.filtr;                 // data-filtr atributining qiymati
+    document.querySelectorAll(&quot;[data-filtr]&quot;).forEach(t =&gt; t.classList.remove(&quot;faol&quot;));
+    tugma.classList.add(&quot;faol&quot;);
+    render();
+  });
+});
+
+document.querySelector(&quot;#tozalash&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  vazifalar = vazifalar.filter(v =&gt; !v.bajarildi);
+  yangilash();
+});
+
+// ========== 6. BOSHLASH ==========
+render();</code></pre></div>
+<h3>3-qadam: dizayn</h3>
+<div class="code"><div class="code-head"><span>todo/style.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">* { box-sizing: border-box; }
+body { font-family: &quot;Segoe UI&quot;, sans-serif; background: #eef2ff; margin: 0; padding: 40px 16px; }
+.ilova { max-width: 480px; margin: 0 auto; background: white; padding: 28px; border-radius: 18px;
+         box-shadow: 0 15px 35px rgba(79,70,229,.12); }
+h1 { margin-top: 0; text-align: center; }
+#forma { display: flex; gap: 8px; }
+#forma input { flex: 1; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; }
+#forma input:focus { border-color: #4f46e5; outline: none; }
+#forma button { padding: 0 18px; border: none; border-radius: 10px; background: #4f46e5; color: white; font-weight: 600; cursor: pointer; }
+.xato { color: #dc2626; min-height: 1.2em; margin: 6px 0; font-size: 14px; }
+.filtrlar { display: flex; gap: 6px; margin-bottom: 10px; }
+.filtrlar button { border: 1px solid #e5e7eb; background: white; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.filtrlar button.faol { background: #4f46e5; color: white; border-color: #4f46e5; }
+#royxat { list-style: none; padding: 0; margin: 0; }
+#royxat li { display: flex; align-items: center; gap: 10px; padding: 12px 4px; border-bottom: 1px solid #f3f4f6; }
+#royxat li span { flex: 1; }
+#royxat li.bajarildi span { text-decoration: line-through; color: #9ca3af; }
+#royxat li button { border: none; background: none; cursor: pointer; font-size: 18px; opacity: .4; transition: opacity .2s; }
+#royxat li:hover button { opacity: 1; }
+#royxat li.bosh { justify-content: center; color: #9ca3af; }
+.pastki { display: flex; justify-content: space-between; margin-top: 14px; font-size: 14px; color: #6b7280; }
+.pastki button { border: none; background: none; color: #6b7280; text-decoration: underline; cursor: pointer; }</code></pre></div>
+<p>Uchala faylni bitta papkada yarating va Live Server bilan oching. Vazifalar qo'shing, sahifani yangilang — ular <b>saqlanib qoladi</b> (localStorage).</p>
+<div class="callout tip"><span class="t">Tushunish uchun tajriba</span>
+DevTools → <b>Application</b> → <b>Local Storage</b> ni oching. Vazifa qo'shganingizda <code>vazifalar</code> kaliti ostidagi JSON qanday o'zgarishini kuzating.</div>
+
+<h2 id="2-loyiha-mini-test-tizimi-12-loyiha"><a class="anchor" href="#2-loyiha-mini-test-tizimi-12-loyiha">#</a>2-loyiha: Mini test tizimi (12-loyiha)</h2>
+<p>Savollar <b>ma'lumot</b> sifatida massivda saqlanadi — yangi savol qo'shish uchun kodni o'zgartirish shart emas, faqat massivga qo'shish kifoya.</p>
+<div class="code" data-play><div class="code-head"><span>test.html</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Mini test&lt;/title&gt;
+&lt;style&gt;
+  body { font-family: &quot;Segoe UI&quot;, sans-serif; background: #f1f5f9; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+  .test { background: white; width: min(480px, 92vw); padding: 28px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+  .progress { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-bottom: 18px; }
+  .progress div { height: 100%; background: #4f46e5; width: 0; transition: width .4s; }
+  .raqam { color: #6b7280; font-size: 14px; }
+  h2 { margin: 6px 0 16px; font-size: 1.25rem; }
+  .variant { display: block; width: 100%; text-align: left; padding: 12px 14px; margin: 8px 0; border: 2px solid #e5e7eb;
+             border-radius: 10px; background: white; font-size: 16px; cursor: pointer; transition: .2s; }
+  .variant:hover:not(:disabled) { border-color: #4f46e5; background: #eef2ff; }
+  .variant.togri { border-color: #22c55e; background: #dcfce7; }
+  .variant.notogri { border-color: #ef4444; background: #fee2e2; }
+  #keyingi { margin-top: 14px; padding: 12px 22px; border: none; border-radius: 10px; background: #4f46e5; color: white; font-size: 16px; cursor: pointer; }
+  .yashirin { display: none; }
+  .natija { text-align: center; }
+  .natija .ball { font-size: 3rem; font-weight: 800; color: #4f46e5; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;test&quot;&gt;
+  &lt;div class=&quot;progress&quot;&gt;&lt;div id=&quot;chiziq&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div id=&quot;savolBloki&quot;&gt;
+    &lt;div class=&quot;raqam&quot; id=&quot;raqam&quot;&gt;&lt;/div&gt;
+    &lt;h2 id=&quot;savol&quot;&gt;&lt;/h2&gt;
+    &lt;div id=&quot;variantlar&quot;&gt;&lt;/div&gt;
+    &lt;button id=&quot;keyingi&quot; class=&quot;yashirin&quot;&gt;Keyingi →&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;natijaBloki&quot; class=&quot;natija yashirin&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const SAVOLLAR = [
+    { savol: &quot;Sahifa tuzilishini yaratuvchi til qaysi?&quot;, variantlar: [&quot;CSS&quot;, &quot;HTML&quot;, &quot;JavaScript&quot;, &quot;Python&quot;], togri: 1 },
+    { savol: &quot;Doim ishlatilishi kerak bo&#x27;lgan taqqoslash operatori?&quot;, variantlar: [&quot;=&quot;, &quot;==&quot;, &quot;===&quot;, &quot;=&gt;&quot;], togri: 2 },
+    { savol: &quot;Massiv oxiriga element qo&#x27;shuvchi metod?&quot;, variantlar: [&quot;pop()&quot;, &quot;push()&quot;, &quot;shift()&quot;, &quot;add()&quot;], togri: 1 },
+    { savol: &quot;Elementni CSS selektori bilan topuvchi metod?&quot;, variantlar: [&quot;querySelector&quot;, &quot;findElement&quot;, &quot;getCSS&quot;, &quot;select&quot;], togri: 0 },
+    { savol: &quot;17 % 5 nechaga teng?&quot;, variantlar: [&quot;3&quot;, &quot;3.4&quot;, &quot;2&quot;, &quot;12&quot;], togri: 2 },
+  ];
+
+  let joriy = 0;
+  let ball = 0;
+
+  const raqamEl = document.querySelector(&quot;#raqam&quot;);
+  const savolEl = document.querySelector(&quot;#savol&quot;);
+  const variantlarEl = document.querySelector(&quot;#variantlar&quot;);
+  const keyingiEl = document.querySelector(&quot;#keyingi&quot;);
+  const chiziqEl = document.querySelector(&quot;#chiziq&quot;);
+
+  function savolniKorsat() {
+    const s = SAVOLLAR[joriy];
+    raqamEl.textContent = `Savol ${joriy + 1} / ${SAVOLLAR.length}`;
+    savolEl.textContent = s.savol;
+    chiziqEl.style.width = `${(joriy / SAVOLLAR.length) * 100}%`;
+    keyingiEl.classList.add(&quot;yashirin&quot;);
+    variantlarEl.innerHTML = &quot;&quot;;
+
+    s.variantlar.forEach((matn, i) =&gt; {
+      const tugma = document.createElement(&quot;button&quot;);
+      tugma.className = &quot;variant&quot;;
+      tugma.textContent = matn;
+      tugma.addEventListener(&quot;click&quot;, () =&gt; javobBer(i, tugma));
+      variantlarEl.append(tugma);
+    });
+  }
+
+  function javobBer(tanlangan, tugma) {
+    const togri = SAVOLLAR[joriy].togri;
+    const hammasi = variantlarEl.querySelectorAll(&quot;.variant&quot;);
+    hammasi.forEach(t =&gt; t.disabled = true);            // qayta bosib bo&#x27;lmasin
+
+    if (tanlangan === togri) {
+      ball++;
+      tugma.classList.add(&quot;togri&quot;);
+    } else {
+      tugma.classList.add(&quot;notogri&quot;);
+      hammasi[togri].classList.add(&quot;togri&quot;);            // to&#x27;g&#x27;ri javobni ko&#x27;rsatamiz
+    }
+    keyingiEl.classList.remove(&quot;yashirin&quot;);
+  }
+
+  keyingiEl.addEventListener(&quot;click&quot;, () =&gt; {
+    joriy++;
+    if (joriy &lt; SAVOLLAR.length) savolniKorsat();
+    else natijaniKorsat();
+  });
+
+  function natijaniKorsat() {
+    chiziqEl.style.width = &quot;100%&quot;;
+    document.querySelector(&quot;#savolBloki&quot;).classList.add(&quot;yashirin&quot;);
+    const foiz = Math.round((ball / SAVOLLAR.length) * 100);
+    const izoh = foiz &gt;= 86 ? &quot;A&#x27;lo! 🏆&quot; : foiz &gt;= 60 ? &quot;Yaxshi! 👍&quot; : &quot;Yana mashq qiling 📚&quot;;
+    const blok = document.querySelector(&quot;#natijaBloki&quot;);
+    blok.classList.remove(&quot;yashirin&quot;);
+    blok.innerHTML = `&lt;p&gt;Natijangiz&lt;/p&gt;&lt;div class=&quot;ball&quot;&gt;${ball}/${SAVOLLAR.length}&lt;/div&gt;
+                      &lt;p&gt;${foiz}% — ${izoh}&lt;/p&gt;&lt;button id=&quot;qayta&quot;&gt;Qaytadan boshlash&lt;/button&gt;`;
+    document.querySelector(&quot;#qayta&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+      joriy = 0; ball = 0;
+      blok.classList.add(&quot;yashirin&quot;);
+      document.querySelector(&quot;#savolBloki&quot;).classList.remove(&quot;yashirin&quot;);
+      savolniKorsat();
+    });
+  }
+
+  savolniKorsat();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<p><b>Kengaytirish g'oyalari:</b></p>
+<ol class="steps">
+  <li>O'zingiz 10 ta savol yozing (HTML, CSS, JS bo'yicha).</li>
+  <li>Savollar va variantlar har safar <b>aralashtirilib</b> chiqsin (Maslahat: <code>arr.sort(() =&gt; Math.random() - 0.5)</code>; variantlarni aralashtirganda to'g'ri javob indeksini ham yangilashni unutmang!).</li>
+  <li>Har bir savolga 20 soniyalik taymer qo'shing (<code>setInterval</code>). Vaqt tugasa — javob noto'g'ri hisoblanadi.</li>
+  <li>Eng yaxshi natijani <code>localStorage</code> da saqlang va "Rekord: 9/10" deb ko'rsating.</li>
+</ol>
+
+<h2 id="forma-validatsiyasi-real-vaqtda-tekshirish"><a class="anchor" href="#forma-validatsiyasi-real-vaqtda-tekshirish">#</a>Forma validatsiyasi: real vaqtda tekshirish</h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  body { font-family: sans-serif; padding: 20px; }
+  .maydon { margin-bottom: 14px; }
+  input { padding: 10px; border: 2px solid #d1d5db; border-radius: 8px; width: 260px; }
+  .maydon.xato input { border-color: #ef4444; }
+  .maydon.ok input { border-color: #22c55e; }
+  small { display: block; color: #ef4444; min-height: 1em; }
+&lt;/style&gt;
+&lt;form id=&quot;royxatdan&quot;&gt;
+  &lt;div class=&quot;maydon&quot;&gt;&lt;input name=&quot;email&quot; placeholder=&quot;Email&quot;&gt;&lt;small&gt;&lt;/small&gt;&lt;/div&gt;
+  &lt;div class=&quot;maydon&quot;&gt;&lt;input name=&quot;parol&quot; type=&quot;password&quot; placeholder=&quot;Parol&quot;&gt;&lt;small&gt;&lt;/small&gt;&lt;/div&gt;
+  &lt;button&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/button&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  const qoidalar = {
+    email: v =&gt; /^\S+@\S+\.\S+$/.test(v) ? &quot;&quot; : &quot;Email noto&#x27;g&#x27;ri&quot;,
+    parol: v =&gt; v.length &lt; 8 ? &quot;Kamida 8 belgi&quot; : !/\d/.test(v) ? &quot;Kamida bitta raqam bo&#x27;lsin&quot; : &quot;&quot;,
+  };
+  const forma = document.querySelector(&quot;#royxatdan&quot;);
+
+  function tekshir(input) {
+    const xato = qoidalar[input.name](input.value);
+    const maydon = input.closest(&quot;.maydon&quot;);
+    maydon.querySelector(&quot;small&quot;).textContent = xato;
+    maydon.classList.toggle(&quot;xato&quot;, xato !== &quot;&quot;);
+    maydon.classList.toggle(&quot;ok&quot;, xato === &quot;&quot;);
+    return xato === &quot;&quot;;
+  }
+
+  forma.addEventListener(&quot;input&quot;, e =&gt; tekshir(e.target));
+  forma.addEventListener(&quot;submit&quot;, e =&gt; {
+    e.preventDefault();
+    const hammasiOk = [...forma.elements].filter(el =&gt; el.name).map(tekshir).every(Boolean);
+    if (hammasiOk) alert(&quot;✅ Muvaffaqiyatli ro&#x27;yxatdan o&#x27;tdingiz!&quot;);
+  });
+&lt;/script&gt;</code></pre></div>
+<p><code>/^\S+@\S+\.\S+$/</code> — <b>muntazam ifoda (regex)</b>: "bo'sh joysiz belgilar, @, belgilar, nuqta, belgilar". Regex'lar matnni naqsh bo'yicha tekshirish uchun ishlatiladi.</p>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Holatni o'zgartirib, <code>render()</code> ni chaqirishni unutish — massiv o'zgardi, lekin ekran eski holicha.</li>
+  <li>❌ <code>localStorage</code> ga massivni <code>JSON.stringify</code>siz saqlash — <code>"[object Object]"</code> saqlanib qoladi.</li>
+  <li>❌ <code>render()</code> da ro'yxatni tozalamaslik (<code>innerHTML = ""</code>) — har safar elementlar ikki baravar ko'payadi.</li>
+  <li>❌ Foydalanuvchi matnini <code>innerHTML</code> bilan qo'shish — XSS xavfi. <code>textContent</code>!</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">"Holat → Chizish" usulida tugma bosilganda birinchi nima o'zgaradi?</p><ol>
+<li>Sahifadagi HTML</li><li>CSS fayl</li><li>Ma'lumotlar massivi (holat)</li><li>localStorage</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Massivni localStorage'da saqlash uchun avval nima qilinadi?</p><ol>
+<li><code>JSON.stringify()</code> bilan matnga aylantiriladi</li><li><code>toString()</code> chaqiriladi</li><li>Hech narsa, to'g'ridan-to'g'ri saqlanadi</li><li><code>Number()</code> bilan songa aylantiriladi</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>&lt;button data-filtr="faol"&gt;</code> dagi qiymatni JS'da qanday o'qiysiz?</p><ol>
+<li><code>tugma.filtr</code></li><li><code>tugma.data</code></li><li><code>tugma.value</code></li><li><code>tugma.dataset.filtr</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Vazifani o'chirishning eng qulay usuli (id bo'yicha)?</p><ol>
+<li><code>vazifalar.pop(id)</code></li><li><code>vazifalar = vazifalar.filter(v =&gt; v.id !== id)</code></li><li><code>delete vazifalar[id]</code></li><li><code>vazifalar.remove(id)</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa (bob yakunlovchi loyiha)</h3>
+<p>Quyidagilardan <b>birini</b> tanlab, to'liq ilova yarating va GitHub + Netlify'ga joylang:</p>
+<ol>
+  <li><b>Xarajatlar hisobchisi:</b> xarajat nomi, summasi va toifasi qo'shiladi; jami summa va toifalar bo'yicha yig'indi ko'rsatiladi; localStorage.</li>
+  <li><b>Lug'at o'yini:</b> inglizcha so'z ko'rsatiladi, foydalanuvchi tarjimasini yozadi; ball va "qiyin so'zlar" ro'yxati.</li>
+  <li><b>Kutubxona katalogi:</b> kitoblar kartochkalari, qidiruv maydoni (real vaqtda filtr), janr bo'yicha filtr, "o'qildi" belgisi.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>🎉 II bob yakunlandi!</h3>
+<ul>
+  <li>Loyiha: reja → dizayn → ma'lumot tuzilmasi → hodisalar → kichik qadamlar.</li>
+  <li>"Holat → Chizish": hodisa holatni o'zgartiradi, <code>render()</code> sahifani holatdan chizadi, <code>localStorage</code> saqlaydi.</li>
+  <li>Siz endi interaktiv veb-ilovalar yarata olasiz. Keyingi bobda <b>server tomoni</b>ga o'tamiz — Python va ma'lumotlar bazalari!</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="19-dom-bom-eventlar.html"><small>← Oldingi mavzu</small>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a><a class="next" href="21-python-kirish.html"><small>Keyingi mavzu →</small>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#loyihani-qanday-boshlash-kerak">Loyihani qanday boshlash kerak?</a></li><li><a href="#holat-chizish-usuli">&quot;Holat → Chizish&quot; usuli</a></li><li><a href="#1-loyiha-to-do-list-11-loyiha">1-loyiha: To-Do List (11-loyiha)</a></li><li><a href="#2-loyiha-mini-test-tizimi-12-loyiha">2-loyiha: Mini test tizimi (12-loyiha)</a></li><li><a href="#forma-validatsiyasi-real-vaqtda-tekshirish">Forma validatsiyasi: real vaqtda tekshirish</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

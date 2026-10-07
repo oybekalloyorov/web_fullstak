@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Model — jadvalning Python klassi, maydon turlari, ForeignKey bog&#x27;lanishlari, __str__ va Meta; makemigrations va migrate; ORM bilan CRUD: create, all, filter, get, order_by, update, delete; get_object_or_404; view&#x27;larni bazaga ulash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a class="active" href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧬</div><div><div class="crumb">36-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</h1><p class="lead">Model — jadvalning Python klassi, maydon turlari, ForeignKey bog&#x27;lanishlari, __str__ va Meta; makemigrations va migrate; ORM bilan CRUD: create, all, filter, get, order_by, update, delete; get_object_or_404; view&#x27;larni bazaga ulash.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Model</b> — ma'lumotlar bazasi jadvalini Python klassi sifatida yozishni;</li>
+  <li>Maydon turlari va jadvallar o'rtasidagi bog'lanishlarni (<code>ForeignKey</code>);</li>
+  <li><b>Migratsiya</b> — modelni haqiqiy jadvalga aylantirish jarayonini;</li>
+  <li><b>ORM</b> yordamida SQL yozmasdan ma'lumot qo'shish, o'qish, filtrlash, o'zgartirish va o'chirishni;</li>
+  <li>Blog sahifalarini haqiqiy PostgreSQL bazasiga ulashni.</li>
+</ul>
+</div>
+
+<h2 id="orm-nima"><a class="anchor" href="#orm-nima">#</a>ORM nima?</h2>
+<p>III bobda SQL yozdik, 32-mavzuda esa uni Python ichida satr sifatida yubordik. Django'da yanada qulay yo'l bor — <b>ORM</b> (Object-Relational Mapping):
+jadvallar — <b>klasslar</b>, qatorlar — <b>obyektlar</b>, SQL o'rniga — <b>Python kodi</b>.</p>
+<div class="table-wrap"><table>
+<tr><th>SQL</th><th>Django ORM</th></tr>
+<tr><td><code>SELECT * FROM blog_maqola;</code></td><td><code>Maqola.objects.all()</code></td></tr>
+<tr><td><code>SELECT * FROM blog_maqola WHERE id = 5;</code></td><td><code>Maqola.objects.get(id=5)</code></td></tr>
+<tr><td><code>... WHERE sarlavha ILIKE '%futbol%' ORDER BY yaratilgan DESC</code></td><td><code>Maqola.objects.filter(sarlavha__icontains="futbol").order_by("-yaratilgan")</code></td></tr>
+<tr><td><code>INSERT INTO blog_maqola (...) VALUES (...);</code></td><td><code>Maqola.objects.create(sarlavha="...", ...)</code></td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: tarjimon</span>
+Siz o'zbekcha (Python) gapirasiz, baza esa faqat inglizcha (SQL) tushunadi. ORM — tarjimon: sizning <code>Maqola.objects.filter(...)</code> gapingizni to'g'ri va xavfsiz SQL'ga
+o'giradi. Bonus: SQL injection'dan avtomatik himoya (32-mavzu) va bazani almashtirsangiz (SQLite → PostgreSQL) kod o'zgarmaydi.</div>
+
+<h2 id="model-yaratish"><a class="anchor" href="#model-yaratish">#</a>Model yaratish</h2>
+<div class="code"><div class="code-head"><span>blog/models.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+
+class Kategoriya(models.Model):
+    nomi = models.CharField(&quot;Nomi&quot;, max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        verbose_name = &quot;Kategoriya&quot;
+        verbose_name_plural = &quot;Kategoriyalar&quot;
+        ordering = [&quot;nomi&quot;]
+
+    def __str__(self):
+        return self.nomi
+
+
+class Maqola(models.Model):
+    sarlavha = models.CharField(&quot;Sarlavha&quot;, max_length=200)
+    matn = models.TextField(&quot;Matn&quot;)
+    kategoriya = models.ForeignKey(
+        Kategoriya,
+        on_delete=models.PROTECT,          # kategoriyada maqola bo&#x27;lsa — o&#x27;chirib bo&#x27;lmaydi
+        related_name=&quot;maqolalar&quot;,
+    )
+    muallif = models.ForeignKey(User, on_delete=models.CASCADE, related_name=&quot;maqolalar&quot;)
+    chop_etilgan = models.BooleanField(&quot;Chop etilgan&quot;, default=True)
+    korishlar = models.PositiveIntegerField(default=0)
+    yaratilgan = models.DateTimeField(auto_now_add=True)    # yaratilganda avtomatik
+    yangilangan = models.DateTimeField(auto_now=True)       # har saqlanganda avtomatik
+
+    class Meta:
+        verbose_name = &quot;Maqola&quot;
+        verbose_name_plural = &quot;Maqolalar&quot;
+        ordering = [&quot;-yaratilgan&quot;]                          # yangilari birinchi
+
+    def __str__(self):
+        return self.sarlavha
+
+    def get_absolute_url(self):
+        return reverse(&quot;blog:maqola&quot;, args=[self.id])</code></pre></div>
+<p>Har bir model — <code>models.Model</code> dan <b>meros</b> olgan klass (25-mavzu!). Har bir atribut — jadval <b>ustuni</b>. <code>id</code> ustunini yozmaymiz — Django uni avtomatik qo'shadi.</p>
+<h3>Asosiy maydon turlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Django maydoni</th><th>PostgreSQL turi</th><th>Qachon</th></tr>
+<tr><td><code>CharField(max_length=...)</code></td><td><code>VARCHAR(n)</code></td><td>Qisqa matn: ism, sarlavha</td></tr>
+<tr><td><code>TextField()</code></td><td><code>TEXT</code></td><td>Uzun matn: maqola</td></tr>
+<tr><td><code>IntegerField()</code>, <code>PositiveIntegerField()</code></td><td><code>INTEGER</code></td><td>Butun son</td></tr>
+<tr><td><code>DecimalField(max_digits, decimal_places)</code></td><td><code>NUMERIC</code></td><td>Pul</td></tr>
+<tr><td><code>BooleanField()</code></td><td><code>BOOLEAN</code></td><td>Ha/yo'q</td></tr>
+<tr><td><code>DateField()</code>, <code>DateTimeField()</code></td><td><code>DATE</code>, <code>TIMESTAMP</code></td><td>Sana, vaqt</td></tr>
+<tr><td><code>EmailField()</code>, <code>URLField()</code>, <code>SlugField()</code></td><td><code>VARCHAR</code> + tekshiruv</td><td>Email, havola, slug</td></tr>
+<tr><td><code>ImageField(upload_to=...)</code></td><td><code>VARCHAR</code> (fayl yo'li)</td><td>Rasm (<code>pip install Pillow</code> kerak)</td></tr>
+<tr><td><code>ForeignKey(Model, on_delete=...)</code></td><td>FK ustun <code>..._id</code></td><td>Birga-ko'p bog'lanish</td></tr>
+<tr><td><code>ManyToManyField(Model)</code></td><td>Oraliq jadval (avtomatik)</td><td>Ko'pga-ko'p (teglar)</td></tr>
+</table></div>
+<h3>Maydon parametrlari</h3>
+<ul>
+  <li><code>null=True</code> — bazada NULL bo'lishi mumkin; <code>blank=True</code> — formada bo'sh qoldirish mumkin.</li>
+  <li><code>default=...</code> — standart qiymat; <code>unique=True</code> — takrorlanmas; <code>choices=[...]</code> — tanlov ro'yxati.</li>
+  <li>Birinchi argument (<code>"Sarlavha"</code>) — admin panel va formalarda ko'rinadigan chiroyli nom.</li>
+</ul>
+<h3><code>on_delete</code> — 29-mavzudagi yaxlitlik qoidalari</h3>
+<div class="table-wrap"><table>
+<tr><th>Django</th><th>SQL ma'nosi</th><th>Bizning misolda</th></tr>
+<tr><td><code>CASCADE</code></td><td><code>ON DELETE CASCADE</code></td><td>Foydalanuvchi o'chsa — maqolalari ham</td></tr>
+<tr><td><code>PROTECT</code></td><td><code>RESTRICT</code></td><td>Maqolasi bor kategoriyani o'chirib bo'lmaydi</td></tr>
+<tr><td><code>SET_NULL</code></td><td><code>SET NULL</code> (<code>null=True</code> kerak)</td><td>—</td></tr>
+</table></div>
+
+<h2 id="migratsiyalar-modeldan-jadvalga"><a class="anchor" href="#migratsiyalar-modeldan-jadvalga">#</a>Migratsiyalar — modeldan jadvalga</h2>
+<p>Model — faqat Python kodi. Bazada jadval paydo bo'lishi uchun ikki qadam kerak:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">python manage.py makemigrations     # 1) model o&#x27;zgarishlaridan &quot;reja&quot; (migratsiya fayli) yaratish
+python manage.py migrate            # 2) rejani bazaga qo&#x27;llash (CREATE TABLE ...)</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Migrations for &#x27;blog&#x27;:
+  blog/migrations/0001_initial.py
+    - Create model Kategoriya
+    - Create model Maqola
+Operations to perform:
+  Apply all migrations: admin, auth, blog, contenttypes, sessions
+Running migrations:
+  Applying blog.0001_initial... OK</code></pre></div>
+<div class="analogy"><span class="t">O'xshatish: qurilish chizmasi</span>
+<code>models.py</code> — uyning yangi loyihasi. <code>makemigrations</code> — quruvchilar uchun "nimani o'zgartirish kerak" degan ish rejasini yozish ("2-qavatga xona qo'shilsin").
+<code>migrate</code> — rejani haqiqatda bajarish. Migratsiya fayllari — barcha o'zgarishlar tarixi (Git kabi!).</div>
+<p>pgAdmin'da <code>blog_kategoriya</code> va <code>blog_maqola</code> jadvallarini toping (nom: <code>ilova_model</code>). <code>blog_maqola</code> da <code>kategoriya_id</code> va <code>muallif_id</code> FK ustunlariga e'tibor bering.
+Django qanday SQL yozganini ko'rish: <code>python manage.py sqlmigrate blog 0001</code>.</p>
+<div class="callout warn"><span class="t">Qoida</span>
+<code>models.py</code> ni har o'zgartirganingizda (maydon qo'shish, nomini o'zgartirish) — <b>makemigrations</b> va <b>migrate</b>. Migratsiya fayllarini qo'lda tahrirlamang
+va Git'ga commit qiling.</div>
+
+<h2 id="orm-bilan-ishlash-django-shell"><a class="anchor" href="#orm-bilan-ishlash-django-shell">#</a>ORM bilan ishlash: Django shell</h2>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">python manage.py createsuperuser     # admin foydalanuvchi (maqola muallifi uchun ham kerak)
+python manage.py shell               # loyiha ichidagi Python konsoli</code></pre></div>
+<h3>Create — yaratish</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from blog.models import Kategoriya, Maqola
+from django.contrib.auth.models import User
+
+admin = User.objects.first()
+
+sport = Kategoriya.objects.create(nomi=&quot;Sport&quot;, slug=&quot;sport&quot;)
+tadbir = Kategoriya.objects.create(nomi=&quot;Tadbirlar&quot;, slug=&quot;tadbirlar&quot;)
+
+m = Maqola.objects.create(
+    sarlavha=&quot;Futbol bo&#x27;yicha g&#x27;alaba&quot;,
+    matn=&quot;Maktabimiz jamoasi shahar chempionatida birinchi o&#x27;rinni egalladi!&quot;,
+    kategoriya=sport,
+    muallif=admin,
+)
+print(m.id, m.yaratilgan)
+
+# Ikkinchi usul: obyekt yaratib, keyin saqlash
+m2 = Maqola(sarlavha=&quot;Bilimlar bellashuvi&quot;, matn=&quot;...&quot;, kategoriya=tadbir, muallif=admin)
+m2.save()</code></pre></div>
+<h3>Read — o'qish</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">Maqola.objects.all()                          # barchasi (QuerySet)
+Maqola.objects.count()                        # soni
+Maqola.objects.get(id=1)                      # aynan bittasi (topilmasa — DoesNotExist xatosi!)
+Maqola.objects.first(), Maqola.objects.last()
+
+Maqola.objects.filter(chop_etilgan=True)                  # WHERE chop_etilgan = TRUE
+Maqola.objects.filter(kategoriya__slug=&quot;sport&quot;)           # bog&#x27;langan jadval bo&#x27;yicha (JOIN!)
+Maqola.objects.filter(sarlavha__icontains=&quot;futbol&quot;)       # ILIKE &#x27;%futbol%&#x27;
+Maqola.objects.filter(korishlar__gte=100)                 # &gt;= 100
+Maqola.objects.filter(yaratilgan__year=2026)
+Maqola.objects.exclude(chop_etilgan=False)                # NOT
+Maqola.objects.order_by(&quot;-korishlar&quot;)[:5]                 # ORDER BY ... DESC LIMIT 5
+
+m = Maqola.objects.get(id=1)
+print(m.sarlavha, m.kategoriya.nomi, m.muallif.username)  # FK orqali bog&#x27;langan obyektga o&#x27;tish
+sport.maqolalar.all()                                     # teskari yo&#x27;nalish (related_name)</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Lookup</th><th>SQL</th></tr>
+<tr><td><code>maydon=x</code></td><td><code>= x</code></td></tr>
+<tr><td><code>maydon__gt</code> / <code>__gte</code> / <code>__lt</code> / <code>__lte</code></td><td><code>&gt;</code> / <code>&gt;=</code> / <code>&lt;</code> / <code>&lt;=</code></td></tr>
+<tr><td><code>maydon__contains</code> / <code>__icontains</code></td><td><code>LIKE '%x%'</code> / <code>ILIKE</code></td></tr>
+<tr><td><code>maydon__startswith</code></td><td><code>LIKE 'x%'</code></td></tr>
+<tr><td><code>maydon__in=[1, 2]</code></td><td><code>IN (1, 2)</code></td></tr>
+<tr><td><code>maydon__isnull=True</code></td><td><code>IS NULL</code></td></tr>
+<tr><td><code>fk__maydon</code></td><td>JOIN orqali bog'langan jadval ustuni</td></tr>
+</table></div>
+<h3>Update va Delete</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">m = Maqola.objects.get(id=1)
+m.sarlavha = &quot;Futbol: shahar chempionlari!&quot;
+m.korishlar += 1
+m.save()                                                   # UPDATE
+
+Maqola.objects.filter(kategoriya__slug=&quot;sport&quot;).update(chop_etilgan=False)   # ko&#x27;pini birdan
+
+Maqola.objects.get(id=2).delete()                          # DELETE</code></pre></div>
+<h3>Agregatsiya (30-mavzu Django'da)</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.db.models import Count, Sum, Avg
+
+Maqola.objects.aggregate(jami=Sum(&quot;korishlar&quot;), ortacha=Avg(&quot;korishlar&quot;))
+# {&#x27;jami&#x27;: 340, &#x27;ortacha&#x27;: 85.0}
+
+Kategoriya.objects.annotate(soni=Count(&quot;maqolalar&quot;))       # GROUP BY: har bir kategoriyadagi maqolalar soni
+for k in Kategoriya.objects.annotate(soni=Count(&quot;maqolalar&quot;)):
+    print(k.nomi, k.soni)</code></pre></div>
+<div class="callout info"><b>QuerySet "dangasa"</b>: <code>Maqola.objects.filter(...)</code> yozilganda baza hali so'ralmaydi — faqat natija haqiqatan kerak bo'lganda (sikl, <code>print</code>, shablon) bitta SQL yuboriladi.
+Shu tufayli <code>filter().exclude().order_by()</code> zanjiri samarali ishlaydi.</div>
+
+<h2 id="viewlarni-bazaga-ulash"><a class="anchor" href="#viewlarni-bazaga-ulash">#</a>View'larni bazaga ulash</h2>
+<p>Endi 34–35-mavzulardagi <code>MAQOLALAR</code> ro'yxatini o'chirib, haqiqiy modeldan foydalanamiz:</p>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.shortcuts import render, get_object_or_404
+from django.db.models import Q, F
+from .models import Maqola, Kategoriya
+
+
+def bosh_sahifa(request):
+    maqolalar = Maqola.objects.filter(chop_etilgan=True).select_related(&quot;kategoriya&quot;, &quot;muallif&quot;)
+    return render(request, &quot;blog/bosh_sahifa.html&quot;, {&quot;maqolalar&quot;: maqolalar})
+
+
+def maqola(request, id):
+    m = get_object_or_404(Maqola, id=id, chop_etilgan=True)    # topilmasa — avtomatik 404
+    Maqola.objects.filter(id=m.id).update(korishlar=F(&quot;korishlar&quot;) + 1)   # ko&#x27;rishlar +1
+    return render(request, &quot;blog/maqola.html&quot;, {&quot;maqola&quot;: m})
+
+
+def kategoriya(request, nomi):
+    kat = get_object_or_404(Kategoriya, slug=nomi)
+    return render(request, &quot;blog/kategoriya.html&quot;, {
+        &quot;kategoriya&quot;: kat,
+        &quot;maqolalar&quot;: kat.maqolalar.filter(chop_etilgan=True),
+    })
+
+
+def qidiruv(request):
+    q = request.GET.get(&quot;q&quot;, &quot;&quot;).strip()
+    natija = Maqola.objects.none()
+    if q:
+        natija = Maqola.objects.filter(
+            Q(sarlavha__icontains=q) | Q(matn__icontains=q),    # Q — YOKI shart
+            chop_etilgan=True,
+        )
+    return render(request, &quot;blog/qidiruv.html&quot;, {&quot;q&quot;: q, &quot;maqolalar&quot;: natija})</code></pre></div>
+<p>Shablonlar deyarli o'zgarmaydi — dict kalitlari o'rniga model atributlari: <code>{{ m.sarlavha }}</code>, <code>{{ m.kategoriya.nomi }}</code>, <code>{{ m.yaratilgan|date:"d.m.Y" }}</code>,
+havola uchun <code>{{ m.get_absolute_url }}</code>.</p>
+<div class="code"><div class="code-head"><span>blog/templates/blog/_karta.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{# m — Maqola obyekti #}
+&lt;article class=&quot;karta&quot;&gt;
+  &lt;a class=&quot;belgi&quot; href=&quot;{% url &#x27;blog:kategoriya&#x27; m.kategoriya.slug %}&quot;&gt;{{ m.kategoriya.nomi }}&lt;/a&gt;
+  &lt;h3&gt;&lt;a href=&quot;{{ m.get_absolute_url }}&quot;&gt;{{ m.sarlavha }}&lt;/a&gt;&lt;/h3&gt;
+  &lt;p&gt;{{ m.matn|truncatewords:20 }}&lt;/p&gt;
+  &lt;small&gt;✍️ {{ m.muallif.username }} · 📅 {{ m.yaratilgan|date:&quot;d.m.Y&quot; }} · 👁 {{ m.korishlar }}&lt;/small&gt;
+&lt;/article&gt;</code></pre></div>
+<div class="callout tip"><code>select_related("kategoriya", "muallif")</code> — kategoriya va muallifni <b>bitta JOIN so'rov</b> bilan oladi. Usiz har bir karta uchun alohida so'rov ketardi
+(10 ta maqola = 21 ta so'rov). Bu "N+1 muammosi" deyiladi.</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>Kategoriya</code> va <code>Maqola</code> modellarini yozing, <code>makemigrations</code> + <code>migrate</code>. pgAdmin'da jadvallarni ko'ring.</li>
+  <li><code>createsuperuser</code> bilan admin yarating.</li>
+  <li><code>shell</code> orqali 3 ta kategoriya va 6 ta maqola yarating. ORM so'rovlarini mashq qiling: sport maqolalari, sarlavhasida "maktab" bor maqolalar, eng ko'p ko'rilgan 3 tasi.</li>
+  <li>View'larni bazaga ulang, <code>MAQOLALAR</code> ro'yxatini o'chiring. <code>kategoriya.html</code> va <code>qidiruv.html</code> shablonlarini (<code>base.html</code> dan meros, kartalar uchun <code>_karta.html</code>) yarating. <code>base.html</code> dagi menyuga qidiruv formasini qo'shing: <code>&lt;form action="{% url 'blog:qidiruv' %}"&gt;&lt;input name="q"&gt;&lt;/form&gt;</code>. Sayt endi bazadagi ma'lumotni ko'rsatishini tekshiring.</li>
+  <li>Bosh sahifaga kategoriyalar ro'yxatini maqolalar soni bilan qo'shing (<code>annotate(Count(...))</code>).</li>
+  <li><b>Model o'zgartirish:</b> <code>Maqola</code> ga <code>rasm = models.ImageField(upload_to="maqolalar/", blank=True)</code> qo'shing (<code>pip install Pillow</code>), migratsiya qiling.
+  <code>settings.py</code> ga <code>MEDIA_URL = "media/"</code>, <code>MEDIA_ROOT = BASE_DIR / "media"</code>; <code>config/urls.py</code> oxiriga:
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # faqat DEBUG rejimida</code></pre></div>
+  Shablonda: <code>{% if m.rasm %}&lt;img src="{{ m.rasm.url }}" alt="{{ m.sarlavha }}"&gt;{% endif %}</code>.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>no such table</code> / <code>relation "blog_maqola" does not exist</code> — <code>migrate</code> bajarilmagan.</li>
+  <li>❌ <code>No changes detected</code> — ilova <code>INSTALLED_APPS</code> da yo'q yoki fayl saqlanmagan.</li>
+  <li>❌ <code>Maqola matching query does not exist</code> — <code>get()</code> hech narsa topmadi; view'larda <code>get_object_or_404</code> ishlating.</li>
+  <li>❌ <code>get() returned more than one</code> — <code>get</code> faqat bitta natija uchun; ko'p bo'lsa <code>filter</code>.</li>
+  <li>❌ Yangi majburiy maydon qo'shganda migratsiya standart qiymat so'raydi — <code>default=...</code> yoki <code>null=True</code> bering.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">ORM nima?</p><ol>
+<li>Ma'lumotlar bazasi turi</li><li>Jadvallar bilan Python klass va obyektlari orqali ishlash texnologiyasi</li><li>HTML shablon tili</li><li>Server dasturi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Modelni o'zgartirgandan keyin bajariladigan ikki buyruq?</p><ol>
+<li><code>runserver</code> va <code>shell</code></li><li><code>startapp</code> va <code>migrate</code></li><li><code>makemigrations</code> va <code>migrate</code></li><li><code>createsuperuser</code> va <code>collectstatic</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Uzun maqola matni uchun eng mos maydon?</p><ol>
+<li><code>TextField</code></li><li><code>CharField(max_length=50)</code></li><li><code>SlugField</code></li><li><code>IntegerField</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Sarlavhasida "olimpiada" so'zi bor maqolalar (katta-kichik harfga qaramay)?</p><ol>
+<li><code>Maqola.objects.get(sarlavha="olimpiada")</code></li><li><code>Maqola.objects.all("olimpiada")</code></li><li><code>Maqola.objects.filter(sarlavha="%olimpiada%")</code></li><li><code>Maqola.objects.filter(sarlavha__icontains="olimpiada")</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Obyekt topilmasa avtomatik 404 qaytaruvchi funksiya?</p><ol>
+<li><code>Maqola.objects.get()</code></li><li><code>get_object_or_404()</code></li><li><code>find_or_404()</code></li><li><code>Http404()</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">"Har bir maqolaning bitta kategoriyasi, kategoriyada ko'p maqola" — qaysi maydon?</p><ol>
+<li><code>ManyToManyField</code></li><li><code>OneToOneField</code></li><li><code>ForeignKey</code> (Maqola modelida)</li><li><code>CharField</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Kutubxona tizimi (22-loyiha) — modellar:</b> <code>Muallif</code>, <code>Kitob</code> (FK muallif, janr — <code>choices</code>, yil, sahifalar, mavjud), <code>Oquvchi</code>. Migratsiya va shell orqali ma'lumotlar.</li>
+  <li><b>Teglar:</b> <code>Teg</code> modeli va <code>Maqola.teglar = models.ManyToManyField(Teg, blank=True)</code>. Shell'da: <code>m.teglar.add(t1, t2)</code>, <code>Maqola.objects.filter(teglar__nomi="olimpiada")</code>.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Model — <code>class X(models.Model)</code>; maydonlar — ustunlar; <code>__str__</code>, <code>Meta</code>, <code>get_absolute_url</code>.</li>
+  <li><code>ForeignKey(..., on_delete=CASCADE/PROTECT/SET_NULL, related_name=...)</code>, <code>ManyToManyField</code>.</li>
+  <li><code>makemigrations</code> → <code>migrate</code> — har model o'zgarishidan keyin.</li>
+  <li>ORM: <code>create</code>, <code>all</code>, <code>get</code>, <code>filter(maydon__lookup=...)</code>, <code>exclude</code>, <code>order_by</code>, <code>save</code>, <code>update</code>, <code>delete</code>, <code>annotate/aggregate</code>.</li>
+  <li>View'larda <code>get_object_or_404</code>, <code>select_related</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="35-django-template-static.html"><small>← Oldingi mavzu</small>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a><a class="next" href="37-django-admin-forms.html"><small>Keyingi mavzu →</small>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#orm-nima">ORM nima?</a></li><li><a href="#model-yaratish">Model yaratish</a></li><li><a href="#migratsiyalar-modeldan-jadvalga">Migratsiyalar — modeldan jadvalga</a></li><li><a href="#orm-bilan-ishlash-django-shell">ORM bilan ishlash: Django shell</a></li><li><a href="#viewlarni-bazaga-ulash">View&#x27;larni bazaga ulash</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

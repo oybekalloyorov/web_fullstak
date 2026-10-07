@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="PostgreSQL va pgAdmin&#x27;ni o&#x27;rnatish, psql konsoli, ma&#x27;lumotlar bazasi yaratish, CREATE TABLE, asosiy ma&#x27;lumot turlari (INTEGER, NUMERIC, VARCHAR, TEXT, BOOLEAN, DATE, TIMESTAMP), SERIAL, ALTER TABLE va DROP TABLE.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a class="active" href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🐘</div><div><div class="crumb">27-mavzu · 42 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</h1><p class="lead">PostgreSQL va pgAdmin&#x27;ni o&#x27;rnatish, psql konsoli, ma&#x27;lumotlar bazasi yaratish, CREATE TABLE, asosiy ma&#x27;lumot turlari (INTEGER, NUMERIC, VARCHAR, TEXT, BOOLEAN, DATE, TIMESTAMP), SERIAL, ALTER TABLE va DROP TABLE.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>PostgreSQL va uning grafik dasturi pgAdmin'ni o'rnatishni;</li>
+  <li>Yangi ma'lumotlar bazasi yaratishni;</li>
+  <li><code>CREATE TABLE</code> bilan jadval yaratish va ustun turlarini to'g'ri tanlashni;</li>
+  <li>Jadval tuzilmasini o'zgartirish (<code>ALTER</code>) va o'chirishni (<code>DROP</code>).</li>
+</ul>
+</div>
+
+<h2 id="postgresql-nima"><a class="anchor" href="#postgresql-nima">#</a>PostgreSQL nima?</h2>
+<p><b>PostgreSQL</b> (qisqacha "Postgres", belgisi — fil 🐘) — dunyodagi eng ishonchli va kuchli <b>bepul, ochiq kodli</b> relyatsion DBMS. Uni Apple, Instagram,
+Spotify, Reddit kabi kompaniyalar ishlatadi. U 35 yildan ortiq rivojlanib kelmoqda.</p>
+<p>PostgreSQL <b>server</b> sifatida ishlaydi: kompyuteringizda fonda yoqiq turadi va dasturlar (pgAdmin, Python, Django) unga <b>ulanib</b>, SQL so'rovlar yuboradi.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🖥️ pgAdmin / psql<small>siz SQL yozasiz</small></div>
+    <div class="arrow">→ SQL so'rov →</div>
+    <div class="node">🐘 PostgreSQL server<small>port 5432</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🗄️ Bazalar<small>maktab, dokon, ...</small></div>
+  </div>
+</div>
+
+<h2 id="ornatish"><a class="anchor" href="#ornatish">#</a>O'rnatish</h2>
+<ol class="steps">
+  <li><a href="https://www.postgresql.org/download/" target="_blank" rel="noopener">postgresql.org/download</a> → operatsion tizimingizni tanlang → <b>Download the installer</b> (EDB) → eng so'nggi versiya.</li>
+  <li>O'rnatish oynasida barcha komponentlarni qoldiring: <b>PostgreSQL Server</b>, <b>pgAdmin 4</b>, <b>Command Line Tools</b>.</li>
+  <li><b>Parol</b> so'raladi — bu <code>postgres</code> (bosh administrator) foydalanuvchisi paroli. <b>Uni yozib qo'ying!</b> Unutsangiz, qayta o'rnatishga to'g'ri keladi.</li>
+  <li>Port: <code>5432</code> (standart) — o'zgartirmang.</li>
+  <li>O'rnatish tugagach, "Stack Builder" ni ishga tushirish shart emas.</li>
+</ol>
+<div class="callout info"><span class="t">O'rnatib bo'lmasa</span>
+Maktab kompyuterida ruxsat bo'lmasa, brauzerda ishlaydigan bepul onlayn muharrirlardan foydalaning: <a href="https://www.db-fiddle.com" target="_blank" rel="noopener">db-fiddle.com</a>
+(PostgreSQL'ni tanlang) yoki <a href="https://onecompiler.com/postgresql" target="_blank" rel="noopener">onecompiler.com/postgresql</a>. Bu darsdagi barcha SQL'lar ularda ishlaydi.</div>
+
+<h2 id="pgadmin-bilan-ishlash"><a class="anchor" href="#pgadmin-bilan-ishlash">#</a>pgAdmin bilan ishlash</h2>
+<ol class="steps">
+  <li>pgAdmin 4 ni oching (birinchi marta pgAdmin uchun "master parol" so'rashi mumkin).</li>
+  <li>Chap panelda <b>Servers → PostgreSQL</b> ni oching — o'rnatishdagi parolni kiriting.</li>
+  <li><b>Databases</b> ustida o'ng tugma → <b>Create → Database...</b> → nom: <code>maktab</code> → <b>Save</b>.</li>
+  <li><code>maktab</code> bazasini tanlang va yuqoridagi <b>Query Tool</b> (⚡ yoki SQL belgisi) tugmasini bosing — SQL yozish oynasi ochiladi.</li>
+  <li>SQL yozib, <kbd>F5</kbd> (yoki ▶ Execute) bilan bajaring. Natija pastki panelda ko'rinadi.</li>
+</ol>
+<h3>psql — buyruqlar qatori orqali</h3>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">psql -U postgres                 # ulanish (parol so&#x27;raladi)</code></pre></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE DATABASE maktab;          -- baza yaratish
+\l                               -- barcha bazalar ro&#x27;yxati
+\c maktab                        -- maktab bazasiga o&#x27;tish
+\dt                              -- jadvallar ro&#x27;yxati
+\d oquvchilar                    -- jadval tuzilmasini ko&#x27;rish
+\q                               -- chiqish</code></pre></div>
+<div class="callout tip"><span class="t">SQL yozish qoidalari</span>
+<ul>
+  <li>Har bir buyruq <code>;</code> (nuqta-vergul) bilan tugaydi.</li>
+  <li>SQL kalit so'zlari katta-kichik harfni farqlamaydi (<code>select</code> = <code>SELECT</code>), lekin <b>kalit so'zlarni KATTA</b>, nomlarni kichik yozish odat.</li>
+  <li>Matnlar <b>bitta qo'shtirnoq</b>da: <code>'Ali'</code>. O'zbekcha apostrof ikkilantiriladi: <code>'O''zbekiston'</code>.</li>
+  <li>Izoh: <code>-- bir qatorli</code> yoki <code>/* ko'p qatorli */</code>.</li>
+  <li>Jadval va ustun nomlari: kichik lotin harflar va pastki chiziq — <code>oquvchilar</code>, <code>tugilgan_sana</code>.</li>
+</ul></div>
+
+<h2 id="malumot-turlari"><a class="anchor" href="#malumot-turlari">#</a>Ma'lumot turlari</h2>
+<p>Jadval yaratishda har bir ustunning <b>turini</b> ko'rsatish shart. To'g'ri tanlangan tur xatolarning oldini oladi va joyni tejaydi.</p>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Nima uchun</th><th>Misol qiymat</th></tr>
+<tr><td><code>INTEGER</code> (<code>INT</code>)</td><td>Butun son (±2 mlrd gacha)</td><td><code>14</code>, <code>-5</code></td></tr>
+<tr><td><code>SMALLINT</code></td><td>Kichik butun son (±32 767)</td><td>baho: <code>5</code></td></tr>
+<tr><td><code>BIGINT</code></td><td>Juda katta butun son</td><td>telefon raqami yoki katta id</td></tr>
+<tr><td><code>SERIAL</code></td><td>Avtomatik o'suvchi butun son (1, 2, 3...) — <b>id uchun</b></td><td>—</td></tr>
+<tr><td><code>NUMERIC(10, 2)</code></td><td>Aniq o'nlik son — <b>pul uchun</b> (10 xona, shundan 2 tasi kasr)</td><td><code>12500.50</code></td></tr>
+<tr><td><code>REAL</code>, <code>DOUBLE PRECISION</code></td><td>Taqribiy kasr son (ilmiy hisoblar)</td><td><code>3.14159</code></td></tr>
+<tr><td><code>VARCHAR(n)</code></td><td>Uzunligi n gacha bo'lgan matn</td><td><code>VARCHAR(50)</code> — ism</td></tr>
+<tr><td><code>TEXT</code></td><td>Cheksiz uzunlikdagi matn</td><td>maqola, izoh</td></tr>
+<tr><td><code>BOOLEAN</code></td><td>Rost / yolg'on</td><td><code>TRUE</code>, <code>FALSE</code></td></tr>
+<tr><td><code>DATE</code></td><td>Sana</td><td><code>'2012-03-15'</code> (yil-oy-kun)</td></tr>
+<tr><td><code>TIME</code></td><td>Vaqt</td><td><code>'08:30:00'</code></td></tr>
+<tr><td><code>TIMESTAMP</code></td><td>Sana va vaqt</td><td><code>'2026-10-06 14:30:00'</code></td></tr>
+</table></div>
+<div class="callout warn"><span class="t">Turni tanlashdagi muhim qoidalar</span>
+<ul>
+  <li><b>Pul</b> uchun <code>REAL</code> emas, <code>NUMERIC</code> — kasr sonlar kompyuterda aniq saqlanmaydi (0.1 + 0.2 ≠ 0.3!).</li>
+  <li><b>Telefon raqami</b> uchun <code>INTEGER</code> emas, <code>VARCHAR(20)</code> — unda <code>+</code> belgisi va boshidagi 0 bo'lishi mumkin, u bilan hisob-kitob qilinmaydi.</li>
+  <li><b>Sana</b>ni matn sifatida saqlamang — <code>DATE</code> bilan sanalarni solishtirish va hisoblash mumkin.</li>
+</ul></div>
+
+<h2 id="jadval-yaratish-create-table"><a class="anchor" href="#jadval-yaratish-create-table">#</a>Jadval yaratish: <code>CREATE TABLE</code></h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE sinflar (
+    id            SERIAL PRIMARY KEY,
+    nomi          VARCHAR(10) NOT NULL UNIQUE,
+    sinf_rahbari  VARCHAR(100),
+    xona          SMALLINT
+);
+
+CREATE TABLE oquvchilar (
+    id             SERIAL PRIMARY KEY,                 -- avtomatik id, birlamchi kalit
+    ism            VARCHAR(50) NOT NULL,               -- bo&#x27;sh bo&#x27;lishi mumkin emas
+    familiya       VARCHAR(50) NOT NULL,
+    tugilgan_sana  DATE,
+    telefon        VARCHAR(20),
+    email          VARCHAR(100) UNIQUE,                -- takrorlanmasin
+    alochi         BOOLEAN DEFAULT FALSE,              -- standart qiymat
+    sinf_id        INTEGER REFERENCES sinflar(id),     -- tashqi kalit!
+    yaratilgan     TIMESTAMP DEFAULT NOW()             -- qo&#x27;shilgan vaqt avtomatik
+);</code></pre></div>
+<h3>Cheklovlar (constraints)</h3>
+<div class="table-wrap"><table>
+<tr><th>Cheklov</th><th>Ma'nosi</th></tr>
+<tr><td><code>PRIMARY KEY</code></td><td>Birlamchi kalit: noyob va bo'sh emas</td></tr>
+<tr><td><code>NOT NULL</code></td><td>Majburiy maydon — bo'sh qoldirib bo'lmaydi</td></tr>
+<tr><td><code>UNIQUE</code></td><td>Takrorlanmas qiymat (ikki o'quvchida bir xil email bo'lmaydi)</td></tr>
+<tr><td><code>DEFAULT qiymat</code></td><td>Qiymat berilmasa — shu qo'yiladi</td></tr>
+<tr><td><code>CHECK (shart)</code></td><td>Qiymat shartga mos bo'lishi kerak: <code>CHECK (baho BETWEEN 2 AND 5)</code></td></tr>
+<tr><td><code>REFERENCES jadval(ustun)</code></td><td>Tashqi kalit — boshqa jadvalga bog'lanish</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE baholar (
+    id          SERIAL PRIMARY KEY,
+    oquvchi_id  INTEGER NOT NULL REFERENCES oquvchilar(id) ON DELETE CASCADE,
+    fan         VARCHAR(50) NOT NULL,
+    baho        SMALLINT NOT NULL CHECK (baho BETWEEN 2 AND 5),
+    sana        DATE NOT NULL DEFAULT CURRENT_DATE
+);</code></pre></div>
+<p><code>ON DELETE CASCADE</code> — o'quvchi o'chirilsa, uning barcha baholari ham avtomatik o'chadi (yetim baholar qolmaydi).</p>
+<div class="callout tip">Jadvallar <b>tartib</b> bilan yaratiladi: avval bog'lanish ko'rsatiladigan (<code>sinflar</code>), keyin unga ishora qiluvchi (<code>oquvchilar</code>), keyin <code>baholar</code>.
+Aks holda "relation does not exist" xatosi chiqadi.</div>
+
+<h2 id="jadvalni-ozgartirish-va-ochirish"><a class="anchor" href="#jadvalni-ozgartirish-va-ochirish">#</a>Jadvalni o'zgartirish va o'chirish</h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Yangi ustun qo&#x27;shish
+ALTER TABLE oquvchilar ADD COLUMN manzil TEXT;
+
+-- Ustun nomini o&#x27;zgartirish
+ALTER TABLE oquvchilar RENAME COLUMN manzil TO yashash_joyi;
+
+-- Ustun turini o&#x27;zgartirish
+ALTER TABLE oquvchilar ALTER COLUMN telefon TYPE VARCHAR(30);
+
+-- Ustunni o&#x27;chirish
+ALTER TABLE oquvchilar DROP COLUMN yashash_joyi;
+
+-- Jadval nomini o&#x27;zgartirish (umumiy ko&#x27;rinishi)
+-- ALTER TABLE eski_nom RENAME TO yangi_nom;
+
+-- Jadvalni BUTUNLAY o&#x27;chirish (ehtiyot bo&#x27;ling — qaytarib bo&#x27;lmaydi!)
+DROP TABLE IF EXISTS vaqtinchalik;</code></pre></div>
+<div class="callout danger"><code>DROP TABLE</code> va <code>DROP DATABASE</code> jadval/bazani <b>barcha ma'lumotlari bilan birga</b> o'chiradi. "Ctrl+Z" yo'q! Bajarishdan oldin ikki marta o'ylang
+(va zaxira nusxangiz borligiga ishonch hosil qiling — 29-mavzu).</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>PostgreSQL va pgAdmin'ni o'rnating (yoki db-fiddle.com'ni oching).</li>
+  <li><code>maktab</code> bazasini yarating.</li>
+  <li>Yuqoridagi <code>sinflar</code>, <code>oquvchilar</code>, <code>baholar</code> jadvallarini yarating. pgAdmin'da <b>Schemas → public → Tables</b> ni yangilab (<kbd>F5</kbd>), jadvallarni ko'ring.</li>
+  <li><code>oquvchilar</code> jadvali ustida o'ng tugma → <b>Properties → Columns</b>: ustunlar va turlarini tekshiring.</li>
+  <li><b>Mustaqil:</b> <code>togaraklar</code> (id, nomi, rahbar, joylar_soni — musbat bo'lsin) va ko'pga-ko'p uchun <code>azoliklar</code> (oquvchi_id, togarak_id, qoshilgan_sana) jadvallarini yarating.
+  <code>azoliklar</code> da bitta o'quvchi bir to'garakka ikki marta yozilmasligi uchun <code>PRIMARY KEY (oquvchi_id, togarak_id)</code> qo'llang.</li>
+  <li><code>oquvchilar</code> jadvaliga <code>jinsi</code> ustunini qo'shing: faqat <code>'o'g'il'</code> yoki <code>'qiz'</code> bo'lishi mumkin (<code>CHECK</code> ... <code>IN (...)</code>).</li>
+</ol>
+<details><summary>5 va 6-topshiriqlar javobi</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE togaraklar (
+    id           SERIAL PRIMARY KEY,
+    nomi         VARCHAR(100) NOT NULL UNIQUE,
+    rahbar       VARCHAR(100),
+    joylar_soni  INTEGER CHECK (joylar_soni &gt; 0)
+);
+
+CREATE TABLE azoliklar (
+    oquvchi_id      INTEGER REFERENCES oquvchilar(id) ON DELETE CASCADE,
+    togarak_id      INTEGER REFERENCES togaraklar(id) ON DELETE CASCADE,
+    qoshilgan_sana  DATE DEFAULT CURRENT_DATE,
+    PRIMARY KEY (oquvchi_id, togarak_id)
+);
+
+ALTER TABLE oquvchilar ADD COLUMN jinsi VARCHAR(10) CHECK (jinsi IN (&#x27;o&#x27;&#x27;g&#x27;&#x27;il&#x27;, &#x27;qiz&#x27;));</code></pre></div>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>relation "oquvchilar" does not exist</code> — jadval yaratilmagan yoki boshqa bazaga ulangansiz.</li>
+  <li>❌ <code>syntax error at or near ")"</code> — oxirgi ustundan keyin ortiqcha vergul qoldirilgan.</li>
+  <li>❌ Matnni qo'sh qo'shtirnoqda yozish: <code>"Ali"</code> — SQL'da qo'sh qo'shtirnoq ustun nomlari uchun; matn — <code>'Ali'</code>.</li>
+  <li>❌ <code>password authentication failed</code> — o'rnatishdagi parol noto'g'ri kiritilgan.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Pul summasini saqlash uchun eng to'g'ri tur?</p><ol>
+<li><code>REAL</code></li><li><code>VARCHAR</code></li><li><code>NUMERIC(12, 2)</code></li><li><code>BOOLEAN</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Avtomatik 1, 2, 3... deb o'suvchi id ustuni uchun tur?</p><ol>
+<li><code>SERIAL</code></li><li><code>AUTO</code></li><li><code>COUNTER</code></li><li><code>TEXT</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Ustunni majburiy (bo'sh bo'lmaydigan) qiluvchi cheklov?</p><ol>
+<li><code>UNIQUE</code></li><li><code>DEFAULT</code></li><li><code>CHECK</code></li><li><code>NOT NULL</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Mavjud jadvalga yangi ustun qo'shuvchi buyruq?</p><ol>
+<li><code>UPDATE TABLE ... ADD</code></li><li><code>ALTER TABLE ... ADD COLUMN</code></li><li><code>INSERT COLUMN</code></li><li><code>CREATE COLUMN</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Telefon raqami (+998901234567) uchun eng mos tur?</p><ol>
+<li><code>INTEGER</code></li><li><code>NUMERIC</code></li><li><code>VARCHAR(20)</code></li><li><code>DATE</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">SQL'da matn qiymati qanday yoziladi?</p><ol>
+<li><code>'Ali'</code></li><li><code>"Ali"</code></li><li><code>`Ali`</code></li><li><code>Ali</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><code>dokon</code> bazasini yarating va jadvallarni tuzing: <code>toifalar</code>, <code>mahsulotlar</code> (narx — NUMERIC, soni — 0 dan kichik emas, toifa_id — FK), <code>mijozlar</code> (email UNIQUE).</li>
+  <li>26-mavzudagi kutubxona ER-diagrammangiz asosida haqiqiy jadvallarni SQL'da yarating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>PostgreSQL — server (port 5432); pgAdmin — grafik dastur; psql — konsol.</li>
+  <li><code>CREATE DATABASE nom;</code>, <code>CREATE TABLE nom (ustun TUR cheklovlar, ...);</code></li>
+  <li>Turlar: <code>SERIAL</code>, <code>INTEGER</code>, <code>NUMERIC</code>, <code>VARCHAR(n)</code>, <code>TEXT</code>, <code>BOOLEAN</code>, <code>DATE</code>, <code>TIMESTAMP</code>.</li>
+  <li>Cheklovlar: <code>PRIMARY KEY</code>, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>DEFAULT</code>, <code>CHECK</code>, <code>REFERENCES</code>.</li>
+  <li><code>ALTER TABLE</code> — o'zgartirish; <code>DROP TABLE</code> — o'chirish (qaytarib bo'lmaydi!).</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="26-malumotlar-bazasi-kirish.html"><small>← Oldingi mavzu</small>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a><a class="next" href="28-sql-crud.html"><small>Keyingi mavzu →</small>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#postgresql-nima">PostgreSQL nima?</a></li><li><a href="#ornatish">O&#x27;rnatish</a></li><li><a href="#pgadmin-bilan-ishlash">pgAdmin bilan ishlash</a></li><li><a href="#malumot-turlari">Ma&#x27;lumot turlari</a></li><li><a href="#jadval-yaratish-create-table">Jadval yaratish: CREATE TABLE</a></li><li><a href="#jadvalni-ozgartirish-va-ochirish">Jadvalni o&#x27;zgartirish va o&#x27;chirish</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

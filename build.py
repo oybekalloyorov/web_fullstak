@@ -2,13 +2,16 @@
 """
 Qo'llanma saytini yig'uvchi skript (hech qanday tashqi kutubxona kerak emas).
 
-  src/index.html          -> index.html
-  src/darslar/NN-nom.html -> darslar/NN-nom.html
+  src/index.html              -> index.html               (umumiy bosh sahifa)
+  src/darslar/NN-nom.html     -> darslar/NN-nom.html      ("Full-stack qo'llanma" kursi)
+  src/8-sinf/index.html       -> 8-sinf/index.html        (8-sinf kursi bosh sahifasi)
+  src/8-sinf/NN-nom.html      -> 8-sinf/NN-nom.html       (8-sinf o'quv dasturi mavzulari)
 
 Manba fayllarda:
-  * Boshida meta-blok:   <!-- title: ... | desc: ... | icon: ... -->
+  * Boshida meta-blok:   <!-- title: ... | desc: ... | icon: ... | level: ... | bob: ... -->
   * Kod bloklari:        <pre data-lang="js"> ...xom kod... </pre>
     (ichidagi < > & belgilarini skript o'zi ekranlaydi)
+    Qo'shimcha atributlar: data-title="fayl.js", data-play (HTML/CSS/JS ni brauzerda ishga tushirish)
   * <h2> sarlavhalarga avtomatik id beriladi va "Mundarija" yasaladi.
 
 Ishga tushirish:  python3 build.py
@@ -19,12 +22,36 @@ import re
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src"
-OUT_LESSONS = ROOT / "darslar"
+
+COURSES = [
+    {
+        "dir": "darslar",
+        "name": "Full-stack qo'llanma",
+        "unit": "dars",
+        "home": "index.html",          # kurs ro'yxati qayerda (ildizga nisbatan)
+    },
+    {
+        "dir": "8-sinf",
+        "name": "8-sinf: Web Full-stack kursi",
+        "unit": "mavzu",
+        "home": "8-sinf/index.html",
+    },
+]
 
 META_RE = re.compile(r"^\s*<!--(.*?)-->", re.S)
 H2_RE = re.compile(r"<h2>(.*?)</h2>")
+OPEN_RE = re.compile(r'<pre data-lang="([\w+-]+)"([^>]*)>\n?')
+ATTR_RE = re.compile(r'([\w-]+)(?:="([^"]*)")?')
 
 UZ_MAP = str.maketrans({"ʻ": "", "ʼ": "", "'": "", "‘": "", "’": ""})
+
+LANG_NAMES = {
+    "html": "HTML", "css": "CSS", "js": "JavaScript", "javascript": "JavaScript",
+    "jsx": "React (JSX)", "bash": "Terminal", "json": "JSON", "sql": "SQL",
+    "http": "HTTP", "text": "Matn", "dockerfile": "Dockerfile", "nginx": "Nginx",
+    "ini": ".env", "yaml": "YAML", "plaintext": "Matn", "python": "Python",
+    "py": "Python", "output": "Natija", "django": "Django shablon",
+}
 
 
 def slugify(text):
@@ -45,34 +72,18 @@ def parse_meta(text):
     return meta, text
 
 
-def render_code(m):
-    lang, title, code = m.group(1), m.group(2), m.group(3)
+def render_code(lang, attrs, code):
+    title = attrs.get("data-title")
+    play = "data-play" in attrs
     label = title or LANG_NAMES.get(lang, lang)
+    hl = {"py": "python", "output": "plaintext", "django": "html"}.get(lang, lang)
+    cls = "code output" if lang == "output" else "code"
+    play_btn = '<button class="run" type="button">▶ Sinab ko\'rish</button>' if play else ""
     return (
-        f'<div class="code"><div class="code-head"><span>{html.escape(label)}</span>'
-        f'<button class="copy" type="button">Nusxa olish</button></div>'
-        f'<pre><code class="language-{lang}">{html.escape(code)}</code></pre></div>'
+        f'<div class="{cls}"{" data-play" if play else ""}><div class="code-head"><span>{html.escape(label)}</span>'
+        f'<span class="code-actions">{play_btn}<button class="copy" type="button">Nusxa olish</button></span></div>'
+        f'<pre><code class="language-{hl}">{html.escape(code)}</code></pre></div>'
     )
-
-
-LANG_NAMES = {
-    "html": "HTML", "css": "CSS", "js": "JavaScript", "javascript": "JavaScript",
-    "jsx": "React (JSX)", "bash": "Terminal", "json": "JSON", "sql": "SQL",
-    "http": "HTTP", "text": "Matn", "dockerfile": "Dockerfile", "nginx": "Nginx",
-    "ini": ".env", "yaml": "YAML", "plaintext": "Matn",
-}
-
-
-OPEN_RE = re.compile(r'<pre data-lang="([\w+-]+)"(?: data-title="([^"]*)")?>\n?')
-
-
-class _M:
-    """render_code() uchun oddiy match-o'xshash obyekt."""
-    def __init__(self, *groups):
-        self.groups_ = groups
-
-    def group(self, i):
-        return self.groups_[i - 1]
 
 
 def replace_code_blocks(body):
@@ -97,7 +108,8 @@ def replace_code_blocks(body):
         code = body[m.end():i - 6]
         if code.endswith("\n"):
             code = code[:-1]
-        out.append(render_code(_M(m.group(1), m.group(2), code)))
+        attrs = {k: v for k, v in ATTR_RE.findall(m.group(2))}
+        out.append(render_code(m.group(1), attrs, code))
         pos = i
 
 
@@ -120,27 +132,40 @@ def process_body(body):
     return body, toc
 
 
-def load_lessons():
+def load_lessons(course):
     lessons = []
-    for path in sorted((SRC / "darslar").glob("*.html")):
+    for path in sorted((SRC / course["dir"]).glob("[0-9]*.html")):
         meta, body = parse_meta(path.read_text(encoding="utf-8"))
         num = path.stem.split("-", 1)[0]
-        lessons.append({"path": path, "slug": path.stem, "num": num, "meta": meta, "body": body})
+        lessons.append({"slug": path.stem, "num": num, "meta": meta, "body": body})
     return lessons
 
 
-def sidebar(lessons, current, prefix):
-    items = []
+def sidebar(course, lessons, current, prefix):
+    """Yon menyu: bob (bo'lim) bo'yicha guruhlangan darslar ro'yxati."""
+    items, last_bob = [], None
     for l in lessons:
+        bob = l["meta"].get("bob")
+        if bob and bob != last_bob:
+            items.append(f'<li class="side-group">{html.escape(bob)}</li>')
+            last_bob = bob
         cls = ' class="active"' if l["slug"] == current else ""
         items.append(
-            f'<li><a{cls} href="{prefix}darslar/{l["slug"]}.html">'
+            f'<li><a{cls} href="{prefix}{course["dir"]}/{l["slug"]}.html">'
             f'<span class="num">{l["num"]}</span>{html.escape(l["meta"].get("title", l["slug"]))}</a></li>'
         )
     return "\n".join(items)
 
 
-def page(title, desc, content, side, prefix, toc_html="", extra_class=""):
+def course_switch(prefix, active_dir):
+    links = []
+    for c in COURSES:
+        cls = ' class="active"' if c["dir"] == active_dir else ""
+        links.append(f'<a{cls} href="{prefix}{c["home"]}">{html.escape(c["name"])}</a>')
+    return '<nav class="course-switch">' + "".join(links) + "</nav>"
+
+
+def page(title, desc, content, side, prefix, toc_html="", extra_class="", side_title="Darslar", active_dir=None):
     return f"""<!doctype html>
 <html lang="uz">
 <head>
@@ -153,7 +178,7 @@ def page(title, desc, content, side, prefix, toc_html="", extra_class=""):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
-<script>try{{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}}catch(e){{}}</script>
+<script>document.documentElement.classList.add('js');try{{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}}catch(e){{}}</script>
 </head>
 <body class="{extra_class}">
 <div class="progress" id="progress"></div>
@@ -168,7 +193,8 @@ def page(title, desc, content, side, prefix, toc_html="", extra_class=""):
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="{prefix}index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    {course_switch(prefix, active_dir)}
+    <div class="side-title">{html.escape(side_title)}</div>
     <ol class="lesson-list" id="lessonList">
 {side}
     </ol>
@@ -186,27 +212,57 @@ def page(title, desc, content, side, prefix, toc_html="", extra_class=""):
 """
 
 
-def build():
-    lessons = load_lessons()
-    OUT_LESSONS.mkdir(exist_ok=True)
+def card(href, l, unit):
+    m = l["meta"]
+    return (
+        f'<a class="card" href="{href}"><div class="card-icon">{m.get("icon", "📘")}</div>'
+        f'<div class="card-num">{l["num"]}-{unit}</div><h3>{html.escape(m.get("title", ""))}</h3>'
+        f'<p>{html.escape(m.get("desc", ""))}</p><div class="card-level">{html.escape(m.get("level", ""))}</div></a>'
+    )
+
+
+def cards_by_bob(lessons, unit):
+    """Bob bo'yicha guruhlangan kartalar (kurs bosh sahifasi uchun)."""
+    out, group, last = [], [], None
+    for l in lessons:
+        bob = l["meta"].get("bob", "")
+        if bob != last and group:
+            out.append(f'<h3 class="bob-title">{html.escape(last)}</h3><div class="cards">{"".join(group)}</div>')
+            group = []
+        last = bob
+        group.append(card(f'{l["slug"]}.html', l, unit))
+    if group:
+        out.append(f'<h3 class="bob-title">{html.escape(last)}</h3><div class="cards">{"".join(group)}</div>')
+    return "\n".join(out)
+
+
+def build_course(course):
+    lessons = load_lessons(course)
+    out_dir = ROOT / course["dir"]
+    out_dir.mkdir(exist_ok=True)
+    unit = course["unit"]
 
     for i, l in enumerate(lessons):
         body, toc = process_body(l["body"])
-        title = l["meta"].get("title", l["slug"])
-        desc = l["meta"].get("desc", "")
-        icon = l["meta"].get("icon", "📘")
+        meta = l["meta"]
+        title = meta.get("title", l["slug"])
+        desc = meta.get("desc", "")
         prev_l = lessons[i - 1] if i > 0 else None
         next_l = lessons[i + 1] if i + 1 < len(lessons) else None
         nav = '<nav class="pager">'
-        nav += (f'<a class="prev" href="{prev_l["slug"]}.html"><small>← Oldingi dars</small>'
+        nav += (f'<a class="prev" href="{prev_l["slug"]}.html"><small>← Oldingi {unit}</small>'
                 f'{html.escape(prev_l["meta"]["title"])}</a>') if prev_l else "<span></span>"
-        nav += (f'<a class="next" href="{next_l["slug"]}.html"><small>Keyingi dars →</small>'
+        nav += (f'<a class="next" href="{next_l["slug"]}.html"><small>Keyingi {unit} →</small>'
                 f'{html.escape(next_l["meta"]["title"])}</a>') if next_l else "<span></span>"
         nav += "</nav>"
+        crumb = f'{l["num"]}-{unit} · {len(lessons)} tadan'
+        if meta.get("bob"):
+            crumb += f' · {html.escape(meta["bob"])}'
+        level = f'<div class="hero-level">{html.escape(meta["level"])}</div>' if meta.get("level") else ""
         header = (
-            f'<div class="lesson-hero"><div class="hero-icon">{icon}</div>'
-            f'<div><div class="crumb">{l["num"]}-dars · {len(lessons)} tadan</div>'
-            f'<h1>{html.escape(title)}</h1><p class="lead">{html.escape(desc)}</p></div></div>'
+            f'<div class="lesson-hero"><div class="hero-icon">{meta.get("icon", "📘")}</div>'
+            f'<div><div class="crumb">{crumb}</div>'
+            f'<h1>{html.escape(title)}</h1><p class="lead">{html.escape(desc)}</p>{level}</div></div>'
         )
         toc_html = (
             '<aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul>'
@@ -214,26 +270,44 @@ def build():
             + "</ul></aside>"
         )
         content = f'<article class="lesson">{header}{body}{nav}</article>'
-        out = page(f"{title} — Full-Stack Qo'llanma", desc, content,
-                   sidebar(lessons, l["slug"], "../"), "../", toc_html)
-        (OUT_LESSONS / f"{l['slug']}.html").write_text(out, encoding="utf-8")
+        out = page(f"{title} — {course['name']}", desc, content,
+                   sidebar(course, lessons, l["slug"], "../"), "../", toc_html,
+                   side_title=course["name"], active_dir=course["dir"])
+        (out_dir / f"{l['slug']}.html").write_text(out, encoding="utf-8")
 
-    # Bosh sahifa
+    # Kursning o'z bosh sahifasi (bo'lsa)
+    course_index = SRC / course["dir"] / "index.html"
+    if course_index.exists():
+        meta, body = parse_meta(course_index.read_text(encoding="utf-8"))
+        body = (body.replace("{{CARDS_BY_BOB}}", cards_by_bob(lessons, unit))
+                    .replace("{{COUNT}}", str(len(lessons))))
+        body, _ = process_body(body)
+        out = page(meta.get("title", course["name"]), meta.get("desc", ""), body,
+                   sidebar(course, lessons, None, "../"), "../", "", "home",
+                   side_title=course["name"], active_dir=course["dir"])
+        (out_dir / "index.html").write_text(out, encoding="utf-8")
+
+    print(f"  {course['name']}: {len(lessons)} ta {unit}")
+    return lessons
+
+
+def build():
+    all_lessons = {c["dir"]: build_course(c) for c in COURSES}
+
+    # Umumiy bosh sahifa
+    main = COURSES[0]
+    lessons = all_lessons[main["dir"]]
     meta, body = parse_meta((SRC / "index.html").read_text(encoding="utf-8"))
-    cards = []
-    for l in lessons:
-        m = l["meta"]
-        cards.append(
-            f'<a class="card" href="darslar/{l["slug"]}.html"><div class="card-icon">{m.get("icon", "📘")}</div>'
-            f'<div class="card-num">{l["num"]}-dars</div><h3>{html.escape(m.get("title", ""))}</h3>'
-            f'<p>{html.escape(m.get("desc", ""))}</p><div class="card-level">{html.escape(m.get("level", ""))}</div></a>'
-        )
-    body = body.replace("{{CARDS}}", "\n".join(cards)).replace("{{COUNT}}", str(len(lessons)))
+    cards = "\n".join(card(f'{main["dir"]}/{l["slug"]}.html', l, main["unit"]) for l in lessons)
+    body = body.replace("{{CARDS}}", cards).replace("{{COUNT}}", str(len(lessons)))
+    for c in COURSES:
+        body = body.replace("{{COUNT:%s}}" % c["dir"], str(len(all_lessons[c["dir"]])))
     body, _ = process_body(body)
     out = page(meta.get("title", "Full-Stack Qo'llanma"), meta.get("desc", ""), body,
-               sidebar(lessons, None, ""), "", "", "home")
+               sidebar(main, lessons, None, ""), "", "", "home",
+               side_title=main["name"], active_dir=None)
     (ROOT / "index.html").write_text(out, encoding="utf-8")
-    print(f"Tayyor: {len(lessons)} ta dars + bosh sahifa yig'ildi.")
+    print("Tayyor: barcha sahifalar yig'ildi.")
 
 
 if __name__ == "__main__":

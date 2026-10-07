@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django Template tizimi va dinamik sahifalar. Template va statik fayllar — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="render() va kontekst, Django Template Language: o&#x27;zgaruvchilar, {% if %}, {% for %}, filtrlar, {% url %}; shablon merosi (extends, block, include); CSS, JavaScript va rasmlar — static fayllar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a class="active" href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🎨</div><div><div class="crumb">35-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</h1><p class="lead">render() va kontekst, Django Template Language: o&#x27;zgaruvchilar, {% if %}, {% for %}, filtrlar, {% url %}; shablon merosi (extends, block, include); CSS, JavaScript va rasmlar — static fayllar.</p><div class="hero-level">2 soat · 1 nazariy + 1 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>HTML'ni view'dan ajratib, <b>shablon</b> (template) fayllarda saqlashni;</li>
+  <li>View'dan shablonga ma'lumot uzatishni (<code>render</code> va kontekst);</li>
+  <li>Django shablon tili: o'zgaruvchilar, shartlar, sikllar, filtrlar;</li>
+  <li><b>Shablon merosi</b> — umumiy sahifa "skeleti"ni bir marta yozishni;</li>
+  <li>CSS, JavaScript va rasmlarni (<b>static fayllar</b>) ulashni.</li>
+</ul>
+<p>Bu dars I–II boblardagi HTML/CSS/JS bilimlaringizni Django bilan birlashtiradi!</p>
+</div>
+
+<h2 id="template-nima"><a class="anchor" href="#template-nima">#</a>Template nima?</h2>
+<p>34-mavzuda HTML'ni Python satri ichida yozdik — noqulay va xavfli. <b>Template (shablon)</b> — oddiy HTML fayl, lekin unda <b>"bo'sh joylar"</b> bor, ularni Django
+ma'lumot bilan to'ldiradi.</p>
+<div class="analogy"><span class="t">O'xshatish: tabriknoma shabloni</span>
+Do'konda tayyor tabriknoma: "Hurmatli ________, sizni ________ bilan tabriklaymiz!" Siz faqat bo'sh joylarni to'ldirasiz. Shablon bir xil, ism va sabab har safar boshqa.
+Django template ham shunday: <code>&lt;h1&gt;{{ sarlavha }}&lt;/h1&gt;</code> — har bir maqola uchun o'z sarlavhasi qo'yiladi.</div>
+
+<h2 id="shablonlar-papkasi-va-render"><a class="anchor" href="#shablonlar-papkasi-va-render">#</a>Shablonlar papkasi va render()</h2>
+<ol class="steps">
+  <li>Papkalar tuzilmasini yarating (ilova nomini <b>ikki marta</b> takrorlash — nomlar to'qnashmasligi uchun Django an'anasi):
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">blog/
+└── templates/
+    └── blog/
+        ├── bosh_sahifa.html
+        └── maqola.html</code></pre></div></li>
+  <li>View'da <code>render</code> ishlating:
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.shortcuts import render
+from django.http import Http404
+
+MAQOLALAR = [ ... ]   # 34-mavzudagi ro&#x27;yxat
+
+def bosh_sahifa(request):
+    kontekst = {                                  # shablonga yuboriladigan ma&#x27;lumotlar (dict)
+        &quot;sarlavha&quot;: &quot;Maktab blogi&quot;,
+        &quot;maqolalar&quot;: MAQOLALAR,
+    }
+    return render(request, &quot;blog/bosh_sahifa.html&quot;, kontekst)
+
+def maqola(request, id):
+    for m in MAQOLALAR:
+        if m[&quot;id&quot;] == id:
+            return render(request, &quot;blog/maqola.html&quot;, {&quot;maqola&quot;: m})
+    raise Http404(&quot;Maqola topilmadi&quot;)</code></pre></div></li>
+</ol>
+<p><code>render(request, shablon_yo'li, kontekst)</code> — shablonni topadi, kontekstdagi ma'lumotlar bilan to'ldiradi va tayyor HTML javob qaytaradi.</p>
+
+<h2 id="django-template-language-dtl"><a class="anchor" href="#django-template-language-dtl">#</a>Django Template Language (DTL)</h2>
+<div class="table-wrap"><table>
+<tr><th>Sintaksis</th><th>Vazifasi</th><th>Misol</th></tr>
+<tr><td><code>{{ ... }}</code></td><td><b>O'zgaruvchini chiqarish</b></td><td><code>{{ maqola.sarlavha }}</code></td></tr>
+<tr><td><code>{% ... %}</code></td><td><b>Teg — mantiq</b> (shart, sikl, havola)</td><td><code>{% for m in maqolalar %}</code></td></tr>
+<tr><td><code>{{ x|filtr }}</code></td><td><b>Filtr</b> — qiymatni o'zgartirish</td><td><code>{{ ism|upper }}</code></td></tr>
+<tr><td><code>{# ... #}</code></td><td>Izoh</td><td><code>{# bu ko'rinmaydi #}</code></td></tr>
+</table></div>
+<h3>O'zgaruvchilar</h3>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;{{ maqola.sarlavha }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;{{ maqola.sarlavha }}&lt;/h1&gt;          {# dict kaliti yoki obyekt atributi — nuqta bilan #}
+  &lt;p&gt;Kategoriya: {{ maqola.kategoriya }}&lt;/p&gt;
+  &lt;p&gt;{{ maqola.matn }}&lt;/p&gt;
+  &lt;a href=&quot;/&quot;&gt;← Bosh sahifa&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<div class="callout tip"><span class="t">Avtomatik xavfsizlik</span>
+Agar matnda <code>&lt;script&gt;</code> bo'lsa, Django uni <b>avtomatik ekranlaydi</b> (zararsiz matnga aylantiradi) — XSS hujumlaridan himoya (19-mavzuni eslang). 34-mavzudagi
+satr bilan yasalgan HTML'dan farqi aynan shu.</div>
+<h3>Shartlar: <code>{% if %}</code></h3>
+<div class="code"><div class="code-head"><span>Django shablon</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% if maqolalar %}
+  &lt;p&gt;Jami {{ maqolalar|length }} ta maqola&lt;/p&gt;
+{% else %}
+  &lt;p&gt;Hozircha maqola yo&#x27;q 😔&lt;/p&gt;
+{% endif %}
+
+{% if user.is_authenticated %}
+  &lt;p&gt;Salom, {{ user.username }}!&lt;/p&gt;
+{% elif yosh &gt;= 14 and sinf == 8 %}
+  ...
+{% endif %}</code></pre></div>
+<h3>Sikllar: <code>{% for %}</code></h3>
+<div class="code"><div class="code-head"><span>blog/templates/blog/bosh_sahifa.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;h1&gt;{{ sarlavha }}&lt;/h1&gt;
+&lt;ul&gt;
+  {% for m in maqolalar %}
+    &lt;li&gt;
+      {{ forloop.counter }}.                                   {# 1, 2, 3 — tartib raqami #}
+      &lt;a href=&quot;{% url &#x27;blog:maqola&#x27; m.id %}&quot;&gt;{{ m.sarlavha }}&lt;/a&gt;
+      &lt;small&gt;({{ m.kategoriya }})&lt;/small&gt;
+    &lt;/li&gt;
+  {% empty %}
+    &lt;li&gt;Maqolalar yo&#x27;q&lt;/li&gt;                                    {# ro&#x27;yxat bo&#x27;sh bo&#x27;lsa #}
+  {% endfor %}
+&lt;/ul&gt;</code></pre></div>
+<ul>
+  <li><code>{% url 'blog:maqola' m.id %}</code> — 34-mavzudagi nomlangan URL'dan havola yasaydi. Manzillarni qo'lda yozmang!</li>
+  <li><code>forloop.counter</code> (1 dan), <code>forloop.first</code>, <code>forloop.last</code> — sikl haqida ma'lumot.</li>
+</ul>
+<div class="callout warn">Shablonda faqat <b>ko'rsatish mantiqi</b> bo'lsin. Murakkab hisob-kitob, bazaga so'rov — view'ning ishi. DTL ataylab cheklangan: unda Python funksiyalarini to'g'ridan-to'g'ri chaqirib bo'lmaydi.</div>
+
+<h3>Filtrlar</h3>
+<div class="code"><div class="code-head"><span>Django shablon</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{{ ism|upper }}                       → ALI
+{{ ism|lower }}                       → ali
+{{ ism|title }}                       → Ali Valiyev
+{{ matn|truncatewords:20 }}           → birinchi 20 so&#x27;z...
+{{ matn|truncatechars:100 }}          → birinchi 100 belgi…
+{{ maqolalar|length }}                → 3
+{{ sana|date:&quot;d.m.Y&quot; }}               → 06.10.2026
+{{ sana|date:&quot;d E Y, H:i&quot; }}          → 06 oktabr 2026, 15:30
+{{ narx|floatformat:2 }}              → 12500.00
+{{ izoh|default:&quot;Izoh yo&#x27;q&quot; }}        → qiymat bo&#x27;sh bo&#x27;lsa
+{{ matn|linebreaks }}                 → qator o&#x27;tishlarini &lt;p&gt; va &lt;br&gt; ga aylantiradi</code></pre></div>
+
+<h2 id="shablon-merosi-eng-muhim-imkoniyat"><a class="anchor" href="#shablon-merosi-eng-muhim-imkoniyat">#</a>Shablon merosi — eng muhim imkoniyat</h2>
+<p>Saytning har bir sahifasida bir xil header, menyu, footer va CSS bor. Ularni har bir shablonga nusxalash — xato. <b>Shablon merosi</b>: umumiy skelet bitta
+<code>base.html</code> da yoziladi, boshqa sahifalar faqat <b>o'zgaruvchi qismlarini</b> to'ldiradi.</p>
+<div class="analogy"><span class="t">O'xshatish: daftar varag'i</span>
+Maktab daftarining har bir varag'ida bir xil chiziqlar va hoshiya bor (base.html). Har bir varaqqa faqat o'sha kunning darsi yoziladi (block content).
+Hoshiyani har safar qayta chizmaysiz.</div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/base.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% load static %}
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;{% block title %}Maktab blogi{% endblock %}&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;{% static &#x27;blog/css/style.css&#x27; %}&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header class=&quot;header&quot;&gt;
+    &lt;a class=&quot;logo&quot; href=&quot;{% url &#x27;blog:bosh&#x27; %}&quot;&gt;📰 Maktab blogi&lt;/a&gt;
+    &lt;nav&gt;
+      &lt;a href=&quot;{% url &#x27;blog:bosh&#x27; %}&quot;&gt;Bosh sahifa&lt;/a&gt;
+      &lt;a href=&quot;{% url &#x27;blog:haqida&#x27; %}&quot;&gt;Biz haqimizda&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main class=&quot;konteyner&quot;&gt;
+    {% block content %}{% endblock %}         {# ⬅ har bir sahifa shu joyni to&#x27;ldiradi #}
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;footer&quot;&gt;© 2026 5-maktab o&#x27;quvchilari&lt;/footer&gt;
+  &lt;script src=&quot;{% static &#x27;blog/js/main.js&#x27; %}&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/bosh_sahifa.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+
+{% block title %}Bosh sahifa — Maktab blogi{% endblock %}
+
+{% block content %}
+  &lt;h1&gt;So&#x27;nggi maqolalar&lt;/h1&gt;
+  &lt;div class=&quot;kartalar&quot;&gt;
+    {% for m in maqolalar %}
+      {% include &quot;blog/_karta.html&quot; %}
+    {% empty %}
+      &lt;p&gt;Hozircha maqola yo&#x27;q.&lt;/p&gt;
+    {% endfor %}
+  &lt;/div&gt;
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/_karta.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{# Qayta ishlatiladigan bo&#x27;lak: bitta maqola kartasi #}
+&lt;article class=&quot;karta&quot;&gt;
+  &lt;span class=&quot;belgi&quot;&gt;{{ m.kategoriya }}&lt;/span&gt;
+  &lt;h3&gt;&lt;a href=&quot;{% url &#x27;blog:maqola&#x27; m.id %}&quot;&gt;{{ m.sarlavha }}&lt;/a&gt;&lt;/h3&gt;
+  &lt;p&gt;{{ m.matn|truncatewords:15 }}&lt;/p&gt;
+&lt;/article&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+
+{% block title %}{{ maqola.sarlavha }}{% endblock %}
+
+{% block content %}
+  &lt;article&gt;
+    &lt;h1&gt;{{ maqola.sarlavha }}&lt;/h1&gt;
+    &lt;p class=&quot;belgi&quot;&gt;{{ maqola.kategoriya }}&lt;/p&gt;
+    {{ maqola.matn|linebreaks }}
+    &lt;a href=&quot;{% url &#x27;blog:bosh&#x27; %}&quot;&gt;← Barcha maqolalar&lt;/a&gt;
+  &lt;/article&gt;
+{% endblock %}</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Teg</th><th>Vazifasi</th></tr>
+<tr><td><code>{% extends "base.html" %}</code></td><td>Ota shablondan meros olish (faylning <b>birinchi</b> qatori bo'lishi shart)</td></tr>
+<tr><td><code>{% block nom %}...{% endblock %}</code></td><td>O'zgaradigan joy (ota shablonda e'lon qilinadi, bola uni to'ldiradi)</td></tr>
+<tr><td><code>{% include "fayl.html" %}</code></td><td>Boshqa shablon bo'lagini qo'shish (karta, menyu)</td></tr>
+</table></div>
+
+<h2 id="static-fayllar-css-javascript-rasmlar"><a class="anchor" href="#static-fayllar-css-javascript-rasmlar">#</a>Static fayllar: CSS, JavaScript, rasmlar</h2>
+<p>CSS, JS va logotip kabi o'zgarmaydigan fayllar Django'da <b>static fayllar</b> deyiladi.</p>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">blog/
+└── static/
+    └── blog/
+        ├── css/style.css
+        ├── js/main.js
+        └── img/logo.png</code></pre></div>
+<div class="code"><div class="code-head"><span>Django shablon</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% load static %}                                         {# shablon boshida bir marta #}
+&lt;link rel=&quot;stylesheet&quot; href=&quot;{% static &#x27;blog/css/style.css&#x27; %}&quot;&gt;
+&lt;img src=&quot;{% static &#x27;blog/img/logo.png&#x27; %}&quot; alt=&quot;Logo&quot;&gt;
+&lt;script src=&quot;{% static &#x27;blog/js/main.js&#x27; %}&quot;&gt;&lt;/script&gt;</code></pre></div>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">STATIC_URL = &quot;static/&quot;                     # brauzerdagi manzil boshlanishi
+STATICFILES_DIRS = [BASE_DIR / &quot;static&quot;]   # (ixtiyoriy) loyiha darajasidagi umumiy static papka
+STATIC_ROOT = BASE_DIR / &quot;staticfiles&quot;     # serverga joylashda yig&#x27;iladigan joy (41-mavzu)</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/static/blog/css/style.css</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">* { box-sizing: border-box; }
+body { margin: 0; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; background: #f8fafc; color: #1f2937; }
+.header { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px;
+          background: #4f46e5; }
+.header a { color: white; text-decoration: none; margin-left: 18px; }
+.logo { font-weight: 800; font-size: 1.3rem; margin-left: 0 !important; }
+.konteyner { max-width: 1000px; margin: 30px auto; padding: 0 16px; min-height: 60vh; }
+.kartalar { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.karta { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.06);
+         transition: transform .2s; }
+.karta:hover { transform: translateY(-4px); }
+.karta h3 a { color: #1e1b4b; text-decoration: none; }
+.belgi { display: inline-block; background: #eef2ff; color: #4f46e5; padding: 2px 10px;
+         border-radius: 999px; font-size: 13px; font-weight: 600; }
+.footer { text-align: center; padding: 24px; color: #6b7280; }</code></pre></div>
+<div class="callout info"><b>Media fayllar</b> — foydalanuvchilar yuklaydigan fayllar (maqola rasmlari, avatarlar). Ular static'dan farq qiladi va <code>MEDIA_URL</code>/<code>MEDIA_ROOT</code> bilan sozlanadi —
+36-mavzuda <code>ImageField</code> bilan birga ko'ramiz.</div>
+<div class="callout warn">Static fayl o'zgarishi ko'rinmasa — brauzer eski nusxani keshlagan. <kbd>Ctrl</kbd>+<kbd>F5</kbd> bilan sahifani to'liq yangilang. Yangi <code>static</code> papka qo'shganda serverni qayta ishga tushiring.</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>base.html</code>, <code>bosh_sahifa.html</code>, <code>_karta.html</code>, <code>maqola.html</code> shablonlarini yarating va view'larni <code>render</code> ga o'tkazing.</li>
+  <li>Static papkada <code>style.css</code> yarating va ulang. Sahifa 8-mavzudagi portfolio kabi chiroyli ko'rinishiga erishing.</li>
+  <li><code>haqida.html</code> sahifasini <code>base.html</code> dan meros olib yarating.</li>
+  <li><code>main.js</code> da kichik interaktivlik qo'shing: "🌙" tugmasi bosilganda tungi rejim (19-mavzu).</li>
+  <li>Kategoriya sahifasini (<code>kategoriya.html</code>) yarating: sarlavha <code>{{ nomi|title }}</code> va shu kategoriyadagi maqolalar (<code>_karta.html</code> ni <code>include</code> qilib).</li>
+  <li>Bosh sahifada maqolalar sonini ko'rsating va oxirgi kartadan keyin chiziq chizilmasin (<code>forloop.last</code>).</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>TemplateDoesNotExist</code> — shablon yo'li noto'g'ri yoki papka nomi <code>template</code> (s harfisiz). To'g'risi: <code>blog/templates/blog/fayl.html</code>.</li>
+  <li>❌ <code>Invalid block tag 'static'</code> — shablon boshida <code>{% load static %}</code> yo'q.</li>
+  <li>❌ <code>{% endfor %}</code>, <code>{% endif %}</code>, <code>{% endblock %}</code> ni unutish — <code>TemplateSyntaxError</code>.</li>
+  <li>❌ <code>{% extends %}</code> birinchi qatorda emas.</li>
+  <li>❌ <code>{{ maqola[sarlavha] }}</code> — DTL'da kvadrat qavs yo'q, faqat nuqta: <code>{{ maqola.sarlavha }}</code>.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Shablonda o'zgaruvchi qiymatini chiqarish sintaksisi?</p><ol>
+<li><code>{% ism %}</code></li><li><code>{{ ism }}</code></li><li><code>${ism}</code></li><li><code>&lt;?= ism ?&gt;</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">View'dan shablonga ma'lumot qanday uzatiladi?</p><ol>
+<li>Global o'zgaruvchi orqali</li><li>URL orqali</li><li><code>render(request, "shablon.html", kontekst_dict)</code></li><li>localStorage orqali</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Umumiy skeletdan meros olish uchun qaysi teg?</p><ol>
+<li><code>{% extends "base.html" %}</code></li><li><code>{% include "base.html" %}</code></li><li><code>{% import base %}</code></li><li><code>{% inherit base %}</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Shablonda CSS faylni to'g'ri ulash?</p><ol>
+<li><code>href="style.css"</code></li><li><code>href="/blog/style.css"</code></li><li><code>href="{{ static.css }}"</code></li><li><code>href="{% static 'blog/css/style.css' %}"</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>{{ matn|truncatewords:10 }}</code> nima qiladi?</p><ol>
+<li>Matnni 10 marta takrorlaydi</li><li>Matnning birinchi 10 so'zini ko'rsatadi</li><li>10 ta belgini o'chiradi</li><li>Matnni 10 ga bo'ladi</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Sikl ichida ro'yxat bo'sh bo'lgandagi holat uchun qaysi teg?</p><ol>
+<li><code>{% else %}</code></li><li><code>{% none %}</code></li><li><code>{% empty %}</code></li><li><code>{% null %}</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Blog dizaynini to'liq responsiv qiling (10-mavzu): telefonda bitta ustun, burger menyu.</li>
+  <li>Maxsus 404 sahifa: <code>templates/404.html</code> yarating (u <code>DEBUG=False</code> bo'lganda ko'rinadi — 41-mavzuda tekshiramiz).</li>
+  <li><code>pages</code> ilovasidagi sahifalarni ham umumiy <code>base.html</code> dan meros oladigan qiling (Maslahat: <code>config/settings.py</code> → <code>TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]</code> va loyiha darajasidagi <code>templates/base.html</code>).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Shablonlar: <code>ilova/templates/ilova/*.html</code>; view'da <code>render(request, "ilova/fayl.html", {...})</code>.</li>
+  <li>DTL: <code>{{ o'zgaruvchi }}</code>, <code>{% teg %}</code>, <code>{{ x|filtr }}</code>; <code>{% if %}</code>, <code>{% for %}...{% empty %}</code>, <code>{% url 'app:nom' arg %}</code>.</li>
+  <li>Meros: <code>base.html</code> da <code>{% block content %}</code>; bolada <code>{% extends %}</code> + <code>{% block %}</code>; bo'laklar — <code>{% include %}</code>.</li>
+  <li>Static: <code>ilova/static/ilova/...</code>, shablonda <code>{% load static %}</code> + <code>{% static 'yo'l' %}</code>.</li>
+  <li>Django matnni avtomatik ekranlaydi — XSS'dan himoya.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="34-django-url-view.html"><small>← Oldingi mavzu</small>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a><a class="next" href="36-django-model-orm.html"><small>Keyingi mavzu →</small>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#template-nima">Template nima?</a></li><li><a href="#shablonlar-papkasi-va-render">Shablonlar papkasi va render()</a></li><li><a href="#django-template-language-dtl">Django Template Language (DTL)</a></li><li><a href="#shablon-merosi-eng-muhim-imkoniyat">Shablon merosi — eng muhim imkoniyat</a></li><li><a href="#static-fayllar-css-javascript-rasmlar">Static fayllar: CSS, JavaScript, rasmlar</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

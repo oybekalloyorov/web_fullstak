@@ -1,0 +1,373 @@
+<!-- title: DOM va BOM bilan ishlash. JavaScript'da eventlar | desc: DOM daraxti, elementlarni topish (querySelector), matn, atribut, uslub va class'larni o'zgartirish, element yaratish va o'chirish; BOM: window, location, localStorage, setTimeout; hodisalar va addEventListener; valyuta konvertori. | icon: 🌳 | level: 2 soat · amaliy | bob: II bob. JavaScript asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>DOM</b> nima va JavaScript sahifadagi elementlarni qanday "ko'radi";</li>
+  <li>Elementlarni topish, matnini, rangini, class'ini o'zgartirishni;</li>
+  <li>Yangi elementlar yaratish va o'chirishni;</li>
+  <li><b>BOM</b>: brauzer oynasi, manzil, xotira (<code>localStorage</code>), taymerlar;</li>
+  <li><b>Hodisalar (events)</b>: tugma bosilishi, matn kiritilishi va boshqalarga javob berishni;</li>
+  <li>Haqiqiy interaktiv dastur — valyuta konvertorini (13-loyiha).</li>
+</ul>
+</div>
+
+<h2>DOM nima?</h2>
+<p>Brauzer HTML faylni o'qiganda, uni xotirada <b>daraxt</b> ko'rinishidagi obyektlarga aylantiradi. Bu daraxt <b>DOM (Document Object Model)</b> deyiladi.
+JavaScript sahifani aynan DOM orqali o'zgartiradi.</p>
+<pre data-lang="html"><body>
+  <h1 id="sarlavha">Salom</h1>
+  <ul class="royxat">
+    <li>Olma</li>
+    <li>Nok</li>
+  </ul>
+</body></pre>
+<pre data-lang="text">document
+└── html
+    └── body
+        ├── h1#sarlavha  →  "Salom"
+        └── ul.royxat
+            ├── li  →  "Olma"
+            └── li  →  "Nok"</pre>
+<div class="analogy"><span class="t">O'xshatish: oila shajarasi</span>
+DOM — oila daraxti. <code>body</code> — bobo, <code>ul</code> — ota, <code>li</code> lar — bolalar (va o'zaro aka-uka). JavaScript shu daraxtdagi istalgan "qarindosh"ni
+topib, uning kiyimini (uslub), ismini (matn) o'zgartirishi, yangi farzand qo'shishi yoki olib tashlashi mumkin.</div>
+<p><code>document</code> — butun sahifani ifodalovchi obyekt, DOM bilan ishlashning kirish nuqtasi.</p>
+
+<h2>Elementlarni topish</h2>
+<pre data-lang="js">// querySelector — CSS selektori bilan BIRINCHI mos elementni topadi
+const sarlavha = document.querySelector("#sarlavha");   // id bo'yicha
+const royxat   = document.querySelector(".royxat");     // class bo'yicha
+const birinchiLi = document.querySelector("li");        // teg bo'yicha
+
+// querySelectorAll — BARCHA mos elementlar (ro'yxat)
+const hammaLi = document.querySelectorAll("li");
+hammaLi.forEach(li => console.log(li.textContent));
+
+// Eski, lekin ko'p uchraydigan usul
+const s = document.getElementById("sarlavha");          // # belgisisiz!</pre>
+<div class="callout tip">CSS'da qanday selektor yozsangiz (<code>#id</code>, <code>.class</code>, <code>nav a</code>), <code>querySelector</code> ga ham xuddi shunday yozasiz. 6-mavzudagi bilimlar shu yerda ham ishlaydi!</div>
+
+<h2>Elementlarni o'zgartirish</h2>
+<pre data-lang="html" data-play><h1 id="sarlavha">Eski sarlavha</h1>
+<p class="matn">Oddiy paragraf</p>
+<img id="rasm" src="https://picsum.photos/seed/bir/200/120" alt="Rasm">
+<a id="havola" href="#">Havola</a>
+
+<script>
+  const h1 = document.querySelector("#sarlavha");
+  h1.textContent = "Yangi sarlavha ✨";            // matnni almashtirish
+
+  const p = document.querySelector(".matn");
+  p.innerHTML = "Endi <b>qalin</b> so'z bor";      // HTML bilan almashtirish
+
+  // Uslub (inline CSS) — xossa nomlari camelCase: background-color → backgroundColor
+  h1.style.color = "white";
+  h1.style.backgroundColor = "#4f46e5";
+  h1.style.padding = "10px";
+  h1.style.borderRadius = "8px";
+
+  // Atributlar
+  document.querySelector("#rasm").src = "https://picsum.photos/seed/ikki/200/120";
+  const a = document.querySelector("#havola");
+  a.href = "https://uz.wikipedia.org";
+  a.textContent = "Vikipediya";
+  a.setAttribute("target", "_blank");
+</script></pre>
+<div class="callout danger"><span class="t">textContent yoki innerHTML?</span>
+Foydalanuvchi kiritgan matnni (ism, izoh) <b>doim</b> <code>textContent</code> bilan qo'ying. <code>innerHTML</code> esa matn ichidagi HTML va skriptlarni ham bajaradi —
+yomon niyatli odam izoh sifatida zararli kod yozishi mumkin (bu <b>XSS hujumi</b> deyiladi).</div>
+
+<h3>Class'lar bilan ishlash — eng to'g'ri usul</h3>
+<p>Uslubni <code>style</code> orqali birma-bir o'zgartirgandan ko'ra, CSS'da tayyor class yozib, JavaScript bilan uni <b>qo'shish/olib tashlash</b> yaxshiroq:</p>
+<pre data-lang="html" data-play><style>
+  .quti { padding: 20px; border-radius: 10px; background: #e5e7eb; transition: .3s; font-family: sans-serif; }
+  .faol { background: #22c55e; color: white; transform: scale(1.05); }
+  .yashirin { display: none; }
+</style>
+<div class="quti" id="q">Men qutiman</div>
+<p id="sir" class="yashirin">🤫 Sir matn topildi!</p>
+
+<script>
+  const q = document.querySelector("#q");
+  q.classList.add("faol");              // class qo'shish
+  // q.classList.remove("faol");        // olib tashlash
+  // q.classList.toggle("faol");        // bor bo'lsa olib tashlaydi, yo'q bo'lsa qo'shadi
+  console.log(q.classList.contains("faol"));   // true — bormi?
+
+  document.querySelector("#sir").classList.remove("yashirin");
+</script></pre>
+
+<h3>Element yaratish va o'chirish</h3>
+<pre data-lang="html" data-play><ul id="royxat"><li>Non</li></ul>
+
+<script>
+  const royxat = document.querySelector("#royxat");
+  const mahsulotlar = ["Sut", "Tuxum", "Olma"];
+
+  mahsulotlar.forEach(nom => {
+    const li = document.createElement("li");   // 1. yaratish (hali sahifada yo'q)
+    li.textContent = nom;                        // 2. to'ldirish
+    royxat.append(li);                           // 3. sahifaga qo'shish
+  });
+
+  royxat.firstElementChild.remove();             // birinchi elementni o'chirish
+</script></pre>
+
+<h2>BOM — brauzer bilan ishlash</h2>
+<p><b>BOM (Browser Object Model)</b> — sahifaning o'zi emas, <b>brauzer oynasi</b> bilan ishlash vositalari. Ularning "boshlig'i" — <code>window</code> obyekti.</p>
+<pre data-lang="js" data-play>console.log(window.innerWidth, window.innerHeight);  // oyna o'lchami
+console.log(location.href);         // joriy sahifa manzili
+// location.href = "https://kun.uz"; // boshqa sahifaga o'tish
+// location.reload();                 // sahifani yangilash
+console.log(navigator.language);    // brauzer tili, masalan "uz" yoki "ru"
+// history.back();                    // "Orqaga" tugmasi
+
+// Taymerlar
+setTimeout(() => {
+  console.log("3 soniya o'tdi ⏰");
+}, 3000);                            // bir marta, 3000 ms dan keyin
+
+let soniya = 0;
+const taymer = setInterval(() => {
+  soniya++;
+  console.log(`${soniya} soniya`);
+  if (soniya === 5) clearInterval(taymer);   // to'xtatish
+}, 1000);                            // har 1000 ms da</pre>
+<h3><code>localStorage</code> — brauzer xotirasi</h3>
+<p>Sahifa yangilansa, JavaScript o'zgaruvchilari "unutiladi". <code>localStorage</code> esa ma'lumotni brauzerda <b>doimiy</b> saqlaydi (brauzer yopilsa ham).</p>
+<pre data-lang="js" data-play>localStorage.setItem("ism", "Malika");          // saqlash (faqat matn!)
+console.log(localStorage.getItem("ism"));       // o'qish → "Malika"
+localStorage.removeItem("ism");                 // o'chirish
+
+// Massiv yoki obyektni saqlash uchun — JSON ga aylantirish
+const vazifalar = ["Dars qilish", "Kitob o'qish"];
+localStorage.setItem("vazifalar", JSON.stringify(vazifalar));
+const qaytaOlingan = JSON.parse(localStorage.getItem("vazifalar"));
+console.log(qaytaOlingan[0]);</pre>
+
+<h2>Hodisalar (events)</h2>
+<p><b>Hodisa</b> — sahifada sodir bo'ladigan narsa: tugma bosildi, klavish bosildi, sichqoncha ustiga keldi, forma yuborildi. JavaScript hodisani
+<b>"tinglab"</b> turadi va sodir bo'lganda belgilangan funksiyani bajaradi.</p>
+<div class="analogy"><span class="t">O'xshatish: eshik qo'ng'irog'i</span>
+Siz eshik oldida doim kutib turmaysiz. Qo'ng'iroq <b>chalinganda</b> (hodisa) eshikni ochishga borasiz (funksiya). <code>addEventListener</code> — "qo'ng'iroq
+chalinsa, menga ayt" degan kelishuv.</div>
+<pre data-lang="html" data-play><button id="tugma">Meni bosing!</button>
+<p id="natija">Hali bosilmadi</p>
+
+<script>
+  const tugma = document.querySelector("#tugma");
+  const natija = document.querySelector("#natija");
+  let soni = 0;
+
+  tugma.addEventListener("click", () => {
+    soni++;
+    natija.textContent = `Siz ${soni} marta bosdingiz 🎉`;
+  });
+</script></pre>
+<pre data-lang="js">element.addEventListener("hodisa_turi", funksiya);</pre>
+<div class="table-wrap"><table>
+<tr><th>Hodisa</th><th>Qachon sodir bo'ladi</th></tr>
+<tr><td><code>click</code></td><td>Element bosilganda</td></tr>
+<tr><td><code>dblclick</code></td><td>Ikki marta bosilganda</td></tr>
+<tr><td><code>mouseenter</code> / <code>mouseleave</code></td><td>Sichqoncha ustiga kelganda / ketganda</td></tr>
+<tr><td><code>input</code></td><td>Maydonga har bir belgi kiritilganda</td></tr>
+<tr><td><code>change</code></td><td>Qiymat o'zgarib, maydondan chiqilganda (select, checkbox)</td></tr>
+<tr><td><code>submit</code></td><td>Forma yuborilganda</td></tr>
+<tr><td><code>keydown</code></td><td>Klaviaturada tugma bosilganda</td></tr>
+<tr><td><code>load</code></td><td>Sahifa to'liq yuklanganda</td></tr>
+<tr><td><code>scroll</code> / <code>resize</code></td><td>Sahifa aylantirilganda / oyna o'lchami o'zgarganda</td></tr>
+</table></div>
+<h3>Hodisa obyekti (<code>event</code>)</h3>
+<pre data-lang="html" data-play><input id="matn" placeholder="Bu yerga yozing...">
+<p>Belgilar soni: <b id="soni">0</b></p>
+<p id="oxirgi"></p>
+
+<script>
+  const input = document.querySelector("#matn");
+
+  input.addEventListener("input", (event) => {
+    // event.target — hodisa sodir bo'lgan element
+    document.querySelector("#soni").textContent = event.target.value.length;
+  });
+
+  document.addEventListener("keydown", (e) => {
+    document.querySelector("#oxirgi").textContent = `Oxirgi bosilgan tugma: ${e.key}`;
+    if (e.key === "Escape") input.value = "";
+  });
+</script></pre>
+<h3>Forma yuborilishini ushlash</h3>
+<pre data-lang="html" data-play><form id="forma">
+  <input name="ism" placeholder="Ismingiz" required>
+  <button>Yuborish</button>
+</form>
+<p id="javob"></p>
+
+<script>
+  document.querySelector("#forma").addEventListener("submit", (e) => {
+    e.preventDefault();                 // ⬅ sahifa qayta yuklanishini TO'XTATADI
+    const ism = e.target.ism.value.trim();
+    document.querySelector("#javob").textContent = `Rahmat, ${ism}! Ma'lumot qabul qilindi.`;
+    e.target.reset();                   // formani tozalash
+  });
+</script></pre>
+<div class="callout info"><code>e.preventDefault()</code> — brauzerning odatiy harakatini bekor qiladi. Forma uchun bu sahifa qayta yuklanishining oldini oladi va
+ma'lumotni JavaScript bilan o'zimiz qayta ishlaymiz.</div>
+
+<h2>Amaliy mashg'ulot: valyuta konvertori (13-loyiha)</h2>
+<pre data-lang="html" data-title="konvertor.html" data-play><!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valyuta konvertori</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", sans-serif; background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+         min-height: 100vh; display: grid; place-items: center; margin: 0; }
+  .karta { background: white; padding: 28px; border-radius: 20px; width: 340px;
+           box-shadow: 0 20px 40px rgba(79,70,229,.15); }
+  h1 { margin: 0 0 18px; font-size: 1.4rem; text-align: center; }
+  label { font-size: 14px; color: #6b7280; }
+  input, select { width: 100%; padding: 12px; margin: 6px 0 14px; font-size: 16px;
+                  border: 2px solid #e5e7eb; border-radius: 10px; }
+  input:focus, select:focus { border-color: #4f46e5; outline: none; }
+  .qator { display: flex; gap: 10px; align-items: center; }
+  .qator select { flex: 1; }
+  #almashtir { border: none; background: #eef2ff; border-radius: 50%; width: 42px; height: 42px;
+               font-size: 18px; cursor: pointer; transition: transform .3s; }
+  #almashtir:hover { transform: rotate(180deg); }
+  .natija { margin-top: 6px; padding: 16px; background: #4f46e5; color: white; border-radius: 12px;
+            text-align: center; font-size: 1.3rem; font-weight: bold; }
+  .kurs { text-align: center; color: #6b7280; font-size: 13px; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="karta">
+    <h1>💱 Valyuta konvertori</h1>
+    <label for="miqdor">Miqdor</label>
+    <input id="miqdor" type="number" value="100" min="0">
+    <div class="qator">
+      <select id="dan"></select>
+      <button id="almashtir" title="Almashtirish">⇄</button>
+      <select id="ga"></select>
+    </div>
+    <div class="natija" id="natija">—</div>
+    <div class="kurs" id="kurs"></div>
+  </div>
+
+<script>
+  // 1 birlik valyuta necha so'm (namuna kurslar)
+  const KURSLAR = {
+    UZS: { nomi: "🇺🇿 So'm", kurs: 1 },
+    USD: { nomi: "🇺🇸 Dollar", kurs: 12700 },
+    EUR: { nomi: "🇪🇺 Yevro", kurs: 13900 },
+    RUB: { nomi: "🇷🇺 Rubl", kurs: 155 },
+    KZT: { nomi: "🇰🇿 Tenge", kurs: 25 },
+  };
+
+  const miqdorEl = document.querySelector("#miqdor");
+  const danEl = document.querySelector("#dan");
+  const gaEl = document.querySelector("#ga");
+  const natijaEl = document.querySelector("#natija");
+  const kursEl = document.querySelector("#kurs");
+
+  // Select'larni JavaScript bilan to'ldiramiz
+  for (const kod in KURSLAR) {
+    danEl.append(new Option(`${KURSLAR[kod].nomi} (${kod})`, kod));
+    gaEl.append(new Option(`${KURSLAR[kod].nomi} (${kod})`, kod));
+  }
+
+  // Oxirgi tanlovni eslab qolish (localStorage)
+  danEl.value = localStorage.getItem("dan") || "USD";
+  gaEl.value = localStorage.getItem("ga") || "UZS";
+
+  function hisobla() {
+    const miqdor = Number(miqdorEl.value);
+    const dan = danEl.value;
+    const ga = gaEl.value;
+
+    if (miqdor < 0 || miqdorEl.value === "") {
+      natijaEl.textContent = "Miqdorni kiriting";
+      return;
+    }
+
+    const somda = miqdor * KURSLAR[dan].kurs;           // avval so'mga
+    const natija = somda / KURSLAR[ga].kurs;            // keyin kerakli valyutaga
+
+    natijaEl.textContent = `${natija.toLocaleString("uz-UZ", { maximumFractionDigits: 2 })} ${ga}`;
+    kursEl.textContent = `1 ${dan} = ${(KURSLAR[dan].kurs / KURSLAR[ga].kurs).toLocaleString("uz-UZ", { maximumFractionDigits: 4 })} ${ga}`;
+
+    localStorage.setItem("dan", dan);
+    localStorage.setItem("ga", ga);
+  }
+
+  miqdorEl.addEventListener("input", hisobla);
+  danEl.addEventListener("change", hisobla);
+  gaEl.addEventListener("change", hisobla);
+
+  document.querySelector("#almashtir").addEventListener("click", () => {
+    [danEl.value, gaEl.value] = [gaEl.value, danEl.value];   // qiymatlarni almashtirish
+    hisobla();
+  });
+
+  hisobla();   // sahifa ochilganda birinchi hisob
+</script>
+</body>
+</html></pre>
+<p><b>Kodni tahlil qiling va kengaytiring:</b></p>
+<ol class="steps">
+  <li>Har bir qatorga izoh yozing: bu qator nima qiladi?</li>
+  <li>Yana 2 ta valyuta qo'shing (masalan, GBP, CNY).</li>
+  <li>"Tarix" bo'limi qo'shing: oxirgi 5 ta hisob ro'yxat sifatida natija ostida ko'rsatilsin (<code>createElement</code> + <code>prepend</code>).</li>
+  <li>Miqdor 1 000 000 dan katta bo'lsa, natija qizil rangda ko'rinsin (<code>classList</code>).</li>
+</ol>
+<h3>Qo'shimcha mashqlar</h3>
+<ul>
+  <li><b>Tungi rejim tugmasi:</b> bosilganda <code>body</code> ga <code>dark</code> class qo'shilsin/olinsin, tanlov <code>localStorage</code> da saqlansin.</li>
+  <li><b>Burger menyu:</b> 10-mavzudagi menyuni endi JavaScript bilan oching: ☰ bosilganda <code>.menyu</code> ga <code>ochiq</code> class.</li>
+  <li><b>Sekundomer:</b> Start/Stop/Reset tugmalari va <code>setInterval</code>.</li>
+</ul>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Cannot read properties of null</code> — <code>querySelector</code> elementni topmadi: selektorda xato (<code>#</code> yoki <code>.</code> unutilgan) yoki skript HTML'dan <b>oldin</b> ulangan.</li>
+  <li>❌ <code>addEventListener("click", hisobla())</code> — qavs qo'yilsa funksiya darhol bajariladi. To'g'risi: <code>hisobla</code> (qavssiz).</li>
+  <li>❌ <code>input.value</code> ni son deb o'ylash — u doim matn. <code>Number()</code>!</li>
+  <li>❌ Formada <code>e.preventDefault()</code> unutilgan — sahifa yangilanib, natija bir lahzada yo'qoladi.</li>
+  <li>❌ <code>style.background-color</code> — JS'da defisli nomlar camelCase bo'ladi: <code>style.backgroundColor</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q"><code>class="karta"</code> bo'lgan birinchi elementni topuvchi kod?</p><ol>
+<li><code>document.querySelector("karta")</code></li><li><code>document.querySelector(".karta")</code></li><li><code>document.getElementById(".karta")</code></li><li><code>document.find("karta")</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Element matnini xavfsiz o'zgartiruvchi xossa?</p><ol>
+<li><code>innerHTML</code></li><li><code>value</code></li><li><code>src</code></li><li><code>textContent</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Class bor bo'lsa olib tashlaydigan, yo'q bo'lsa qo'shadigan metod?</p><ol>
+<li><code>classList.toggle()</code></li><li><code>classList.add()</code></li><li><code>classList.switch()</code></li><li><code>className.change()</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Maydonga har bir belgi kiritilganda sodir bo'ladigan hodisa?</p><ol>
+<li><code>click</code></li><li><code>submit</code></li><li><code>input</code></li><li><code>load</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Ma'lumotni brauzer yopilsa ham saqlab qoluvchi BOM vositasi?</p><ol>
+<li><code>setTimeout</code></li><li><code>localStorage</code></li><li><code>console</code></li><li><code>location</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Forma yuborilganda sahifa qayta yuklanmasligi uchun nima chaqiriladi?</p><ol>
+<li><code>e.stop()</code></li><li><code>return false</code></li><li><code>form.reset()</code></li><li><code>e.preventDefault()</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Valyuta konvertorini yakunlab, GitHub'ga joylang va Netlify'da e'lon qiling.</li>
+  <li><b>Rang tanlagich:</b> 3 ta <code>input type="range"</code> (R, G, B). Ular o'zgarganda katta quti rangi o'zgarsin va HEX kodi ko'rsatilsin.</li>
+  <li><b>Rasm galereyasi:</b> kichik rasmlar ustiga bosilganda katta rasm almashsin.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>DOM — sahifaning obyektlar daraxti; <code>document.querySelector()</code> / <code>querySelectorAll()</code> bilan topiladi.</li>
+  <li>O'zgartirish: <code>textContent</code>, <code>innerHTML</code>, <code>style.xossa</code>, <code>classList.add/remove/toggle</code>, atributlar.</li>
+  <li>Yaratish: <code>createElement</code> → <code>append</code>; o'chirish: <code>remove()</code>.</li>
+  <li>BOM: <code>window</code>, <code>location</code>, <code>setTimeout/setInterval</code>, <code>localStorage</code> (JSON bilan).</li>
+  <li>Hodisalar: <code>el.addEventListener("click", funksiya)</code>; formada <code>e.preventDefault()</code>.</li>
+</ul>
+</div>

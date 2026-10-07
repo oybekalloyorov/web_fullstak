@@ -1,0 +1,353 @@
+<!-- title: CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar | desc: CSS nima, Inline, Internal va External usullar, qoida sintaksisi, teg/class/id va boshqa selektorlar, kaskad va ustuvorlik, ranglar, matn va shrift xossalari, Google Fonts. | icon: 🎨 | level: 2 soat · 1 nazariy + 1 amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>CSS nima va u HTML bilan qanday ishlashini;</li>
+  <li>CSS'ni sahifaga ulashning 3 usulini va qaysi biri eng to'g'ri ekanini;</li>
+  <li>CSS qoidasining tuzilishi va asosiy selektorlarni;</li>
+  <li>Bir elementga bir nechta qoida to'g'ri kelsa, qaysi biri "g'olib" bo'lishini;</li>
+  <li>Ranglar, matn va shriftlar bilan ishlashni.</li>
+</ul>
+</div>
+
+<h2>CSS nima?</h2>
+<p><b>CSS (Cascading Style Sheets)</b> — "kaskadli uslublar jadvali". HTML sahifaning <b>tuzilishini</b> yaratsa, CSS uning <b>ko'rinishini</b> belgilaydi:
+ranglar, shriftlar, o'lchamlar, joylashuv, animatsiyalar.</p>
+<div class="analogy"><span class="t">O'xshatish</span>
+HTML — odamning skeleti va tanasi. CSS — kiyimi, soch turmagi, rangi. Bir odam turli kiyimda butunlay boshqacha ko'rinadi — xuddi shunday,
+bitta HTML sahifa turli CSS bilan butunlay boshqacha ko'rinadi. Buni <a href="https://www.csszengarden.com" target="_blank" rel="noopener">CSS Zen Garden</a>
+saytida o'zingiz ko'ring: HTML bir xil, faqat CSS fayl almashadi!</div>
+
+<h2>CSS qoidasining tuzilishi</h2>
+<pre data-lang="css">h1 {
+  color: blue;
+  font-size: 32px;
+}
+/*
+ h1             — selektor: QAYSI elementlarga
+ { ... }        — deklaratsiyalar bloki
+ color          — xossa (property): NIMANI o'zgartiramiz
+ blue           — qiymat (value): QANDAY qilib
+ color: blue;   — bitta deklaratsiya. Oxirida nuqta-vergul (;) majburiy!
+*/</pre>
+<div class="callout info">CSS'da izohlar <code>/* ... */</code> ko'rinishida yoziladi (HTML'dagi <code>&lt;!-- --&gt;</code> emas).</div>
+
+<h2>CSS'ni ulashning 3 usuli</h2>
+<h3>1. Inline — teg ichida</h3>
+<pre data-lang="html" data-play><p style="color: red; font-size: 20px;">Bu paragraf qizil va katta.</p></pre>
+<p>Faqat <b>bitta</b> elementga ta'sir qiladi. Tez sinab ko'rish uchun qulay, lakin 100 ta paragrafni qizil qilish uchun 100 marta yozish kerak — noqulay.</p>
+
+<h3>2. Internal — <code>&lt;style&gt;</code> tegi ichida</h3>
+<pre data-lang="html" data-play><!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Internal CSS</title>
+  <style>
+    p {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <p>Birinchi paragraf yashil.</p>
+  <p>Ikkinchisi ham yashil!</p>
+</body>
+</html></pre>
+<p>Butun <b>bitta sahifaga</b> ta'sir qiladi. Lekin saytda 10 ta sahifa bo'lsa, har biriga nusxalash kerak.</p>
+
+<h3>3. External — alohida <code>.css</code> fayl ✅</h3>
+<pre data-lang="html" data-title="index.html"><head>
+  <meta charset="UTF-8">
+  <title>External CSS</title>
+  <link rel="stylesheet" href="style.css">
+</head></pre>
+<pre data-lang="css" data-title="style.css">p {
+  color: purple;
+}</pre>
+<p><b>Eng to'g'ri usul.</b> Bitta <code>style.css</code> fayli <b>barcha sahifalarga</b> ulanadi. Dizaynni o'zgartirish uchun bitta faylni tahrirlash kifoya.
+Brauzer faylni bir marta yuklab, xotirada saqlaydi — sayt tezroq ishlaydi.</p>
+<div class="table-wrap"><table>
+<tr><th>Usul</th><th>Qayerda</th><th>Ta'sir doirasi</th><th>Qachon</th></tr>
+<tr><td>Inline</td><td><code>style="..."</code> atributi</td><td>Bitta element</td><td>Tez sinash, kamdan-kam</td></tr>
+<tr><td>Internal</td><td><code>&lt;style&gt;</code> tegi (<code>head</code>da)</td><td>Bitta sahifa</td><td>Bir sahifali kichik loyihalar</td></tr>
+<tr><td>External</td><td>Alohida <code>.css</code> fayl + <code>&lt;link&gt;</code></td><td>Butun sayt</td><td><b>Deyarli har doim</b></td></tr>
+</table></div>
+
+<h2>Selektorlar — "kimga?" savoliga javob</h2>
+<h3>Asosiy selektorlar</h3>
+<pre data-lang="html" data-play><style>
+  /* 1. Teg selektori — BARCHA <p> lar */
+  p { color: #333; }
+
+  /* 2. Class selektori — class="muhim" bo'lgan BARCHA elementlar (nuqta bilan) */
+  .muhim { color: crimson; font-weight: bold; }
+
+  /* 3. ID selektori — id="sarlavha" bo'lgan BITTA element (panjara bilan) */
+  #sarlavha { color: navy; text-decoration: underline; }
+
+  /* 4. Universal selektor — sahifadagi HAMMA narsa */
+  * { font-family: Arial, sans-serif; }
+
+  /* 5. Guruh selektori — bir nechtasiga birdan (vergul bilan) */
+  h2, h3 { color: teal; }
+</style>
+
+<h1 id="sarlavha">Maktab gazetasi</h1>
+<h2>Yangiliklar</h2>
+<p>Oddiy paragraf.</p>
+<p class="muhim">Muhim e'lon: ertaga dars yo'q!</p>
+<h3>Sport</h3>
+<p>Yana oddiy paragraf, lekin <span class="muhim">bu so'z muhim</span>.</p></pre>
+<div class="table-wrap"><table>
+<tr><th>Selektor</th><th>Yozilishi</th><th>Kimni tanlaydi</th></tr>
+<tr><td>Teg</td><td><code>p</code></td><td>Barcha <code>&lt;p&gt;</code> elementlari</td></tr>
+<tr><td>Class</td><td><code>.muhim</code></td><td><code>class="muhim"</code> bo'lganlar (bir nechta bo'lishi mumkin)</td></tr>
+<tr><td>ID</td><td><code>#sarlavha</code></td><td><code>id="sarlavha"</code> bo'lgan yagona element</td></tr>
+<tr><td>Universal</td><td><code>*</code></td><td>Hammasi</td></tr>
+<tr><td>Guruh</td><td><code>h2, h3</code></td><td>Ham <code>h2</code>, ham <code>h3</code></td></tr>
+</table></div>
+<div class="callout tip"><span class="t">class yoki id?</span>
+Dizayn uchun deyarli doim <b>class</b> ishlating. Bitta elementga bir nechta class berish mumkin: <code>class="tugma katta qizil"</code>.
+<code>id</code> esa sahifada takrorlanmaydi va asosan havolalar (<code>#bo'lim</code>) va JavaScript uchun kerak.</div>
+
+<h3>Kombinatsiyalangan selektorlar</h3>
+<pre data-lang="html" data-play><style>
+  /* Avlod: <nav> ichidagi BARCHA <a> lar (istalgan chuqurlikda) — bo'sh joy bilan */
+  nav a { color: white; background: #4f46e5; padding: 4px 10px; text-decoration: none; }
+
+  /* Bevosita farzand: faqat birinchi darajadagi <li> — ">" bilan */
+  .menyu > li { font-weight: bold; }
+
+  /* Teg + class: faqat class="eslatma" bo'lgan <p> lar */
+  p.eslatma { background: lightyellow; }
+
+  /* Atribut bo'yicha */
+  input[type="email"] { border: 2px solid green; }
+</style>
+
+<nav><a href="#">Bosh sahifa</a> <a href="#">Aloqa</a></nav>
+
+<ul class="menyu">
+  <li>Birinchi daraja
+    <ul><li>Ikkinchi daraja (qalin emas)</li></ul>
+  </li>
+</ul>
+
+<p class="eslatma">Bu eslatma paragrafi</p>
+<div class="eslatma">Bu div — sariq bo'lmaydi</div>
+<input type="email" placeholder="email"> <input type="text" placeholder="matn"></pre>
+
+<h2>Kaskad: qaysi qoida g'olib?</h2>
+<p>Bir elementga bir nechta qoida to'g'ri kelsa, brauzer quyidagi tartibda hal qiladi:</p>
+<ol>
+  <li><b>Aniqlik (spetsifiklik)</b> — aniqroq selektor yutadi: <b>inline &gt; id &gt; class &gt; teg</b>.</li>
+  <li><b>Tartib</b> — aniqlik teng bo'lsa, <b>keyinroq yozilgan</b> qoida yutadi.</li>
+</ol>
+<pre data-lang="html" data-play><style>
+  p { color: blue; }          /* teg — eng kuchsiz */
+  .matn { color: green; }     /* class — kuchliroq */
+  #asosiy { color: orange; }  /* id — yanada kuchliroq */
+  p { color: red; }           /* teg, keyinroq yozilgan — lekin class va id dan baribir kuchsiz */
+</style>
+
+<p>Men qizilman (ikkala teg qoidasidan keyingisi yutdi)</p>
+<p class="matn">Men yashilman (class tegdan kuchli)</p>
+<p class="matn" id="asosiy">Men to'q sariqman (id class'dan kuchli)</p>
+<p class="matn" id="asosiy" style="color: purple">Men binafshaman (inline eng kuchli)</p></pre>
+<div class="analogy"><span class="t">O'xshatish: ko'rsatmalar</span>
+Direktor (<b>inline</b>) "Ali, sen bugun navbatchisan" desa, bu sinf rahbari (<b>id</b>) yoki sinf sardori (<b>class</b>) aytganidan ustun.
+Umumiy maktab qoidasi (<b>teg</b>) esa eng kuchsiz — maxsus ko'rsatma bo'lmagandagina amal qiladi.</div>
+<h3>Meros (inheritance)</h3>
+<p>Ba'zi xossalar (asosan matnga oid: <code>color</code>, <code>font-family</code>, <code>font-size</code>) ota elementdan ichidagi elementlarga
+<b>meros</b> bo'lib o'tadi. Shuning uchun shriftni bir marta <code>body</code> ga berish kifoya — butun sahifaga tarqaladi.</p>
+
+<h2>Ranglar</h2>
+<pre data-lang="html" data-play><style>
+  .r1 { color: tomato; }                 /* nom bilan (140+ ta tayyor nom) */
+  .r2 { color: #4f46e5; }                /* HEX: #RRGGBB (qizil, yashil, ko'k) */
+  .r3 { color: #f00; }                   /* qisqa HEX = #ff0000 */
+  .r4 { color: rgb(16, 185, 129); }      /* RGB: har biri 0–255 */
+  .r5 { color: rgba(0, 0, 0, 0.4); }     /* RGBA: 4-son — shaffoflik 0..1 */
+  .r6 { color: hsl(280, 70%, 50%); }     /* HSL: rang tusi, to'yinganlik, yorqinlik */
+  .fon { background-color: #fef3c7; color: #92400e; padding: 8px; }
+</style>
+<p class="r1">tomato</p>
+<p class="r2">#4f46e5</p>
+<p class="r3">#f00</p>
+<p class="r4">rgb(16, 185, 129)</p>
+<p class="r5">rgba — yarim shaffof</p>
+<p class="r6">hsl(280, 70%, 50%)</p>
+<p class="fon">Fon rangi va matn rangi</p></pre>
+<p><b>HEX</b> kodda har bir juft — 16 lik sanoq sistemasidagi son (<code>00</code>–<code>ff</code>): <code>#ff0000</code> — to'liq qizil, <code>#000000</code> — qora,
+<code>#ffffff</code> — oq. Ranglarni tanlash uchun VS Code'da rang ustiga sichqonchani olib boring yoki <a href="https://coolors.co" target="_blank" rel="noopener">coolors.co</a>
+saytidan tayyor palitralardan foydalaning.</p>
+<div class="callout warn">Matn va fon o'rtasida <b>yetarli kontrast</b> bo'lsin: och kulrang fonda och sariq matnni hech kim o'qiy olmaydi.</div>
+
+<h2>Matn xossalari</h2>
+<pre data-lang="html" data-play><style>
+  .demo p { border-bottom: 1px dashed #ccc; padding: 4px; }
+  .a { text-align: center; }                  /* left | right | center | justify */
+  .b { text-decoration: underline; }          /* none | underline | line-through */
+  .c { text-transform: uppercase; }           /* uppercase | lowercase | capitalize */
+  .d { letter-spacing: 4px; }                 /* harflar orasidagi masofa */
+  .e { word-spacing: 15px; }                  /* so'zlar orasidagi masofa */
+  .f { line-height: 2; }                      /* qatorlar orasidagi masofa (shrift o'lchamiga nisbatan) */
+  .g { text-indent: 40px; }                   /* xatboshi */
+  .h { text-shadow: 2px 2px 4px rgba(0,0,0,.4); }  /* soya: o'ngga, pastga, xiralik, rang */
+  a.i { text-decoration: none; }              /* havola tagidagi chiziqni olib tashlash */
+</style>
+<div class="demo">
+  <p class="a">Markazga tekislangan matn</p>
+  <p class="b">Tagi chizilgan matn</p>
+  <p class="c">katta harflarga aylantirilgan matn</p>
+  <p class="d">Keng harflar</p>
+  <p class="e">So'zlar orasi keng</p>
+  <p class="f">Qatorlar orasi ikki baravar. Bu matn ikki qatorga tushishi uchun ataylab uzunroq yozildi, natijani ko'ring.</p>
+  <p class="g">Xatboshi bilan boshlangan abzats. Kitoblardagi kabi birinchi qator ichkariga surilgan.</p>
+  <p class="h">Soyali matn</p>
+  <p><a class="i" href="#">Tagida chizig'i yo'q havola</a></p>
+</div></pre>
+
+<h2>Shriftlar</h2>
+<pre data-lang="css">body {
+  font-family: "Segoe UI", Arial, sans-serif;  /* birinchisi bo'lmasa — keyingisi (zaxira) */
+  font-size: 16px;                             /* shrift o'lchami */
+  font-weight: 400;                            /* qalinlik: 100..900 (400 = normal, 700 = bold) */
+  font-style: normal;                          /* normal | italic */
+  line-height: 1.6;                            /* o'qish uchun qulay qator oralig'i */
+}
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}</pre>
+<p><b>Shrift oilalari:</b></p>
+<ul>
+  <li><code>serif</code> — harflarida "oyoqchalari" bor (Times New Roman, Georgia). Kitob uslubi.</li>
+  <li><code>sans-serif</code> — oyoqchasiz, zamonaviy (Arial, Roboto). Ekranda o'qish uchun qulay.</li>
+  <li><code>monospace</code> — har bir harf bir xil kenglikda (Courier). Dastur kodi uchun.</li>
+</ul>
+<p>Ro'yxat oxiriga doim umumiy oilani (<code>sans-serif</code>) yozing — agar foydalanuvchi kompyuterida birorta shrift bo'lmasa, brauzer shu oiladan biror shriftni tanlaydi.</p>
+<h3>Google Fonts — bepul chiroyli shriftlar</h3>
+<ol class="steps">
+  <li><a href="https://fonts.google.com" target="_blank" rel="noopener">fonts.google.com</a> saytiga kiring va shrift tanlang (masalan, <b>Montserrat</b>).
+  O'zbekcha harflar uchun <b>Latin Extended</b>ni qo'llab-quvvatlaydiganini tanlang.</li>
+  <li>"Get font" → "Get embed code" bosing va <code>&lt;link&gt;</code> kodini nusxalang.</li>
+  <li>Uni HTML'ning <code>&lt;head&gt;</code> qismiga, <b>o'z CSS faylingizdan oldin</b> qo'ying:
+<pre data-lang="html"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></pre></li>
+  <li>CSS'da ishlating: <code>body { font-family: "Montserrat", sans-serif; }</code></li>
+</ol>
+
+<h3>O'lcham birliklari (qisqacha)</h3>
+<ul>
+  <li><code>px</code> — piksel, aniq o'lcham.</li>
+  <li><code>em</code> — ota element shrift o'lchamiga nisbatan (<code>2em</code> = 2 barobar).</li>
+  <li><code>rem</code> — sahifaning asosiy shrifti (odatda 16px) ga nisbatan: <code>1.5rem</code> = 24px. Shriftlar uchun tavsiya etiladi.</li>
+  <li><code>%</code> — ota elementga nisbatan foiz.</li>
+</ul>
+<p>Batafsil 8-mavzuda.</p>
+
+<h2>Amaliy mashg'ulot: vizitka saytiga dizayn</h2>
+<ol class="steps">
+  <li><code>vizitka/</code> papkasida <code>css/style.css</code> faylini yarating.</li>
+  <li>Har bir HTML sahifaning <code>&lt;head&gt;</code> qismiga ulang: <code>&lt;link rel="stylesheet" href="css/style.css"&gt;</code>
+  (ichki papkadagi sahifalarda — <code>../css/style.css</code>!).</li>
+  <li>Google Fonts'dan ikkita shrift ulang: sarlavhalar uchun bittasi, matn uchun boshqasi.</li>
+  <li><code>style.css</code> ga quyidagilarni yozing va o'zingizga moslang:
+<pre data-lang="css" data-title="css/style.css" data-play>/* Butun sahifa uchun asosiy uslub */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1f2937;
+  background-color: #f9fafb;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, serif;
+  color: #4f46e5;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+nav a {
+  color: #4f46e5;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ajratilgan {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}</pre></li>
+  <li>HTML'da 2–3 ta muhim so'zni <code>&lt;span class="ajratilgan"&gt;</code> bilan o'rang.</li>
+  <li>Brauzerda <kbd>F12</kbd> → <b>Elements</b> → biror elementni tanlang. O'ng tomondagi <b>Styles</b> panelida unga qaysi CSS qoidalari
+  ta'sir qilayotganini va qaysilari ustidan chizilganini (yutqazganini) ko'ring. Qiymatlarni shu yerning o'zida o'zgartirib tajriba qiling.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Nuqta-vergulni unutish: <code>color: red font-size: 20px;</code> — ikkala xossa ham ishlamaydi.</li>
+  <li>❌ Class selektorida nuqtani unutish: <code>muhim { }</code> o'rniga <code>.muhim { }</code>.</li>
+  <li>❌ HTML'da <code>class=".muhim"</code> deb yozish — HTML'da nuqtasiz: <code>class="muhim"</code>.</li>
+  <li>❌ CSS fayl yo'li noto'g'ri — <kbd>F12</kbd> → Console'da "404 style.css" xatosini ko'rasiz.</li>
+  <li>❌ Xossa nomida xato: <code>colour</code>, <code>font-colour</code>, <code>text-color</code> — to'g'risi <code>color</code>.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Butun saytga bitta dizayn berishning eng to'g'ri usuli qaysi?</p><ol>
+<li>Inline CSS</li><li>Internal CSS</li><li>External CSS (alohida .css fayl)</li><li>Har sahifaga &lt;style&gt;</li></ol>
+<p class="explain">Bitta fayl — barcha sahifalar. O'zgartirish oson va brauzer faylni keshlaydi.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>class="karta"</code> bo'lgan elementlarni tanlovchi selektor qaysi?</p><ol>
+<li><code>#karta</code></li><li><code>.karta</code></li><li><code>karta</code></li><li><code>*karta</code></li></ol>
+<p class="explain">Nuqta — class, panjara — id.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>&lt;p class="a" id="b"&gt;</code> uchun <code>p {color:red}</code>, <code>.a {color:green}</code>, <code>#b {color:blue}</code> yozilgan. Matn qanday rangda?</p><ol>
+<li>Qizil</li><li>Yashil</li><li>Qora</li><li>Ko'k</li></ol>
+<p class="explain">ID selektori class va tegdan kuchliroq.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>nav a</code> selektori nimani tanlaydi?</p><ol>
+<li><code>nav</code> ichidagi barcha havolalarni</li><li><code>nav</code> va barcha <code>a</code> larni</li><li>Faqat birinchi havolani</li><li><code>a</code> ichidagi <code>nav</code> ni</li></ol>
+<p class="explain">Bo'sh joy — "ichidagi" (avlod) selektori. Vergul esa "va" (guruh) bo'lardi.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Matnni markazga tekislovchi xossa qaysi?</p><ol>
+<li><code>align: center</code></li><li><code>font-align: center</code></li><li><code>text-align: center</code></li><li><code>center: true</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>font-family: "Roboto", Arial, sans-serif;</code> — agar kompyuterda Roboto bo'lmasa?</p><ol>
+<li>Matn ko'rinmaydi</li><li>Arial ishlatiladi</li><li>Xato chiqadi</li><li>Times New Roman ishlatiladi</li></ol>
+<p class="explain">Ro'yxat — zaxira shriftlar ketma-ketligi.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><a href="https://flukeout.github.io" target="_blank" rel="noopener">CSS Diner</a> o'yinida kamida 12-darajagacha o'ting (selektorlarni o'yin orqali mashq qilish).</li>
+  <li>Vizitka saytingiz uchun 4–5 rangdan iborat palitra tanlang (coolors.co) va barcha sahifalarga qo'llang.</li>
+  <li>5-mavzudagi "Sinfimiz gazetasi" sahifasiga gazeta uslubida dizayn bering: serif shrift, markazdagi katta sarlavha, ustunlar orasida chiziq.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Qoida: <code>selektor { xossa: qiymat; }</code>.</li>
+  <li>External CSS (<code>&lt;link rel="stylesheet" href="style.css"&gt;</code>) — asosiy usul.</li>
+  <li>Selektorlar: <code>teg</code>, <code>.class</code>, <code>#id</code>, <code>*</code>, <code>a, b</code> (guruh), <code>a b</code> (ichidagi), <code>a &gt; b</code> (bevosita farzand).</li>
+  <li>Ustuvorlik: inline &gt; id &gt; class &gt; teg; teng bo'lsa — keyingisi yutadi.</li>
+  <li>Matn: <code>color</code>, <code>text-align</code>, <code>text-decoration</code>, <code>line-height</code>; shrift: <code>font-family</code>, <code>font-size</code>, <code>font-weight</code>.</li>
+</ul>
+</div>

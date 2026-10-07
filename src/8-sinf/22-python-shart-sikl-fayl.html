@@ -1,0 +1,296 @@
+<!-- title: Python control flow: shartlar va sikllar. Fayllar bilan ishlash | desc: if, elif, else va chekinish qoidasi; match; for va range(), while, break, continue; try/except bilan xatolarni ushlash; fayllarni ochish, o'qish, yozish va qo'shish (with open). Python kalkulyatori. | icon: 🔀 | level: 1 soat · amaliy | bob: III bob. Python va ma'lumotlar bazasi -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python'da shartlar: <code>if</code>, <code>elif</code>, <code>else</code> va <b>chekinish (indentatsiya)</b> qoidasi;</li>
+  <li>Sikllar: <code>for</code> + <code>range()</code>, <code>while</code>, <code>break</code>, <code>continue</code>;</li>
+  <li>Dastur "yiqilmasligi" uchun xatolarni ushlash: <code>try</code> / <code>except</code>;</li>
+  <li>Fayllar bilan ishlash: yaratish, yozish, o'qish, qo'shish;</li>
+  <li>Python kalkulyatorini (15-loyiha).</li>
+</ul>
+<p>JavaScript'da shart va sikllarni o'rgangansiz — g'oyalar bir xil, faqat yozilishi boshqacha. Shuning uchun bu mavzu tez o'tadi.</p>
+</div>
+
+<h2>Shartlar: if, elif, else</h2>
+<pre data-lang="python">ball = int(input("Ballingiz: "))
+
+if ball >= 86:
+    print("A'lo! 🏆")
+    baho = 5
+elif ball >= 71:              # JS'dagi "else if" → Python'da "elif"
+    print("Yaxshi 👍")
+    baho = 4
+elif ball >= 56:
+    print("Qoniqarli")
+    baho = 3
+else:
+    print("Qoniqarsiz 😔")
+    baho = 2
+
+print("Bahoingiz:", baho)</pre>
+<h3>Chekinish (indentatsiya) — Python'ning eng muhim qoidasi</h3>
+<p>JavaScript'da kod bloklari <code>{ }</code> bilan belgilanadi. Python'da esa <b>ikki nuqta <code>:</code></b> va undan keyingi qatorlarning <b>4 ta bo'sh joy</b> bilan
+ichkariga surilishi bilan.</p>
+<pre data-lang="python">yosh = 15
+if yosh >= 14:
+    print("Pasport olish mumkin")      # ← if ichida (4 bo'sh joy)
+    print("Tabriklaymiz!")             # ← if ichida
+print("Bu har doim chiqadi")           # ← if TASHQARISIDA (chekinishsiz)</pre>
+<div class="callout danger"><span class="t">IndentationError</span>
+Chekinish noto'g'ri bo'lsa, Python ishlamaydi: <code>IndentationError: expected an indented block</code>. Bitta faylda bo'sh joy va Tab'ni aralashtirmang.
+VS Code <kbd>Tab</kbd> bosganda avtomatik 4 bo'sh joy qo'yadi.</div>
+<div class="analogy"><span class="t">O'xshatish: kitob mundarijasi</span>
+Mundarijada bo'lim nomlari chapda, ularning ichidagi kichik bo'limlar esa o'ngroqqa surilgan. Qaysi kichik bo'lim qaysi bo'limga tegishli ekanini
+siljishdan bilasiz. Python ham kod "ierarxiyasini" xuddi shunday — siljish orqali tushunadi.</div>
+<h3>Qo'shimcha imkoniyatlar</h3>
+<pre data-lang="python">yosh = 16
+# Qisqa shart (ternary)
+holat = "katta" if yosh >= 18 else "voyaga yetmagan"
+print(holat)
+
+# Oraliq
+if 12 <= yosh <= 17:
+    print("O'smir")
+
+# in — ichida bormi?
+mevalar = "olma nok uzum"
+if "nok" in mevalar:
+    print("Nok bor")
+
+# match — JS'dagi switch (Python 3.10+)
+kun = 6
+match kun:
+    case 1 | 2 | 3 | 4 | 5:
+        print("Ish kuni")
+    case 6 | 7:
+        print("Dam olish kuni 🎉")
+    case _:
+        print("Noto'g'ri kun")       # _ — default</pre>
+
+<h2>Sikllar</h2>
+<h3><code>for</code> va <code>range()</code></h3>
+<pre data-lang="python">for i in range(5):            # 0, 1, 2, 3, 4   (5 — kirmaydi!)
+    print(i, end=" ")
+print()
+
+for i in range(1, 6):         # 1, 2, 3, 4, 5
+    print(i, end=" ")
+print()
+
+for i in range(10, 0, -2):    # 10, 8, 6, 4, 2   (boshlanish, tugash, qadam)
+    print(i, end=" ")
+print()
+
+for harf in "Python":         # satrning har bir harfi
+    print(harf, end="-")</pre>
+<pre data-lang="output">0 1 2 3 4
+1 2 3 4 5
+10 8 6 4 2
+P-y-t-h-o-n-</pre>
+<div class="table-wrap"><table>
+<tr><th>JavaScript</th><th>Python</th></tr>
+<tr><td><code>for (let i = 0; i &lt; 5; i++)</code></td><td><code>for i in range(5):</code></td></tr>
+<tr><td><code>for (let i = 1; i &lt;= 10; i += 2)</code></td><td><code>for i in range(1, 11, 2):</code></td></tr>
+<tr><td><code>for (const x of arr)</code></td><td><code>for x in arr:</code></td></tr>
+</table></div>
+<h3>Yig'indi va ko'paytirish jadvali</h3>
+<pre data-lang="python">jami = 0
+for i in range(1, 101):
+    jami += i
+print("1..100 yig'indi:", jami)        # 5050
+
+son = int(input("Qaysi sonning jadvali? "))
+for i in range(1, 11):
+    print(f"{son} × {i:2} = {son * i:3}")    # :2 va :3 — ustunlarni tekislash</pre>
+<h3><code>while</code>, <code>break</code>, <code>continue</code></h3>
+<pre data-lang="python">import random
+
+yashirin = random.randint(1, 20)
+urinish = 0
+
+while True:                              # "cheksiz" sikl — break bilan chiqamiz
+    taxmin = int(input("1–20 oralig'ida son: "))
+    urinish += 1
+    if taxmin == yashirin:
+        print(f"🎉 Topdingiz! {urinish} ta urinishda")
+        break                            # sikldan chiqish
+    elif taxmin < yashirin:
+        print("Kattaroq ⬆️")
+    else:
+        print("Kichikroq ⬇️")
+
+for i in range(1, 11):
+    if i % 3 == 0:
+        continue                         # 3, 6, 9 ni o'tkazib yuboradi
+    print(i, end=" ")</pre>
+
+<h2>Xatolarni ushlash: try / except</h2>
+<p>Foydalanuvchi son o'rniga "salom" yozsa, <code>int("salom")</code> xato beradi va dastur <b>to'xtab qoladi</b>. Buning oldini olish uchun:</p>
+<pre data-lang="python">try:
+    son = int(input("Son kiriting: "))
+    natija = 100 / son
+    print("Natija:", natija)
+except ValueError:
+    print("❌ Bu son emas!")
+except ZeroDivisionError:
+    print("❌ Nolga bo'lib bo'lmaydi!")
+finally:
+    print("Dastur tugadi")              # har doim bajariladi</pre>
+<pre data-lang="output">Son kiriting: abc
+❌ Bu son emas!
+Dastur tugadi</pre>
+<h3>To'g'ri son kiritilmaguncha so'rash</h3>
+<pre data-lang="python">while True:
+    try:
+        yosh = int(input("Yoshingiz: "))
+        if 1 <= yosh <= 120:
+            break
+        print("Yosh 1 dan 120 gacha bo'lishi kerak")
+    except ValueError:
+        print("Iltimos, raqam kiriting")
+
+print(f"Rahmat! Siz {yosh} yoshdasiz.")</pre>
+<div class="callout tip">Bu "kiritishni tekshirish sikli" — haqiqiy dasturlarda juda ko'p ishlatiladi. Uni funksiyaga aylantirib, keyingi loyihalarda qayta ishlating (24-mavzu).</div>
+
+<h2>Fayllar bilan ishlash</h2>
+<p>O'zgaruvchilardagi ma'lumot dastur yopilganda yo'qoladi. Uni saqlab qolish uchun <b>faylga</b> yozish kerak (keyinroq — ma'lumotlar bazasiga).</p>
+<h3>Faylga yozish</h3>
+<pre data-lang="python">with open("eslatma.txt", "w", encoding="utf-8") as f:
+    f.write("Birinchi qator\n")         # \n — yangi qatorga o'tish
+    f.write("Ikkinchi qator\n")
+print("Fayl yaratildi!")</pre>
+<ul>
+  <li><code>open(fayl_nomi, rejim, encoding)</code> — faylni ochadi.</li>
+  <li><code>with ... as f:</code> — ish tugagach faylni <b>avtomatik yopadi</b> (yopilmagan fayl ma'lumot yo'qolishiga olib kelishi mumkin).</li>
+  <li><code>encoding="utf-8"</code> — o'zbekcha harflar (<code>o'</code>, <code>g'</code>) va emoji to'g'ri saqlanishi uchun. Doim yozing!</li>
+</ul>
+<div class="table-wrap"><table>
+<tr><th>Rejim</th><th>Ma'nosi</th><th>Fayl yo'q bo'lsa</th><th>Fayl bor bo'lsa</th></tr>
+<tr><td><code>"r"</code></td><td>read — o'qish (standart)</td><td>❌ Xato</td><td>O'qiydi</td></tr>
+<tr><td><code>"w"</code></td><td>write — yozish</td><td>Yaratadi</td><td>⚠️ <b>Eski mazmunini o'chiradi!</b></td></tr>
+<tr><td><code>"a"</code></td><td>append — oxiriga qo'shish</td><td>Yaratadi</td><td>Oxiriga qo'shadi</td></tr>
+</table></div>
+<h3>Fayldan o'qish</h3>
+<pre data-lang="python">with open("eslatma.txt", "r", encoding="utf-8") as f:
+    matn = f.read()                     # butun faylni bitta satr sifatida
+print(matn)
+
+with open("eslatma.txt", encoding="utf-8") as f:
+    for i, qator in enumerate(f, start=1):   # qatorma-qator (katta fayllar uchun qulay)
+        print(i, qator.strip())          # strip() — qator oxiridagi \n ni olib tashlaydi</pre>
+<h3>Qo'shish va fayl borligini tekshirish</h3>
+<pre data-lang="python">import os
+
+with open("kundalik.txt", "a", encoding="utf-8") as f:
+    f.write(input("Bugun nima qildingiz? ") + "\n")
+
+if os.path.exists("kundalik.txt"):
+    with open("kundalik.txt", encoding="utf-8") as f:
+        qatorlar = f.readlines()           # qatorlar ro'yxati
+    print(f"Kundalikda {len(qatorlar)} ta yozuv bor")</pre>
+
+<h2>Amaliy mashg'ulot: Python kalkulyatori (15-loyiha)</h2>
+<pre data-lang="python" data-title="kalkulyator.py">from datetime import datetime
+
+TARIX_FAYLI = "tarix.txt"
+
+def son_sora(matn):
+    """To'g'ri son kiritilmaguncha so'raydi."""
+    while True:
+        try:
+            return float(input(matn))
+        except ValueError:
+            print("  ⚠️ Iltimos, son kiriting (masalan: 12 yoki 3.5)")
+
+print("=" * 32)
+print("   🧮 PYTHON KALKULYATORI")
+print("=" * 32)
+
+while True:
+    a = son_sora("Birinchi son: ")
+    amal = input("Amal (+ - * / // % **): ").strip()
+    b = son_sora("Ikkinchi son: ")
+
+    if amal == "+":
+        natija = a + b
+    elif amal == "-":
+        natija = a - b
+    elif amal == "*":
+        natija = a * b
+    elif amal in ("/", "//", "%"):
+        if b == 0:
+            print("❌ Nolga bo'lib bo'lmaydi!")
+            continue
+        natija = a / b if amal == "/" else a // b if amal == "//" else a % b
+    elif amal == "**":
+        natija = a ** b
+    else:
+        print("❌ Noma'lum amal")
+        continue
+
+    # 5.0 o'rniga 5 ko'rinsin
+    if natija == int(natija):
+        natija = int(natija)
+    yozuv = f"{a:g} {amal} {b:g} = {natija}"
+    print("✅", yozuv)
+
+    with open(TARIX_FAYLI, "a", encoding="utf-8") as f:
+        f.write(f"[{datetime.now():%Y-%m-%d %H:%M}] {yozuv}\n")
+
+    javob = input("Davom etamizmi? (ha/yo'q/tarix): ").strip().lower()
+    if javob == "tarix":
+        with open(TARIX_FAYLI, encoding="utf-8") as f:
+            print(f.read())
+    elif javob != "ha":
+        print("Xayr! 👋")
+        break</pre>
+<p><b>Topshiriqlar:</b></p>
+<ol class="steps">
+  <li>Kalkulyatorni ishga tushiring va har bir amalni sinab ko'ring, xato kiritishlarni ham.</li>
+  <li>Yangi amallar qo'shing: <code>sqrt</code> (ildiz, bitta son bilan) va <code>%%</code> (foizini hisoblash: a ning b foizi).</li>
+  <li>"tarix" buyrug'i faqat oxirgi 5 ta yozuvni ko'rsatsin (<code>readlines()[-5:]</code>).</li>
+  <li><code>.txt</code> fayl kompyuterda qayerda yaratilganini toping va oddiy Bloknot bilan oching.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>if</code>, <code>for</code>, <code>while</code> qatori oxirida <code>:</code> unutilgan → <code>SyntaxError</code>.</li>
+  <li>❌ <code>else if</code> deb yozish — Python'da <code>elif</code>.</li>
+  <li>❌ <code>range(1, 10)</code> 10 ni ham beradi deb o'ylash — oxirgi son kirmaydi.</li>
+  <li>❌ <code>"w"</code> rejimida ochib, muhim faylni o'chirib yuborish. Qo'shish uchun <code>"a"</code>.</li>
+  <li>❌ <code>encoding="utf-8"</code> siz o'zbekcha matn — Windows'da g'alati belgilar chiqadi.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">JS'dagi <code>else if</code> Python'da qanday yoziladi?</p><ol>
+<li><code>else if</code></li><li><code>elseif</code></li><li><code>elif</code></li><li><code>orif</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>list(range(2, 8, 2))</code> qanday sonlarni beradi?</p><ol>
+<li>2, 4, 6, 8</li><li>2, 4, 6</li><li>2, 3, 4, 5, 6, 7</li><li>8, 6, 4, 2</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Python kod bloklarini qanday belgilaydi?</p><ol>
+<li>Jingalak qavslar <code>{}</code></li><li>begin / end so'zlari</li><li>Nuqta-vergul</li><li>Ikki nuqta va chekinish (bo'sh joylar)</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Fayl mazmunini o'chirmasdan, oxiriga yozish rejimi?</p><ol>
+<li><code>"a"</code></li><li><code>"w"</code></li><li><code>"r"</code></li><li><code>"x"</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>int("abc")</code> qanday xato beradi?</p><ol>
+<li>ZeroDivisionError</li><li>IndentationError</li><li>ValueError</li><li>TypeError</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>with open(...)</code> ning afzalligi nimada?</p><ol>
+<li>Faylni tezroq o'qiydi</li><li>Ish tugagach faylni avtomatik yopadi</li><li>Faylni shifrlaydi</li><li>Faylni o'chiradi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Parol tekshiruvchi:</b> parol kamida 8 belgi, kamida bitta raqam va bitta katta harf bo'lsin. (<code>for harf in parol:</code> va <code>harf.isdigit()</code>, <code>harf.isupper()</code>.)</li>
+  <li><b>Kundalik:</b> dastur har ishga tushganda sanani va bugungi xulosangizni <code>kundalik.txt</code> ga qo'shsin, so'ng barcha yozuvlarni ko'rsatsin.</li>
+  <li><b>Tub sonlar faylga:</b> 1–200 oralig'idagi barcha tub sonlarni <code>tub.txt</code> fayliga har qatorda bittadan yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>if / elif / else:</code> — oxirida ikki nuqta, ichidagi kod 4 bo'sh joy surilgan.</li>
+  <li><code>for i in range(boshi, oxiri, qadam):</code> — oxiri kirmaydi; <code>while shart:</code>; <code>break</code>, <code>continue</code>.</li>
+  <li><code>try: ... except ValueError: ...</code> — xatolarni ushlab, dasturni "yiqilish"dan saqlash.</li>
+  <li><code>with open("f.txt", "r/w/a", encoding="utf-8") as f:</code> — <code>read()</code>, <code>write()</code>, <code>readlines()</code>.</li>
+</ul>
+</div>

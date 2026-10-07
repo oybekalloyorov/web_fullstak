@@ -1,0 +1,341 @@
+<!-- title: DRF yordamida REST API yaratish. CRUD API ishlab chiqish | desc: Generic view'lar (ListCreateAPIView, RetrieveUpdateDestroyAPIView), ViewSet va Router, ruxsatlar (faqat muallif), sahifalash, qidiruv va saralash, token autentifikatsiya, CORS; Front-end (JavaScript fetch) va Back-end integratsiyasi; mahsulotlar API'si. | icon: 🧩 | level: 2 soat · amaliy | bob: V bob. DRF va deploy -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>To'liq CRUD API'ni (GET, POST, PUT, PATCH, DELETE) bir necha qatorda yozishni;</li>
+  <li><b>ViewSet</b> va <b>Router</b> — URL'larni avtomatik yaratishni;</li>
+  <li>API ruxsatlari: "faqat muallif o'zgartira oladi";</li>
+  <li>Sahifalash, qidiruv va saralashni;</li>
+  <li><b>Front-end va Back-end integratsiyasi</b>: II bobdagi JavaScript bilan Django API'dan foydalanishni (29-loyiha);</li>
+  <li>Mahsulotlar boshqaruv API'sini (27–28-loyihalar).</li>
+</ul>
+</div>
+
+<h2>Abstraksiya zinapoyasi</h2>
+<p>39-mavzuda <code>@api_view</code> bilan har bir metodni qo'lda yozdik. DRF bir xil ishni tobora qisqaroq yozish imkonini beradi:</p>
+<div class="table-wrap"><table>
+<tr><th>Daraja</th><th>Vosita</th><th>Kod hajmi</th><th>Qachon</th></tr>
+<tr><td>1</td><td><code>@api_view</code> / <code>APIView</code></td><td>Ko'p, hammasi qo'lda</td><td>Nostandart mantiq</td></tr>
+<tr><td>2</td><td>Generic view'lar (<code>ListCreateAPIView</code>...)</td><td>Kam</td><td>Standart CRUD, URL'larni o'zingiz boshqarasiz</td></tr>
+<tr><td>3</td><td><code>ModelViewSet</code> + <code>Router</code></td><td>Eng kam</td><td>To'liq standart CRUD</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: ovqat tayyorlash</span>
+1-daraja — hamma narsani noldan pishirish. 2-daraja — yarim tayyor mahsulotlardan. 3-daraja — tayyor taomni isitib berish. Har birining o'z o'rni bor: maxsus
+taom uchun noldan pishirasiz, oddiy tushlik uchun — tayyoridan foydalanasiz.</div>
+
+<h2>2-daraja: Generic view'lar</h2>
+<pre data-lang="python" data-title="blog/api_views.py">from rest_framework import generics
+from .models import Maqola
+from .serializers import MaqolaSerializer
+
+
+class MaqolaListCreate(generics.ListCreateAPIView):          # GET (ro'yxat) + POST (yaratish)
+    queryset = Maqola.objects.filter(chop_etilgan=True).select_related("kategoriya", "muallif")
+    serializer_class = MaqolaSerializer
+
+    def perform_create(self, serializer):                    # saqlashdan oldin muallifni qo'shamiz
+        serializer.save(muallif=self.request.user)
+
+
+class MaqolaDetail(generics.RetrieveUpdateDestroyAPIView):   # GET (bitta) + PUT + PATCH + DELETE
+    queryset = Maqola.objects.all()
+    serializer_class = MaqolaSerializer</pre>
+<pre data-lang="python" data-title="blog/urls.py">path("api/maqolalar/", api_views.MaqolaListCreate.as_view()),
+path("api/maqolalar/<int:pk>/", api_views.MaqolaDetail.as_view()),    # generic'lar "pk" kutadi</pre>
+<p>Atigi ~15 qatorda to'liq CRUD API! Ammo hozir <b>istalgan</b> tizimga kirgan foydalanuvchi boshqa birovning maqolasini o'zgartira oladi — buni tuzatamiz.</p>
+
+<h2>Ruxsatlar (permissions)</h2>
+<pre data-lang="python" data-title="blog/permissions.py (yangi fayl)">from rest_framework import permissions
+
+
+class MuallifYokiFaqatOqish(permissions.BasePermission):
+    """O'qish — hammaga; o'zgartirish va o'chirish — faqat muallifga."""
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:       # GET, HEAD, OPTIONS — "xavfsiz" metodlar
+            return True
+        return obj.muallif == request.user</pre>
+<pre data-lang="python" data-title="blog/api_views.py">from rest_framework import permissions
+from .permissions import MuallifYokiFaqatOqish
+
+
+class MaqolaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Maqola.objects.all()
+    serializer_class = MaqolaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, MuallifYokiFaqatOqish]</pre>
+<div class="table-wrap"><table>
+<tr><th>Tayyor ruxsat</th><th>Ma'nosi</th></tr>
+<tr><td><code>AllowAny</code></td><td>Hammaga ochiq</td></tr>
+<tr><td><code>IsAuthenticated</code></td><td>Faqat tizimga kirganlar</td></tr>
+<tr><td><code>IsAuthenticatedOrReadOnly</code></td><td>O'qish — hammaga, yozish — kirganlarga</td></tr>
+<tr><td><code>IsAdminUser</code></td><td>Faqat admin (staff)</td></tr>
+</table></div>
+<p>Bu 38-mavzudagi "faqat muallif tahrirlay oladi" qoidasining API'dagi ko'rinishi. Begona foydalanuvchi PUT/DELETE yuborsa — <code>403 Forbidden</code>.</p>
+
+<h2>3-daraja: ViewSet va Router</h2>
+<pre data-lang="python" data-title="blog/api_views.py">from rest_framework import viewsets, permissions, filters
+from .models import Maqola, Kategoriya
+from .serializers import MaqolaSerializer, KategoriyaSerializer
+from .permissions import MuallifYokiFaqatOqish
+
+
+class MaqolaViewSet(viewsets.ModelViewSet):          # list, create, retrieve, update, partial_update, destroy
+    serializer_class = MaqolaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, MuallifYokiFaqatOqish]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ["sarlavha", "matn"]                    # ?search=futbol
+    ordering_fields = ["yaratilgan", "korishlar"]           # ?ordering=-korishlar
+
+    def get_queryset(self):
+        qs = Maqola.objects.filter(chop_etilgan=True).select_related("kategoriya", "muallif")
+        kategoriya = self.request.query_params.get("kategoriya")   # ?kategoriya=sport
+        if kategoriya:
+            qs = qs.filter(kategoriya__slug=kategoriya)
+        return qs
+
+    def perform_create(self, serializer):
+        serializer.save(muallif=self.request.user)
+
+
+class KategoriyaViewSet(viewsets.ReadOnlyModelViewSet):   # faqat o'qish: list + retrieve
+    queryset = Kategoriya.objects.all()
+    serializer_class = KategoriyaSerializer</pre>
+<pre data-lang="python" data-title="config/urls.py">from rest_framework.routers import DefaultRouter
+from blog.api_views import MaqolaViewSet, KategoriyaViewSet
+
+router = DefaultRouter()
+router.register("maqolalar", MaqolaViewSet, basename="maqola")
+router.register("kategoriyalar", KategoriyaViewSet)
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),         # ⬅ barcha API URL'lari avtomatik
+    path("api-auth/", include("rest_framework.urls")),   # brauzerdagi API'da "Log in" tugmasi
+    path("", include("blog.urls")),
+]</pre>
+<div class="callout warn">39-mavzu va yuqoridagi generic misol uchun <code>blog/urls.py</code> ga qo'shgan <code>api/maqolalar/...</code> yo'llarini endi <b>o'chiring</b> — aks holda bir xil manzil ikki joyda e'lon qilinadi.</div>
+<p>Router avtomatik yaratgan URL'lar:</p>
+<div class="table-wrap"><table>
+<tr><th>URL</th><th>Metodlar</th><th>ViewSet metodi</th></tr>
+<tr><td><code>/api/</code></td><td>GET</td><td>Barcha endpointlar ro'yxati (DRF bosh sahifasi)</td></tr>
+<tr><td><code>/api/maqolalar/</code></td><td>GET, POST</td><td><code>list</code>, <code>create</code></td></tr>
+<tr><td><code>/api/maqolalar/5/</code></td><td>GET, PUT, PATCH, DELETE</td><td><code>retrieve</code>, <code>update</code>, <code>partial_update</code>, <code>destroy</code></td></tr>
+<tr><td><code>/api/kategoriyalar/</code>, <code>/api/kategoriyalar/2/</code></td><td>GET</td><td><code>list</code>, <code>retrieve</code></td></tr>
+</table></div>
+
+<h2>Sahifalash</h2>
+<pre data-lang="python" data-title="config/settings.py">REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticatedOrReadOnly"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}</pre>
+<pre data-lang="json" data-title="GET /api/maqolalar/?page=2&search=maktab&ordering=-korishlar">{
+  "count": 23,
+  "next": "http://127.0.0.1:8000/api/maqolalar/?page=3&search=maktab&ordering=-korishlar",
+  "previous": "http://127.0.0.1:8000/api/maqolalar/?page=1&search=maktab&ordering=-korishlar",
+  "results": [
+    { "id": 12, "sarlavha": "Maktab kutubxonasi yangilandi", "korishlar": 340, "...": "..." }
+  ]
+}</pre>
+
+<h2>Mobil ilova va JavaScript uchun: Token autentifikatsiya</h2>
+<p>Brauzer sessiya (cookie) orqali tizimda qoladi. Mobil ilova va boshqa dasturlar esa har bir so'rovda <b>token</b> — maxfiy kalit yuboradi.</p>
+<pre data-lang="python" data-title="config/settings.py">INSTALLED_APPS += ["rest_framework.authtoken"]
+
+REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] = [
+    "rest_framework.authentication.SessionAuthentication",
+    "rest_framework.authentication.TokenAuthentication",
+]</pre>
+<pre data-lang="python" data-title="config/urls.py">from rest_framework.authtoken.views import obtain_auth_token
+urlpatterns += [path("api/token/", obtain_auth_token)]       # POST username+password → token</pre>
+<pre data-lang="bash">python manage.py migrate
+curl -X POST http://127.0.0.1:8000/api/token/ -d "username=ali&password=parol12345"
+# {"token":"9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"}
+
+curl -X POST http://127.0.0.1:8000/api/maqolalar/ \
+     -H "Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" \
+     -H "Content-Type: application/json" \
+     -d '{"sarlavha": "Token bilan yozildi", "matn": "Salom!", "kategoriya": 1}'</pre>
+<div class="callout danger">Token — parol kabi maxfiy! Uni kodga yozib GitHub'ga yuklamang. Haqiqiy loyihalarda tokenlar HTTPS orqali uzatiladi (41-mavzu).</div>
+
+<h2>Front-end va Back-end integratsiyasi (29-loyiha)</h2>
+<p>Endi kursning eng muhim lahzasi: <b>II bobdagi JavaScript</b> (front-end) va <b>Django API</b> (back-end) birlashadi. Front-end alohida sayt bo'lishi mumkin
+(masalan, Netlify'da), shuning uchun avval <b>CORS</b> ni sozlaymiz.</p>
+<h3>CORS — boshqa saytdan so'rovlarga ruxsat</h3>
+<p>Brauzer xavfsizlik uchun bir saytdagi JavaScript'ga <b>boshqa domendagi</b> API'ga so'rov yuborishni taqiqlaydi (<b>CORS</b> — Cross-Origin Resource Sharing).
+Ruxsat <b>server</b> tomonidan beriladi:</p>
+<pre data-lang="bash">pip install django-cors-headers</pre>
+<pre data-lang="python" data-title="config/settings.py">INSTALLED_APPS += ["corsheaders"]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",          # ⬅ ro'yxatning eng boshiga
+    "django.middleware.security.SecurityMiddleware",
+    # ... qolganlari
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",                          # VS Code Live Server
+    "https://maktab-blog.netlify.app",                # internetdagi front-end
+]</pre>
+<h3>Front-end: maqolalar o'quvchi sahifa</h3>
+<pre data-lang="html" data-title="frontend/index.html (Live Server bilan oching)"><!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maktab blogi — JS mijoz</title>
+<style>
+  body { font-family: "Segoe UI", sans-serif; max-width: 760px; margin: 30px auto; padding: 0 16px; background: #f8fafc; }
+  .qidiruv { display: flex; gap: 8px; margin-bottom: 16px; }
+  .qidiruv input { flex: 1; padding: 10px; border: 2px solid #e5e7eb; border-radius: 10px; }
+  .karta { background: #fff; padding: 16px 20px; border-radius: 14px; margin-bottom: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+  .belgi { background: #eef2ff; color: #4f46e5; padding: 2px 10px; border-radius: 999px; font-size: 13px; }
+  .xato { color: #dc2626; }
+  button { padding: 10px 16px; border: none; border-radius: 10px; background: #4f46e5; color: #fff; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h1>📰 Maktab blogi</h1>
+  <form class="qidiruv" id="qidiruv">
+    <input id="soz" placeholder="Qidirish...">
+    <button>Izlash</button>
+  </form>
+  <p id="holat">Yuklanmoqda...</p>
+  <div id="royxat"></div>
+  <button id="yana" hidden>Yana yuklash</button>
+
+<script>
+  const API = "http://127.0.0.1:8000/api/maqolalar/";
+  const royxat = document.querySelector("#royxat");
+  const holat = document.querySelector("#holat");
+  const yanaBtn = document.querySelector("#yana");
+  let keyingi = null;
+
+  async function yukla(url, tozala = true) {
+    holat.textContent = "Yuklanmoqda...";
+    holat.className = "";
+    try {
+      const javob = await fetch(url);
+      if (!javob.ok) throw new Error(`Server xatosi: ${javob.status}`);
+      const data = await javob.json();          // { count, next, previous, results }
+
+      if (tozala) royxat.innerHTML = "";
+      data.results.forEach(m => {
+        const karta = document.createElement("article");
+        karta.className = "karta";
+        const sarlavha = document.createElement("h3");
+        sarlavha.textContent = m.sarlavha;                       // textContent — XSS'dan himoya
+        const meta = document.createElement("p");
+        meta.innerHTML = `<span class="belgi"></span> ✍️ <b></b> · 👁 ${m.korishlar}`;
+        meta.querySelector(".belgi").textContent = m.kategoriya_nomi;
+        meta.querySelector("b").textContent = m.muallif;
+        const matn = document.createElement("p");
+        matn.textContent = m.matn.slice(0, 150) + (m.matn.length > 150 ? "..." : "");
+        karta.append(sarlavha, meta, matn);
+        royxat.append(karta);
+      });
+
+      holat.textContent = `Jami: ${data.count} ta maqola`;
+      keyingi = data.next;
+      yanaBtn.hidden = !keyingi;
+    } catch (err) {
+      holat.textContent = `❌ ${err.message}. Django server ishlayaptimi?`;
+      holat.className = "xato";
+    }
+  }
+
+  document.querySelector("#qidiruv").addEventListener("submit", e => {
+    e.preventDefault();
+    const soz = document.querySelector("#soz").value.trim();
+    yukla(`${API}?search=${encodeURIComponent(soz)}`);
+  });
+
+  yanaBtn.addEventListener("click", () => yukla(keyingi, false));   // keyingi sahifa
+
+  yukla(API);
+</script>
+</body>
+</html></pre>
+<p><b>Nima bo'lyapti?</b> JavaScript (front-end, port 5500) → <code>fetch</code> → Django API (back-end, port 8000) → PostgreSQL → JSON → JavaScript sahifani chizadi.
+Bu — <b>full-stack</b> ilovaning to'liq zanjiri, va siz uning barcha qismlarini o'zingiz yozdingiz! 🎉</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🌐 index.html + JS<small>Live Server :5500</small></div>
+    <div class="arrow">— fetch(GET /api/maqolalar/) →</div>
+    <div class="node">🌿 Django + DRF<small>:8000</small></div>
+    <div class="arrow">⇄ SQL ⇄</div>
+    <div class="node">🐘 PostgreSQL</div>
+  </div>
+</div>
+
+<h2>Amaliy mashg'ulot: mahsulotlar boshqaruv API'si (27–28-loyihalar)</h2>
+<ol class="steps">
+  <li>Yangi ilova: <code>python manage.py startapp shop</code>. Model:
+<pre data-lang="python" data-title="shop/models.py">from django.db import models
+
+class Mahsulot(models.Model):
+    nomi = models.CharField(max_length=200)
+    tavsif = models.TextField(blank=True)
+    narx = models.DecimalField(max_digits=12, decimal_places=2)
+    soni = models.PositiveIntegerField(default=0)
+    faol = models.BooleanField(default=True)
+    yaratilgan = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nomi</pre></li>
+  <li><code>MahsulotSerializer</code> (narx musbat bo'lsin — <code>validate_narx</code>), <code>MahsulotViewSet</code> (qidiruv — nom; saralash — narx, yaratilgan), router'ga qo'shing.</li>
+  <li>Ruxsat: o'qish — hammaga, qo'shish/o'zgartirish/o'chirish — faqat admin (<code>IsAdminUser</code>; maslahat: <code>get_permissions</code> metodida <code>self.action</code> ga qarab).</li>
+  <li><code>?narx_min=10000&amp;narx_max=50000</code> filtrini <code>get_queryset</code> da qo'shing.</li>
+  <li>Barcha amallarni brauzerdagi API sahifasida yoki Thunder Client'da sinang: GET (ro'yxat, bitta), POST, PATCH (faqat narx), DELETE.</li>
+  <li><b>Front-end:</b> 19-mavzudagi kartalar dizayni bilan mahsulotlar katalogi sahifasini yarating — ma'lumotlar API'dan kelsin.</li>
+</ol>
+<details><summary>3-qadam uchun maslahat</summary>
+<pre data-lang="python">class MahsulotViewSet(viewsets.ModelViewSet):
+    queryset = Mahsulot.objects.filter(faol=True)
+    serializer_class = MahsulotSerializer
+
+    def get_permissions(self):
+        if self.action in ("list", "retrieve"):
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]</pre>
+</details>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Brauzer konsolida <code>blocked by CORS policy</code> — <code>corsheaders</code> o'rnatilmagan, middleware ro'yxat boshida emas yoki front-end manzili <code>CORS_ALLOWED_ORIGINS</code> da yo'q (port ham mos bo'lishi kerak!).</li>
+  <li>❌ ViewSet'da <code>get_queryset</code> ishlatilganda router'da <code>basename</code> unutilgan.</li>
+  <li>❌ Generic view URL'ida <code>&lt;int:id&gt;</code> — generic'lar standart holatda <code>pk</code> kutadi.</li>
+  <li>❌ <code>fetch</code> natijasini <code>.json()</code> siz ishlatish yoki <code>await</code> ni unutish.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Bitta klassda list, create, retrieve, update, destroy amallarini beruvchi DRF klassi?</p><ol>
+<li><code>APIView</code></li><li><code>ListAPIView</code></li><li><code>ModelViewSet</code></li><li><code>Serializer</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">ViewSet uchun URL'larni avtomatik yaratuvchi vosita?</p><ol>
+<li>Router (<code>DefaultRouter</code>)</li><li><code>path()</code></li><li>Paginator</li><li>Middleware</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>SAFE_METHODS</code> qaysi metodlarni o'z ichiga oladi?</p><ol>
+<li>POST, PUT</li><li>DELETE</li><li>Hammasi</li><li>GET, HEAD, OPTIONS</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Netlify'dagi JS sayt Django API'ga so'rov yuborganda "CORS" xatosi chiqdi. Nima qilish kerak?</p><ol>
+<li>JavaScript kodini o'chirish</li><li>Django'da <code>django-cors-headers</code> ni sozlab, front-end manzilini ruxsat etilganlarga qo'shish</li><li>Brauzerni almashtirish</li><li>API'ni HTML'ga aylantirish</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">API'da qidiruv uchun DRF'ning qaysi vositasi ishlatiladi?</p><ol>
+<li><code>Paginator</code></li><li><code>OrderingFilter</code></li><li><code>SearchFilter</code> + <code>search_fields</code></li><li><code>Router</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>JS front-end'ga "Maqola qo'shish" formasini qo'shing: token bilan <code>POST</code> so'rov yuboring (<code>headers: { "Authorization": "Token ...", "Content-Type": "application/json" }</code>).</li>
+  <li>Kutubxona API'ngizni ViewSet + Router'ga o'tkazing, qidiruv va sahifalash qo'shing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Generic: <code>ListCreateAPIView</code>, <code>RetrieveUpdateDestroyAPIView</code>; <code>perform_create</code> — muallifni qo'shish.</li>
+  <li><code>ModelViewSet</code> + <code>DefaultRouter</code> — to'liq CRUD API bir necha qatorda.</li>
+  <li>Ruxsatlar: <code>permission_classes</code>, o'z <code>BasePermission</code> klassingiz (<code>has_object_permission</code>).</li>
+  <li><code>SearchFilter</code>, <code>OrderingFilter</code>, <code>PageNumberPagination</code>; token autentifikatsiya.</li>
+  <li>Integratsiya: front-end <code>fetch</code> ⇄ DRF API; <code>django-cors-headers</code> bilan CORS.</li>
+</ul>
+</div>

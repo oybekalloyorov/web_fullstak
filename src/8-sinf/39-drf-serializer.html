@@ -1,0 +1,256 @@
+<!-- title: Django REST Framework (DRF) ga kirish. Serializerlar va API View'lar | desc: API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF'ni o'rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko'rinadigan API. | icon: 🔄 | level: 2 soat · 1 nazariy + 1 amaliy | bob: V bob. DRF va deploy -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>API</b> nima va zamonaviy ilovalar nima uchun unga muhtojligini;</li>
+  <li><b>REST</b> arxitekturasi qoidalari va <b>JSON</b> formatini;</li>
+  <li>Django REST Framework'ni o'rnatish va sozlashni;</li>
+  <li><b>Serializer</b> — Python obyektlarini JSON'ga va aksincha aylantirishni;</li>
+  <li>API View'lar yozib, ularni brauzerda sinashni.</li>
+</ul>
+</div>
+
+<h2>API nima?</h2>
+<p>IV bobda Django <b>HTML sahifalar</b> qaytardi — ularni faqat brauzer ko'rsata oladi. Lekin bugun bitta xizmatdan ko'plab "mijozlar" foydalanadi:</p>
+<ul>
+  <li>📱 Mobil ilova (Android, iOS) — unga HTML kerak emas, faqat <b>ma'lumot</b> kerak;</li>
+  <li>⚛️ React/Vue kabi frontend dasturlar — sahifani o'zi chizadi, serverdan faqat ma'lumot oladi;</li>
+  <li>🤖 Telegram bot, boshqa saytlar, aqlli soatlar...</li>
+</ul>
+<p><b>API</b> (Application Programming Interface — dasturlash interfeysi) — dasturlar bir-biri bilan "gaplashishi" uchun kelishilgan qoidalar. Veb-API — ma'lumotni
+<b>JSON</b> ko'rinishida beradigan URL'lar to'plami.</p>
+<div class="analogy"><span class="t">O'xshatish: restoran (yana!) va yetkazib berish</span>
+IV bobdagi sayt — restoran zali: taom chiroyli likopchada (HTML) beriladi. <b>API</b> — yetkazib berish xizmati: o'sha oshxona, o'sha taom, lekin konteynerda (JSON).
+Mijoz uni o'z uyida (mobil ilova, React sayt) o'zi xohlagan likopchaga soladi. Oshxona (back-end) bitta — mijozlar ko'p.</div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">📱 Mobil ilova</div>
+    <div class="node">⚛️ React sayt</div>
+    <div class="node">🤖 Telegram bot</div>
+    <div class="arrow">⇄ JSON ⇄</div>
+    <div class="node">🔄 Django REST API<small>/api/maqolalar/</small></div>
+    <div class="arrow">⇄</div>
+    <div class="node">🐘 PostgreSQL</div>
+  </div>
+</div>
+
+<h2>JSON — ma'lumot almashish tili</h2>
+<p>24-mavzuda tanishgan <b>JSON</b> (JavaScript Object Notation) — API'larning asosiy formati. U Python'dagi dict/list'ga va JavaScript'dagi obyekt/massivga juda o'xshaydi:</p>
+<pre data-lang="json">{
+  "id": 5,
+  "sarlavha": "Bilimlar bellashuvi",
+  "chop_etilgan": true,
+  "korishlar": 128,
+  "kategoriya": { "id": 2, "nomi": "Tadbirlar" },
+  "teglar": ["olimpiada", "8-sinf"],
+  "rasm": null
+}</pre>
+<p>Qoidalar: kalitlar <b>qo'sh qo'shtirnoqda</b>; qiymatlar — matn, son, <code>true</code>/<code>false</code>, <code>null</code>, obyekt <code>{}</code> yoki massiv <code>[]</code>.</p>
+
+<h2>REST arxitekturasi</h2>
+<p><b>REST</b> — API'ni tartibli va tushunarli loyihalash uslubi. Asosiy g'oya: hamma narsa — <b>resurs</b> (maqola, foydalanuvchi, mahsulot), har bir resursning o'z
+<b>URL</b>i bor, amallar esa <b>HTTP metodlari</b> bilan bildiriladi.</p>
+<div class="table-wrap"><table>
+<tr><th>Amal (CRUD)</th><th>HTTP metod</th><th>URL</th><th>Javob kodi</th></tr>
+<tr><td>Barcha maqolalar ro'yxati</td><td><code>GET</code></td><td><code>/api/maqolalar/</code></td><td><code>200 OK</code></td></tr>
+<tr><td>Bitta maqola</td><td><code>GET</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code> / <code>404</code></td></tr>
+<tr><td>Yangi maqola yaratish</td><td><code>POST</code></td><td><code>/api/maqolalar/</code></td><td><code>201 Created</code></td></tr>
+<tr><td>To'liq yangilash</td><td><code>PUT</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code></td></tr>
+<tr><td>Qisman yangilash</td><td><code>PATCH</code></td><td><code>/api/maqolalar/5/</code></td><td><code>200</code></td></tr>
+<tr><td>O'chirish</td><td><code>DELETE</code></td><td><code>/api/maqolalar/5/</code></td><td><code>204 No Content</code></td></tr>
+</table></div>
+<ul>
+  <li>URL'da <b>ot</b> (resurs), ko'plikda: <code>/api/maqolalar/</code> ✅, <code>/api/getMaqola/</code> ❌, <code>/api/maqola/ochir/5/</code> ❌ — amal metod orqali bildiriladi.</li>
+  <li>Xatolar ham status kod bilan: <code>400</code> — noto'g'ri ma'lumot, <code>401</code> — tizimga kirilmagan, <code>403</code> — ruxsat yo'q, <code>404</code> — topilmadi.</li>
+</ul>
+
+<h2>DRF'ni o'rnatish</h2>
+<p><b>Django REST Framework (DRF)</b> — Django'da API yaratish uchun eng mashhur kutubxona.</p>
+<pre data-lang="bash">pip install djangorestframework
+pip freeze > requirements.txt</pre>
+<pre data-lang="python" data-title="config/settings.py">INSTALLED_APPS = [
+    # ...
+    "rest_framework",
+    "blog",
+]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",   # o'qish — hammaga, yozish — kirganlarga
+    ],
+}</pre>
+
+<h2>Serializer — tarjimon</h2>
+<p>Bazadan olingan <code>Maqola</code> obyektini to'g'ridan-to'g'ri JSON qilib bo'lmaydi. <b>Serializer</b> ikki yo'nalishda ishlaydi:</p>
+<ul>
+  <li><b>Serializatsiya:</b> model obyekti → Python dict → JSON (javob yuborish uchun);</li>
+  <li><b>Deserializatsiya:</b> JSON → tekshirish (validatsiya) → model obyekti (kelgan ma'lumotni saqlash uchun).</li>
+</ul>
+<div class="analogy"><span class="t">Django Forms bilan o'xshashlik</span>
+Serializer — API uchun <b>Forma</b> (37-mavzu): u ham maydonlarni belgilaydi, ma'lumotni tekshiradi va saqlaydi. Farqi: forma HTML bilan, serializer JSON bilan ishlaydi.
+<code>Form</code> ↔ <code>Serializer</code>, <code>ModelForm</code> ↔ <code>ModelSerializer</code>.</div>
+<pre data-lang="python" data-title="blog/serializers.py (yangi fayl)">from rest_framework import serializers
+from .models import Kategoriya, Maqola
+
+
+class KategoriyaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kategoriya
+        fields = ["id", "nomi", "slug"]
+
+
+class MaqolaSerializer(serializers.ModelSerializer):
+    muallif = serializers.ReadOnlyField(source="muallif.username")        # faqat o'qish uchun
+    kategoriya_nomi = serializers.ReadOnlyField(source="kategoriya.nomi")
+
+    class Meta:
+        model = Maqola
+        fields = ["id", "sarlavha", "matn", "kategoriya", "kategoriya_nomi",
+                  "muallif", "chop_etilgan", "korishlar", "yaratilgan"]
+        read_only_fields = ["korishlar", "yaratilgan"]
+
+    def validate_sarlavha(self, qiymat):                # Forms'dagi clean_sarlavha kabi
+        if len(qiymat.strip()) < 5:
+            raise serializers.ValidationError("Sarlavha kamida 5 belgi bo'lsin")
+        return qiymat.strip()</pre>
+<h3>Shell'da sinab ko'ramiz</h3>
+<pre data-lang="python">from blog.models import Maqola
+from blog.serializers import MaqolaSerializer
+
+m = Maqola.objects.first()
+s = MaqolaSerializer(m)
+print(s.data)                                   # obyekt → dict
+
+s = MaqolaSerializer(Maqola.objects.all()[:2], many=True)   # ro'yxat uchun many=True
+print(s.data)
+
+# Kelgan ma'lumotni tekshirish
+s = MaqolaSerializer(data={"sarlavha": "Hi", "matn": "...", "kategoriya": 1})
+print(s.is_valid())                             # False
+print(s.errors)                                 # {'sarlavha': ["Sarlavha kamida 5 belgi bo'lsin"]}</pre>
+<pre data-lang="output">{'id': 1, 'sarlavha': "Futbol bo'yicha g'alaba", 'matn': '...', 'kategoriya': 1, 'kategoriya_nomi': 'Sport',
+ 'muallif': 'admin', 'chop_etilgan': True, 'korishlar': 12, 'yaratilgan': '2026-10-06T15:30:00+05:00'}
+False
+{'sarlavha': [ErrorDetail(string="Sarlavha kamida 5 belgi bo'lsin", code='invalid')]}</pre>
+
+<h2>API View'lar</h2>
+<h3>1-usul: <code>@api_view</code> — funksiya asosida</h3>
+<pre data-lang="python" data-title="blog/api_views.py (yangi fayl)">from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import Maqola
+from .serializers import MaqolaSerializer
+
+
+@api_view(["GET", "POST"])
+def maqolalar_api(request):
+    if request.method == "GET":
+        maqolalar = Maqola.objects.filter(chop_etilgan=True)
+        serializer = MaqolaSerializer(maqolalar, many=True)
+        return Response(serializer.data)                             # 200 + JSON
+
+    # POST — yangi maqola
+    serializer = MaqolaSerializer(data=request.data)                 # request.data — kelgan JSON
+    if serializer.is_valid():
+        serializer.save(muallif=request.user)                        # muallifni o'zimiz beramiz
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def maqola_api(request, id):
+    maqola = get_object_or_404(Maqola, id=id, chop_etilgan=True)
+    return Response(MaqolaSerializer(maqola).data)</pre>
+<h3>2-usul: <code>APIView</code> — klass asosida</h3>
+<pre data-lang="python">from rest_framework.views import APIView
+
+class MaqolalarAPI(APIView):
+    def get(self, request):
+        serializer = MaqolaSerializer(Maqola.objects.filter(chop_etilgan=True), many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = MaqolaSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)        # xato bo'lsa — avtomatik 400
+        serializer.save(muallif=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)</pre>
+<pre data-lang="python" data-title="blog/urls.py">from . import api_views
+
+urlpatterns += [
+    path("api/maqolalar/", api_views.maqolalar_api, name="api_maqolalar"),
+    path("api/maqolalar/<int:id>/", api_views.maqola_api, name="api_maqola"),
+]</pre>
+
+<h2>Brauzerda ko'rinadigan API</h2>
+<p>Serverni ishga tushirib, <a href="http://127.0.0.1:8000/api/maqolalar/" target="_blank" rel="noopener">http://127.0.0.1:8000/api/maqolalar/</a> ni oching. DRF chiroyli,
+<b>interaktiv</b> sahifa ko'rsatadi: JSON javob, status kod va (tizimga kirgan bo'lsangiz) pastda POST qilish uchun forma. Bu API'ni sinashning eng oson usuli.</p>
+<p>Boshqa usullar:</p>
+<pre data-lang="bash"># Terminal orqali (curl)
+curl http://127.0.0.1:8000/api/maqolalar/
+curl http://127.0.0.1:8000/api/maqolalar/1/</pre>
+<pre data-lang="js" data-title="JavaScript'dan (brauzer konsoli yoki frontend)">fetch("http://127.0.0.1:8000/api/maqolalar/")
+  .then(javob => javob.json())
+  .then(maqolalar => {
+    maqolalar.forEach(m => console.log(m.sarlavha, "—", m.muallif));
+  });</pre>
+<div class="callout tip">Professional dasturchilar API'ni sinash uchun <b>Postman</b> yoki VS Code'dagi <b>Thunder Client</b> kengaytmasidan foydalanadi: istalgan metod, sarlavha va JSON tana bilan so'rov yuborish mumkin.</div>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>DRF'ni o'rnating va sozlang.</li>
+  <li><code>serializers.py</code> yarating, shell'da serializatsiya va validatsiyani sinab ko'ring.</li>
+  <li><code>@api_view</code> bilan ikkita endpoint yarating va brauzerda oching.</li>
+  <li>Admin orqali tizimga kiring, so'ng brauzerdagi API sahifasida POST forma orqali yangi maqola yarating (JSON):
+<pre data-lang="json">{
+  "sarlavha": "API orqali yaratilgan maqola",
+  "matn": "Bu maqola DRF yordamida qo'shildi!",
+  "kategoriya": 1
+}</pre>
+  Javob kodi <code>201</code> ekanini tekshiring. Sarlavhani 3 belgili qilib yuboring — <code>400</code> va xato xabari.</li>
+  <li><code>/api/kategoriyalar/</code> endpointini yarating (<code>KategoriyaSerializer</code>), har bir kategoriyada maqolalar soni ham bo'lsin (Maslahat: <code>serializers.IntegerField(source="maqolalar.count", read_only=True)</code>).</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Object of type Maqola is not JSON serializable</code> — obyekt serializer'dan o'tkazilmagan.</li>
+  <li>❌ Ro'yxat uchun <code>many=True</code> unutilgan — <code>AttributeError</code>.</li>
+  <li>❌ <code>serializer.data</code> ni <code>is_valid()</code> dan oldin o'qish (data= bilan yaratilganda).</li>
+  <li>❌ <code>"rest_framework"</code> <code>INSTALLED_APPS</code> ga qo'shilmagan — brauzerdagi API sahifasi shablon xatosi beradi.</li>
+  <li>❌ POST so'rov <code>403</code> qaytaradi — tizimga kirilmagan (<code>IsAuthenticatedOrReadOnly</code>).</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">REST API'da yangi resurs yaratish uchun qaysi HTTP metod ishlatiladi?</p><ol>
+<li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Muvaffaqiyatli yaratilgan resurs uchun qaytariladigan status kod?</p><ol>
+<li>200 OK</li><li>204 No Content</li><li>201 Created</li><li>302 Found</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Serializer'ning vazifasi?</p><ol>
+<li>Model obyektlarini JSON'ga va JSON'ni tekshirilgan obyektlarga aylantirish</li><li>Bazaga ulanish</li><li>HTML shablon yaratish</li><li>URL'larni sozlash</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi URL REST qoidalariga mos?</p><ol>
+<li><code>/api/getAllMaqolalar/</code></li><li><code>/api/maqola/ochirish/5/</code></li><li><code>/api/maqolaYarat/</code></li><li><code>/api/maqolalar/5/</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Bir nechta obyektni serializatsiya qilish uchun qaysi parametr kerak?</p><ol>
+<li><code>all=True</code></li><li><code>many=True</code></li><li><code>list=True</code></li><li><code>multiple=True</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">DRF view'ida kelgan JSON ma'lumot qayerda?</p><ol>
+<li><code>request.POST</code></li><li><code>request.GET</code></li><li><code>request.data</code></li><li><code>request.json</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona loyihangiz (38-mavzu uyga vazifasi) uchun <code>KitobSerializer</code> va <code>/api/kitoblar/</code> (GET, POST) endpointini yarating.</li>
+  <li>Ochiq API'larni o'rganing: brauzerda <code>https://api.github.com/users/torvalds</code> ni oching. JSON tuzilmasini tahlil qilib, qaysi maydonlar borligini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>API — dasturlar orasidagi interfeys; veb-API JSON qaytaradi va ko'p mijozlarga xizmat qiladi.</li>
+  <li>REST: resurs — URL (ot, ko'plik), amal — HTTP metod (GET/POST/PUT/PATCH/DELETE), natija — status kod.</li>
+  <li>DRF: <code>pip install djangorestframework</code> + <code>INSTALLED_APPS</code>.</li>
+  <li><code>ModelSerializer</code> — model ↔ JSON; <code>validate_maydon()</code>; <code>many=True</code>; <code>is_valid()</code>, <code>save()</code>, <code>errors</code>.</li>
+  <li><code>@api_view</code> / <code>APIView</code> + <code>Response(data, status=...)</code>.</li>
+</ul>
+</div>

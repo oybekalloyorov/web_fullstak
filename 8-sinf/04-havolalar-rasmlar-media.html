@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Havolalar va navigatsiya. Rasmlar va media elementlari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Giperhavolalar (a, href, target), absolyut va nisbiy yo&#x27;llar, sahifa ichidagi havolalar, navigatsiya menyusi; rasmlar (img, alt), audio, video va iframe.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a class="active" href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔗</div><div><div class="crumb">04-mavzu · 42 tadan · I bob. HTML va CSS</div><h1>Havolalar va navigatsiya. Rasmlar va media elementlari</h1><p class="lead">Giperhavolalar (a, href, target), absolyut va nisbiy yo&#x27;llar, sahifa ichidagi havolalar, navigatsiya menyusi; rasmlar (img, alt), audio, video va iframe.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Havolalar orqali sahifalarni bir-biriga bog'lashni;</li>
+  <li>Absolyut va nisbiy yo'llar farqini (bu juda ko'p xatoning sababi!);</li>
+  <li>Sahifa ichidagi bo'limlarga o'tish, email va telefon havolalarini;</li>
+  <li>Bir nechta sahifali sayt va navigatsiya menyusini yaratishni;</li>
+  <li>Rasm, audio, video va YouTube videosini sahifaga joylashni.</li>
+</ul>
+</div>
+
+<h2 id="havola-webning-h-harfi"><a class="anchor" href="#havola-webning-h-harfi">#</a>Havola — webning "H" harfi</h2>
+<p>HTML'dagi "<b>H</b>yperText" — havolalar orqali bir-biriga bog'langan matn degani. Havolalar bo'lmaganda web — bir-biridan ajralgan
+alohida hujjatlar bo'lardi. Havola <code>&lt;a&gt;</code> (<i>anchor</i> — langar) tegi bilan yaratiladi:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;https://uz.wikipedia.org&quot;&gt;O&#x27;zbekcha Vikipediya&lt;/a&gt;</code></pre></div>
+<ul>
+  <li><code>href</code> (<i>hypertext reference</i>) — havola <b>qayerga</b> olib borishi.</li>
+  <li>Teglar orasidagi matn — foydalanuvchi bosadigan yozuv.</li>
+</ul>
+<h3>Yangi oynada ochish</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub (yangi yorliqda ochiladi)&lt;/a&gt;</code></pre></div>
+<p><code>target="_blank"</code> — havolani yangi yorliqda (tab) ochadi. Tashqi saytlarga havola berganda qulay: foydalanuvchi sizning saytingizni yo'qotib qo'ymaydi.
+<code>rel="noopener"</code> — xavfsizlik uchun qo'shiladi (ochilgan sayt sizning sahifangizni boshqara olmasligi uchun).</p>
+
+<h2 id="absolyut-va-nisbiy-yollar"><a class="anchor" href="#absolyut-va-nisbiy-yollar">#</a>Absolyut va nisbiy yo'llar</h2>
+<p>Bu darsning eng muhim qismi. Havola, rasm, CSS fayl — barchasi qandaydir <b>yo'l</b> (manzil) bilan ko'rsatiladi.</p>
+<h3>Absolyut yo'l</h3>
+<p>To'liq internet manzili, <code>https://</code> bilan boshlanadi. <b>Boshqa saytlarga</b> havola uchun ishlatiladi.</p>
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;https://www.w3schools.com/html/&quot;&gt;W3Schools HTML darsliklari&lt;/a&gt;</code></pre></div>
+<h3>Nisbiy yo'l</h3>
+<p>Joriy fayldan <b>nisbatan</b> ko'rsatilgan yo'l. <b>O'z saytingiz ichidagi</b> sahifa va fayllar uchun ishlatiladi. Quyidagi papka tuzilmasini olaylik:</p>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">mening-saytim/
+├── index.html          ← bosh sahifa
+├── haqida.html
+├── rasmlar/
+│   ├── logo.png
+│   └── men.jpg
+└── sahifalar/
+    ├── loyihalar.html
+    └── aloqa.html</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Qaysi fayldan</th><th>Qaysi faylga</th><th>Nisbiy yo'l</th><th>Tushuntirish</th></tr>
+<tr><td><code>index.html</code></td><td><code>haqida.html</code></td><td><code>haqida.html</code></td><td>Bir papkada — shunchaki nomi</td></tr>
+<tr><td><code>index.html</code></td><td><code>rasmlar/logo.png</code></td><td><code>rasmlar/logo.png</code></td><td>Ichki papkaga kirish: <code>papka/fayl</code></td></tr>
+<tr><td><code>index.html</code></td><td><code>sahifalar/aloqa.html</code></td><td><code>sahifalar/aloqa.html</code></td><td>Ichki papkaga kirish</td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>index.html</code></td><td><code>../index.html</code></td><td><code>../</code> — bir papka <b>yuqoriga chiqish</b></td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>rasmlar/men.jpg</code></td><td><code>../rasmlar/men.jpg</code></td><td>Yuqoriga chiqib, keyin boshqa papkaga kirish</td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>sahifalar/loyihalar.html</code></td><td><code>loyihalar.html</code></td><td>Bir papkada</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: maktab binosi</span>
+Siz 8-"A" sinfidasiz (<code>sahifalar/</code>). Do'stingizga "qo'shni sinfga o't" desangiz — bu <b>nisbiy</b> yo'l (<code>loyihalar.html</code>).
+"Koridorga chiq, keyin kutubxonaga kir" — <code>../kutubxona/</code>. <b>Absolyut</b> yo'l esa maktabning to'liq pochta manzilini aytish:
+"Samarqand shahri, 5-maktab, 2-qavat, 8-A sinf".</div>
+<div class="callout warn"><span class="t">Eng ko'p uchraydigan xato</span>
+<code>C:\Users\Ali\Desktop\sayt\rasm.jpg</code> kabi kompyuteringizdagi to'liq yo'lni yozmang! Saytni hostingga joylaganingizda
+yoki boshqa kompyuterda ochganda bunday yo'l <b>ishlamaydi</b>. Har doim nisbiy yo'l ishlating. Shuningdek, fayl nomlarida
+bo'sh joy, katta harf va o'zbekcha belgilarni (<code>o'</code>) ishlatmang: <code>Mening Rasmim.JPG</code> ❌ → <code>mening-rasmim.jpg</code> ✅.</div>
+
+<h2 id="boshqa-havola-turlari"><a class="anchor" href="#boshqa-havola-turlari">#</a>Boshqa havola turlari</h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!-- Sahifa ichidagi bo&#x27;limga o&#x27;tish: href=&quot;#id&quot; --&gt;
+&lt;a href=&quot;#aloqa&quot;&gt;Aloqa bo&#x27;limiga o&#x27;tish ↓&lt;/a&gt;
+
+&lt;p style=&quot;height: 400px&quot;&gt;... uzun matn ...&lt;/p&gt;
+
+&lt;h2 id=&quot;aloqa&quot;&gt;Aloqa&lt;/h2&gt;
+
+&lt;!-- Email yozish (pochta dasturi ochiladi) --&gt;
+&lt;a href=&quot;mailto:maktab5@mail.uz&quot;&gt;Bizga xat yozing&lt;/a&gt;&lt;br&gt;
+
+&lt;!-- Telefon qilish (telefonda qo&#x27;ng&#x27;iroq oynasi ochiladi) --&gt;
+&lt;a href=&quot;tel:+998901234567&quot;&gt;+998 90 123 45 67&lt;/a&gt;&lt;br&gt;
+
+&lt;!-- Faylni yuklab olish --&gt;
+&lt;a href=&quot;dars-jadvali.pdf&quot; download&gt;Dars jadvalini yuklab olish&lt;/a&gt;&lt;br&gt;
+
+&lt;!-- Sahifa tepasiga qaytish --&gt;
+&lt;a href=&quot;#&quot;&gt;↑ Yuqoriga&lt;/a&gt;</code></pre></div>
+
+<h2 id="navigatsiya-menyusi"><a class="anchor" href="#navigatsiya-menyusi">#</a>Navigatsiya menyusi</h2>
+<p>Ko'p sahifali saytda har bir sahifaning tepasida bir xil menyu bo'ladi. U <code>&lt;nav&gt;</code> tegi ichida havolalar ro'yxati sifatida yoziladi:</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;Bosh sahifa&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;haqida.html&quot;&gt;Men haqimda&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;sahifalar/loyihalar.html&quot;&gt;Loyihalar&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;sahifalar/aloqa.html&quot;&gt;Aloqa&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre></div>
+<p>Hozircha bu oddiy ro'yxatga o'xshaydi — 8-mavzuda Flexbox bilan uni chiroyli gorizontal menyuga aylantiramiz.</p>
+
+<h2 id="rasmlar"><a class="anchor" href="#rasmlar">#</a>Rasmlar</h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;img src=&quot;https://picsum.photos/400/250&quot; alt=&quot;Tog&#x27; manzarasi&quot; width=&quot;400&quot; height=&quot;250&quot;&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>src</code></td><td>(<i>source</i>) Rasm fayli yo'li — nisbiy yoki absolyut</td></tr>
+<tr><td><code>alt</code></td><td>(<i>alternative</i>) Rasmning <b>matnli tavsifi</b>. Majburiy!</td></tr>
+<tr><td><code>width</code>, <code>height</code></td><td>Kenglik va balandlik (piksellarda)</td></tr>
+<tr><td><code>title</code></td><td>Sichqoncha ustiga borganda chiqadigan yozuv</td></tr>
+<tr><td><code>loading="lazy"</code></td><td>Rasm faqat unga yaqinlashganda yuklanadi — sahifa tezroq ochiladi</td></tr>
+</table></div>
+<h3><code>alt</code> nima uchun shunchalik muhim?</h3>
+<ul>
+  <li>Rasm yuklanmasa (internet sekin, fayl topilmadi), uning o'rnida <code>alt</code> matni ko'rinadi.</li>
+  <li><b>Ko'zi ojiz</b> foydalanuvchilarning ekran o'quvchi dasturlari aynan shu matnni ovoz chiqarib o'qiydi.</li>
+  <li><b>Google</b> rasmda nima borligini <code>alt</code> orqali tushunadi (SEO, 11-mavzu).</li>
+</ul>
+<p>Yaxshi <code>alt</code> rasmda <b>nima tasvirlanganini</b> aytadi: <code>alt="rasm"</code> ❌ → <code>alt="Registon maydoni kechqurun chiroqlarda"</code> ✅.</p>
+<div class="callout tip"><span class="t">Rasm o'lchami</span>
+Faqat <code>width</code> ni bersangiz, brauzer balandlikni proporsiyani saqlagan holda o'zi hisoblaydi. Ikkalasini noto'g'ri bersangiz, rasm
+cho'zilib, buzilib ko'rinadi.</div>
+<h3>Rasm formatlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Format</th><th>Qachon</th></tr>
+<tr><td><code>.jpg</code> / <code>.jpeg</code></td><td>Fotosuratlar</td></tr>
+<tr><td><code>.png</code></td><td>Shaffof fonli rasmlar, skrinshotlar</td></tr>
+<tr><td><code>.svg</code></td><td>Logotip va ikonkalar — har qanday o'lchamda tiniq</td></tr>
+<tr><td><code>.webp</code></td><td>Zamonaviy format: JPG/PNG dan 25–35% yengil</td></tr>
+<tr><td><code>.gif</code></td><td>Oddiy animatsiyalar</td></tr>
+</table></div>
+<h3>Rasm + izoh: <code>figure</code></h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/maktab/300/200&quot; alt=&quot;Maktab hovlisi&quot; width=&quot;300&quot;&gt;
+  &lt;figcaption&gt;1-rasm. Maktabimiz hovlisi bahorda&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></div>
+<h3>Rasmni havola qilish</h3>
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;index.html&quot;&gt;
+  &lt;img src=&quot;rasmlar/logo.png&quot; alt=&quot;Bosh sahifaga qaytish&quot; width=&quot;80&quot;&gt;
+&lt;/a&gt;</code></pre></div>
+
+<h2 id="audio-va-video"><a class="anchor" href="#audio-va-video">#</a>Audio va video</h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;h3&gt;Audio&lt;/h3&gt;
+&lt;audio controls&gt;
+  &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3&quot; type=&quot;audio/mpeg&quot;&gt;
+  Brauzeringiz audioni qo&#x27;llab-quvvatlamaydi.
+&lt;/audio&gt;
+
+&lt;h3&gt;Video&lt;/h3&gt;
+&lt;video controls width=&quot;400&quot; poster=&quot;https://picsum.photos/seed/video/400/225&quot;&gt;
+  &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  Brauzeringiz videoni qo&#x27;llab-quvvatlamaydi.
+&lt;/video&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>controls</code></td><td>Boshqaruv tugmalarini (play, pauza, ovoz) ko'rsatish</td></tr>
+<tr><td><code>autoplay</code></td><td>Avtomatik boshlash (brauzerlar odatda faqat <code>muted</code> bilan ruxsat beradi)</td></tr>
+<tr><td><code>muted</code></td><td>Ovozsiz</td></tr>
+<tr><td><code>loop</code></td><td>Takroriy ijro</td></tr>
+<tr><td><code>poster</code></td><td>Video boshlanguncha ko'rinadigan rasm</td></tr>
+</table></div>
+<p>Teglar orasidagi matn — eski brauzerlar uchun zaxira xabar.</p>
+
+<h3>YouTube video va xarita joylash: <code>iframe</code></h3>
+<p><code>&lt;iframe&gt;</code> — sahifa ichida boshqa saytni "oyna" sifatida ko'rsatadi. YouTube'da video ostidagi <b>Ulashish → Joylashtirish (Embed)</b>
+tugmasini bossangiz, tayyor kod beriladi:</p>
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;iframe width=&quot;560&quot; height=&quot;315&quot;
+        src=&quot;https://www.youtube.com/embed/VIDEO_ID&quot;
+        title=&quot;YouTube video&quot;
+        allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;!-- Google Xaritadan: &quot;Ulashish&quot; → &quot;Xaritani joylashtirish&quot; --&gt;
+&lt;iframe src=&quot;https://www.google.com/maps/embed?pb=...&quot; width=&quot;400&quot; height=&quot;300&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;</code></pre></div>
+
+<h2 id="amaliy-mashgulot-3-sahifali-shaxsiy-sayt"><a class="anchor" href="#amaliy-mashgulot-3-sahifali-shaxsiy-sayt">#</a>Amaliy mashg'ulot: 3 sahifali shaxsiy sayt</h2>
+<ol class="steps">
+  <li>Quyidagi papka tuzilmasini yarating:
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">vizitka/
+├── index.html
+├── hobbilar.html
+├── aloqa.html
+└── rasmlar/
+    └── (2–3 ta rasm: men.jpg, hobbi.jpg ...)</code></pre></div></li>
+  <li>Uchala sahifaga ham <b>bir xil</b> navigatsiya menyusini qo'ying (nusxa olib qo'yish mumkin):
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;nav&gt;
+  &lt;a href=&quot;index.html&quot;&gt;🏠 Bosh sahifa&lt;/a&gt; |
+  &lt;a href=&quot;hobbilar.html&quot;&gt;⚽ Hobbilarim&lt;/a&gt; |
+  &lt;a href=&quot;aloqa.html&quot;&gt;✉️ Aloqa&lt;/a&gt;
+&lt;/nav&gt;
+&lt;hr&gt;</code></pre></div></li>
+  <li><b>index.html</b>: ismingiz (<code>h1</code>), rasmingiz (<code>img</code> + mazmunli <code>alt</code>), o'zingiz haqingizda 2 ta paragraf.</li>
+  <li><b>hobbilar.html</b>: 3 ta hobbi — har biri <code>h2</code>, <code>figure</code> + <code>figcaption</code> bilan rasm va paragraf. Bitta hobbingiz haqida
+  YouTube video joylashtiring.</li>
+  <li><b>aloqa.html</b>: email (<code>mailto:</code>), telefon (<code>tel:</code>), ijtimoiy tarmoqlarga havolalar (<code>target="_blank"</code>)
+  va 3-mavzudagidek kichik "Xabar yuborish" formasi.</li>
+  <li>Barcha havolalarni bosib tekshiring. Biror sahifa ochilmasa — yo'lni tekshiring (fayl nomi, katta-kichik harf, papka).</li>
+  <li><b>Qo'shimcha:</b> uzun <code>hobbilar.html</code> sahifasining tepasiga "Tezkor o'tish" havolalarini qo'ying (<code>href="#futbol"</code>) va har bir
+  bo'lim oxirida "↑ Yuqoriga" havolasini.</li>
+</ol>
+<div class="callout info">Bu sizning <b>1-loyihangiz</b> — "Shaxsiy vizitka sahifasi". Keyingi darslarda unga semantik teglar, so'ng CSS dizayn qo'shib, oxirida internetga joylaymiz.</div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Rasm ko'rinmayapti → fayl nomida xato (<code>Men.JPG</code> va <code>men.jpg</code> serverda <b>har xil</b> fayl!), noto'g'ri papka yoki <code>../</code> unutilgan.</li>
+  <li>❌ <code>href="www.google.com"</code> — <code>https://</code> siz brauzer buni nisbiy yo'l deb o'ylaydi va sizning saytingizdan "www.google.com" faylini qidiradi.</li>
+  <li>❌ <code>alt</code> ni yozmaslik yoki <code>alt="rasm"</code> deb yozish.</li>
+  <li>❌ Juda katta (5–10 MB) rasmlarni to'g'ridan-to'g'ri qo'yish — sahifa sekin ochiladi. Rasmni oldin kichraytiring (masalan, squoosh.app saytida).</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Havolani yangi yorliqda ochish uchun qaysi atribut kerak?</p><ol>
+<li><code>href="_new"</code></li><li><code>open="tab"</code></li><li><code>target="_blank"</code></li><li><code>rel="new"</code></li></ol>
+<p class="explain"><code>target="_blank"</code> + xavfsizlik uchun <code>rel="noopener"</code>.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>sahifalar/aloqa.html</code> faylidan <code>index.html</code> (bir papka yuqorida) ga to'g'ri havola qaysi?</p><ol>
+<li><code>index.html</code></li><li><code>../index.html</code></li><li><code>/sahifalar/index.html</code></li><li><code>sahifalar/index.html</code></li></ol>
+<p class="explain"><code>../</code> — bir papka yuqoriga chiqish.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>alt</code> atributi nima uchun kerak?</p><ol>
+<li>Rasm o'lchamini belgilash</li><li>Rasmga havola qo'yish</li><li>Rasmni tezroq yuklash</li><li>Rasm ko'rinmaganda va ko'zi ojizlar uchun uning matnli tavsifi</li></ol>
+<p class="explain">Shuningdek, Google rasm mazmunini <code>alt</code> orqali tushunadi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Sahifadagi <code>id="narxlar"</code> bo'limiga o'tuvchi havola qaysi?</p><ol>
+<li><code>&lt;a href="#narxlar"&gt;</code></li><li><code>&lt;a href="narxlar"&gt;</code></li><li><code>&lt;a id="#narxlar"&gt;</code></li><li><code>&lt;a href=".narxlar"&gt;</code></li></ol>
+<p class="explain"><code>#</code> belgisi — sahifa ichidagi id'ga ishora.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Videoda play/pauza tugmalari ko'rinishi uchun qaysi atribut kerak?</p><ol>
+<li><code>autoplay</code></li><li><code>loop</code></li><li><code>controls</code></li><li><code>buttons</code></li></ol>
+<p class="explain"><code>controls</code> — boshqaruv paneli.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Logotip uchun eng mos rasm formati qaysi?</p><ol>
+<li>JPG</li><li>SVG</li><li>GIF</li><li>BMP</li></ol>
+<p class="explain">SVG — vektorli format, har qanday o'lchamda tiniq va juda yengil.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Vizitka saytingizga to'rtinchi sahifa — <code>sahifalar/kitoblar.html</code> qo'shing (ichki papkada!). Undan bosh sahifaga va rasmlarga
+  to'g'ri havolalar bering (<code>../</code>).</li>
+  <li>Sevimli 3 ta kitob haqida: muqova rasmi (<code>figure</code>), qisqa tavsif va kitob haqidagi tashqi saytga havola.</li>
+  <li>Maktabingiz joylashgan joyni Google Xaritadan <code>iframe</code> bilan aloqa sahifasiga joylang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>&lt;a href="..."&gt;</code> — havola; <code>target="_blank"</code> — yangi yorliqda.</li>
+  <li>Tashqi saytlarga — <b>absolyut</b> (<code>https://...</code>), o'z fayllaringizga — <b>nisbiy</b> yo'l; <code>../</code> — bir papka yuqoriga.</li>
+  <li><code>#id</code> — sahifa ichidagi bo'limga, <code>mailto:</code> — email, <code>tel:</code> — telefon.</li>
+  <li><code>&lt;img src alt&gt;</code> — rasm; <code>alt</code> doim mazmunli bo'lsin.</li>
+  <li><code>&lt;audio&gt;</code>, <code>&lt;video controls&gt;</code>, <code>&lt;iframe&gt;</code> — media va boshqa saytlarni joylash.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="03-jadval-royxat-forma.html"><small>← Oldingi mavzu</small>Jadval, ro&#x27;yxat va forma elementlari</a><a class="next" href="05-semantik-teglar.html"><small>Keyingi mavzu →</small>HTML5 semantik teglari va ularning roli</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#havola-webning-h-harfi">Havola — webning &quot;H&quot; harfi</a></li><li><a href="#absolyut-va-nisbiy-yollar">Absolyut va nisbiy yo&#x27;llar</a></li><li><a href="#boshqa-havola-turlari">Boshqa havola turlari</a></li><li><a href="#navigatsiya-menyusi">Navigatsiya menyusi</a></li><li><a href="#rasmlar">Rasmlar</a></li><li><a href="#audio-va-video">Audio va video</a></li><li><a href="#amaliy-mashgulot-3-sahifali-shaxsiy-sayt">Amaliy mashg&#x27;ulot: 3 sahifali shaxsiy sayt</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JavaScript asoslari — Full-Stack Qo&#x27;llanma</title>
+<title>JavaScript asoslari — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="O&#x27;zgaruvchilar, ma&#x27;lumot turlari, operatorlar, shartlar, sikllar, funksiyalar, scope va closure, massiv va obyekt metodlari, sinflar, modullar va xatolar bilan ishlash.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚡</div><div><div class="crumb">04-dars · 14 tadan</div><h1>JavaScript asoslari</h1><p class="lead">O&#x27;zgaruvchilar, ma&#x27;lumot turlari, operatorlar, shartlar, sikllar, funksiyalar, scope va closure, massiv va obyekt metodlari, sinflar, modullar va xatolar bilan ishlash.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">⚡</div><div><div class="crumb">04-dars · 14 tadan</div><h1>JavaScript asoslari</h1><p class="lead">O&#x27;zgaruvchilar, ma&#x27;lumot turlari, operatorlar, shartlar, sikllar, funksiyalar, scope va closure, massiv va obyekt metodlari, sinflar, modullar va xatolar bilan ishlash.</p><div class="hero-level">Boshlang&#x27;ich–O&#x27;rta · ~150 daqiqa</div></div></div>
 
 <p><b>JavaScript</b> — webning yagona dasturlash tili: u brauzerda ishlaydi va sahifani "jonlantiradi". Node.js
 tufayli esa serverda ham ishlaydi — ya'ni full-stack dasturchi <b>bitta til</b> bilan frontend va backendni yoza oladi.
@@ -56,12 +57,12 @@ Bu dars eng uzun va eng muhim darslardan biri: keyingi barcha mavzular shu yerda
   <li><b>HTML ichida</b>: <code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code></li>
   <li><b>Node.js</b>: <code>node app.js</code> (terminalda)</li>
 </ul>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">console.log(&#x27;Salom, dunyo!&#x27;);       // oddiy chiqarish
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">console.log(&#x27;Salom, dunyo!&#x27;);       // oddiy chiqarish
 console.table([{ ism: &#x27;Ali&#x27;, yosh: 20 }, { ism: &#x27;Vali&#x27;, yosh: 22 }]); // jadval ko&#x27;rinishida
 console.error(&#x27;Xato xabari&#x27;);        // qizil rangda</code></pre></div>
 
 <h2 id="ozgaruvchilar-let-const-var"><a class="anchor" href="#ozgaruvchilar-let-const-var">#</a>O'zgaruvchilar: let, const, var</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const PI = 3.14159;      // qayta tayinlab bo&#x27;lmaydi
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const PI = 3.14159;      // qayta tayinlab bo&#x27;lmaydi
 let yosh = 25;           // qayta tayinlash mumkin
 yosh = 26;               // ✅
 // PI = 3;               // ❌ TypeError: Assignment to constant variable
@@ -96,7 +97,7 @@ sinflar uchun <code>PascalCase</code>. Nom ma'noli bo'lsin: <code>x</code> emas,
 </table></div>
 <h3>Primitiv va havola (reference) turlar</h3>
 <p>Bu farqni tushunish ko'plab xatolarning oldini oladi:</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Primitivlar QIYMAT bo&#x27;yicha nusxalanadi
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Primitivlar QIYMAT bo&#x27;yicha nusxalanadi
 let a = 10;
 let b = a;
 b = 20;
@@ -116,7 +117,7 @@ const deep = structuredClone(user1);       // chuqur (deep) nusxa
 console.log({ a: 1 } === { a: 1 }); // false — ikki xil obyekt</code></pre></div>
 
 <h3>Satrlar bilan ishlash</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const ism = &#x27;Malika&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const ism = &#x27;Malika&#x27;;
 const salom = `Salom, ${ism}! Bugun ${new Date().getFullYear()}-yil.`; // template literal
 
 const s = &#x27;  JavaScript Dasturlash  &#x27;;
@@ -133,7 +134,7 @@ s.trim().slice(0, 10);     // &#x27;JavaScript&#x27;
 &#x27;salom dunyo&#x27;.replaceAll(&#x27;o&#x27;, &#x27;0&#x27;); // &#x27;sal0m duny0&#x27;</code></pre></div>
 
 <h3>Sonlar va Math</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">0.1 + 0.2;                 // 0.30000000000000004 (!) — kasr sonlar ikkilik tizimda aniq emas
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">0.1 + 0.2;                 // 0.30000000000000004 (!) — kasr sonlar ikkilik tizimda aniq emas
 (0.1 + 0.2).toFixed(2);    // &#x27;0.30&#x27;
 Number(&#x27;42&#x27;);              // 42
 Number(&#x27;42px&#x27;);            // NaN
@@ -150,7 +151,7 @@ Math.floor(Math.random() * 10) + 1; // 1..10 oralig&#x27;ida tasodifiy butun son
 (<code>1999 so'm 50 tiyin → 199950</code>) yoki serverda aniq o'nlik turlaridan (SQL'dagi <code>NUMERIC</code>) foydalaning.</div>
 
 <h3>Turlarni o'zgartirish (type coercion)</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">&#x27;5&#x27; + 3;      // &#x27;53&#x27;  — + operatori satr bo&#x27;lsa birlashtiradi
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">&#x27;5&#x27; + 3;      // &#x27;53&#x27;  — + operatori satr bo&#x27;lsa birlashtiradi
 &#x27;5&#x27; - 3;      // 2     — boshqa operatorlar songa aylantiradi
 &#x27;5&#x27; * &#x27;2&#x27;;    // 10
 true + 1;     // 2
@@ -167,7 +168,7 @@ null === undefined; // false</code></pre></div>
 <div class="callout danger">Har doim <b><code>===</code></b> va <b><code>!==</code></b> dan foydalaning. <code>==</code> ning tur o'zgartirish qoidalari chalkash va xatolarga olib keladi.</div>
 
 <h2 id="operatorlar"><a class="anchor" href="#operatorlar">#</a>Operatorlar</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Arifmetik: + - * / % (qoldiq) ** (daraja)
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Arifmetik: + - * / % (qoldiq) ** (daraja)
 10 % 3;     // 1
 2 ** 10;    // 1024
 
@@ -193,7 +194,7 @@ user.sayHi?.();                             // metod bo&#x27;lsa chaqiradi
 const status = yosh &gt;= 18 ? &#x27;katta&#x27; : &#x27;voyaga yetmagan&#x27;;</code></pre></div>
 
 <h2 id="shartlar-va-sikllar"><a class="anchor" href="#shartlar-va-sikllar">#</a>Shartlar va sikllar</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// if / else if / else
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// if / else if / else
 const ball = 78;
 if (ball &gt;= 86) {
   console.log(&quot;A&#x27;lo&quot;);
@@ -237,7 +238,7 @@ for (let i = 1; i &lt;= 10; i++) {
 <h2 id="funksiyalar"><a class="anchor" href="#funksiyalar">#</a>Funksiyalar</h2>
 <p>Funksiya — nomlangan, qayta ishlatiladigan kod bloki. JavaScript'da funksiyalar <b>birinchi darajali qiymatlar</b>
 (first-class): ularni o'zgaruvchiga saqlash, argument sifatida berish va funksiyadan qaytarish mumkin.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// 1. Function declaration — hoisting tufayli e&#x27;londan oldin ham chaqirish mumkin
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// 1. Function declaration — hoisting tufayli e&#x27;londan oldin ham chaqirish mumkin
 function qoshish(a, b) {
   return a + b;
 }
@@ -270,7 +271,7 @@ metodlari uchun oddiy funksiya, callback'lar uchun arrow funksiya qulay.</div>
 
 <h2 id="scope-hoisting-va-closure"><a class="anchor" href="#scope-hoisting-va-closure">#</a>Scope, hoisting va closure</h2>
 <h3>Scope — ko'rinish doirasi</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const global = &#x27;hamma joyda ko\&#x27;rinadi&#x27;;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const global = &#x27;hamma joyda ko\&#x27;rinadi&#x27;;
 
 function tashqi() {
   const tashqiOzgaruvchi = &#x27;tashqi funksiyada&#x27;;
@@ -293,7 +294,7 @@ console.log(funksiyada); // 2 — var blokni &quot;teshib&quot; chiqadi</code></
 ko'rinishi kod <i>qayerda yozilganiga</i> bog'liq, qayerda chaqirilganiga emas.</p>
 <h3>Closure (yopilish)</h3>
 <p><b>Closure</b> — funksiya o'zi yaratilgan muhitdagi o'zgaruvchilarni, hatto o'sha muhit tugaganidan keyin ham <i>eslab qolishi</i>.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function hisoblagichYarat() {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function hisoblagichYarat() {
   let son = 0;                 // tashqaridan to&#x27;g&#x27;ridan-to&#x27;g&#x27;ri o&#x27;zgartirib bo&#x27;lmaydi (xususiy)
   return {
     oshir: () =&gt; ++son,
@@ -311,7 +312,7 @@ console.log(h2.qiymat()); // 0</code></pre></div>
 <p>Closure'lar hamma joyda: hodisa ishlovchilari, <code>setTimeout</code>, React hook'lari, middleware'lar. Ularni tushunish — JavaScript'ni tushunish demak.</p>
 
 <h2 id="massivlar-va-ularning-metodlari"><a class="anchor" href="#massivlar-va-ularning-metodlari">#</a>Massivlar va ularning metodlari</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const arr = [10, 20, 30];
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const arr = [10, 20, 30];
 arr.push(40);        // oxiriga qo&#x27;shish → [10,20,30,40]
 arr.pop();           // oxiridan olish
 arr.unshift(5);      // boshiga qo&#x27;shish
@@ -325,7 +326,7 @@ arr.join(&#x27; - &#x27;);     // &#x27;10 - 30&#x27;
 Array.from({ length: 5 }, (_, i) =&gt; i * 2); // [0, 2, 4, 6, 8]</code></pre></div>
 <h3>Yuqori tartibli (higher-order) metodlar — eng muhimlari</h3>
 <p>Bu metodlar asl massivni o'zgartirmaydi va real loyihalarda <code>for</code> sikllarining o'rnini deyarli to'liq egallaydi.</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const mahsulotlar = [
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const mahsulotlar = [
   { nomi: &#x27;Noutbuk&#x27;, narx: 9_500_000, toifa: &#x27;texnika&#x27;, soni: 3 },
   { nomi: &#x27;Sichqoncha&#x27;, narx: 150_000, toifa: &#x27;texnika&#x27;, soni: 0 },
   { nomi: &#x27;Kitob&#x27;, narx: 85_000, toifa: &#x27;kitob&#x27;, soni: 12 },
@@ -368,7 +369,7 @@ const texnikaNomlari = mahsulotlar
   .map(m =&gt; `${m.nomi} — ${m.narx.toLocaleString()} so&#x27;m`);</code></pre></div>
 
 <h2 id="obyektlar"><a class="anchor" href="#obyektlar">#</a>Obyektlar</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const talaba = {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const talaba = {
   ism: &#x27;Nodira&#x27;,
   yosh: 21,
   &#x27;sevimli fan&#x27;: &#x27;Matematika&#x27;,     // bo&#x27;sh joyli kalit — qo&#x27;shtirnoqda
@@ -398,7 +399,7 @@ const odam = { ism, yosh };      // { ism: &#x27;Jamshid&#x27;, yosh: 30 }
 // Spread bilan birlashtirish / yangilash (immutable usul)
 const yangilangan = { ...talaba, yosh: 22, manzil: { ...talaba.manzil, shahar: &#x27;Toshkent&#x27; } };</code></pre></div>
 <h3>Destructuring</h3>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const { ism, yosh, manzil: { shahar }, kurs = 1 } = talaba;   // standart qiymat bilan
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const { ism, yosh, manzil: { shahar }, kurs = 1 } = talaba;   // standart qiymat bilan
 const { ism: talabaIsmi } = talaba;                              // boshqa nomga
 
 const [birinchi, ikkinchi, ...qolgan] = [10, 20, 30, 40];
@@ -412,14 +413,14 @@ function kartaChiz({ nomi, narx, chegirma = 0 }) {
 kartaChiz({ nomi: &#x27;Kitob&#x27;, narx: 50000, chegirma: 0.1 });</code></pre></div>
 <h3>JSON</h3>
 <p><b>JSON</b> — obyektlarni matn ko'rinishida uzatish formati. Frontend va backend aynan JSON orqali "gaplashadi".</p>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const obj = { ism: &#x27;Ali&#x27;, ballar: [90, 85], faol: true };
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const obj = { ism: &#x27;Ali&#x27;, ballar: [90, 85], faol: true };
 const matn = JSON.stringify(obj);           // &#x27;{&quot;ism&quot;:&quot;Ali&quot;,&quot;ballar&quot;:[90,85],&quot;faol&quot;:true}&#x27;
 const chiroyli = JSON.stringify(obj, null, 2); // 2 bo&#x27;shliq bilan formatlangan
 const qaytaObj = JSON.parse(matn);          // yana obyekt
 // JSON&#x27;da: kalitlar faqat qo&#x27;shtirnoqda, funksiya va undefined bo&#x27;lmaydi, izoh yozib bo&#x27;lmaydi</code></pre></div>
 
 <h2 id="sinflar-class-va-oop"><a class="anchor" href="#sinflar-class-va-oop">#</a>Sinflar (class) va OOP</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">class Hisob {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">class Hisob {
   #balans = 0;                      // # — haqiqiy xususiy (private) maydon
   static bankNomi = &#x27;Ishonch Bank&#x27;; // sinfga tegishli, obyektga emas
 
@@ -466,7 +467,7 @@ console.log(h.balans);        // 1120000
 h instanceof Hisob;           // true</code></pre></div>
 
 <h2 id="xatolar-bilan-ishlash"><a class="anchor" href="#xatolar-bilan-ishlash">#</a>Xatolar bilan ishlash</h2>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">function yoshniTekshir(yosh) {
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">function yoshniTekshir(yosh) {
   if (typeof yosh !== &#x27;number&#x27; || Number.isNaN(yosh)) {
     throw new TypeError(&#x27;Yosh son bo\&#x27;lishi kerak&#x27;);
   }
@@ -495,7 +496,7 @@ class ValidationError extends Error {
 
 <h2 id="modullar-es-modules"><a class="anchor" href="#modullar-es-modules">#</a>Modullar (ES Modules)</h2>
 <p>Katta dasturni fayllarga bo'lish uchun modullar ishlatiladi.</p>
-<div class="code"><div class="code-head"><span>utils/format.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// Nomli eksport (bir nechta bo&#x27;lishi mumkin)
+<div class="code"><div class="code-head"><span>utils/format.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// Nomli eksport (bir nechta bo&#x27;lishi mumkin)
 export const valyuta = (son) =&gt; `${son.toLocaleString(&#x27;uz-UZ&#x27;)} so&#x27;m`;
 export function sanaFormat(d) {
   return new Date(d).toLocaleDateString(&#x27;uz-UZ&#x27;);
@@ -505,7 +506,7 @@ export function sanaFormat(d) {
 export default function slugify(matn) {
   return matn.toLowerCase().trim().replace(/[^a-z0-9]+/g, &#x27;-&#x27;);
 }</code></pre></div>
-<div class="code"><div class="code-head"><span>main.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">import slugify, { valyuta, sanaFormat as sana } from &#x27;./utils/format.js&#x27;;
+<div class="code"><div class="code-head"><span>main.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">import slugify, { valyuta, sanaFormat as sana } from &#x27;./utils/format.js&#x27;;
 import * as fmt from &#x27;./utils/format.js&#x27;;
 
 console.log(valyuta(150000));    // &#x27;150 000 so&#x27;m&#x27;
@@ -516,7 +517,7 @@ console.log(slugify(&#x27;Salom Dunyo&#x27;)); // &#x27;salom-dunyo&#x27;</code>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Internet-do'kon savatchasi hisob-kitobi</h3></div><div class="ex-body">
 <p>Real e-commerce mantiq: chegirmalar, promokod, yetkazib berish narxi va QQS.</p>
-<div class="code"><div class="code-head"><span>cart.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const savat = [
+<div class="code"><div class="code-head"><span>cart.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const savat = [
   { id: 1, nomi: &#x27;Simsiz quloqchin&#x27;, narx: 450_000, soni: 2, chegirma: 0.1 },
   { id: 2, nomi: &#x27;Telefon g\&#x27;ilofi&#x27;, narx: 60_000, soni: 3, chegirma: 0 },
   { id: 3, nomi: &#x27;Quvvatlagich 65W&#x27;, narx: 280_000, soni: 1, chegirma: 0.15 },
@@ -574,7 +575,7 @@ ajratgich (<code>450_000</code>). Bu kod 13-darsda React interfeysiga ulanadi.</
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Guruh baholari statistikasi</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>grades.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const talabalar = [
+<div class="code"><div class="code-head"><span>grades.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const talabalar = [
   { ism: &#x27;Akmal&#x27;, baholar: { matematika: 92, fizika: 78, ingliz: 85 } },
   { ism: &#x27;Barno&#x27;, baholar: { matematika: 67, fizika: 88, ingliz: 95 } },
   { ism: &#x27;Davron&#x27;, baholar: { matematika: 45, fizika: 52, ingliz: 60 } },
@@ -635,7 +636,7 @@ console.log(&#x27;Stipendiya:&#x27;, stipendiya); // [&#x27;Akmal&#x27;, &#x27;G
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Closure bilan amaliy vositalar: memoize, once va debounce</h3></div><div class="ex-body">
 <p>Professional kodda tez-tez uchraydigan uchta yordamchi funksiya — barchasi closure asosida.</p>
-<div class="code"><div class="code-head"><span>helpers.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">// 1. memoize — og&#x27;ir hisob natijasini keshlash
+<div class="code"><div class="code-head"><span>helpers.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">// 1. memoize — og&#x27;ir hisob natijasini keshlash
 function memoize(fn) {
   const kesh = new Map();                 // closure ichida saqlanadi
   return function (...args) {
@@ -684,7 +685,7 @@ qidir(&#x27;j&#x27;); qidir(&#x27;ja&#x27;); qidir(&#x27;jav&#x27;); qidir(&#x27
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Kutubxona boshqaruv tizimi (sinflar, xatolar, Map)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>library.js</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">class KitobMavjudEmasError extends Error {
+<div class="code"><div class="code-head"><span>library.js</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">class KitobMavjudEmasError extends Error {
   constructor(isbn) {
     super(`ISBN ${isbn} bo&#x27;yicha bo&#x27;sh nusxa yo&#x27;q`);
     this.name = &#x27;KitobMavjudEmasError&#x27;;
@@ -790,7 +791,7 @@ mantiqni ma'lumotlar bazasiga o'tkazamiz.</p>
   <li><code>TodoList</code> sinfini yozing: <code>add</code>, <code>toggle(id)</code>, <code>remove(id)</code>, <code>filter('all'|'done'|'active')</code> metodlari va <code>stats</code> getteri bilan.</li>
 </ol>
 <details><summary>1-mashq yechimi</summary>
-<div class="code"><div class="code-head"><span>JavaScript</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-js">const sozlarSoni = (matn) =&gt;
+<div class="code"><div class="code-head"><span>JavaScript</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-js">const sozlarSoni = (matn) =&gt;
   matn.toLowerCase()
       .replace(/[^\p{L}\p{N}\s&#x27;-]/gu, &#x27;&#x27;)
       .split(/\s+/)

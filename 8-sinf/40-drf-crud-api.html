@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRF yordamida REST API yaratish. CRUD API ishlab chiqish — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Generic view&#x27;lar (ListCreateAPIView, RetrieveUpdateDestroyAPIView), ViewSet va Router, ruxsatlar (faqat muallif), sahifalash, qidiruv va saralash, token autentifikatsiya, CORS; Front-end (JavaScript fetch) va Back-end integratsiyasi; mahsulotlar API&#x27;si.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a class="active" href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧩</div><div><div class="crumb">40-mavzu · 42 tadan · V bob. DRF va deploy</div><h1>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</h1><p class="lead">Generic view&#x27;lar (ListCreateAPIView, RetrieveUpdateDestroyAPIView), ViewSet va Router, ruxsatlar (faqat muallif), sahifalash, qidiruv va saralash, token autentifikatsiya, CORS; Front-end (JavaScript fetch) va Back-end integratsiyasi; mahsulotlar API&#x27;si.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>To'liq CRUD API'ni (GET, POST, PUT, PATCH, DELETE) bir necha qatorda yozishni;</li>
+  <li><b>ViewSet</b> va <b>Router</b> — URL'larni avtomatik yaratishni;</li>
+  <li>API ruxsatlari: "faqat muallif o'zgartira oladi";</li>
+  <li>Sahifalash, qidiruv va saralashni;</li>
+  <li><b>Front-end va Back-end integratsiyasi</b>: II bobdagi JavaScript bilan Django API'dan foydalanishni (29-loyiha);</li>
+  <li>Mahsulotlar boshqaruv API'sini (27–28-loyihalar).</li>
+</ul>
+</div>
+
+<h2 id="abstraksiya-zinapoyasi"><a class="anchor" href="#abstraksiya-zinapoyasi">#</a>Abstraksiya zinapoyasi</h2>
+<p>39-mavzuda <code>@api_view</code> bilan har bir metodni qo'lda yozdik. DRF bir xil ishni tobora qisqaroq yozish imkonini beradi:</p>
+<div class="table-wrap"><table>
+<tr><th>Daraja</th><th>Vosita</th><th>Kod hajmi</th><th>Qachon</th></tr>
+<tr><td>1</td><td><code>@api_view</code> / <code>APIView</code></td><td>Ko'p, hammasi qo'lda</td><td>Nostandart mantiq</td></tr>
+<tr><td>2</td><td>Generic view'lar (<code>ListCreateAPIView</code>...)</td><td>Kam</td><td>Standart CRUD, URL'larni o'zingiz boshqarasiz</td></tr>
+<tr><td>3</td><td><code>ModelViewSet</code> + <code>Router</code></td><td>Eng kam</td><td>To'liq standart CRUD</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: ovqat tayyorlash</span>
+1-daraja — hamma narsani noldan pishirish. 2-daraja — yarim tayyor mahsulotlardan. 3-daraja — tayyor taomni isitib berish. Har birining o'z o'rni bor: maxsus
+taom uchun noldan pishirasiz, oddiy tushlik uchun — tayyoridan foydalanasiz.</div>
+
+<h2 id="2-daraja-generic-viewlar"><a class="anchor" href="#2-daraja-generic-viewlar">#</a>2-daraja: Generic view'lar</h2>
+<div class="code"><div class="code-head"><span>blog/api_views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework import generics
+from .models import Maqola
+from .serializers import MaqolaSerializer
+
+
+class MaqolaListCreate(generics.ListCreateAPIView):          # GET (ro&#x27;yxat) + POST (yaratish)
+    queryset = Maqola.objects.filter(chop_etilgan=True).select_related(&quot;kategoriya&quot;, &quot;muallif&quot;)
+    serializer_class = MaqolaSerializer
+
+    def perform_create(self, serializer):                    # saqlashdan oldin muallifni qo&#x27;shamiz
+        serializer.save(muallif=self.request.user)
+
+
+class MaqolaDetail(generics.RetrieveUpdateDestroyAPIView):   # GET (bitta) + PUT + PATCH + DELETE
+    queryset = Maqola.objects.all()
+    serializer_class = MaqolaSerializer</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">path(&quot;api/maqolalar/&quot;, api_views.MaqolaListCreate.as_view()),
+path(&quot;api/maqolalar/&lt;int:pk&gt;/&quot;, api_views.MaqolaDetail.as_view()),    # generic&#x27;lar &quot;pk&quot; kutadi</code></pre></div>
+<p>Atigi ~15 qatorda to'liq CRUD API! Ammo hozir <b>istalgan</b> tizimga kirgan foydalanuvchi boshqa birovning maqolasini o'zgartira oladi — buni tuzatamiz.</p>
+
+<h2 id="ruxsatlar-permissions"><a class="anchor" href="#ruxsatlar-permissions">#</a>Ruxsatlar (permissions)</h2>
+<div class="code"><div class="code-head"><span>blog/permissions.py (yangi fayl)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework import permissions
+
+
+class MuallifYokiFaqatOqish(permissions.BasePermission):
+    &quot;&quot;&quot;O&#x27;qish — hammaga; o&#x27;zgartirish va o&#x27;chirish — faqat muallifga.&quot;&quot;&quot;
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:       # GET, HEAD, OPTIONS — &quot;xavfsiz&quot; metodlar
+            return True
+        return obj.muallif == request.user</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/api_views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework import permissions
+from .permissions import MuallifYokiFaqatOqish
+
+
+class MaqolaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Maqola.objects.all()
+    serializer_class = MaqolaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, MuallifYokiFaqatOqish]</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Tayyor ruxsat</th><th>Ma'nosi</th></tr>
+<tr><td><code>AllowAny</code></td><td>Hammaga ochiq</td></tr>
+<tr><td><code>IsAuthenticated</code></td><td>Faqat tizimga kirganlar</td></tr>
+<tr><td><code>IsAuthenticatedOrReadOnly</code></td><td>O'qish — hammaga, yozish — kirganlarga</td></tr>
+<tr><td><code>IsAdminUser</code></td><td>Faqat admin (staff)</td></tr>
+</table></div>
+<p>Bu 38-mavzudagi "faqat muallif tahrirlay oladi" qoidasining API'dagi ko'rinishi. Begona foydalanuvchi PUT/DELETE yuborsa — <code>403 Forbidden</code>.</p>
+
+<h2 id="3-daraja-viewset-va-router"><a class="anchor" href="#3-daraja-viewset-va-router">#</a>3-daraja: ViewSet va Router</h2>
+<div class="code"><div class="code-head"><span>blog/api_views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework import viewsets, permissions, filters
+from .models import Maqola, Kategoriya
+from .serializers import MaqolaSerializer, KategoriyaSerializer
+from .permissions import MuallifYokiFaqatOqish
+
+
+class MaqolaViewSet(viewsets.ModelViewSet):          # list, create, retrieve, update, partial_update, destroy
+    serializer_class = MaqolaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, MuallifYokiFaqatOqish]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = [&quot;sarlavha&quot;, &quot;matn&quot;]                    # ?search=futbol
+    ordering_fields = [&quot;yaratilgan&quot;, &quot;korishlar&quot;]           # ?ordering=-korishlar
+
+    def get_queryset(self):
+        qs = Maqola.objects.filter(chop_etilgan=True).select_related(&quot;kategoriya&quot;, &quot;muallif&quot;)
+        kategoriya = self.request.query_params.get(&quot;kategoriya&quot;)   # ?kategoriya=sport
+        if kategoriya:
+            qs = qs.filter(kategoriya__slug=kategoriya)
+        return qs
+
+    def perform_create(self, serializer):
+        serializer.save(muallif=self.request.user)
+
+
+class KategoriyaViewSet(viewsets.ReadOnlyModelViewSet):   # faqat o&#x27;qish: list + retrieve
+    queryset = Kategoriya.objects.all()
+    serializer_class = KategoriyaSerializer</code></pre></div>
+<div class="code"><div class="code-head"><span>config/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework.routers import DefaultRouter
+from blog.api_views import MaqolaViewSet, KategoriyaViewSet
+
+router = DefaultRouter()
+router.register(&quot;maqolalar&quot;, MaqolaViewSet, basename=&quot;maqola&quot;)
+router.register(&quot;kategoriyalar&quot;, KategoriyaViewSet)
+
+urlpatterns = [
+    path(&quot;admin/&quot;, admin.site.urls),
+    path(&quot;api/&quot;, include(router.urls)),         # ⬅ barcha API URL&#x27;lari avtomatik
+    path(&quot;api-auth/&quot;, include(&quot;rest_framework.urls&quot;)),   # brauzerdagi API&#x27;da &quot;Log in&quot; tugmasi
+    path(&quot;&quot;, include(&quot;blog.urls&quot;)),
+]</code></pre></div>
+<div class="callout warn">39-mavzu va yuqoridagi generic misol uchun <code>blog/urls.py</code> ga qo'shgan <code>api/maqolalar/...</code> yo'llarini endi <b>o'chiring</b> — aks holda bir xil manzil ikki joyda e'lon qilinadi.</div>
+<p>Router avtomatik yaratgan URL'lar:</p>
+<div class="table-wrap"><table>
+<tr><th>URL</th><th>Metodlar</th><th>ViewSet metodi</th></tr>
+<tr><td><code>/api/</code></td><td>GET</td><td>Barcha endpointlar ro'yxati (DRF bosh sahifasi)</td></tr>
+<tr><td><code>/api/maqolalar/</code></td><td>GET, POST</td><td><code>list</code>, <code>create</code></td></tr>
+<tr><td><code>/api/maqolalar/5/</code></td><td>GET, PUT, PATCH, DELETE</td><td><code>retrieve</code>, <code>update</code>, <code>partial_update</code>, <code>destroy</code></td></tr>
+<tr><td><code>/api/kategoriyalar/</code>, <code>/api/kategoriyalar/2/</code></td><td>GET</td><td><code>list</code>, <code>retrieve</code></td></tr>
+</table></div>
+
+<h2 id="sahifalash"><a class="anchor" href="#sahifalash">#</a>Sahifalash</h2>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">REST_FRAMEWORK = {
+    &quot;DEFAULT_PERMISSION_CLASSES&quot;: [&quot;rest_framework.permissions.IsAuthenticatedOrReadOnly&quot;],
+    &quot;DEFAULT_PAGINATION_CLASS&quot;: &quot;rest_framework.pagination.PageNumberPagination&quot;,
+    &quot;PAGE_SIZE&quot;: 10,
+}</code></pre></div>
+<div class="code"><div class="code-head"><span>GET /api/maqolalar/?page=2&amp;search=maktab&amp;ordering=-korishlar</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-json">{
+  &quot;count&quot;: 23,
+  &quot;next&quot;: &quot;http://127.0.0.1:8000/api/maqolalar/?page=3&amp;search=maktab&amp;ordering=-korishlar&quot;,
+  &quot;previous&quot;: &quot;http://127.0.0.1:8000/api/maqolalar/?page=1&amp;search=maktab&amp;ordering=-korishlar&quot;,
+  &quot;results&quot;: [
+    { &quot;id&quot;: 12, &quot;sarlavha&quot;: &quot;Maktab kutubxonasi yangilandi&quot;, &quot;korishlar&quot;: 340, &quot;...&quot;: &quot;...&quot; }
+  ]
+}</code></pre></div>
+
+<h2 id="mobil-ilova-va-javascript-uchun-token-autentifikatsiya"><a class="anchor" href="#mobil-ilova-va-javascript-uchun-token-autentifikatsiya">#</a>Mobil ilova va JavaScript uchun: Token autentifikatsiya</h2>
+<p>Brauzer sessiya (cookie) orqali tizimda qoladi. Mobil ilova va boshqa dasturlar esa har bir so'rovda <b>token</b> — maxfiy kalit yuboradi.</p>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">INSTALLED_APPS += [&quot;rest_framework.authtoken&quot;]
+
+REST_FRAMEWORK[&quot;DEFAULT_AUTHENTICATION_CLASSES&quot;] = [
+    &quot;rest_framework.authentication.SessionAuthentication&quot;,
+    &quot;rest_framework.authentication.TokenAuthentication&quot;,
+]</code></pre></div>
+<div class="code"><div class="code-head"><span>config/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from rest_framework.authtoken.views import obtain_auth_token
+urlpatterns += [path(&quot;api/token/&quot;, obtain_auth_token)]       # POST username+password → token</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">python manage.py migrate
+curl -X POST http://127.0.0.1:8000/api/token/ -d &quot;username=ali&amp;password=parol12345&quot;
+# {&quot;token&quot;:&quot;9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b&quot;}
+
+curl -X POST http://127.0.0.1:8000/api/maqolalar/ \
+     -H &quot;Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b&quot; \
+     -H &quot;Content-Type: application/json&quot; \
+     -d &#x27;{&quot;sarlavha&quot;: &quot;Token bilan yozildi&quot;, &quot;matn&quot;: &quot;Salom!&quot;, &quot;kategoriya&quot;: 1}&#x27;</code></pre></div>
+<div class="callout danger">Token — parol kabi maxfiy! Uni kodga yozib GitHub'ga yuklamang. Haqiqiy loyihalarda tokenlar HTTPS orqali uzatiladi (41-mavzu).</div>
+
+<h2 id="front-end-va-back-end-integratsiyasi-29-loyiha"><a class="anchor" href="#front-end-va-back-end-integratsiyasi-29-loyiha">#</a>Front-end va Back-end integratsiyasi (29-loyiha)</h2>
+<p>Endi kursning eng muhim lahzasi: <b>II bobdagi JavaScript</b> (front-end) va <b>Django API</b> (back-end) birlashadi. Front-end alohida sayt bo'lishi mumkin
+(masalan, Netlify'da), shuning uchun avval <b>CORS</b> ni sozlaymiz.</p>
+<h3>CORS — boshqa saytdan so'rovlarga ruxsat</h3>
+<p>Brauzer xavfsizlik uchun bir saytdagi JavaScript'ga <b>boshqa domendagi</b> API'ga so'rov yuborishni taqiqlaydi (<b>CORS</b> — Cross-Origin Resource Sharing).
+Ruxsat <b>server</b> tomonidan beriladi:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">pip install django-cors-headers</code></pre></div>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">INSTALLED_APPS += [&quot;corsheaders&quot;]
+
+MIDDLEWARE = [
+    &quot;corsheaders.middleware.CorsMiddleware&quot;,          # ⬅ ro&#x27;yxatning eng boshiga
+    &quot;django.middleware.security.SecurityMiddleware&quot;,
+    # ... qolganlari
+]
+
+CORS_ALLOWED_ORIGINS = [
+    &quot;http://127.0.0.1:5500&quot;,                          # VS Code Live Server
+    &quot;https://maktab-blog.netlify.app&quot;,                # internetdagi front-end
+]</code></pre></div>
+<h3>Front-end: maqolalar o'quvchi sahifa</h3>
+<div class="code"><div class="code-head"><span>frontend/index.html (Live Server bilan oching)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;uz&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Maktab blogi — JS mijoz&lt;/title&gt;
+&lt;style&gt;
+  body { font-family: &quot;Segoe UI&quot;, sans-serif; max-width: 760px; margin: 30px auto; padding: 0 16px; background: #f8fafc; }
+  .qidiruv { display: flex; gap: 8px; margin-bottom: 16px; }
+  .qidiruv input { flex: 1; padding: 10px; border: 2px solid #e5e7eb; border-radius: 10px; }
+  .karta { background: #fff; padding: 16px 20px; border-radius: 14px; margin-bottom: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+  .belgi { background: #eef2ff; color: #4f46e5; padding: 2px 10px; border-radius: 999px; font-size: 13px; }
+  .xato { color: #dc2626; }
+  button { padding: 10px 16px; border: none; border-radius: 10px; background: #4f46e5; color: #fff; cursor: pointer; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;📰 Maktab blogi&lt;/h1&gt;
+  &lt;form class=&quot;qidiruv&quot; id=&quot;qidiruv&quot;&gt;
+    &lt;input id=&quot;soz&quot; placeholder=&quot;Qidirish...&quot;&gt;
+    &lt;button&gt;Izlash&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;p id=&quot;holat&quot;&gt;Yuklanmoqda...&lt;/p&gt;
+  &lt;div id=&quot;royxat&quot;&gt;&lt;/div&gt;
+  &lt;button id=&quot;yana&quot; hidden&gt;Yana yuklash&lt;/button&gt;
+
+&lt;script&gt;
+  const API = &quot;http://127.0.0.1:8000/api/maqolalar/&quot;;
+  const royxat = document.querySelector(&quot;#royxat&quot;);
+  const holat = document.querySelector(&quot;#holat&quot;);
+  const yanaBtn = document.querySelector(&quot;#yana&quot;);
+  let keyingi = null;
+
+  async function yukla(url, tozala = true) {
+    holat.textContent = &quot;Yuklanmoqda...&quot;;
+    holat.className = &quot;&quot;;
+    try {
+      const javob = await fetch(url);
+      if (!javob.ok) throw new Error(`Server xatosi: ${javob.status}`);
+      const data = await javob.json();          // { count, next, previous, results }
+
+      if (tozala) royxat.innerHTML = &quot;&quot;;
+      data.results.forEach(m =&gt; {
+        const karta = document.createElement(&quot;article&quot;);
+        karta.className = &quot;karta&quot;;
+        const sarlavha = document.createElement(&quot;h3&quot;);
+        sarlavha.textContent = m.sarlavha;                       // textContent — XSS&#x27;dan himoya
+        const meta = document.createElement(&quot;p&quot;);
+        meta.innerHTML = `&lt;span class=&quot;belgi&quot;&gt;&lt;/span&gt; ✍️ &lt;b&gt;&lt;/b&gt; · 👁 ${m.korishlar}`;
+        meta.querySelector(&quot;.belgi&quot;).textContent = m.kategoriya_nomi;
+        meta.querySelector(&quot;b&quot;).textContent = m.muallif;
+        const matn = document.createElement(&quot;p&quot;);
+        matn.textContent = m.matn.slice(0, 150) + (m.matn.length &gt; 150 ? &quot;...&quot; : &quot;&quot;);
+        karta.append(sarlavha, meta, matn);
+        royxat.append(karta);
+      });
+
+      holat.textContent = `Jami: ${data.count} ta maqola`;
+      keyingi = data.next;
+      yanaBtn.hidden = !keyingi;
+    } catch (err) {
+      holat.textContent = `❌ ${err.message}. Django server ishlayaptimi?`;
+      holat.className = &quot;xato&quot;;
+    }
+  }
+
+  document.querySelector(&quot;#qidiruv&quot;).addEventListener(&quot;submit&quot;, e =&gt; {
+    e.preventDefault();
+    const soz = document.querySelector(&quot;#soz&quot;).value.trim();
+    yukla(`${API}?search=${encodeURIComponent(soz)}`);
+  });
+
+  yanaBtn.addEventListener(&quot;click&quot;, () =&gt; yukla(keyingi, false));   // keyingi sahifa
+
+  yukla(API);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+<p><b>Nima bo'lyapti?</b> JavaScript (front-end, port 5500) → <code>fetch</code> → Django API (back-end, port 8000) → PostgreSQL → JSON → JavaScript sahifani chizadi.
+Bu — <b>full-stack</b> ilovaning to'liq zanjiri, va siz uning barcha qismlarini o'zingiz yozdingiz! 🎉</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🌐 index.html + JS<small>Live Server :5500</small></div>
+    <div class="arrow">— fetch(GET /api/maqolalar/) →</div>
+    <div class="node">🌿 Django + DRF<small>:8000</small></div>
+    <div class="arrow">⇄ SQL ⇄</div>
+    <div class="node">🐘 PostgreSQL</div>
+  </div>
+</div>
+
+<h2 id="amaliy-mashgulot-mahsulotlar-boshqaruv-apisi-27-28-loyihalar"><a class="anchor" href="#amaliy-mashgulot-mahsulotlar-boshqaruv-apisi-27-28-loyihalar">#</a>Amaliy mashg'ulot: mahsulotlar boshqaruv API'si (27–28-loyihalar)</h2>
+<ol class="steps">
+  <li>Yangi ilova: <code>python manage.py startapp shop</code>. Model:
+<div class="code"><div class="code-head"><span>shop/models.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.db import models
+
+class Mahsulot(models.Model):
+    nomi = models.CharField(max_length=200)
+    tavsif = models.TextField(blank=True)
+    narx = models.DecimalField(max_digits=12, decimal_places=2)
+    soni = models.PositiveIntegerField(default=0)
+    faol = models.BooleanField(default=True)
+    yaratilgan = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nomi</code></pre></div></li>
+  <li><code>MahsulotSerializer</code> (narx musbat bo'lsin — <code>validate_narx</code>), <code>MahsulotViewSet</code> (qidiruv — nom; saralash — narx, yaratilgan), router'ga qo'shing.</li>
+  <li>Ruxsat: o'qish — hammaga, qo'shish/o'zgartirish/o'chirish — faqat admin (<code>IsAdminUser</code>; maslahat: <code>get_permissions</code> metodida <code>self.action</code> ga qarab).</li>
+  <li><code>?narx_min=10000&amp;narx_max=50000</code> filtrini <code>get_queryset</code> da qo'shing.</li>
+  <li>Barcha amallarni brauzerdagi API sahifasida yoki Thunder Client'da sinang: GET (ro'yxat, bitta), POST, PATCH (faqat narx), DELETE.</li>
+  <li><b>Front-end:</b> 19-mavzudagi kartalar dizayni bilan mahsulotlar katalogi sahifasini yarating — ma'lumotlar API'dan kelsin.</li>
+</ol>
+<details><summary>3-qadam uchun maslahat</summary>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">class MahsulotViewSet(viewsets.ModelViewSet):
+    queryset = Mahsulot.objects.filter(faol=True)
+    serializer_class = MahsulotSerializer
+
+    def get_permissions(self):
+        if self.action in (&quot;list&quot;, &quot;retrieve&quot;):
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]</code></pre></div>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Brauzer konsolida <code>blocked by CORS policy</code> — <code>corsheaders</code> o'rnatilmagan, middleware ro'yxat boshida emas yoki front-end manzili <code>CORS_ALLOWED_ORIGINS</code> da yo'q (port ham mos bo'lishi kerak!).</li>
+  <li>❌ ViewSet'da <code>get_queryset</code> ishlatilganda router'da <code>basename</code> unutilgan.</li>
+  <li>❌ Generic view URL'ida <code>&lt;int:id&gt;</code> — generic'lar standart holatda <code>pk</code> kutadi.</li>
+  <li>❌ <code>fetch</code> natijasini <code>.json()</code> siz ishlatish yoki <code>await</code> ni unutish.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Bitta klassda list, create, retrieve, update, destroy amallarini beruvchi DRF klassi?</p><ol>
+<li><code>APIView</code></li><li><code>ListAPIView</code></li><li><code>ModelViewSet</code></li><li><code>Serializer</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">ViewSet uchun URL'larni avtomatik yaratuvchi vosita?</p><ol>
+<li>Router (<code>DefaultRouter</code>)</li><li><code>path()</code></li><li>Paginator</li><li>Middleware</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>SAFE_METHODS</code> qaysi metodlarni o'z ichiga oladi?</p><ol>
+<li>POST, PUT</li><li>DELETE</li><li>Hammasi</li><li>GET, HEAD, OPTIONS</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Netlify'dagi JS sayt Django API'ga so'rov yuborganda "CORS" xatosi chiqdi. Nima qilish kerak?</p><ol>
+<li>JavaScript kodini o'chirish</li><li>Django'da <code>django-cors-headers</code> ni sozlab, front-end manzilini ruxsat etilganlarga qo'shish</li><li>Brauzerni almashtirish</li><li>API'ni HTML'ga aylantirish</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">API'da qidiruv uchun DRF'ning qaysi vositasi ishlatiladi?</p><ol>
+<li><code>Paginator</code></li><li><code>OrderingFilter</code></li><li><code>SearchFilter</code> + <code>search_fields</code></li><li><code>Router</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>JS front-end'ga "Maqola qo'shish" formasini qo'shing: token bilan <code>POST</code> so'rov yuboring (<code>headers: { "Authorization": "Token ...", "Content-Type": "application/json" }</code>).</li>
+  <li>Kutubxona API'ngizni ViewSet + Router'ga o'tkazing, qidiruv va sahifalash qo'shing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Generic: <code>ListCreateAPIView</code>, <code>RetrieveUpdateDestroyAPIView</code>; <code>perform_create</code> — muallifni qo'shish.</li>
+  <li><code>ModelViewSet</code> + <code>DefaultRouter</code> — to'liq CRUD API bir necha qatorda.</li>
+  <li>Ruxsatlar: <code>permission_classes</code>, o'z <code>BasePermission</code> klassingiz (<code>has_object_permission</code>).</li>
+  <li><code>SearchFilter</code>, <code>OrderingFilter</code>, <code>PageNumberPagination</code>; token autentifikatsiya.</li>
+  <li>Integratsiya: front-end <code>fetch</code> ⇄ DRF API; <code>django-cors-headers</code> bilan CORS.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="39-drf-serializer.html"><small>← Oldingi mavzu</small>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a><a class="next" href="41-django-deploy.html"><small>Keyingi mavzu →</small>Django loyihasini serverga joylash (Deploy)</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#abstraksiya-zinapoyasi">Abstraksiya zinapoyasi</a></li><li><a href="#2-daraja-generic-viewlar">2-daraja: Generic view&#x27;lar</a></li><li><a href="#ruxsatlar-permissions">Ruxsatlar (permissions)</a></li><li><a href="#3-daraja-viewset-va-router">3-daraja: ViewSet va Router</a></li><li><a href="#sahifalash">Sahifalash</a></li><li><a href="#mobil-ilova-va-javascript-uchun-token-autentifikatsiya">Mobil ilova va JavaScript uchun: Token autentifikatsiya</a></li><li><a href="#front-end-va-back-end-integratsiyasi-29-loyiha">Front-end va Back-end integratsiyasi (29-loyiha)</a></li><li><a href="#amaliy-mashgulot-mahsulotlar-boshqaruv-apisi-27-28-loyihalar">Amaliy mashg&#x27;ulot: mahsulotlar boshqaruv API&#x27;si (27–28-loyihalar)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

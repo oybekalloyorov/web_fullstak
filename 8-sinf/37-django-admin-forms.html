@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Superuser, modellarni admin&#x27;da ro&#x27;yxatdan o&#x27;tkazish va sozlash (list_display, search_fields, list_filter, prepopulated_fields); Form va ModelForm, CSRF himoyasi, validatsiya, clean metodlari, xabarlar; ro&#x27;yxatdan o&#x27;tish va kirish tizimi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a class="active" href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🛡️</div><div><div class="crumb">37-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</h1><p class="lead">Superuser, modellarni admin&#x27;da ro&#x27;yxatdan o&#x27;tkazish va sozlash (list_display, search_fields, list_filter, prepopulated_fields); Form va ModelForm, CSRF himoyasi, validatsiya, clean metodlari, xabarlar; ro&#x27;yxatdan o&#x27;tish va kirish tizimi.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Django'ning tayyor <b>admin paneli</b> orqali ma'lumotlarni boshqarishni va uni sozlashni;</li>
+  <li><b>Django Forms</b> — foydalanuvchidan ma'lumotni qabul qilish, tekshirish va bazaga saqlashni;</li>
+  <li><b>CSRF</b> hujumi va <code>{% csrf_token %}</code> himoyasini;</li>
+  <li>O'z validatsiya qoidalaringizni yozishni;</li>
+  <li><b>Ro'yxatdan o'tish va kirish</b> (Login/Register) tizimini (24–25-loyihalar).</li>
+</ul>
+</div>
+
+<h2 id="django-admin-tayyor-boshqaruv-paneli"><a class="anchor" href="#django-admin-tayyor-boshqaruv-paneli">#</a>Django Admin — tayyor boshqaruv paneli</h2>
+<p>Har bir saytga "orqa eshik" kerak: maqolalarni qo'shish, tahrirlash, foydalanuvchilarni boshqarish. Boshqa frameworklarda buni haftalab yozish kerak — Django'da u
+<b>tayyor</b>. Bu Django'ning eng mashhur imkoniyatlaridan biri.</p>
+<h3>1. Superuser va kirish</h3>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">python manage.py createsuperuser
+# Username: admin
+# Email: admin@maktab.uz
+# Password: ********   (yozilayotganda ko&#x27;rinmaydi — bu normal)
+python manage.py runserver</code></pre></div>
+<p><a href="http://127.0.0.1:8000/admin/" target="_blank" rel="noopener">http://127.0.0.1:8000/admin/</a> ni oching va kiring. Hozircha faqat "Foydalanuvchilar" va "Guruhlar" bor.</p>
+<h3>2. Modellarni ro'yxatdan o'tkazish</h3>
+<div class="code"><div class="code-head"><span>blog/admin.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib import admin
+from .models import Kategoriya, Maqola
+
+admin.site.register(Kategoriya)
+admin.site.register(Maqola)</code></pre></div>
+<p>Sahifani yangilang — "Blog" bo'limida Kategoriyalar va Maqolalar paydo bo'ldi. Endi ularni qo'shish, tahrirlash va o'chirish mumkin — bir qator kod yozmasdan
+(tayyor formalar, validatsiya, tasdiqlash oynalari)! Ro'yxatda obyektlar <code>__str__</code> qaytargan matn bilan ko'rinadi (36-mavzu).</p>
+<h3>3. Admin'ni sozlash</h3>
+<div class="code"><div class="code-head"><span>blog/admin.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib import admin
+from .models import Kategoriya, Maqola
+
+
+@admin.register(Kategoriya)
+class KategoriyaAdmin(admin.ModelAdmin):
+    list_display = [&quot;nomi&quot;, &quot;slug&quot;]
+    prepopulated_fields = {&quot;slug&quot;: (&quot;nomi&quot;,)}         # nom yozilganda slug avtomatik to&#x27;ladi
+
+
+@admin.register(Maqola)
+class MaqolaAdmin(admin.ModelAdmin):
+    list_display = [&quot;sarlavha&quot;, &quot;kategoriya&quot;, &quot;muallif&quot;, &quot;chop_etilgan&quot;, &quot;korishlar&quot;, &quot;yaratilgan&quot;]
+    list_filter = [&quot;chop_etilgan&quot;, &quot;kategoriya&quot;, &quot;yaratilgan&quot;]    # o&#x27;ng tomonda filtrlar
+    search_fields = [&quot;sarlavha&quot;, &quot;matn&quot;]                           # qidiruv maydoni
+    list_editable = [&quot;chop_etilgan&quot;]                               # ro&#x27;yxatning o&#x27;zida tahrirlash
+    list_per_page = 20
+    date_hierarchy = &quot;yaratilgan&quot;                                  # sana bo&#x27;yicha navigatsiya
+    readonly_fields = [&quot;korishlar&quot;, &quot;yaratilgan&quot;, &quot;yangilangan&quot;]
+    actions = [&quot;chop_etish&quot;]
+
+    @admin.action(description=&quot;Tanlanganlarni chop etish&quot;)
+    def chop_etish(self, request, queryset):
+        soni = queryset.update(chop_etilgan=True)
+        self.message_user(request, f&quot;{soni} ta maqola chop etildi&quot;)
+
+
+admin.site.site_header = &quot;Maktab blogi — boshqaruv paneli&quot;
+admin.site.site_title = &quot;Maktab blogi&quot;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Sozlama</th><th>Vazifasi</th></tr>
+<tr><td><code>list_display</code></td><td>Ro'yxatda qaysi ustunlar ko'rinadi</td></tr>
+<tr><td><code>list_filter</code></td><td>O'ng paneldagi filtrlar</td></tr>
+<tr><td><code>search_fields</code></td><td>Qidiruv qaysi maydonlar bo'yicha</td></tr>
+<tr><td><code>list_editable</code></td><td>Ro'yxatning o'zida o'zgartiriladigan maydonlar</td></tr>
+<tr><td><code>prepopulated_fields</code></td><td>Bir maydondan boshqasini avtomatik to'ldirish (slug)</td></tr>
+<tr><td><code>readonly_fields</code></td><td>Faqat o'qish uchun</td></tr>
+<tr><td><code>actions</code></td><td>Tanlangan obyektlar ustida ommaviy amallar</td></tr>
+</table></div>
+<div class="callout info"><span class="t">Foydalanuvchilar va ruxsatlar</span>
+Admin'da yangi foydalanuvchi yaratib, unga <b>"Staff status"</b> bering va faqat "Maqola" uchun "qo'shish/o'zgartirish" ruxsatlarini belgilang — u admin'ga kira oladi, lekin
+kategoriyalar va foydalanuvchilarni ko'rmaydi. Masalan, sinf muxbirlari uchun.</div>
+
+<h2 id="django-forms-nima-uchun"><a class="anchor" href="#django-forms-nima-uchun">#</a>Django Forms — nima uchun?</h2>
+<p>Admin panel — faqat ma'murlar uchun. Oddiy foydalanuvchilar (izoh qoldirish, ro'yxatdan o'tish, maqola yuborish) uchun <b>sayt ichida</b> formalar kerak.
+3-mavzuda HTML formalarni yozdik va 20-mavzuda JavaScript bilan tekshirdik. Lekin brauzerdagi tekshiruvni chetlab o'tish oson — <b>server ham tekshirishi shart</b>.</p>
+<p><b>Django Forms</b> uchta ishni bajaradi:</p>
+<ol>
+  <li><b>HTML yaratadi</b> — input'lar, label'lar avtomatik;</li>
+  <li><b>Tekshiradi (validatsiya)</b> — majburiy maydonlar, email formati, uzunlik, o'z qoidalaringiz;</li>
+  <li><b>Tozalaydi</b> — matnni kerakli turga (son, sana) aylantiradi va xavfsiz qiladi.</li>
+</ol>
+
+<h2 id="oddiy-form-aloqa-formasi"><a class="anchor" href="#oddiy-form-aloqa-formasi">#</a>Oddiy Form: "Aloqa" formasi</h2>
+<div class="code"><div class="code-head"><span>blog/forms.py (yangi fayl)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django import forms
+
+
+class AloqaForm(forms.Form):
+    ism = forms.CharField(label=&quot;Ismingiz&quot;, max_length=100)
+    email = forms.EmailField(label=&quot;Email&quot;)
+    mavzu = forms.ChoiceField(label=&quot;Mavzu&quot;, choices=[
+        (&quot;taklif&quot;, &quot;Taklif&quot;),
+        (&quot;xato&quot;, &quot;Xato haqida xabar&quot;),
+        (&quot;boshqa&quot;, &quot;Boshqa&quot;),
+    ])
+    xabar = forms.CharField(label=&quot;Xabar&quot;, widget=forms.Textarea(attrs={&quot;rows&quot;: 5}), min_length=10)
+
+    def clean_ism(self):                              # bitta maydon uchun o&#x27;z tekshiruvimiz
+        ism = self.cleaned_data[&quot;ism&quot;].strip()
+        if any(belgi.isdigit() for belgi in ism):
+            raise forms.ValidationError(&quot;Ismda raqam bo&#x27;lmasligi kerak&quot;)
+        return ism.title()</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib import messages
+from django.shortcuts import render, redirect
+from .forms import AloqaForm
+
+
+def aloqa(request):
+    if request.method == &quot;POST&quot;:                      # forma yuborildi
+        form = AloqaForm(request.POST)                # kelgan ma&#x27;lumot bilan to&#x27;ldiramiz
+        if form.is_valid():                           # ✅ hamma tekshiruvdan o&#x27;tdi
+            data = form.cleaned_data                  # tozalangan ma&#x27;lumot (dict)
+            print(&quot;Yangi xabar:&quot;, data[&quot;ism&quot;], data[&quot;email&quot;], data[&quot;xabar&quot;])
+            messages.success(request, &quot;Rahmat! Xabaringiz yuborildi.&quot;)
+            return redirect(&quot;blog:aloqa&quot;)             # qayta yuborilmasligi uchun redirect
+        # ❌ xato bo&#x27;lsa — forma xatolar bilan qayta ko&#x27;rsatiladi
+    else:                                             # GET — sahifa birinchi marta ochildi
+        form = AloqaForm()                            # bo&#x27;sh forma
+    return render(request, &quot;blog/aloqa.html&quot;, {&quot;form&quot;: form})</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/aloqa.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+
+{% block content %}
+  &lt;h1&gt;Biz bilan bog&#x27;laning&lt;/h1&gt;
+
+  {% if messages %}
+    {% for msg in messages %}&lt;p class=&quot;xabar&quot;&gt;{{ msg }}&lt;/p&gt;{% endfor %}
+  {% endif %}
+
+  &lt;form method=&quot;post&quot; novalidate&gt;
+    {% csrf_token %}                {# ⬅ MAJBURIY: CSRF himoyasi #}
+    {{ form.as_p }}                 {# barcha maydonlar &lt;p&gt; ichida, xatolar bilan #}
+    &lt;button type=&quot;submit&quot;&gt;Yuborish&lt;/button&gt;
+  &lt;/form&gt;
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">path(&quot;aloqa/&quot;, views.aloqa, name=&quot;aloqa&quot;),</code></pre></div>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">GET /aloqa/<small>bo'sh forma</small></div><div class="arrow">→</div>
+    <div class="node">POST /aloqa/<small>form = AloqaForm(request.POST)</small></div><div class="arrow">→</div>
+    <div class="node">is_valid()?</div>
+  </div>
+  <div class="flow" style="margin-top:8px">
+    <div class="node">✅ Ha<small>saqlash → redirect</small></div>
+    <div class="arrow">|</div>
+    <div class="node">❌ Yo'q<small>forma xatolar bilan qayta</small></div>
+  </div>
+  <div class="diagram-caption">Django formasini qayta ishlashning standart sxemasi</div>
+</div>
+<div class="callout danger"><span class="t">CSRF nima?</span>
+<b>CSRF</b> (Cross-Site Request Forgery) — yovuz sayt sizning brauzeringiz nomidan boshqa saytga yashirin forma yuboradigan hujum (masalan, siz tizimga kirgan blogga
+"barcha maqolalarni o'chir" so'rovi). <code>{% csrf_token %}</code> formaga yashirin maxfiy kod qo'shadi; Django POST so'rovni faqat shu kod to'g'ri bo'lsa qabul qiladi.
+Usiz: <b>403 Forbidden — CSRF verification failed</b>.</div>
+<h3>Formani qo'lda chiqarish (dizayn uchun)</h3>
+<div class="code"><div class="code-head"><span>Django shablon</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% for field in form %}
+  &lt;div class=&quot;maydon&quot;&gt;
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.errors %}&lt;small class=&quot;xato&quot;&gt;{{ field.errors.0 }}&lt;/small&gt;{% endif %}
+  &lt;/div&gt;
+{% endfor %}</code></pre></div>
+
+<h2 id="modelform-modeldan-avtomatik-forma"><a class="anchor" href="#modelform-modeldan-avtomatik-forma">#</a>ModelForm — modeldan avtomatik forma</h2>
+<p>Agar forma <b>model</b>ga ma'lumot saqlasa, maydonlarni qayta yozish shart emas — <code>ModelForm</code> ularni modeldan o'zi oladi.</p>
+<div class="code"><div class="code-head"><span>blog/forms.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from .models import Maqola
+
+
+class MaqolaForm(forms.ModelForm):
+    class Meta:
+        model = Maqola
+        fields = [&quot;sarlavha&quot;, &quot;kategoriya&quot;, &quot;matn&quot;]          # foydalanuvchi to&#x27;ldiradigan maydonlar
+        widgets = {
+            &quot;sarlavha&quot;: forms.TextInput(attrs={&quot;placeholder&quot;: &quot;Qiziqarli sarlavha...&quot;}),
+            &quot;matn&quot;: forms.Textarea(attrs={&quot;rows&quot;: 8}),
+        }
+
+    def clean_sarlavha(self):
+        s = self.cleaned_data[&quot;sarlavha&quot;]
+        if len(s) &lt; 5:
+            raise forms.ValidationError(&quot;Sarlavha kamida 5 belgidan iborat bo&#x27;lsin&quot;)
+        return s</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib.auth.decorators import login_required
+from .forms import MaqolaForm
+
+
+@login_required                                       # faqat tizimga kirganlar uchun
+def maqola_yozish(request):
+    if request.method == &quot;POST&quot;:
+        form = MaqolaForm(request.POST)
+        if form.is_valid():
+            maqola = form.save(commit=False)          # hali bazaga yozmay turamiz
+            maqola.muallif = request.user             # muallifni o&#x27;zimiz qo&#x27;yamiz
+            maqola.chop_etilgan = False               # admin tasdiqlaguncha yashirin
+            maqola.save()                             # endi saqlaymiz
+            messages.success(request, &quot;Maqola yuborildi! Admin tasdiqlagach chop etiladi.&quot;)
+            return redirect(&quot;blog:bosh&quot;)
+    else:
+        form = MaqolaForm()
+    return render(request, &quot;blog/maqola_form.html&quot;, {&quot;form&quot;: form})</code></pre></div>
+<p><code>commit=False</code> — formadan obyekt yaratadi, lekin bazaga saqlamaydi: shunda formada bo'lmagan maydonlarni (<code>muallif</code>) qo'shib, keyin saqlash mumkin.</p>
+
+<h2 id="royxatdan-otish-va-kirish-login-register"><a class="anchor" href="#royxatdan-otish-va-kirish-login-register">#</a>Ro'yxatdan o'tish va kirish (Login / Register)</h2>
+<p>Django'da foydalanuvchilar tizimi tayyor: <code>User</code> modeli, parollarni <b>xeshlab</b> (shifrlab bo'lmaydigan ko'rinishda) saqlash, kirish/chiqish view'lari.</p>
+<h3>Kirish va chiqish — tayyor view'lar</h3>
+<div class="code"><div class="code-head"><span>config/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">urlpatterns = [
+    path(&quot;admin/&quot;, admin.site.urls),
+    path(&quot;accounts/&quot;, include(&quot;django.contrib.auth.urls&quot;)),   # login/, logout/, password_change/ ...
+    path(&quot;&quot;, include(&quot;blog.urls&quot;)),
+]</code></pre></div>
+<div class="code"><div class="code-head"><span>config/settings.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">LOGIN_REDIRECT_URL = &quot;blog:bosh&quot;       # kirgandan keyin
+LOGOUT_REDIRECT_URL = &quot;blog:bosh&quot;      # chiqqandan keyin
+LOGIN_URL = &quot;login&quot;                    # @login_required kirmaganlarni shu yerga yuboradi</code></pre></div>
+<div class="code"><div class="code-head"><span>templates/registration/login.html (loyiha darajasida yoki blog/templates/registration/)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+{% block content %}
+  &lt;h1&gt;Kirish&lt;/h1&gt;
+  &lt;form method=&quot;post&quot;&gt;
+    {% csrf_token %}
+    {{ form.as_p }}
+    &lt;button&gt;Kirish&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;p&gt;Akkauntingiz yo&#x27;qmi? &lt;a href=&quot;{% url &#x27;blog:royxat&#x27; %}&quot;&gt;Ro&#x27;yxatdan o&#x27;ting&lt;/a&gt;&lt;/p&gt;
+{% endblock %}</code></pre></div>
+<h3>Ro'yxatdan o'tish</h3>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+
+
+def royxatdan_otish(request):
+    if request.method == &quot;POST&quot;:
+        form = UserCreationForm(request.POST)      # tayyor forma: username + parol + tasdiqlash
+        if form.is_valid():
+            user = form.save()                     # parol avtomatik xeshlanadi
+            login(request, user)                   # darhol tizimga kiritamiz
+            messages.success(request, f&quot;Xush kelibsiz, {user.username}!&quot;)
+            return redirect(&quot;blog:bosh&quot;)
+    else:
+        form = UserCreationForm()
+    return render(request, &quot;blog/royxat.html&quot;, {&quot;form&quot;: form})</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py (qo&#x27;shimcha)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">path(&quot;royxat/&quot;, views.royxatdan_otish, name=&quot;royxat&quot;),
+path(&quot;yozish/&quot;, views.maqola_yozish, name=&quot;yozish&quot;),</code></pre></div>
+<div class="code"><div class="code-head"><span>base.html menyusiga</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% if user.is_authenticated %}
+  &lt;span&gt;👤 {{ user.username }}&lt;/span&gt;
+  &lt;a href=&quot;{% url &#x27;blog:yozish&#x27; %}&quot;&gt;✍️ Maqola yozish&lt;/a&gt;
+  &lt;form method=&quot;post&quot; action=&quot;{% url &#x27;logout&#x27; %}&quot; style=&quot;display:inline&quot;&gt;
+    {% csrf_token %}&lt;button&gt;Chiqish&lt;/button&gt;             {# Django 5&#x27;da logout — POST so&#x27;rov #}
+  &lt;/form&gt;
+{% else %}
+  &lt;a href=&quot;{% url &#x27;login&#x27; %}&quot;&gt;Kirish&lt;/a&gt;
+  &lt;a href=&quot;{% url &#x27;blog:royxat&#x27; %}&quot;&gt;Ro&#x27;yxatdan o&#x27;tish&lt;/a&gt;
+{% endif %}</code></pre></div>
+<div class="callout tip">Parollar bazada <b>ochiq holda saqlanmaydi</b> — pgAdmin'da <code>auth_user</code> jadvalining <code>password</code> ustuniga qarang: <code>pbkdf2_sha256$...</code> kabi
+xesh. Hatto admin ham parolingizni bilmaydi. Hech qachon parolni o'zingiz oddiy <code>CharField</code> da saqlamang!</div>
+
+<h2 id="amaliy-mashgulot"><a class="anchor" href="#amaliy-mashgulot">#</a>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li>Admin'ni sozlang (yuqoridagi <code>KategoriyaAdmin</code>, <code>MaqolaAdmin</code>) va admin orqali 5 ta maqola qo'shing. Filtr, qidiruv va ommaviy amalni sinang.</li>
+  <li>"Aloqa" formasini yarating. Bo'sh, noto'g'ri email va raqamli ism bilan yuborib, xato xabarlarini ko'ring. <code>{% csrf_token %}</code> ni olib tashlab, 403 xatoni ko'ring — keyin qaytaring.</li>
+  <li>Aloqa xabarlarini bazada saqlang: <code>Xabar</code> modeli (ism, email, mavzu, matn, sana) → <code>ModelForm</code> → admin'da ko'rinsin.</li>
+  <li>Ro'yxatdan o'tish (24-loyiha) va kirish/chiqish (25-loyiha) tizimini qo'shing; menyuda foydalanuvchi holatiga qarab havolalar o'zgarsin.</li>
+  <li>"Maqola yozish" sahifasini (<code>@login_required</code>) yarating. Tizimga kirmasdan <code>/yozish/</code> ga kirib ko'ring — login sahifasiga yo'naltiradi.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>CSRF verification failed</code> — formada <code>{% csrf_token %}</code> yo'q yoki <code>method="post"</code> yozilmagan.</li>
+  <li>❌ Forma yuborilgach sahifa yangilansa, ma'lumot <b>qayta yuboriladi</b> — muvaffaqiyatli POST'dan keyin doim <code>redirect</code>.</li>
+  <li>❌ <code>form.cleaned_data</code> ni <code>is_valid()</code> dan <b>oldin</b> ishlatish — <code>AttributeError</code>.</li>
+  <li>❌ Admin'da model ko'rinmayapti — <code>admin.py</code> da ro'yxatdan o'tkazilmagan yoki server qayta ishga tushirilmagan.</li>
+  <li>❌ ModelForm'da <code>fields</code> ko'rsatilmagan — Django xato beradi (xavfsizlik uchun barcha maydonlarni avtomatik ochmaydi).</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Modelni admin panelda ko'rsatish uchun nima qilinadi?</p><ol>
+<li><code>settings.py</code> ga qo'shiladi</li><li><code>admin.py</code> da <code>admin.site.register(Model)</code></li><li>Migratsiya qilinadi</li><li>Shablon yaratiladi</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Admin ro'yxatida qaysi ustunlar ko'rinishini belgilovchi sozlama?</p><ol>
+<li><code>fields</code></li><li><code>list_filter</code></li><li><code>search_fields</code></li><li><code>list_display</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">POST formada majburiy bo'lgan xavfsizlik tegi?</p><ol>
+<li><code>{% csrf_token %}</code></li><li><code>{% secure %}</code></li><li><code>{% load form %}</code></li><li><code>{% token %}</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Forma ma'lumotlari to'g'riligini tekshiruvchi metod?</p><ol>
+<li><code>form.save()</code></li><li><code>form.check()</code></li><li><code>form.is_valid()</code></li><li><code>form.validate()</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Model asosida avtomatik forma yaratuvchi klass?</p><ol>
+<li><code>forms.Form</code></li><li><code>forms.ModelForm</code></li><li><code>admin.ModelAdmin</code></li><li><code>models.Form</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">View'ni faqat tizimga kirgan foydalanuvchilar uchun ochiq qiluvchi dekorator?</p><ol>
+<li><code>@admin_only</code></li><li><code>@csrf_exempt</code></li><li><code>@staff</code></li><li><code>@login_required</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Izohlar:</b> <code>Izoh</code> modeli (maqola FK, muallif FK, matn, sana). Maqola sahifasida izohlar ro'yxati va faqat tizimga kirganlar uchun izoh formasi.</li>
+  <li>Kutubxona loyihangiz (22-loyiha) uchun admin'ni to'liq sozlang: kitoblar ro'yxatida muallif, janr, yil; filtr — janr va mavjudlik; qidiruv — nom va muallif.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Admin: <code>createsuperuser</code>; <code>@admin.register(Model)</code> + <code>ModelAdmin</code> (<code>list_display</code>, <code>list_filter</code>, <code>search_fields</code>...).</li>
+  <li>Forma sxemasi: GET → bo'sh forma; POST → <code>Form(request.POST)</code> → <code>is_valid()</code> → <code>cleaned_data</code>/<code>save()</code> → <code>redirect</code>.</li>
+  <li><code>{% csrf_token %}</code> — har bir POST formada; <code>clean_maydon()</code> — o'z tekshiruvlaringiz.</li>
+  <li><code>ModelForm</code> + <code>save(commit=False)</code>; <code>messages</code> — foydalanuvchiga xabar.</li>
+  <li>Auth: <code>include("django.contrib.auth.urls")</code>, <code>UserCreationForm</code>, <code>login()</code>, <code>@login_required</code>, <code>user.is_authenticated</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="36-django-model-orm.html"><small>← Oldingi mavzu</small>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a><a class="next" href="38-django-crud-loyiha.html"><small>Keyingi mavzu →</small>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#django-admin-tayyor-boshqaruv-paneli">Django Admin — tayyor boshqaruv paneli</a></li><li><a href="#django-forms-nima-uchun">Django Forms — nima uchun?</a></li><li><a href="#oddiy-form-aloqa-formasi">Oddiy Form: &quot;Aloqa&quot; formasi</a></li><li><a href="#modelform-modeldan-avtomatik-forma">ModelForm — modeldan avtomatik forma</a></li><li><a href="#royxatdan-otish-va-kirish-login-register">Ro&#x27;yxatdan o&#x27;tish va kirish (Login / Register)</a></li><li><a href="#amaliy-mashgulot">Amaliy mashg&#x27;ulot</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

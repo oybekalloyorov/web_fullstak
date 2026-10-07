@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Jamoaviy loyiha bosqichlari, rollarni taqsimlash, Git branch, merge va konfliktlar, GitHub&#x27;da hamkorlik va Pull Request; saytni Netlify va Vercel&#x27;ga bepul joylash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a class="active" href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">👥</div><div><div class="crumb">13-mavzu · 42 tadan · I bob. HTML va CSS</div><h1>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</h1><p class="lead">Jamoaviy loyiha bosqichlari, rollarni taqsimlash, Git branch, merge va konfliktlar, GitHub&#x27;da hamkorlik va Pull Request; saytni Netlify va Vercel&#x27;ga bepul joylash.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Haqiqiy dasturchilar jamoada qanday ishlashini;</li>
+  <li>Loyihani rejalashtirish va vazifalarni taqsimlashni;</li>
+  <li>Git <b>branch</b> (tarmoq), <b>merge</b> va <b>konflikt</b> tushunchalarini;</li>
+  <li>GitHub'da hamkor qo'shish va <b>Pull Request</b> orqali kodni birlashtirishni;</li>
+  <li>Tayyor saytni <b>Netlify</b> va <b>Vercel</b>'ga joylashni (deploy).</li>
+</ul>
+</div>
+
+<h2 id="nima-uchun-jamoada-ishlash-muhim"><a class="anchor" href="#nima-uchun-jamoada-ishlash-muhim">#</a>Nima uchun jamoada ishlash muhim?</h2>
+<p>Instagram, Telegram, Click kabi ilovalarni bitta odam yaratmagan — ularda o'nlab, yuzlab dasturchilar birga ishlaydi. Dasturchining
+eng qadrli ko'nikmalaridan biri — <b>jamoada ishlay olish</b>: vazifani bo'lishish, boshqalarning kodini tushunish, kelishish.</p>
+<div class="analogy"><span class="t">O'xshatish: futbol jamoasi</span>
+Futbolda hamma to'p ortidan yugursa, jamoa yutqazadi. Har bir o'yinchining o'z o'rni bor: darvozabon, himoyachi, hujumchi. Murabbiy reja tuzadi.
+Dasturlash jamoasida ham shunday: kimdir header va menyuni, kimdir galereyani, kimdir formani yozadi — va oxirida hammasi bitta saytga birlashadi.</div>
+
+<h2 id="jamoaviy-loyiha-bosqichlari"><a class="anchor" href="#jamoaviy-loyiha-bosqichlari">#</a>Jamoaviy loyiha bosqichlari</h2>
+<ol class="steps">
+  <li><b>G'oya va maqsad.</b> Sayt nima haqida? Kimlar uchun? Asosiy sahifalari qaysilar?</li>
+  <li><b>Reja (vazifalar ro'yxati).</b> Saytni kichik vazifalarga bo'ling: "Header va menyu", "Bosh sahifa hero bo'limi", "Galereya sahifasi",
+  "Aloqa formasi", "Telefon versiyasi"...</li>
+  <li><b>Rollarni taqsimlash.</b> Har bir vazifaga mas'ul belgilanadi.</li>
+  <li><b>Kelishuvlar.</b> Ranglar palitrasi, shriftlar, fayl nomlari, CSS class nomlash qoidalari — hamma bir xil yozishi uchun.</li>
+  <li><b>Ishlab chiqish.</b> Har kim o'z qismini alohida <b>branch</b>da yozadi.</li>
+  <li><b>Tekshirish (code review).</b> Jamoadoshlar bir-birining kodini ko'rib chiqadi.</li>
+  <li><b>Birlashtirish va deploy.</b> Hammasi asosiy branch'ga qo'shiladi va internetga chiqariladi.</li>
+</ol>
+<h3>Vazifalarni boshqarish: Kanban doskasi</h3>
+<p>Jamoalar vazifalarni <b>Kanban</b> doskasida kuzatadi — 3 ustunli jadval:</p>
+<div class="table-wrap"><table>
+<tr><th>📝 Qilinishi kerak (To Do)</th><th>⏳ Jarayonda (In Progress)</th><th>✅ Tayyor (Done)</th></tr>
+<tr><td>Galereya sahifasi — <i>Madina</i><br>Aloqa formasi — <i>Javohir</i></td><td>Header va menyu — <i>Sardor</i></td><td>Ranglar va shriftlar tanlandi — <i>hamma</i><br>Papka tuzilmasi — <i>Sardor</i></td></tr>
+</table></div>
+<p>Buning uchun <b>GitHub Projects</b> (repozitoriyada "Projects" yorlig'i) yoki Trello'dan foydalanish mumkin. Oddiy variant — sinf doskasi va stikerlar!</p>
+
+<h2 id="git-branch-parallel-ish"><a class="anchor" href="#git-branch-parallel-ish">#</a>Git branch — parallel ish</h2>
+<p><b>Branch</b> (tarmoq) — loyihaning <b>alohida nusxasi</b>, unda asosiy kodga tegmasdan ishlash mumkin. Asosiy branch odatda <code>main</code> deb ataladi
+va unda doim <b>ishlaydigan</b> kod turadi.</p>
+<div class="analogy"><span class="t">O'xshatish: daraxt shoxlari</span>
+<code>main</code> — daraxtning tanasi. Har bir dasturchi o'z vazifasi uchun alohida shox (branch) o'stiradi. Ish tugagach, shox tanaga qayta "payvand" qilinadi
+(<b>merge</b>). Shoxda xato bo'lsa — tana zarar ko'rmaydi.</div>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">             o──o──o        ← feature/galereya (Madina)
+            /        \
+main  o──o──o──────────o──o  ← birlashtirilgan (merge)
+            \            /
+             o──o──o───o     ← feature/forma (Javohir)</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Barcha branch&#x27;larni ko&#x27;rish (* — siz hozir qaysi branch&#x27;dasiz)
+git branch
+
+# Yangi branch yaratish va unga o&#x27;tish
+git switch -c feature/galereya
+
+# ... ishlash, git add, git commit ...
+
+# Asosiy branch&#x27;ga qaytish
+git switch main
+
+# feature/galereya ni main ga birlashtirish
+git merge feature/galereya</code></pre></div>
+
+<h3>Konflikt — ikki kishi bitta qatorni o'zgartirsa</h3>
+<p>Madina va Javohir ikkalasi <code>index.html</code> dagi bitta sarlavhani turlicha o'zgartirishdi. Git qaysi birini tanlashni bilmaydi va <b>konflikt</b> haqida xabar beradi.
+Faylda shunday belgilar paydo bo'ladi:</p>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;h1&gt;Bizning maktab&lt;/h1&gt;
+=======
+&lt;h1&gt;5-maktab rasmiy sayti&lt;/h1&gt;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/forma</code></pre></div>
+<ul>
+  <li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> va <code>=======</code> orasida — sizning (joriy) variant;</li>
+  <li><code>=======</code> va <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> orasida — birlashtirilayotgan branch varianti.</li>
+</ul>
+<p><b>Hal qilish:</b> jamoa bilan kelishib, keraklisini qoldiring, <b>barcha belgilarni o'chiring</b>, so'ng <code>git add .</code> va <code>git commit</code>.
+VS Code konfliktlarni rangli ko'rsatadi va "Accept Current / Incoming / Both" tugmalarini taklif qiladi.</p>
+<div class="callout tip"><span class="t">Konfliktlarni kamaytirish</span>
+Har kim <b>turli fayllarda</b> ishlasin (masalan, har bir sahifa alohida fayl, har bir bo'lim CSS'i alohida). Tez-tez <code>git pull</code> qiling va kichik commit'lar bilan ishlang.</div>
+
+<h2 id="githubda-hamkorlik"><a class="anchor" href="#githubda-hamkorlik">#</a>GitHub'da hamkorlik</h2>
+<h3>1. Hamkor qo'shish</h3>
+<p>Jamoa sardori repozitoriyani yaratadi → <b>Settings → Collaborators → Add people</b> → jamoadoshlarning GitHub nomlarini qo'shadi. Ular emailga
+kelgan taklifni qabul qiladi va endi <code>git clone</code> qilib, <code>push</code> qila oladi.</p>
+<h3>2. Pull Request (PR) — kodni birlashtirishni so'rash</h3>
+<p>Professional jamoalarda hech kim to'g'ridan-to'g'ri <code>main</code>ga push qilmaydi. Buning o'rniga:</p>
+<ol class="steps">
+  <li>O'z branch'ingizda ishlaysiz va uni GitHub'ga yuborasiz: <code>git push -u origin feature/galereya</code></li>
+  <li>GitHub'da sariq <b>"Compare &amp; pull request"</b> tugmasi chiqadi — bosing.</li>
+  <li>Sarlavha va tavsif yozing: nima qildingiz, qanday tekshirish mumkin, skrinshot.</li>
+  <li>Jamoadoshlar <b>Files changed</b> yorlig'ida kodingizni ko'rib, izoh qoldiradi ("Bu rasmga alt qo'shish kerak").</li>
+  <li>Izohlarni tuzatib, yana push qilasiz — PR avtomatik yangilanadi.</li>
+  <li>Hamma rozi bo'lsa — <b>Merge pull request</b>. Kod <code>main</code>ga qo'shildi!</li>
+  <li>Hamma o'z kompyuterida yangilanadi: <code>git switch main</code> → <code>git pull</code>.</li>
+</ol>
+<h3>Code review madaniyati</h3>
+<ul>
+  <li>Kodni tanqid qiling, odamni emas: "Bu yerda <code>alt</code> yo'q" ✅, "Sen hech narsa bilmaysan" ❌.</li>
+  <li>Maqtashni ham unutmang: "Animatsiya zo'r chiqibdi! 👍"</li>
+  <li>Taklif sifatida yozing: "Bu yerda Grid ishlatsak qanday bo'ladi?"</li>
+</ul>
+
+<h2 id="deploy-saytni-internetga-chiqarish"><a class="anchor" href="#deploy-saytni-internetga-chiqarish">#</a>Deploy — saytni internetga chiqarish</h2>
+<p><b>Deploy</b> — tayyor loyihani foydalanuvchilar ochishi uchun serverga joylash. 11-mavzuda GitHub Pages'ni ko'rdik. Endi ikkita mashhur platforma:</p>
+<div class="table-wrap"><table>
+<tr><th></th><th>Netlify</th><th>Vercel</th></tr>
+<tr><td>Narxi</td><td>Shaxsiy loyihalar uchun bepul</td><td>Shaxsiy loyihalar uchun bepul</td></tr>
+<tr><td>Manzil</td><td><code>nom.netlify.app</code></td><td><code>nom.vercel.app</code></td></tr>
+<tr><td>HTTPS</td><td>Avtomatik</td><td>Avtomatik</td></tr>
+<tr><td>GitHub bilan ulanish</td><td>Ha — har push'da avtomatik yangilanadi</td><td>Ha — har push'da avtomatik yangilanadi</td></tr>
+<tr><td>O'ziga xosligi</td><td>Papkani sudrab tashlab deploy (Drag &amp; Drop), formalarni qabul qilish</td><td>React/Next.js loyihalari uchun ayniqsa qulay</td></tr>
+</table></div>
+<h3>Netlify — 1-usul: sudrab tashlash (eng oson)</h3>
+<ol class="steps">
+  <li><a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a> sahifasini oching.</li>
+  <li>Sayt papkangizni (ichida <code>index.html</code> bor) sahifadagi maydonga sichqoncha bilan <b>sudrab tashlang</b>.</li>
+  <li>Bir necha soniyada sayt tayyor: <code>https://tasodifiy-nom-123.netlify.app</code>. Saqlab qolish uchun ro'yxatdan o'ting.</li>
+  <li><b>Site configuration → Change site name</b> orqali chiroyli nom bering: <code>maktab5-samarqand.netlify.app</code>.</li>
+</ol>
+<h3>Netlify yoki Vercel — 2-usul: GitHub orqali (professional)</h3>
+<ol class="steps">
+  <li>Netlify yoki Vercel'ga <b>GitHub akkauntingiz bilan</b> kiring.</li>
+  <li><b>Add new site → Import an existing project</b> (Netlify) yoki <b>Add New → Project</b> (Vercel).</li>
+  <li>GitHub'dagi repozitoriyangizni tanlang.</li>
+  <li>Oddiy HTML/CSS sayt uchun hech qanday sozlama kerak emas (Build command — bo'sh, Publish directory — <code>/</code> yoki loyiha ildizi). <b>Deploy</b> bosing.</li>
+  <li>Endi har safar <code>git push</code> qilganingizda sayt <b>avtomatik yangilanadi</b>. Bu — <b>CI/CD</b> (uzluksiz yetkazib berish) degan professional usulning eng oddiy ko'rinishi.</li>
+</ol>
+<div class="callout info"><span class="t">O'z domeningiz</span>
+Agar <code>.uz</code> domen sotib olsangiz, Netlify/Vercel'da <b>Domain settings → Add custom domain</b> qilib, domen sozlamalarida (DNS, 1-mavzu) ular ko'rsatgan yozuvlarni kiritasiz.</div>
+
+<h2 id="amaliy-mashgulot-jamoaviy-loyiha-8-loyiha"><a class="anchor" href="#amaliy-mashgulot-jamoaviy-loyiha-8-loyiha">#</a>Amaliy mashg'ulot: jamoaviy loyiha (8-loyiha)</h2>
+<p>3–4 kishilik jamoalarda <b>"Bizning sinf"</b> saytini yarating.</p>
+<ol class="steps">
+  <li><b>Sardor</b> (jamoa rahbari) GitHub'da <code>bizning-sinf</code> repozitoriyasini yaratadi, boshlang'ich tuzilmani push qiladi va hamkorlarni qo'shadi:
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">bizning-sinf/
+├── index.html          ← bosh sahifa (Sardor)
+├── oquvchilar.html     ← o&#x27;quvchilar kartalari (2-a&#x27;zo)
+├── galereya.html       ← rasmlar galereyasi (3-a&#x27;zo)
+├── aloqa.html          ← forma va xarita (4-a&#x27;zo)
+├── css/
+│   ├── umumiy.css      ← ranglar, shriftlar, header, footer (kelishib yoziladi)
+│   └── ...             ← har kimning sahifasi uchun alohida fayl
+└── rasmlar/</code></pre></div></li>
+  <li>Jamoa <b>kelishuvlar</b> faylini (<code>README.md</code>) yozadi: ranglar (HEX), shriftlar, class nomlash qoidasi, kim nimaga mas'ul.</li>
+  <li>Har bir a'zo <code>git clone</code> qiladi va o'z branch'ini yaratadi: <code>git switch -c feature/galereya</code>.</li>
+  <li>O'z sahifasini yozadi, kamida 3 ta commit qiladi va <code>git push -u origin feature/galereya</code>.</li>
+  <li>GitHub'da Pull Request ochadi; boshqa a'zo uni ko'rib, kamida bitta izoh qoldiradi; so'ng merge qilinadi.</li>
+  <li>Barcha PR'lar birlashgach, sardor loyihani Netlify yoki Vercel'ga GitHub orqali ulaydi.</li>
+  <li>Har bir a'zo telefonida saytni ochib tekshiradi; topilgan xatolar uchun GitHub'da <b>Issue</b> ochiladi va tuzatiladi.</li>
+  <li><b>Taqdimot:</b> jamoa saytini sinfga 3 daqiqada tanishtiradi: kim nima qildi, qanday qiyinchiliklar bo'ldi.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Hamma <code>main</code>ga to'g'ridan-to'g'ri push qiladi — bir-birining ishini o'chirib yuboradi.</li>
+  <li>❌ Ishni boshlashdan oldin <code>git pull</code> qilmaslik — eski kod ustida ishlab, keyin katta konflikt chiqadi.</li>
+  <li>❌ Konflikt belgilarini (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>) faylda qoldirib yuborish — sahifada g'alati matn ko'rinadi.</li>
+  <li>❌ Netlify'da "Page not found" — papka ichida yana papka (<code>sayt/sayt/index.html</code>); <code>index.html</code> yuklangan papkaning <b>ildizida</b> bo'lishi kerak.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Git'da asosiy koddan alohida, mustaqil ishlash uchun nima yaratiladi?</p><ol>
+<li>Commit</li><li>Branch</li><li>Clone</li><li>Remote</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">GitHub'da o'z branch'ingizni asosiy kodga qo'shishni so'rash nima deyiladi?</p><ol>
+<li>Push Request</li><li>Merge Commit</li><li>Issue</li><li>Pull Request</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Konflikt qachon yuzaga keladi?</p><ol>
+<li>Ikki branch'da bitta faylning bitta qatori turlicha o'zgartirilganda</li><li>Internet uzilganda</li><li>Fayl o'chirilganda</li><li>Juda ko'p commit qilinganda</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Netlify'ga GitHub orqali ulangan saytni yangilash uchun nima qilish kerak?</p><ol>
+<li>Har safar papkani qayta yuklash</li><li>Netlify'ga xat yozish</li><li>Shunchaki <code>git push</code> qilish — sayt avtomatik yangilanadi</li><li>Saytni o'chirib, qaytadan yaratish</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Kanban doskasining odatiy ustunlari qaysilar?</p><ol>
+<li>HTML, CSS, JS</li><li>Qilinishi kerak, Jarayonda, Tayyor</li><li>Dushanba, Seshanba, Chorshanba</li><li>Oson, O'rta, Qiyin</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Jamoaviy loyihadagi o'z qismingizni yakunlang va PR orqali birlashtiring.</li>
+  <li>Shaxsiy portfoliongizni Netlify'ga (GitHub orqali) ham joylang va manzilini GitHub profilingizga qo'shing.</li>
+  <li>Biror sinfdoshingizning repozitoriyasida "Issue" oching: saytida topgan bitta xato yoki taklifingizni hurmat bilan yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Jamoaviy ish: reja → rollar → kelishuvlar → branch'larda ishlash → code review → merge → deploy.</li>
+  <li><code>git switch -c nom</code> — yangi branch; <code>git merge nom</code> — birlashtirish; konfliktda belgilarni o'chirib, add + commit.</li>
+  <li>GitHub: Collaborators, Pull Request, Issues, Projects.</li>
+  <li>Deploy: Netlify (Drop yoki GitHub), Vercel (GitHub) — bepul, HTTPS, har push'da avtomatik yangilanish.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="12-css-animatsiya.html"><small>← Oldingi mavzu</small>CSS animatsiyalar va transformatsiyalar</a><a class="next" href="14-nazorat-ishi-1.html"><small>Keyingi mavzu →</small>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#nima-uchun-jamoada-ishlash-muhim">Nima uchun jamoada ishlash muhim?</a></li><li><a href="#jamoaviy-loyiha-bosqichlari">Jamoaviy loyiha bosqichlari</a></li><li><a href="#git-branch-parallel-ish">Git branch — parallel ish</a></li><li><a href="#githubda-hamkorlik">GitHub&#x27;da hamkorlik</a></li><li><a href="#deploy-saytni-internetga-chiqarish">Deploy — saytni internetga chiqarish</a></li><li><a href="#amaliy-mashgulot-jamoaviy-loyiha-8-loyiha">Amaliy mashg&#x27;ulot: jamoaviy loyiha (8-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

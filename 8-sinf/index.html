@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8-sinf: Web Full-stack dasturlash kursi — to&#x27;liq qo&#x27;llanma</title>
+<meta name="description" content="&quot;Muhammad al-Xorazmiy vorislari&quot; tizimi asosidagi 8-sinf Web Full-stack o&#x27;quv dasturining 42 mavzusi bo&#x27;yicha sodda va chuqur qo&#x27;llanma: HTML, CSS, JavaScript, Python, PostgreSQL, Django va DRF.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="home">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+
+<section class="hero">
+  <span class="tag">🎓 8-sinf · 66 soat · 5 bob · 42 mavzu</span>
+  <h1>Web <span>Full-stack</span> dasturlash: 8-sinf kursi</h1>
+  <p>Ushbu qo'llanma 8-sinf o'quvchilari uchun tasdiqlangan <b>Web Full-stack dasturlash o'quv dasturi</b>ning har bir mavzusini
+  ketma-ket, <b>sodda tilda</b>, hayotiy misollar va <b>qadamma-qadam amaliyot</b> bilan tushuntiradi. Har bir dars dasturdagi
+  mavzu raqamiga aynan mos keladi — o'quvchi ham, mentor ham darhol kerakli joyni topadi.</p>
+  <a class="btn primary" href="01-internet-dns-hosting.html">1-mavzudan boshlash →</a>
+  <a class="btn ghost" href="#mavzular">Barcha mavzular</a>
+  <div class="stats">
+    <div><b>42</b>mavzu</div>
+    <div><b>200+</b>test savoli</div>
+    <div><b>31</b>loyiha g'oyasi</div>
+    <div><b id="doneCount">0</b>siz o'qigan mavzular</div>
+  </div>
+</section>
+
+<section class="home-section">
+  <h2 id="bu-kursda-nimani-organasiz"><a class="anchor" href="#bu-kursda-nimani-organasiz">#</a>Bu kursda nimani o'rganasiz?</h2>
+  <div class="diagram">
+    <div class="flow">
+      <div class="node">🧱 HTML + 🎨 CSS<small>Sahifa tuzilishi va dizayni</small></div>
+      <div class="arrow">→</div>
+      <div class="node">⚡ JavaScript<small>Interaktivlik</small></div>
+      <div class="arrow">→</div>
+      <div class="node">🐍 Python<small>Server tomoni mantiqi</small></div>
+      <div class="arrow">→</div>
+      <div class="node">🐘 PostgreSQL<small>Ma'lumotlar bazasi</small></div>
+      <div class="arrow">→</div>
+      <div class="node">🌿 Django + DRF<small>Veb-ilova va API</small></div>
+      <div class="arrow">→</div>
+      <div class="node">🚀 Deploy<small>Internetga chiqarish</small></div>
+    </div>
+    <div class="diagram-caption">Kurs oxirida siz frontend va backend qismlari bo'lgan, internetda ishlaydigan veb-ilova yarata olasiz</div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <tr><th>Bob</th><th>Mavzular</th><th>Soat</th><th>Nazariy / Amaliy / Nazorat</th><th>Chorak</th></tr>
+    <tr><td><b>I bob.</b> Front-end dasturlash asoslari. HTML va CSS</td><td>1–14</td><td>21</td><td>5 / 15 / 1</td><td>II chorak</td></tr>
+    <tr><td><b>II bob.</b> JavaScript dasturlash tili asoslari</td><td>15–20</td><td>10</td><td>1 / 9 / 0</td><td>III chorak</td></tr>
+    <tr><td><b>III bob.</b> Back-end. Python dasturlash tili. Ma'lumotlar bazasi asoslari</td><td>21–31</td><td>14</td><td>3 / 10 / 1</td><td>III chorak</td></tr>
+    <tr><td><b>IV bob.</b> Python'ni PostgreSQL'ga bog'lash. Django bilan ishlash</td><td>32–38</td><td>14</td><td>4 / 10 / 0</td><td>IV chorak</td></tr>
+    <tr><td><b>V bob.</b> Django REST Framework (DRF) va deploy</td><td>39–42</td><td>7</td><td>1 / 5 / 1</td><td>IV chorak</td></tr>
+    <tr><td colspan="2"><b>Jami</b></td><td><b>66</b></td><td><b>14 / 49 / 3</b></td><td>22 hafta</td></tr>
+  </table></div>
+  <p>Darslar haftasiga <b>3 marta</b>, har biri <b>80 daqiqa</b> (1 soat 20 daqiqa). Kursning taxminan <b>75%</b>i — amaliyot.
+  Shuning uchun bu qo'llanmadagi har bir mavzuda albatta qo'lda bajariladigan topshiriqlar bor.</p>
+</section>
+
+<section class="home-section">
+  <h2 id="har-bir-mavzu-qanday-tuzilgan"><a class="anchor" href="#har-bir-mavzu-qanday-tuzilgan">#</a>Har bir mavzu qanday tuzilgan?</h2>
+  <div class="roadmap">
+    <div class="stage"><h3>🎯 Maqsad</h3><p>Dars oxirida nimani bilib, nimani qila olishingiz.</p></div>
+    <div class="stage"><h3>📖 Nazariya</h3><p>Sodda tilda, hayotiy o'xshatishlar (🧠) bilan. Har bir tushunchaning "nima uchun"i ham.</p></div>
+    <div class="stage"><h3>💻 Misollar</h3><p>Kod va uning natijasi. HTML/CSS/JS kodlarini <b>▶ Sinab ko'rish</b> tugmasi bilan shu yerning o'zida o'zgartirib ko'ring.</p></div>
+    <div class="stage"><h3>🛠 Amaliyot</h3><p>Qadamma-qadam bajariladigan amaliy ish, ko'p uchraydigan xatolar, test savollari va uyga vazifa.</p></div>
+  </div>
+  <div class="callout tip"><span class="t">O'quvchiga maslahat</span>
+  Kodni nusxa olmasdan, <b>o'zingiz qo'lda yozing</b>. Xato chiqsa — xursand bo'ling: xatoni topish va tuzatish dasturchining eng
+  muhim ko'nikmasi. Har bir mavzu oxiridagi testlarni yechib, natijangizni tekshiring.</div>
+  <div class="callout info"><span class="t">Mentorga</span>
+  Mavzu raqamlari o'quv dasturidagi "O'quv mavzu rejasi" jadvaliga mos. "Amaliy mashg'ulot" bo'limini darsning amaliy qismi
+  sifatida, "O'zingizni tekshiring" testlarini esa joriy nazorat uchun ishlatishingiz mumkin. 14, 31 va 42-mavzular — bob
+  yakunidagi nazorat ishlari (test + amaliy topshiriq + baholash mezoni).</div>
+</section>
+
+<section class="home-section" id="mavzular">
+  <h2 id="barcha-mavzular"><a class="anchor" href="#barcha-mavzular">#</a>Barcha mavzular</h2>
+  <h3 class="bob-title">I bob. HTML va CSS</h3><div class="cards"><a class="card" href="01-internet-dns-hosting.html"><div class="card-icon">🌐</div><div class="card-num">01-mavzu</div><h3>Internet qanday ishlaydi? DNS, hosting, domen</h3><p>Mijoz-server arxitekturasi, IP-manzil, DNS, domen va hosting tushunchalari, veb-sayt internetda qanday &quot;yashaydi&quot;, Front-end va Back-end farqi.</p><div class="card-level">1 soat · nazariy</div></a><a class="card" href="02-html-tuzilishi.html"><div class="card-icon">🧱</div><div class="card-num">02-mavzu</div><h3>HTML hujjatining tuzilishi, asosiy teglar va atributlar</h3><p>HTML nima, teg va element, hujjat skeleti (html, head, body), sarlavhalar, paragraflar, matn teglari va atributlar. Birinchi veb-sahifani yaratish.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="03-jadval-royxat-forma.html"><div class="card-icon">📋</div><div class="card-num">03-mavzu</div><h3>Jadval, ro&#x27;yxat va forma elementlari</h3><p>Tartibli va tartibsiz ro&#x27;yxatlar, jadvallar (thead, tbody, colspan, rowspan), forma va uning elementlari: input turlari, label, select, textarea, tugmalar.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="04-havolalar-rasmlar-media.html"><div class="card-icon">🔗</div><div class="card-num">04-mavzu</div><h3>Havolalar va navigatsiya. Rasmlar va media elementlari</h3><p>Giperhavolalar (a, href, target), absolyut va nisbiy yo&#x27;llar, sahifa ichidagi havolalar, navigatsiya menyusi; rasmlar (img, alt), audio, video va iframe.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="05-semantik-teglar.html"><div class="card-icon">🏛️</div><div class="card-num">05-mavzu</div><h3>HTML5 semantik teglari va ularning roli</h3><p>Semantik HTML nima, header, nav, main, section, article, aside, footer teglarining vazifalari, div va span farqi, SEO va foydalanish qulayligi (accessibility) uchun ahamiyati.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="06-css-ulash-selektorlar-matn.html"><div class="card-icon">🎨</div><div class="card-num">06-mavzu</div><h3>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</h3><p>CSS nima, Inline, Internal va External usullar, qoida sintaksisi, teg/class/id va boshqa selektorlar, kaskad va ustuvorlik, ranglar, matn va shrift xossalari, Google Fonts.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="07-css-background-border.html"><div class="card-icon">🖼️</div><div class="card-num">07-mavzu</div><h3>CSS background va border xossalari</h3><p>Fon rangi, fon rasmi, takrorlanish, joylashuv va o&#x27;lcham (cover/contain), gradientlar; chegaralar: qalinlik, uslub, rang, border-radius, box-shadow va outline.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="08-box-model-flexbox-grid.html"><div class="card-icon">📦</div><div class="card-num">08-mavzu</div><h3>Box model va o&#x27;lcham birliklari. Flexbox va Grid</h3><p>Har bir element — quti: content, padding, border, margin; box-sizing; px, %, em, rem, vw, vh; display; Flexbox bilan bir o&#x27;lchamli va CSS Grid bilan ikki o&#x27;lchamli sahifa maketlari.</p><div class="card-level">3 soat · 1 nazariy + 2 amaliy</div></a><a class="card" href="09-pseudo-class-position.html"><div class="card-icon">📍</div><div class="card-num">09-mavzu</div><h3>CSS pseudo-class va pseudo-elementlar. CSS position</h3><p>:hover, :focus, :active, :nth-child kabi holat selektorlari; ::before, ::after, ::first-letter pseudo-elementlari; static, relative, absolute, fixed, sticky pozitsiyalari va z-index.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="10-responsiv-dizayn-figma.html"><div class="card-icon">📱</div><div class="card-num">10-mavzu</div><h3>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</h3><p>Responsiv dizayn nima, viewport, moslashuvchan rasmlar, media query sintaksisi, mobile-first yondashuv, breakpointlar, DevTools&#x27;da telefon rejimi; Figma&#x27;da maket bilan ishlash va uni kodga o&#x27;tkazish.</p><div class="card-level">3 soat · 1 nazariy + 2 amaliy</div></a><a class="card" href="11-git-github-seo.html"><div class="card-icon">🌿</div><div class="card-num">11-mavzu</div><h3>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</h3><p>Versiyalarni boshqarish tizimi nima, Git&#x27;ni o&#x27;rnatish, init, add, commit, status, log; GitHub&#x27;da repozitoriya, push va clone; GitHub Pages; SEO asoslari: title, description, sarlavhalar, alt, tezlik.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="12-css-animatsiya.html"><div class="card-icon">✨</div><div class="card-num">12-mavzu</div><h3>CSS animatsiyalar va transformatsiyalar</h3><p>transform (translate, scale, rotate, skew), transition bilan silliq o&#x27;tishlar, @keyframes va animation xossalari; interaktiv tugmalar, yuklanish belgisi, kartalar effektlari.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="13-jamoa-loyiha-deploy.html"><div class="card-icon">👥</div><div class="card-num">13-mavzu</div><h3>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</h3><p>Jamoaviy loyiha bosqichlari, rollarni taqsimlash, Git branch, merge va konfliktlar, GitHub&#x27;da hamkorlik va Pull Request; saytni Netlify va Vercel&#x27;ga bepul joylash.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="14-nazorat-ishi-1.html"><div class="card-icon">📝</div><div class="card-num">14-mavzu</div><h3>Yakuniy nazorat ishi — I bob (HTML va CSS)</h3><p>I bob bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.</p><div class="card-level">1 soat · nazorat ishi</div></a></div>
+<h3 class="bob-title">II bob. JavaScript asoslari</h3><div class="cards"><a class="card" href="15-js-ozgaruvchilar.html"><div class="card-icon">⚡</div><div class="card-num">15-mavzu</div><h3>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</h3><p>JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o&#x27;zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="16-js-operatorlar-shartlar.html"><div class="card-icon">🔀</div><div class="card-num">16-mavzu</div><h3>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</h3><p>Arifmetik, tayinlash, taqqoslash va mantiqiy operatorlar; == va === farqi; if, else if, else; ternary operator; switch; amaliy dasturlar: baho aniqlash, juft-toq, kirish tizimi.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="17-js-sikllar-funksiyalar.html"><div class="card-icon">🔁</div><div class="card-num">17-mavzu</div><h3>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</h3><p>for, while, do...while sikllari, break va continue, cheksiz sikl xavfi; funksiya e&#x27;lon qilish, parametrlar, return, arrow funksiyalar, ko&#x27;rinish doirasi; kalkulyator va son topish o&#x27;yini.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="18-js-massiv-obyekt.html"><div class="card-icon">🗂️</div><div class="card-num">18-mavzu</div><h3>Arraylar (massivlar) va obyektlar bilan ishlash</h3><p>Massiv yaratish, indekslar, length, push/pop/shift/unshift, includes/indexOf, for...of; forEach, map, filter, find, reduce; obyektlar, xossalar, metodlar, obyektlar massivi; o&#x27;quvchilar bahosini hisoblovchi dastur.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="19-dom-bom-eventlar.html"><div class="card-icon">🌳</div><div class="card-num">19-mavzu</div><h3>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</h3><p>DOM daraxti, elementlarni topish (querySelector), matn, atribut, uslub va class&#x27;larni o&#x27;zgartirish, element yaratish va o&#x27;chirish; BOM: window, location, localStorage, setTimeout; hodisalar va addEventListener; valyuta konvertori.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="20-js-mini-loyiha.html"><div class="card-icon">🧩</div><div class="card-num">20-mavzu</div><h3>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</h3><p>Loyihani rejalashtirish, &quot;holat → chizish&quot; usuli, forma tekshirish; To-Do List (localStorage bilan), mini test tizimi va interaktiv komponentlar — bosqichma-bosqich.</p><div class="card-level">2 soat · amaliy</div></a></div>
+<h3 class="bob-title">III bob. Python va ma&#x27;lumotlar bazasi</h3><div class="cards"><a class="card" href="21-python-kirish.html"><div class="card-icon">🐍</div><div class="card-num">21-mavzu</div><h3>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</h3><p>Back-end nima qiladi, algoritm va blok-sxema (Flowgorithm), Python&#x27;ni o&#x27;rnatish va VS Code, print va input, o&#x27;zgaruvchilar, int/float/str/bool, operatorlar, f-satrlar.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="22-python-shart-sikl-fayl.html"><div class="card-icon">🔀</div><div class="card-num">22-mavzu</div><h3>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</h3><p>if, elif, else va chekinish qoidasi; match; for va range(), while, break, continue; try/except bilan xatolarni ushlash; fayllarni ochish, o&#x27;qish, yozish va qo&#x27;shish (with open). Python kalkulyatori.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="23-python-list-tuple-set-dict.html"><div class="card-icon">📚</div><div class="card-num">23-mavzu</div><h3>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</h3><p>Ro&#x27;yxat (list) va uning metodlari, kesish (slicing), list comprehension; o&#x27;zgarmas tuple; takrorlanmas set; kalit-qiymatli dictionary; qaysi birini qachon tanlash; o&#x27;quvchilar ma&#x27;lumotlarini boshqarish dasturi.</p><div class="card-level">1 soat · nazariy</div></a><a class="card" href="24-python-funksiya-modul.html"><div class="card-icon">🧰</div><div class="card-num">24-mavzu</div><h3>Python funksiyalar, modullar va standart kutubxonalar</h3><p>def, parametrlar, standart qiymatlar, return, nomlangan argumentlar, lambda, ko&#x27;rinish doirasi, docstring; o&#x27;z modulini yaratish va import; math, random, datetime, json, os standart kutubxonalari; pip va tashqi paketlar.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="25-python-oop.html"><div class="card-icon">🏗️</div><div class="card-num">25-mavzu</div><h3>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</h3><p>Klass va obyekt, __init__ va self, atributlar va metodlar, __str__, inkapsulyatsiya, merosxo&#x27;rlik (inheritance), polimorfizm; kutubxona boshqaruv tizimi loyihasi.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="26-malumotlar-bazasi-kirish.html"><div class="card-icon">🗄️</div><div class="card-num">26-mavzu</div><h3>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</h3><p>Nima uchun fayllar yetarli emas, ma&#x27;lumotlar bazasi va DBMS, jadval, ustun, qator, birlamchi kalit, tashqi kalit, bog&#x27;lanish turlari (1:1, 1:N, N:M), SQL nima, relyatsion va NoSQL bazalar.</p><div class="card-level">1 soat · nazariy</div></a><a class="card" href="27-postgresql-jadval.html"><div class="card-icon">🐘</div><div class="card-num">27-mavzu</div><h3>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</h3><p>PostgreSQL va pgAdmin&#x27;ni o&#x27;rnatish, psql konsoli, ma&#x27;lumotlar bazasi yaratish, CREATE TABLE, asosiy ma&#x27;lumot turlari (INTEGER, NUMERIC, VARCHAR, TEXT, BOOLEAN, DATE, TIMESTAMP), SERIAL, ALTER TABLE va DROP TABLE.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="28-sql-crud.html"><div class="card-icon">✏️</div><div class="card-num">28-mavzu</div><h3>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</h3><p>CRUD konsepsiyasi; INSERT bilan qo&#x27;shish, SELECT bilan o&#x27;qish (ustunlarni tanlash, WHERE, ORDER BY, LIMIT), UPDATE bilan yangilash, DELETE bilan o&#x27;chirish; WHERE&#x27;siz UPDATE/DELETE xavfi; o&#x27;quvchilar bazasi loyihasi.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="29-sql-join-index-backup.html"><div class="card-icon">🔗</div><div class="card-num">29-mavzu</div><h3>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</h3><p>INNER, LEFT, RIGHT JOIN va ular farqi; bir nechta jadvalni birlashtirish; indekslar va EXPLAIN; cheklovlar va ma&#x27;lumotlar yaxlitligi (ON DELETE); pg_dump va pgAdmin orqali zaxira nusxa va tiklash.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="30-sql-filtr-aggregatsiya.html"><div class="card-icon">📊</div><div class="card-num">30-mavzu</div><h3>Filtrlash va shartlar. Aggregation va grouping</h3><p>WHERE&#x27;da taqqoslash, AND/OR/NOT, IN, BETWEEN, LIKE/ILIKE, IS NULL; ORDER BY, LIMIT, DISTINCT; agregat funksiyalar COUNT, SUM, AVG, MIN, MAX; GROUP BY va HAVING; statistik hisobotlar tayyorlash.</p><div class="card-level">1 soat · amaliy</div></a><a class="card" href="31-nazorat-ishi-2.html"><div class="card-icon">📝</div><div class="card-num">31-mavzu</div><h3>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</h3><p>JavaScript, Python va ma&#x27;lumotlar bazasi bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.</p><div class="card-level">1 soat · nazorat ishi</div></a></div>
+<h3 class="bob-title">IV bob. Python, PostgreSQL va Django</h3><div class="cards"><a class="card" href="32-python-postgresql.html"><div class="card-icon">🔌</div><div class="card-num">32-mavzu</div><h3>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</h3><p>Virtual muhit, psycopg kutubxonasi, ulanish, kursor, SQL so&#x27;rovlarni Python&#x27;dan bajarish, parametrli so&#x27;rovlar va SQL injection xavfi, commit va rollback, maxfiy sozlamalar; Python + PostgreSQL CRUD konsol dasturi.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="33-django-kirish.html"><div class="card-icon">🌿</div><div class="card-num">33-mavzu</div><h3>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</h3><p>Framework nima va nima uchun Django, MVT arxitekturasi, so&#x27;rovning Django ichidagi yo&#x27;li, o&#x27;rnatish, startproject va startapp, loyiha fayllari, settings.py, runserver, PostgreSQL&#x27;ga ulash.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="34-django-url-view.html"><div class="card-icon">🗺️</div><div class="card-num">34-mavzu</div><h3>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</h3><p>So&#x27;rov va javob obyektlari, funksiya asosidagi view&#x27;lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL&#x27;lar, GET parametrlari, 404 va redirect, Class Based View&#x27;lar bilan tanishuv.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="35-django-template-static.html"><div class="card-icon">🎨</div><div class="card-num">35-mavzu</div><h3>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</h3><p>render() va kontekst, Django Template Language: o&#x27;zgaruvchilar, {% if %}, {% for %}, filtrlar, {% url %}; shablon merosi (extends, block, include); CSS, JavaScript va rasmlar — static fayllar.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="36-django-model-orm.html"><div class="card-icon">🧬</div><div class="card-num">36-mavzu</div><h3>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</h3><p>Model — jadvalning Python klassi, maydon turlari, ForeignKey bog&#x27;lanishlari, __str__ va Meta; makemigrations va migrate; ORM bilan CRUD: create, all, filter, get, order_by, update, delete; get_object_or_404; view&#x27;larni bazaga ulash.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="37-django-admin-forms.html"><div class="card-icon">🛡️</div><div class="card-num">37-mavzu</div><h3>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</h3><p>Superuser, modellarni admin&#x27;da ro&#x27;yxatdan o&#x27;tkazish va sozlash (list_display, search_fields, list_filter, prepopulated_fields); Form va ModelForm, CSRF himoyasi, validatsiya, clean metodlari, xabarlar; ro&#x27;yxatdan o&#x27;tish va kirish tizimi.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="38-django-crud-loyiha.html"><div class="card-icon">🏁</div><div class="card-num">38-mavzu</div><h3>CRUD amallarini yaratish. CRUD asosida mini loyiha</h3><p>Maktab blogini to&#x27;liq CRUD ilovaga aylantirish: ro&#x27;yxat (sahifalash bilan), batafsil ko&#x27;rish, yaratish, tahrirlash, o&#x27;chirish (tasdiqlash bilan), faqat muallifga ruxsat; xuddi shu ishni Class Based View&#x27;lar (ListView, DetailView, CreateView, UpdateView, DeleteView) bilan qilish; sinovdan o&#x27;tkazish.</p><div class="card-level">2 soat · amaliy</div></a></div>
+<h3 class="bob-title">V bob. DRF va deploy</h3><div class="cards"><a class="card" href="39-drf-serializer.html"><div class="card-icon">🔄</div><div class="card-num">39-mavzu</div><h3>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</h3><p>API nima, REST arxitekturasi, JSON formati, HTTP metodlari va status kodlari; DRF&#x27;ni o&#x27;rnatish, Serializer va ModelSerializer, validatsiya, @api_view va APIView, Response, brauzerda ko&#x27;rinadigan API.</p><div class="card-level">2 soat · 1 nazariy + 1 amaliy</div></a><a class="card" href="40-drf-crud-api.html"><div class="card-icon">🧩</div><div class="card-num">40-mavzu</div><h3>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</h3><p>Generic view&#x27;lar (ListCreateAPIView, RetrieveUpdateDestroyAPIView), ViewSet va Router, ruxsatlar (faqat muallif), sahifalash, qidiruv va saralash, token autentifikatsiya, CORS; Front-end (JavaScript fetch) va Back-end integratsiyasi; mahsulotlar API&#x27;si.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="41-django-deploy.html"><div class="card-icon">🚀</div><div class="card-num">41-mavzu</div><h3>Django loyihasini serverga joylash (Deploy)</h3><p>Deploy nima, development va production farqi, hosting turlari; loyihani tayyorlash: DEBUG, SECRET_KEY, ALLOWED_HOSTS, gunicorn, whitenoise, dj-database-url, requirements.txt, collectstatic; Render&#x27;ga bosqichma-bosqich joylash, PostgreSQL, superuser; PythonAnywhere muqobili; deploy&#x27;dan keyingi tekshiruv.</p><div class="card-level">2 soat · amaliy</div></a><a class="card" href="42-nazorat-ishi-3.html"><div class="card-icon">🎓</div><div class="card-num">42-mavzu</div><h3>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</h3><p>Django, Django REST Framework va deploy bo&#x27;yicha nazorat: 25 ta yopiq test va 5 ta ochiq topshiriq (jami 100 ball); yakuniy loyiha talablari, g&#x27;oyalar, baholash mezoni va taqdimot rejasi.</p><div class="card-level">1 soat · nazorat ishi</div></a></div>
+</section>
+
+<section class="home-section">
+  <h2 id="kurs-davomidagi-loyiha-ishlari"><a class="anchor" href="#kurs-davomidagi-loyiha-ishlari">#</a>Kurs davomidagi loyiha ishlari</h2>
+  <p>O'quv dasturida tavsiya etilgan loyihalar. Har biri tegishli mavzuni o'tgandan keyin bajariladi va GitHub'dagi
+  portfoliongizga qo'shiladi.</p>
+  <div class="table-wrap"><table>
+    <tr><th>№</th><th>Loyiha</th><th>Qaysi mavzudan keyin</th></tr>
+    <tr><td>1</td><td>HTML yordamida shaxsiy vizitka (Personal Profile) sahifasi</td><td><a href="02-html-tuzilishi.html">2</a>–<a href="05-semantik-teglar.html">5</a></td></tr>
+    <tr><td>2</td><td>HTML va CSS yordamida o'quvchi portfolio sayti</td><td><a href="08-box-model-flexbox-grid.html">8</a></td></tr>
+    <tr><td>3</td><td>Maktab yoki sinf uchun veb-sahifa</td><td><a href="09-pseudo-class-position.html">9</a></td></tr>
+    <tr><td>4</td><td>Responsiv Landing Page</td><td><a href="10-responsiv-dizayn-figma.html">10</a></td></tr>
+    <tr><td>5</td><td>Figma dizayni asosida sahifa maketini kodlash</td><td><a href="10-responsiv-dizayn-figma.html">10</a></td></tr>
+    <tr><td>6–7</td><td>GitHub'da portfolio repozitoriyasi, versiyalarni boshqarish</td><td><a href="11-git-github-seo.html">11</a></td></tr>
+    <tr><td>8</td><td>Statik saytni Netlify yoki Vercel'ga joylash</td><td><a href="13-jamoa-loyiha-deploy.html">13</a></td></tr>
+    <tr><td>9</td><td>JavaScript kalkulyator</td><td><a href="17-js-sikllar-funksiyalar.html">17</a>, <a href="20-js-mini-loyiha.html">20</a></td></tr>
+    <tr><td>10</td><td>Tasodifiy son topish o'yini</td><td><a href="17-js-sikllar-funksiyalar.html">17</a>, <a href="20-js-mini-loyiha.html">20</a></td></tr>
+    <tr><td>11</td><td>To-Do List (vazifalar ro'yxati)</td><td><a href="20-js-mini-loyiha.html">20</a></td></tr>
+    <tr><td>12</td><td>Mini test tizimi</td><td><a href="20-js-mini-loyiha.html">20</a></td></tr>
+    <tr><td>13</td><td>Valyuta konvertori</td><td><a href="19-dom-bom-eventlar.html">19</a></td></tr>
+    <tr><td>14</td><td>O'quvchilar bahosini hisoblovchi dastur</td><td><a href="18-js-massiv-obyekt.html">18</a></td></tr>
+    <tr><td>15</td><td>Python kalkulyator</td><td><a href="22-python-shart-sikl-fayl.html">22</a></td></tr>
+    <tr><td>16</td><td>Python'da o'quvchilar ma'lumotlarini boshqarish</td><td><a href="23-python-list-tuple-set-dict.html">23</a></td></tr>
+    <tr><td>17</td><td>Python'da kutubxona boshqaruv tizimi</td><td><a href="25-python-oop.html">25</a></td></tr>
+    <tr><td>18</td><td>PostgreSQL'da o'quvchilar bazasi</td><td><a href="28-sql-crud.html">28</a></td></tr>
+    <tr><td>19</td><td>Mahsulotlar va buyurtmalar bazasi</td><td><a href="29-sql-join-index-backup.html">29</a>–<a href="30-sql-filtr-aggregatsiya.html">30</a></td></tr>
+    <tr><td>20</td><td>Python + PostgreSQL CRUD dasturi</td><td><a href="32-python-postgresql.html">32</a></td></tr>
+    <tr><td>21</td><td>Django'da Blog veb-ilovasi</td><td><a href="38-django-crud-loyiha.html">38</a></td></tr>
+    <tr><td>22–23</td><td>Django'da kutubxona / talabalar boshqaruv tizimi</td><td><a href="36-django-model-orm.html">36</a>–<a href="38-django-crud-loyiha.html">38</a></td></tr>
+    <tr><td>24–25</td><td>Django Forms bilan ro'yxatdan o'tish, Login va Register</td><td><a href="37-django-admin-forms.html">37</a></td></tr>
+    <tr><td>26</td><td>Django ORM yordamida ma'lumotlar bilan ishlovchi ilova</td><td><a href="36-django-model-orm.html">36</a></td></tr>
+    <tr><td>27–28</td><td>DRF yordamida REST API, mahsulotlar boshqaruv API'si</td><td><a href="40-drf-crud-api.html">40</a></td></tr>
+    <tr><td>29</td><td>Front-end va Back-end integratsiyasi (mini loyiha)</td><td><a href="40-drf-crud-api.html">40</a></td></tr>
+    <tr><td>30</td><td>Loyihani Render, Railway yoki boshqa hostingga joylash</td><td><a href="41-django-deploy.html">41</a></td></tr>
+    <tr><td>31</td><td>Yakuniy loyiha</td><td><a href="42-nazorat-ishi-3.html">42</a></td></tr>
+  </table></div>
+</section>
+
+<section class="home-section">
+  <h2 id="kurs-yakunida-siz"><a class="anchor" href="#kurs-yakunida-siz">#</a>Kurs yakunida siz...</h2>
+  <div class="roadmap">
+    <div class="stage"><h3>Bilim</h3><p>Front-end, Back-end, Git va GitHub, algoritmlash va dasturlashning asosiy tushunchalarini bilasiz;
+    zamonaviy IT yo'nalishlari haqida umumiy tasavvurga ega bo'lasiz.</p></div>
+    <div class="stage"><h3>Ko'nikma</h3><p>HTML/CSS bilan responsiv sahifa, JavaScript bilan interaktivlik, Python va Django bilan backend,
+    PostgreSQL bilan ma'lumotlar bazasi, DRF bilan API yarata olasiz; loyihani GitHub va hostingga joylay olasiz.</p></div>
+    <div class="stage"><h3>Kompetensiya</h3><p>Muammoni algoritmik fikrlash bilan tahlil qilib, yechim ishlab chiqasiz; boshlang'ich va
+    o'rta darajadagi veb-ilovalar yaratasiz; keyingi IT yo'nalishlarini o'rganishga tayyor bo'lasiz.</p></div>
+  </div>
+
+  <h3>Kerakli dasturlar</h3>
+  <ul>
+    <li><b>Brauzer</b>: Google Chrome yoki Microsoft Edge</li>
+    <li><b>Kod muharriri</b>: <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a> (+ "Live Server", "Python" kengaytmalari)</li>
+    <li><b>Git</b> va <b>GitHub</b> akkaunti (11-mavzu)</li>
+    <li><b>Python 3.12+</b> (21-mavzu) va <b>PostgreSQL</b> + pgAdmin (27-mavzu)</li>
+  </ul>
+  <div class="callout info">Ushbu qo'llanma o'quv dasturi mavzulari asosida mustaqil tayyorlangan ochiq ta'lim resursi. Xato yoki taklif bo'lsa —
+  <a href="https://github.com/oybekalloyorov/web_fullstak" target="_blank" rel="noopener">GitHub repozitoriyasida</a> issue oching.</div>
+</section>
+
+  </main>
+  
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

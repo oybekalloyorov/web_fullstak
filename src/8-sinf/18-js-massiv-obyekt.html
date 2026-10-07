@@ -1,0 +1,305 @@
+<!-- title: Arraylar (massivlar) va obyektlar bilan ishlash | desc: Massiv yaratish, indekslar, length, push/pop/shift/unshift, includes/indexOf, for...of; forEach, map, filter, find, reduce; obyektlar, xossalar, metodlar, obyektlar massivi; o'quvchilar bahosini hisoblovchi dastur. | icon: 🗂️ | level: 1 soat · amaliy | bob: II bob. JavaScript asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li><b>Massiv (array)</b> — ko'p qiymatni bitta o'zgaruvchida saqlashni;</li>
+  <li>Massivga qo'shish, o'chirish, qidirish va aylanib chiqishni;</li>
+  <li>Kuchli metodlar: <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>;</li>
+  <li><b>Obyekt</b> — bitta narsaning bir nechta xususiyatini saqlashni;</li>
+  <li>Obyektlar massivi bilan real ma'lumotlarni qayta ishlashni (14-loyiha).</li>
+</ul>
+</div>
+
+<h2>Massiv nima?</h2>
+<p>Sinfdagi 25 o'quvchi ismini saqlash uchun 25 ta o'zgaruvchi yaratish (<code>ism1</code>, <code>ism2</code>...) noqulay. <b>Massiv</b> — qiymatlarning
+<b>tartiblangan ro'yxati</b>, bitta o'zgaruvchi ichida.</p>
+<div class="analogy"><span class="t">O'xshatish: poyezd vagonlari</span>
+Massiv — poyezd. Har bir vagonda bitta qiymat. Vagonlar raqamlangan, lekin raqamlash <b>0 dan</b> boshlanadi: birinchi vagon — 0-vagon.
+Bu raqam <b>indeks</b> deyiladi. Vagonlar soni — <code>length</code>.</div>
+<pre data-lang="js" data-play>const mevalar = ["olma", "nok", "uzum", "anor"];
+//                 0       1       2       3      ← indekslar
+
+console.log(mevalar);
+console.log(mevalar[0]);                  // olma  — birinchi element
+console.log(mevalar[2]);                  // uzum
+console.log(mevalar.length);              // 4    — elementlar soni
+console.log(mevalar[mevalar.length - 1]); // anor — OXIRGI element
+console.log(mevalar[10]);                 // undefined — bunday element yo'q
+
+mevalar[1] = "shaftoli";                  // elementni o'zgartirish
+console.log(mevalar);
+
+const aralash = [14, "Ali", true, null];  // turli turlar ham bo'lishi mumkin
+const bosh = [];                           // bo'sh massiv</pre>
+
+<h2>Massiv metodlari</h2>
+<h3>Qo'shish va o'chirish</h3>
+<pre data-lang="js" data-play>const navbat = ["Ali", "Vali"];
+
+navbat.push("Gani");        // OXIRIGA qo'shish    → ["Ali", "Vali", "Gani"]
+navbat.unshift("Sobir");    // BOSHIGA qo'shish    → ["Sobir", "Ali", "Vali", "Gani"]
+console.log(navbat);
+
+const oxirgi = navbat.pop();      // OXIRIDAN olish   → "Gani"
+const birinchi = navbat.shift();  // BOSHIDAN olish   → "Sobir"
+console.log(oxirgi, birinchi, navbat);   // Gani Sobir ["Ali", "Vali"]
+
+// splice — o'rtadan o'chirish: (qaysi indeksdan, nechta)
+const sonlar = [10, 20, 30, 40, 50];
+sonlar.splice(1, 2);        // 1-indeksdan 2 ta element o'chdi
+console.log(sonlar);        // [10, 40, 50]</pre>
+<div class="table-wrap"><table>
+<tr><th>Metod</th><th>Nima qiladi</th><th>Eslab qolish</th></tr>
+<tr><td><code>push(x)</code></td><td>Oxiriga qo'shadi</td><td>Navbat oxiriga turish</td></tr>
+<tr><td><code>pop()</code></td><td>Oxirgisini olib tashlaydi va qaytaradi</td><td>Oxirgisi chiqib ketdi</td></tr>
+<tr><td><code>unshift(x)</code></td><td>Boshiga qo'shadi</td><td>Navbatsiz oldinga o'tdi</td></tr>
+<tr><td><code>shift()</code></td><td>Birinchisini olib tashlaydi</td><td>Navbatdagi birinchi kirdi</td></tr>
+<tr><td><code>splice(i, n)</code></td><td>i-indeksdan n tasini o'chiradi</td><td>Kesib olish</td></tr>
+</table></div>
+<h3>Qidirish va boshqa foydali metodlar</h3>
+<pre data-lang="js" data-play>const fanlar = ["matematika", "fizika", "informatika", "tarix"];
+
+console.log(fanlar.includes("fizika"));      // true  — bormi?
+console.log(fanlar.indexOf("informatika"));  // 2     — qaysi indeksda?
+console.log(fanlar.indexOf("kimyo"));        // -1    — topilmadi
+console.log(fanlar.join(", "));              // matnga: "matematika, fizika, ..."
+console.log("a,b,c".split(","));             // matndan massivga: ["a","b","c"]
+console.log(fanlar.slice(1, 3));             // nusxa: ["fizika", "informatika"]
+
+const sonlar = [5, 1, 10, 3];
+sonlar.sort((a, b) => a - b);                // o'sish tartibida saralash
+console.log(sonlar);                          // [1, 3, 5, 10]
+console.log(fanlar.sort());                   // matnlarni alifbo bo'yicha</pre>
+<div class="callout warn">Sonlarni <code>sort()</code> bilan qavssiz saralasangiz, ular <b>matn sifatida</b> saralanadi: <code>[5, 1, 10, 3].sort()</code> → <code>[1, 10, 3, 5]</code> 😱.
+Sonlar uchun doim <code>sort((a, b) =&gt; a - b)</code> yozing (kamayish tartibi uchun <code>b - a</code>).</div>
+
+<h2>Massivni aylanib chiqish</h2>
+<pre data-lang="js" data-play>const ballar = [85, 92, 78, 95, 60];
+
+// 1. Oddiy for — indeks kerak bo'lsa
+for (let i = 0; i < ballar.length; i++) {
+  console.log(`${i + 1}-o'quvchi: ${ballar[i]} ball`);
+}
+
+// 2. for...of — eng sodda va o'qilishi oson
+for (const ball of ballar) {
+  console.log(ball);
+}
+
+// 3. forEach — har bir element uchun funksiya
+ballar.forEach((ball, index) => {
+  console.log(`#${index}: ${ball}`);
+});</pre>
+<h3>Amaliy masala: eng katta, o'rtacha, yig'indi</h3>
+<pre data-lang="js" data-play>const ballar = [85, 92, 78, 95, 60];
+
+let yigindi = 0;
+let eng = ballar[0];
+for (const b of ballar) {
+  yigindi += b;
+  if (b > eng) eng = b;
+}
+const ortacha = yigindi / ballar.length;
+
+console.log(`Yig'indi: ${yigindi}`);
+console.log(`O'rtacha: ${ortacha.toFixed(1)}`);    // toFixed(1) — 1 xona kasr
+console.log(`Eng yuqori: ${eng}`);
+console.log(`Math bilan: ${Math.max(...ballar)}`);  // ... — massivni "yoyish"</pre>
+
+<h2>Kuchli massiv metodlari</h2>
+<p>Bu metodlar professional JavaScript'ning yuragi. Ular asl massivni o'zgartirmaydi — <b>yangi</b> natija qaytaradi.</p>
+<div class="table-wrap"><table>
+<tr><th>Metod</th><th>Savol</th><th>Natija</th></tr>
+<tr><td><code>map</code></td><td>"Har birini qanday o'zgartiray?"</td><td>Xuddi shuncha elementli <b>yangi massiv</b></td></tr>
+<tr><td><code>filter</code></td><td>"Qaysilari shartga mos?"</td><td>Faqat mos kelganlardan iborat massiv</td></tr>
+<tr><td><code>find</code></td><td>"Shartga mos <b>birinchisi</b> qaysi?"</td><td>Bitta element (yoki <code>undefined</code>)</td></tr>
+<tr><td><code>some</code> / <code>every</code></td><td>"Kamida bittasi / hammasi mosmi?"</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>reduce</code></td><td>"Hammasini bitta qiymatga qanday yig'ay?"</td><td>Bitta qiymat (yig'indi, ko'paytma...)</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: mevalar savati</span>
+<b>map</b> — har bir mevani to'g'rash (5 meva → 5 to'g'ralgan meva). <b>filter</b> — faqat pishganlarini tanlab olish. <b>find</b> — birinchi uchragan olmani
+olish. <b>reduce</b> — hammasidan bitta sharbat tayyorlash.</div>
+<pre data-lang="js" data-play>const narxlar = [12000, 45000, 8000, 30000];
+
+const chegirmali = narxlar.map(n => n * 0.9);          // har biriga 10% chegirma
+console.log(chegirmali);                               // [10800, 40500, 7200, 27000]
+
+const arzonlar = narxlar.filter(n => n < 20000);       // 20 000 dan arzonlari
+console.log(arzonlar);                                 // [12000, 8000]
+
+const birinchiQimmat = narxlar.find(n => n > 25000);
+console.log(birinchiQimmat);                           // 45000
+
+console.log(narxlar.some(n => n > 40000));             // true — kamida bittasi
+console.log(narxlar.every(n => n > 5000));             // true — hammasi
+
+const jami = narxlar.reduce((yigindi, n) => yigindi + n, 0);   // 0 — boshlang'ich qiymat
+console.log(jami);                                     // 95000</pre>
+
+<h2>Obyektlar</h2>
+<p>Massiv — ko'p <b>bir xil</b> narsalar ro'yxati. <b>Obyekt</b> esa <b>bitta narsaning</b> turli xususiyatlarini nomlari bilan saqlaydi.</p>
+<div class="analogy"><span class="t">O'xshatish: o'quvchi anketasi</span>
+Anketada: "Ism: Dilnoza", "Yosh: 14", "Sinf: 8-A", "To'garak: shaxmat". Har bir qator — <b>kalit: qiymat</b> jufti. Obyekt — aynan shunday anketa.</div>
+<pre data-lang="js" data-play>const oquvchi = {
+  ism: "Dilnoza",          // kalit (xossa nomi): qiymat
+  yosh: 14,
+  sinf: "8-A",
+  alochi: true,
+  fanlar: ["matematika", "ingliz tili"],    // qiymat massiv ham bo'lishi mumkin
+};
+
+// Xossani o'qish — ikki usul
+console.log(oquvchi.ism);          // nuqta orqali — ko'p ishlatiladi
+console.log(oquvchi["sinf"]);      // kvadrat qavs orqali
+
+// O'zgartirish, qo'shish, o'chirish
+oquvchi.yosh = 15;
+oquvchi.shahar = "Namangan";        // yangi xossa
+delete oquvchi.alochi;
+console.log(oquvchi);
+
+// Barcha kalitlar va qiymatlar
+console.log(Object.keys(oquvchi));
+console.log(Object.values(oquvchi));
+for (const kalit in oquvchi) {
+  console.log(`${kalit}: ${oquvchi[kalit]}`);
+}</pre>
+<h3>Metodlar — obyekt ichidagi funksiyalar</h3>
+<pre data-lang="js" data-play>const hisob = {
+  egasi: "Jasur",
+  balans: 50000,
+  toldirish(summa) {
+    this.balans += summa;            // this — "shu obyektning o'zi"
+    console.log(`+${summa}. Balans: ${this.balans}`);
+  },
+  yechish(summa) {
+    if (summa > this.balans) {
+      console.log("❌ Mablag' yetarli emas");
+      return;
+    }
+    this.balans -= summa;
+    console.log(`-${summa}. Balans: ${this.balans}`);
+  },
+};
+
+hisob.toldirish(20000);
+hisob.yechish(100000);
+hisob.yechish(30000);</pre>
+
+<h2>Obyektlar massivi — real ma'lumotlar</h2>
+<p>Haqiqiy dasturlarda ma'lumotlar deyarli doim shunday ko'rinishda bo'ladi: mahsulotlar ro'yxati, o'quvchilar ro'yxati, xabarlar ro'yxati. Serverdan keladigan
+ma'lumot ham (JSON, 39-mavzu) aynan shunday tuzilgan.</p>
+<pre data-lang="js" data-play>const mahsulotlar = [
+  { nomi: "Daftar", narx: 5000, soni: 120, toifa: "kanselyariya" },
+  { nomi: "Ruchka", narx: 3000, soni: 0, toifa: "kanselyariya" },
+  { nomi: "Ryukzak", narx: 180000, soni: 7, toifa: "sumka" },
+  { nomi: "Kalkulyator", narx: 95000, soni: 15, toifa: "texnika" },
+];
+
+// Omborda bor mahsulotlar nomlari
+const mavjud = mahsulotlar.filter(m => m.soni > 0).map(m => m.nomi);
+console.log("Mavjud:", mavjud);
+
+// Nomi bo'yicha qidirish
+const topilgan = mahsulotlar.find(m => m.nomi === "Ryukzak");
+console.log(topilgan.narx);
+
+// Ombordagi umumiy qiymat
+const omborQiymati = mahsulotlar.reduce((jami, m) => jami + m.narx * m.soni, 0);
+console.log(`Ombor qiymati: ${omborQiymati.toLocaleString()} so'm`);
+
+// Narx bo'yicha saralash (qimmatdan arzonga)
+const saralangan = [...mahsulotlar].sort((a, b) => b.narx - a.narx);
+saralangan.forEach(m => console.log(`${m.nomi}: ${m.narx} so'm`));</pre>
+
+<h2>Amaliy mashg'ulot: o'quvchilar bahosini hisoblovchi dastur (14-loyiha)</h2>
+<pre data-lang="js" data-play>const oquvchilar = [
+  { ism: "Akmal", ballar: [92, 85, 78] },
+  { ism: "Barno", ballar: [67, 88, 95] },
+  { ism: "Davron", ballar: [45, 52, 60] },
+  { ism: "Gulnoza", ballar: [98, 94, 91] },
+  { ism: "Erkin", ballar: [73, 39, 70] },
+];
+
+// 1. Yordamchi funksiyalar
+const ortacha = (sonlar) => sonlar.reduce((a, b) => a + b, 0) / sonlar.length;
+
+function baho(ball) {
+  if (ball >= 86) return 5;
+  if (ball >= 71) return 4;
+  if (ball >= 56) return 3;
+  return 2;
+}
+
+// 2. Har bir o'quvchi uchun natija
+const natijalar = oquvchilar.map(o => {
+  const ort = Math.round(ortacha(o.ballar));
+  return { ism: o.ism, ortacha: ort, baho: baho(ort) };
+});
+
+// 3. Reyting (o'rtacha ball bo'yicha)
+natijalar.sort((a, b) => b.ortacha - a.ortacha);
+
+console.log("🏆 REYTING");
+natijalar.forEach((n, i) => {
+  console.log(`${i + 1}. ${n.ism} — ${n.ortacha} ball, baho: ${n.baho}`);
+});
+
+// 4. Statistika
+const alochilar = natijalar.filter(n => n.baho === 5).map(n => n.ism);
+const sinfOrtachasi = ortacha(natijalar.map(n => n.ortacha));
+console.log(`\nA'lochilar: ${alochilar.join(", ") || "yo'q"}`);
+console.log(`Sinf o'rtachasi: ${sinfOrtachasi.toFixed(1)}`);
+console.log(`Qoniqarsiz baho olganlar: ${natijalar.filter(n => n.baho === 2).length} nafar`);</pre>
+<p><b>Topshiriqlar:</b></p>
+<ol class="steps">
+  <li>Har bir o'quvchiga 4-fan bahosi qo'shing va natijani qayta hisoblang.</li>
+  <li>Eng past ball olgan o'quvchini <code>reduce</code> yoki saralash bilan toping.</li>
+  <li>"Yangi o'quvchi qo'shish" funksiyasini yozing: <code>qosh(ism, ballar)</code> u <code>push</code> qilsin.</li>
+  <li>Ismi bo'yicha qidirish funksiyasi: <code>izla("barno")</code> — katta-kichik harfga e'tibor bermasin.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Indeks 1 dan boshlanadi deb o'ylash: <code>arr[1]</code> — bu <b>ikkinchi</b> element!</li>
+  <li>❌ Oxirgi elementga <code>arr[arr.length]</code> deb murojaat — to'g'risi <code>arr[arr.length - 1]</code>.</li>
+  <li>❌ <code>map</code> ichida <code>return</code> ni unutish (jingalak qavs bilan yozilganda) — natija <code>[undefined, undefined...]</code>.</li>
+  <li>❌ Obyekt xossasi nomidagi xato: <code>oquvchi.Ism</code> — <code>undefined</code>, chunki kalit <code>ism</code>.</li>
+  <li>❌ <code>reduce</code> da boshlang'ich qiymatni (<code>, 0</code>) unutish.</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q"><code>const a = [10, 20, 30];</code> — <code>a[1]</code> nimaga teng?</p><ol>
+<li>10</li><li>20</li><li>30</li><li>undefined</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Massiv oxiriga element qo'shuvchi metod?</p><ol>
+<li><code>push()</code></li><li><code>pop()</code></li><li><code>shift()</code></li><li><code>add()</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>[1, 2, 3, 4].filter(x =&gt; x % 2 === 0)</code> natijasi?</p><ol>
+<li>[1, 3]</li><li>[2, 4, 6, 8]</li><li>[2, 4]</li><li>2</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>[1, 2, 3].map(x =&gt; x * 10)</code> natijasi?</p><ol>
+<li>60</li><li>[1, 2, 3]</li><li>30</li><li>[10, 20, 30]</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>const k = { ism: "Ali", yosh: 14 };</code> — yoshni o'qishning to'g'ri usuli?</p><ol>
+<li><code>k[yosh]</code></li><li><code>k.yosh</code></li><li><code>k(yosh)</code></li><li><code>k-&gt;yosh</code></li></ol>
+<p class="explain"><code>k["yosh"]</code> ham to'g'ri — qo'shtirnoq bilan.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Massivdagi barcha sonlar yig'indisini bitta qiymatga yig'uvchi metod?</p><ol>
+<li><code>map</code></li><li><code>find</code></li><li><code>reduce</code></li><li><code>join</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Kitoblar javoni:</b> 6 ta kitobdan iborat obyektlar massivi (nomi, muallif, yil, sahifalar, o'qilganmi). Chiqaring: o'qilmagan kitoblar, eng qalin kitob, 2000-yildan keyin chiqqanlar, umumiy sahifalar soni.</li>
+  <li><b>Takrorlarni olib tashlash:</b> <code>[1, 2, 2, 3, 1, 4]</code> → <code>[1, 2, 3, 4]</code> (<code>filter</code> + <code>indexOf</code> yoki <code>new Set()</code>).</li>
+  <li><b>So'zlar statistikasi:</b> gapni so'zlarga ajratib (<code>split(" ")</code>), eng uzun so'zni va so'zlar sonini toping.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Massiv: <code>[a, b, c]</code>, indeks 0 dan; <code>length</code>, <code>push/pop/shift/unshift</code>, <code>includes</code>, <code>indexOf</code>, <code>sort((a,b)=&gt;a-b)</code>.</li>
+  <li>Aylanish: <code>for</code>, <code>for...of</code>, <code>forEach</code>.</li>
+  <li><code>map</code> — o'zgartirish, <code>filter</code> — tanlash, <code>find</code> — birinchisi, <code>reduce</code> — yig'ish.</li>
+  <li>Obyekt: <code>{ kalit: qiymat }</code>; <code>obj.kalit</code> yoki <code>obj["kalit"]</code>; metodlarda <code>this</code>.</li>
+  <li>Obyektlar massivi — real dasturlardagi ma'lumotlarning asosiy shakli.</li>
+</ul>
+</div>

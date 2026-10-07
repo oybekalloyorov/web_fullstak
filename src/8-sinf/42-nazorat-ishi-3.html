@@ -1,0 +1,266 @@
+<!-- title: Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha | desc: Django, Django REST Framework va deploy bo'yicha nazorat: 25 ta yopiq test va 5 ta ochiq topshiriq (jami 100 ball); yakuniy loyiha talablari, g'oyalar, baholash mezoni va taqdimot rejasi. | icon: 🎓 | level: 1 soat · nazorat ishi | bob: V bob. DRF va deploy -->
+
+<div class="goals">
+<h3>📋 Nazorat ishi tuzilishi</h3>
+<ul>
+  <li><b>1-qism:</b> 25 ta yopiq test × 3 ball = <b>75 ball</b> (Python+PostgreSQL — 3, Django — 14, DRF — 5, Deploy — 3).</li>
+  <li><b>2-qism:</b> 5 ta ochiq savol va amaliy topshiriq × 5 ball = <b>25 ball</b>.</li>
+  <li><b>Jami: 100 ball.</b> Vaqt: 80 daqiqa.</li>
+  <li>Sahifa oxirida — kursning <b>yakuniy loyihasi</b> talablari (31-loyiha).</li>
+</ul>
+</div>
+
+<h2>Takrorlash rejasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Mavzu</th><th>Bilishingiz kerak</th></tr>
+<tr><td><a href="32-python-postgresql.html">32. Python + PostgreSQL</a></td><td>venv, psycopg, connect/execute/fetch, commit, parametrli so'rovlar va SQL injection</td></tr>
+<tr><td><a href="33-django-kirish.html">33. Django'ga kirish</a></td><td>MVT, project/app, startproject/startapp, INSTALLED_APPS, runserver, settings, DATABASES</td></tr>
+<tr><td><a href="34-django-url-view.html">34. URL va View</a></td><td>request/response, path, include, converterlar, name/reverse, Http404, redirect, CBV</td></tr>
+<tr><td><a href="35-django-template-static.html">35. Template va static</a></td><td>render, {{ }}, {% %}, filtrlar, extends/block/include, {% url %}, {% static %}</td></tr>
+<tr><td><a href="36-django-model-orm.html">36. Model va ORM</a></td><td>maydon turlari, ForeignKey, makemigrations/migrate, objects.all/filter/get/create, lookups</td></tr>
+<tr><td><a href="37-django-admin-forms.html">37. Admin va Forms</a></td><td>admin.register, ModelAdmin, Form/ModelForm, is_valid, csrf_token, login_required, UserCreationForm</td></tr>
+<tr><td><a href="38-django-crud-loyiha.html">38. CRUD</a></td><td>5 sahifa, instance=, ruxsatlar, POST bilan o'chirish, Paginator, generic CBV'lar</td></tr>
+<tr><td><a href="39-drf-serializer.html">39–40. DRF</a></td><td>REST, JSON, metodlar va status kodlar, Serializer, @api_view, generics, ViewSet, Router, permissions, CORS</td></tr>
+<tr><td><a href="41-django-deploy.html">41. Deploy</a></td><td>DEBUG=False, SECRET_KEY, ALLOWED_HOSTS, gunicorn, whitenoise, collectstatic, muhit o'zgaruvchilari</td></tr>
+</table></div>
+
+<h2>1-qism: Yopiq testlar (25 × 3 = 75 ball)</h2>
+<div class="quiz" data-answer="2"><p class="q">1. SQL injection'dan himoyalangan so'rov qaysi?</p><ol>
+<li><code>cur.execute(f"SELECT * FROM t WHERE ism='{ism}'")</code></li><li><code>cur.execute("SELECT * FROM t WHERE ism=%s", (ism,))</code></li><li><code>cur.execute("SELECT * FROM t WHERE ism='" + ism + "'")</code></li><li>Hammasi xavfsiz</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">2. psycopg'da INSERT dan keyin o'zgarishni saqlash?</p><ol>
+<li><code>cur.save()</code></li><li><code>cur.fetchall()</code></li><li><code>conn.close()</code></li><li><code>conn.commit()</code> (yoki <code>with</code> blokining muvaffaqiyatli tugashi)</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">3. Loyiha kutubxonalarini alohida saqlash uchun nima yaratiladi?</p><ol>
+<li>Virtual muhit (venv)</li><li>Yangi baza</li><li>Git branch</li><li>Docker</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">4. Django arxitekturasidagi "T" nima?</p><ol>
+<li>Table</li><li>Test</li><li>Template</li><li>Token</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">5. Yangi ilova yaratilgandan keyin uni qayerga qo'shish kerak?</p><ol>
+<li><code>urls.py</code></li><li><code>settings.py</code> → <code>INSTALLED_APPS</code></li><li><code>models.py</code></li><li><code>manage.py</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">6. <code>path("kitob/&lt;int:pk&gt;/", views.kitob)</code> — view qanday e'lon qilinadi?</p><ol>
+<li><code>def kitob(request):</code></li><li><code>def kitob(pk):</code></li><li><code>def kitob(request, id):</code></li><li><code>def kitob(request, pk):</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">7. Ilova URL'larini asosiy faylga ulash?</p><ol>
+<li><code>path("", include("blog.urls"))</code></li><li><code>import blog.urls</code></li><li><code>urls.append(blog)</code></li><li><code>path("", blog)</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">8. Shablonda o'zgaruvchi chiqarish?</p><ol>
+<li><code>{% ism %}</code></li><li><code>[[ ism ]]</code></li><li><code>{{ ism }}</code></li><li><code>${ ism }</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">9. Umumiy skeletdan meros olish tegi?</p><ol>
+<li><code>{% include %}</code></li><li><code>{% extends %}</code></li><li><code>{% block %}</code></li><li><code>{% load %}</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">10. Shablonda CSS ulash uchun avval nima yoziladi?</p><ol>
+<li><code>{% css %}</code></li><li><code>{% import static %}</code></li><li><code>{% url 'static' %}</code></li><li><code>{% load static %}</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">11. Model o'zgargandan keyin bajariladigan buyruqlar ketma-ketligi?</p><ol>
+<li><code>makemigrations</code> → <code>migrate</code></li><li><code>migrate</code> → <code>makemigrations</code></li><li><code>runserver</code> → <code>migrate</code></li><li><code>collectstatic</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">12. "Har bir kitobning bitta muallifi, muallifning ko'p kitobi" — Kitob modelida qaysi maydon?</p><ol>
+<li><code>ManyToManyField(Muallif)</code></li><li><code>CharField</code></li><li><code>ForeignKey(Muallif, on_delete=...)</code></li><li><code>OneToOneField</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">13. Narxi 50 000 dan kichik kitoblar?</p><ol>
+<li><code>Kitob.objects.get(narx&lt;50000)</code></li><li><code>Kitob.objects.filter(narx__lt=50000)</code></li><li><code>Kitob.objects.all(narx=50000)</code></li><li><code>Kitob.filter("narx &lt; 50000")</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">14. Obyekt topilmasa avtomatik 404 qaytaruvchi funksiya?</p><ol>
+<li><code>Model.objects.get()</code></li><li><code>Http404()</code></li><li><code>find()</code></li><li><code>get_object_or_404()</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">15. Admin ro'yxatidagi ustunlarni belgilovchi sozlama?</p><ol>
+<li><code>list_display</code></li><li><code>fields</code></li><li><code>columns</code></li><li><code>search_fields</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">16. POST formada majburiy xavfsizlik tegi?</p><ol>
+<li><code>{% secure %}</code></li><li><code>{% load csrf %}</code></li><li><code>{% csrf_token %}</code></li><li><code>{% token %}</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">17. Mavjud obyektni ModelForm bilan tahrirlash?</p><ol>
+<li><code>Form(request.POST, id=5)</code></li><li><code>Form(request.POST, instance=obj)</code></li><li><code>Form.update(obj)</code></li><li><code>obj.form()</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">18. Faqat tizimga kirganlar uchun ochiq view (funksiya)?</p><ol>
+<li><code>@admin_required</code></li><li><code>@csrf_exempt</code></li><li><code>@api_view</code></li><li><code>@login_required</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">19. REST API'da resursni o'chirish metodi va javob kodi?</p><ol>
+<li>GET, 200</li><li>POST, 201</li><li>DELETE, 204</li><li>PUT, 404</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">20. Model ↔ JSON aylantiruvchi DRF klassi?</p><ol>
+<li><code>ModelSerializer</code></li><li><code>ModelForm</code></li><li><code>ModelAdmin</code></li><li><code>JsonResponse</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">21. Bir nechta obyektni serializatsiya qilish?</p><ol>
+<li><code>Serializer(qs, all=True)</code></li><li><code>Serializer(qs, many=True)</code></li><li><code>Serializer.list(qs)</code></li><li><code>Serializer(qs)</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">22. To'liq CRUD API'ni bitta klassda beruvchi DRF klassi va URL'larni avtomatik yaratuvchi vosita?</p><ol>
+<li><code>APIView</code> + <code>path</code></li><li><code>Serializer</code> + <code>include</code></li><li><code>ListView</code> + <code>Paginator</code></li><li><code>ModelViewSet</code> + <code>DefaultRouter</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">23. Boshqa domendagi JS sayt API'ga murojaat qila olishi uchun Django'da nima sozlanadi?</p><ol>
+<li>CSRF</li><li>ALLOWED_HOSTS</li><li>CORS (<code>django-cors-headers</code>)</li><li>WhiteNoise</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">24. Production'da Django ilovasini ishga tushiruvchi server dasturi?</p><ol>
+<li><code>gunicorn</code></li><li><code>runserver</code></li><li><code>pip</code></li><li><code>psql</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">25. Internetdagi saytda qaysi sozlama noto'g'ri?</p><ol>
+<li><code>DEBUG = False</code></li><li><code>DEBUG = True</code></li><li><code>ALLOWED_HOSTS = ["sayt.onrender.com"]</code></li><li><code>SECRET_KEY</code> muhit o'zgaruvchisida</li></ol></div>
+
+<h2>2-qism: Ochiq savollar va amaliy topshiriqlar (5 × 5 = 25 ball)</h2>
+<div class="exercise">
+<h3>1-topshiriq (5 ball). Nazariy savol</h3>
+<p>Foydalanuvchi brauzerda <code>/maqola/5/</code> ni ochganda Django ichida nima sodir bo'lishini MVT tushunchalari bilan bosqichma-bosqich tushuntiring.</p>
+<details><summary>Namuna javob va baholash</summary>
+<p>(1) So'rov Django'ga keladi; (2) <code>urls.py</code> yo'llarni tekshirib, <code>maqola/&lt;int:id&gt;/</code> ga mosini topadi va <code>id=5</code> bilan view'ni chaqiradi;
+(3) View Model orqali (ORM) bazadan 5-maqolani so'raydi — <code>get_object_or_404(Maqola, id=5)</code>; topilmasa 404; (4) View maqolani kontekst sifatida Template'ga beradi —
+<code>render(...)</code>; (5) Shablon ma'lumot bilan to'ldirilib, tayyor HTML javob brauzerga qaytariladi.</p>
+<p><b>Baholash:</b> URL — 1; View — 1; Model/ORM/baza — 1; Template/render — 1; to'g'ri ketma-ketlik va 404 holati — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>2-topshiriq (5 ball). Model va admin</h3>
+<p><code>Kitob</code> modelini yozing: nomi (200 belgi), muallif (100 belgi), janr (tanlov: roman, she'riyat, ilmiy), yil, narx (pul), mavjud (standart — ha), qo'shilgan sana (avtomatik).
+<code>__str__</code> nomini qaytarsin. Admin'da ro'yxatda nomi, muallif, janr, mavjud ko'rinsin; janr va mavjudlik bo'yicha filtr, nom va muallif bo'yicha qidiruv.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="python">from django.db import models
+from django.contrib import admin
+
+
+class Kitob(models.Model):
+    JANRLAR = [("roman", "Roman"), ("sheriyat", "She'riyat"), ("ilmiy", "Ilmiy")]
+    nomi = models.CharField(max_length=200)
+    muallif = models.CharField(max_length=100)
+    janr = models.CharField(max_length=20, choices=JANRLAR)
+    yil = models.PositiveIntegerField()
+    narx = models.DecimalField(max_digits=10, decimal_places=2)
+    mavjud = models.BooleanField(default=True)
+    qoshilgan = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nomi
+
+
+@admin.register(Kitob)
+class KitobAdmin(admin.ModelAdmin):
+    list_display = ["nomi", "muallif", "janr", "mavjud"]
+    list_filter = ["janr", "mavjud"]
+    search_fields = ["nomi", "muallif"]</pre>
+<p><b>Baholash:</b> maydon turlari to'g'ri — 2; choices va default/auto_now_add — 1; <code>__str__</code> — 1; admin sozlamalari — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>3-topshiriq (5 ball). View va shablon</h3>
+<p>Mavjud kitoblar ro'yxatini ko'rsatuvchi view va shablon yozing: <code>?q=</code> parametri bo'lsa, nomi bo'yicha qidirsin; ro'yxat bo'sh bo'lsa "Kitob topilmadi" chiqsin;
+har bir kitob nomi batafsil sahifaga havola bo'lsin.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="python">def kitoblar(request):
+    q = request.GET.get("q", "").strip()
+    qs = Kitob.objects.filter(mavjud=True)
+    if q:
+        qs = qs.filter(nomi__icontains=q)
+    return render(request, "kutubxona/kitoblar.html", {"kitoblar": qs, "q": q})</pre>
+<pre data-lang="django">{% extends "kutubxona/base.html" %}
+{% block content %}
+  <form><input name="q" value="{{ q }}" placeholder="Qidirish"><button>Izlash</button></form>
+  <ul>
+    {% for k in kitoblar %}
+      <li><a href="{% url 'kutubxona:kitob' k.id %}">{{ k.nomi }}</a> — {{ k.muallif }}</li>
+    {% empty %}
+      <li>Kitob topilmadi</li>
+    {% endfor %}
+  </ul>
+{% endblock %}</pre>
+<p><b>Baholash:</b> filter va icontains — 1; GET parametr — 1; render va kontekst — 1; for/empty — 1; <code>{% url %}</code> bilan havola — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>4-topshiriq (5 ball). DRF API</h3>
+<p><code>Kitob</code> uchun to'liq CRUD API yarating (<code>/api/kitoblar/</code>): o'qish — hammaga, o'zgartirish — faqat tizimga kirganlarga; narx musbat bo'lishi tekshirilsin;
+nom bo'yicha qidiruv.</p>
+<details><summary>Namuna javob</summary>
+<pre data-lang="python">from rest_framework import serializers, viewsets, permissions, filters
+from rest_framework.routers import DefaultRouter
+
+
+class KitobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kitob
+        fields = "__all__"
+
+    def validate_narx(self, v):
+        if v <= 0:
+            raise serializers.ValidationError("Narx musbat bo'lishi kerak")
+        return v
+
+
+class KitobViewSet(viewsets.ModelViewSet):
+    queryset = Kitob.objects.all()
+    serializer_class = KitobSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["nomi"]
+
+
+router = DefaultRouter()
+router.register("kitoblar", KitobViewSet)
+# urls.py: path("api/", include(router.urls))</pre>
+<p><b>Baholash:</b> serializer — 1; validatsiya — 1; ViewSet — 1; ruxsat — 1; router va qidiruv — 1.</p>
+</details>
+</div>
+<div class="exercise">
+<h3>5-topshiriq (5 ball). Deploy</h3>
+<p>Django loyihasini Render'ga joylash uchun bajariladigan asosiy qadamlarni va production sozlamalarini sanab, har birini qisqa tushuntiring.</p>
+<details><summary>Namuna javob</summary>
+<ol>
+  <li><code>gunicorn</code>, <code>whitenoise</code>, <code>dj-database-url</code> o'rnatish va <code>requirements.txt</code> ni yangilash.</li>
+  <li><code>settings.py</code>: <code>DEBUG=False</code>, <code>SECRET_KEY</code> va baza — muhit o'zgaruvchilaridan, <code>ALLOWED_HOSTS</code> va <code>CSRF_TRUSTED_ORIGINS</code> — domen, WhiteNoise middleware, <code>STATIC_ROOT</code>.</li>
+  <li><code>build.sh</code>: pip install → collectstatic → migrate. Kod GitHub'ga push.</li>
+  <li>Render'da PostgreSQL va Web Service; Start: <code>gunicorn config.wsgi:application</code>; Environment Variables.</li>
+  <li>Deploy'dan keyin: superuser yaratish, tekshiruv ro'yxati, Logs orqali xatolarni topish.</li>
+</ol>
+<p><b>Baholash:</b> har bir to'g'ri tushuntirilgan bosqich — 1 ball.</p>
+</details>
+</div>
+
+<h2>Baholash shkalasi</h2>
+<div class="table-wrap"><table>
+<tr><th>Ball</th><th>Natija</th></tr>
+<tr><td>86–100</td><td>A'lo — kurs dasturini to'liq o'zlashtirgansiz</td></tr>
+<tr><td>71–85</td><td>Yaxshi</td></tr>
+<tr><td>60–70</td><td>Qoniqarli</td></tr>
+<tr><td>0–59</td><td>Qoniqarsiz — mentor bilan takrorlash tavsiya etiladi</td></tr>
+</table></div>
+
+<h2>Yakuniy loyiha (31-loyiha)</h2>
+<p>Kurs davomida o'rganilgan <b>barcha</b> bilimlarni bitta loyihada namoyish eting. Loyiha individual yoki 2–3 kishilik jamoada (13-mavzu) bajariladi.</p>
+<h3>Majburiy talablar</h3>
+<div class="table-wrap"><table>
+<tr><th>Qism</th><th>Talab</th><th>Mavzular</th></tr>
+<tr><td>Front-end</td><td>Semantik HTML, o'z CSS dizayni, responsiv (telefon + kompyuter), kamida bitta JS interaktivlik</td><td>2–12, 15–20</td></tr>
+<tr><td>Ma'lumotlar bazasi</td><td>PostgreSQL; kamida 3 ta model, kamida bitta <code>ForeignKey</code></td><td>26–30, 36</td></tr>
+<tr><td>Back-end</td><td>Django: CRUD (5 sahifa), shablon merosi, formalar va validatsiya, admin panel</td><td>33–38</td></tr>
+<tr><td>Foydalanuvchilar</td><td>Ro'yxatdan o'tish / kirish; kamida bitta "faqat muallif" ruxsati</td><td>37–38</td></tr>
+<tr><td>API</td><td>Kamida bitta resurs uchun DRF API (GET + POST)</td><td>39–40</td></tr>
+<tr><td>Algoritmik qism</td><td>Shart va sikllarga asoslangan mantiq: statistika, reyting, hisob-kitob, filtrlash</td><td>16–18, 21–23, 30</td></tr>
+<tr><td>Git va deploy</td><td>GitHub'da kamida 15 ta mazmunli commit, README; internetga joylangan</td><td>11, 13, 41</td></tr>
+</table></div>
+<h3>Loyiha g'oyalari</h3>
+<ul>
+  <li>📚 <b>Maktab kutubxonasi:</b> kitoblar katalogi, ijaraga olish/qaytarish, kechikish jarimasi, eng ko'p o'qilgan kitoblar reytingi.</li>
+  <li>📝 <b>Onlayn test tizimi:</b> o'qituvchi test yaratadi, o'quvchilar yechadi, natijalar va reyting jadvali.</li>
+  <li>🏫 <b>Sinf jurnali:</b> o'quvchilar, fanlar, baholar, davomat; o'rtacha baholar va hisobotlar.</li>
+  <li>🛒 <b>Maktab do'koni / yarmarka:</b> mahsulotlar, savat, buyurtmalar, ombor hisobi.</li>
+  <li>🎯 <b>To'garaklar portali:</b> to'garaklar, joylar soni, ro'yxatdan o'tish, jadval.</li>
+  <li>💡 <b>O'z g'oyangiz</b> — mentor bilan kelishgan holda.</li>
+</ul>
+<h3>Bajarish rejasi</h3>
+<ol class="steps">
+  <li><b>G'oya va rejalashtirish</b> (1-hafta): funksiyalar ro'yxati, ER-diagramma (26-mavzu), Figma'da 2–3 sahifa maketi (10-mavzu), GitHub repozitoriya va Kanban doskasi.</li>
+  <li><b>Back-end</b> (2-hafta): modellar, migratsiyalar, admin, CRUD view'lar va formalar.</li>
+  <li><b>Front-end</b> (3-hafta): shablonlar, dizayn, responsivlik, JS interaktivlik.</li>
+  <li><b>API, sinov va deploy</b> (4-hafta): DRF endpoint, sinov ssenariylari va testlar, Render'ga joylash, README.</li>
+  <li><b>Taqdimot.</b></li>
+</ol>
+<h3>Baholash mezoni (100 ball)</h3>
+<div class="table-wrap"><table>
+<tr><th>Mezon</th><th>Ball</th></tr>
+<tr><td>Funksionallik: barcha majburiy talablar ishlaydi, xatolarsiz</td><td>30</td></tr>
+<tr><td>Kod sifati: tushunarli nomlar, tartibli tuzilma, takrorlanmaslik, xavfsizlik (CSRF, ruxsatlar, parametrli so'rovlar)</td><td>20</td></tr>
+<tr><td>Dizayn va foydalanish qulayligi: chiroyli, responsiv, tushunarli</td><td>15</td></tr>
+<tr><td>Ma'lumotlar bazasi tuzilmasi: to'g'ri modellar va bog'lanishlar</td><td>10</td></tr>
+<tr><td>Git, README va deploy: commit tarixi, hujjat, ishlaydigan havola</td><td>10</td></tr>
+<tr><td>Taqdimot: maqsadni, ishlash prinsipini va texnologiyalarni tushuntira olish, savollarga javob</td><td>15</td></tr>
+</table></div>
+<h3>Taqdimot rejasi (5–7 daqiqa)</h3>
+<ol>
+  <li><b>Muammo va g'oya</b> — loyiha kimga va nima uchun kerak? (30 soniya)</li>
+  <li><b>Jonli namoyish</b> — internetdagi sayt: asosiy ssenariylar (3 daqiqa).</li>
+  <li><b>Texnik tuzilma</b> — modellar diagrammasi, qaysi texnologiyalar qayerda ishlatilgan (1–2 daqiqa).</li>
+  <li><b>Qiyinchiliklar va xulosalar</b> — eng qiyin muammo va uni qanday hal qildingiz; nimani yaxshilagan bo'lardingiz (1 daqiqa).</li>
+  <li><b>Savollarga javob.</b></li>
+</ol>
+<p>Loyiha havolasi o'quv dasturiga ko'ra GitHub repozitoriyasi yoki mentor tasdiqlagan boshqa platforma (Google Drive, Telegram kanal/guruhdagi video-taqdimot) orqali topshiriladi.</p>
+
+<div class="summary-box">
+<h3>🎓 Tabriklaymiz — kurs yakunlandi!</h3>
+<p>Siz 66 soat davomida veb-sahifaning birinchi tegidan internetda ishlaydigan, ma'lumotlar bazasi va API'ga ega full-stack ilovagacha bo'lgan yo'lni bosib o'tdingiz:
+<b>HTML → CSS → JavaScript → Python → PostgreSQL → Django → DRF → Deploy</b>.</p>
+<p><b>Keyingi qadamlar:</b></p>
+<ul>
+  <li>Ushbu saytdagi <a href="../index.html">"Full-stack qo'llanma"</a> kursida JavaScript backend (Node.js, Express) va React bilan tanishing.</li>
+  <li><b>Telegram botlar</b> (Python + Aiogram) — Python bilimlaringizni yangi yo'nalishda qo'llang.</li>
+  <li>Loyihalar qilishda davom eting: har bir yangi loyiha — portfoliongizga yangi qadam.</li>
+  <li>Olimpiadalar, xakatonlar va IT-tanlovlarda qatnashing.</li>
+</ul>
+<p>Omad! 🚀</p>
+</div>

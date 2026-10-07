@@ -1,0 +1,264 @@
+<!-- title: JavaScript'ga kirish. O'zgaruvchilar va ma'lumot turlari | desc: JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o'zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof. | icon: ⚡ | level: 1 soat · amaliy | bob: II bob. JavaScript asoslari -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>JavaScript nima va u HTML/CSS'dan nimasi bilan farq qilishini;</li>
+  <li>JavaScript kodini sahifaga ulash va brauzer konsolidan foydalanishni;</li>
+  <li><b>O'zgaruvchi</b> nima ekanini va <code>let</code>, <code>const</code> bilan yaratishni;</li>
+  <li>Asosiy ma'lumot turlarini: matn, son, mantiqiy qiymat va boshqalar;</li>
+  <li>Birinchi interaktiv dasturingizni yozishni.</li>
+</ul>
+</div>
+
+<h2>JavaScript nima?</h2>
+<p><b>JavaScript (JS)</b> — veb-sahifalarga <b>harakat va mantiq</b> qo'shuvchi <b>dasturlash tili</b>. HTML va CSS'dan farqli o'laroq, unda hisob-kitob, shartlar,
+takrorlanishlar bor — ya'ni u haqiqiy dasturlash tili.</p>
+<div class="analogy"><span class="t">O'xshatish: uy (davomi)</span>
+HTML — devorlar, CSS — bo'yoq va mebel. <b>JavaScript</b> — elektr tarmog'i va "aqlli uy" tizimi: tugma bosilsa chiroq yonadi, eshik oldiga kelsangiz
+qo'ng'iroq chalinadi, harorat pasaysa isitish yoqiladi.</div>
+<p><b>JavaScript bilan nimalar qilinadi?</b></p>
+<ul>
+  <li>Tugma bosilganda biror narsa sodir bo'lishi (menyu ochilishi, rasm almashishi);</li>
+  <li>Formani yuborishdan oldin tekshirish ("Parol juda qisqa!");</li>
+  <li>Kalkulyator, o'yinlar, testlar, taymerlar;</li>
+  <li>Sahifani qayta yuklamasdan yangi ma'lumot olish (Instagram lentasi, ob-havo).</li>
+</ul>
+<div class="callout info"><span class="t">JavaScript ≠ Java</span>
+Nomlari o'xshash, lekin bu ikki butunlay boshqa til — xuddi "olma" va "olmos" kabi. JavaScript 1995-yilda atigi 10 kunda yaratilgan va hozir dunyodagi eng
+mashhur dasturlash tillaridan biri. U nafaqat brauzerda, balki serverda (Node.js) va mobil ilovalarda ham ishlaydi.</div>
+
+<h2>JavaScript'ni ishga tushirish</h2>
+<h3>1. Brauzer konsoli — eng tez usul</h3>
+<p>Chrome'da <kbd>F12</kbd> → <b>Console</b> yorlig'i. Bu yerga kod yozib <kbd>Enter</kbd> bossangiz, darhol bajariladi:</p>
+<pre data-lang="js" data-play>console.log("Salom, dunyo!");
+console.log(2 + 3);
+console.log("Men", 14, "yoshdaman");</pre>
+<p><code>console.log()</code> — qavs ichidagini konsolga chiqaradi. Dasturchilar undan kodni tekshirish uchun doimo foydalanadi. (Bu sahifadagi ▶ tugmasi
+natijani o'ng tomonda ko'rsatadi.)</p>
+<h3>2. HTML sahifada — <code>&lt;script&gt;</code> tegi</h3>
+<pre data-lang="html" data-play><!DOCTYPE html>
+<html lang="uz">
+<head><meta charset="UTF-8"><title>JS</title></head>
+<body>
+  <h1>Birinchi dasturim</h1>
+
+  <script>
+    alert("Saytga xush kelibsiz!");          // oyna chiqaradi
+    console.log("Bu konsolda ko'rinadi");
+    document.write("<p>Bu sahifaga yozildi</p>");
+  </script>
+</body>
+</html></pre>
+<h3>3. Alohida <code>.js</code> fayl ✅</h3>
+<pre data-lang="html" data-title="index.html"><body>
+  <h1>Sahifa</h1>
+  <!-- Skript body OXIRIDA: avval HTML yuklansin, keyin JS -->
+  <script src="app.js"></script>
+</body></pre>
+<pre data-lang="js" data-title="app.js">console.log("app.js ishladi!");</pre>
+<p>CSS kabi, eng to'g'ri usul — alohida fayl. <code>&lt;script&gt;</code> ni <code>&lt;/body&gt;</code> dan oldin qo'ying — shunda JavaScript ishlay boshlaganda sahifa elementlari allaqachon mavjud bo'ladi.</p>
+<h3>Izohlar</h3>
+<pre data-lang="js">// Bir qatorli izoh
+
+/* Ko'p qatorli
+   izoh */</pre>
+
+<h2>O'zgaruvchilar</h2>
+<p><b>O'zgaruvchi</b> — ma'lumotni saqlash uchun <b>nomlangan "quti"</b>. Unga qiymat qo'yasiz va keyinroq nomi orqali ishlatasiz.</p>
+<div class="analogy"><span class="t">O'xshatish: yorliqli qutilar</span>
+Javonda qutilar turibdi. Har biriga yorliq yopishtirilgan: "ism", "yosh", "ball". "ism" qutisiga "Malika" qog'ozini, "yosh" qutisiga 14 raqamini soldingiz.
+Endi "yosh qutisida nima bor?" deb so'rasangiz — 14. Yorliq — o'zgaruvchi <b>nomi</b>, ichidagi narsa — uning <b>qiymati</b>.</div>
+<pre data-lang="js" data-play>let ism = "Malika";        // "ism" qutisini yaratdik va ichiga "Malika" ni soldik
+let yosh = 14;
+console.log(ism);           // Malika
+console.log(yosh);          // 14
+
+yosh = 15;                  // qiymatni o'zgartirish (let ni qayta yozmaymiz!)
+console.log(yosh);          // 15
+
+let shahar;                 // e'lon qilindi, lekin qiymat berilmadi
+console.log(shahar);        // undefined</pre>
+<ul>
+  <li><code>let</code> — o'zgaruvchi e'lon qilish kalit so'zi.</li>
+  <li><code>=</code> — <b>tayinlash</b> belgisi ("tenglik" emas!): "o'ngdagi qiymatni chapdagi qutiga sol".</li>
+  <li>Satr oxirida <code>;</code> (nuqta-vergul) — buyruq tugadi.</li>
+</ul>
+
+<h3><code>let</code>, <code>const</code> va <code>var</code></h3>
+<pre data-lang="js" data-play>const PI = 3.14;            // const — o'zgarmas (constant)
+const tugilganYil = 2012;
+// PI = 5;                  // ❌ Xato! const qiymatini o'zgartirib bo'lmaydi
+
+let ball = 0;               // let — o'zgaradigan qiymat
+ball = ball + 10;
+console.log(ball);          // 10</pre>
+<div class="table-wrap"><table>
+<tr><th></th><th><code>const</code></th><th><code>let</code></th><th><code>var</code></th></tr>
+<tr><td>Qiymatni o'zgartirish</td><td>❌ Yo'q</td><td>✅ Ha</td><td>✅ Ha</td></tr>
+<tr><td>Qachon ishlatish</td><td><b>Doim birinchi tanlov</b></td><td>Qiymat o'zgarishi kerak bo'lsa</td><td>Eski kodlarda uchraydi. <b>Ishlatmang</b></td></tr>
+</table></div>
+<div class="callout tip"><span class="t">Oltin qoida</span>
+Har doim <code>const</code> bilan boshlang. Agar keyinroq qiymatni o'zgartirish kerak bo'lsa — <code>let</code> ga almashtiring. <code>var</code> eski usul va kutilmagan xatolarga olib keladi.</div>
+
+<h3>O'zgaruvchilarni nomlash qoidalari</h3>
+<div class="table-wrap"><table>
+<tr><th>Qoida</th><th>✅ To'g'ri</th><th>❌ Noto'g'ri</th></tr>
+<tr><td>Harf, <code>$</code> yoki <code>_</code> bilan boshlanadi</td><td><code>ism</code>, <code>_soni</code></td><td><code>1ism</code></td></tr>
+<tr><td>Bo'sh joy bo'lmaydi</td><td><code>sinfRahbari</code></td><td><code>sinf rahbari</code></td></tr>
+<tr><td>Defis bo'lmaydi</td><td><code>umumiyBall</code></td><td><code>umumiy-ball</code></td></tr>
+<tr><td>Maxsus so'zlar bo'lmaydi</td><td><code>mening_let</code></td><td><code>let</code>, <code>const</code>, <code>if</code></td></tr>
+<tr><td>Apostrof (') bo'lmaydi</td><td><code>ogil</code>, <code>yosh</code></td><td><code>o'g'il</code></td></tr>
+</table></div>
+<ul>
+  <li>JS <b>katta-kichik harfni farqlaydi</b>: <code>ism</code> va <code>Ism</code> — ikki xil o'zgaruvchi!</li>
+  <li>Bir necha so'zli nomlar <b>camelCase</b> uslubida yoziladi: birinchi so'z kichik, keyingilari katta harf bilan — <code>oquvchiSoni</code>, <code>dasturlashTili</code>.</li>
+  <li>Nom <b>mazmunli</b> bo'lsin: <code>x</code>, <code>a1</code> ❌ → <code>narx</code>, <code>chegirmaFoizi</code> ✅.</li>
+</ul>
+
+<h2>Ma'lumot turlari</h2>
+<p>Har bir qiymatning <b>turi</b> bor. Tur — bu qiymat bilan nima qilish mumkinligini belgilaydi: sonlarni qo'shish mumkin, matnni katta harfga aylantirish mumkin.</p>
+<h3>1. String — matn (satr)</h3>
+<pre data-lang="js" data-play>const ism = "Aziz";                 // qo'sh tirnoq
+const familiya = 'Karimov';         // bitta tirnoq
+const shahar = `Toshkent`;          // teskari tirnoq (backtick) — eng qulayi
+
+// Satrlarni birlashtirish
+console.log(ism + " " + familiya);                  // Aziz Karimov
+
+// Shablon satr (template literal): ${} ichiga o'zgaruvchi qo'yiladi
+const yosh = 14;
+console.log(`Mening ismim ${ism}, ${yosh} yoshdaman, ${shahar}da yashayman.`);
+
+// Foydali imkoniyatlar
+console.log(ism.length);            // 4 — harflar soni
+console.log(ism.toUpperCase());     // AZIZ
+console.log(ism.toLowerCase());     // aziz
+console.log(familiya[0]);           // K — birinchi harf (sanash 0 dan boshlanadi!)
+console.log("salom dunyo".includes("dunyo"));   // true</pre>
+<div class="callout warn"><span class="t">O'zbekcha apostrof bilan ehtiyot bo'ling</span>
+<code>'O'zbekiston'</code> ❌ — birinchi <code>'</code> satrni ochadi, ikkinchisi yopadi va xato chiqadi. Yechim: qo'sh tirnoq yoki backtick ishlating:
+<code>"O'zbekiston"</code> yoki <code>`O'zbekiston`</code> ✅.</div>
+<h3>2. Number — son</h3>
+<pre data-lang="js" data-play>const butun = 42;
+const kasr = 3.14;            // o'nlik kasr NUQTA bilan (vergul emas!)
+const manfiy = -10;
+console.log(butun + kasr);    // 45.14
+console.log(10 / 3);          // 3.3333333333333335
+console.log(10 / 0);          // Infinity — cheksizlik
+console.log("olma" * 2);      // NaN — "Not a Number" (son emas)</pre>
+<h3>3. Boolean — mantiqiy qiymat</h3>
+<p>Faqat ikki qiymat: <code>true</code> (rost, ha) yoki <code>false</code> (yolg'on, yo'q). Shartlarda ishlatiladi (16-mavzu).</p>
+<pre data-lang="js" data-play>const tizimgaKirgan = true;
+const darsTugadi = false;
+console.log(5 > 3);           // true
+console.log(10 === 7);        // false</pre>
+<h3>4. Undefined va null</h3>
+<ul>
+  <li><code>undefined</code> — "qiymat hali <b>berilmagan</b>" (bo'sh quti, ichiga hech narsa solinmagan).</li>
+  <li><code>null</code> — "qiymat <b>ataylab bo'sh</b>" (dasturchi qutini o'zi bo'shatib qo'ygan).</li>
+</ul>
+<h3>Murakkab turlar (oldinda)</h3>
+<p><b>Array</b> (massiv, ro'yxat) <code>[1, 2, 3]</code> va <b>Object</b> (obyekt) <code>{ ism: "Ali" }</code> — 18-mavzuda batafsil.</p>
+<h3>Turni aniqlash: <code>typeof</code></h3>
+<pre data-lang="js" data-play>console.log(typeof "Salom");     // string
+console.log(typeof 25);          // number
+console.log(typeof true);        // boolean
+console.log(typeof undefined);   // undefined
+console.log(typeof null);        // object  ← JavaScript'ning mashhur "tarixiy xatosi"!
+console.log(typeof [1, 2]);      // object</pre>
+
+<h3>Turlarni o'zgartirish</h3>
+<pre data-lang="js" data-play>// Matn + son = matn (son matnga aylanadi)
+console.log("5" + 3);           // "53"  😮
+console.log("5" - 3);           // 2     (ayirishda matn songa aylanadi)
+
+// Aniq o'zgartirish
+console.log(Number("42") + 8);  // 50
+console.log(String(100) + "%"); // "100%"
+console.log(parseInt("15px"));  // 15
+console.log(parseFloat("3.5"));  // 3.5</pre>
+<div class="callout warn">Foydalanuvchi kiritgan har qanday ma'lumot (<code>prompt</code>, forma) <b>doim matn</b> bo'lib keladi. Hisoblashdan oldin <code>Number()</code> bilan songa aylantiring!</div>
+
+<h2>Foydalanuvchi bilan muloqot</h2>
+<pre data-lang="js" data-play>const ism = prompt("Ismingiz nima?");                  // matn kiritish oynasi
+const tugilganYil = Number(prompt("Qaysi yilda tug'ilgansiz?"));
+const yosh = 2026 - tugilganYil;
+
+alert(`Salom, ${ism}! Siz ${yosh} yoshdasiz.`);
+const tasdiq = confirm("Dasturlashni yoqtirasizmi?");   // OK → true, Cancel → false
+console.log("Javob:", tasdiq);</pre>
+<div class="table-wrap"><table>
+<tr><th>Funksiya</th><th>Vazifasi</th><th>Nima qaytaradi</th></tr>
+<tr><td><code>alert("...")</code></td><td>Xabar oynasi</td><td>Hech narsa</td></tr>
+<tr><td><code>prompt("...")</code></td><td>Matn kiritish oynasi</td><td>Kiritilgan <b>matn</b> (yoki <code>null</code>)</td></tr>
+<tr><td><code>confirm("...")</code></td><td>OK / Bekor qilish oynasi</td><td><code>true</code> yoki <code>false</code></td></tr>
+</table></div>
+<p>Bu oynalar eski va unchalik chiroyli emas — o'rganish uchun qulay. 19-mavzudan boshlab sahifaning o'zida input va tugmalar bilan ishlaymiz.</p>
+
+<h2>Amaliy mashg'ulot</h2>
+<ol class="steps">
+  <li><code>js-darslar/</code> papkasida <code>index.html</code> va <code>app.js</code> yarating, skriptni <code>&lt;/body&gt;</code> oldidan ulang.</li>
+  <li><b>"Men haqimda" dasturi.</b> O'zingiz haqingizda 5 ta o'zgaruvchi yarating (ism, familiya, yosh, sinf, sevimli fan) va shablon satr bilan bitta chiroyli gapni konsolga chiqaring.</li>
+  <li><b>Yosh kalkulyatori.</b> <code>prompt</code> bilan tug'ilgan yilni so'rang va: yoshni, 2030-yilda necha yoshda bo'lishini, necha kun yashaganini (taxminan, × 365) hisoblang.</li>
+  <li><b>Do'kon cheki.</b>
+<pre data-lang="js" data-play>const mahsulot = "Daftar";
+const narx = 5000;
+const soni = 4;
+const jami = narx * soni;
+
+console.log("======= CHEK =======");
+console.log(`Mahsulot: ${mahsulot}`);
+console.log(`Narxi: ${narx} so'm × ${soni} dona`);
+console.log(`Jami: ${jami} so'm`);
+console.log("====================");
+console.log("Xaridingiz uchun rahmat!");</pre>
+  Kodni o'zgartiring: yana ikkita mahsulot qo'shing va umumiy summani hisoblang.</li>
+  <li><b>Tur detektivi.</b> 8 ta turli qiymat (matn, son, kasr, true, undefined, null, "123", 0) uchun <code>typeof</code> natijalarini oldindan daftarga yozing, so'ng konsolda tekshiring.</li>
+</ol>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>Uncaught SyntaxError</code> — qo'shtirnoq yopilmagan yoki o'zbekcha apostrof satrni "sindirib" qo'ygan.</li>
+  <li>❌ <code>ReferenceError: x is not defined</code> — o'zgaruvchi nomi noto'g'ri yozilgan (katta-kichik harf!) yoki e'lon qilinmagan.</li>
+  <li>❌ <code>TypeError: Assignment to constant variable</code> — <code>const</code> qiymatini o'zgartirishga urinish.</li>
+  <li>❌ <code>prompt</code> dan olingan sonni qo'shish: <code>"10" + 5 = "105"</code>. <code>Number()</code> unutilgan.</li>
+  <li>❌ Bitta o'zgaruvchini ikki marta <code>let</code> bilan e'lon qilish: <code>let a = 1; let a = 2;</code></li>
+</ul>
+<div class="callout tip"><span class="t">Xatolarni o'qishni o'rganing</span>
+Konsoldagi qizil xabar — dushman emas, yordamchi! U xato turini va qaysi faylning <b>qaysi qatorida</b> ekanini aytadi (masalan, <code>app.js:12</code>). Ustiga bossangiz, o'sha qatorga olib boradi.</div>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Qiymati keyinchalik o'zgarmaydigan o'zgaruvchi qaysi kalit so'z bilan e'lon qilinadi?</p><ol>
+<li><code>let</code></li><li><code>const</code></li><li><code>var</code></li><li><code>fix</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Qaysi o'zgaruvchi nomi to'g'ri?</p><ol>
+<li><code>2sinf</code></li><li><code>umumiy-ball</code></li><li><code>sinf rahbari</code></li><li><code>oquvchilarSoni</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>console.log("7" + 3)</code> natijasi?</p><ol>
+<li>10</li><li>4</li><li>"73"</li><li>Xato</li></ol>
+<p class="explain">Matnga son qo'shilsa, son matnga aylanib, ular yopishtiriladi.</p></div>
+<div class="quiz" data-answer="1"><p class="q"><code>typeof true</code> nima qaytaradi?</p><ol>
+<li><code>"boolean"</code></li><li><code>"string"</code></li><li><code>"true"</code></li><li><code>"number"</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q"><code>const ism = "Ali"; console.log(`Salom, ${ism}!`)</code> nima chiqaradi?</p><ol>
+<li><code>Salom, ${ism}!</code></li><li><code>Salom, Ali!</code></li><li><code>Salom, ism!</code></li><li>Xato</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>prompt()</code> qanday turdagi qiymat qaytaradi?</p><ol>
+<li>Doim son</li><li>Boolean</li><li>Matn (string) yoki null</li><li>Massiv</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Valyuta hisoblagichi (oddiy):</b> foydalanuvchidan dollar miqdorini so'rang va kurs (<code>const KURS = 12700</code>) bo'yicha so'mga aylantirib, <code>alert</code> bilan ko'rsating.</li>
+  <li><b>Doira:</b> radiusni so'rang, yuzasi (π·r²) va uzunligini (2·π·r) hisoblang. <code>Math.PI</code> dan foydalaning.</li>
+  <li>Ismingizni so'rab, quyidagilarni chiqaring: harflar soni, KATTA harflarda, birinchi va oxirgi harfi.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>JavaScript — sahifaga mantiq va harakat qo'shuvchi dasturlash tili; alohida <code>.js</code> fayl <code>&lt;/body&gt;</code> oldidan ulanadi.</li>
+  <li><code>console.log()</code> — natijani konsolga chiqarish (<kbd>F12</kbd> → Console).</li>
+  <li><code>const</code> — o'zgarmas, <code>let</code> — o'zgaruvchan; <code>var</code> ishlatmang. Nomlar — camelCase.</li>
+  <li>Turlar: string, number, boolean, undefined, null (+ array, object). <code>typeof</code> — turini aniqlash.</li>
+  <li>Shablon satr: <code>`Salom, ${ism}!`</code>. Kiritilgan ma'lumot matn — <code>Number()</code> bilan songa aylantiring.</li>
+</ul>
+</div>

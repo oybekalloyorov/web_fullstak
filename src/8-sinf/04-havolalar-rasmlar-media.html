@@ -1,0 +1,239 @@
+<!-- title: Havolalar va navigatsiya. Rasmlar va media elementlari | desc: Giperhavolalar (a, href, target), absolyut va nisbiy yo'llar, sahifa ichidagi havolalar, navigatsiya menyusi; rasmlar (img, alt), audio, video va iframe. | icon: 🔗 | level: 1 soat · amaliy | bob: I bob. HTML va CSS -->
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Havolalar orqali sahifalarni bir-biriga bog'lashni;</li>
+  <li>Absolyut va nisbiy yo'llar farqini (bu juda ko'p xatoning sababi!);</li>
+  <li>Sahifa ichidagi bo'limlarga o'tish, email va telefon havolalarini;</li>
+  <li>Bir nechta sahifali sayt va navigatsiya menyusini yaratishni;</li>
+  <li>Rasm, audio, video va YouTube videosini sahifaga joylashni.</li>
+</ul>
+</div>
+
+<h2>Havola — webning "H" harfi</h2>
+<p>HTML'dagi "<b>H</b>yperText" — havolalar orqali bir-biriga bog'langan matn degani. Havolalar bo'lmaganda web — bir-biridan ajralgan
+alohida hujjatlar bo'lardi. Havola <code>&lt;a&gt;</code> (<i>anchor</i> — langar) tegi bilan yaratiladi:</p>
+<pre data-lang="html" data-play><a href="https://uz.wikipedia.org">O'zbekcha Vikipediya</a></pre>
+<ul>
+  <li><code>href</code> (<i>hypertext reference</i>) — havola <b>qayerga</b> olib borishi.</li>
+  <li>Teglar orasidagi matn — foydalanuvchi bosadigan yozuv.</li>
+</ul>
+<h3>Yangi oynada ochish</h3>
+<pre data-lang="html" data-play><a href="https://github.com" target="_blank" rel="noopener">GitHub (yangi yorliqda ochiladi)</a></pre>
+<p><code>target="_blank"</code> — havolani yangi yorliqda (tab) ochadi. Tashqi saytlarga havola berganda qulay: foydalanuvchi sizning saytingizni yo'qotib qo'ymaydi.
+<code>rel="noopener"</code> — xavfsizlik uchun qo'shiladi (ochilgan sayt sizning sahifangizni boshqara olmasligi uchun).</p>
+
+<h2>Absolyut va nisbiy yo'llar</h2>
+<p>Bu darsning eng muhim qismi. Havola, rasm, CSS fayl — barchasi qandaydir <b>yo'l</b> (manzil) bilan ko'rsatiladi.</p>
+<h3>Absolyut yo'l</h3>
+<p>To'liq internet manzili, <code>https://</code> bilan boshlanadi. <b>Boshqa saytlarga</b> havola uchun ishlatiladi.</p>
+<pre data-lang="html"><a href="https://www.w3schools.com/html/">W3Schools HTML darsliklari</a></pre>
+<h3>Nisbiy yo'l</h3>
+<p>Joriy fayldan <b>nisbatan</b> ko'rsatilgan yo'l. <b>O'z saytingiz ichidagi</b> sahifa va fayllar uchun ishlatiladi. Quyidagi papka tuzilmasini olaylik:</p>
+<pre data-lang="text">mening-saytim/
+├── index.html          ← bosh sahifa
+├── haqida.html
+├── rasmlar/
+│   ├── logo.png
+│   └── men.jpg
+└── sahifalar/
+    ├── loyihalar.html
+    └── aloqa.html</pre>
+<div class="table-wrap"><table>
+<tr><th>Qaysi fayldan</th><th>Qaysi faylga</th><th>Nisbiy yo'l</th><th>Tushuntirish</th></tr>
+<tr><td><code>index.html</code></td><td><code>haqida.html</code></td><td><code>haqida.html</code></td><td>Bir papkada — shunchaki nomi</td></tr>
+<tr><td><code>index.html</code></td><td><code>rasmlar/logo.png</code></td><td><code>rasmlar/logo.png</code></td><td>Ichki papkaga kirish: <code>papka/fayl</code></td></tr>
+<tr><td><code>index.html</code></td><td><code>sahifalar/aloqa.html</code></td><td><code>sahifalar/aloqa.html</code></td><td>Ichki papkaga kirish</td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>index.html</code></td><td><code>../index.html</code></td><td><code>../</code> — bir papka <b>yuqoriga chiqish</b></td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>rasmlar/men.jpg</code></td><td><code>../rasmlar/men.jpg</code></td><td>Yuqoriga chiqib, keyin boshqa papkaga kirish</td></tr>
+<tr><td><code>sahifalar/aloqa.html</code></td><td><code>sahifalar/loyihalar.html</code></td><td><code>loyihalar.html</code></td><td>Bir papkada</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatish: maktab binosi</span>
+Siz 8-"A" sinfidasiz (<code>sahifalar/</code>). Do'stingizga "qo'shni sinfga o't" desangiz — bu <b>nisbiy</b> yo'l (<code>loyihalar.html</code>).
+"Koridorga chiq, keyin kutubxonaga kir" — <code>../kutubxona/</code>. <b>Absolyut</b> yo'l esa maktabning to'liq pochta manzilini aytish:
+"Samarqand shahri, 5-maktab, 2-qavat, 8-A sinf".</div>
+<div class="callout warn"><span class="t">Eng ko'p uchraydigan xato</span>
+<code>C:\Users\Ali\Desktop\sayt\rasm.jpg</code> kabi kompyuteringizdagi to'liq yo'lni yozmang! Saytni hostingga joylaganingizda
+yoki boshqa kompyuterda ochganda bunday yo'l <b>ishlamaydi</b>. Har doim nisbiy yo'l ishlating. Shuningdek, fayl nomlarida
+bo'sh joy, katta harf va o'zbekcha belgilarni (<code>o'</code>) ishlatmang: <code>Mening Rasmim.JPG</code> ❌ → <code>mening-rasmim.jpg</code> ✅.</div>
+
+<h2>Boshqa havola turlari</h2>
+<pre data-lang="html" data-play><!-- Sahifa ichidagi bo'limga o'tish: href="#id" -->
+<a href="#aloqa">Aloqa bo'limiga o'tish ↓</a>
+
+<p style="height: 400px">... uzun matn ...</p>
+
+<h2 id="aloqa">Aloqa</h2>
+
+<!-- Email yozish (pochta dasturi ochiladi) -->
+<a href="mailto:maktab5@mail.uz">Bizga xat yozing</a><br>
+
+<!-- Telefon qilish (telefonda qo'ng'iroq oynasi ochiladi) -->
+<a href="tel:+998901234567">+998 90 123 45 67</a><br>
+
+<!-- Faylni yuklab olish -->
+<a href="dars-jadvali.pdf" download>Dars jadvalini yuklab olish</a><br>
+
+<!-- Sahifa tepasiga qaytish -->
+<a href="#">↑ Yuqoriga</a></pre>
+
+<h2>Navigatsiya menyusi</h2>
+<p>Ko'p sahifali saytda har bir sahifaning tepasida bir xil menyu bo'ladi. U <code>&lt;nav&gt;</code> tegi ichida havolalar ro'yxati sifatida yoziladi:</p>
+<pre data-lang="html" data-play><nav>
+  <ul>
+    <li><a href="index.html">Bosh sahifa</a></li>
+    <li><a href="haqida.html">Men haqimda</a></li>
+    <li><a href="sahifalar/loyihalar.html">Loyihalar</a></li>
+    <li><a href="sahifalar/aloqa.html">Aloqa</a></li>
+  </ul>
+</nav></pre>
+<p>Hozircha bu oddiy ro'yxatga o'xshaydi — 8-mavzuda Flexbox bilan uni chiroyli gorizontal menyuga aylantiramiz.</p>
+
+<h2>Rasmlar</h2>
+<pre data-lang="html" data-play><img src="https://picsum.photos/400/250" alt="Tog' manzarasi" width="400" height="250"></pre>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>src</code></td><td>(<i>source</i>) Rasm fayli yo'li — nisbiy yoki absolyut</td></tr>
+<tr><td><code>alt</code></td><td>(<i>alternative</i>) Rasmning <b>matnli tavsifi</b>. Majburiy!</td></tr>
+<tr><td><code>width</code>, <code>height</code></td><td>Kenglik va balandlik (piksellarda)</td></tr>
+<tr><td><code>title</code></td><td>Sichqoncha ustiga borganda chiqadigan yozuv</td></tr>
+<tr><td><code>loading="lazy"</code></td><td>Rasm faqat unga yaqinlashganda yuklanadi — sahifa tezroq ochiladi</td></tr>
+</table></div>
+<h3><code>alt</code> nima uchun shunchalik muhim?</h3>
+<ul>
+  <li>Rasm yuklanmasa (internet sekin, fayl topilmadi), uning o'rnida <code>alt</code> matni ko'rinadi.</li>
+  <li><b>Ko'zi ojiz</b> foydalanuvchilarning ekran o'quvchi dasturlari aynan shu matnni ovoz chiqarib o'qiydi.</li>
+  <li><b>Google</b> rasmda nima borligini <code>alt</code> orqali tushunadi (SEO, 11-mavzu).</li>
+</ul>
+<p>Yaxshi <code>alt</code> rasmda <b>nima tasvirlanganini</b> aytadi: <code>alt="rasm"</code> ❌ → <code>alt="Registon maydoni kechqurun chiroqlarda"</code> ✅.</p>
+<div class="callout tip"><span class="t">Rasm o'lchami</span>
+Faqat <code>width</code> ni bersangiz, brauzer balandlikni proporsiyani saqlagan holda o'zi hisoblaydi. Ikkalasini noto'g'ri bersangiz, rasm
+cho'zilib, buzilib ko'rinadi.</div>
+<h3>Rasm formatlari</h3>
+<div class="table-wrap"><table>
+<tr><th>Format</th><th>Qachon</th></tr>
+<tr><td><code>.jpg</code> / <code>.jpeg</code></td><td>Fotosuratlar</td></tr>
+<tr><td><code>.png</code></td><td>Shaffof fonli rasmlar, skrinshotlar</td></tr>
+<tr><td><code>.svg</code></td><td>Logotip va ikonkalar — har qanday o'lchamda tiniq</td></tr>
+<tr><td><code>.webp</code></td><td>Zamonaviy format: JPG/PNG dan 25–35% yengil</td></tr>
+<tr><td><code>.gif</code></td><td>Oddiy animatsiyalar</td></tr>
+</table></div>
+<h3>Rasm + izoh: <code>figure</code></h3>
+<pre data-lang="html" data-play><figure>
+  <img src="https://picsum.photos/seed/maktab/300/200" alt="Maktab hovlisi" width="300">
+  <figcaption>1-rasm. Maktabimiz hovlisi bahorda</figcaption>
+</figure></pre>
+<h3>Rasmni havola qilish</h3>
+<pre data-lang="html"><a href="index.html">
+  <img src="rasmlar/logo.png" alt="Bosh sahifaga qaytish" width="80">
+</a></pre>
+
+<h2>Audio va video</h2>
+<pre data-lang="html" data-play><h3>Audio</h3>
+<audio controls>
+  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3" type="audio/mpeg">
+  Brauzeringiz audioni qo'llab-quvvatlamaydi.
+</audio>
+
+<h3>Video</h3>
+<video controls width="400" poster="https://picsum.photos/seed/video/400/225">
+  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+  Brauzeringiz videoni qo'llab-quvvatlamaydi.
+</video></pre>
+<div class="table-wrap"><table>
+<tr><th>Atribut</th><th>Vazifasi</th></tr>
+<tr><td><code>controls</code></td><td>Boshqaruv tugmalarini (play, pauza, ovoz) ko'rsatish</td></tr>
+<tr><td><code>autoplay</code></td><td>Avtomatik boshlash (brauzerlar odatda faqat <code>muted</code> bilan ruxsat beradi)</td></tr>
+<tr><td><code>muted</code></td><td>Ovozsiz</td></tr>
+<tr><td><code>loop</code></td><td>Takroriy ijro</td></tr>
+<tr><td><code>poster</code></td><td>Video boshlanguncha ko'rinadigan rasm</td></tr>
+</table></div>
+<p>Teglar orasidagi matn — eski brauzerlar uchun zaxira xabar.</p>
+
+<h3>YouTube video va xarita joylash: <code>iframe</code></h3>
+<p><code>&lt;iframe&gt;</code> — sahifa ichida boshqa saytni "oyna" sifatida ko'rsatadi. YouTube'da video ostidagi <b>Ulashish → Joylashtirish (Embed)</b>
+tugmasini bossangiz, tayyor kod beriladi:</p>
+<pre data-lang="html"><iframe width="560" height="315"
+        src="https://www.youtube.com/embed/VIDEO_ID"
+        title="YouTube video"
+        allowfullscreen></iframe>
+
+<!-- Google Xaritadan: "Ulashish" → "Xaritani joylashtirish" -->
+<iframe src="https://www.google.com/maps/embed?pb=..." width="400" height="300" loading="lazy"></iframe></pre>
+
+<h2>Amaliy mashg'ulot: 3 sahifali shaxsiy sayt</h2>
+<ol class="steps">
+  <li>Quyidagi papka tuzilmasini yarating:
+<pre data-lang="text">vizitka/
+├── index.html
+├── hobbilar.html
+├── aloqa.html
+└── rasmlar/
+    └── (2–3 ta rasm: men.jpg, hobbi.jpg ...)</pre></li>
+  <li>Uchala sahifaga ham <b>bir xil</b> navigatsiya menyusini qo'ying (nusxa olib qo'yish mumkin):
+<pre data-lang="html"><nav>
+  <a href="index.html">🏠 Bosh sahifa</a> |
+  <a href="hobbilar.html">⚽ Hobbilarim</a> |
+  <a href="aloqa.html">✉️ Aloqa</a>
+</nav>
+<hr></pre></li>
+  <li><b>index.html</b>: ismingiz (<code>h1</code>), rasmingiz (<code>img</code> + mazmunli <code>alt</code>), o'zingiz haqingizda 2 ta paragraf.</li>
+  <li><b>hobbilar.html</b>: 3 ta hobbi — har biri <code>h2</code>, <code>figure</code> + <code>figcaption</code> bilan rasm va paragraf. Bitta hobbingiz haqida
+  YouTube video joylashtiring.</li>
+  <li><b>aloqa.html</b>: email (<code>mailto:</code>), telefon (<code>tel:</code>), ijtimoiy tarmoqlarga havolalar (<code>target="_blank"</code>)
+  va 3-mavzudagidek kichik "Xabar yuborish" formasi.</li>
+  <li>Barcha havolalarni bosib tekshiring. Biror sahifa ochilmasa — yo'lni tekshiring (fayl nomi, katta-kichik harf, papka).</li>
+  <li><b>Qo'shimcha:</b> uzun <code>hobbilar.html</code> sahifasining tepasiga "Tezkor o'tish" havolalarini qo'ying (<code>href="#futbol"</code>) va har bir
+  bo'lim oxirida "↑ Yuqoriga" havolasini.</li>
+</ol>
+<div class="callout info">Bu sizning <b>1-loyihangiz</b> — "Shaxsiy vizitka sahifasi". Keyingi darslarda unga semantik teglar, so'ng CSS dizayn qo'shib, oxirida internetga joylaymiz.</div>
+
+<h2>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Rasm ko'rinmayapti → fayl nomida xato (<code>Men.JPG</code> va <code>men.jpg</code> serverda <b>har xil</b> fayl!), noto'g'ri papka yoki <code>../</code> unutilgan.</li>
+  <li>❌ <code>href="www.google.com"</code> — <code>https://</code> siz brauzer buni nisbiy yo'l deb o'ylaydi va sizning saytingizdan "www.google.com" faylini qidiradi.</li>
+  <li>❌ <code>alt</code> ni yozmaslik yoki <code>alt="rasm"</code> deb yozish.</li>
+  <li>❌ Juda katta (5–10 MB) rasmlarni to'g'ridan-to'g'ri qo'yish — sahifa sekin ochiladi. Rasmni oldin kichraytiring (masalan, squoosh.app saytida).</li>
+</ul>
+
+<h2>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">Havolani yangi yorliqda ochish uchun qaysi atribut kerak?</p><ol>
+<li><code>href="_new"</code></li><li><code>open="tab"</code></li><li><code>target="_blank"</code></li><li><code>rel="new"</code></li></ol>
+<p class="explain"><code>target="_blank"</code> + xavfsizlik uchun <code>rel="noopener"</code>.</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>sahifalar/aloqa.html</code> faylidan <code>index.html</code> (bir papka yuqorida) ga to'g'ri havola qaysi?</p><ol>
+<li><code>index.html</code></li><li><code>../index.html</code></li><li><code>/sahifalar/index.html</code></li><li><code>sahifalar/index.html</code></li></ol>
+<p class="explain"><code>../</code> — bir papka yuqoriga chiqish.</p></div>
+<div class="quiz" data-answer="4"><p class="q"><code>alt</code> atributi nima uchun kerak?</p><ol>
+<li>Rasm o'lchamini belgilash</li><li>Rasmga havola qo'yish</li><li>Rasmni tezroq yuklash</li><li>Rasm ko'rinmaganda va ko'zi ojizlar uchun uning matnli tavsifi</li></ol>
+<p class="explain">Shuningdek, Google rasm mazmunini <code>alt</code> orqali tushunadi.</p></div>
+<div class="quiz" data-answer="1"><p class="q">Sahifadagi <code>id="narxlar"</code> bo'limiga o'tuvchi havola qaysi?</p><ol>
+<li><code>&lt;a href="#narxlar"&gt;</code></li><li><code>&lt;a href="narxlar"&gt;</code></li><li><code>&lt;a id="#narxlar"&gt;</code></li><li><code>&lt;a href=".narxlar"&gt;</code></li></ol>
+<p class="explain"><code>#</code> belgisi — sahifa ichidagi id'ga ishora.</p></div>
+<div class="quiz" data-answer="3"><p class="q">Videoda play/pauza tugmalari ko'rinishi uchun qaysi atribut kerak?</p><ol>
+<li><code>autoplay</code></li><li><code>loop</code></li><li><code>controls</code></li><li><code>buttons</code></li></ol>
+<p class="explain"><code>controls</code> — boshqaruv paneli.</p></div>
+<div class="quiz" data-answer="2"><p class="q">Logotip uchun eng mos rasm formati qaysi?</p><ol>
+<li>JPG</li><li>SVG</li><li>GIF</li><li>BMP</li></ol>
+<p class="explain">SVG — vektorli format, har qanday o'lchamda tiniq va juda yengil.</p></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Vizitka saytingizga to'rtinchi sahifa — <code>sahifalar/kitoblar.html</code> qo'shing (ichki papkada!). Undan bosh sahifaga va rasmlarga
+  to'g'ri havolalar bering (<code>../</code>).</li>
+  <li>Sevimli 3 ta kitob haqida: muqova rasmi (<code>figure</code>), qisqa tavsif va kitob haqidagi tashqi saytga havola.</li>
+  <li>Maktabingiz joylashgan joyni Google Xaritadan <code>iframe</code> bilan aloqa sahifasiga joylang.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>&lt;a href="..."&gt;</code> — havola; <code>target="_blank"</code> — yangi yorliqda.</li>
+  <li>Tashqi saytlarga — <b>absolyut</b> (<code>https://...</code>), o'z fayllaringizga — <b>nisbiy</b> yo'l; <code>../</code> — bir papka yuqoriga.</li>
+  <li><code>#id</code> — sahifa ichidagi bo'limga, <code>mailto:</code> — email, <code>tel:</code> — telefon.</li>
+  <li><code>&lt;img src alt&gt;</code> — rasm; <code>alt</code> doim mazmunli bo'lsin.</li>
+  <li><code>&lt;audio&gt;</code>, <code>&lt;video controls&gt;</code>, <code>&lt;iframe&gt;</code> — media va boshqa saytlarni joylash.</li>
+</ul>
+</div>

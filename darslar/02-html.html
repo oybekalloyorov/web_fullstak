@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HTML — sahifa tuzilishi — Full-Stack Qo&#x27;llanma</title>
+<title>HTML — sahifa tuzilishi — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a class="active" href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧱</div><div><div class="crumb">02-dars · 14 tadan</div><h1>HTML — sahifa tuzilishi</h1><p class="lead">Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🧱</div><div><div class="crumb">02-dars · 14 tadan</div><h1>HTML — sahifa tuzilishi</h1><p class="lead">Teglar, atributlar, semantik HTML, formalar, jadvallar, media, accessibility va SEO uchun meta-teglar.</p><div class="hero-level">Boshlang&#x27;ich · ~90 daqiqa</div></div></div>
 
 <p><b>HTML (HyperText Markup Language)</b> — veb-sahifaning skeleti. U dasturlash tili emas, balki <b>belgilash
 (markup) tili</b>: biz matnning qaysi qismi sarlavha, qaysisi paragraf, qaysisi havola yoki tugma ekanini
@@ -53,7 +54,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
 
 <h2 id="element-teg-va-atribut"><a class="anchor" href="#element-teg-va-atribut">#</a>Element, teg va atribut</h2>
 <p>HTML hujjati <b>elementlardan</b> tashkil topadi. Element odatda ochuvchi teg, mazmun va yopuvchi tegdan iborat:</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;a href=&quot;https://kun.uz&quot; target=&quot;_blank&quot; title=&quot;Yangiliklar&quot;&gt;Kun.uz saytiga o&#x27;tish&lt;/a&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;https://kun.uz&quot; target=&quot;_blank&quot; title=&quot;Yangiliklar&quot;&gt;Kun.uz saytiga o&#x27;tish&lt;/a&gt;
 &lt;!-- └ochuvchi teg ┘ └──── atributlar ────────────────┘ └─── mazmun ──────┘└yopuvchi┘ --&gt;</code></pre></div>
 <ul>
   <li><b>Teg</b> — burchak qavslar ichidagi nom: <code>&lt;p&gt;</code>, <code>&lt;/p&gt;</code>.</li>
@@ -77,7 +78,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
 
 <h2 id="html-hujjatining-asosiy-tuzilishi"><a class="anchor" href="#html-hujjatining-asosiy-tuzilishi">#</a>HTML hujjatining asosiy tuzilishi</h2>
 <p>Har bir HTML sahifa quyidagi skeletdan boshlanadi. VS Code'da bo'sh <code>.html</code> faylga <code>!</code> yozib <kbd>Tab</kbd> bossangiz, u avtomatik yaratiladi.</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;uz&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -110,7 +111,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
   <li>Matnni katta qilish uchun sarlavha tegi ishlatmang — buning uchun CSS bor.</li>
 </ul>
 <h3>Matn elementlari</h3>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;p&gt;Paragraf — matnning asosiy bloki.&lt;/p&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;p&gt;Paragraf — matnning asosiy bloki.&lt;/p&gt;
 
 &lt;p&gt;
   &lt;strong&gt;Muhim matn&lt;/strong&gt; (semantik qalin) va &lt;b&gt;shunchaki qalin&lt;/b&gt;.&lt;br&gt;
@@ -137,7 +138,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
 <code>&lt;b&gt;</code> — faqat vizual qalinlik. Xuddi shunday <code>&lt;em&gt;</code> (urg'u) va <code>&lt;i&gt;</code> (stil).</div>
 
 <h3>Ro'yxatlar</h3>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!-- Tartibsiz ro&#x27;yxat --&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!-- Tartibsiz ro&#x27;yxat --&gt;
 &lt;ul&gt;
   &lt;li&gt;Non&lt;/li&gt;
   &lt;li&gt;Sut&lt;/li&gt;
@@ -162,7 +163,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
 &lt;/dl&gt;</code></pre></div>
 
 <h3>Havolalar</h3>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;a href=&quot;https://developer.mozilla.org&quot;&gt;Tashqi havola (absolyut URL)&lt;/a&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;a href=&quot;https://developer.mozilla.org&quot;&gt;Tashqi havola (absolyut URL)&lt;/a&gt;
 &lt;a href=&quot;/about.html&quot;&gt;Saytning ildizidan (root-relative)&lt;/a&gt;
 &lt;a href=&quot;../index.html&quot;&gt;Joriy papkadan bir yuqoriga (relative)&lt;/a&gt;
 &lt;a href=&quot;#aloqa&quot;&gt;Sahifadagi id=&quot;aloqa&quot; elementiga&lt;/a&gt;
@@ -174,7 +175,7 @@ ko'zi ojiz foydalanuvchilar ham bemalol ishlata oladigan saytning asosi.</p>
 &lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;GitHub&lt;/a&gt;</code></pre></div>
 
 <h2 id="rasmlar-va-media"><a class="anchor" href="#rasmlar-va-media">#</a>Rasmlar va media</h2>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;img src=&quot;images/samarqand.jpg&quot;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;img src=&quot;images/samarqand.jpg&quot;
      alt=&quot;Samarqanddagi Registon maydoni kechqurun&quot;
      width=&quot;800&quot; height=&quot;533&quot;
      loading=&quot;lazy&quot;&gt;
@@ -243,7 +244,7 @@ borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatil
 
 <h2 id="jadvallar"><a class="anchor" href="#jadvallar">#</a>Jadvallar</h2>
 <p>Jadvallar faqat <b>jadval ko'rinishidagi ma'lumotlar</b> uchun (narxlar, dars jadvali, statistika). Sahifa maketini jadval bilan qurish — 1990-yillar usuli, hozir CSS Grid/Flexbox ishlatiladi.</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;table&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;table&gt;
   &lt;caption&gt;2026-yil 1-chorak savdo hisoboti&lt;/caption&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -270,7 +271,7 @@ borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatil
 
 <h2 id="formalar-foydalanuvchidan-malumot-olish"><a class="anchor" href="#formalar-foydalanuvchidan-malumot-olish">#</a>Formalar — foydalanuvchidan ma'lumot olish</h2>
 <p>Formalar — frontend va backend o'rtasidagi ko'prik. Ro'yxatdan o'tish, qidiruv, buyurtma — barchasi forma orqali.</p>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form action=&quot;/api/register&quot; method=&quot;POST&quot;&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form action=&quot;/api/register&quot; method=&quot;POST&quot;&gt;
   &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
   &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required placeholder=&quot;siz@mail.uz&quot;&gt;
 
@@ -321,7 +322,7 @@ borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatil
   <li>Saytni sichqonchasiz, faqat <kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd> bilan ishlatib ko'ring.</li>
 </ul>
 <h3>SEO va ijtimoiy tarmoqlar uchun meta-teglar</h3>
-<div class="code"><div class="code-head"><span>HTML</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;head&gt;
+<div class="code"><div class="code-head"><span>HTML</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;head&gt;
   &lt;title&gt;iPhone 16 Pro — narxi va xususiyatlari | TexnoShop&lt;/title&gt;
   &lt;meta name=&quot;description&quot; content=&quot;iPhone 16 Pro: 256 GB, kafolat 1 yil, Toshkent bo&#x27;ylab bepul yetkazib berish.&quot;&gt;
   &lt;link rel=&quot;canonical&quot; href=&quot;https://texnoshop.uz/iphone-16-pro&quot;&gt;
@@ -338,7 +339,7 @@ borligini</i> tasvirlashi kerak, "rasm" so'zini emas. Faqat bezak uchun ishlatil
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Shaxsiy portfolio sahifasi (to'liq semantik tuzilma)</h3></div><div class="ex-body">
 <p>Dasturchi rezyumesi o'rnida ishlatiladigan bir sahifali sayt. Faqat HTML — dizaynni keyingi darsda qo'shamiz.</p>
-<div class="code"><div class="code-head"><span>portfolio/index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<div class="code"><div class="code-head"><span>portfolio/index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;uz&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -419,7 +420,7 @@ alohida <code>&lt;article&gt;</code>; tajriba teskari tartibli ro'yxat (<code>re
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Kursga ro'yxatdan o'tish formasi (barcha maydon turlari)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>register.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;form action=&quot;/api/enroll&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;
+<div class="code"><div class="code-head"><span>register.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;form action=&quot;/api/enroll&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Shaxsiy ma&#x27;lumotlar&lt;/legend&gt;
 
@@ -494,7 +495,7 @@ alohida <code>&lt;article&gt;</code>; tajriba teskari tartibli ro'yxat (<code>re
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Blog maqolasi sahifasi (SEO va semantika)</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>blog/js-closure.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;body&gt;
+<div class="code"><div class="code-head"><span>blog/js-closure.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;body&gt;
   &lt;header&gt;...&lt;/header&gt;
 
   &lt;main&gt;
@@ -564,7 +565,7 @@ mashina o'qiy oladigan formatda beradi.</p>
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 4</span><h3>Restoran menyusi: jadval, rasm va ichki havolalar</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>menu.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-html">&lt;main&gt;
+<div class="code"><div class="code-head"><span>menu.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;main&gt;
   &lt;h1&gt;&quot;Bahor&quot; milliy taomlar restorani — Menyu&lt;/h1&gt;
 
   &lt;nav aria-label=&quot;Menyu bo&#x27;limlari&quot;&gt;

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRUD amallarini yaratish. CRUD asosida mini loyiha — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Maktab blogini to&#x27;liq CRUD ilovaga aylantirish: ro&#x27;yxat (sahifalash bilan), batafsil ko&#x27;rish, yaratish, tahrirlash, o&#x27;chirish (tasdiqlash bilan), faqat muallifga ruxsat; xuddi shu ishni Class Based View&#x27;lar (ListView, DetailView, CreateView, UpdateView, DeleteView) bilan qilish; sinovdan o&#x27;tkazish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a class="active" href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🏁</div><div><div class="crumb">38-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>CRUD amallarini yaratish. CRUD asosida mini loyiha</h1><p class="lead">Maktab blogini to&#x27;liq CRUD ilovaga aylantirish: ro&#x27;yxat (sahifalash bilan), batafsil ko&#x27;rish, yaratish, tahrirlash, o&#x27;chirish (tasdiqlash bilan), faqat muallifga ruxsat; xuddi shu ishni Class Based View&#x27;lar (ListView, DetailView, CreateView, UpdateView, DeleteView) bilan qilish; sinovdan o&#x27;tkazish.</p><div class="hero-level">2 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Model, View, Template va Form'ni bitta to'liq ishlaydigan ilovaga <b>birlashtirishni</b>;</li>
+  <li>To'rtta CRUD amalini veb-interfeys orqali amalga oshirishni;</li>
+  <li><b>Ruxsatlarni</b>: maqolani faqat uning muallifi tahrirlay va o'chira olishini;</li>
+  <li>Uzun ro'yxatni sahifalarga bo'lishni (pagination);</li>
+  <li>Xuddi shu ilovani Django'ning tayyor <b>Class Based View</b>'lari bilan bir necha qatorda yozishni;</li>
+  <li>Loyihani sinovdan o'tkazishni (21-loyiha: Blog veb-ilovasi).</li>
+</ul>
+</div>
+
+<h2 id="reja-crud-5-ta-sahifa"><a class="anchor" href="#reja-crud-5-ta-sahifa">#</a>Reja: CRUD = 5 ta sahifa</h2>
+<div class="table-wrap"><table>
+<tr><th>Amal</th><th>URL</th><th>View</th><th>Shablon</th><th>Kim uchun</th></tr>
+<tr><td><b>R</b> — ro'yxat</td><td><code>/</code></td><td><code>maqola_royxat</code></td><td><code>maqola_list.html</code></td><td>Hamma</td></tr>
+<tr><td><b>R</b> — batafsil</td><td><code>/maqola/&lt;id&gt;/</code></td><td><code>maqola_batafsil</code></td><td><code>maqola_detail.html</code></td><td>Hamma</td></tr>
+<tr><td><b>C</b> — yaratish</td><td><code>/maqola/yangi/</code></td><td><code>maqola_yaratish</code></td><td><code>maqola_form.html</code></td><td>Tizimga kirganlar</td></tr>
+<tr><td><b>U</b> — tahrirlash</td><td><code>/maqola/&lt;id&gt;/tahrirlash/</code></td><td><code>maqola_tahrirlash</code></td><td><code>maqola_form.html</code> (o'sha!)</td><td>Faqat muallif</td></tr>
+<tr><td><b>D</b> — o'chirish</td><td><code>/maqola/&lt;id&gt;/ochirish/</code></td><td><code>maqola_ochirish</code></td><td><code>maqola_confirm_delete.html</code></td><td>Faqat muallif</td></tr>
+</table></div>
+<p>Bu jadval — har qanday CRUD ilovaning "retsepti". Kutubxona, talabalar tizimi, mahsulotlar — hammasi xuddi shu 5 ta sahifadan iborat.</p>
+
+<h2 id="1-urllar"><a class="anchor" href="#1-urllar">#</a>1. URL'lar</h2>
+<div class="code"><div class="code-head"><span>blog/urls.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.urls import path
+from . import views
+
+app_name = &quot;blog&quot;
+
+urlpatterns = [
+    path(&quot;&quot;, views.maqola_royxat, name=&quot;bosh&quot;),
+    path(&quot;maqola/yangi/&quot;, views.maqola_yaratish, name=&quot;yaratish&quot;),            # &lt;int:id&gt; dan OLDIN!
+    path(&quot;maqola/&lt;int:id&gt;/&quot;, views.maqola_batafsil, name=&quot;maqola&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/tahrirlash/&quot;, views.maqola_tahrirlash, name=&quot;tahrirlash&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/ochirish/&quot;, views.maqola_ochirish, name=&quot;ochirish&quot;),
+    path(&quot;kategoriya/&lt;slug:nomi&gt;/&quot;, views.kategoriya, name=&quot;kategoriya&quot;),
+    path(&quot;qidiruv/&quot;, views.qidiruv, name=&quot;qidiruv&quot;),
+    path(&quot;royxat/&quot;, views.royxatdan_otish, name=&quot;royxat&quot;),
+]</code></pre></div>
+
+<h2 id="2-forma"><a class="anchor" href="#2-forma">#</a>2. Forma</h2>
+<div class="code"><div class="code-head"><span>blog/forms.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django import forms
+from .models import Maqola
+
+
+class MaqolaForm(forms.ModelForm):
+    class Meta:
+        model = Maqola
+        fields = [&quot;sarlavha&quot;, &quot;kategoriya&quot;, &quot;matn&quot;, &quot;chop_etilgan&quot;]
+        widgets = {&quot;matn&quot;: forms.Textarea(attrs={&quot;rows&quot;: 10})}
+
+    def clean_sarlavha(self):
+        s = self.cleaned_data[&quot;sarlavha&quot;].strip()
+        if len(s) &lt; 5:
+            raise forms.ValidationError(&quot;Sarlavha kamida 5 belgi bo&#x27;lsin&quot;)
+        return s</code></pre></div>
+
+<h2 id="3-viewlar-funksiya-asosida"><a class="anchor" href="#3-viewlar-funksiya-asosida">#</a>3. View'lar (funksiya asosida)</h2>
+<div class="code"><div class="code-head"><span>blog/views.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import F
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import MaqolaForm
+from .models import Maqola
+
+
+# ---------- READ: ro&#x27;yxat ----------
+def maqola_royxat(request):
+    maqolalar = (Maqola.objects.filter(chop_etilgan=True)
+                 .select_related(&quot;kategoriya&quot;, &quot;muallif&quot;))
+    sahifalovchi = Paginator(maqolalar, 6)                  # har sahifada 6 ta
+    sahifa = sahifalovchi.get_page(request.GET.get(&quot;page&quot;)) # ?page=2
+    return render(request, &quot;blog/maqola_list.html&quot;, {&quot;sahifa&quot;: sahifa})
+
+
+# ---------- READ: batafsil ----------
+def maqola_batafsil(request, id):
+    maqola = get_object_or_404(Maqola, id=id)
+    # Chop etilmagan maqolani faqat muallifi ko&#x27;ra oladi
+    if not maqola.chop_etilgan and maqola.muallif != request.user:
+        return HttpResponseForbidden(&quot;Bu maqola hali chop etilmagan&quot;)
+    Maqola.objects.filter(id=id).update(korishlar=F(&quot;korishlar&quot;) + 1)
+    return render(request, &quot;blog/maqola_detail.html&quot;, {&quot;maqola&quot;: maqola})
+
+
+# ---------- CREATE ----------
+@login_required
+def maqola_yaratish(request):
+    if request.method == &quot;POST&quot;:
+        form = MaqolaForm(request.POST)
+        if form.is_valid():
+            maqola = form.save(commit=False)
+            maqola.muallif = request.user
+            maqola.save()
+            messages.success(request, &quot;✅ Maqola yaratildi&quot;)
+            return redirect(maqola)                          # get_absolute_url() ga
+    else:
+        form = MaqolaForm()
+    return render(request, &quot;blog/maqola_form.html&quot;, {&quot;form&quot;: form, &quot;sarlavha&quot;: &quot;Yangi maqola&quot;})
+
+
+# ---------- UPDATE ----------
+@login_required
+def maqola_tahrirlash(request, id):
+    maqola = get_object_or_404(Maqola, id=id)
+    if maqola.muallif != request.user:                      # 🔒 faqat muallif
+        return HttpResponseForbidden(&quot;Siz bu maqolani tahrirlay olmaysiz&quot;)
+    if request.method == &quot;POST&quot;:
+        form = MaqolaForm(request.POST, instance=maqola)    # instance — mavjud obyektni yangilash
+        if form.is_valid():
+            form.save()
+            messages.success(request, &quot;✅ O&#x27;zgarishlar saqlandi&quot;)
+            return redirect(maqola)
+    else:
+        form = MaqolaForm(instance=maqola)                  # forma eski qiymatlar bilan to&#x27;lgan
+    return render(request, &quot;blog/maqola_form.html&quot;, {&quot;form&quot;: form, &quot;sarlavha&quot;: &quot;Tahrirlash&quot;})
+
+
+# ---------- DELETE ----------
+@login_required
+def maqola_ochirish(request, id):
+    maqola = get_object_or_404(Maqola, id=id)
+    if maqola.muallif != request.user:
+        return HttpResponseForbidden(&quot;Siz bu maqolani o&#x27;chira olmaysiz&quot;)
+    if request.method == &quot;POST&quot;:                            # faqat tasdiqlangandan keyin
+        maqola.delete()
+        messages.success(request, &quot;🗑 Maqola o&#x27;chirildi&quot;)
+        return redirect(&quot;blog:bosh&quot;)
+    return render(request, &quot;blog/maqola_confirm_delete.html&quot;, {&quot;maqola&quot;: maqola})</code></pre></div>
+<div class="callout danger"><span class="t">Xavfsizlik: ikki qoida</span>
+<ol>
+  <li><b>Ruxsatni serverda tekshiring.</b> Shablonda "Tahrirlash" tugmasini yashirish yetarli emas — ayyor foydalanuvchi <code>/maqola/5/tahrirlash/</code> manzilini qo'lda yozishi mumkin.
+  Shuning uchun view'da <code>if maqola.muallif != request.user</code>.</li>
+  <li><b>O'chirish — faqat POST.</b> Agar GET so'rov bilan o'chirsak, oddiy havola (yoki boshqa saytdagi rasm teg!) maqolani o'chirib yuborishi mumkin. Avval tasdiqlash sahifasi, keyin POST forma + CSRF.</li>
+</ol></div>
+<p><code>MaqolaForm(request.POST, instance=maqola)</code> — <b>yaratish va tahrirlash</b> uchun bitta forma va bitta shablon: <code>instance</code> berilsa — mavjud obyekt yangilanadi, berilmasa — yangisi yaratiladi.</p>
+
+<h2 id="4-shablonlar"><a class="anchor" href="#4-shablonlar">#</a>4. Shablonlar</h2>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola_list.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+{% block title %}Maktab blogi{% endblock %}
+
+{% block content %}
+  &lt;div class=&quot;sarlavha-qator&quot;&gt;
+    &lt;h1&gt;So&#x27;nggi maqolalar&lt;/h1&gt;
+    {% if user.is_authenticated %}
+      &lt;a class=&quot;tugma&quot; href=&quot;{% url &#x27;blog:yaratish&#x27; %}&quot;&gt;✍️ Yangi maqola&lt;/a&gt;
+    {% endif %}
+  &lt;/div&gt;
+
+  &lt;div class=&quot;kartalar&quot;&gt;
+    {% for m in sahifa %}
+      {% include &quot;blog/_karta.html&quot; %}
+    {% empty %}
+      &lt;p&gt;Hozircha maqola yo&#x27;q. Birinchisini siz yozing!&lt;/p&gt;
+    {% endfor %}
+  &lt;/div&gt;
+
+  {% if sahifa.has_other_pages %}
+    &lt;nav class=&quot;sahifalash&quot;&gt;
+      {% if sahifa.has_previous %}
+        &lt;a href=&quot;?page={{ sahifa.previous_page_number }}&quot;&gt;← Oldingi&lt;/a&gt;
+      {% endif %}
+      &lt;span&gt;{{ sahifa.number }} / {{ sahifa.paginator.num_pages }}&lt;/span&gt;
+      {% if sahifa.has_next %}
+        &lt;a href=&quot;?page={{ sahifa.next_page_number }}&quot;&gt;Keyingi →&lt;/a&gt;
+      {% endif %}
+    &lt;/nav&gt;
+  {% endif %}
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola_detail.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+{% block title %}{{ maqola.sarlavha }}{% endblock %}
+
+{% block content %}
+  {% for msg in messages %}&lt;p class=&quot;xabar&quot;&gt;{{ msg }}&lt;/p&gt;{% endfor %}
+
+  &lt;article class=&quot;maqola&quot;&gt;
+    &lt;a class=&quot;belgi&quot; href=&quot;{% url &#x27;blog:kategoriya&#x27; maqola.kategoriya.slug %}&quot;&gt;{{ maqola.kategoriya }}&lt;/a&gt;
+    &lt;h1&gt;{{ maqola.sarlavha }}&lt;/h1&gt;
+    &lt;p class=&quot;meta&quot;&gt;✍️ {{ maqola.muallif.username }} · 📅 {{ maqola.yaratilgan|date:&quot;d.m.Y H:i&quot; }} · 👁 {{ maqola.korishlar }}&lt;/p&gt;
+    {% if not maqola.chop_etilgan %}&lt;p class=&quot;ogohlantirish&quot;&gt;📝 Qoralama — faqat siz ko&#x27;ryapsiz&lt;/p&gt;{% endif %}
+    {{ maqola.matn|linebreaks }}
+
+    {% if user == maqola.muallif %}                   {# tugmalar faqat muallifga ko&#x27;rinadi #}
+      &lt;div class=&quot;amallar&quot;&gt;
+        &lt;a class=&quot;tugma&quot; href=&quot;{% url &#x27;blog:tahrirlash&#x27; maqola.id %}&quot;&gt;✏️ Tahrirlash&lt;/a&gt;
+        &lt;a class=&quot;tugma qizil&quot; href=&quot;{% url &#x27;blog:ochirish&#x27; maqola.id %}&quot;&gt;🗑 O&#x27;chirish&lt;/a&gt;
+      &lt;/div&gt;
+    {% endif %}
+  &lt;/article&gt;
+  &lt;a href=&quot;{% url &#x27;blog:bosh&#x27; %}&quot;&gt;← Barcha maqolalar&lt;/a&gt;
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola_form.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+{% block title %}{{ sarlavha }}{% endblock %}
+
+{% block content %}
+  &lt;h1&gt;{{ sarlavha }}&lt;/h1&gt;
+  &lt;form method=&quot;post&quot; class=&quot;forma&quot;&gt;
+    {% csrf_token %}
+    {% for field in form %}
+      &lt;div class=&quot;maydon&quot;&gt;
+        {{ field.label_tag }}
+        {{ field }}
+        {% for xato in field.errors %}&lt;small class=&quot;xato&quot;&gt;{{ xato }}&lt;/small&gt;{% endfor %}
+      &lt;/div&gt;
+    {% endfor %}
+    &lt;button type=&quot;submit&quot; class=&quot;tugma&quot;&gt;💾 Saqlash&lt;/button&gt;
+    &lt;a href=&quot;{% url &#x27;blog:bosh&#x27; %}&quot;&gt;Bekor qilish&lt;/a&gt;
+  &lt;/form&gt;
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/templates/blog/maqola_confirm_delete.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">{% extends &quot;blog/base.html&quot; %}
+{% block content %}
+  &lt;h1&gt;O&#x27;chirishni tasdiqlang&lt;/h1&gt;
+  &lt;p&gt;«&lt;b&gt;{{ maqola.sarlavha }}&lt;/b&gt;» maqolasini o&#x27;chirmoqchimisiz? Bu amalni qaytarib bo&#x27;lmaydi.&lt;/p&gt;
+  &lt;form method=&quot;post&quot;&gt;
+    {% csrf_token %}
+    &lt;button type=&quot;submit&quot; class=&quot;tugma qizil&quot;&gt;Ha, o&#x27;chirish&lt;/button&gt;
+    &lt;a href=&quot;{{ maqola.get_absolute_url }}&quot;&gt;Yo&#x27;q, ortga&lt;/a&gt;
+  &lt;/form&gt;
+{% endblock %}</code></pre></div>
+<div class="code"><div class="code-head"><span>style.css ga qo&#x27;shimcha</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.sarlavha-qator { display: flex; justify-content: space-between; align-items: center; }
+.tugma { display: inline-block; background: #4f46e5; color: #fff; padding: 10px 18px; border-radius: 10px;
+         text-decoration: none; border: none; font: inherit; cursor: pointer; }
+.tugma.qizil { background: #dc2626; }
+.forma .maydon { display: grid; gap: 6px; margin-bottom: 16px; }
+.forma input, .forma select, .forma textarea { padding: 10px; border: 2px solid #e5e7eb; border-radius: 10px; font: inherit; }
+.xato { color: #dc2626; }
+.xabar { background: #dcfce7; padding: 12px; border-radius: 10px; }
+.sahifalash { display: flex; gap: 16px; justify-content: center; margin: 30px 0; }
+.amallar { display: flex; gap: 10px; margin: 20px 0; }</code></pre></div>
+
+<h2 id="5-xuddi-shu-narsa-class-based-viewlar-bilan"><a class="anchor" href="#5-xuddi-shu-narsa-class-based-viewlar-bilan">#</a>5. Xuddi shu narsa — Class Based View'lar bilan</h2>
+<p>CRUD shunchalik keng tarqalganki, Django uning uchun <b>tayyor klasslar</b> beradi. Yuqoridagi ~80 qator view kodi ~40 qatorga qisqaradi:</p>
+<div class="code"><div class="code-head"><span>blog/views_cbv.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from .forms import MaqolaForm
+from .models import Maqola
+
+
+class MaqolaList(ListView):
+    queryset = Maqola.objects.filter(chop_etilgan=True).select_related(&quot;kategoriya&quot;, &quot;muallif&quot;)
+    paginate_by = 6                         # shablonda: page_obj, object_list
+    # shablon (standart): blog/maqola_list.html
+
+
+class MaqolaDetail(DetailView):
+    model = Maqola
+    pk_url_kwarg = &quot;id&quot;                     # URL&#x27;da &lt;int:id&gt; ishlatganimiz uchun
+    # shablon: blog/maqola_detail.html, obyekt: {{ object }} yoki {{ maqola }}
+
+
+class MaqolaCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Maqola
+    form_class = MaqolaForm
+    success_message = &quot;✅ Maqola yaratildi&quot;
+    extra_context = {&quot;sarlavha&quot;: &quot;Yangi maqola&quot;}      # shablondagi {{ sarlavha }} uchun
+
+    def form_valid(self, form):
+        form.instance.muallif = self.request.user
+        return super().form_valid(form)     # saqlash va get_absolute_url() ga o&#x27;tish
+
+
+class FaqatMuallif(UserPassesTestMixin):
+    &quot;&quot;&quot;Faqat muallifga ruxsat beruvchi &#x27;aralashma&#x27; (mixin).&quot;&quot;&quot;
+    def test_func(self):
+        return self.get_object().muallif == self.request.user
+
+
+class MaqolaUpdate(LoginRequiredMixin, FaqatMuallif, SuccessMessageMixin, UpdateView):
+    model = Maqola
+    form_class = MaqolaForm
+    pk_url_kwarg = &quot;id&quot;
+    success_message = &quot;✅ O&#x27;zgarishlar saqlandi&quot;
+    extra_context = {&quot;sarlavha&quot;: &quot;Tahrirlash&quot;}
+
+
+class MaqolaDelete(LoginRequiredMixin, FaqatMuallif, DeleteView):
+    model = Maqola
+    pk_url_kwarg = &quot;id&quot;
+    success_url = reverse_lazy(&quot;blog:bosh&quot;)</code></pre></div>
+<div class="code"><div class="code-head"><span>blog/urls.py (CBV varianti)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from . import views_cbv as v
+
+urlpatterns = [
+    path(&quot;&quot;, v.MaqolaList.as_view(), name=&quot;bosh&quot;),
+    path(&quot;maqola/yangi/&quot;, v.MaqolaCreate.as_view(), name=&quot;yaratish&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/&quot;, v.MaqolaDetail.as_view(), name=&quot;maqola&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/tahrirlash/&quot;, v.MaqolaUpdate.as_view(), name=&quot;tahrirlash&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/ochirish/&quot;, v.MaqolaDelete.as_view(), name=&quot;ochirish&quot;),
+]</code></pre></div>
+<div class="callout info"><span class="t">CBV shablon nomlari</span>
+Tayyor klasslar shablonni <b>avtomatik</b> nomi bo'yicha qidiradi: <code>ilova/model_list.html</code>, <code>model_detail.html</code>, <code>model_form.html</code>, <code>model_confirm_delete.html</code>.
+Shuning uchun biz shablonlarni oldindan aynan shunday nomladik! <code>ListView</code> da ro'yxat — <code>page_obj</code> (yoki <code>maqola_list</code>), shuning uchun <code>maqola_list.html</code> dagi
+<code>sahifa</code> ni <code>page_obj</code> ga almashtiring.</div>
+<div class="table-wrap"><table>
+<tr><th>Klass</th><th>Nima qiladi</th></tr>
+<tr><td><code>ListView</code></td><td>Ro'yxat + sahifalash</td></tr>
+<tr><td><code>DetailView</code></td><td>Bitta obyekt (topilmasa 404)</td></tr>
+<tr><td><code>CreateView</code></td><td>GET — bo'sh forma, POST — tekshirish va yaratish</td></tr>
+<tr><td><code>UpdateView</code></td><td>Eski qiymatlar bilan forma, saqlash</td></tr>
+<tr><td><code>DeleteView</code></td><td>Tasdiqlash sahifasi va POST bilan o'chirish</td></tr>
+<tr><td><code>LoginRequiredMixin</code></td><td><code>@login_required</code> ning CBV varianti</td></tr>
+<tr><td><code>UserPassesTestMixin</code></td><td><code>test_func()</code> True qaytarmasa — 403</td></tr>
+</table></div>
+
+<h2 id="6-sinovdan-otkazish"><a class="anchor" href="#6-sinovdan-otkazish">#</a>6. Sinovdan o'tkazish</h2>
+<p>Loyihani topshirishdan oldin har bir ssenariyni tekshiring. Ikki xil brauzerda (yoki biri "Inkognito" rejimida) ikki foydalanuvchi bilan kiring:</p>
+<div class="table-wrap"><table>
+<tr><th>#</th><th>Ssenariy</th><th>Kutilgan natija</th><th>✓</th></tr>
+<tr><td>1</td><td>Mehmon bosh sahifani ochadi</td><td>Chop etilgan maqolalar, "Yangi maqola" tugmasi yo'q</td><td>☐</td></tr>
+<tr><td>2</td><td>Mehmon <code>/maqola/yangi/</code> ni qo'lda ochadi</td><td>Login sahifasiga yo'naltiriladi</td><td>☐</td></tr>
+<tr><td>3</td><td>Ali maqola yaratadi (sarlavha 3 belgi)</td><td>"Kamida 5 belgi" xatosi, forma ma'lumotlari yo'qolmaydi</td><td>☐</td></tr>
+<tr><td>4</td><td>Ali to'g'ri maqola yaratadi</td><td>Maqola sahifasi + yashil xabar; admin'da muallif — Ali</td><td>☐</td></tr>
+<tr><td>5</td><td>Vali Ali'ning maqolasini ochadi</td><td>Tahrirlash/o'chirish tugmalari ko'rinmaydi</td><td>☐</td></tr>
+<tr><td>6</td><td>Vali <code>/maqola/ID/tahrirlash/</code> ni qo'lda ochadi</td><td>403 Forbidden</td><td>☐</td></tr>
+<tr><td>7</td><td>Ali maqolani o'chiradi</td><td>Tasdiqlash sahifasi → "Ha" → ro'yxatda yo'q</td><td>☐</td></tr>
+<tr><td>8</td><td>15 ta maqola bo'lsa</td><td>Sahifalash: 3 ta sahifa</td><td>☐</td></tr>
+<tr><td>9</td><td><code>/maqola/9999/</code></td><td>404</td><td>☐</td></tr>
+</table></div>
+<h3>Avtomatik test (qisqacha tanishuv)</h3>
+<div class="code"><div class="code-head"><span>blog/tests.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from django.contrib.auth.models import User
+from django.test import TestCase
+from django.urls import reverse
+from .models import Kategoriya, Maqola
+
+
+class MaqolaTestlari(TestCase):
+    def setUp(self):
+        self.ali = User.objects.create_user(&quot;ali&quot;, password=&quot;parol12345&quot;)
+        self.vali = User.objects.create_user(&quot;vali&quot;, password=&quot;parol12345&quot;)
+        kat = Kategoriya.objects.create(nomi=&quot;Sport&quot;, slug=&quot;sport&quot;)
+        self.m = Maqola.objects.create(sarlavha=&quot;Test maqola&quot;, matn=&quot;...&quot;, kategoriya=kat, muallif=self.ali)
+
+    def test_bosh_sahifa_ochiladi(self):
+        javob = self.client.get(reverse(&quot;blog:bosh&quot;))
+        self.assertEqual(javob.status_code, 200)
+        self.assertContains(javob, &quot;Test maqola&quot;)
+
+    def test_begona_tahrirlay_olmaydi(self):
+        self.client.login(username=&quot;vali&quot;, password=&quot;parol12345&quot;)
+        javob = self.client.get(reverse(&quot;blog:tahrirlash&quot;, args=[self.m.id]))
+        self.assertEqual(javob.status_code, 403)</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">python manage.py test blog</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">Creating test database for alias &#x27;default&#x27;...
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.412s
+
+OK</code></pre></div>
+<p>Testlar alohida, vaqtinchalik bazada ishlaydi — haqiqiy ma'lumotlaringizga tegmaydi.</p>
+
+<h2 id="amaliy-mashgulot-21-loyiha-blog-veb-ilovasi"><a class="anchor" href="#amaliy-mashgulot-21-loyiha-blog-veb-ilovasi">#</a>Amaliy mashg'ulot (21-loyiha: Blog veb-ilovasi)</h2>
+<ol class="steps">
+  <li>Yuqoridagi URL, forma, view va shablonlarni loyihangizga qo'shing (funksiya variantida).</li>
+  <li>Sinov jadvalidagi 9 ta ssenariyni bajaring va belgilang.</li>
+  <li>View'larni CBV variantiga o'tkazing va ssenariylarni qayta tekshiring.</li>
+  <li>"Mening maqolalarim" sahifasi: <code>/mening/</code> — joriy foydalanuvchining barcha maqolalari (qoralamalar bilan).</li>
+  <li>Loyihani GitHub'ga push qiling; README'da: loyiha tavsifi, texnologiyalar, ishga tushirish yo'riqnomasi, skrinshotlar.</li>
+</ol>
+<details><summary>4-topshiriq yechimi</summary>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">@login_required
+def mening_maqolalarim(request):
+    maqolalar = Maqola.objects.filter(muallif=request.user).select_related(&quot;kategoriya&quot;)
+    return render(request, &quot;blog/mening.html&quot;, {&quot;maqolalar&quot;: maqolalar})
+
+# urls.py:  path(&quot;mening/&quot;, views.mening_maqolalarim, name=&quot;mening&quot;),</code></pre></div>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>maqola/yangi/</code> yo'li <code>maqola/&lt;int:id&gt;/</code> dan <b>keyin</b> yozilsa — muammo yo'q (chunki "yangi" son emas), lekin <code>&lt;str:...&gt;</code> ishlatilsa — "yangi" so'zi id deb olinadi. Aniq yo'llarni doim oldin yozing.</li>
+  <li>❌ Tahrirlashda <code>instance=</code> unutilgan — yangi nusxa yaratiladi, eskisi o'zgarmaydi.</li>
+  <li>❌ Ruxsat faqat shablonda tekshirilgan — URL'ni qo'lda yozib, boshqa birovning maqolasini o'chirish mumkin bo'lib qoladi.</li>
+  <li>❌ GET so'rov bilan o'chirish.</li>
+  <li>❌ <code>TemplateDoesNotExist: blog/maqola_form.html</code> — CBV standart nomli shablonni qidiryapti; faylni shunday nomlang yoki <code>template_name</code> bering.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="3"><p class="q">ModelForm bilan <b>mavjud</b> obyektni tahrirlash uchun formaga nima beriladi?</p><ol>
+<li><code>id=</code></li><li><code>object=</code></li><li><code>instance=</code></li><li><code>update=True</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Nima uchun o'chirish faqat POST so'rov bilan bo'lishi kerak?</p><ol>
+<li>POST tezroq ishlaydi</li><li>Oddiy havola yoki begona sayt tasodifan/ataylab o'chirib yubormasligi uchun (CSRF himoyasi bilan)</li><li>GET so'rovda id bo'lmaydi</li><li>Django GET'ni qo'llab-quvvatlamaydi</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">"Faqat muallif tahrirlay oladi" tekshiruvi qayerda bo'lishi SHART?</p><ol>
+<li>View'da (serverda)</li><li>Faqat shablonda</li><li>CSS'da</li><li>JavaScript'da</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Ro'yxatni sahifalarga bo'luvchi Django klassi?</p><ol>
+<li><code>Splitter</code></li><li><code>PageView</code></li><li><code>Limiter</code></li><li><code>Paginator</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Yangi obyekt yaratuvchi tayyor CBV?</p><ol>
+<li><code>ListView</code></li><li><code>CreateView</code></li><li><code>NewView</code></li><li><code>FormView</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">CBV'da tizimga kirishni talab qiluvchi aralashma (mixin)?</p><ol>
+<li><code>AuthMixin</code></li><li><code>UserPassesTestMixin</code></li><li><code>LoginRequiredMixin</code></li><li><code>SessionMixin</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa (IV bob yakunlovchi loyiha)</h3>
+<p>Quyidagilardan birini to'liq CRUD ilova sifatida yarating (model + admin + forma + 5 sahifa + ruxsatlar + sahifalash + kamida 2 ta test):</p>
+<ol>
+  <li><b>Kutubxona boshqaruv tizimi</b> (22-loyiha): kitoblar CRUD'i, kitobni "olish/qaytarish".</li>
+  <li><b>Talabalar boshqaruv tizimi</b> (23-loyiha): talabalar, guruhlar, baholar; guruh bo'yicha o'rtacha baho.</li>
+  <li><b>E'lonlar taxtasi</b>: foydalanuvchilar e'lon joylaydi (rasm bilan), toifa va qidiruv bo'yicha filtr.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>🎉 IV bob yakunlandi!</h3>
+<ul>
+  <li>CRUD = ro'yxat, batafsil, yaratish, tahrirlash, o'chirish — 5 ta URL/view/shablon.</li>
+  <li><code>ModelForm(request.POST, instance=obj)</code> — yaratish va tahrirlash uchun bitta forma.</li>
+  <li>Ruxsatlar serverda; o'chirish — tasdiqlash + POST.</li>
+  <li><code>Paginator</code>; tayyor CBV'lar: <code>ListView</code>, <code>DetailView</code>, <code>CreateView</code>, <code>UpdateView</code>, <code>DeleteView</code> + mixinlar.</li>
+  <li>Siz endi to'liq ishlaydigan, xavfsiz veb-ilova yarata olasiz! Keyingi bobda unga <b>API</b> qo'shamiz va <b>internetga chiqaramiz</b>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="37-django-admin-forms.html"><small>← Oldingi mavzu</small>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a><a class="next" href="39-drf-serializer.html"><small>Keyingi mavzu →</small>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#reja-crud-5-ta-sahifa">Reja: CRUD = 5 ta sahifa</a></li><li><a href="#1-urllar">1. URL&#x27;lar</a></li><li><a href="#2-forma">2. Forma</a></li><li><a href="#3-viewlar-funksiya-asosida">3. View&#x27;lar (funksiya asosida)</a></li><li><a href="#4-shablonlar">4. Shablonlar</a></li><li><a href="#5-xuddi-shu-narsa-class-based-viewlar-bilan">5. Xuddi shu narsa — Class Based View&#x27;lar bilan</a></li><li><a href="#6-sinovdan-otkazish">6. Sinovdan o&#x27;tkazish</a></li><li><a href="#amaliy-mashgulot-21-loyiha-blog-veb-ilovasi">Amaliy mashg&#x27;ulot (21-loyiha: Blog veb-ilovasi)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

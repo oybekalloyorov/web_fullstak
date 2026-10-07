@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Ro&#x27;yxat (list) va uning metodlari, kesish (slicing), list comprehension; o&#x27;zgarmas tuple; takrorlanmas set; kalit-qiymatli dictionary; qaysi birini qachon tanlash; o&#x27;quvchilar ma&#x27;lumotlarini boshqarish dasturi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a class="active" href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📚</div><div><div class="crumb">23-mavzu · 42 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</h1><p class="lead">Ro&#x27;yxat (list) va uning metodlari, kesish (slicing), list comprehension; o&#x27;zgarmas tuple; takrorlanmas set; kalit-qiymatli dictionary; qaysi birini qachon tanlash; o&#x27;quvchilar ma&#x27;lumotlarini boshqarish dasturi.</p><div class="hero-level">1 soat · nazariy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python'ning to'rtta asosiy "konteyneri": <b>list</b>, <b>tuple</b>, <b>set</b>, <b>dict</b>;</li>
+  <li>Har birining xususiyatlari va qachon qaysi birini tanlash kerakligini;</li>
+  <li>Ro'yxatlarni kesish (slicing) va list comprehension;</li>
+  <li>O'quvchilar ma'lumotlarini boshqaruvchi dasturni (16-loyiha).</li>
+</ul>
+</div>
+
+<h2 id="tort-tuzilma-bir-qarashda"><a class="anchor" href="#tort-tuzilma-bir-qarashda">#</a>To'rt tuzilma — bir qarashda</h2>
+<div class="table-wrap"><table>
+<tr><th>Tuzilma</th><th>Yozilishi</th><th>Tartiblangan?</th><th>O'zgartirish mumkinmi?</th><th>Takrorlanish?</th><th>JS'dagi o'xshashi</th></tr>
+<tr><td><b>list</b> (ro'yxat)</td><td><code>[1, 2, 3]</code></td><td>✅ Ha</td><td>✅ Ha</td><td>✅ Mumkin</td><td>Array</td></tr>
+<tr><td><b>tuple</b> (kortej)</td><td><code>(1, 2, 3)</code></td><td>✅ Ha</td><td>❌ Yo'q</td><td>✅ Mumkin</td><td>—</td></tr>
+<tr><td><b>set</b> (to'plam)</td><td><code>{1, 2, 3}</code></td><td>❌ Yo'q</td><td>✅ Ha</td><td>❌ Yo'q</td><td>Set</td></tr>
+<tr><td><b>dict</b> (lug'at)</td><td><code>{"ism": "Ali"}</code></td><td>✅ Ha</td><td>✅ Ha</td><td>Kalitlar — yo'q</td><td>Object</td></tr>
+</table></div>
+<div class="analogy"><span class="t">O'xshatishlar</span>
+<b>list</b> — xarid ro'yxati: tartibi bor, qo'shish-o'chirish mumkin, bir narsa ikki marta yozilishi mumkin.<br>
+<b>tuple</b> — tug'ilgan sana (kun, oy, yil): bir marta yoziladi va o'zgarmaydi.<br>
+<b>set</b> — sinfdagi o'quvchilar ismlari to'plami: har biri faqat bir marta, tartibi ahamiyatsiz.<br>
+<b>dict</b> — lug'at yoki telefon kitobi: so'z (kalit) bo'yicha ma'nosini (qiymatni) darhol topasiz.</div>
+
+<h2 id="list-royxat"><a class="anchor" href="#list-royxat">#</a>List — ro'yxat</h2>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">fanlar = [&quot;matematika&quot;, &quot;fizika&quot;, &quot;informatika&quot;]
+print(fanlar[0])          # matematika — indeks 0 dan
+print(fanlar[-1])         # informatika — MANFIY indeks: oxiridan sanaydi
+print(len(fanlar))        # 3 — elementlar soni
+
+fanlar.append(&quot;tarix&quot;)            # oxiriga qo&#x27;shish (JS: push)
+fanlar.insert(1, &quot;kimyo&quot;)         # 1-o&#x27;ringa qo&#x27;yish
+fanlar.remove(&quot;fizika&quot;)           # qiymati bo&#x27;yicha o&#x27;chirish
+oxirgi = fanlar.pop()             # oxirgisini olib tashlash va qaytarish
+fanlar[0] = &quot;algebra&quot;             # o&#x27;zgartirish
+print(fanlar)                     # [&#x27;algebra&#x27;, &#x27;kimyo&#x27;, &#x27;informatika&#x27;]
+
+print(&quot;kimyo&quot; in fanlar)          # True — bormi?
+print(fanlar.index(&quot;kimyo&quot;))      # 1 — qaysi o&#x27;rinda?</code></pre></div>
+<h3>Sonlar ro'yxati bilan ishlash</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">ballar = [78, 95, 62, 88, 95, 71]
+print(sum(ballar))                # 489 — yig&#x27;indi
+print(max(ballar), min(ballar))   # 95 62
+print(sum(ballar) / len(ballar))  # 81.5 — o&#x27;rtacha
+print(ballar.count(95))           # 2 — necha marta uchraydi
+
+ballar.sort()                     # o&#x27;sish tartibida (asl ro&#x27;yxatni o&#x27;zgartiradi)
+print(ballar)
+ballar.sort(reverse=True)         # kamayish tartibida
+print(sorted([&quot;olma&quot;, &quot;anor&quot;, &quot;behi&quot;]))   # yangi saralangan ro&#x27;yxat qaytaradi</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">489
+95 62
+81.5
+2
+[62, 71, 78, 88, 95, 95]
+[&#x27;anor&#x27;, &#x27;behi&#x27;, &#x27;olma&#x27;]</code></pre></div>
+<h3>Kesish (slicing) — Python'ning "super kuchi"</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">harflar = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+#            0    1    2    3    4    5
+print(harflar[1:4])     # [&#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]   — 1 dan 4 gacha (4 kirmaydi)
+print(harflar[:3])      # [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]   — boshidan
+print(harflar[3:])      # [&#x27;d&#x27;, &#x27;e&#x27;, &#x27;f&#x27;]   — oxirigacha
+print(harflar[-2:])     # [&#x27;e&#x27;, &#x27;f&#x27;]        — oxirgi ikkitasi
+print(harflar[::2])     # [&#x27;a&#x27;, &#x27;c&#x27;, &#x27;e&#x27;]   — har ikkinchisi
+print(harflar[::-1])    # teskari tartibda!
+print(&quot;Python&quot;[::-1])   # nohtyP — satrlarda ham ishlaydi</code></pre></div>
+<h3>Aylanib chiqish</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">oquvchilar = [&quot;Ali&quot;, &quot;Vali&quot;, &quot;Gani&quot;]
+for ism in oquvchilar:
+    print(ism)
+
+for i, ism in enumerate(oquvchilar, start=1):    # raqam bilan
+    print(f&quot;{i}. {ism}&quot;)</code></pre></div>
+<h3>List comprehension — qisqa va kuchli</h3>
+<p>Mavjud ro'yxatdan yangisini bitta qatorda yaratish (JS'dagi <code>map</code> va <code>filter</code> ning birlashmasi):</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">sonlar = [1, 2, 3, 4, 5, 6]
+
+kvadratlar = [x * x for x in sonlar]             # [1, 4, 9, 16, 25, 36]
+juftlar = [x for x in sonlar if x % 2 == 0]      # [2, 4, 6]
+ismlar = [&quot;ali&quot;, &quot;vali&quot;]
+kattalar = [i.capitalize() for i in ismlar]      # [&#x27;Ali&#x27;, &#x27;Vali&#x27;]
+
+# Oddiy sikl bilan xuddi shu:
+kvadratlar2 = []
+for x in sonlar:
+    kvadratlar2.append(x * x)</code></pre></div>
+
+<h2 id="tuple-ozgarmas-royxat"><a class="anchor" href="#tuple-ozgarmas-royxat">#</a>Tuple — o'zgarmas ro'yxat</h2>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">sana = (1, 9, 2026)               # kun, oy, yil
+koordinata = (41.31, 69.28)       # Toshkent kengligi va uzunligi
+print(sana[2])                    # 2026
+# sana[0] = 5                     # ❌ TypeError: tuple o&#x27;zgartirilmaydi
+
+kun, oy, yil = sana               # &quot;ochish&quot; (unpacking)
+print(f&quot;{kun}.{oy}.{yil}&quot;)
+
+a, b = 5, 10
+a, b = b, a                       # qiymatlarni almashtirish — aslida tuple!
+print(a, b)                       # 10 5</code></pre></div>
+<p><b>Qachon tuple?</b> Ma'lumot o'zgarmasligi kerak bo'lsa: sanalar, koordinatalar, RGB ranglar <code>(255, 0, 0)</code>, haftaning kunlari. Tuple list'dan biroz tezroq
+va "tasodifan o'zgartirib qo'yish"dan himoya qiladi.</p>
+
+<h2 id="set-takrorlanmas-toplam"><a class="anchor" href="#set-takrorlanmas-toplam">#</a>Set — takrorlanmas to'plam</h2>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">ranglar = {&quot;qizil&quot;, &quot;yashil&quot;, &quot;qizil&quot;, &quot;ko&#x27;k&quot;}
+print(ranglar)              # {&#x27;yashil&#x27;, &#x27;ko&#x27;k&#x27;, &#x27;qizil&#x27;} — takror o&#x27;chdi, tartib kafolatlanmaydi
+ranglar.add(&quot;sariq&quot;)
+ranglar.discard(&quot;yashil&quot;)
+print(&quot;qizil&quot; in ranglar)   # True — set&#x27;da qidirish juda tez
+
+# Takrorlarni olib tashlashning eng oson usuli
+royxat = [1, 2, 2, 3, 3, 3, 4]
+print(list(set(royxat)))    # [1, 2, 3, 4]
+
+# To&#x27;plamlar ustida amallar (matematikadagi kabi)
+futbol = {&quot;Ali&quot;, &quot;Vali&quot;, &quot;Sardor&quot;}
+shaxmat = {&quot;Vali&quot;, &quot;Malika&quot;, &quot;Sardor&quot;}
+print(futbol &amp; shaxmat)     # kesishma — ikkalasida ham: {&#x27;Vali&#x27;, &#x27;Sardor&#x27;}
+print(futbol | shaxmat)     # birlashma — hammasi
+print(futbol - shaxmat)     # ayirma — faqat futbolda: {&#x27;Ali&#x27;}</code></pre></div>
+<div class="callout warn">Bo'sh set — <code>set()</code>. <code>{}</code> yozsangiz bo'sh <b>dict</b> yaratiladi!</div>
+
+<h2 id="dictionary-kalit-qiymat"><a class="anchor" href="#dictionary-kalit-qiymat">#</a>Dictionary — kalit: qiymat</h2>
+<p>Eng ko'p ishlatiladigan tuzilma. Ma'lumotni <b>nomi (kaliti)</b> bo'yicha saqlaydi va darhol topadi.</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">oquvchi = {
+    &quot;ism&quot;: &quot;Dilnoza&quot;,
+    &quot;yosh&quot;: 14,
+    &quot;sinf&quot;: &quot;8-A&quot;,
+    &quot;fanlar&quot;: [&quot;matematika&quot;, &quot;ingliz tili&quot;],
+}
+
+print(oquvchi[&quot;ism&quot;])                    # Dilnoza
+print(oquvchi.get(&quot;telefon&quot;))            # None — kalit yo&#x27;q bo&#x27;lsa xato bermaydi
+print(oquvchi.get(&quot;telefon&quot;, &quot;yo&#x27;q&quot;))    # standart qiymat bilan
+
+oquvchi[&quot;yosh&quot;] = 15                     # o&#x27;zgartirish
+oquvchi[&quot;shahar&quot;] = &quot;Andijon&quot;            # yangi kalit qo&#x27;shish
+del oquvchi[&quot;sinf&quot;]                      # o&#x27;chirish
+print(&quot;ism&quot; in oquvchi)                  # True — kalit bormi?
+
+for kalit, qiymat in oquvchi.items():    # kalit va qiymatni birga
+    print(f&quot;{kalit}: {qiymat}&quot;)
+
+print(list(oquvchi.keys()))
+print(list(oquvchi.values()))</code></pre></div>
+<div class="callout danger"><code>oquvchi["telefon"]</code> — kalit yo'q bo'lsa <code>KeyError</code> xatosi. Ishonchingiz komil bo'lmasa, <code>.get()</code> ishlating.</div>
+<h3>Dict bilan sanash — klassik masala</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">matn = &quot;olma nok olma uzum nok olma&quot;
+sanoq = {}
+for soz in matn.split():
+    sanoq[soz] = sanoq.get(soz, 0) + 1
+print(sanoq)        # {&#x27;olma&#x27;: 3, &#x27;nok&#x27;: 2, &#x27;uzum&#x27;: 1}</code></pre></div>
+<h3>Ichma-ich tuzilmalar — real ma'lumot</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">sinf = [
+    {&quot;ism&quot;: &quot;Ali&quot;, &quot;baholar&quot;: {&quot;matematika&quot;: 5, &quot;fizika&quot;: 4}},
+    {&quot;ism&quot;: &quot;Zarina&quot;, &quot;baholar&quot;: {&quot;matematika&quot;: 5, &quot;fizika&quot;: 5}},
+]
+print(sinf[1][&quot;baholar&quot;][&quot;fizika&quot;])     # 5
+
+for o in sinf:
+    ortacha = sum(o[&quot;baholar&quot;].values()) / len(o[&quot;baholar&quot;])
+    print(f&quot;{o[&#x27;ism&#x27;]}: {ortacha}&quot;)</code></pre></div>
+<p>Bu ko'rinish JavaScript'dagi obyektlar massiviga (18-mavzu) va internetdagi <b>JSON</b> formatiga juda o'xshaydi — 39-mavzuda API yaratganimizda aynan shu ishlatiladi.</p>
+
+<h2 id="qaysi-birini-tanlash-kerak"><a class="anchor" href="#qaysi-birini-tanlash-kerak">#</a>Qaysi birini tanlash kerak?</h2>
+<div class="table-wrap"><table>
+<tr><th>Vazifa</th><th>Tanlov</th></tr>
+<tr><td>Tartibli, o'zgaradigan ro'yxat (vazifalar, xabarlar)</td><td><b>list</b></td></tr>
+<tr><td>O'zgarmas guruh (sana, koordinata)</td><td><b>tuple</b></td></tr>
+<tr><td>Faqat noyob qiymatlar, tez "bormi?" tekshiruvi</td><td><b>set</b></td></tr>
+<tr><td>Nom bo'yicha qidirish (login → parol, so'z → tarjima)</td><td><b>dict</b></td></tr>
+<tr><td>Ko'p obyekt, har birining xususiyatlari</td><td><b>list ichida dict</b></td></tr>
+</table></div>
+
+<h2 id="amaliy-mashgulot-oquvchilar-malumotlarini-boshqarish-16-loyiha"><a class="anchor" href="#amaliy-mashgulot-oquvchilar-malumotlarini-boshqarish-16-loyiha">#</a>Amaliy mashg'ulot: o'quvchilar ma'lumotlarini boshqarish (16-loyiha)</h2>
+<div class="code"><div class="code-head"><span>oquvchilar.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">oquvchilar = {
+    &quot;ali&quot;: {&quot;ism&quot;: &quot;Ali Valiyev&quot;, &quot;sinf&quot;: &quot;8-A&quot;, &quot;baholar&quot;: [5, 4, 5]},
+    &quot;zarina&quot;: {&quot;ism&quot;: &quot;Zarina Karimova&quot;, &quot;sinf&quot;: &quot;8-B&quot;, &quot;baholar&quot;: [5, 5, 4]},
+}
+
+def ortacha(baholar):
+    return round(sum(baholar) / len(baholar), 2) if baholar else 0
+
+def royxat():
+    if not oquvchilar:
+        print(&quot;Ro&#x27;yxat bo&#x27;sh&quot;)
+        return
+    print(f&quot;\n{&#x27;Login&#x27;:&lt;10}{&#x27;Ism&#x27;:&lt;20}{&#x27;Sinf&#x27;:&lt;6}{&#x27;O‘rtacha&#x27;:&gt;8}&quot;)
+    print(&quot;-&quot; * 44)
+    for login, o in oquvchilar.items():
+        print(f&quot;{login:&lt;10}{o[&#x27;ism&#x27;]:&lt;20}{o[&#x27;sinf&#x27;]:&lt;6}{ortacha(o[&#x27;baholar&#x27;]):&gt;8}&quot;)
+
+def qoshish():
+    login = input(&quot;Login: &quot;).strip().lower()
+    if login in oquvchilar:
+        print(&quot;❌ Bunday login band&quot;)
+        return
+    ism = input(&quot;To&#x27;liq ism: &quot;).strip()
+    sinf = input(&quot;Sinf: &quot;).strip()
+    oquvchilar[login] = {&quot;ism&quot;: ism, &quot;sinf&quot;: sinf, &quot;baholar&quot;: []}
+    print(&quot;✅ Qo&#x27;shildi&quot;)
+
+def baho_qoyish():
+    login = input(&quot;Login: &quot;).strip().lower()
+    if login not in oquvchilar:
+        print(&quot;❌ Topilmadi&quot;)
+        return
+    try:
+        baho = int(input(&quot;Baho (2–5): &quot;))
+    except ValueError:
+        print(&quot;❌ Son kiriting&quot;)
+        return
+    if baho not in (2, 3, 4, 5):
+        print(&quot;❌ Baho 2 dan 5 gacha&quot;)
+        return
+    oquvchilar[login][&quot;baholar&quot;].append(baho)
+    print(&quot;✅ Baho qo&#x27;yildi&quot;)
+
+def statistika():
+    if not oquvchilar:
+        return
+    eng_yaxshi = max(oquvchilar.values(), key=lambda o: ortacha(o[&quot;baholar&quot;]))
+    sinflar = {o[&quot;sinf&quot;] for o in oquvchilar.values()}          # set comprehension
+    print(f&quot;Jami o&#x27;quvchilar: {len(oquvchilar)}&quot;)
+    print(f&quot;Sinflar: {&#x27;, &#x27;.join(sorted(sinflar))}&quot;)
+    print(f&quot;Eng yuqori o&#x27;rtacha: {eng_yaxshi[&#x27;ism&#x27;]} ({ortacha(eng_yaxshi[&#x27;baholar&#x27;])})&quot;)
+
+MENYU = {
+    &quot;1&quot;: (&quot;Ro&#x27;yxatni ko&#x27;rish&quot;, royxat),
+    &quot;2&quot;: (&quot;O&#x27;quvchi qo&#x27;shish&quot;, qoshish),
+    &quot;3&quot;: (&quot;Baho qo&#x27;yish&quot;, baho_qoyish),
+    &quot;4&quot;: (&quot;Statistika&quot;, statistika),
+}
+
+while True:
+    print(&quot;\n===== O&#x27;QUVCHILAR TIZIMI =====&quot;)
+    for kalit, (nom, _) in MENYU.items():
+        print(f&quot;{kalit}. {nom}&quot;)
+    print(&quot;0. Chiqish&quot;)
+    tanlov = input(&quot;Tanlang: &quot;).strip()
+    if tanlov == &quot;0&quot;:
+        print(&quot;Xayr!&quot;)
+        break
+    if tanlov in MENYU:
+        MENYU[tanlov][1]()          # dict&#x27;dan funksiyani olib, chaqiramiz
+    else:
+        print(&quot;❌ Noto&#x27;g&#x27;ri tanlov&quot;)</code></pre></div>
+<p><b>Kodni o'rganing:</b> o'quvchilar <b>dict</b>da (login bo'yicha tez topish), baholar <b>list</b>da, menyu ham <b>dict</b> (raqam → nom va funksiya <b>tuple</b>), sinflar <b>set</b>da (takrorlanmas).
+To'rtala tuzilma bitta dasturda!</p>
+<ol class="steps">
+  <li>"O'quvchini o'chirish" va "Ism bo'yicha qidirish" menyu bandlarini qo'shing.</li>
+  <li>Dastur yopilganda ma'lumot yo'qolmasligi uchun JSON faylga saqlang (24-mavzuda <code>json</code> modulini o'rganamiz — oldindan sinab ko'ring!).</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>IndexError: list index out of range</code> — mavjud bo'lmagan indeks (3 elementli ro'yxatda <code>[3]</code>).</li>
+  <li>❌ <code>KeyError</code> — dict'da yo'q kalit; <code>.get()</code> ishlating.</li>
+  <li>❌ <code>x = ro'yxat.sort()</code> — <code>sort()</code> hech narsa qaytarmaydi (<code>None</code>); yangi ro'yxat kerak bo'lsa <code>sorted()</code>.</li>
+  <li>❌ Bo'sh set uchun <code>{}</code> yozish — bu dict.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Qaysi tuzilmani yaratilgandan keyin o'zgartirib bo'lmaydi?</p><ol>
+<li>list</li><li>tuple</li><li>set</li><li>dict</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>[1, 2, 2, 3, 3]</code> dan takrorlarni olib tashlashning eng oson usuli?</p><ol>
+<li><code>sort()</code></li><li><code>tuple()</code></li><li><code>pop()</code></li><li><code>list(set(...))</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>a = [10, 20, 30, 40]; print(a[-1])</code> natijasi?</p><ol>
+<li>10</li><li>Xato</li><li>40</li><li>30</li></ol></div>
+<div class="quiz" data-answer="1"><p class="q"><code>"Salom"[1:4]</code> natijasi?</p><ol>
+<li>"alo"</li><li>"Sal"</li><li>"alom"</li><li>"Salo"</li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Telefon kitobi (ism → raqam) uchun eng mos tuzilma?</p><ol>
+<li>list</li><li>dict</li><li>tuple</li><li>set</li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>[x * 2 for x in range(4)]</code> natijasi?</p><ol>
+<li>[2, 4, 6, 8]</li><li>[0, 1, 2, 3]</li><li>[0, 2, 4, 6]</li><li>8</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li><b>Lug'at:</b> 10 ta inglizcha-o'zbekcha so'zli dict yarating. Foydalanuvchi so'z kiritadi — tarjimasi chiqadi; yo'q bo'lsa, tarjimasini so'rab lug'atga qo'shadi.</li>
+  <li><b>Umumiy do'stlar:</b> ikki kishining do'stlari ro'yxatidan (set) umumiy do'stlarni va faqat birinchisining do'stlarini toping.</li>
+  <li><b>Harflar statistikasi:</b> kiritilgan matnda har bir harf necha marta uchrashini dict bilan hisoblang va eng ko'p uchragan 3 tasini chiqaring.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><b>list</b> <code>[]</code> — tartibli, o'zgaruvchan: <code>append</code>, <code>remove</code>, <code>pop</code>, <code>sort</code>, slicing <code>[a:b]</code>, <code>[-1]</code>.</li>
+  <li><b>tuple</b> <code>()</code> — o'zgarmas; unpacking: <code>a, b = (1, 2)</code>.</li>
+  <li><b>set</b> <code>{}</code> — takrorsiz; <code>&amp;</code> <code>|</code> <code>-</code> amallari.</li>
+  <li><b>dict</b> <code>{"k": v}</code> — kalit bo'yicha: <code>d["k"]</code>, <code>d.get("k")</code>, <code>.items()</code>, <code>.keys()</code>, <code>.values()</code>.</li>
+  <li>List comprehension: <code>[ifoda for x in to'plam if shart]</code>.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="22-python-shart-sikl-fayl.html"><small>← Oldingi mavzu</small>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a><a class="next" href="24-python-funksiya-modul.html"><small>Keyingi mavzu →</small>Python funksiyalar, modullar va standart kutubxonalar</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#tort-tuzilma-bir-qarashda">To&#x27;rt tuzilma — bir qarashda</a></li><li><a href="#list-royxat">List — ro&#x27;yxat</a></li><li><a href="#tuple-ozgarmas-royxat">Tuple — o&#x27;zgarmas ro&#x27;yxat</a></li><li><a href="#set-takrorlanmas-toplam">Set — takrorlanmas to&#x27;plam</a></li><li><a href="#dictionary-kalit-qiymat">Dictionary — kalit: qiymat</a></li><li><a href="#qaysi-birini-tanlash-kerak">Qaysi birini tanlash kerak?</a></li><li><a href="#amaliy-mashgulot-oquvchilar-malumotlarini-boshqarish-16-loyiha">Amaliy mashg&#x27;ulot: o&#x27;quvchilar ma&#x27;lumotlarini boshqarish (16-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

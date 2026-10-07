@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="INNER, LEFT, RIGHT JOIN va ular farqi; bir nechta jadvalni birlashtirish; indekslar va EXPLAIN; cheklovlar va ma&#x27;lumotlar yaxlitligi (ON DELETE); pg_dump va pgAdmin orqali zaxira nusxa va tiklash.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a class="active" href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔗</div><div><div class="crumb">29-mavzu · 42 tadan · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</h1><p class="lead">INNER, LEFT, RIGHT JOIN va ular farqi; bir nechta jadvalni birlashtirish; indekslar va EXPLAIN; cheklovlar va ma&#x27;lumotlar yaxlitligi (ON DELETE); pg_dump va pgAdmin orqali zaxira nusxa va tiklash.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Bir nechta jadvaldagi ma'lumotlarni <b>JOIN</b> bilan birlashtirishni;</li>
+  <li><code>INNER</code>, <code>LEFT</code> va <code>RIGHT JOIN</code> farqini;</li>
+  <li>Qidiruvni tezlashtiruvchi <b>indekslar</b>ni;</li>
+  <li>Ma'lumotlar <b>yaxlitligi</b> va cheklovlar qanday himoya qilishini;</li>
+  <li>Bazaning <b>zaxira nusxasini</b> olish va tiklashni (backup / restore).</li>
+</ul>
+</div>
+
+<h2 id="nima-uchun-join-kerak"><a class="anchor" href="#nima-uchun-join-kerak">#</a>Nima uchun JOIN kerak?</h2>
+<p>26-mavzuda ma'lumotlarni takrorlamaslik uchun ularni turli jadvallarga ajratdik: o'quvchilar alohida, sinflar alohida, baholar alohida. Endi savol:
+<b>"Ali Valiyev qaysi sinfda va sinf rahbari kim?"</b> Javob uchun ikkala jadvalni <b>birlashtirish</b> kerak — buni <code>JOIN</code> qiladi.</p>
+<div class="analogy"><span class="t">O'xshatish: ikkita ro'yxat</span>
+Sizda ikkita qog'oz bor: birinchisida "O'quvchi — sinf raqami", ikkinchisida "Sinf raqami — sinf rahbari". Ali'ning rahbarini bilish uchun birinchi qog'ozdan
+sinf raqamini topib, ikkinchi qog'ozdan shu raqamni qidirasiz. JOIN aynan shuni avtomatik va millionlab qator uchun bir zumda qiladi.</div>
+
+<h2 id="inner-join"><a class="anchor" href="#inner-join">#</a>INNER JOIN</h2>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT oquvchilar.ism, oquvchilar.familiya, sinflar.nomi, sinflar.sinf_rahbari
+FROM oquvchilar
+INNER JOIN sinflar ON oquvchilar.sinf_id = sinflar.id;</code></pre></div>
+<ul>
+  <li><code>JOIN sinflar</code> — qaysi jadval bilan birlashtiramiz.</li>
+  <li><code>ON oquvchilar.sinf_id = sinflar.id</code> — <b>qaysi ustunlar bo'yicha</b> moslashtiramiz (odatda FK = PK).</li>
+  <li><code>jadval.ustun</code> — ikki jadvalda bir xil nomli ustun bo'lsa (ikkalasida <code>id</code> bor), qaysi biri ekanini aniq ko'rsatish uchun.</li>
+</ul>
+<h3>Taxalluslar — qisqaroq yozuv</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT o.ism, o.familiya, s.nomi AS sinf, s.sinf_rahbari
+FROM oquvchilar AS o
+JOIN sinflar AS s ON o.sinf_id = s.id        -- JOIN = INNER JOIN
+ORDER BY s.nomi, o.familiya;</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext"> ism     | familiya  | sinf | sinf_rahbari
+---------+-----------+------+-----------------
+ Dilnoza | Aminova   | 8-A  | Karimova Nodira
+ Zarina  | Karimova  | 8-A  | Karimova Nodira
+ Ali     | Valiyev   | 8-A  | Karimova Nodira
+ Madina  | Ergasheva | 8-B  | Rasulov Akmal
+ Bobur   | Toshmatov | 8-B  | Rasulov Akmal
+ ...</code></pre></div>
+
+<h2 id="join-turlari"><a class="anchor" href="#join-turlari">#</a>JOIN turlari</h2>
+<p>Agar biror o'quvchining <code>sinf_id</code> si bo'sh (NULL) bo'lsa yoki biror sinfda hali o'quvchi bo'lmasa-chi? Shu yerda JOIN turlari farq qiladi:</p>
+<div class="table-wrap"><table>
+<tr><th>Tur</th><th>Natijada nima bo'ladi</th><th>Doira diagrammasi</th></tr>
+<tr><td><code>INNER JOIN</code></td><td>Faqat <b>ikkala</b> jadvalda ham mos keladigan qatorlar</td><td>Ikki doiraning <b>kesishmasi</b></td></tr>
+<tr><td><code>LEFT JOIN</code></td><td><b>Chap</b> jadvalning HAMMA qatorlari + o'ngdan mos kelganlar (mos kelmasa — NULL)</td><td>Butun chap doira</td></tr>
+<tr><td><code>RIGHT JOIN</code></td><td><b>O'ng</b> jadvalning HAMMA qatorlari + chapdan mos kelganlar</td><td>Butun o'ng doira</td></tr>
+<tr><td><code>FULL JOIN</code></td><td>Ikkala jadvalning hamma qatorlari</td><td>Ikkala doira</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Tayyorgarlik: sinfsiz o&#x27;quvchi va o&#x27;quvchisiz sinf qo&#x27;shamiz
+INSERT INTO oquvchilar (ism, familiya) VALUES (&#x27;Yangi&#x27;, &#x27;Keldi&#x27;);   -- sinf_id = NULL
+INSERT INTO sinflar (nomi, sinf_rahbari) VALUES (&#x27;8-G&#x27;, &#x27;Azimov B.&#x27;);  -- hali o&#x27;quvchisi yo&#x27;q
+
+-- INNER: &quot;Yangi Keldi&quot; ham, &quot;8-G&quot; ham YO&#x27;Q
+SELECT o.ism, s.nomi FROM oquvchilar o JOIN sinflar s ON o.sinf_id = s.id;
+
+-- LEFT: barcha o&#x27;quvchilar; &quot;Yangi Keldi&quot; ning sinfi — NULL
+SELECT o.ism, s.nomi FROM oquvchilar o LEFT JOIN sinflar s ON o.sinf_id = s.id;
+
+-- RIGHT: barcha sinflar; &quot;8-G&quot; uchun o&#x27;quvchi — NULL
+SELECT o.ism, s.nomi FROM oquvchilar o RIGHT JOIN sinflar s ON o.sinf_id = s.id;</code></pre></div>
+<h3>LEFT JOIN'ning foydali qo'llanilishi: "yo'q"larni topish</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Hali birorta ham baho olmagan o&#x27;quvchilar
+SELECT o.ism, o.familiya
+FROM oquvchilar o
+LEFT JOIN baholar b ON b.oquvchi_id = o.id
+WHERE b.id IS NULL;</code></pre></div>
+<div class="callout tip">Qaysi JOIN kerakligini bilish uchun so'rang: "Mos kelmagan qatorlar natijada <b>ko'rinishi kerakmi</b>?" Yo'q → <code>INNER</code>. Chap jadvalning hammasi kerak → <code>LEFT</code>.
+Amalda <code>RIGHT JOIN</code> kam ishlatiladi — jadvallar o'rnini almashtirib, <code>LEFT</code> bilan yozish mumkin.</div>
+
+<h3>Uch jadvalni birlashtirish</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Kim, qaysi sinfdan, qaysi fandan, qanday baho olgan
+SELECT o.ism || &#x27; &#x27; || o.familiya AS oquvchi,
+       s.nomi AS sinf,
+       b.fan,
+       b.baho,
+       b.sana
+FROM baholar b
+JOIN oquvchilar o ON b.oquvchi_id = o.id
+JOIN sinflar s    ON o.sinf_id = s.id
+WHERE b.fan = &#x27;Matematika&#x27;
+ORDER BY b.baho DESC, oquvchi;</code></pre></div>
+<h3>Ko'pga-ko'p: to'garaklar</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Har bir o&#x27;quvchi qaysi to&#x27;garaklarda (oraliq jadval orqali)
+SELECT o.ism, t.nomi AS togarak
+FROM oquvchilar o
+JOIN azoliklar a  ON a.oquvchi_id = o.id
+JOIN togaraklar t ON t.id = a.togarak_id
+ORDER BY o.ism;</code></pre></div>
+
+<h2 id="indekslar-qidiruvni-tezlashtirish"><a class="anchor" href="#indekslar-qidiruvni-tezlashtirish">#</a>Indekslar — qidiruvni tezlashtirish</h2>
+<p>Jadvalda 1 000 000 qator bo'lsa, <code>WHERE familiya = 'Karimova'</code> uchun baza har bir qatorni birma-bir tekshiradi. <b>Indeks</b> — maxsus "ko'rsatkich" bo'lib,
+kerakli qatorlarni darhol topishga yordam beradi.</p>
+<div class="analogy"><span class="t">O'xshatish: kitob oxiridagi ko'rsatkich</span>
+"Fotosintez" so'zini darslikda topish uchun 300 betni varaqlaysizmi? Yo'q — kitob oxiridagi alifboli <b>ko'rsatkich</b>ga qaraysiz: "Fotosintez — 47, 112-betlar".
+Indeks — baza uchun xuddi shunday ko'rsatkich.</div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">-- Familiya bo&#x27;yicha tez-tez qidiramiz — indeks yaratamiz
+CREATE INDEX idx_oquvchilar_familiya ON oquvchilar (familiya);
+
+-- Tashqi kalitlar JOIN&#x27;da ishlatiladi — ularga indeks foydali
+CREATE INDEX idx_baholar_oquvchi ON baholar (oquvchi_id);
+
+-- Baza so&#x27;rovni qanday bajarishini ko&#x27;rish
+EXPLAIN SELECT * FROM oquvchilar WHERE familiya = &#x27;Karimova&#x27;;
+
+DROP INDEX idx_oquvchilar_familiya;    -- indeksni o&#x27;chirish</code></pre></div>
+<ul>
+  <li><code>PRIMARY KEY</code> va <code>UNIQUE</code> ustunlarga indeks <b>avtomatik</b> yaratiladi.</li>
+  <li>Indeks o'qishni tezlashtiradi, lekin <b>yozishni biroz sekinlashtiradi</b> va joy egallaydi. Shuning uchun faqat <b>tez-tez qidiriladigan</b> ustunlarga qo'yiladi.</li>
+  <li>Kichik jadvallarda (yuzlab qator) farq sezilmaydi; minglab va millionlab qatorda — juda katta.</li>
+</ul>
+
+<h2 id="constraint-va-malumotlar-yaxlitligi-data-integrity"><a class="anchor" href="#constraint-va-malumotlar-yaxlitligi-data-integrity">#</a>Constraint va ma'lumotlar yaxlitligi (data integrity)</h2>
+<p><b>Ma'lumotlar yaxlitligi</b> — bazadagi ma'lumotlar har doim <b>to'g'ri, izchil va ishonchli</b> bo'lishi. Buni dastur kodiga emas, <b>bazaning o'ziga</b> ishonib topshirish kerak —
+chunki dasturda xato bo'lishi mumkin, baza esa qoidani doim tekshiradi.</p>
+<div class="table-wrap"><table>
+<tr><th>Yaxlitlik turi</th><th>Nimani kafolatlaydi</th><th>Vosita</th></tr>
+<tr><td>Obyekt yaxlitligi</td><td>Har bir qator noyob va aniqlanadigan</td><td><code>PRIMARY KEY</code></td></tr>
+<tr><td>Havola yaxlitligi</td><td>FK doim mavjud qatorga ishora qiladi</td><td><code>FOREIGN KEY</code> (<code>REFERENCES</code>)</td></tr>
+<tr><td>Qiymat yaxlitligi</td><td>Qiymatlar to'g'ri turda va chegarada</td><td>Turlar, <code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code></td></tr>
+</table></div>
+<h3>FK qatori o'chirilganda nima bo'ladi?</h3>
+<div class="table-wrap"><table>
+<tr><th>Variant</th><th>Xatti-harakat</th><th>Misol</th></tr>
+<tr><td><code>ON DELETE RESTRICT</code> (standart)</td><td>O'chirishga ruxsat bermaydi</td><td>O'quvchilari bor sinfni o'chirib bo'lmaydi</td></tr>
+<tr><td><code>ON DELETE CASCADE</code></td><td>Bog'liq qatorlar ham o'chadi</td><td>O'quvchi o'chsa — baholari ham</td></tr>
+<tr><td><code>ON DELETE SET NULL</code></td><td>FK ustuni NULL bo'ladi</td><td>Sinf yopilsa — o'quvchilar "sinfsiz" qoladi</td></tr>
+</table></div>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">DELETE FROM sinflar WHERE id = 1;
+-- ❌ update or delete on table &quot;sinflar&quot; violates foreign key constraint ...
+--    Key (id)=(1) is still referenced from table &quot;oquvchilar&quot;.
+-- Baza &quot;yetim&quot; o&#x27;quvchilar paydo bo&#x27;lishiga yo&#x27;l qo&#x27;ymadi ✅</code></pre></div>
+<h3>Mavjud jadvalga cheklov qo'shish</h3>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">ALTER TABLE oquvchilar ADD CONSTRAINT email_formati CHECK (email LIKE &#x27;%@%.%&#x27;);
+ALTER TABLE sinflar ADD CONSTRAINT xona_musbat CHECK (xona &gt; 0);</code></pre></div>
+
+<h2 id="backup-va-restore-zaxira-nusxa"><a class="anchor" href="#backup-va-restore-zaxira-nusxa">#</a>Backup va Restore — zaxira nusxa</h2>
+<p>Kompyuter buzilishi, tasodifiy <code>DELETE</code> yoki viruslar — ma'lumot yo'qolishining sabablari ko'p. <b>Backup</b> — bazaning nusxasini saqlab qo'yish, <b>restore</b> —
+nusxadan qayta tiklash. Professional qoida: <b>"Tekshirilmagan zaxira — zaxira emas"</b> — tiklashni ham sinab ko'ring.</p>
+<h3>pgAdmin orqali</h3>
+<ol class="steps">
+  <li><b>Backup:</b> <code>maktab</code> bazasi ustida o'ng tugma → <b>Backup...</b> → fayl nomi (<code>maktab_2026-10-06.backup</code>) → Format: <b>Custom</b> → <b>Backup</b>.</li>
+  <li><b>Restore:</b> yangi bo'sh baza yarating (<code>maktab_tiklangan</code>) → o'ng tugma → <b>Restore...</b> → faylni tanlang → <b>Restore</b>.</li>
+  <li>Tiklangan bazadagi jadvallar va ma'lumotlarni tekshiring.</li>
+</ol>
+<h3>Buyruqlar qatori orqali</h3>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Butun bazani SQL fayl ko&#x27;rinishida saqlash
+pg_dump -U postgres -d maktab -f maktab_backup.sql
+
+# Siqilgan (custom) formatda
+pg_dump -U postgres -d maktab -F c -f maktab.backup
+
+# Tiklash
+createdb -U postgres maktab_yangi
+psql -U postgres -d maktab_yangi -f maktab_backup.sql           # .sql fayldan
+pg_restore -U postgres -d maktab_yangi maktab.backup             # .backup fayldan</code></pre></div>
+<p><code>maktab_backup.sql</code> faylini oddiy matn muharririda oching — u bazani qaytadan yaratuvchi <code>CREATE TABLE</code> va <code>INSERT</code> buyruqlaridan iborat!</p>
+
+<h2 id="amaliy-mashgulot-mahsulotlar-va-buyurtmalar-bazasi-19-loyiha"><a class="anchor" href="#amaliy-mashgulot-mahsulotlar-va-buyurtmalar-bazasi-19-loyiha">#</a>Amaliy mashg'ulot: mahsulotlar va buyurtmalar bazasi (19-loyiha)</h2>
+<div class="code"><div class="code-head"><span>dokon.sql</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">CREATE TABLE mijozlar (
+    id      SERIAL PRIMARY KEY,
+    ism     VARCHAR(100) NOT NULL,
+    telefon VARCHAR(20) UNIQUE
+);
+CREATE TABLE mahsulotlar (
+    id     SERIAL PRIMARY KEY,
+    nomi   VARCHAR(100) NOT NULL,
+    narx   NUMERIC(12, 2) NOT NULL CHECK (narx &gt; 0),
+    soni   INTEGER NOT NULL DEFAULT 0 CHECK (soni &gt;= 0)
+);
+CREATE TABLE buyurtmalar (
+    id        SERIAL PRIMARY KEY,
+    mijoz_id  INTEGER NOT NULL REFERENCES mijozlar(id),
+    sana      TIMESTAMP DEFAULT NOW(),
+    holat     VARCHAR(20) DEFAULT &#x27;yangi&#x27; CHECK (holat IN (&#x27;yangi&#x27;, &#x27;yetkazilmoqda&#x27;, &#x27;yetkazildi&#x27;, &#x27;bekor&#x27;))
+);
+CREATE TABLE buyurtma_tarkibi (                                 -- ko&#x27;pga-ko&#x27;p
+    buyurtma_id  INTEGER REFERENCES buyurtmalar(id) ON DELETE CASCADE,
+    mahsulot_id  INTEGER REFERENCES mahsulotlar(id),
+    soni         INTEGER NOT NULL CHECK (soni &gt; 0),
+    narx         NUMERIC(12, 2) NOT NULL,                       -- sotilgan paytdagi narx!
+    PRIMARY KEY (buyurtma_id, mahsulot_id)
+);
+
+INSERT INTO mijozlar (ism, telefon) VALUES
+    (&#x27;Aziz&#x27;, &#x27;+998901111111&#x27;), (&#x27;Nilufar&#x27;, &#x27;+998902222222&#x27;), (&#x27;Kamol&#x27;, &#x27;+998903333333&#x27;);
+INSERT INTO mahsulotlar (nomi, narx, soni) VALUES
+    (&#x27;Daftar&#x27;, 5000, 200), (&#x27;Ruchka&#x27;, 3000, 500), (&#x27;Ryukzak&#x27;, 180000, 15), (&#x27;Kalkulyator&#x27;, 95000, 0);
+INSERT INTO buyurtmalar (mijoz_id, holat) VALUES (1, &#x27;yetkazildi&#x27;), (2, &#x27;yangi&#x27;), (1, &#x27;yangi&#x27;);
+INSERT INTO buyurtma_tarkibi VALUES
+    (1, 1, 10, 5000), (1, 2, 5, 3000), (2, 3, 1, 180000), (3, 1, 2, 5000);</code></pre></div>
+<p>Quyidagi so'rovlarni yozing:</p>
+<ol class="steps">
+  <li>Har bir buyurtma: raqami, mijoz ismi, sanasi va holati.</li>
+  <li>1-buyurtma tarkibi: mahsulot nomi, soni, narxi va <code>soni * narx</code> (summa).</li>
+  <li>Hali birorta ham buyurtma bermagan mijozlar (LEFT JOIN + IS NULL).</li>
+  <li>Hech qachon sotilmagan mahsulotlar.</li>
+  <li>Bazaning zaxira nusxasini oling, <code>mahsulotlar</code> jadvalidan bitta qatorni o'chiring, so'ng nusxadan yangi bazaga tiklab, qator o'z joyida ekanini tekshiring.</li>
+</ol>
+<details><summary>Javoblar (1–4)</summary>
+<div class="code"><div class="code-head"><span>SQL</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-sql">SELECT b.id, m.ism, b.sana, b.holat
+FROM buyurtmalar b JOIN mijozlar m ON m.id = b.mijoz_id;
+
+SELECT p.nomi, t.soni, t.narx, t.soni * t.narx AS summa
+FROM buyurtma_tarkibi t JOIN mahsulotlar p ON p.id = t.mahsulot_id
+WHERE t.buyurtma_id = 1;
+
+SELECT m.ism FROM mijozlar m
+LEFT JOIN buyurtmalar b ON b.mijoz_id = m.id
+WHERE b.id IS NULL;
+
+SELECT p.nomi FROM mahsulotlar p
+LEFT JOIN buyurtma_tarkibi t ON t.mahsulot_id = p.id
+WHERE t.mahsulot_id IS NULL;</code></pre></div>
+</details>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>column reference "id" is ambiguous</code> — ikki jadvalda ham <code>id</code> bor; <code>o.id</code> yoki <code>s.id</code> deb aniq yozing.</li>
+  <li>❌ <code>ON</code> shartini unutish yoki noto'g'ri ustunlarni bog'lash (<code>o.id = s.id</code>) — natija mantiqsiz bo'ladi.</li>
+  <li>❌ LEFT JOIN'dan keyin o'ng jadval bo'yicha <code>WHERE</code> qo'yib, uni INNER'ga aylantirib qo'yish.</li>
+  <li>❌ Zaxira nusxani o'sha kompyuterning o'zida saqlash — kompyuter buzilsa, nusxa ham yo'qoladi. Boshqa joyga (fleshka, bulut) ham ko'chiring.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="1"><p class="q">Faqat ikkala jadvalda ham mos keladigan qatorlarni qaytaruvchi JOIN?</p><ol>
+<li><code>INNER JOIN</code></li><li><code>LEFT JOIN</code></li><li><code>RIGHT JOIN</code></li><li><code>FULL JOIN</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Barcha o'quvchilarni (sinfi bo'lmaganlarini ham) sinf nomi bilan chiqarish uchun?</p><ol>
+<li><code>oquvchilar INNER JOIN sinflar</code></li><li><code>sinflar INNER JOIN oquvchilar</code></li><li><code>oquvchilar LEFT JOIN sinflar</code></li><li><code>oquvchilar RIGHT JOIN sinflar</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Indeksning asosiy vazifasi?</p><ol>
+<li>Ma'lumotlarni shifrlash</li><li>Qidiruvni tezlashtirish</li><li>Zaxira nusxa olish</li><li>Jadvallarni bog'lash</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">O'quvchi o'chirilganda uning baholari ham avtomatik o'chishi uchun FK'ga nima qo'shiladi?</p><ol>
+<li><code>ON DELETE RESTRICT</code></li><li><code>ON DELETE SET NULL</code></li><li><code>NOT NULL</code></li><li><code>ON DELETE CASCADE</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">PostgreSQL bazasining zaxira nusxasini oluvchi buyruq?</p><ol>
+<li><code>pg_backup</code></li><li><code>pg_dump</code></li><li><code>COPY DATABASE</code></li><li><code>SAVE DATABASE</code></li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Kutubxona bazangizda (27-mavzu uyga vazifasi): har bir ijara — kitob nomi, muallif, o'quvchi ismi; hali qaytarilmagan kitoblar; hech kim olmagan kitoblar.</li>
+  <li>Haftada bir marta avtomatik backup qilish nima uchun muhimligini va qanday tashkil qilish mumkinligini yozing.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li><code>SELECT ... FROM a JOIN b ON a.fk = b.id</code>; taxalluslar: <code>FROM oquvchilar o</code>.</li>
+  <li>INNER — faqat moslar; LEFT — chapning hammasi; RIGHT — o'ngning hammasi. "Yo'q"larni topish: LEFT JOIN + <code>IS NULL</code>.</li>
+  <li>Indeks — tez qidiruv uchun ko'rsatkich (<code>CREATE INDEX</code>); PK/UNIQUE'da avtomatik.</li>
+  <li>Yaxlitlik: PK, FK, NOT NULL, UNIQUE, CHECK; <code>ON DELETE CASCADE / RESTRICT / SET NULL</code>.</li>
+  <li>Backup: <code>pg_dump</code> / pgAdmin Backup; restore: <code>psql -f</code>, <code>pg_restore</code>. Tiklashni sinab ko'ring!</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="28-sql-crud.html"><small>← Oldingi mavzu</small>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a><a class="next" href="30-sql-filtr-aggregatsiya.html"><small>Keyingi mavzu →</small>Filtrlash va shartlar. Aggregation va grouping</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#nima-uchun-join-kerak">Nima uchun JOIN kerak?</a></li><li><a href="#inner-join">INNER JOIN</a></li><li><a href="#join-turlari">JOIN turlari</a></li><li><a href="#indekslar-qidiruvni-tezlashtirish">Indekslar — qidiruvni tezlashtirish</a></li><li><a href="#constraint-va-malumotlar-yaxlitligi-data-integrity">Constraint va ma&#x27;lumotlar yaxlitligi (data integrity)</a></li><li><a href="#backup-va-restore-zaxira-nusxa">Backup va Restore — zaxira nusxa</a></li><li><a href="#amaliy-mashgulot-mahsulotlar-va-buyurtmalar-bazasi-19-loyiha">Amaliy mashg&#x27;ulot: mahsulotlar va buyurtmalar bazasi (19-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

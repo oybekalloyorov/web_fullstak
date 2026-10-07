@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Git va GitHub — Full-Stack Qo&#x27;llanma</title>
+<title>Git va GitHub — Full-stack qo&#x27;llanma</title>
 <meta name="description" content="Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 </head>
 <body class="">
 <div class="progress" id="progress"></div>
@@ -25,7 +25,8 @@
 <div class="layout">
   <aside class="sidebar" id="sidebar">
     <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
-    <div class="side-title">Darslar</div>
+    <nav class="course-switch"><a class="active" href="../index.html">Full-stack qo&#x27;llanma</a><a href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">Full-stack qo&#x27;llanma</div>
     <ol class="lesson-list" id="lessonList">
 <li><a href="../darslar/01-web-qanday-ishlaydi.html"><span class="num">01</span>Web qanday ishlaydi</a></li>
 <li><a href="../darslar/02-html.html"><span class="num">02</span>HTML — sahifa tuzilishi</a></li>
@@ -44,7 +45,7 @@
     </ol>
   </aside>
   <main class="content">
-<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌿</div><div><div class="crumb">07-dars · 14 tadan</div><h1>Git va GitHub</h1><p class="lead">Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.</p></div></div>
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🌿</div><div><div class="crumb">07-dars · 14 tadan</div><h1>Git va GitHub</h1><p class="lead">Versiyalarni boshqarish: commit, branch, merge, konfliktlarni hal qilish, remote repozitoriya, Pull Request, jamoaviy ish oqimi va GitHub Pages.</p><div class="hero-level">Boshlang&#x27;ich–O&#x27;rta · ~90 daqiqa</div></div></div>
 
 <p>Tasavvur qiling: loyihangiz ishlab turibdi, siz yangi funksiya qo'shdingiz va hammasi buzildi. Qaysi o'zgarish
 sababchi? Kecha ishlagan versiyani qanday qaytarish mumkin? Uch kishi bitta faylni bir vaqtda qanday tahrirlaydi?
@@ -80,12 +81,12 @@ dasturchini ishga olishmaydi. Siz hozir o'qiyotgan qo'llanma ham Git orqali GitH
 <h3>Branch (tarmoq)</h3>
 <p><b>Branch</b> — commit'ga ko'rsatkich (yorliq). Yangi branch yaratish — tarixdan "nusxa" olib, asosiy kodga tegmasdan
 tajriba qilish demak. <code>HEAD</code> — hozir qaysi branch'da turganingizni bildiruvchi maxsus ko'rsatkich.</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">            C4 ── C5      ← feature/login
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">            C4 ── C5      ← feature/login
            /
 C1 ── C2 ── C3 ── C6      ← main  ← HEAD</code></pre></div>
 
 <h2 id="ornatish-va-sozlash"><a class="anchor" href="#ornatish-va-sozlash">#</a>O'rnatish va sozlash</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Versiyani tekshirish
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Versiyani tekshirish
 git --version
 
 # Bir martalik sozlash (har bir commit&#x27;da ism va email yoziladi)
@@ -97,7 +98,7 @@ git config --global core.editor &quot;code --wait&quot;     # VS Code muharrir s
 git config --list   # sozlamalarni ko&#x27;rish</code></pre></div>
 
 <h2 id="asosiy-buyruqlar"><a class="anchor" href="#asosiy-buyruqlar">#</a>Asosiy buyruqlar</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Yangi repozitoriya
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Yangi repozitoriya
 git init
 
 # Holat: qaysi fayllar o&#x27;zgargan, qaysilari staging&#x27;da
@@ -137,7 +138,7 @@ git blame app.js                    # har bir qatorni kim, qachon o&#x27;zgartir
 
 <h3>.gitignore</h3>
 <p>Ba'zi fayllar repozitoriyaga <b>hech qachon</b> tushmasligi kerak:</p>
-<div class="code"><div class="code-head"><span>.gitignore</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text"># Bog&#x27;liqliklar (npm install bilan qayta tiklanadi)
+<div class="code"><div class="code-head"><span>.gitignore</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text"># Bog&#x27;liqliklar (npm install bilan qayta tiklanadi)
 node_modules/
 
 # Maxfiy ma&#x27;lumotlar — PAROLLAR, KALITLAR!
@@ -162,7 +163,7 @@ Faylni o'chirib, yangi commit qilish yetarli emas — kalit tarixda qoladi. GitH
 kalitlarni bir necha daqiqada topadi. <b>Darhol kalitni bekor qiling (revoke) va yangisini yarating.</b></div>
 
 <h2 id="branchlar-bilan-ishlash"><a class="anchor" href="#branchlar-bilan-ishlash">#</a>Branch'lar bilan ishlash</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git branch                       # branch&#x27;lar ro&#x27;yxati (* — joriy)
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git branch                       # branch&#x27;lar ro&#x27;yxati (* — joriy)
 git branch feature/cart          # yangi branch yaratish
 git switch feature/cart          # unga o&#x27;tish (eski usul: git checkout feature/cart)
 git switch -c feature/search     # yaratish + o&#x27;tish bir buyruqda
@@ -182,7 +183,7 @@ git branch -d feature/cart       # birlashtirilgan branch&#x27;ni o&#x27;chirish
 
 <h2 id="konfliktlar-merge-conflict"><a class="anchor" href="#konfliktlar-merge-conflict">#</a>Konfliktlar (merge conflict)</h2>
 <p>Ikki branch bitta faylning <b>bitta qatorini</b> turlicha o'zgartirsa, Git qaysi birini tanlashni bilmaydi va sizdan so'raydi:</p>
-<div class="code"><div class="code-head"><span>index.html</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+<div class="code"><div class="code-head"><span>index.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 &lt;h1&gt;Xush kelibsiz, aziz mijoz!&lt;/h1&gt;
 =======
 &lt;h1&gt;Bizning do&#x27;konga xush kelibsiz!&lt;/h1&gt;
@@ -212,7 +213,7 @@ git branch -d feature/cart       # birlashtirilgan branch&#x27;ni o&#x27;chirish
 Umumiy branch'larda <code>revert</code> dan foydalaning; force push kerak bo'lsa <code>--force-with-lease</code> xavfsizroq.</div>
 
 <h2 id="remote-github-bilan-ishlash"><a class="anchor" href="#remote-github-bilan-ishlash">#</a>Remote: GitHub bilan ishlash</h2>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># Mavjud repozitoriyani yuklab olish
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># Mavjud repozitoriyani yuklab olish
 git clone https://github.com/oybekalloyorov/web_fullstak.git
 cd web_fullstak
 
@@ -252,7 +253,7 @@ o'zgarish → push (o'z fork'ingizga) → asl loyihaga Pull Request oching.</div
 <h2 id="amaliy-misollar"><a class="anchor" href="#amaliy-misollar">#</a>Amaliy misollar</h2>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 1</span><h3>Noldan loyiha yaratish va GitHub'ga joylash</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># 1. Loyiha papkasi
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># 1. Loyiha papkasi
 mkdir portfolio &amp;&amp; cd portfolio
 git init
 
@@ -289,7 +290,7 @@ git log --oneline
 </div></div>
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 2</span><h3>Feature branch, Pull Request va code review</h3></div><div class="ex-body">
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash"># main yangi ekaniga ishonch hosil qilamiz
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash"># main yangi ekaniga ishonch hosil qilamiz
 git switch main
 git pull
 
@@ -309,7 +310,7 @@ git push -u origin feature/contact-form
 # remote: Create a pull request for &#x27;feature/contact-form&#x27; on GitHub by visiting:
 # remote:   https://github.com/USERNAME/portfolio/pull/new/feature/contact-form</code></pre></div>
 <p>GitHub'da PR tavsifiga namuna:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">## Nima o&#x27;zgardi
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">## Nima o&#x27;zgardi
 - /contact sahifasi va aloqa formasi qo&#x27;shildi
 - Email va +998 formatidagi telefon raqami tekshiriladi
 
@@ -322,7 +323,7 @@ git push -u origin feature/contact-form
 
 Closes #12</code></pre></div>
 <p>Reviewer izoh qoldirdi: "Telefon maydoniga <code>autocomplete="tel"</code> qo'shing". Siz shu branch'da tuzatasiz:</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git add contact.html
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git add contact.html
 git commit -m &quot;fix(contact): telefon maydoniga autocomplete qo&#x27;shildi&quot;
 git push                    # PR avtomatik yangilanadi
 
@@ -336,7 +337,7 @@ git push origin --delete feature/contact-form   # (GitHub&#x27;da &quot;Delete b
 
 <div class="example"><div class="ex-head"><span class="ex-badge">Misol 3</span><h3>Konfliktni qadamma-qadam hal qilish</h3></div><div class="ex-body">
 <p>Konfliktni o'z kompyuteringizda ataylab yaratib, hal qilishni mashq qilamiz:</p>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">mkdir conflict-demo &amp;&amp; cd conflict-demo &amp;&amp; git init
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">mkdir conflict-demo &amp;&amp; cd conflict-demo &amp;&amp; git init
 echo &quot;Narx: 100 000 so&#x27;m&quot; &gt; price.txt
 git add . &amp;&amp; git commit -m &quot;Boshlang&#x27;ich narx&quot;
 
@@ -358,14 +359,14 @@ git merge discount
 git status        # both modified: price.txt
 cat price.txt</code></pre></div>
 <p>Fayl mazmuni:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 Narx: 120 000 so&#x27;m
 =======
 Narx: 80 000 so&#x27;m (chegirma!)
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; discount</code></pre></div>
 <p>Jamoa bilan kelishib, yangi narxga chegirma qo'llaymiz. Faylni shunday tahrirlaymiz:</p>
-<div class="code"><div class="code-head"><span>Matn</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-text">Narx: 96 000 so&#x27;m (120 000 dan 20% chegirma!)</code></pre></div>
-<div class="code"><div class="code-head"><span>Terminal</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-bash">git add price.txt
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">Narx: 96 000 so&#x27;m (120 000 dan 20% chegirma!)</code></pre></div>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">git add price.txt
 git commit -m &quot;Merge discount: yangi narxga chegirma qo&#x27;llandi&quot;
 git log --oneline --graph
 # *   d4e5f6a Merge discount: yangi narxga chegirma qo&#x27;llandi
@@ -385,7 +386,7 @@ git log --oneline --graph
   <li>1–2 daqiqadan so'ng sayt <code>https://USERNAME.github.io/REPO/</code> manzilida ochiladi.</li>
 </ol>
 <p>Avtomatlashtirilgan variant — GitHub Actions bilan har push'da deploy:</p>
-<div class="code"><div class="code-head"><span>.github/workflows/pages.yml</span><button class="copy" type="button">Nusxa olish</button></div><pre><code class="language-yaml">name: Deploy to GitHub Pages
+<div class="code"><div class="code-head"><span>.github/workflows/pages.yml</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-yaml">name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]

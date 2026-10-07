@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS pseudo-class va pseudo-elementlar. CSS position — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content=":hover, :focus, :active, :nth-child kabi holat selektorlari; ::before, ::after, ::first-letter pseudo-elementlari; static, relative, absolute, fixed, sticky pozitsiyalari va z-index.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a class="active" href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">📍</div><div><div class="crumb">09-mavzu · 42 tadan · I bob. HTML va CSS</div><h1>CSS pseudo-class va pseudo-elementlar. CSS position</h1><p class="lead">:hover, :focus, :active, :nth-child kabi holat selektorlari; ::before, ::after, ::first-letter pseudo-elementlari; static, relative, absolute, fixed, sticky pozitsiyalari va z-index.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Element <b>holatiga</b> qarab uslub berishni: sichqoncha ustida, bosilganda, tanlanganda;</li>
+  <li>Ro'yxatning birinchi, oxirgi, juft-toq elementlarini tanlashni;</li>
+  <li>HTML'siz "virtual" elementlar yaratishni (<code>::before</code>, <code>::after</code>);</li>
+  <li>Elementlarni aniq joyga qo'yish: <code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>;</li>
+  <li>Ustma-ust tushgan elementlar tartibini <code>z-index</code> bilan boshqarishni.</li>
+</ul>
+</div>
+
+<h2 id="pseudo-class-element-holati"><a class="anchor" href="#pseudo-class-element-holati">#</a>Pseudo-class — element holati</h2>
+<p><b>Pseudo-class</b> (soxta sinf) — elementning <b>holatini</b> yoki <b>o'rnini</b> bildiruvchi selektor. U <b>bitta ikki nuqta</b> bilan yoziladi: <code>a:hover</code>.</p>
+<div class="analogy"><span class="t">O'xshatish: svetofor</span>
+Svetofor bitta, lekin holati o'zgaradi: qizil, sariq, yashil. Tugma ham bitta, lekin holatlari bor: oddiy, sichqoncha ustida (<code>:hover</code>),
+bosilgan payt (<code>:active</code>), klaviatura bilan tanlangan (<code>:focus</code>). Har bir holatga alohida "rang" beramiz.</div>
+<h3>Foydalanuvchi harakati holatlari</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .tugma {
+    background: #4f46e5; color: white; border: none;
+    padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer;
+  }
+  .tugma:hover  { background: #4338ca; }                  /* sichqoncha ustida */
+  .tugma:active { transform: scale(0.95); }               /* bosilgan payt */
+  .tugma:focus  { outline: 3px solid #fbbf24; }           /* Tab bilan tanlanganda */
+
+  input { padding: 8px; border: 2px solid #cbd5e1; border-radius: 6px; }
+  input:focus { border-color: #4f46e5; outline: none; background: #eef2ff; }
+
+  a:link    { color: #2563eb; }     /* hali bosilmagan havola */
+  a:visited { color: #7c3aed; }     /* ilgari bosilgan havola */
+  a:hover   { color: #dc2626; }
+
+  button:disabled { background: #9ca3af; cursor: not-allowed; }
+&lt;/style&gt;
+&lt;button class=&quot;tugma&quot;&gt;Ustiga olib boring va bosing&lt;/button&gt;
+&lt;button class=&quot;tugma&quot; disabled&gt;O&#x27;chirilgan tugma&lt;/button&gt;
+&lt;p&gt;&lt;input placeholder=&quot;Meni bosing (focus)&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;Havola&lt;/a&gt;&lt;/p&gt;</code></pre></div>
+<div class="callout info"><span class="t">"LoVe HAte" qoidasi</span>
+Havola holatlarini shu tartibda yozing: <code>:link</code> → <code>:visited</code> → <code>:hover</code> → <code>:active</code> (L-V-H-A). Aks holda ba'zilari ishlamay qoladi.</div>
+<div class="callout tip"><code>cursor: pointer</code> — sichqoncha ko'rsatkichini "qo'l"ga aylantiradi. Bosiladigan har qanday narsaga qo'ying, foydalanuvchi uni bosish mumkinligini tushunadi.</div>
+
+<h3>Tuzilma bo'yicha tanlash</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  li { padding: 6px 10px; }
+  li:first-child { font-weight: bold; color: #4f46e5; }   /* birinchi */
+  li:last-child  { color: #dc2626; }                       /* oxirgi */
+  li:nth-child(3) { background: #fef3c7; }                 /* uchinchi */
+
+  tr:nth-child(even) { background: #f1f5f9; }              /* juft qatorlar (2, 4, 6...) */
+  tr:nth-child(odd)  { background: white; }                /* toq qatorlar */
+  td, th { padding: 6px 14px; }
+
+  p:not(.oddiy) { font-style: italic; }                    /* .oddiy dan TASHQARI hammasi */
+&lt;/style&gt;
+&lt;ol&gt;
+  &lt;li&gt;Birinchi — ko&#x27;k va qalin&lt;/li&gt;
+  &lt;li&gt;Ikkinchi&lt;/li&gt;
+  &lt;li&gt;Uchinchi — sariq fon&lt;/li&gt;
+  &lt;li&gt;To&#x27;rtinchi&lt;/li&gt;
+  &lt;li&gt;Oxirgi — qizil&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;Ism&lt;/th&gt;&lt;th&gt;Ball&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Ali&lt;/td&gt;&lt;td&gt;95&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Vali&lt;/td&gt;&lt;td&gt;87&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Gani&lt;/td&gt;&lt;td&gt;92&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Sobir&lt;/td&gt;&lt;td&gt;78&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p class=&quot;oddiy&quot;&gt;Oddiy paragraf&lt;/p&gt;
+&lt;p&gt;Bu kursiv (chunki .oddiy emas)&lt;/p&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Selektor</th><th>Nimani tanlaydi</th></tr>
+<tr><td><code>:first-child</code> / <code>:last-child</code></td><td>Otasining birinchi / oxirgi farzandi</td></tr>
+<tr><td><code>:nth-child(3)</code></td><td>3-farzand</td></tr>
+<tr><td><code>:nth-child(even)</code> / <code>(odd)</code></td><td>Juft / toq o'rindagilar ("zebra" jadval)</td></tr>
+<tr><td><code>:nth-child(3n)</code></td><td>Har uchinchisi: 3, 6, 9...</td></tr>
+<tr><td><code>:not(.x)</code></td><td><code>.x</code> sinfi bo'lmaganlar</td></tr>
+<tr><td><code>:checked</code></td><td>Belgilangan checkbox/radio</td></tr>
+<tr><td><code>:valid</code> / <code>:invalid</code></td><td>Forma maydoni to'g'ri / noto'g'ri to'ldirilgan</td></tr>
+</table></div>
+
+<h2 id="pseudo-element-virtual-qism"><a class="anchor" href="#pseudo-element-virtual-qism">#</a>Pseudo-element — virtual qism</h2>
+<p><b>Pseudo-element</b> — elementning <b>bir qismini</b> tanlaydi yoki HTML'da yo'q <b>yangi qism yaratadi</b>. U <b>ikki nuqta ikki marta</b> bilan yoziladi: <code>::before</code>.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  /* ::before va ::after — element ichida, boshida/oxirida virtual &quot;bola&quot; yaratadi.
+     content xossasi MAJBURIY (hatto bo&#x27;sh bo&#x27;lsa ham: content: &quot;&quot;) */
+  .majburiy::after { content: &quot; *&quot;; color: red; font-weight: bold; }
+  .yangi::before { content: &quot;🔥 YANGI &quot;; color: #f97316; font-size: 12px; font-weight: bold; }
+  .tel::before { content: &quot;📞 &quot;; }
+
+  /* Bezak chiziq: sarlavha ostida qisqa rangli chiziq */
+  h2.chiziqli::after {
+    content: &quot;&quot;;
+    display: block;
+    width: 60px; height: 4px;
+    background: #4f46e5; border-radius: 2px; margin-top: 6px;
+  }
+
+  p.kitob::first-letter { font-size: 2.5em; color: #4f46e5; font-weight: bold; float: left; margin-right: 6px; line-height: 1; }
+  p.kitob::first-line { font-variant: small-caps; }
+  ::selection { background: #fde047; }       /* sichqoncha bilan belgilangan matn */
+  input::placeholder { color: #a78bfa; font-style: italic; }
+&lt;/style&gt;
+&lt;label class=&quot;majburiy&quot;&gt;Ism&lt;/label&gt;&lt;br&gt;
+&lt;p class=&quot;yangi&quot;&gt;Robototexnika to&#x27;garagi ochildi&lt;/p&gt;
+&lt;p class=&quot;tel&quot;&gt;+998 90 123 45 67&lt;/p&gt;
+&lt;h2 class=&quot;chiziqli&quot;&gt;Bo&#x27;lim sarlavhasi&lt;/h2&gt;
+&lt;p class=&quot;kitob&quot;&gt;Qadim zamonlarda bir dono podsho yashagan ekan. U o&#x27;z yurtida ilm-fanni rivojlantirish uchun ko&#x27;p ishlar qilibdi. Matnni sichqoncha bilan belgilab ko&#x27;ring.&lt;/p&gt;
+&lt;input placeholder=&quot;Placeholder rangi o&#x27;zgargan&quot;&gt;</code></pre></div>
+<div class="callout warn"><code>::before</code>/<code>::after</code> yordamida yaratilgan matn ekran o'quvchilarda har doim ham o'qilmaydi va uni nusxalab bo'lmaydi.
+Ularni faqat <b>bezak</b> uchun ishlating; muhim ma'lumot HTML'da bo'lsin.</div>
+
+<h2 id="position-elementni-aniq-joyga-qoyish"><a class="anchor" href="#position-elementni-aniq-joyga-qoyish">#</a>Position — elementni aniq joyga qo'yish</h2>
+<p>Odatda elementlar <b>oqim</b> bo'yicha — yuqoridan pastga, birin-ketin joylashadi. <code>position</code> xossasi bu tartibni o'zgartirishga imkon beradi.
+Joy <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> xossalari bilan ko'rsatiladi.</p>
+<div class="table-wrap"><table>
+<tr><th>Qiymat</th><th>Xatti-harakat</th><th>Nimaga nisbatan siljiydi</th><th>Misol</th></tr>
+<tr><td><code>static</code></td><td>Standart — oddiy oqimda</td><td>Siljimaydi</td><td>Hamma elementlar</td></tr>
+<tr><td><code>relative</code></td><td>Oqimda qoladi, joyi saqlanadi</td><td><b>O'zining</b> asl joyiga</td><td>Kichik siljitish; <code>absolute</code> uchun "langar"</td></tr>
+<tr><td><code>absolute</code></td><td>Oqimdan <b>chiqadi</b> (joy egallamaydi)</td><td>Eng yaqin <code>position</code>li ajdodiga</td><td>Kartadagi "-20%" belgisi</td></tr>
+<tr><td><code>fixed</code></td><td>Oqimdan chiqadi, <b>scroll qilinganda qimirlamaydi</b></td><td>Ekranga (brauzer oynasiga)</td><td>"Yuqoriga" tugmasi, chat tugmasi</td></tr>
+<tr><td><code>sticky</code></td><td>Oddiy turadi, scroll paytida chegaraga yetgach <b>yopishib qoladi</b></td><td>Scroll konteyneriga</td><td>Yopishqoq menyu</td></tr>
+</table></div>
+<h3>relative + absolute — eng ko'p ishlatiladigan juftlik</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .karta {
+    position: relative;          /* ⬅ &quot;langar&quot;: ichidagi absolute elementlar shunga nisbatan joylashadi */
+    width: 260px; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12); font-family: sans-serif;
+  }
+  .karta img { width: 100%; display: block; }
+  .chegirma {
+    position: absolute;          /* ⬅ oqimdan chiqdi */
+    top: 12px;                   /* kartaning tepasidan 12px */
+    left: 12px;                  /* chapidan 12px */
+    background: #ef4444; color: white; font-weight: bold; padding: 4px 10px; border-radius: 6px;
+  }
+  .sevimli {
+    position: absolute; top: 12px; right: 12px;
+    background: white; width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 18px;
+  }
+  .karta-matn { padding: 12px 16px; }
+&lt;/style&gt;
+&lt;div class=&quot;karta&quot;&gt;
+  &lt;img src=&quot;https://picsum.photos/seed/telefon/520/360&quot; alt=&quot;Smartfon&quot;&gt;
+  &lt;span class=&quot;chegirma&quot;&gt;-20%&lt;/span&gt;
+  &lt;span class=&quot;sevimli&quot;&gt;♡&lt;/span&gt;
+  &lt;div class=&quot;karta-matn&quot;&gt;&lt;b&gt;Smartfon X&lt;/b&gt;&lt;br&gt;3 999 000 so&#x27;m&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+<div class="analogy"><span class="t">O'xshatish: muzlatgichdagi magnit</span>
+<code>position: relative</code> berilgan karta — muzlatgich eshigi. <code>position: absolute</code> berilgan belgi — magnit: siz uni eshikning
+istalgan burchagiga yopishtirasiz (<code>top</code>, <code>left</code>...). Eshik (karta) qayerga borsa, magnit ham u bilan birga ketadi.
+Agar ota elementda <code>position: relative</code> bo'lmasa, "magnit" butun sahifa burchagiga uchib ketadi!</div>
+
+<h3>fixed va sticky</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  body { margin: 0; font-family: sans-serif; }
+  .menyu { position: sticky; top: 0; background: #4f46e5; color: white; padding: 14px; z-index: 10; }
+  .yuqoriga {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #f97316; color: white; display: grid; place-items: center;
+    font-size: 22px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  }
+  .matn { padding: 20px; }
+  .matn p { height: 120px; background: #f1f5f9; margin: 10px 0; padding: 10px; }
+&lt;/style&gt;
+&lt;div class=&quot;matn&quot;&gt;&lt;b&gt;Sahifani pastga aylantiring...&lt;/b&gt;&lt;/div&gt;
+&lt;nav class=&quot;menyu&quot;&gt;Men sticky menyuman — tepaga yetganda yopishib qolaman&lt;/nav&gt;
+&lt;div class=&quot;matn&quot;&gt;
+  &lt;p&gt;1-paragraf&lt;/p&gt;&lt;p&gt;2-paragraf&lt;/p&gt;&lt;p&gt;3-paragraf&lt;/p&gt;&lt;p&gt;4-paragraf&lt;/p&gt;&lt;p&gt;5-paragraf&lt;/p&gt;&lt;p&gt;6-paragraf&lt;/p&gt;
+&lt;/div&gt;
+&lt;a class=&quot;yuqoriga&quot; href=&quot;#&quot;&gt;↑&lt;/a&gt;</code></pre></div>
+
+<h3><code>z-index</code> — qatlamlar tartibi</h3>
+<p>Elementlar ustma-ust tushsa, qaysi biri yuqorida ko'rinadi? <code>z-index</code> — "qavat raqami": kattasi yuqorida. U faqat <code>position</code> berilgan
+(static bo'lmagan) elementlarda ishlaydi.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .q { position: absolute; width: 120px; height: 120px; color: white; font-weight: bold; padding: 8px; border-radius: 10px; }
+  .a { background: #ef4444; top: 20px; left: 20px; z-index: 1; }
+  .b { background: #22c55e; top: 60px; left: 70px; z-index: 3; }
+  .c { background: #3b82f6; top: 100px; left: 120px; z-index: 2; }
+  .sahna { position: relative; height: 260px; }
+&lt;/style&gt;
+&lt;div class=&quot;sahna&quot;&gt;
+  &lt;div class=&quot;q a&quot;&gt;z-index: 1&lt;/div&gt;
+  &lt;div class=&quot;q b&quot;&gt;z-index: 3 (eng yuqorida)&lt;/div&gt;
+  &lt;div class=&quot;q c&quot;&gt;z-index: 2&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+
+<h2 id="amaliy-mashgulot-maktab-sahifasi-3-loyiha"><a class="anchor" href="#amaliy-mashgulot-maktab-sahifasi-3-loyiha">#</a>Amaliy mashg'ulot: maktab sahifasi (3-loyiha)</h2>
+<ol class="steps">
+  <li><code>maktab/</code> papkasida <code>index.html</code> va <code>style.css</code> yarating.</li>
+  <li><b>Sticky header</b>: maktab logotipi va menyu, <code>position: sticky; top: 0; z-index: 100;</code>. Menyu havolalariga <code>:hover</code> holatini qo'shing.</li>
+  <li><b>Hero bo'lim</b>: maktab rasmi fonda (7-mavzu), ustida sarlavha.</li>
+  <li><b>"Yangiliklar"</b>: 3–4 ta karta (Grid, 8-mavzu). Har bir kartaning burchagida <code>position: absolute</code> bilan sana belgisi
+  (masalan, "15 OKT"). Kartaga <code>:hover</code> da soya kuchaysin.</li>
+  <li><b>"Ustozlarimiz"</b>: doira shaklidagi rasmlar va ism; <code>:hover</code> bo'lganda rasm atrofida rangli chegara paydo bo'lsin.</li>
+  <li><b>Dars jadvali</b>: <code>tr:nth-child(even)</code> bilan "zebra" uslubi, <code>tr:hover</code> bilan qatorni ajratib ko'rsatish.</li>
+  <li><b>"Yuqoriga" tugmasi</b>: <code>position: fixed</code> bilan o'ng pastki burchakda.</li>
+  <li>Sarlavhalar ostiga <code>::after</code> bilan qisqa rangli chiziq qo'shing.</li>
+</ol>
+<div class="code"><div class="code-head"><span>Yordamchi qism: yangilik kartasi</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">.yangilik { position: relative; background: white; border-radius: 14px; overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0,0,0,.08); transition: box-shadow .2s; }
+.yangilik:hover { box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+.yangilik .sana { position: absolute; top: 12px; left: 12px; background: white;
+                  border-radius: 8px; padding: 4px 10px; font-weight: 800; color: #4f46e5;
+                  text-align: center; line-height: 1.1; }
+.yangilik img { width: 100%; height: 160px; object-fit: cover; display: block; }</code></pre></div>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>absolute</code> element butun sahifa burchagiga "uchib ketdi" — ota elementga <code>position: relative</code> berilmagan.</li>
+  <li>❌ <code>::before</code> ko'rinmayapti — <code>content</code> xossasi yozilmagan.</li>
+  <li>❌ <code>sticky</code> ishlamayapti — <code>top: 0</code> berilmagan yoki ota elementda <code>overflow: hidden</code> bor.</li>
+  <li>❌ <code>z-index: 9999</code> ham yordam bermayapti — elementda <code>position</code> yo'q (static).</li>
+  <li>❌ <code>a:hover</code> ni <code>a :hover</code> deb yozish (orada bo'sh joy) — bu butunlay boshqa selektor bo'lib qoladi.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Sichqoncha element ustiga kelganda ishlaydigan pseudo-class qaysi?</p><ol>
+<li><code>:active</code></li><li><code>:hover</code></li><li><code>:focus</code></li><li><code>:over</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">Jadvalning faqat juft qatorlarini tanlash uchun?</p><ol>
+<li><code>tr:even</code></li><li><code>tr:nth(2)</code></li><li><code>tr:first-child</code></li><li><code>tr:nth-child(even)</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q"><code>::after</code> ishlashi uchun qaysi xossa majburiy?</p><ol>
+<li><code>content</code></li><li><code>display</code></li><li><code>position</code></li><li><code>color</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">Sahifa aylantirilganda ham ekranning bir joyida qimirlamay turadigan tugma uchun qaysi position?</p><ol>
+<li><code>relative</code></li><li><code>absolute</code></li><li><code>fixed</code></li><li><code>static</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Kartaning burchagidagi "-20%" belgisi kartaga nisbatan joylashishi uchun kartaga nima beriladi?</p><ol>
+<li><code>position: absolute</code></li><li><code>position: relative</code></li><li><code>position: fixed</code></li><li><code>z-index: 1</code></li></ol>
+<p class="explain">Ota — relative (langar), belgi — absolute.</p></div>
+<div class="quiz" data-answer="3"><p class="q">z-index: 5 va z-index: 2 bo'lgan elementlar ustma-ust tushdi. Qaysi biri ko'rinadi?</p><ol>
+<li>z-index: 2</li><li>HTML'da birinchi yozilgani</li><li>z-index: 5</li><li>Ikkalasi ham ko'rinmaydi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Maktab sahifasini yakunlang va barcha interaktiv holatlarni (<code>:hover</code>, <code>:focus</code>) qo'shing.</li>
+  <li>5 xil tugma dizaynini yarating: har birida <code>:hover</code>, <code>:active</code> va <code>:disabled</code> holatlari bo'lsin.</li>
+  <li>Faqat CSS bilan "tooltip" yasang: sichqoncha so'z ustiga borganda uning tepasida izoh chiqsin (<code>position: absolute</code> + <code>:hover</code>).</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Pseudo-class (<code>:</code>) — holat: <code>:hover</code>, <code>:focus</code>, <code>:active</code>, <code>:nth-child()</code>, <code>:first-child</code>, <code>:not()</code>.</li>
+  <li>Pseudo-element (<code>::</code>) — virtual qism: <code>::before</code>, <code>::after</code> (<code>content</code> majburiy), <code>::first-letter</code>, <code>::placeholder</code>.</li>
+  <li><code>relative</code> — langar; <code>absolute</code> — langarga nisbatan; <code>fixed</code> — ekranga; <code>sticky</code> — yopishqoq.</li>
+  <li><code>z-index</code> — qatlamlar tartibi (faqat position berilganlarda).</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="08-box-model-flexbox-grid.html"><small>← Oldingi mavzu</small>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a><a class="next" href="10-responsiv-dizayn-figma.html"><small>Keyingi mavzu →</small>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#pseudo-class-element-holati">Pseudo-class — element holati</a></li><li><a href="#pseudo-element-virtual-qism">Pseudo-element — virtual qism</a></li><li><a href="#position-elementni-aniq-joyga-qoyish">Position — elementni aniq joyga qo&#x27;yish</a></li><li><a href="#amaliy-mashgulot-maktab-sahifasi-3-loyiha">Amaliy mashg&#x27;ulot: maktab sahifasi (3-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

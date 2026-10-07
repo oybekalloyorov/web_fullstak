@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS background va border xossalari — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Fon rangi, fon rasmi, takrorlanish, joylashuv va o&#x27;lcham (cover/contain), gradientlar; chegaralar: qalinlik, uslub, rang, border-radius, box-shadow va outline.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a class="active" href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🖼️</div><div><div class="crumb">07-mavzu · 42 tadan · I bob. HTML va CSS</div><h1>CSS background va border xossalari</h1><p class="lead">Fon rangi, fon rasmi, takrorlanish, joylashuv va o&#x27;lcham (cover/contain), gradientlar; chegaralar: qalinlik, uslub, rang, border-radius, box-shadow va outline.</p><div class="hero-level">1 soat · amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Elementlarga fon rangi, fon rasmi va gradient berishni;</li>
+  <li>Fon rasmini to'g'ri joylashtirish va o'lchamlashni (<code>cover</code>, <code>contain</code>);</li>
+  <li>Chegaralar (border) yaratish, ularning uslublari va yumaloq burchaklarni;</li>
+  <li>Soyalar (<code>box-shadow</code>) bilan "kartochka" dizaynini yaratishni.</li>
+</ul>
+</div>
+
+<h2 id="fon-rangi-background-color"><a class="anchor" href="#fon-rangi-background-color">#</a>Fon rangi — <code>background-color</code></h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  body { background-color: #f1f5f9; }
+  .quti { background-color: #4f46e5; color: white; padding: 20px; }
+  .shaffof { background-color: rgba(79, 70, 229, 0.2); padding: 20px; }
+&lt;/style&gt;
+&lt;div class=&quot;quti&quot;&gt;To&#x27;q ko&#x27;k fonli quti&lt;/div&gt;
+&lt;div class=&quot;shaffof&quot;&gt;Yarim shaffof fonli quti (rgba)&lt;/div&gt;</code></pre></div>
+<div class="callout tip"><code>padding</code> — matn va chegara orasidagi ichki bo'shliq. Usiz matn fon chetiga yopishib qoladi. Batafsil — keyingi mavzuda.</div>
+
+<h2 id="fon-rasmi-background-image"><a class="anchor" href="#fon-rasmi-background-image">#</a>Fon rasmi — <code>background-image</code></h2>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .banner {
+    height: 250px;
+    background-image: url(&quot;https://picsum.photos/seed/tog/1200/600&quot;);
+    background-size: cover;          /* rasmni butun maydonga yoyish */
+    background-position: center;     /* rasmning markazini ko&#x27;rsatish */
+    background-repeat: no-repeat;    /* takrorlamaslik */
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  }
+&lt;/style&gt;
+&lt;div class=&quot;banner&quot;&gt;Tog&#x27;larga sayohat&lt;/div&gt;</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Xossa</th><th>Qiymatlar</th><th>Vazifasi</th></tr>
+<tr><td><code>background-image</code></td><td><code>url("rasm.jpg")</code></td><td>Fon rasmi (yo'l nisbiy: CSS fayldan hisoblanadi!)</td></tr>
+<tr><td><code>background-repeat</code></td><td><code>repeat</code> | <code>no-repeat</code> | <code>repeat-x</code> | <code>repeat-y</code></td><td>Rasm kichik bo'lsa takrorlanishi</td></tr>
+<tr><td><code>background-position</code></td><td><code>center</code>, <code>top right</code>, <code>50% 20%</code></td><td>Rasmning qaysi qismi ko'rinadi</td></tr>
+<tr><td><code>background-size</code></td><td><code>cover</code> | <code>contain</code> | <code>200px 100px</code> | <code>50%</code></td><td>Rasm o'lchami</td></tr>
+<tr><td><code>background-attachment</code></td><td><code>scroll</code> | <code>fixed</code></td><td><code>fixed</code> — sahifa aylantirilganda fon joyida qoladi (parallax effekti)</td></tr>
+</table></div>
+<h3><code>cover</code> va <code>contain</code> farqi</h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .q { width: 300px; height: 150px; border: 3px solid #333; display: inline-block; margin: 8px;
+       background: #fde68a url(&quot;https://picsum.photos/seed/olma/400/400&quot;) no-repeat center; }
+  .cover { background-size: cover; }
+  .contain { background-size: contain; }
+&lt;/style&gt;
+&lt;div class=&quot;q cover&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;q contain&quot;&gt;&lt;/div&gt;
+&lt;p&gt;&lt;b&gt;cover&lt;/b&gt; (chapda): butun qutini to&#x27;ldiradi, ortiqcha qismi kesiladi.&lt;br&gt;
+&lt;b&gt;contain&lt;/b&gt; (o&#x27;ngda): rasm to&#x27;liq ko&#x27;rinadi, lekin bo&#x27;sh joy qolishi mumkin.&lt;/p&gt;</code></pre></div>
+<div class="analogy"><span class="t">O'xshatish</span>
+<b>cover</b> — telefonga devor qog'ozi (oboy) qo'yish: ekran to'ladi, rasmning chetlari kesiladi. <b>contain</b> — rasmni ramkaga qo'yish:
+rasm butunligicha ko'rinadi, lekin atrofida bo'sh joy qoladi.</div>
+<div class="callout warn"><span class="t">Fon rasmi yo'li</span>
+<code>url()</code> ichidagi yo'l <b>CSS faylga nisbatan</b> hisoblanadi. Agar CSS <code>css/style.css</code> da, rasm <code>rasmlar/fon.jpg</code> da bo'lsa:
+<code>url("../rasmlar/fon.jpg")</code>.</div>
+
+<h3>Qisqa yozuv (shorthand)</h3>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">/* Uzun yozuv */
+.banner {
+  background-color: #1e293b;
+  background-image: url(&quot;fon.jpg&quot;);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+/* Qisqa yozuv — hammasi bitta qatorda (size &quot;/&quot; belgisidan keyin) */
+.banner {
+  background: #1e293b url(&quot;fon.jpg&quot;) no-repeat center / cover;
+}</code></pre></div>
+
+<h2 id="gradientlar"><a class="anchor" href="#gradientlar">#</a>Gradientlar</h2>
+<p><b>Gradient</b> — bir rangdan boshqasiga silliq o'tish. U ham fon rasmi sifatida ishlaydi.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .g { height: 70px; margin: 8px 0; border-radius: 10px; color: white; font-weight: bold; padding: 10px; }
+  .g1 { background: linear-gradient(to right, #4f46e5, #06b6d4); }
+  .g2 { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6); }
+  .g3 { background: radial-gradient(circle, #fde047, #f97316); color: #333; }
+  .g4 { background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(&quot;https://picsum.photos/seed/shahar/800/200&quot;) center / cover; }
+&lt;/style&gt;
+&lt;div class=&quot;g g1&quot;&gt;linear-gradient: chapdan o&#x27;ngga&lt;/div&gt;
+&lt;div class=&quot;g g2&quot;&gt;135° burchak ostida 3 ta rang&lt;/div&gt;
+&lt;div class=&quot;g g3&quot;&gt;radial-gradient: markazdan atrofga&lt;/div&gt;
+&lt;div class=&quot;g g4&quot;&gt;Rasm ustida qoraytiruvchi gradient — matn o&#x27;qilishi oson&lt;/div&gt;</code></pre></div>
+<p>Oxirgi usul juda ko'p ishlatiladi: rasm ustiga yarim shaffof qora qatlam qo'yilsa, oq matn har qanday rasmda ham yaxshi o'qiladi.</p>
+
+<h2 id="chegaralar-border"><a class="anchor" href="#chegaralar-border">#</a>Chegaralar — <code>border</code></h2>
+<p>Chegara uchta qismdan iborat: <b>qalinlik</b>, <b>uslub</b> va <b>rang</b>.</p>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  div { padding: 10px; margin: 10px 0; }
+  .b1 { border: 2px solid #4f46e5; }
+  .b2 { border: 3px dashed tomato; }
+  .b3 { border: 4px dotted green; }
+  .b4 { border: 6px double #333; }
+  .b5 { border: 6px groove #aaa; }
+  .b6 { border-bottom: 3px solid orange; }                /* faqat pastki */
+  .b7 { border-left: 6px solid #4f46e5; background: #eef2ff; }  /* &quot;eslatma&quot; uslubi */
+  .b8 { border-width: 1px 4px 8px 12px; border-style: solid; border-color: crimson; }  /* tepa o&#x27;ng past chap */
+&lt;/style&gt;
+&lt;div class=&quot;b1&quot;&gt;solid — yaxlit chiziq&lt;/div&gt;
+&lt;div class=&quot;b2&quot;&gt;dashed — shtrix&lt;/div&gt;
+&lt;div class=&quot;b3&quot;&gt;dotted — nuqtali&lt;/div&gt;
+&lt;div class=&quot;b4&quot;&gt;double — qo&#x27;sh chiziq&lt;/div&gt;
+&lt;div class=&quot;b5&quot;&gt;groove — o&#x27;yilgan&lt;/div&gt;
+&lt;div class=&quot;b6&quot;&gt;Faqat pastki chegara&lt;/div&gt;
+&lt;div class=&quot;b7&quot;&gt;Chap tomonda qalin chiziq — eslatma bloki&lt;/div&gt;
+&lt;div class=&quot;b8&quot;&gt;Har tomonda har xil qalinlik&lt;/div&gt;</code></pre></div>
+<div class="callout info"><span class="t">Soat strelkasi qoidasi</span>
+To'rt tomonli qiymatlar doim <b>tepa → o'ng → past → chap</b> tartibida yoziladi (soat strelkasi bo'yicha, 12 dan boshlab).
+Bu qoida <code>margin</code> va <code>padding</code> uchun ham amal qiladi.</div>
+
+<h3>Yumaloq burchaklar — <code>border-radius</code></h3>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  .r { width: 120px; height: 120px; background: #4f46e5; color: white; display: inline-grid; place-items: center; margin: 6px; font-size: 13px; }
+  .r1 { border-radius: 10px; }
+  .r2 { border-radius: 30px; }
+  .r3 { border-radius: 50%; }                  /* doira! */
+  .r4 { border-radius: 40px 0 40px 0; }        /* barg shakli */
+  .r5 { width: 160px; height: 50px; border-radius: 999px; }  /* &quot;tabletka&quot; tugma */
+  img.avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 0 0 3px #4f46e5; }
+&lt;/style&gt;
+&lt;div class=&quot;r r1&quot;&gt;10px&lt;/div&gt;
+&lt;div class=&quot;r r2&quot;&gt;30px&lt;/div&gt;
+&lt;div class=&quot;r r3&quot;&gt;50% — doira&lt;/div&gt;
+&lt;div class=&quot;r r4&quot;&gt;barg&lt;/div&gt;
+&lt;div class=&quot;r r5&quot;&gt;tabletka&lt;/div&gt;
+&lt;br&gt;
+&lt;img class=&quot;avatar&quot; src=&quot;https://picsum.photos/seed/avatar/200&quot; alt=&quot;Profil rasmi&quot;&gt;</code></pre></div>
+<p><code>border-radius: 50%</code> + teng kenglik va balandlik = <b>doira</b>. Profil rasmlari aynan shunday qilinadi.</p>
+
+<h2 id="soyalar-box-shadow"><a class="anchor" href="#soyalar-box-shadow">#</a>Soyalar — <code>box-shadow</code></h2>
+<div class="code"><div class="code-head"><span>CSS</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-css">box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/*          │  │   │    └ rang (yarim shaffof qora — eng tabiiy ko&#x27;rinadi)
+            │  │   └ xiralik (blur) — qancha katta, shuncha yumshoq
+            │  └ pastga siljish (y)
+            └ o&#x27;ngga siljish (x)                                       */</code></pre></div>
+<div class="code" data-play><div class="code-head"><span>HTML</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+  body { background: #f1f5f9; font-family: sans-serif; }
+  .s { background: white; padding: 20px; margin: 18px; border-radius: 12px; display: inline-block; width: 180px; }
+  .s1 { box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .s2 { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .s3 { box-shadow: 0 20px 40px rgba(79,70,229,.35); }
+  .s4 { box-shadow: inset 0 2px 6px rgba(0,0,0,.2); }   /* ichki soya */
+&lt;/style&gt;
+&lt;div class=&quot;s s1&quot;&gt;Yengil soya&lt;/div&gt;
+&lt;div class=&quot;s s2&quot;&gt;O&#x27;rtacha soya&lt;/div&gt;
+&lt;div class=&quot;s s3&quot;&gt;Rangli kuchli soya&lt;/div&gt;
+&lt;div class=&quot;s s4&quot;&gt;Ichki soya (inset)&lt;/div&gt;</code></pre></div>
+<p><code>outline</code> — chegaraga o'xshaydi, lekin joy egallamaydi. Brauzer klaviatura bilan tanlangan elementni (<kbd>Tab</kbd>) shu bilan ko'rsatadi —
+uni <code>outline: none</code> bilan butunlay o'chirib qo'ymang, aks holda klaviaturadan foydalanuvchilar qayerdaligini bilmay qoladi.</p>
+
+<h2 id="amaliy-mashgulot-oquvchi-kartochkasi"><a class="anchor" href="#amaliy-mashgulot-oquvchi-kartochkasi">#</a>Amaliy mashg'ulot: "O'quvchi kartochkasi"</h2>
+<p>Ko'plab zamonaviy saytlardagi "karta" (card) dizaynini o'rganilgan xossalar bilan yaratamiz.</p>
+<ol class="steps">
+  <li><code>karta.html</code> va <code>karta.css</code> fayllarini yarating, CSS'ni HTML'ga ulang.</li>
+  <li>HTML tuzilmasini yozing:
+<div class="code"><div class="code-head"><span>karta.html</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;body&gt;
+  &lt;article class=&quot;karta&quot;&gt;
+    &lt;div class=&quot;karta-fon&quot;&gt;&lt;/div&gt;
+    &lt;img class=&quot;karta-avatar&quot; src=&quot;https://picsum.photos/seed/oquvchi/200&quot; alt=&quot;Malika Karimova surati&quot;&gt;
+    &lt;h2&gt;Malika Karimova&lt;/h2&gt;
+    &lt;p class=&quot;karta-sinf&quot;&gt;8-&quot;A&quot; sinf · Frontend yo&#x27;nalishi&lt;/p&gt;
+    &lt;p class=&quot;karta-matn&quot;&gt;HTML va CSS bilan chiroyli sahifalar yaratishni yaxshi ko&#x27;raman.
+       Maqsadim — o&#x27;z maktabim uchun sayt yaratish.&lt;/p&gt;
+    &lt;a class=&quot;karta-tugma&quot; href=&quot;#&quot;&gt;Portfolioni ko&#x27;rish&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/body&gt;</code></pre></div></li>
+  <li>CSS'ni yozing:
+<div class="code" data-play><div class="code-head"><span>Natijani sinab ko&#x27;ring</span><span class="code-actions"><button class="run" type="button">▶ Sinab ko'rish</button><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-html">&lt;style&gt;
+body {
+  background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+  font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px;
+}
+.karta {
+  width: 320px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(79, 70, 229, 0.2);
+  text-align: center;
+  padding-bottom: 28px;
+  overflow: hidden;              /* fon rasmi burchaklardan chiqib ketmasin */
+}
+.karta-fon {
+  height: 110px;
+  background: linear-gradient(rgba(79,70,229,.6), rgba(236,72,153,.6)),
+              url(&quot;https://picsum.photos/seed/kutubxona/640/220&quot;) center / cover;
+}
+.karta-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 5px solid white;
+  margin-top: -55px;             /* rasmni fonning ustiga &quot;chiqarish&quot; */
+  object-fit: cover;
+}
+.karta h2 { margin: 8px 0 0; color: #1e1b4b; }
+.karta-sinf { color: #6366f1; font-weight: 600; margin: 4px 0 12px; }
+.karta-matn { color: #4b5563; padding: 0 24px; line-height: 1.6; }
+.karta-tugma {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(to right, #4f46e5, #ec4899);
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(236, 72, 153, 0.35);
+}
+&lt;/style&gt;
+&lt;article class=&quot;karta&quot;&gt;
+  &lt;div class=&quot;karta-fon&quot;&gt;&lt;/div&gt;
+  &lt;img class=&quot;karta-avatar&quot; src=&quot;https://picsum.photos/seed/oquvchi/200&quot; alt=&quot;Malika Karimova surati&quot;&gt;
+  &lt;h2&gt;Malika Karimova&lt;/h2&gt;
+  &lt;p class=&quot;karta-sinf&quot;&gt;8-&quot;A&quot; sinf · Frontend yo&#x27;nalishi&lt;/p&gt;
+  &lt;p class=&quot;karta-matn&quot;&gt;HTML va CSS bilan chiroyli sahifalar yaratishni yaxshi ko&#x27;raman. Maqsadim — o&#x27;z maktabim uchun sayt yaratish.&lt;/p&gt;
+  &lt;a class=&quot;karta-tugma&quot; href=&quot;#&quot;&gt;Portfolioni ko&#x27;rish&lt;/a&gt;
+&lt;/article&gt;</code></pre></div></li>
+  <li>O'z ma'lumotlaringiz va ranglaringiz bilan moslang. Soya, radius va gradient qiymatlarini o'zgartirib, natija qanday o'zgarishini kuzating.</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ Fon rasmi ko'rinmayapti — <code>url()</code> dagi yo'l CSS faylga nisbatan emas, HTML'ga nisbatan yozilgan. Yoki elementning <b>balandligi 0</b> (ichida mazmun yo'q va <code>height</code> berilmagan).</li>
+  <li>❌ <code>border: 2px red;</code> — uslub (<code>solid</code>) unutilgan, chegara ko'rinmaydi.</li>
+  <li>❌ Doira chiqmayapti — <code>width</code> va <code>height</code> teng emas, natijada oval bo'ladi.</li>
+  <li>❌ Juda qora, qattiq soya (<code>box-shadow: 5px 5px 0 black</code>) — zamonaviy dizaynda yumshoq, shaffof soyalar ishlatiladi.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Fon rasmi butun maydonni to'ldirishi (ortig'i kesilishi) uchun qaysi qiymat kerak?</p><ol>
+<li><code>background-size: contain</code></li><li><code>background-size: cover</code></li><li><code>background-repeat: repeat</code></li><li><code>background-position: fill</code></li></ol></div>
+<div class="quiz" data-answer="4"><p class="q"><code>border: 3px ____ blue;</code> — bo'sh joyga nima yozilsa shtrixli chiziq bo'ladi?</p><ol>
+<li><code>solid</code></li><li><code>dotted</code></li><li><code>double</code></li><li><code>dashed</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">Kvadrat rasmni doiraga aylantirish uchun nima kerak?</p><ol>
+<li><code>border-radius: 50%</code></li><li><code>border: circle</code></li><li><code>shape: round</code></li><li><code>border-radius: 10px</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q"><code>margin: 10px 20px 30px 40px;</code> da chap tomon necha piksel?</p><ol>
+<li>10px</li><li>20px</li><li>40px</li><li>30px</li></ol>
+<p class="explain">Tartib: tepa (10) → o'ng (20) → past (30) → chap (40).</p></div>
+<div class="quiz" data-answer="2"><p class="q"><code>box-shadow: 0 10px 20px rgba(0,0,0,.2)</code> da <code>20px</code> nima?</p><ol>
+<li>O'ngga siljish</li><li>Xiralik (blur)</li><li>Pastga siljish</li><li>Soya rangi</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>Vizitka saytingiz bosh sahifasiga gradient ustidagi fon rasmli "banner" qo'shing (ismingiz va qisqa shiorga).</li>
+  <li>Sinfdoshlaringizdan 3 nafari uchun o'quvchi kartochkalarini yarating (har biri boshqa rang sxemasida).</li>
+  <li><a href="https://cssgradient.io" target="_blank" rel="noopener">cssgradient.io</a> saytida o'z gradientingizni yarating va ishlating.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Fon: <code>background-color</code>, <code>background-image: url()</code>, <code>-repeat</code>, <code>-position</code>, <code>-size: cover/contain</code>; qisqasi — <code>background</code>.</li>
+  <li>Gradient: <code>linear-gradient(yo'nalish, rang1, rang2)</code>, <code>radial-gradient()</code>.</li>
+  <li>Chegara: <code>border: qalinlik uslub rang</code>; tomonlar tartibi — tepa, o'ng, past, chap.</li>
+  <li><code>border-radius</code> — yumaloq burchak (50% = doira); <code>box-shadow</code> — soya.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="06-css-ulash-selektorlar-matn.html"><small>← Oldingi mavzu</small>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a><a class="next" href="08-box-model-flexbox-grid.html"><small>Keyingi mavzu →</small>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#fon-rangi-background-color">Fon rangi — background-color</a></li><li><a href="#fon-rasmi-background-image">Fon rasmi — background-image</a></li><li><a href="#gradientlar">Gradientlar</a></li><li><a href="#chegaralar-border">Chegaralar — border</a></li><li><a href="#soyalar-box-shadow">Soyalar — box-shadow</a></li><li><a href="#amaliy-mashgulot-oquvchi-kartochkasi">Amaliy mashg&#x27;ulot: &quot;O&#x27;quvchi kartochkasi&quot;</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash — 8-sinf: Web Full-stack kursi</title>
+<meta name="description" content="Virtual muhit, psycopg kutubxonasi, ulanish, kursor, SQL so&#x27;rovlarni Python&#x27;dan bajarish, parametrli so&#x27;rovlar va SQL injection xavfi, commit va rollback, maxfiy sozlamalar; Python + PostgreSQL CRUD konsol dasturi.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body class="">
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menyu">☰</button>
+  <a class="brand" href="../index.html"><span class="logo">⟨/⟩</span> Full-Stack <b>Qo'llanma</b></a>
+  <div class="top-actions">
+    <input class="search" id="search" type="search" placeholder="Mavzu qidirish..." aria-label="Qidirish">
+    <button class="theme-btn" id="themeBtn" aria-label="Mavzu rangini almashtirish">🌓</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="side-home" href="../index.html">🏠 Bosh sahifa</a>
+    <nav class="course-switch"><a href="../index.html">Full-stack qo&#x27;llanma</a><a class="active" href="../8-sinf/index.html">8-sinf: Web Full-stack kursi</a></nav>
+    <div class="side-title">8-sinf: Web Full-stack kursi</div>
+    <ol class="lesson-list" id="lessonList">
+<li class="side-group">I bob. HTML va CSS</li>
+<li><a href="../8-sinf/01-internet-dns-hosting.html"><span class="num">01</span>Internet qanday ishlaydi? DNS, hosting, domen</a></li>
+<li><a href="../8-sinf/02-html-tuzilishi.html"><span class="num">02</span>HTML hujjatining tuzilishi, asosiy teglar va atributlar</a></li>
+<li><a href="../8-sinf/03-jadval-royxat-forma.html"><span class="num">03</span>Jadval, ro&#x27;yxat va forma elementlari</a></li>
+<li><a href="../8-sinf/04-havolalar-rasmlar-media.html"><span class="num">04</span>Havolalar va navigatsiya. Rasmlar va media elementlari</a></li>
+<li><a href="../8-sinf/05-semantik-teglar.html"><span class="num">05</span>HTML5 semantik teglari va ularning roli</a></li>
+<li><a href="../8-sinf/06-css-ulash-selektorlar-matn.html"><span class="num">06</span>CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar</a></li>
+<li><a href="../8-sinf/07-css-background-border.html"><span class="num">07</span>CSS background va border xossalari</a></li>
+<li><a href="../8-sinf/08-box-model-flexbox-grid.html"><span class="num">08</span>Box model va o&#x27;lcham birliklari. Flexbox va Grid</a></li>
+<li><a href="../8-sinf/09-pseudo-class-position.html"><span class="num">09</span>CSS pseudo-class va pseudo-elementlar. CSS position</a></li>
+<li><a href="../8-sinf/10-responsiv-dizayn-figma.html"><span class="num">10</span>Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</a></li>
+<li><a href="../8-sinf/11-git-github-seo.html"><span class="num">11</span>Git va GitHub, hosting va SEO bo&#x27;yicha umumiy bilimlar</a></li>
+<li><a href="../8-sinf/12-css-animatsiya.html"><span class="num">12</span>CSS animatsiyalar va transformatsiyalar</a></li>
+<li><a href="../8-sinf/13-jamoa-loyiha-deploy.html"><span class="num">13</span>Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel&#x27;ga deploy</a></li>
+<li><a href="../8-sinf/14-nazorat-ishi-1.html"><span class="num">14</span>Yakuniy nazorat ishi — I bob (HTML va CSS)</a></li>
+<li class="side-group">II bob. JavaScript asoslari</li>
+<li><a href="../8-sinf/15-js-ozgaruvchilar.html"><span class="num">15</span>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/16-js-operatorlar-shartlar.html"><span class="num">16</span>JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</a></li>
+<li><a href="../8-sinf/17-js-sikllar-funksiyalar.html"><span class="num">17</span>JavaScript&#x27;da takrorlanish operatorlari va funksiyalar</a></li>
+<li><a href="../8-sinf/18-js-massiv-obyekt.html"><span class="num">18</span>Arraylar (massivlar) va obyektlar bilan ishlash</a></li>
+<li><a href="../8-sinf/19-dom-bom-eventlar.html"><span class="num">19</span>DOM va BOM bilan ishlash. JavaScript&#x27;da eventlar</a></li>
+<li><a href="../8-sinf/20-js-mini-loyiha.html"><span class="num">20</span>HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha</a></li>
+<li class="side-group">III bob. Python va ma&#x27;lumotlar bazasi</li>
+<li><a href="../8-sinf/21-python-kirish.html"><span class="num">21</span>Back-end haqida. Python&#x27;ga kirish va o&#x27;rnatish. O&#x27;zgaruvchilar, turlar, operatorlar, kiritish-chiqarish</a></li>
+<li><a href="../8-sinf/22-python-shart-sikl-fayl.html"><span class="num">22</span>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</a></li>
+<li><a href="../8-sinf/23-python-list-tuple-set-dict.html"><span class="num">23</span>Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</a></li>
+<li><a href="../8-sinf/24-python-funksiya-modul.html"><span class="num">24</span>Python funksiyalar, modullar va standart kutubxonalar</a></li>
+<li><a href="../8-sinf/25-python-oop.html"><span class="num">25</span>Obyektga yo&#x27;naltirilgan dasturlash (OOP) asoslari</a></li>
+<li><a href="../8-sinf/26-malumotlar-bazasi-kirish.html"><span class="num">26</span>Ma&#x27;lumotlar bazasiga kirish. Relyatsion ma&#x27;lumotlar bazasi tushunchasi</a></li>
+<li><a href="../8-sinf/27-postgresql-jadval.html"><span class="num">27</span>PostgreSQL bilan tanishish. Jadval yaratish va ma&#x27;lumot turlari</a></li>
+<li><a href="../8-sinf/28-sql-crud.html"><span class="num">28</span>Ma&#x27;lumotlarni qo&#x27;shish, ko&#x27;rish va saqlash. CRUD operatsiyalari</a></li>
+<li><a href="../8-sinf/29-sql-join-index-backup.html"><span class="num">29</span>Jadvallarni bog&#x27;lash va JOIN. Index, constraint, data integrity. Backup va restore</a></li>
+<li><a href="../8-sinf/30-sql-filtr-aggregatsiya.html"><span class="num">30</span>Filtrlash va shartlar. Aggregation va grouping</a></li>
+<li><a href="../8-sinf/31-nazorat-ishi-2.html"><span class="num">31</span>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a></li>
+<li class="side-group">IV bob. Python, PostgreSQL va Django</li>
+<li><a class="active" href="../8-sinf/32-python-postgresql.html"><span class="num">32</span>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</a></li>
+<li><a href="../8-sinf/33-django-kirish.html"><span class="num">33</span>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></li>
+<li><a href="../8-sinf/34-django-url-view.html"><span class="num">34</span>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</a></li>
+<li><a href="../8-sinf/35-django-template-static.html"><span class="num">35</span>Django Template tizimi va dinamik sahifalar. Template va statik fayllar</a></li>
+<li><a href="../8-sinf/36-django-model-orm.html"><span class="num">36</span>Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar</a></li>
+<li><a href="../8-sinf/37-django-admin-forms.html"><span class="num">37</span>Django Admin panel bilan ishlash. Django Forms yordamida ma&#x27;lumotlarni qabul qilish</a></li>
+<li><a href="../8-sinf/38-django-crud-loyiha.html"><span class="num">38</span>CRUD amallarini yaratish. CRUD asosida mini loyiha</a></li>
+<li class="side-group">V bob. DRF va deploy</li>
+<li><a href="../8-sinf/39-drf-serializer.html"><span class="num">39</span>Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</a></li>
+<li><a href="../8-sinf/40-drf-crud-api.html"><span class="num">40</span>DRF yordamida REST API yaratish. CRUD API ishlab chiqish</a></li>
+<li><a href="../8-sinf/41-django-deploy.html"><span class="num">41</span>Django loyihasini serverga joylash (Deploy)</a></li>
+<li><a href="../8-sinf/42-nazorat-ishi-3.html"><span class="num">42</span>Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha</a></li>
+    </ol>
+  </aside>
+  <main class="content">
+<article class="lesson"><div class="lesson-hero"><div class="hero-icon">🔌</div><div><div class="crumb">32-mavzu · 42 tadan · IV bob. Python, PostgreSQL va Django</div><h1>Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</h1><p class="lead">Virtual muhit, psycopg kutubxonasi, ulanish, kursor, SQL so&#x27;rovlarni Python&#x27;dan bajarish, parametrli so&#x27;rovlar va SQL injection xavfi, commit va rollback, maxfiy sozlamalar; Python + PostgreSQL CRUD konsol dasturi.</p><div class="hero-level">2 soat · 1 nazariy + 1 amaliy</div></div></div>
+
+<div class="goals">
+<h3>🎯 Bu darsda nimani o'rganasiz</h3>
+<ul>
+  <li>Python dasturi ma'lumotlar bazasi bilan qanday "gaplashishini";</li>
+  <li>Virtual muhit yaratish va <code>psycopg</code> kutubxonasini o'rnatishni;</li>
+  <li>Bazaga ulanish, so'rov yuborish va natijani olishni;</li>
+  <li>Eng xavfli zaiflik — <b>SQL injection</b> va undan himoyalanishni;</li>
+  <li>Bazada ishlaydigan to'liq CRUD konsol dasturini (20-loyiha).</li>
+</ul>
+</div>
+
+<h2 id="python-va-baza-qanday-boglanadi"><a class="anchor" href="#python-va-baza-qanday-boglanadi">#</a>Python va baza qanday bog'lanadi?</h2>
+<p>III bobda SQL'ni pgAdmin orqali qo'lda yozdik. Haqiqiy ilovalarda esa SQL so'rovlarni <b>dastur</b> yuboradi: foydalanuvchi formani to'ldiradi →
+Python ma'lumotni oladi → bazaga <code>INSERT</code> yuboradi.</p>
+<div class="diagram">
+  <div class="flow">
+    <div class="node">🐍 Python dasturi<small>sizning kodingiz</small></div>
+    <div class="arrow">→</div>
+    <div class="node">🔌 psycopg<small>"tarjimon" kutubxona</small></div>
+    <div class="arrow">→ SQL (port 5432) →</div>
+    <div class="node">🐘 PostgreSQL<small>natija qatorlari</small></div>
+  </div>
+</div>
+<div class="analogy"><span class="t">O'xshatish: telefon qo'ng'irog'i</span>
+<b>Ulanish (connection)</b> — telefon raqamini terib, suhbat boshlash. <b>Kursor (cursor)</b> — suhbat davomida savol berib, javob olish. <b>Commit</b> — "kelishdik, yozib qo'ying".
+<b>Yopish (close)</b> — go'shakni qo'yish.</div>
+
+<h2 id="tayyorgarlik"><a class="anchor" href="#tayyorgarlik">#</a>Tayyorgarlik</h2>
+<h3>1. Virtual muhit (venv)</h3>
+<p>Har bir loyiha o'z kutubxonalarini alohida "quti"da saqlashi kerak — shunda bir loyihaning paketlari boshqasiga xalaqit bermaydi.</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">mkdir maktab_app
+cd maktab_app
+python -m venv venv                 # &quot;venv&quot; nomli virtual muhit yaratish
+
+# Faollashtirish
+venv\Scripts\activate               # Windows
+source venv/bin/activate            # macOS / Linux
+# Terminal boshida (venv) yozuvi paydo bo&#x27;ladi
+
+pip install &quot;psycopg[binary]&quot;       # PostgreSQL uchun Python kutubxonasi
+pip freeze &gt; requirements.txt       # o&#x27;rnatilgan paketlar ro&#x27;yxatini saqlash</code></pre></div>
+<div class="callout tip"><code>requirements.txt</code> — loyihaga kerakli paketlar ro'yxati. Boshqa kompyuterda <code>pip install -r requirements.txt</code> bilan hammasini birdan o'rnatish mumkin.
+<code>venv</code> papkasini esa GitHub'ga yuklamang (<code>.gitignore</code> ga qo'shing).</div>
+<h3>2. Baza</h3>
+<p>28–30-mavzulardagi <code>maktab</code> bazasidan foydalanamiz (sinflar, oquvchilar, baholar jadvallari bilan).</p>
+
+<h2 id="birinchi-ulanish"><a class="anchor" href="#birinchi-ulanish">#</a>Birinchi ulanish</h2>
+<div class="code"><div class="code-head"><span>test_ulanish.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import psycopg
+
+conn = psycopg.connect(
+    host=&quot;localhost&quot;,
+    port=5432,
+    dbname=&quot;maktab&quot;,
+    user=&quot;postgres&quot;,
+    password=&quot;SIZNING_PAROLINGIZ&quot;,
+)
+
+cur = conn.cursor()                          # kursor — so&#x27;rov yuborish vositasi
+cur.execute(&quot;SELECT version();&quot;)             # SQL so&#x27;rov
+print(cur.fetchone())                        # bitta natija qatori
+
+cur.close()
+conn.close()</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">(&#x27;PostgreSQL 17.0 on x86_64-windows, compiled by ...&#x27;,)</code></pre></div>
+<h3><code>with</code> bilan — avtomatik yopish (tavsiya etiladi)</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import psycopg
+
+with psycopg.connect(&quot;dbname=maktab user=postgres password=SIZNING_PAROLINGIZ host=localhost&quot;) as conn:
+    with conn.cursor() as cur:
+        cur.execute(&quot;SELECT id, ism, familiya FROM oquvchilar ORDER BY familiya&quot;)
+        for qator in cur.fetchall():          # barcha natijalar: tuple&#x27;lar ro&#x27;yxati
+            print(qator)
+# with tugaganda: xato bo&#x27;lmasa — commit, xato bo&#x27;lsa — rollback, so&#x27;ng ulanish yopiladi</code></pre></div>
+<div class="code output"><div class="code-head"><span>Natija</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-plaintext">(6, &#x27;Dilnoza&#x27;, &#x27;Aminova&#x27;)
+(4, &#x27;Madina&#x27;, &#x27;Ergasheva&#x27;)
+(2, &#x27;Zarina&#x27;, &#x27;Karimova&#x27;)
+...</code></pre></div>
+<div class="table-wrap"><table>
+<tr><th>Metod</th><th>Vazifasi</th></tr>
+<tr><td><code>cur.execute(sql, params)</code></td><td>So'rovni bajarish</td></tr>
+<tr><td><code>cur.fetchone()</code></td><td>Keyingi <b>bitta</b> qator (yoki <code>None</code>)</td></tr>
+<tr><td><code>cur.fetchall()</code></td><td><b>Barcha</b> qatorlar ro'yxati</td></tr>
+<tr><td><code>cur.fetchmany(5)</code></td><td>Keyingi 5 ta qator</td></tr>
+<tr><td><code>cur.rowcount</code></td><td>O'zgargan qatorlar soni (UPDATE/DELETE dan keyin)</td></tr>
+<tr><td><code>conn.commit()</code></td><td>O'zgarishlarni saqlash</td></tr>
+<tr><td><code>conn.rollback()</code></td><td>O'zgarishlarni bekor qilish</td></tr>
+</table></div>
+<div class="callout warn"><span class="t">commit'ni unutmang!</span>
+<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> dan keyin <code>conn.commit()</code> chaqirilmasa, o'zgarishlar <b>saqlanmaydi</b> (tranzaksiya, 28-mavzu).
+<code>with psycopg.connect(...) as conn:</code> bloki muvaffaqiyatli tugaganda commit avtomatik bajariladi.</div>
+
+<h2 id="sql-injection-eng-xavfli-xato"><a class="anchor" href="#sql-injection-eng-xavfli-xato">#</a>⚠️ SQL injection — eng xavfli xato</h2>
+<p>Foydalanuvchi kiritgan qiymatni SQL satriga <b>to'g'ridan-to'g'ri qo'shish</b> — veb-saytlardagi eng xavfli va keng tarqalgan zaifliklardan biri.</p>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python"># ❌ HECH QACHON BUNDAY QILMANG
+ism = input(&quot;Ism: &quot;)
+cur.execute(f&quot;SELECT * FROM oquvchilar WHERE ism = &#x27;{ism}&#x27;&quot;)</code></pre></div>
+<p>Oddiy foydalanuvchi <code>Ali</code> yozadi — hammasi joyida. Lekin buzg'unchi quyidagini yozsa:</p>
+<div class="code"><div class="code-head"><span>Matn</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">&#x27; OR &#x27;1&#x27;=&#x27;1</code></pre></div>
+<p>SQL shunday bo'lib qoladi: <code>SELECT * FROM oquvchilar WHERE ism = '' OR '1'='1'</code> — <code>'1'='1'</code> doim rost, demak <b>barcha o'quvchilar</b> ma'lumoti
+chiqib ketadi! Yoki undan ham yomoni: <code>'; DROP TABLE oquvchilar; --</code> — jadval o'chiriladi.</p>
+<div class="analogy"><span class="t">O'xshatish: buyruq qog'ozi</span>
+Siz yordamchingizga "Ombordan ____ ni olib kel" degan qog'oz berasiz va bo'sh joyni mijoz to'ldiradi. Ayyor mijoz "olma. Keyin seyfdagi pullarni ham olib kel" deb yozsa,
+yordamchingiz ikkalasini ham bajaradi. Parametrli so'rov esa bo'sh joyga yozilgan narsani <b>faqat mahsulot nomi</b> deb tushunadi — buyruq sifatida emas.</div>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python"># ✅ TO&#x27;G&#x27;RI: parametrli so&#x27;rov — %s o&#x27;rniga qiymatni psycopg o&#x27;zi xavfsiz qo&#x27;yadi
+ism = input(&quot;Ism: &quot;)
+cur.execute(&quot;SELECT * FROM oquvchilar WHERE ism = %s&quot;, (ism,))   # (ism,) — bitta elementli tuple!
+
+# Bir nechta parametr
+cur.execute(
+    &quot;INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (%s, %s, %s)&quot;,
+    (&quot;Jasur&quot;, &quot;Rahimov&quot;, 2),
+)</code></pre></div>
+<div class="callout danger"><span class="t">Qat'iy qoida</span>
+SQL'ga kiradigan har qanday o'zgaruvchan qiymat — <b>faqat <code>%s</code> parametr orqali</b>. f-string, <code>+</code> yoki <code>.format()</code> bilan SQL yasamang!
+(Eslatma: <code>%s</code> — barcha turlar uchun, son uchun ham; atrofiga qo'shtirnoq qo'yilmaydi.)</div>
+
+<h2 id="crudni-pythondan-bajarish"><a class="anchor" href="#crudni-pythondan-bajarish">#</a>CRUD'ni Python'dan bajarish</h2>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import psycopg
+
+DSN = &quot;dbname=maktab user=postgres password=SIZNING_PAROLINGIZ host=localhost&quot;
+
+with psycopg.connect(DSN) as conn:
+    with conn.cursor() as cur:
+        # CREATE
+        cur.execute(
+            &quot;INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (%s, %s, %s) RETURNING id&quot;,
+            (&quot;Laylo&quot;, &quot;Usmonova&quot;, 1),
+        )
+        yangi_id = cur.fetchone()[0]
+        print(&quot;Yangi o&#x27;quvchi id:&quot;, yangi_id)
+
+        # READ
+        cur.execute(&quot;SELECT ism, familiya FROM oquvchilar WHERE id = %s&quot;, (yangi_id,))
+        print(cur.fetchone())
+
+        # UPDATE
+        cur.execute(&quot;UPDATE oquvchilar SET email = %s WHERE id = %s&quot;, (&quot;laylo@mail.uz&quot;, yangi_id))
+        print(&quot;Yangilandi:&quot;, cur.rowcount, &quot;qator&quot;)
+
+        # DELETE
+        cur.execute(&quot;DELETE FROM oquvchilar WHERE id = %s&quot;, (yangi_id,))
+        print(&quot;O&#x27;chirildi:&quot;, cur.rowcount, &quot;qator&quot;)
+    # bu yerda avtomatik conn.commit()</code></pre></div>
+<h3>Natijani dict ko'rinishida olish</h3>
+<div class="code"><div class="code-head"><span>Python</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">from psycopg.rows import dict_row
+
+with psycopg.connect(DSN, row_factory=dict_row) as conn:
+    rows = conn.execute(&quot;SELECT id, ism, familiya FROM oquvchilar LIMIT 2&quot;).fetchall()
+    for r in rows:
+        print(r[&quot;ism&quot;], r[&quot;familiya&quot;])     # indeks o&#x27;rniga nom bilan — o&#x27;qilishi oson
+# [{&#x27;id&#x27;: 1, &#x27;ism&#x27;: &#x27;Ali&#x27;, &#x27;familiya&#x27;: &#x27;Valiyev&#x27;}, ...]</code></pre></div>
+
+<h2 id="maxfiy-sozlamalarni-koddan-ajratish"><a class="anchor" href="#maxfiy-sozlamalarni-koddan-ajratish">#</a>Maxfiy sozlamalarni koddan ajratish</h2>
+<p>Parolni kod ichida yozib, GitHub'ga yuklasangiz — uni butun dunyo ko'radi! Sozlamalarni <b>muhit o'zgaruvchilari</b> (environment variables) yoki alohida faylda saqlang:</p>
+<div class="code"><div class="code-head"><span>Terminal</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-bash">pip install python-dotenv</code></pre></div>
+<div class="code"><div class="code-head"><span>.env (GitHub&#x27;ga YUKLANMAYDI!)</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-ini">DB_NAME=maktab
+DB_USER=postgres
+DB_PASSWORD=SIZNING_PAROLINGIZ
+DB_HOST=localhost</code></pre></div>
+<div class="code"><div class="code-head"><span>.gitignore</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-text">venv/
+.env
+__pycache__/</code></pre></div>
+<div class="code"><div class="code-head"><span>db.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import os
+import psycopg
+from psycopg.rows import dict_row
+from dotenv import load_dotenv
+
+load_dotenv()          # .env faylidagi qiymatlarni o&#x27;qiydi
+
+def ulanish():
+    return psycopg.connect(
+        dbname=os.getenv(&quot;DB_NAME&quot;),
+        user=os.getenv(&quot;DB_USER&quot;),
+        password=os.getenv(&quot;DB_PASSWORD&quot;),
+        host=os.getenv(&quot;DB_HOST&quot;, &quot;localhost&quot;),
+        row_factory=dict_row,
+    )</code></pre></div>
+
+<h2 id="amaliy-mashgulot-python-postgresql-crud-dasturi-20-loyiha"><a class="anchor" href="#amaliy-mashgulot-python-postgresql-crud-dasturi-20-loyiha">#</a>Amaliy mashg'ulot: Python + PostgreSQL CRUD dasturi (20-loyiha)</h2>
+<p>23-mavzudagi o'quvchilar dasturini endi <b>haqiqiy bazada</b> ishlaydigan qilamiz. Ma'lumotlar dastur yopilganda ham saqlanib qoladi.</p>
+<div class="code"><div class="code-head"><span>oquvchilar_db.py</span><span class="code-actions"><button class="copy" type="button">Nusxa olish</button></span></div><pre><code class="language-python">import psycopg
+from db import ulanish
+
+
+def royxat():
+    with ulanish() as conn:
+        rows = conn.execute(&quot;&quot;&quot;
+            SELECT o.id, o.ism, o.familiya, s.nomi AS sinf,
+                   ROUND(AVG(b.baho), 2) AS ortacha
+            FROM oquvchilar o
+            LEFT JOIN sinflar s ON s.id = o.sinf_id
+            LEFT JOIN baholar b ON b.oquvchi_id = o.id
+            GROUP BY o.id, s.nomi
+            ORDER BY o.familiya
+        &quot;&quot;&quot;).fetchall()
+    print(f&quot;\n{&#x27;ID&#x27;:&lt;4}{&#x27;Ism&#x27;:&lt;12}{&#x27;Familiya&#x27;:&lt;14}{&#x27;Sinf&#x27;:&lt;6}{&#x27;O‘rtacha&#x27;:&gt;8}&quot;)
+    print(&quot;-&quot; * 44)
+    for r in rows:
+        print(f&quot;{r[&#x27;id&#x27;]:&lt;4}{r[&#x27;ism&#x27;]:&lt;12}{r[&#x27;familiya&#x27;]:&lt;14}{r[&#x27;sinf&#x27;] or &#x27;-&#x27;:&lt;6}{r[&#x27;ortacha&#x27;] or &#x27;-&#x27;:&gt;8}&quot;)
+
+
+def qoshish():
+    ism = input(&quot;Ism: &quot;).strip()
+    familiya = input(&quot;Familiya: &quot;).strip()
+    if not ism or not familiya:
+        print(&quot;❌ Ism va familiya majburiy&quot;)
+        return
+    with ulanish() as conn:
+        sinflar = conn.execute(&quot;SELECT id, nomi FROM sinflar ORDER BY nomi&quot;).fetchall()
+        print(&quot;Sinflar:&quot;, &quot;, &quot;.join(f&quot;{s[&#x27;id&#x27;]}={s[&#x27;nomi&#x27;]}&quot; for s in sinflar))
+        try:
+            sinf_id = int(input(&quot;Sinf id: &quot;))
+            r = conn.execute(
+                &quot;INSERT INTO oquvchilar (ism, familiya, sinf_id) VALUES (%s, %s, %s) RETURNING id&quot;,
+                (ism, familiya, sinf_id),
+            ).fetchone()
+            print(f&quot;✅ Qo&#x27;shildi (id = {r[&#x27;id&#x27;]})&quot;)
+        except ValueError:
+            print(&quot;❌ Sinf id son bo&#x27;lishi kerak&quot;)
+        except psycopg.errors.ForeignKeyViolation:
+            print(&quot;❌ Bunday sinf yo&#x27;q&quot;)
+
+
+def baho_qoyish():
+    try:
+        oquvchi_id = int(input(&quot;O&#x27;quvchi id: &quot;))
+        fan = input(&quot;Fan: &quot;).strip()
+        baho = int(input(&quot;Baho (2–5): &quot;))
+    except ValueError:
+        print(&quot;❌ Son kiriting&quot;)
+        return
+    try:
+        with ulanish() as conn:
+            conn.execute(
+                &quot;INSERT INTO baholar (oquvchi_id, fan, baho) VALUES (%s, %s, %s)&quot;,
+                (oquvchi_id, fan, baho),
+            )
+        print(&quot;✅ Baho qo&#x27;yildi&quot;)
+    except psycopg.errors.CheckViolation:
+        print(&quot;❌ Baho 2 dan 5 gacha bo&#x27;lishi kerak&quot;)
+    except psycopg.errors.ForeignKeyViolation:
+        print(&quot;❌ Bunday o&#x27;quvchi yo&#x27;q&quot;)
+
+
+def qidirish():
+    soz = input(&quot;Ism yoki familiya qismi: &quot;).strip()
+    with ulanish() as conn:
+        rows = conn.execute(
+            &quot;SELECT id, ism, familiya FROM oquvchilar WHERE ism ILIKE %s OR familiya ILIKE %s&quot;,
+            (f&quot;%{soz}%&quot;, f&quot;%{soz}%&quot;),           # % belgilarini QIYMATga qo&#x27;shamiz, SQL&#x27;ga emas
+        ).fetchall()
+    for r in rows:
+        print(f&quot;  {r[&#x27;id&#x27;]}. {r[&#x27;ism&#x27;]} {r[&#x27;familiya&#x27;]}&quot;)
+    if not rows:
+        print(&quot;  Hech kim topilmadi&quot;)
+
+
+def ochirish():
+    try:
+        oquvchi_id = int(input(&quot;O&#x27;chiriladigan o&#x27;quvchi id: &quot;))
+    except ValueError:
+        print(&quot;❌ Son kiriting&quot;)
+        return
+    with ulanish() as conn:
+        r = conn.execute(&quot;SELECT ism, familiya FROM oquvchilar WHERE id = %s&quot;, (oquvchi_id,)).fetchone()
+        if not r:
+            print(&quot;❌ Topilmadi&quot;)
+            return
+        if input(f&quot;{r[&#x27;ism&#x27;]} {r[&#x27;familiya&#x27;]} o&#x27;chirilsinmi? (ha/yo&#x27;q): &quot;).lower() == &quot;ha&quot;:
+            conn.execute(&quot;DELETE FROM oquvchilar WHERE id = %s&quot;, (oquvchi_id,))
+            print(&quot;✅ O&#x27;chirildi&quot;)
+
+
+MENYU = {
+    &quot;1&quot;: (&quot;Ro&#x27;yxat&quot;, royxat),
+    &quot;2&quot;: (&quot;O&#x27;quvchi qo&#x27;shish&quot;, qoshish),
+    &quot;3&quot;: (&quot;Baho qo&#x27;yish&quot;, baho_qoyish),
+    &quot;4&quot;: (&quot;Qidirish&quot;, qidirish),
+    &quot;5&quot;: (&quot;O&#x27;chirish&quot;, ochirish),
+}
+
+if __name__ == &quot;__main__&quot;:
+    while True:
+        print(&quot;\n===== MAKTAB BAZASI =====&quot;)
+        for k, (nom, _) in MENYU.items():
+            print(f&quot;{k}. {nom}&quot;)
+        print(&quot;0. Chiqish&quot;)
+        t = input(&quot;&gt; &quot;).strip()
+        if t == &quot;0&quot;:
+            break
+        if t in MENYU:
+            MENYU[t][1]()</code></pre></div>
+<p><b>Topshiriqlar:</b></p>
+<ol class="steps">
+  <li>Dasturni ishga tushiring. pgAdmin'da bir vaqtning o'zida jadvalni ochib, dastur qo'shgan ma'lumotlar bazada paydo bo'layotganini kuzating.</li>
+  <li>"Qidirish" ga <code>' OR '1'='1</code> yozib ko'ring — parametrli so'rov tufayli hech qanday "teshik" yo'qligiga ishonch hosil qiling.</li>
+  <li>"Sinf statistikasi" menyu bandini qo'shing (30-mavzudagi GROUP BY so'rovi).</li>
+  <li>"O'quvchi ma'lumotlarini tahrirlash" bandini qo'shing (UPDATE).</li>
+</ol>
+
+<h2 id="kop-uchraydigan-xatolar"><a class="anchor" href="#kop-uchraydigan-xatolar">#</a>Ko'p uchraydigan xatolar</h2>
+<ul class="mistakes">
+  <li>❌ <code>ModuleNotFoundError: No module named 'psycopg'</code> — virtual muhit faollashtirilmagan yoki paket o'rnatilmagan.</li>
+  <li>❌ <code>connection refused</code> — PostgreSQL serveri ishlamayapti yoki port/host noto'g'ri.</li>
+  <li>❌ <code>(ism)</code> yozish — bu tuple emas, oddiy qavs! Bitta parametr uchun: <code>(ism,)</code> — vergul bilan.</li>
+  <li>❌ <code>'%s'</code> — qo'shtirnoq ichida yozish; to'g'risi shunchaki <code>%s</code>.</li>
+  <li>❌ O'zgartirishdan keyin commit qilinmagani uchun ma'lumot "yo'qolib" qolishi.</li>
+</ul>
+
+<h2 id="ozingizni-tekshiring"><a class="anchor" href="#ozingizni-tekshiring">#</a>O'zingizni tekshiring</h2>
+<div class="quiz" data-answer="2"><p class="q">Python'dan PostgreSQL bilan ishlash uchun ishlatiladigan kutubxona?</p><ol>
+<li>requests</li><li>psycopg</li><li>pygame</li><li>flask</li></ol></div>
+<div class="quiz" data-answer="4"><p class="q">INSERT dan keyin o'zgarishni bazada saqlash uchun nima chaqiriladi?</p><ol>
+<li><code>cur.save()</code></li><li><code>conn.close()</code></li><li><code>cur.fetchone()</code></li><li><code>conn.commit()</code></li></ol></div>
+<div class="quiz" data-answer="1"><p class="q">SQL injection'dan himoyalangan to'g'ri kod?</p><ol>
+<li><code>cur.execute("... WHERE ism = %s", (ism,))</code></li><li><code>cur.execute(f"... WHERE ism = '{ism}'")</code></li><li><code>cur.execute("... WHERE ism = '" + ism + "'")</code></li><li><code>cur.execute("... WHERE ism = {}".format(ism))</code></li></ol></div>
+<div class="quiz" data-answer="3"><p class="q">So'rovning barcha natija qatorlarini oluvchi metod?</p><ol>
+<li><code>fetchone()</code></li><li><code>getall()</code></li><li><code>fetchall()</code></li><li><code>readall()</code></li></ol></div>
+<div class="quiz" data-answer="2"><p class="q">Parol kabi maxfiy sozlamalarni qayerda saqlash to'g'ri?</p><ol>
+<li>Kod ichida, izoh bilan</li><li><code>.env</code> faylida (GitHub'ga yuklanmaydi)</li><li>README faylida</li><li>Ma'lumotlar bazasi nomida</li></ol></div>
+
+<div class="homework">
+<h3>🏠 Uyga vazifa</h3>
+<ol>
+  <li>29-mavzudagi <code>dokon</code> bazasi uchun Python dasturi: mahsulotlar ro'yxati, mahsulot qo'shish, narxni o'zgartirish, omborda tugaganlarni ko'rsatish.</li>
+  <li>"Buyurtma berish" funksiyasi: mijoz va mahsulotlarni tanlaydi, <code>buyurtmalar</code> va <code>buyurtma_tarkibi</code> ga yozadi, ombordagi <code>soni</code> ni kamaytiradi — hammasi <b>bitta tranzaksiyada</b>.</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h3>✅ Yodda tuting</h3>
+<ul>
+  <li>Virtual muhit: <code>python -m venv venv</code> → faollashtirish → <code>pip install "psycopg[binary]"</code>.</li>
+  <li><code>with psycopg.connect(...) as conn:</code> → <code>conn.execute(sql, params)</code> → <code>fetchone/fetchall</code>; blok tugaganda avtomatik commit.</li>
+  <li><b>Faqat parametrli so'rovlar</b>: <code>%s</code> + tuple — SQL injection'dan himoya.</li>
+  <li>Maxfiy sozlamalar — <code>.env</code> da, <code>.gitignore</code> ga qo'shilgan.</li>
+</ul>
+</div>
+<nav class="pager"><a class="prev" href="31-nazorat-ishi-2.html"><small>← Oldingi mavzu</small>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</a><a class="next" href="33-django-kirish.html"><small>Keyingi mavzu →</small>Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish</a></nav></article>
+  </main>
+  <aside class="toc"><div class="toc-title">Ushbu sahifada</div><ul><li><a href="#python-va-baza-qanday-boglanadi">Python va baza qanday bog&#x27;lanadi?</a></li><li><a href="#tayyorgarlik">Tayyorgarlik</a></li><li><a href="#birinchi-ulanish">Birinchi ulanish</a></li><li><a href="#sql-injection-eng-xavfli-xato">⚠️ SQL injection — eng xavfli xato</a></li><li><a href="#crudni-pythondan-bajarish">CRUD&#x27;ni Python&#x27;dan bajarish</a></li><li><a href="#maxfiy-sozlamalarni-koddan-ajratish">Maxfiy sozlamalarni koddan ajratish</a></li><li><a href="#amaliy-mashgulot-python-postgresql-crud-dasturi-20-loyiha">Amaliy mashg&#x27;ulot: Python + PostgreSQL CRUD dasturi (20-loyiha)</a></li><li><a href="#kop-uchraydigan-xatolar">Ko&#x27;p uchraydigan xatolar</a></li><li><a href="#ozingizni-tekshiring">O&#x27;zingizni tekshiring</a></li></ul></aside>
+</div>
+<div class="overlay" id="overlay"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
