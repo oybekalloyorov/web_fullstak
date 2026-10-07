@@ -1,0 +1,222 @@
+# Bugun nimani o'rganamiz?
+- HTML'ni **shablon** (template) fayllarda saqlash
+- View'dan shablonga ma'lumot: `render()` va **kontekst**
+- Django shablon tili: o'zgaruvchilar, shartlar, sikllar, filtrlar
+- **Shablon merosi** — umumiy skelet bir marta
+- CSS, JS, rasmlar — **static** fayllar
+note: Bu dars I–II boblardagi HTML/CSS/JS bilimlarini Django bilan birlashtiradi!
+---
+# Template nima?
+= Template — "bo'sh joylari" bor HTML fayl; Django ularni ma'lumot bilan to'ldiradi
+> **Tabriknoma shabloni:** "Hurmatli ________, sizni ________ bilan tabriklaymiz!" Shablon bir xil — ism va sabab har safar boshqa. `<h1>{{ sarlavha }}</h1>` — har maqolaga o'z sarlavhasi.
+```text
+blog/
+└── templates/
+    └── blog/            ← ilova nomi ikki marta — nomlar to'qnashmasin
+        ├── bosh_sahifa.html
+        └── maqola.html
+```
+---
+# render() va kontekst
+```python
+from django.shortcuts import render
+from django.http import Http404
+
+def bosh_sahifa(request):
+    kontekst = {
+        "sarlavha": "Maktab blogi",
+        "maqolalar": MAQOLALAR,
+    }
+    return render(request, "blog/bosh_sahifa.html", kontekst)
+
+def maqola(request, id):
+    for m in MAQOLALAR:
+        if m["id"] == id:
+            return render(request, "blog/maqola.html", {"maqola": m})
+    raise Http404("Maqola topilmadi")
+```
+- `render()` — shablonni topadi, kontekst bilan to'ldiradi, tayyor HTML qaytaradi
+---
+# Django Template Language (DTL)
+| Sintaksis | Vazifasi | Misol |
+|---|---|---|
+| `{{ ... }}` | O'zgaruvchi | `{{ maqola.sarlavha }}` |
+| `{% ... %}` | Teg — mantiq | `{% for m in maqolalar %}` |
+| `{{ x\|filtr }}` | Filtr | `{{ ism\|upper }}` |
+| `{# ... #}` | Izoh | `{# ko'rinmaydi #}` |
+```django
+<h1>{{ maqola.sarlavha }}</h1>        {# dict kaliti / atribut — nuqta bilan #}
+<p>Kategoriya: {{ maqola.kategoriya }}</p>
+```
+> **Avtomatik xavfsizlik:** matnda `<script>` bo'lsa, Django uni zararsiz matnga aylantiradi — **XSS**'dan himoya
+---
+# if va for
+```django
+{% if maqolalar %}
+  <p>Jami {{ maqolalar|length }} ta maqola</p>
+{% else %}
+  <p>Hozircha maqola yo'q 😔</p>
+{% endif %}
+
+<ul>
+  {% for m in maqolalar %}
+    <li>
+      {{ forloop.counter }}.
+      <a href="{% url 'blog:maqola' m.id %}">{{ m.sarlavha }}</a>
+    </li>
+  {% empty %}
+    <li>Maqolalar yo'q</li>
+  {% endfor %}
+</ul>
+```
+- `{% url 'blog:maqola' m.id %}` — manzillarni qo'lda yozmang!
+- `forloop.counter`, `forloop.first`, `forloop.last`
+! Shablonda faqat **ko'rsatish** mantiqi; hisob-kitob va bazaga so'rov — view'ning ishi
+---
+# Filtrlar
+```django
+{{ ism|upper }}                → ALI
+{{ ism|title }}                → Ali Valiyev
+{{ matn|truncatewords:20 }}    → birinchi 20 so'z...
+{{ maqolalar|length }}         → 3
+{{ sana|date:"d.m.Y" }}        → 06.10.2026
+{{ narx|floatformat:2 }}       → 12500.00
+{{ izoh|default:"Izoh yo'q" }} → bo'sh bo'lsa
+{{ matn|linebreaks }}          → qatorlarni <p> va <br> ga
+```
+---
+## Shablon merosi
+Umumiy skelet bir marta yoziladi
+---
+# base.html — umumiy skelet
+> **Daftar varag'i:** har varaqda bir xil chiziqlar va hoshiya (base.html). Har varaqqa faqat o'sha kunning darsi yoziladi (`block content`).
+```django blog/templates/blog/base.html
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Maktab blogi{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="{% url 'blog:bosh' %}">📰 Maktab blogi</a>
+    <nav><a href="{% url 'blog:haqida' %}">Biz haqimizda</a></nav>
+  </header>
+  <main class="konteyner">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">© 2026 Maktab blogi</footer>
+</body>
+</html>
+```
+---
+# extends, block, include
+```django bosh_sahifa.html
+{% extends "blog/base.html" %}
+{% block title %}Bosh sahifa{% endblock %}
+
+{% block content %}
+  <h1>So'nggi maqolalar</h1>
+  <div class="kartalar">
+    {% for m in maqolalar %}
+      {% include "blog/_karta.html" %}
+    {% endfor %}
+  </div>
+{% endblock %}
+```
+::
+```django _karta.html
+<article class="karta">
+  <span class="belgi">
+    {{ m.kategoriya }}
+  </span>
+  <h3>
+    <a href="{% url 'blog:maqola' m.id %}">
+      {{ m.sarlavha }}
+    </a>
+  </h3>
+</article>
+```
+| Teg | Vazifasi |
+|---|---|
+| `{% extends %}` | Ota shablondan meros (**birinchi qator**) |
+| `{% block %}` | O'zgaradigan joy |
+| `{% include %}` | Bo'lakni qo'shish (karta, menyu) |
+---
+# Static fayllar
+```text
+blog/static/blog/
+├── css/style.css
+├── js/main.js
+└── img/logo.png
+```
+```django
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+<script src="{% static 'blog/js/main.js' %}"></script>
+<img src="{% static 'blog/img/logo.png' %}" alt="Logo">
+```
+```python settings.py
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"    # serverga joylashda (41-mavzu)
+```
+- **Media** — foydalanuvchi yuklaydigan fayllar (rasmlar, avatarlar) — 36-mavzu
+! O'zgarish ko'rinmasa — **Ctrl+F5**; yangi static papkadan keyin serverni qayta ishga tushiring
+---
+# Amaliyot
+1. `base.html`, `bosh_sahifa.html`, `_karta.html`, `maqola.html` + view'larni `render` ga o'tkazing
+2. `style.css` — portfolio kabi chiroyli dizayn (Grid kartalar, soya, hover)
+3. `haqida.html` — `base.html` dan meros
+4. `main.js` — 🌙 tungi rejim
+5. `kategoriya.html`: `{{ nomi|title }}` + kartalar (`include`)
+```css
+.kartalar { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.karta { background: white; padding: 20px; border-radius: 14px;
+         box-shadow: 0 6px 18px rgba(0,0,0,.06); transition: transform .2s; }
+.karta:hover { transform: translateY(-4px); }
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `TemplateDoesNotExist` — yo'l xato yoki papka `template` (s siz); to'g'risi `blog/templates/blog/`
+- ❌ `Invalid block tag 'static'` — `{% load static %}` yo'q
+- ❌ `{% endfor %}`, `{% endif %}`, `{% endblock %}` unutilgan
+- ❌ `{% extends %}` birinchi qatorda emas
+- ❌ `{{ maqola[sarlavha] }}` — DTL'da faqat nuqta: `{{ maqola.sarlavha }}`
+---
+? Shablonda o'zgaruvchi qiymatini chiqarish sintaksisi?
+o `{% ism %}`
++ `{{ ism }}`
+o `${ism}`
+o `<?= ism ?>`
+---
+? View'dan shablonga ma'lumot qanday uzatiladi?
+o Global o'zgaruvchi orqali
+o URL orqali
++ `render(request, "shablon.html", kontekst)`
+o localStorage orqali
+---
+? Umumiy skeletdan meros olish uchun qaysi teg?
++ `{% extends "base.html" %}`
+o `{% include "base.html" %}`
+o `{% import base %}`
+o `{% inherit base %}`
+---
+? Sikl ichida ro'yxat bo'sh bo'lgandagi holat uchun qaysi teg?
+o `{% else %}`
+o `{% none %}`
++ `{% empty %}`
+o `{% null %}`
+---
+# 🏠 Uyga vazifa
+1. Blogni to'liq **responsiv** qiling: telefonda bitta ustun, burger menyu
+2. Maxsus **404 sahifa**: `templates/404.html` (41-mavzuda tekshiramiz)
+3. `pages` ilovasi ham umumiy `base.html` dan meros olsin (`TEMPLATES[0]["DIRS"]`)
+---
+# ✅ Yodda tuting
+- Shablonlar: `ilova/templates/ilova/*.html`; `render(request, "...", {...})`
+- `{{ o'zgaruvchi }}`, `{% teg %}`, `{{ x|filtr }}`; `{% for %}...{% empty %}`, `{% url %}`
+- Meros: `{% extends %}` + `{% block %}`; bo'laklar — `{% include %}`
+- Static: `{% load static %}` + `{% static 'yo'l' %}`
+- Django matnni avtomatik ekranlaydi — XSS'dan himoya

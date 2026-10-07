@@ -1,0 +1,211 @@
+# Bugun nimani o'rganamiz?
+- **CSS** nima va HTML bilan qanday ishlaydi
+- CSS'ni ulashning **3 usuli**
+- Qoida tuzilishi va **selektorlar**
+- **Kaskad:** qaysi qoida "g'olib"?
+- **Ranglar, matn va shriftlar**, Google Fonts
+---
+# CSS nima?
+= CSS — sahifaning ko'rinishi: rang, shrift, o'lcham, joylashuv
+- **C**ascading **S**tyle **S**heets — kaskadli uslublar jadvali
+- HTML — **tuzilma**, CSS — **dizayn**
+> **O'xshatish:** HTML — odamning tanasi, CSS — kiyimi va soch turmagi. Bitta odam turli kiyimda butunlay boshqacha ko'rinadi.
+note: CSS Zen Garden saytini ko'rsating: HTML bir xil, faqat CSS fayl almashadi.
+---
+# CSS qoidasining tuzilishi
+```css
+h1 {
+  color: blue;
+  font-size: 32px;
+}
+```
+::
+- `h1` — **selektor**: QAYSI elementlarga
+- `color` — **xossa**: NIMANI o'zgartiramiz
+- `blue` — **qiymat**: QANDAY qilib
+- `color: blue;` — deklaratsiya
+! Har deklaratsiya oxirida `;` majburiy!
+- Izoh: `/* ... */`
+---
+# CSS'ni ulashning 3 usuli
+```html 1. Inline
+<p style="color: red; font-size: 20px;">Qizil paragraf</p>
+```
+```html 2. Internal
+<style>
+  p { color: green; }
+</style>
+```
+```html 3. External ✅
+<link rel="stylesheet" href="css/style.css">
+```
+---
+# Qaysi usul qachon?
+| Usul | Qayerda | Ta'sir doirasi | Qachon |
+|---|---|---|---|
+| Inline | `style="..."` | Bitta element | Tez sinash |
+| Internal | `<style>` (head'da) | Bitta sahifa | Kichik loyiha |
+| **External** | `.css` fayl + `<link>` | **Butun sayt** | **Deyarli har doim** |
+- Bitta `style.css` → barcha sahifalar; o'zgartirish — bitta faylda
+- Brauzer faylni xotirada saqlaydi → sayt tezroq
+---
+# Asosiy selektorlar
+```css
+p { color: #333; }                 /* teg — barcha <p> lar */
+.muhim { color: crimson; }         /* class — nuqta bilan */
+#sarlavha { color: navy; }         /* id — panjara bilan */
+* { font-family: Arial; }          /* universal — hammasi */
+h2, h3 { color: teal; }            /* guruh — vergul bilan */
+```
+- **class** — dizayn uchun deyarli doim; bir nechta: `class="tugma katta qizil"`
+- **id** — sahifada **yagona**; havolalar va JavaScript uchun
+---
+# Kombinatsiyalangan selektorlar
+| Selektor | Ma'nosi |
+|---|---|
+| `nav a` | `nav` **ichidagi** barcha `a` (bo'sh joy) |
+| `.menyu > li` | Faqat **bevosita farzand** `li` |
+| `p.eslatma` | `class="eslatma"` bo'lgan `p` |
+| `input[type="email"]` | Atribut bo'yicha |
+| `h2, h3` | Ham `h2`, ham `h3` (vergul) |
+---
+# Kaskad: qaysi qoida g'olib?
+1. **Aniqlik:** inline > id > class > teg
+2. Aniqlik teng bo'lsa — **keyinroq yozilgani** yutadi
+```html
+<style>
+  p { color: blue; }
+  .matn { color: green; }
+  #asosiy { color: orange; }
+</style>
+<p class="matn" id="asosiy">Men to'q sariqman (id yutdi)</p>
+```
+> **Ko'rsatmalar:** direktor (inline) aytgani sinf rahbari (id) va sardor (class) gapidan ustun; umumiy qoida (teg) eng kuchsiz.
+---
+# Meros (inheritance)
+- Matnga oid xossalar (`color`, `font-family`, `font-size`) ota elementdan **ichkariga meros** o'tadi
+- Shuning uchun shriftni bir marta `body` ga berish kifoya
+```css
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #1f2937;
+}
+```
+---
+# Ranglar
+```css
+.r1 { color: tomato; }               /* nom bilan */
+.r2 { color: #4f46e5; }              /* HEX: #RRGGBB */
+.r3 { color: #f00; }                 /* qisqa HEX */
+.r4 { color: rgb(16, 185, 129); }    /* RGB: 0–255 */
+.r5 { color: rgba(0, 0, 0, 0.4); }   /* shaffoflik 0..1 */
+.r6 { color: hsl(280, 70%, 50%); }   /* tus, to'yinganlik, yorqinlik */
+.fon { background-color: #fef3c7; }
+```
+- `#ff0000` — qizil, `#000000` — qora, `#ffffff` — oq
+! Matn va fon o'rtasida yetarli **kontrast** bo'lsin!
+---
+# Matn xossalari
+| Xossa | Qiymatlar |
+|---|---|
+| `text-align` | `left` `center` `right` `justify` |
+| `text-decoration` | `none` `underline` `line-through` |
+| `text-transform` | `uppercase` `lowercase` `capitalize` |
+| `letter-spacing` / `word-spacing` | Harf / so'z oralig'i |
+| `line-height` | Qator oralig'i (masalan `1.6`) |
+| `text-shadow` | `2px 2px 4px rgba(0,0,0,.4)` |
+---
+# Shriftlar
+```css
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;     /* 100..900; 700 = bold */
+  font-style: normal;   /* italic */
+  line-height: 1.6;
+}
+```
+::
+- **serif** — "oyoqchali" (Georgia): kitob uslubi
+- **sans-serif** — oyoqchasiz (Arial): ekran uchun
+- **monospace** — bir xil kenglik: kod uchun
+- Ro'yxat — **zaxira** shriftlar; oxirida umumiy oila
+---
+# Google Fonts va o'lcham birliklari
+1. **fonts.google.com** → shrift tanlang (Latin Extended!)
+2. "Get embed code" → `<link>` ni `<head>` ga qo'ying
+3. CSS: `font-family: "Montserrat", sans-serif;`
+| Birlik | Ma'nosi |
+|---|---|
+| `px` | Aniq piksel |
+| `em` | Ota element shriftiga nisbatan |
+| `rem` | Sahifa asosiy shriftiga (16px) nisbatan — **shriftlar uchun** |
+| `%` | Ota elementga nisbatan |
+---
+## Amaliy mashg'ulot
+Vizitka saytiga dizayn beramiz
+---
+# Amaliyot: vizitkaga dizayn
+1. `css/style.css` yarating
+2. Har sahifaga: `<link rel="stylesheet" href="css/style.css">` (ichki papkada — `../css/`)
+3. Google Fonts'dan 2 ta shrift ulang
+4. `body`, sarlavhalar, havolalar, `.ajratilgan` uchun uslub yozing
+5. **F12 → Elements → Styles**: qaysi qoida ta'sir qilyapti, qaysi biri "yutqazgan"?
+---
+# Amaliyot: namuna CSS
+```css
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1f2937;
+  background-color: #f9fafb;
+}
+h1, h2, h3 { font-family: Georgia, serif; color: #4f46e5; }
+h1 { font-size: 2.5rem; text-align: center; }
+nav a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+.ajratilgan { background-color: #fef3c7; padding: 0 4px; }
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `;` unutilgan: `color: red font-size: 20px;` — ikkalasi ham ishlamaydi
+- ❌ CSS'da nuqta unutilgan: `muhim { }` → `.muhim { }`
+- ❌ HTML'da nuqta qo'yilgan: `class=".muhim"` → `class="muhim"`
+- ❌ CSS fayl yo'li noto'g'ri → Console'da "404 style.css"
+- ❌ `colour`, `text-color` → to'g'risi `color`
+---
+? `class="karta"` bo'lgan elementlarni tanlovchi selektor qaysi?
+o `#karta`
++ `.karta`
+o `karta`
+o `*karta`
+---
+? `<p class="a" id="b">` uchun `p{color:red}`, `.a{color:green}`, `#b{color:blue}` yozilgan. Matn qanday rangda?
+o Qizil
+o Yashil
+o Qora
++ Ko'k
+---
+? `nav a` selektori nimani tanlaydi?
++ `nav` ichidagi barcha havolalarni
+o `nav` va barcha `a` larni
+o Faqat birinchi havolani
+o `a` ichidagi `nav` ni
+---
+? `font-family: "Roboto", Arial, sans-serif;` — kompyuterda Roboto bo'lmasa?
+o Matn ko'rinmaydi
++ Arial ishlatiladi
+o Xato chiqadi
+o Times New Roman ishlatiladi
+---
+# 🏠 Uyga vazifa
+1. **CSS Diner** o'yinida kamida 12-darajagacha o'ting
+2. **coolors.co** dan 4–5 rangli palitra tanlab, vizitkaga qo'llang
+3. "Sinfimiz gazetasi"ga gazeta uslubida dizayn: serif shrift, katta sarlavha
+---
+# ✅ Yodda tuting
+- Qoida: `selektor { xossa: qiymat; }`
+- **External CSS** — asosiy usul
+- Selektorlar: `p`, `.class`, `#id`, `*`, `a, b`, `a b`, `a > b`
+- Ustuvorlik: inline > id > class > teg; teng bo'lsa — keyingisi
+- Matn: `color`, `text-align`, `line-height`; shrift: `font-family`, `font-size`, `font-weight`

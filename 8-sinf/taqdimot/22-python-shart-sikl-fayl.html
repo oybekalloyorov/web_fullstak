@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>22-mavzu: Python control flow: shartlar va sikllar. Fayllar bilan ishlash — taqdimot</title>
+<meta name="description" content="if, elif, else va chekinish qoidasi; match; for va range(), while, break, continue; try/except bilan xatolarni ushlash; fayllarni ochish, o&#x27;qish, yozish va qo&#x27;shish (with open). Python kalkulyatori.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🔀</div><div class="cover-kicker">22-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Python control flow: shartlar va sikllar. Fayllar bilan ishlash</h1><p>if, elif, else va chekinish qoidasi; match; for va range(), while, break, continue; try/except bilan xatolarni ushlash; fayllarni ochish, o&#x27;qish, yozish va qo&#x27;shish (with open). Python kalkulyatori.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes="JavaScript&#x27;dagi g&#x27;oyalar bir xil — faqat yozilishi boshqacha, shuning uchun mavzu tez o&#x27;tadi."><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Shartlar: <code>if</code>, <code>elif</code>, <code>else</code> va <b>chekinish</b> qoidasi</li><li class="lv0">Sikllar: <code>for</code> + <code>range()</code>, <code>while</code>, <code>break</code>, <code>continue</code></li><li class="lv0">Xatolarni ushlash: <code>try</code> / <code>except</code></li><li class="lv0"><b>Fayllar:</b> yaratish, yozish, o&#x27;qish, qo&#x27;shish</li><li class="lv0"><b>Python kalkulyatori</b> (15-loyiha)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>if, elif, else</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">ball = int(input(&quot;Ballingiz: &quot;))
+
+if ball &gt;= 86:
+    print(&quot;A&#x27;lo! 🏆&quot;)
+elif ball &gt;= 71:              # JS&#x27;dagi &quot;else if&quot;
+    print(&quot;Yaxshi 👍&quot;)
+elif ball &gt;= 56:
+    print(&quot;Qoniqarli&quot;)
+else:
+    print(&quot;Qoniqarsiz 😔&quot;)</code></pre></div><ul class="s-list"><li class="lv0">Shart oxirida <b>ikki nuqta</b> <code>:</code></li><li class="lv0"><code>else if</code> emas — <b><code>elif</code></b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Chekinish — Python&#x27;ning eng muhim qoidasi</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">yosh = 15
+if yosh &gt;= 14:
+    print(&quot;Pasport olish mumkin&quot;)    # ← if ichida (4 bo&#x27;sh joy)
+    print(&quot;Tabriklaymiz!&quot;)           # ← if ichida
+print(&quot;Bu har doim chiqadi&quot;)         # ← tashqarida</code></pre></div><ul class="s-list"><li class="lv0">JS&#x27;da bloklar <code>{ }</code> bilan, Python&#x27;da — <code>:</code> va <b>4 bo&#x27;sh joy</b></li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>Kitob mundarijasi:</b> kichik bo&#x27;limlar o&#x27;ngroqqa surilgan — qaysi bo&#x27;limga tegishli ekanini siljishdan bilasiz.</div></div><div class="s-box warn"><span class="ico">⚠️</span><div><code>IndentationError</code> — chekinish noto&#x27;g&#x27;ri. Bo&#x27;sh joy va Tab&#x27;ni aralashtirmang</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Qo&#x27;shimcha imkoniyatlar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">holat = &quot;katta&quot; if yosh &gt;= 18 else &quot;voyaga yetmagan&quot;   # ternary
+
+if 12 &lt;= yosh &lt;= 18:          # oraliq — JS&#x27;da bunday yozib bo&#x27;lmasdi!
+    print(&quot;Maktab yoshi&quot;)
+
+match kun:                    # Python 3.10+ — switch o&#x27;rniga
+    case 6 | 7:
+        print(&quot;Dam olish 🎉&quot;)
+    case _:
+        print(&quot;Ish kuni&quot;)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>for va range()</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">for i in range(5):            # 0 1 2 3 4   (5 kirmaydi!)
+    print(i, end=&quot; &quot;)
+for i in range(1, 6):         # 1 2 3 4 5
+    ...
+for i in range(10, 0, -2):    # 10 8 6 4 2
+    ...
+for harf in &quot;Python&quot;:         # har bir harf
+    print(harf, end=&quot;-&quot;)</code></pre></div><table class="s-table"><thead><tr><th>JavaScript</th><th>Python</th></tr></thead><tbody><tr><td><code>for (let i = 0; i &lt; 5; i++)</code></td><td><code>for i in range(5):</code></td></tr><tr><td><code>for (let i = 1; i &lt;= 10; i += 2)</code></td><td><code>for i in range(1, 11, 2):</code></td></tr><tr><td><code>for (const x of arr)</code></td><td><code>for x in arr:</code></td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Yig&#x27;indi va ko&#x27;paytirish jadvali</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">jami = 0
+for i in range(1, 101):
+    jami += i
+print(&quot;1..100 yig&#x27;indi:&quot;, jami)   # 5050
+
+son = int(input(&quot;Qaysi sonning jadvali? &quot;))
+for i in range(1, 11):
+    print(f&quot;{son} × {i:2} = {son * i:3}&quot;)   # :2, :3 — tekislash</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>while, break, continue</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">import random
+yashirin = random.randint(1, 20)
+urinish = 0
+
+while True:                       # break bilan chiqamiz
+    taxmin = int(input(&quot;1–20 oralig&#x27;ida son: &quot;))
+    urinish += 1
+    if taxmin == yashirin:
+        print(f&quot;🎉 Topdingiz! {urinish} ta urinishda&quot;)
+        break
+    elif taxmin &lt; yashirin:
+        print(&quot;⬆️ Kattaroq&quot;)
+    else:
+        print(&quot;⬇️ Kichikroq&quot;)</code></pre></div><ul class="s-list"><li class="lv0"><code>continue</code> — keyingi qadamga o&#x27;tish</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>try / except — xatolarni ushlash</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">try:
+    son = int(input(&quot;Son kiriting: &quot;))
+    print(&quot;Natija:&quot;, 100 / son)
+except ValueError:
+    print(&quot;❌ Bu son emas!&quot;)
+except ZeroDivisionError:
+    print(&quot;❌ Nolga bo&#x27;lib bo&#x27;lmaydi!&quot;)
+finally:
+    print(&quot;Dastur tugadi&quot;)        # har doim bajariladi</code></pre></div><div class="s-code out"><div class="s-code-head">Natija</div><pre><code class="language-plaintext">Son kiriting: abc
+❌ Bu son emas!
+Dastur tugadi</code></pre></div><ul class="s-list"><li class="lv0"><code>int(&quot;salom&quot;)</code> dasturni to&#x27;xtatadi — <code>try</code> uni <b>&quot;yiqilish&quot;dan saqlaydi</b></li></ul></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Fayllar bilan ishlash</h2><div class="sec-sub"><p>Dastur yopilsa ham ma&#x27;lumot saqlansin</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Faylga yozish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">with open(&quot;eslatma.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Birinchi qator\n&quot;)    # \n — yangi qator
+    f.write(&quot;Ikkinchi qator\n&quot;)</code></pre></div><ul class="s-list"><li class="lv0"><code>with ... as f:</code> — ish tugagach faylni <b>avtomatik yopadi</b></li><li class="lv0"><code>encoding=&quot;utf-8&quot;</code> — o&#x27;, g&#x27; va emoji uchun. <b>Doim yozing!</b></li></ul><table class="s-table"><thead><tr><th>Rejim</th><th>Ma&#x27;nosi</th><th>Fayl bor bo&#x27;lsa</th></tr></thead><tbody><tr><td><code>&quot;r&quot;</code></td><td>O&#x27;qish (standart)</td><td>O&#x27;qiydi (yo&#x27;q bo&#x27;lsa — xato)</td></tr><tr><td><code>&quot;w&quot;</code></td><td>Yozish</td><td>⚠️ Eski mazmunni <b>o&#x27;chiradi</b>!</td></tr><tr><td><code>&quot;a&quot;</code></td><td>Qo&#x27;shish</td><td>Oxiriga qo&#x27;shadi</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Fayldan o&#x27;qish va qo&#x27;shish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">with open(&quot;eslatma.txt&quot;, encoding=&quot;utf-8&quot;) as f:
+    matn = f.read()                         # butun fayl
+
+with open(&quot;eslatma.txt&quot;, encoding=&quot;utf-8&quot;) as f:
+    for i, qator in enumerate(f, start=1):  # qatorma-qator
+        print(i, qator.strip())             # strip() — \n ni olib tashlaydi
+
+import os
+with open(&quot;kundalik.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(input(&quot;Bugun nima qildingiz? &quot;) + &quot;\n&quot;)
+if os.path.exists(&quot;kundalik.txt&quot;):
+    ...</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: Python kalkulyatori (15-loyiha)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">def son_sora(matn):
+    while True:
+        try:
+            return float(input(matn))
+        except ValueError:
+            print(&quot;  ⚠️ Iltimos, son kiriting&quot;)
+
+while True:
+    amal = input(&quot;Amal (+ - * / ** yoki &#x27;chiqish&#x27;, &#x27;tarix&#x27;): &quot;)
+    if amal == &quot;chiqish&quot;:
+        break
+    if amal == &quot;tarix&quot;:
+        with open(&quot;tarix.txt&quot;, encoding=&quot;utf-8&quot;) as f:
+            print(f.read())
+        continue
+    a, b = son_sora(&quot;1-son: &quot;), son_sora(&quot;2-son: &quot;)
+    natija = a + b if amal == &quot;+&quot; else a - b  # ... va hokazo
+    with open(&quot;tarix.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(f&quot;{a} {amal} {b} = {natija}\n&quot;)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: topshiriqlar</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Har bir amalni va <b>xato kiritishlarni</b> sinab ko&#x27;ring</div></div><div class="s-step"><span class="n">2</span><div>Yangi amallar: <code>sqrt</code> (ildiz) va <code>%%</code> (foiz)</div></div><div class="s-step"><span class="n">3</span><div>&quot;tarix&quot; faqat <b>oxirgi 5</b> yozuvni ko&#x27;rsatsin: <code>readlines()[-5:]</code></div></div><div class="s-step"><span class="n">4</span><div><code>tarix.txt</code> ni kompyuterda topib, Bloknot bilan oching</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>if</code>, <code>for</code>, <code>while</code> oxirida <code>:</code> unutilgan → <code>SyntaxError</code></li><li class="lv0">❌ <code>else if</code> — Python&#x27;da <code>elif</code></li><li class="lv0">❌ <code>range(1, 10)</code> 10 ni bermaydi</li><li class="lv0">❌ <code>&quot;w&quot;</code> rejimida muhim faylni o&#x27;chirib yuborish; qo&#x27;shish — <code>&quot;a&quot;</code></li><li class="lv0">❌ <code>encoding=&quot;utf-8&quot;</code> siz — g&#x27;alati belgilar</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>list(range(2, 8, 2))</code> qanday sonlarni beradi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>2, 4, 6, 8</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>2, 4, 6</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>2, 3, 4, 5, 6, 7</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>8, 6, 4, 2</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Python kod bloklarini qanday belgilaydi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Jingalak qavslar <code>{}</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span>begin / end so&#x27;zlari</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Nuqta-vergul</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>Ikki nuqta va chekinish</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Fayl mazmunini o&#x27;chirmasdan oxiriga yozish rejimi?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>&quot;a&quot;</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>&quot;w&quot;</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>&quot;r&quot;</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>&quot;x&quot;</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>int(&quot;abc&quot;)</code> qanday xato beradi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>ZeroDivisionError</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>IndentationError</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>ValueError</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>TypeError</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Parol tekshiruvchi:</b> 8+ belgi, raqam va katta harf (<code>isdigit()</code>, <code>isupper()</code>)</div></div><div class="s-step"><span class="n">2</span><div><b>Kundalik:</b> har ishga tushganda sana va xulosa → <code>kundalik.txt</code></div></div><div class="s-step"><span class="n">3</span><div><b>Tub sonlar</b> 1–200 → <code>tub.txt</code>, har qatorda bittadan</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>if / elif / else:</code> — <code>:</code> va 4 bo&#x27;sh joy chekinish</li><li class="lv0"><code>for i in range(boshi, oxiri, qadam):</code> — oxiri kirmaydi</li><li class="lv0"><code>while shart:</code>, <code>break</code>, <code>continue</code></li><li class="lv0"><code>try: ... except ValueError: ...</code> — dasturni saqlash</li><li class="lv0"><code>with open(&quot;f.txt&quot;, &quot;r/w/a&quot;, encoding=&quot;utf-8&quot;) as f:</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>23. Ma&#x27;lumot tuzilmalari: list, tuple, set va dictionary</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>22-python-shart-sikl-fayl.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../22-python-shart-sikl-fayl.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/22-python-shart-sikl-fayl.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "21-python-kirish.html", "next": "23-python-list-tuple-set-dict.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>31-mavzu: Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL) — taqdimot</title>
+<meta name="description" content="JavaScript, Python va ma&#x27;lumotlar bazasi bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#2F6FAD">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">📝</div><div class="cover-kicker">31-mavzu · III bob. Python va ma&#x27;lumotlar bazasi</div><h1>Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)</h1><p>JavaScript, Python va ma&#x27;lumotlar bazasi bo&#x27;yicha nazorat: 25 ta yopiq test (3 balldan) va 5 ta ochiq savol/amaliy topshiriq (5 balldan) — jami 100 ball. Takrorlash rejasi, javoblar va baholash mezoni.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Nazorat ishi qanday o&#x27;tadi?</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Qism</th><th>Mazmuni</th><th>Ball</th></tr></thead><tbody><tr><td>1-qism</td><td>25 ta test × 3 ball (JS — 8, Python — 9, SQL — 8)</td><td>75</td></tr><tr><td>2-qism</td><td>5 ta ochiq savol / amaliy topshiriq × 5 ball</td><td>25</td></tr><tr><td><b>Jami</b></td><td>Vaqt: 80 daqiqa</td><td><b>100</b></td></tr></tbody></table><ul class="s-list"><li class="lv0">Bugun: takrorlash → namunaviy testlar → amaliy topshiriqlar → baholash</li></ul></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Takrorlash</h2><div class="sec-sub"><p>II va III boblarning eng muhim tushunchalari</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>JavaScript: 15–20-mavzular</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Mavzu</th><th>Bilishingiz kerak</th></tr></thead><tbody><tr><td>JS asoslari</td><td><code>let/const</code>, turlar, <code>typeof</code>, <code>===</code>, <code>if/else</code>, <code>switch</code>, ternary</td></tr><tr><td>Sikl, funksiya</td><td><code>for</code>, <code>while</code>, <code>break</code>, <code>function</code>, <code>return</code>, arrow</td></tr><tr><td>Massiv, obyekt</td><td><code>push/pop</code>, <code>map/filter/reduce</code>, <code>obj.kalit</code></td></tr><tr><td>DOM, hodisalar</td><td><code>querySelector</code>, <code>textContent</code>, <code>classList</code>, <code>addEventListener</code>, <code>preventDefault</code>, <code>localStorage</code></td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Python va SQL: 21–30-mavzular</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Mavzu</th><th>Bilishingiz kerak</th></tr></thead><tbody><tr><td>Python asoslari</td><td><code>print/input</code>, <code>//</code> <code>%</code>, f-satr, <code>if/elif</code>, <code>for + range</code>, <code>try/except</code>, fayllar</td></tr><tr><td>Tuzilmalar, OOP</td><td><code>list/tuple/set/dict</code>, slicing, <code>def</code>, modullar, <code>json</code>; <code>class</code>, <code>__init__</code>, <code>self</code>, meros</td></tr><tr><td>Ma&#x27;lumotlar bazasi</td><td>PK/FK, bog&#x27;lanishlar, turlar, <code>CREATE</code>, CRUD</td></tr><tr><td>SQL chuqur</td><td><code>JOIN</code>, indeks, <code>GROUP BY</code>, <code>HAVING</code></td></tr></tbody></table></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Namunaviy testlar</h2><div class="sec-sub"><p>Avval o&#x27;ylang — keyin javobni ko&#x27;ring</p></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>&quot;3&quot; === 3</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>true</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>&quot;33&quot;</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>6</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>false</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>[5, 10, 15].map(x =&gt; x / 5)</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>30</span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>[5, 10, 15]</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>[1, 2, 3]</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span>6</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Massivni localStorage&#x27;ga saqlashdan oldin nima qilinadi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>Number()</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>toString()</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Hech narsa</span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>JSON.stringify()</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>list(range(1, 5))</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>[1, 2, 3, 4, 5]</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>[0, 1, 2, 3, 4]</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>[1, 5]</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>[1, 2, 3, 4]</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>d = {&quot;a&quot;: 1}; print(d.get(&quot;b&quot;, 0))</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>KeyError</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>None</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>0</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>1</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Pul summasi uchun eng mos tur?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>NUMERIC(12, 2)</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>REAL</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>VARCHAR</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>INTEGER</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Chap jadvalning barcha qatorlarini qaytaruvchi JOIN?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>INNER JOIN</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>RIGHT JOIN</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>LEFT JOIN</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>CROSS JOIN</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Guruhlangan natijani shart bo&#x27;yicha filtrlash?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>WHERE</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>HAVING</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>FILTER</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>IF</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Amaliy qism</h2><div class="sec-sub"><p>5 ta topshiriq × 5 ball</p></div></div></section>
+<section class="slide" data-notes="Baholash: elementlarni topish — 1; hodisa — 1; bo&#x27;sh tekshiruvi (trim) — 1; textContent — 1; ranglar — 1."><header class="s-head"><h2>1-topshiriq: JavaScript DOM</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Tugma bosilganda: maydon bo&#x27;sh — &quot;Ismingizni kiriting!&quot; (qizil), aks holda — &quot;Salom, [ism]!&quot; (yashil)</li></ul><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">document.querySelector(&quot;#btn&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  const ism = document.querySelector(&quot;#ism&quot;).value.trim();
+  const javob = document.querySelector(&quot;#javob&quot;);
+  if (ism === &quot;&quot;) {
+    javob.textContent = &quot;Ismingizni kiriting!&quot;;
+    javob.style.color = &quot;red&quot;;
+  } else {
+    javob.textContent = `Salom, ${ism}!`;
+    javob.style.color = &quot;green&quot;;
+  }
+});</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>2–3-topshiriqlar: Python</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">2: statistika</div><pre><code class="language-python">def statistika(ballar):
+    if not ballar:
+        return None
+    return {
+        &quot;ortacha&quot;: round(sum(ballar) / len(ballar), 2),
+        &quot;eng_yuqori&quot;: max(ballar),
+        &quot;eng_past&quot;: min(ballar),
+        &quot;alo&quot;: len([b for b in ballar if b &gt; 86]),
+    }</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">3: OOP</div><pre><code class="language-python">class Tortburchak:
+    def __init__(self, eni, boyi):
+        self.eni = eni
+        self.boyi = boyi
+    def yuza(self):
+        return self.eni * self.boyi
+    def perimetr(self):
+        return 2 * (self.eni + self.boyi)
+    def __str__(self):
+        return f&quot;Tortburchak {self.eni}×{self.boyi}&quot;
+
+class Kvadrat(Tortburchak):
+    def __init__(self, tomon):
+        super().__init__(tomon, tomon)</code></pre></div></div></div></section>
+<section class="slide" data-notes="Baholash: jadval va turlar — 1; cheklovlar — 1; INSERT (apostrof) — 1; SELECT — 1; UPDATE + WHERE — 1."><header class="s-head"><h2>4-topshiriq: SQL jadval va CRUD</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">CREATE TABLE kitoblar (
+    id      SERIAL PRIMARY KEY,
+    nomi    VARCHAR(200) NOT NULL,
+    muallif VARCHAR(100),
+    yil     INTEGER CHECK (yil &gt; 1450),
+    narx    NUMERIC(10, 2),
+    mavjud  BOOLEAN DEFAULT TRUE
+);
+INSERT INTO kitoblar (nomi, muallif, yil, narx) VALUES
+    (&#x27;O&#x27;&#x27;tkan kunlar&#x27;, &#x27;Abdulla Qodiriy&#x27;, 1926, 65000),
+    (&#x27;Ufq&#x27;, &#x27;Said Ahmad&#x27;, 1976, 48000);
+SELECT nomi, yil, narx FROM kitoblar WHERE yil &gt; 2000 ORDER BY narx DESC;
+UPDATE kitoblar SET narx = narx * 1.1 WHERE id = 1;</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>5-topshiriq: JOIN va GROUP BY</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Har sinf: nomi, o&#x27;quvchilar soni, o&#x27;rtacha baho; faqat o&#x27;rtachasi 4 dan yuqorilar</li></ul><div class="s-code"><div class="s-code-head">SQL</div><pre><code class="language-sql">SELECT s.nomi,
+       COUNT(DISTINCT o.id) AS oquvchilar,
+       ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+HAVING AVG(b.baho) &gt; 4
+ORDER BY ortacha DESC;</code></pre></div><ul class="s-list"><li class="lv0">Nega <code>COUNT(DISTINCT o.id)</code>? JOIN&#x27;dan keyin o&#x27;quvchi har bahosi uchun takrorlanadi!</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Baholash shkalasi</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Ball</th><th>Natija</th><th>Tavsiya</th></tr></thead><tbody><tr><td>86–100</td><td>A&#x27;lo</td><td>IV bob — Django&#x27;ga tayyorsiz!</td></tr><tr><td>71–85</td><td>Yaxshi</td><td>Xato qilgan mavzular amaliyotini takrorlang</td></tr><tr><td>60–70</td><td>Qoniqarli</td><td>OOP (25) va JOIN/GROUP BY (29–30) ni qayta ishlang</td></tr><tr><td>0–59</td><td>Qoniqarsiz</td><td>Mentor bilan qo&#x27;shimcha mashg&#x27;ulot</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🎉 III bob yakunlandi!</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Ikki dasturlash tili: <b>JavaScript</b> va <b>Python</b></li><li class="lv0"><b>OOP</b> tamoyillari</li><li class="lv0">Ma&#x27;lumotlar bazasini loyihalash va <b>SQL</b> bilan boshqarish</li></ul><div class="s-big">Keyingi bob: Python + PostgreSQL + Django = haqiqiy veb-ilova!</div></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>32. Python dasturlash tilini PostgreSQL ma&#x27;lumotlar bazasiga bog&#x27;lash</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>31-nazorat-ishi-2.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../31-nazorat-ishi-2.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/31-nazorat-ishi-2.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "30-sql-filtr-aggregatsiya.html", "next": "32-python-postgresql.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

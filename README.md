@@ -36,6 +36,20 @@ o'quv dasturidagi raqamlar bilan bir xil:
 Har mavzuda: maqsadlar, sodda nazariya va o'xshatishlar, kod misollari (ko'plari brauzerda ishga tushadi),
 amaliy qadamlar, tipik xatolar, testlar, uy vazifasi va xulosa.
 
+### Taqdimotlar
+
+Har bir mavzu uchun alohida taqdimot bor: `8-sinf/taqdimot/` (brauzerda ochiladigan slaydlar) va
+`8-sinf/taqdimot/pptx/` (PowerPoint fayllari). Brauzer versiyasida: ←/→ — slaydlar, `F` — to'liq ekran,
+`N` — o'qituvchi izohlari, test variantini bossangiz to'g'ri javob ko'rinadi, `Ctrl+P` — PDF.
+
+Taqdimot matnlari `src/8-sinf/taqdimot/NN-nom.txt` fayllarida oddiy formatda yozilgan (format `slides.py` boshida
+tushuntirilgan). O'zgartirgandan keyin:
+
+```bash
+pip install python-pptx     # faqat PowerPoint fayllari uchun
+python3 slides.py           # HTML + PPTX taqdimotlarni qayta yasaydi
+```
+
 ## Saytni ochish
 
 - **Onlayn:** GitHub → Settings → Pages → *Deploy from a branch* → `main` / `(root)`.

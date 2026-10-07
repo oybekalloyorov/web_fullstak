@@ -1,0 +1,215 @@
+# Bugun nimani o'rganamiz?
+- **Framework** nima va nega **Django**
+- **MVT** arxitekturasi
+- So'rov Django ichida qanday yo'l bosadi
+- Loyiha (**project**) va ilova (**app**) yaratish
+- Loyihani **PostgreSQL**'ga ulash
+note: Shu darsdan 38-mavzugacha bitta haqiqiy loyiha — "Maktab blogi"ni bosqichma-bosqich quramiz.
+---
+# Framework nima?
+- Veb-sayt uchun kerak: so'rovlar, URL'lar, HTML, formalar, login, parollar, admin panel... Noldan — **oylar**!
+= Framework — sinalgan tayyor "karkas": siz faqat loyihangizga xos qismni yozasiz
+> **Uy qurish:** noldan dastur — g'ishtni o'zingiz pishirish. Framework — tayyor karkas (poydevor, devor, quvurlar) ustida xonalarni bezash. Tezroq, xavfsizroq, sifatliroq.
+---
+# Nima uchun Django?
+- 🔋 **"Batareyalar bilan birga"** — admin panel, foydalanuvchilar, formalar, ORM tayyor
+- 🔐 **Xavfsiz** — SQL injection, XSS, CSRF'dan avtomatik himoya
+- 📈 **Masshtablanadi** — Instagram, Pinterest, Spotify, Mozilla
+- 📚 Ajoyib hujjatlar, katta jamiyat
+= "Muddati bor perfeksionistlar uchun veb-framework"
+---
+# MVT arxitekturasi
+| Qism | Fayl | Vazifasi | Restoranda |
+|---|---|---|---|
+| **Model** | `models.py` | Ma'lumot va baza | Ombor |
+| **View** | `views.py` | Mantiq: so'rov → javob | Oshpaz |
+| **Template** | `templates/*.html` | Ko'rinish (HTML) | Likopcha va bezak |
+| **URL** | `urls.py` | Manzil → View | Ofitsiant |
+- MVC'dagi Controller = Django'dagi **View**; MVC'dagi View = Django'dagi **Template**
+---
+# So'rovning Django ichidagi yo'li
+```text
+🌐 Brauzer: GET /maqolalar/5/
+     │
+     ▼
+🗺️ urls.py:  "/maqolalar/5/" → maqola_view
+     │
+     ▼
+⚙️ View: maqola_view(id=5)  ⇄  🗄️ Model: Maqola.objects.get(id=5) → PostgreSQL
+     │
+     ▼ ma'lumot
+🎨 Template: maqola.html + ma'lumot
+     │
+     ▼ tayyor HTML
+🌐 Brauzer
+```
+---
+# Loyiha va ilova
+- **Loyiha (project)** — butun sayt: umumiy sozlamalar, asosiy URL'lar. **Bitta**
+- **Ilova (app)** — mustaqil qism, bitta vazifa: `blog`, `accounts`, `shop`. **Bir nechta**
+> **Maktab binosi:** loyiha — bino (umumiy qoidalar, qo'ng'iroq). Ilovalar — xonalar: kutubxona, sport zali, oshxona. Har biri o'z ishini qiladi, lekin bitta binoda.
+---
+# O'rnatish va loyiha yaratish
+```bash
+mkdir maktab_blog && cd maktab_blog
+python -m venv venv
+venv\Scripts\activate
+pip install django "psycopg[binary]" python-dotenv
+
+django-admin startproject config .     # nuqta — joriy papkada!
+python manage.py runserver             # http://127.0.0.1:8000 🚀
+python manage.py startapp blog
+```
+```python config/settings.py
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    # ...
+    "blog",          # ⬅ ilovamizni ro'yxatdan o'tkazamiz
+]
+```
+- `runserver` — faqat ishlab chiqish uchun; to'xtatish — **Ctrl+C**
+---
+# Loyiha tuzilmasi
+```text
+maktab_blog/
+├── manage.py            ← boshqaruv buyruqlari
+├── venv/                ← virtual muhit (GitHub'ga emas)
+├── config/              ← LOYIHA
+│   ├── settings.py      ← barcha sozlamalar
+│   ├── urls.py          ← asosiy URL'lar
+│   └── wsgi.py          ← serverga joylash (41-mavzu)
+└── blog/                ← ILOVA
+    ├── migrations/      ← baza o'zgarishlari tarixi
+    ├── admin.py         ← admin panel (37)
+    ├── models.py        ← modellar (36)
+    └── views.py         ← view'lar (34)
+```
+---
+# manage.py buyruqlari
+| Buyruq | Vazifasi |
+|---|---|
+| `runserver` | Serverni ishga tushirish |
+| `startapp nom` | Yangi ilova |
+| `makemigrations` | Model o'zgarishlaridan migratsiya |
+| `migrate` | Migratsiyalarni bazaga qo'llash |
+| `createsuperuser` | Admin foydalanuvchi |
+| `shell` | Loyiha ichida Python konsoli |
+---
+# settings.py — asosiy sozlamalar
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
+SECRET_KEY = os.getenv("SECRET_KEY")                 # MAXFIY!
+DEBUG = os.getenv("DEBUG", "True") == "True"         # serverda False
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
+LANGUAGE_CODE = "uz"
+TIME_ZONE = "Asia/Tashkent"
+```
+! `SECRET_KEY` — GitHub'ga yuklanmaydi; `DEBUG = True` — faqat o'rganishda, internetda **doim False**
+---
+# PostgreSQL'ga ulash
+```ini .env
+SECRET_KEY=uzun-tasodifiy-satr
+DEBUG=True
+DB_NAME=maktab_blog
+DB_USER=postgres
+DB_PASSWORD=SIZNING_PAROLINGIZ
+DB_HOST=localhost
+DB_PORT=5432
+```
+::
+```python settings.py
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+    }
+}
+```
+- Keyin: `python manage.py migrate` — Django o'z jadvallarini yaratadi (`auth_user`, `django_session`...)
+---
+# Birinchi sahifa
+```python blog/views.py
+from django.http import HttpResponse
+
+def bosh_sahifa(request):
+    return HttpResponse("Maktab blogiga xush kelibsiz! 🎉")
+```
+```python config/urls.py
+from django.contrib import admin
+from django.urls import path
+from blog import views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", views.bosh_sahifa),      # bosh sahifa
+]
+```
+- Bosh sahifani yangilang — raketa o'rnida sizning xabaringiz!
+---
+# Amaliyot
+1. venv → Django → `config` → `blog` → PostgreSQL → `migrate` → birinchi sahifa
+2. `pip freeze > requirements.txt`
+3. Git + GitHub (`.env` va `venv` **yuklanmasin**!)
+4. Ataylab xato qiling (`HttpRespons`) — Django'ning **sariq xato sahifasini** o'qing
+5. `python manage.py` — mavjud buyruqlar ro'yxati
+```text .gitignore
+venv/
+.env
+__pycache__/
+*.pyc
+db.sqlite3
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `No module named 'django'` — venv faol emas (terminalda `(venv)` yo'q)
+- ❌ `startproject config` (nuqtasiz) — `config/config/` papkasi
+- ❌ Ilova `INSTALLED_APPS` ga qo'shilmagan
+- ❌ `That port is already in use` — server boshqa terminalda ishlayapti
+- ❌ `password authentication failed` — `.env` paroli xato
+---
+? Django'ning arxitekturasi qanday ataladi?
+o MVC
+o REST
++ MVT (Model–View–Template)
+o CRUD
+---
+? Ma'lumotlar tuzilmasi va baza bilan ishlash qaysi qismda?
+o View
++ Model
+o Template
+o URL
+---
+? Yaratilgan ilovani loyihaga qayerda ro'yxatdan o'tkazamiz?
+o `urls.py`
+o `views.py`
+o `manage.py`
++ `settings.py` → `INSTALLED_APPS`
+---
+? Internetdagi (production) saytda `DEBUG` qanday bo'lishi kerak?
+o True
++ False
+o Ahamiyati yo'q
+o None
+---
+# 🏠 Uyga vazifa
+1. Ikkinchi ilova `pages` — "Biz haqimizda" sahifasi (`/haqida/`)
+2. MVT ni o'z hayotiy o'xshatishingiz bilan chizib tushuntiring (restoran emas!)
+3. Django rasmiy qo'llanmasining 1-qismini o'qing
+---
+# ✅ Yodda tuting
+- Framework — tayyor karkas; Django — xavfsiz, "batareyalar bilan birga"
+- **MVT:** Model — View — Template + URL
+- `startproject config .` → `startapp blog` → `INSTALLED_APPS`
+- `runserver` — ishlab chiqish serveri; `migrate` — jadvallar
+- PostgreSQL: `DATABASES`; maxfiy qiymatlar — `.env`

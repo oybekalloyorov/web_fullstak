@@ -1,0 +1,248 @@
+# Bugun nimani o'rganamiz?
+- Bir ishni ko'p marta bajaruvchi **sikllar**: `for`, `while`, `do...while`
+- `break` va `continue`
+- **Funksiya** — qayta ishlatiladigan kod bloki
+- Parametrlar, `return`, **arrow** funksiyalar
+- **Kalkulyator** va **"Sonni top"** o'yini (9 va 10-loyihalar)
+---
+# Nima uchun sikl kerak?
+- 1 dan 100 gacha sonlarni chiqarish uchun 100 qator `console.log` yozasizmi? 🙅
+= Sikl — kodni shart bajarilguncha qayta-qayta bajaradi
+> **Sport mashg'uloti:** "20 marta o'tirib-tur!" — 1 dan boshlaysiz, 20 gacha sanaysiz, har safar +1. Bu — `for` sikli.
+---
+# for sikli
+```js
+for (let i = 1; i <= 5; i++) {
+  console.log(`${i}-qadam`);
+}
+```
+| Qism | Kod | Ma'nosi |
+|---|---|---|
+| Boshlanish | `let i = 1` | Hisoblagich (bir marta) |
+| Shart | `i <= 5` | Har qadam oldidan; false → tugaydi |
+| Qadam | `i++` | Har aylanishdan keyin +1 |
+- i=1 → 1≤5? ha → ... → i=6 → 6≤5? **yo'q** → tugadi
+---
+# Turli sikllar va yig'uvchi
+```js
+for (let i = 10; i >= 1; i--) console.log(i);   // teskari sanash
+console.log("🚀 Start!");
+
+for (let i = 2; i <= 20; i += 2) console.log(i); // faqat juftlar
+
+let yigindi = 0;                 // akkumulyator
+for (let i = 1; i <= 100; i++) {
+  yigindi += i;
+}
+console.log(yigindi);            // 5050
+```
+- **Yig'uvchi namuna:** sikldan oldin `0`, ichida qo'shib borish
+---
+# Sikl ichida sikl: ko'paytirish jadvali
+```js
+for (let i = 1; i <= 9; i++) {
+  let qator = "";
+  for (let j = 1; j <= 9; j++) {
+    qator += `${i * j}\t`;
+  }
+  console.log(qator);
+}
+```
+- Tashqi sikl — **qatorlar**, ichki sikl — **ustunlar**
+- Ichki sikl tashqi siklning **har bir** qadamida to'liq bajariladi
+---
+# while va do...while
+```js
+// Velosipedga pul yig'ish: oyiga 50 000, kerak 400 000
+let jamgarma = 0, oy = 0;
+while (jamgarma < 400000) {
+  jamgarma += 50000;
+  oy++;
+}
+console.log(`${oy} oyda yig'iladi`);   // 8
+
+let javob;
+do {
+  javob = prompt("Parolni kiriting:");
+} while (javob !== "1234");             // kamida BIR marta bajariladi
+```
+- `while` — necha qadam bo'lishi **noma'lum** bo'lganda
+! **Cheksiz sikl:** shart hech qachon false bo'lmasa (`i++` unutilgan) — brauzer qotadi!
+---
+# break va continue
+```js
+for (let i = 1; i <= 10; i++) {
+  if (i === 5) break;      // siklni darhol TO'XTATISH
+  console.log(i);          // 1 2 3 4
+}
+
+for (let i = 1; i <= 10; i++) {
+  if (i % 3 === 0) continue;   // shu qadamni O'TKAZIB yuborish
+  console.log(i);              // 1 2 4 5 7 8 10
+}
+```
+---
+## Funksiyalar
+Bir marta yozasiz — xohlagancha chaqirasiz
+---
+# Funksiya nima?
+> **Blender:** meva solasiz (parametr), tugmani bosasiz (chaqirish), ichida maydalanadi (tana), sharbat qaytaradi (`return`). Har safar yangi blender yasamaysiz!
+```js
+// 1. E'lon qilish — hali bajarilmaydi
+function salomlash() {
+  console.log("Assalomu alaykum!");
+}
+
+// 2. Chaqirish — endi bajariladi
+salomlash();
+salomlash();
+```
+---
+# Parametrlar
+```js
+function salomlash(ism, sinf) {       // parametrlar
+  console.log(`Salom, ${ism}! Siz ${sinf}-sinfdasiz.`);
+}
+salomlash("Aziza", 8);                // argumentlar
+salomlash("Bobur", 9);
+
+function xabar(matn, belgi = "❗") {   // standart qiymat
+  console.log(belgi + " " + matn);
+}
+xabar("Ertaga nazorat ishi");         // ❗ Ertaga nazorat ishi
+xabar("Yangi dars", "📢");             // 📢 Yangi dars
+```
+---
+# return — natija qaytarish
+```js
+function kvadrat(son) {
+  return son * son;
+}
+const a = kvadrat(5);                  // 25
+const b = kvadrat(3) + kvadrat(4);     // 25
+
+function bahoAniqla(ball) {
+  if (ball >= 86) return 5;   // return funksiyani TUGATADI
+  if (ball >= 71) return 4;
+  if (ball >= 56) return 3;
+  return 2;
+}
+```
+- `console.log` — faqat ekranga; `return` — **qiymat qaytaradi**, uni ishlatish mumkin
+- `return` siz funksiya `undefined` qaytaradi
+---
+# Arrow funksiyalar
+```js
+function qoshish(a, b) {          // oddiy
+  return a + b;
+}
+
+const qoshish2 = (a, b) => {      // arrow
+  return a + b;
+};
+
+const qoshish3 = (a, b) => a + b; // bitta ifoda — return avtomatik
+const ikkilantir = son => son * 2; // bitta parametr — qavssiz
+```
+- Zamonaviy kodda juda ko'p — ayniqsa massiv metodlarida (18-mavzu)
+---
+# Ko'rinish doirasi (scope)
+```js
+const maktab = "5-maktab";           // global — hamma joyda
+
+function tanishtir() {
+  const ism = "Laylo";               // lokal — faqat ichida
+  console.log(`${ism}, ${maktab}`);  // ✅
+}
+tanishtir();
+// console.log(ism);  ❌ ReferenceError
+```
+- Funksiya ichidagi o'zgaruvchi — uning **"shaxsiy xonasi"**
+- **Yaxshi funksiya:** bitta vazifa, nomi fe'l (`hisobla`, `tekshir`), takrorni yo'qotadi (DRY)
+---
+# Amaliyot: kalkulyator (9-loyiha)
+```js
+function hisobla(a, amal, b) {
+  switch (amal) {
+    case "+": return a + b;
+    case "-": return a - b;
+    case "*": return a * b;
+    case "/":
+      if (b === 0) return "Nolga bo'lib bo'lmaydi!";
+      return a / b;
+    default: return "Noma'lum amal";
+  }
+}
+let davom = true;
+while (davom) {
+  const a = Number(prompt("1-son:"));
+  const amal = prompt("Amal (+ - * /):");
+  const b = Number(prompt("2-son:"));
+  alert(`Natija: ${hisobla(a, amal, b)}`);
+  davom = confirm("Yana hisoblaymizmi?");
+}
+```
+---
+# Amaliyot: "Sonni top" (10-loyiha)
+```js
+const yashirin = Math.floor(Math.random() * 100) + 1;
+let urinish = 0, topildi = false;
+
+while (urinish < 7 && !topildi) {
+  const taxmin = Number(prompt("1..100 oralig'ida son:"));
+  urinish++;
+  if (taxmin === yashirin) topildi = true;
+  else if (taxmin < yashirin) alert("⬆️ Kattaroq!");
+  else alert("⬇️ Kichikroq!");
+}
+alert(topildi ? `🎉 ${urinish} urinishda topdingiz!` : `😢 Son: ${yashirin}`);
+```
+note: Savol: nega 7 urinish 1–100 uchun doim yetadi? Har safar o'rtadagi sonni aytsangiz oraliq 2 baravar qisqaradi — ikkilik qidiruv.
+---
+# Mustaqil topshiriqlar
+1. `faktorial(n)`: 5! = 120
+2. `tubmi(n)` — 1–100 oralig'idagi tub sonlar
+3. **FizzBuzz:** 3 ga — "Fizz", 5 ga — "Buzz", ikkalasiga — "FizzBuzz"
+4. `yulduzlar(n)` — `*`, `**`, `***` uchburchak
+---
+# Ko'p uchraydigan xatolar
+- ❌ Funksiyani e'lon qilib, **chaqirishni** unutish (yoki qavssiz `salomlash`)
+- ❌ `return` o'rniga `console.log` — natija `undefined`
+- ❌ `for (let i = 0; i <= 10; i--)` — cheksiz sikl
+- ❌ `<` va `<=` farqi: `i < 10` 10 ni chiqarmaydi
+---
+? `for (let i = 0; i < 5; i++)` necha marta bajariladi?
+o 4
+o 6
++ 5
+o Cheksiz
+---
+? Kamida bir marta bajarilishi kafolatlangan sikl?
+o for
+o while
+o if
++ do...while
+---
+? `const f = x => x * 3; console.log(f(4));` natijasi?
+o 7
++ 12
+o 43
+o undefined
+---
+? `let s = 0; for (let i = 1; i <= 4; i++) s += i;` — `s` nimaga teng?
+o 4
++ 10
+o 24
+o 1234
+---
+# 🏠 Uyga vazifa
+1. Kalkulyatorga **tarix** qo'shing
+2. "Sonni top" — qiyinlik darajalari: 1–20 / 1–100 / 1–1000
+3. `raqamlarYigindisi(1234)` → 10 (`% 10` va `Math.floor(n / 10)`)
+---
+# ✅ Yodda tuting
+- `for` — soni ma'lum; `while` — noma'lum; `do...while` — kamida bir marta
+- `break` — to'xtatish, `continue` — o'tkazib yuborish
+- `function nom(p) { return ... }` yoki `const nom = (p) => ...`
+- `return` qiymat qaytaradi va funksiyani tugatadi
+- Funksiya ichidagi o'zgaruvchilar — lokal

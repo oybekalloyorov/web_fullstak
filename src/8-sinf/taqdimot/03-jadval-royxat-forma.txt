@@ -1,0 +1,193 @@
+# Bugun nimani o'rganamiz?
+- **Ro'yxatlar:** tartibli va tartibsiz
+- **Jadvallar:** dars jadvali, kataklarni birlashtirish
+- **Formalar:** matn, parol, email, tanlash, belgilash, tugmalar
+- Forma ma'lumoti **qayerga va qanday** yuboriladi
+---
+# Ro'yxatlar: ul va ol
+```html
+<h3>Bozorlik ro'yxati</h3>
+<ul>
+  <li>Non</li>
+  <li>Sut</li>
+</ul>
+
+<h3>Choy damlash</h3>
+<ol>
+  <li>Suvni qaynating</li>
+  <li>Choy soling</li>
+</ol>
+```
+::
+- `ul` — **tartibsiz** (unordered): tartib muhim emas
+- `ol` — **tartibli** (ordered): qadamlar, reyting
+- Har bir band — `<li>` (list item)
+- `ol` atributlari: `type="A"`, `type="I"`, `start="5"`, `reversed`
+---
+# Ichma-ich ro'yxat va ta'riflar ro'yxati
+```html
+<ul>
+  <li>Aniq fanlar
+    <ul>
+      <li>Matematika</li>
+      <li>Informatika</li>
+    </ul>
+  </li>
+</ul>
+```
+::
+```html
+<dl>
+  <dt>HTML</dt>
+  <dd>Sahifa tuzilishi tili</dd>
+  <dt>CSS</dt>
+  <dd>Sahifa dizayni tili</dd>
+</dl>
+```
+- Ichki ro'yxat `<li>` **ichiga** yoziladi
+- `dl` — lug'at: `dt` atama, `dd` izoh
+---
+# Jadval teglari
+| Teg | Ma'nosi |
+|---|---|
+| `<table>` | Butun jadval |
+| `<tr>` | **t**able **r**ow — qator |
+| `<td>` | **t**able **d**ata — oddiy katak |
+| `<th>` | Sarlavha katagi (qalin, markazda) |
+| `<caption>` | Jadval nomi |
+| `<thead>` `<tbody>` `<tfoot>` | Bosh, asosiy, pastki qism |
+> Jadval **qatorma-qator** yoziladi: avval `<tr>`, ichiga chapdan o'ngga kataklar. "Ustun" degan teg yo'q!
+---
+# Jadval misoli
+```html
+<table border="1">
+  <caption>8-"A" sinf baholari</caption>
+  <thead>
+    <tr><th>O'quvchi</th><th>Matematika</th><th>Informatika</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Ali</td><td>5</td><td>5</td></tr>
+    <tr><td>Malika</td><td>4</td><td>5</td></tr>
+  </tbody>
+</table>
+```
+- `border="1"` — hozircha chegarani ko'rish uchun; 7-mavzudan CSS bilan
+---
+# Kataklarni birlashtirish
+```html
+<tr><th>Vaqt</th><th>Dushanba</th><th>Seshanba</th></tr>
+<tr><td>08:30</td><td>Matematika</td>
+    <td rowspan="2">Informatika<br>(juft dars)</td></tr>
+<tr><td>09:20</td><td>Ona tili</td></tr>
+<tr><td>10:10</td><td colspan="2">🍎 Katta tanaffus</td></tr>
+```
+- `colspan="2"` — **gorizontal**: 2 ustunni egallaydi
+- `rowspan="2"` — **vertikal**: 2 qatorni egallaydi
+! Birlashgan katak egallagan joyga keyingi qatorda katak yozilmaydi — aks holda jadval "siljiydi".
+---
+## Formalar
+Foydalanuvchidan ma'lumot olish — front-end va back-end o'rtasidagi ko'prik
+---
+# Forma tuzilishi
+```html
+<form action="/royxat" method="POST">
+  <label for="ism">Ismingiz:</label>
+  <input type="text" id="ism" name="ism"
+         placeholder="Masalan: Ali" required>
+  <button type="submit">Yuborish</button>
+</form>
+```
+::
+- `action` — **qayerga** yuboriladi
+- `method` — **GET** (manzilda ochiq) yoki **POST** (yashirin)
+- `label for` = input `id` → yozuv bosilsa maydon faollashadi
+- `name` — **eng muhim!** Serverga `name=qiymat` boradi
+- `required` — majburiy maydon
+---
+# Input turlari
+| `type` | Qachon |
+|---|---|
+| `text` / `password` / `email` | Matn / yashirin parol / @ tekshiruvi |
+| `number` | Faqat son: `min`, `max`, `step` |
+| `radio` | Bittasini tanlash — **name bir xil**! |
+| `checkbox` | Bir nechtasini belgilash |
+| `date` `time` `color` `range` `file` | Sana, vaqt, rang, slayder, fayl |
+```html
+<input type="radio" name="jins" value="o"> O'g'il bola
+<input type="radio" name="jins" value="q"> Qiz bola
+```
+---
+# select, textarea va tugmalar
+```html
+<label for="viloyat">Viloyat:</label>
+<select id="viloyat" name="viloyat">
+  <option value="">— Tanlang —</option>
+  <option value="tosh">Toshkent</option>
+  <option value="sam">Samarqand</option>
+</select>
+
+<textarea name="fikr" rows="4" cols="40"></textarea>
+<button type="submit">Yuborish</button>
+<button type="reset">Tozalash</button>
+```
+- `select` — ochiladigan ro'yxat; serverga `value` boradi
+- `textarea` — ko'p qatorli matn
+---
+# Brauzer tekshiruvi (validatsiya)
+- `required` — bo'sh bo'lmasin
+- `minlength="8"`, `maxlength="20"` — matn uzunligi
+- `min`, `max` — son yoki sana chegarasi
+- `type="email"` — email formati
+! Bu faqat qulaylik uchun — ayyor foydalanuvchi chetlab o'tadi. Ma'lumot **serverda ham** tekshiriladi (37-mavzu).
+---
+# Amaliyot: "To'garakka yozilish" sahifasi
+1. `togarak.html` — skelet, `<h1>` va kirish paragrafi
+2. To'garaklar **jadvali**: nom, kunlar, vaqt, joylar (`rowspan` bilan)
+3. "Nima uchun yozilish kerak?" — `<ul>`
+4. "Qanday yozilish mumkin?" — `<ol>`
+5. Forma: ism, sinf (`select`), telefon (`tel`), to'garaklar (`checkbox`), izoh
+6. Bo'sh formani yuborib, validatsiyani sinang
+7. `POST` → `GET` qiling: ma'lumot manzil satrida ko'rinadi!
+---
+# Ko'p uchraydigan xatolar
+- ❌ `<li>` ni `ul/ol` siz yozish
+- ❌ Radio tugmalarga **turli** `name` berish — hammasi belgilanib qoladi
+- ❌ `label for` qiymati input `id` siga mos emas
+- ❌ Input'da `name` yo'q — ma'lumot serverga bormaydi
+- ❌ `<td>` ni `<tr>` siz to'g'ridan-to'g'ri `<table>` ga yozish
+---
+? Retsept qadamlari uchun qaysi ro'yxat mos?
+o `<ul>`
++ `<ol>`
+o `<dl>`
+o `<table>`
+---
+? Katakni ikki ustun kengligida birlashtirish uchun qaysi atribut kerak?
++ `colspan="2"`
+o `rowspan="2"`
+o `span="2"`
+o `width="2"`
+---
+? "Jinsingiz" savoliga faqat bitta javob tanlash uchun qaysi input turi kerak?
+o checkbox
+o text
+o select multiple
++ radio
+---
+? Parol yuboradigan forma uchun qaysi method to'g'ri?
+o GET
+o SEND
++ POST
+o PUT
+---
+# 🏠 Uyga vazifa
+1. Sinfingizning **haftalik dars jadvali**: `caption`, `thead`, tanaffuslar uchun `colspan`
+2. Retsept sahifasi: masalliqlar `ul`, tayyorlash `ol` bilan
+3. "Kutubxonaga a'zo bo'lish" formasi: ism, sana, email, janr (`select`), tillar (`checkbox`), izoh
+---
+# ✅ Yodda tuting
+- `ul` — tartibsiz, `ol` — tartibli; bandlar `li`
+- Jadval: `table` → `tr` → `td`/`th`
+- `colspan` — gorizontal, `rowspan` — vertikal birlashtirish
+- Forma: `action`, `method` (GET/POST), har maydonda `name` va `label`
+- `radio` — bitta, `checkbox` — bir nechta, `select` — ro'yxat, `textarea` — ko'p qator

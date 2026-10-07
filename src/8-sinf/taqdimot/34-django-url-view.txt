@@ -1,0 +1,177 @@
+# Bugun nimani o'rganamiz?
+- **View** — so'rovni qabul qilib javob qaytaruvchi funksiya
+- URL'larni view'larga bog'lash, ilovada alohida `urls.py`
+- Manzildan qiymat olish: `/maqola/5/` → `id = 5`
+- Qidiruv parametrlari, **404** va **redirect**
+- Funksiya (**FBV**) va klass (**CBV**) asosidagi view'lar
+---
+# So'rov va javob
+```python
+from django.http import HttpResponse
+
+def salom(request):
+    print(request.method)          # "GET" yoki "POST"
+    print(request.path)            # "/salom/"
+    return HttpResponse("Salom!")  # javob
+```
+> **Pochta oynasi:** xat (so'rov) berasiz — kimdan, qayerga, nima so'ralgan. Xodim (view) o'qiydi, ishni bajaradi va javob xatini (response) qaytaradi. Har oyna (URL) — o'z xizmati.
+| `request` xossasi | Nima beradi |
+|---|---|
+| `request.method` | "GET" yoki "POST" |
+| `request.GET` | `/qidiruv/?q=python` → `request.GET.get("q")` |
+| `request.POST` | Forma ma'lumotlari (37) |
+| `request.user` | Tizimga kirgan foydalanuvchi |
+---
+# Ilova uchun alohida urls.py
+```python blog/urls.py
+from django.urls import path
+from . import views
+
+app_name = "blog"
+urlpatterns = [
+    path("", views.bosh_sahifa, name="bosh"),
+    path("haqida/", views.haqida, name="haqida"),
+    path("maqola/<int:id>/", views.maqola, name="maqola"),
+    path("kategoriya/<slug:nomi>/", views.kategoriya, name="kategoriya"),
+    path("qidiruv/", views.qidiruv, name="qidiruv"),
+]
+```
+::
+```python config/urls.py
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("blog.urls")),
+]
+```
+- Django ro'yxatni **yuqoridan pastga** ko'radi — birinchi mos kelganini chaqiradi
+---
+# So'rovning yo'li va converterlar
+```text
+/maqola/5/ → config/urls.py ("" → include) → blog/urls.py ("maqola/<int:id>/") → views.maqola(request, id=5)
+```
+| Converter | Mos keladi | URL | View oladi |
+|---|---|---|---|
+| `<int:id>` | Musbat butun son | `/maqola/42/` | `id=42` (int) |
+| `<str:nom>` | `/` dan boshqa matn | `/user/ali/` | `nom="ali"` |
+| `<slug:nomi>` | Harf, raqam, `-`, `_` | `/kategoriya/maktab-hayoti/` | `nomi="maktab-hayoti"` |
+- **Slug** — sarlavhaning URL ko'rinishi: "Maktab hayoti" → `maktab-hayoti` (SEO uchun foydali)
+---
+# View'lar yozish
+```python
+from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import redirect
+
+MAQOLALAR = [   # vaqtinchalik "baza" — 36-mavzuda modelga almashadi
+    {"id": 1, "sarlavha": "Bilimlar bellashuvi", "kategoriya": "tadbirlar"},
+    {"id": 2, "sarlavha": "Yangi kompyuter xonasi", "kategoriya": "maktab-hayoti"},
+]
+
+def maqola(request, id):
+    for m in MAQOLALAR:
+        if m["id"] == id:
+            return HttpResponse(f"<h1>{m['sarlavha']}</h1>")
+    raise Http404("Maqola topilmadi")
+
+def kategoriya(request, nomi):
+    topilgan = [m for m in MAQOLALAR if m["kategoriya"] == nomi]
+    if not topilgan:
+        return redirect("blog:bosh")
+    ...
+
+def qidiruv(request):
+    soz = request.GET.get("q", "")
+    ...
+```
+---
+# Nomlangan URL'lar va status kodlar
+```python
+from django.urls import reverse
+reverse("blog:maqola", args=[5])     # "/maqola/5/"
+redirect("blog:haqida")              # /haqida/ ga yo'naltirish
+# Shablonda: {% url 'blog:maqola' 5 %}   (35-mavzu)
+```
+- Manzilni o'zgartirsangiz — faqat `urls.py` da **bitta qator**; butun saytdagi havolalar o'zi yangilanadi
+| Holat | Django'da | Kod |
+|---|---|---|
+| Oddiy javob | `HttpResponse(...)` | 200 |
+| Topilmadi | `raise Http404(...)` | 404 |
+| Yo'naltirish | `redirect("nom")` | 302 |
+| JSON | `JsonResponse({...})` | 200 |
+---
+# Class Based View (CBV)
+```python
+from django.views import View
+from django.views.generic import TemplateView
+
+class SalomView(View):
+    def get(self, request):
+        return HttpResponse("Salom, GET!")
+    def post(self, request):
+        return HttpResponse("Salom, POST!")
+
+class AloqaView(TemplateView):
+    template_name = "blog/aloqa.html"
+
+# urls.py:  path("salom/", views.SalomView.as_view(), name="salom")
+```
+| | FBV (funksiya) | CBV (klass) |
+|---|---|---|
+| Yozilishi | Oddiy, aniq | Qisqa, "sehr" ko'p |
+| GET/POST | `if request.method == "POST"` | Alohida `get()`, `post()` |
+| Qayta ishlatish | Qiyinroq | Meros; `ListView`, `DetailView`... |
+---
+# Amaliyot
+1. `blog/urls.py` + `include`
+2. View'larni yozing; `/maqola/2/`, `/maqola/99/`, `/maqola/abc/` ni sinang (nega 404?)
+3. Havolalarni `reverse("blog:maqola", args=[m["id"]])` bilan yasang
+4. Yangi yo'llar:
+  - `/kalkulyator/<int:a>/<int:b>/` — yig'indi, ayirma, ko'paytma
+  - `/salom/<str:ism>/` — "Salom, Ali!"
+  - `/api/maqolalar/` — `JsonResponse`
+  - `/tasodifiy/` — tasodifiy maqolaga `redirect`
+! View ichida HTML'ni satr qilib yozish — faqat o'rganish uchun; keyingi mavzuda **shablonlar**
+---
+# Ko'p uchraydigan xatolar
+- ❌ **404** — yakuniy `/` yo'q yoki yo'l ro'yxatda yo'q (Django xato sahifasi barcha yo'llarni ko'rsatadi)
+- ❌ `unexpected keyword argument 'pk'` — URL'dagi nom va funksiya parametri mos emas
+- ❌ `The view didn't return an HttpResponse object` — `return` unutilgan
+- ❌ `NoReverseMatch` — URL nomi xato yoki `app_name` yo'q
+- ❌ CBV'da `.as_view()` unutilgan
+---
+? Django view'i nimani qabul qilib, nimani qaytaradi?
+o HTML qabul qilib, SQL qaytaradi
++ request qabul qilib, response qaytaradi
+o URL qabul qilib, model qaytaradi
+o Hech narsa qabul qilmaydi
+---
+? `path("maqola/<int:id>/", ...)` — `/maqola/7/` so'ralganda view nima oladi?
+o `id="7"` (matn)
+o Hech narsa
++ `id=7` (son)
+o `maqola=7`
+---
+? `/qidiruv/?q=futbol` dagi "futbol" ni view'da qanday olasiz?
+o `request.POST["q"]`
+o `request.q`
+o `request.path`
++ `request.GET.get("q")`
+---
+? Class Based View'ni URL'ga ulashda nima yoziladi?
+o `views.SalomView`
+o `views.SalomView()`
++ `views.SalomView.as_view()`
+o `views.SalomView.get`
+---
+# 🏠 Uyga vazifa
+1. `pages` ilovasi uchun `urls.py`: `/haqida/`, `/aloqa/`, `/qoidalar/`
+2. `/jadval/<int:son>/` — ko'paytirish jadvali (HTML jadval)
+3. `/yosh/<int:yil>/` — yoshni hisoblash; kelajakdagi yil → 404
+---
+# ✅ Yodda tuting
+- `def view(request): return HttpResponse(...)`
+- Ilovada `urls.py` + `app_name`; asosiyda `include("blog.urls")`
+- `<int:id>`, `<str:nom>`, `<slug:nomi>` → view parametri
+- `request.GET.get("q")`, `Http404`, `redirect("app:nom")`, `JsonResponse`, `reverse`
+- CBV: `class V(View): def get(...)` → `V.as_view()`

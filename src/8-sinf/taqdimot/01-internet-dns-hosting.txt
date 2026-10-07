@@ -1,0 +1,165 @@
+# Bugun nimani o'rganamiz?
+- Internet nima va ma'lumot unda qanday "sayohat" qiladi
+- **Mijoz** (client) va **server** kim
+- **IP-manzil, domen, DNS, hosting** — 4 ta kalit tushuncha
+- Brauzerga manzil yozganda nima sodir bo'ladi
+- **Front-end** va **Back-end** farqi
+note: Darsni savol bilan boshlang: "Kun.uz ni ochganingizda sahifa qayerdan keladi?" O'quvchilar javoblarini doskaga yozib qo'ying, dars oxirida qaytamiz.
+---
+# Internet nima?
+= Internet — dunyodagi millionlab qurilmalarni bog'lagan ulkan tarmoq
+- Kabellar (hatto dengiz tubidagi optik kabellar!), Wi-Fi, mobil minoralar, sun'iy yo'ldoshlar
+> **O'xshatish — pochta:** siz xat (ma'lumot) yuborasiz, unga manzil (IP) yoziladi, pochta bo'limlari (routerlar) uni uzatib, kerakli uyga yetkazadi. Farqi — bir soniyadan ham tez!
+---
+# Internet ≠ Web
+| | Internet | Web (WWW) |
+|---|---|---|
+| Nima | "Yo'llar tizimi" — tarmoqning o'zi | Shu yo'llardagi xizmatlardan biri |
+| Tarkibi | Kabellar, routerlar, serverlar | Havolalar bilan bog'langan veb-sahifalar |
+| Kim yaratgan | Ko'plab olimlar (1960–80-yillar) | Tim Berners-Li, 1989-yil |
+- Internetdagi boshqa xizmatlar: e-pochta, Telegram xabarlari, onlayn o'yinlar, video qo'ng'iroqlar
+---
+# Ma'lumot qanday yuboriladi? Paketlar
+- Katta fayl mayda bo'laklarga — **paketlarga** bo'linadi
+- Har bir paketda qabul qiluvchi manzili yoziladi
+- Paketlar turli yo'llardan ketishi mumkin
+- Manzilda yana to'g'ri tartibda yig'iladi
+> **O'xshatish — mebel ko'chirish:** katta shkafni qismlarga ajratib, bir nechta mashinada jo'natasiz; yangi uyda raqamlar bo'yicha qayta yig'asiz.
+---
+# Mijoz va server
+- **Mijoz (client)** — so'rovchi: brauzer (Chrome, Edge) yoki telefon ilovasi
+- **Server** — javob beruvchi kuchli kompyuter: kechayu kunduz yoqiq, minglab foydalanuvchiga xizmat qiladi
+```text Jarayon
+🧑‍💻 Mijoz ── so'rov (request): "Bosh sahifani ber" ──▶ 🖥️ Server
+🧑‍💻 Mijoz ◀── javob (response): HTML sahifa ───────── 🖥️ Server
+```
+> **O'xshatish — restoran:** siz (mijoz) ofitsiantga buyurtma berasiz, oshxona (server) taomni tayyorlaydi. Oshxonaga kirmaysiz — faqat natijani olasiz.
+---
+# HTTP va HTTPS
+- **Protokol** — kelishilgan muloqot qoidalari
+- `http://` — ma'lumot ochiq uzatiladi, yo'lda o'qilishi mumkin
+- `https://` — **S = Secure**: ma'lumot shifrlanadi, brauzerda 🔒 belgisi
+! Parol yoki karta raqamini faqat `https://` bilan boshlanadigan saytlarga kiriting!
+---
+# Server javobidagi status kodlar
+| Kod | Ma'nosi | Qachon ko'rasiz |
+|---|---|---|
+| **200** | OK — hammasi joyida | Sahifa muvaffaqiyatli ochildi |
+| **301** | Boshqa manzilga ko'chgan | Brauzer o'zi yangi manzilga o'tadi |
+| **404** | Topilmadi | Mavjud bo'lmagan sahifaga kirdingiz |
+| **500** | Serverda xato | Sayt dasturida muammo bor |
+note: Eslab qolish uchun: 2xx — yaxshi, 3xx — boshqa joyga o't, 4xx — siz xato qildingiz, 5xx — server xato qildi.
+---
+# IP-manzil
+= 142.250.74.46
+- Internetga ulangan **har bir qurilmaning** o'z IP-manzili bor — xuddi uyning pochta manzili kabi
+- To'rtta son, nuqta bilan ajratilgan; har biri **0 dan 255 gacha**
+- Muammo: odamlar raqamlarni eslab qololmaydi → yechim: **domen + DNS**
+---
+# Domen nomi
+- Domen — saytning eslab qolinadigan nomi: `kun.uz`, `google.com`
+```text Manzil tarkibi
+  https://  www  .  maktab  .  uz  /  sinflar/8-sinf
+  └──┬──┘   └┬┘     └──┬─┘     └┬┘   └──────┬──────┘
+ protokol subdomen  domen nomi  zona     yo'l (sahifa)
+```
+- **Zona:** `.uz`, `.com`, `.org`, `.edu`
+- Domen registratordan **ijaraga** olinadi (odatda 1 yilga) va har yili uzaytiriladi
+---
+# DNS — internetning telefon kitobi
+> **O'xshatish:** do'stingizga qo'ng'iroq qilganda raqamini yodlab yozmaysiz — kontaktlardan "Aziz"ni tanlaysiz. DNS ham `kun.uz` → IP-manzilni topib beradi.
+1. Siz brauzerga `kun.uz` deb yozasiz
+2. Brauzer o'z xotirasini (keshini) tekshiradi
+3. Topilmasa — provayderning DNS serveridan so'raydi
+4. DNS javob qaytaradi: `kun.uz → 185.x.x.x`
+5. Brauzer shu IP bo'yicha serverga ulanadi
+---
+# Hosting — saytning "uyi"
+- Hosting — sayt fayllari saqlanadigan, doim internetga ulangan serverdagi joy
+> **Domen** — uyning manzili, **hosting** — uyning o'zi (ichida fayllar), **DNS** — manzil bo'yicha uyni topuvchi xarita.
+| Tur | Misol | Kimga mos |
+|---|---|---|
+| Bepul statik | Netlify, Vercel, GitHub Pages | O'quvchilar, portfolio |
+| Shared | Bir serverda yuzlab sayt | Kichik saytlar |
+| VPS | Serverning virtual qismi | O'rta loyihalar |
+| Bulutli | Render, Railway, AWS | Django loyihalari |
+---
+# Manzil yozib Enter bosganda...
+1. **DNS** `maktab.uz` ni IP-manzilga aylantiradi
+2. Brauzer serverga ulanadi (HTTPS — shifrlangan ulanish)
+3. Brauzer **HTTP so'rov** yuboradi: "Bosh sahifani ber"
+4. Server faylni topib **javob** qaytaradi: `200` + HTML
+5. Brauzer CSS, rasm, JS uchun qo'shimcha so'rovlar yuboradi
+6. Hammasini birlashtirib, sahifani ekranga **chizadi**
+note: Shu 6 qadamni o'quvchilardan navbat bilan aytib berishni so'rang — bu darsning eng muhim qismi.
+---
+# Front-end va Back-end
+| | 🎨 Front-end | ⚙️ Back-end |
+|---|---|---|
+| Nima | Ko'rinadigan, bosiladigan qism | Ko'rinmaydigan qism |
+| Qayerda | Foydalanuvchi brauzerida | Serverda |
+| Texnologiya | HTML, CSS, JavaScript | Python, Django, PostgreSQL |
+| Misol | Tugma, menyu, animatsiya | Login tekshirish, bazaga saqlash |
+> Front-end — restoran **zali**, back-end — **oshxona**, ma'lumotlar bazasi — **ombor**. Full-stack dasturchi — ikkalasini ham quradigan usta.
+---
+## Amaliy mashg'ulot
+Kompyuterda o'zimiz tekshirib ko'ramiz
+---
+# Amaliyot: IP-manzil va ping
+```bash Terminal (Win+R → cmd)
+nslookup google.com
+nslookup kun.uz
+ping google.com
+```
+::
+- `Address` qatori — saytning **IP-manzili**
+- `time=25ms` — paket borib-kelish vaqti
+- Brauzerda **F12 → Network** → F5: har bir qator — alohida so'rov
+- `Status` ustunida **200** larni toping
+- Mavjud bo'lmagan sahifani ochib, **404** ni ko'ring
+---
+# Ko'p uchraydigan xato tushunchalar
+- ❌ "Internet va Google bir narsa" → ✅ Google — internetdagi xizmatlardan biri
+- ❌ "Domen olsam, sayt tayyor" → ✅ Domen — faqat manzil, **hosting** ham kerak
+- ❌ "Brauzer = Internet" → ✅ Brauzer — sahifalarni ochuvchi dastur (mijoz)
+- ❌ "HTTPS sayt — albatta ishonchli" → ✅ HTTPS faqat shifrlaydi; firibgar sayt ham HTTPS bo'lishi mumkin
+---
+? DNS'ning asosiy vazifasi nima?
+o Saytni chiroyli qilish
++ Domen nomini IP-manzilga aylantirish
+o Fayllarni saqlash
+o Viruslardan himoyalash
+---
+? Server "404" status kodini qaytardi. Bu nimani bildiradi?
+o Hammasi yaxshi
+o Serverda dastur xatosi
+o Sahifa boshqa manzilga ko'chgan
++ So'ralgan sahifa topilmadi
+---
+? `https://blog.maktab.uz/maqolalar` manzilida subdomen qaysi?
+o https
++ blog
+o uz
+o maqolalar
+---
+? Quyidagilardan qaysi biri front-end'ga tegishli?
++ "Ro'yxatdan o'tish" tugmasining rangi
+o Parolni bazada tekshirish
+o Buyurtmani serverda saqlash
+o Server IP-manzili
+---
+# 🏠 Uyga vazifa
+1. "Manzil yozganda nima bo'ladi?" sxemasini chizing: mijoz, DNS, server, so'rov va javob
+2. Oilangizga restoran o'xshatishi orqali front-end va back-end farqini tushuntiring
+3. 5 ta mobil ilova uchun: front-end qismi nima, back-end nima qiladi — yozing
+---
+# ✅ Yodda tuting
+| Tushuncha | Qisqacha |
+|---|---|
+| Internet / Web | Tarmoq / undagi veb-sahifalar xizmati |
+| Mijoz / Server | So'raydi (brauzer) / javob beradi |
+| IP-manzil | Qurilmaning raqamli manzili |
+| Domen | Eslab qolinadigan nom: `maktab.uz` |
+| DNS | Domen → IP "telefon kitobi" |
+| Hosting | Sayt fayllari yashaydigan server |
+| HTTPS | Shifrlangan muloqot |

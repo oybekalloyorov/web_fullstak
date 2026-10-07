@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15-mavzu: JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari — taqdimot</title>
+<meta name="description" content="JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o&#x27;zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#C99400">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">⚡</div><div class="cover-kicker">15-mavzu · II bob. JavaScript asoslari</div><h1>JavaScript&#x27;ga kirish. O&#x27;zgaruvchilar va ma&#x27;lumot turlari</h1><p>JavaScript nima va qayerda ishlatiladi, kodni ulash usullari, konsol, let/const/var, o&#x27;zgaruvchilarni nomlash qoidalari, string, number, boolean, undefined, null turlari va typeof.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>JavaScript</b> nima va HTML/CSS&#x27;dan farqi</li><li class="lv0">Kodni sahifaga ulash va <b>brauzer konsoli</b></li><li class="lv0"><b>O&#x27;zgaruvchilar:</b> <code>let</code> va <code>const</code></li><li class="lv0"><b>Ma&#x27;lumot turlari:</b> matn, son, mantiqiy qiymat...</li><li class="lv0">Birinchi <b>interaktiv dastur</b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>JavaScript nima?</h2></header><div class="s-body"><div class="col"><div class="s-big">JavaScript — sahifaga harakat va mantiq qo&#x27;shuvchi dasturlash tili</div><ul class="s-list"><li class="lv0">Hisob-kitob, shartlar, takrorlanishlar bor — <b>haqiqiy</b> dasturlash tili</li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>&quot;Aqlli uy&quot;:</b> HTML — devorlar, CSS — bo&#x27;yoq, JavaScript — elektr va avtomatika: tugma bosilsa chiroq yonadi, harorat pasaysa isitish yoqiladi.</div></div><ul class="s-list"><li class="lv0">Menyu ochilishi, forma tekshiruvi, kalkulyator, o&#x27;yinlar, yangi ma&#x27;lumot olish</li></ul><div class="s-box warn"><span class="ico">⚠️</span><div>JavaScript ≠ Java — &quot;olma&quot; va &quot;olmos&quot; kabi butunlay boshqa tillar</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>JavaScript&#x27;ni ishga tushirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">1. Konsol: F12 → Console</div><pre><code class="language-javascript">console.log(&quot;Salom, dunyo!&quot;);
+console.log(2 + 3);
+console.log(&quot;Men&quot;, 14, &quot;yoshdaman&quot;);</code></pre></div><div class="s-code"><div class="s-code-head">2. Alohida .js fayl ✅</div><pre><code class="language-html">&lt;body&gt;
+  &lt;h1&gt;Sahifa&lt;/h1&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;  &lt;!-- &lt;/body&gt; dan oldin --&gt;
+&lt;/body&gt;</code></pre></div><ul class="s-list"><li class="lv0"><code>console.log()</code> — natijani konsolga chiqarish; dasturchining asosiy yordamchisi</li><li class="lv0">Izohlar: <code>// bir qator</code>, <code>/* ko&#x27;p qator */</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>O&#x27;zgaruvchi — nomlangan quti</h2></header><div class="s-body"><div class="col"><div class="s-box analogy"><span class="ico">💡</span><div><b>Yorliqli qutilar:</b> &quot;ism&quot; qutisiga &quot;Malika&quot;ni, &quot;yosh&quot; qutisiga 14 ni soldingiz. Yorliq — o&#x27;zgaruvchi <b>nomi</b>, ichidagi narsa — <b>qiymati</b>.</div></div><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">let ism = &quot;Malika&quot;;
+let yosh = 14;
+console.log(yosh);     // 14
+yosh = 15;             // qiymatni o&#x27;zgartirish (let qayta yozilmaydi!)
+let shahar;
+console.log(shahar);   // undefined</code></pre></div><ul class="s-list"><li class="lv0"><code>=</code> — <b>tayinlash</b> (&quot;o&#x27;ngdagini chapdagi qutiga sol&quot;), tenglik emas!</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>let, const va var</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">const PI = 3.14;
+// PI = 5;          ❌ Xato! const o&#x27;zgarmaydi
+let ball = 0;
+ball = ball + 10;   // ✅ 10</code></pre></div><table class="s-table"><thead><tr><th></th><th>const</th><th>let</th><th>var</th></tr></thead><tbody><tr><td>O&#x27;zgartirish</td><td>❌</td><td>✅</td><td>✅</td></tr><tr><td>Qachon</td><td><b>Birinchi tanlov</b></td><td>Qiymat o&#x27;zgarsa</td><td>Eski kod — ishlatmang</td></tr></tbody></table><div class="s-big">Oltin qoida: avval const, kerak bo&#x27;lsa let</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>O&#x27;zgaruvchilarni nomlash</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Qoida</th><th>✅ To&#x27;g&#x27;ri</th><th>❌ Noto&#x27;g&#x27;ri</th></tr></thead><tbody><tr><td>Harf, <code>$</code>, <code>_</code> bilan boshlanadi</td><td><code>ism</code>, <code>_soni</code></td><td><code>1ism</code></td></tr><tr><td>Bo&#x27;sh joy va defis yo&#x27;q</td><td><code>sinfRahbari</code></td><td><code>sinf rahbari</code>, <code>umumiy-ball</code></td></tr><tr><td>Maxsus so&#x27;zlar emas</td><td><code>mening_let</code></td><td><code>let</code>, <code>if</code></td></tr><tr><td>Apostrof yo&#x27;q</td><td><code>ogil</code></td><td><code>o&#x27;g&#x27;il</code></td></tr></tbody></table><ul class="s-list"><li class="lv0">Katta-kichik harf farqlanadi: <code>ism</code> ≠ <code>Ism</code></li><li class="lv0"><b>camelCase:</b> <code>oquvchiSoni</code>, <code>dasturlashTili</code></li><li class="lv0">Mazmunli nomlar: <code>x</code> ❌ → <code>narx</code> ✅</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>String — matn</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">const ism = &quot;Aziz&quot;;
+const familiya = &#x27;Karimov&#x27;;
+const shahar = `Toshkent`;           // backtick — eng qulayi
+
+console.log(ism + &quot; &quot; + familiya);   // Aziz Karimov
+const yosh = 14;
+console.log(`Ismim ${ism}, ${yosh} yoshdaman`);  // shablon satr
+
+console.log(ism.length);             // 4
+console.log(ism.toUpperCase());      // AZIZ
+console.log(familiya[0]);            // K — sanash 0 dan!</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div><code>&#x27;O&#x27;zbekiston&#x27;</code> ❌ — apostrof satrni sindiradi. <code>&quot;O&#x27;zbekiston&quot;</code> yoki `<code> </code>O&#x27;zbekiston<code> </code>` ✅</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Number, Boolean, undefined, null</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">const kasr = 3.14;           // kasr NUQTA bilan
+console.log(10 / 3);         // 3.3333333333333335
+console.log(10 / 0);         // Infinity
+console.log(&quot;olma&quot; * 2);     // NaN — &quot;son emas&quot;
+
+const tizimgaKirgan = true;  // boolean: true / false
+console.log(5 &gt; 3);          // true</code></pre></div><ul class="s-list"><li class="lv0"><code>undefined</code> — qiymat <b>hali berilmagan</b> (bo&#x27;sh quti)</li><li class="lv0"><code>null</code> — qiymat <b>ataylab bo&#x27;sh</b></li><li class="lv0">Murakkab turlar: <b>Array</b> <code>[1, 2, 3]</code>, <b>Object</b> <code>{ ism: &quot;Ali&quot; }</code> — 18-mavzuda</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>typeof va turlarni o&#x27;zgartirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">typeof &quot;Salom&quot;    // &quot;string&quot;
+typeof 25         // &quot;number&quot;
+typeof true       // &quot;boolean&quot;
+typeof null       // &quot;object&quot; ← tarixiy xato!
+
+&quot;5&quot; + 3           // &quot;53&quot;  😮 matnga yopishadi
+&quot;5&quot; - 3           // 2
+Number(&quot;42&quot;) + 8  // 50
+parseInt(&quot;15px&quot;)  // 15</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div>Foydalanuvchi kiritgan ma&#x27;lumot <b>doim matn</b>. Hisoblashdan oldin <code>Number()</code>!</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Foydalanuvchi bilan muloqot</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">const ism = prompt(&quot;Ismingiz nima?&quot;);
+const yil = Number(prompt(&quot;Qaysi yilda tug&#x27;ilgansiz?&quot;));
+const yosh = 2026 - yil;
+alert(`Salom, ${ism}! Siz ${yosh} yoshdasiz.`);
+
+const tasdiq = confirm(&quot;Dasturlashni yoqtirasizmi?&quot;);</code></pre></div><table class="s-table"><thead><tr><th>Funksiya</th><th>Qaytaradi</th></tr></thead><tbody><tr><td><code>alert(&quot;...&quot;)</code></td><td>Hech narsa — faqat xabar</td></tr><tr><td><code>prompt(&quot;...&quot;)</code></td><td>Kiritilgan matn yoki <code>null</code></td></tr><tr><td><code>confirm(&quot;...&quot;)</code></td><td><code>true</code> yoki <code>false</code></td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><code>js-darslar/</code> — <code>index.html</code> + <code>app.js</code></div></div><div class="s-step"><span class="n">2</span><div><b>&quot;Men haqimda&quot;:</b> 5 ta o&#x27;zgaruvchi + shablon satr bilan bitta gap</div></div><div class="s-step"><span class="n">3</span><div><b>Yosh kalkulyatori:</b> yosh, 2030-yildagi yosh, necha kun yashagan</div></div><div class="s-step"><span class="n">4</span><div><b>Do&#x27;kon cheki:</b> 3 ta mahsulot va umumiy summa</div></div><div class="s-step"><span class="n">5</span><div><b>Tur detektivi:</b> 8 ta qiymat uchun <code>typeof</code> ni avval taxmin qiling, keyin tekshiring</div></div><div class="s-code"><div class="s-code-head">JavaScript</div><pre><code class="language-javascript">const narx = 5000, soni = 4;
+console.log(`Jami: ${narx * soni} so&#x27;m`);</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>SyntaxError</code> — qo&#x27;shtirnoq yopilmagan / apostrof satrni sindirgan</li><li class="lv0">❌ <code>ReferenceError: x is not defined</code> — nom noto&#x27;g&#x27;ri yoki e&#x27;lon qilinmagan</li><li class="lv0">❌ <code>Assignment to constant variable</code> — <code>const</code> ni o&#x27;zgartirish</li><li class="lv0">❌ <code>&quot;10&quot; + 5 = &quot;105&quot;</code> — <code>Number()</code> unutilgan</li><li class="lv0">❌ Bitta nomni ikki marta <code>let</code> bilan e&#x27;lon qilish</li></ul><div class="s-box analogy"><span class="ico">💡</span><div>Konsoldagi qizil xabar — <b>yordamchi!</b> U xato turi va qatorini aytadi: <code>app.js:12</code></div></div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Qiymati o&#x27;zgarmaydigan o&#x27;zgaruvchi qaysi kalit so&#x27;z bilan e&#x27;lon qilinadi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>let</code></span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>const</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>var</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>fix</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Qaysi o&#x27;zgaruvchi nomi to&#x27;g&#x27;ri?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>2sinf</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>umumiy-ball</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>sinf rahbari</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>oquvchilarSoni</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>console.log(&quot;7&quot; + 3)</code> natijasi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>10</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>4</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>&quot;73&quot;</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Xato</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>prompt()</code> qanday turdagi qiymat qaytaradi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Doim son</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Boolean</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>Matn (string) yoki null</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Massiv</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Valyuta:</b> dollarni so&#x27;rang, <code>const KURS = 12700</code> bo&#x27;yicha so&#x27;mga aylantiring</div></div><div class="s-step"><span class="n">2</span><div><b>Doira:</b> radius → yuza (π·r²) va uzunlik (2·π·r); <code>Math.PI</code></div></div><div class="s-step"><span class="n">3</span><div><b>Ism:</b> harflar soni, KATTA harflarda, birinchi va oxirgi harf</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">JavaScript — mantiq va harakat; <code>.js</code> fayl <code>&lt;/body&gt;</code> oldidan</li><li class="lv0"><code>console.log()</code> — F12 → Console</li><li class="lv0"><code>const</code> — o&#x27;zgarmas, <code>let</code> — o&#x27;zgaruvchan; camelCase</li><li class="lv0">Turlar: string, number, boolean, undefined, null; <code>typeof</code></li><li class="lv0">`<code> </code>Salom, ${ism}!<code> </code><code> — shablon satr; kiritilgan ma&#x27;lumot → </code>Number()`</li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>16. JavaScript&#x27;da operatorlar va ifodalar. Shart operatorlari</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>15-js-ozgaruvchilar.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../15-js-ozgaruvchilar.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/15-js-ozgaruvchilar.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "14-nazorat-ishi-1.html", "next": "16-js-operatorlar-shartlar.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

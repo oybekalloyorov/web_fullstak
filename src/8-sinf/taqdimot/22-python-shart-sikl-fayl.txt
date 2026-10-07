@@ -1,0 +1,221 @@
+# Bugun nimani o'rganamiz?
+- Shartlar: `if`, `elif`, `else` va **chekinish** qoidasi
+- Sikllar: `for` + `range()`, `while`, `break`, `continue`
+- Xatolarni ushlash: `try` / `except`
+- **Fayllar:** yaratish, yozish, o'qish, qo'shish
+- **Python kalkulyatori** (15-loyiha)
+note: JavaScript'dagi g'oyalar bir xil — faqat yozilishi boshqacha, shuning uchun mavzu tez o'tadi.
+---
+# if, elif, else
+```python
+ball = int(input("Ballingiz: "))
+
+if ball >= 86:
+    print("A'lo! 🏆")
+elif ball >= 71:              # JS'dagi "else if"
+    print("Yaxshi 👍")
+elif ball >= 56:
+    print("Qoniqarli")
+else:
+    print("Qoniqarsiz 😔")
+```
+- Shart oxirida **ikki nuqta** `:`
+- `else if` emas — **`elif`**
+---
+# Chekinish — Python'ning eng muhim qoidasi
+```python
+yosh = 15
+if yosh >= 14:
+    print("Pasport olish mumkin")    # ← if ichida (4 bo'sh joy)
+    print("Tabriklaymiz!")           # ← if ichida
+print("Bu har doim chiqadi")         # ← tashqarida
+```
+- JS'da bloklar `{ }` bilan, Python'da — `:` va **4 bo'sh joy**
+> **Kitob mundarijasi:** kichik bo'limlar o'ngroqqa surilgan — qaysi bo'limga tegishli ekanini siljishdan bilasiz.
+! `IndentationError` — chekinish noto'g'ri. Bo'sh joy va Tab'ni aralashtirmang
+---
+# Qo'shimcha imkoniyatlar
+```python
+holat = "katta" if yosh >= 18 else "voyaga yetmagan"   # ternary
+
+if 12 <= yosh <= 18:          # oraliq — JS'da bunday yozib bo'lmasdi!
+    print("Maktab yoshi")
+
+match kun:                    # Python 3.10+ — switch o'rniga
+    case 6 | 7:
+        print("Dam olish 🎉")
+    case _:
+        print("Ish kuni")
+```
+---
+# for va range()
+```python
+for i in range(5):            # 0 1 2 3 4   (5 kirmaydi!)
+    print(i, end=" ")
+for i in range(1, 6):         # 1 2 3 4 5
+    ...
+for i in range(10, 0, -2):    # 10 8 6 4 2
+    ...
+for harf in "Python":         # har bir harf
+    print(harf, end="-")
+```
+| JavaScript | Python |
+|---|---|
+| `for (let i = 0; i < 5; i++)` | `for i in range(5):` |
+| `for (let i = 1; i <= 10; i += 2)` | `for i in range(1, 11, 2):` |
+| `for (const x of arr)` | `for x in arr:` |
+---
+# Yig'indi va ko'paytirish jadvali
+```python
+jami = 0
+for i in range(1, 101):
+    jami += i
+print("1..100 yig'indi:", jami)   # 5050
+
+son = int(input("Qaysi sonning jadvali? "))
+for i in range(1, 11):
+    print(f"{son} × {i:2} = {son * i:3}")   # :2, :3 — tekislash
+```
+---
+# while, break, continue
+```python
+import random
+yashirin = random.randint(1, 20)
+urinish = 0
+
+while True:                       # break bilan chiqamiz
+    taxmin = int(input("1–20 oralig'ida son: "))
+    urinish += 1
+    if taxmin == yashirin:
+        print(f"🎉 Topdingiz! {urinish} ta urinishda")
+        break
+    elif taxmin < yashirin:
+        print("⬆️ Kattaroq")
+    else:
+        print("⬇️ Kichikroq")
+```
+- `continue` — keyingi qadamga o'tish
+---
+# try / except — xatolarni ushlash
+```python
+try:
+    son = int(input("Son kiriting: "))
+    print("Natija:", 100 / son)
+except ValueError:
+    print("❌ Bu son emas!")
+except ZeroDivisionError:
+    print("❌ Nolga bo'lib bo'lmaydi!")
+finally:
+    print("Dastur tugadi")        # har doim bajariladi
+```
+```output
+Son kiriting: abc
+❌ Bu son emas!
+Dastur tugadi
+```
+- `int("salom")` dasturni to'xtatadi — `try` uni **"yiqilish"dan saqlaydi**
+---
+## Fayllar bilan ishlash
+Dastur yopilsa ham ma'lumot saqlansin
+---
+# Faylga yozish
+```python
+with open("eslatma.txt", "w", encoding="utf-8") as f:
+    f.write("Birinchi qator\n")    # \n — yangi qator
+    f.write("Ikkinchi qator\n")
+```
+- `with ... as f:` — ish tugagach faylni **avtomatik yopadi**
+- `encoding="utf-8"` — o', g' va emoji uchun. **Doim yozing!**
+| Rejim | Ma'nosi | Fayl bor bo'lsa |
+|---|---|---|
+| `"r"` | O'qish (standart) | O'qiydi (yo'q bo'lsa — xato) |
+| `"w"` | Yozish | ⚠️ Eski mazmunni **o'chiradi**! |
+| `"a"` | Qo'shish | Oxiriga qo'shadi |
+---
+# Fayldan o'qish va qo'shish
+```python
+with open("eslatma.txt", encoding="utf-8") as f:
+    matn = f.read()                         # butun fayl
+
+with open("eslatma.txt", encoding="utf-8") as f:
+    for i, qator in enumerate(f, start=1):  # qatorma-qator
+        print(i, qator.strip())             # strip() — \n ni olib tashlaydi
+
+import os
+with open("kundalik.txt", "a", encoding="utf-8") as f:
+    f.write(input("Bugun nima qildingiz? ") + "\n")
+if os.path.exists("kundalik.txt"):
+    ...
+```
+---
+# Amaliyot: Python kalkulyatori (15-loyiha)
+```python
+def son_sora(matn):
+    while True:
+        try:
+            return float(input(matn))
+        except ValueError:
+            print("  ⚠️ Iltimos, son kiriting")
+
+while True:
+    amal = input("Amal (+ - * / ** yoki 'chiqish', 'tarix'): ")
+    if amal == "chiqish":
+        break
+    if amal == "tarix":
+        with open("tarix.txt", encoding="utf-8") as f:
+            print(f.read())
+        continue
+    a, b = son_sora("1-son: "), son_sora("2-son: ")
+    natija = a + b if amal == "+" else a - b  # ... va hokazo
+    with open("tarix.txt", "a", encoding="utf-8") as f:
+        f.write(f"{a} {amal} {b} = {natija}\n")
+```
+---
+# Amaliyot: topshiriqlar
+1. Har bir amalni va **xato kiritishlarni** sinab ko'ring
+2. Yangi amallar: `sqrt` (ildiz) va `%%` (foiz)
+3. "tarix" faqat **oxirgi 5** yozuvni ko'rsatsin: `readlines()[-5:]`
+4. `tarix.txt` ni kompyuterda topib, Bloknot bilan oching
+---
+# Ko'p uchraydigan xatolar
+- ❌ `if`, `for`, `while` oxirida `:` unutilgan → `SyntaxError`
+- ❌ `else if` — Python'da `elif`
+- ❌ `range(1, 10)` 10 ni bermaydi
+- ❌ `"w"` rejimida muhim faylni o'chirib yuborish; qo'shish — `"a"`
+- ❌ `encoding="utf-8"` siz — g'alati belgilar
+---
+? `list(range(2, 8, 2))` qanday sonlarni beradi?
+o 2, 4, 6, 8
++ 2, 4, 6
+o 2, 3, 4, 5, 6, 7
+o 8, 6, 4, 2
+---
+? Python kod bloklarini qanday belgilaydi?
+o Jingalak qavslar `{}`
+o begin / end so'zlari
+o Nuqta-vergul
++ Ikki nuqta va chekinish
+---
+? Fayl mazmunini o'chirmasdan oxiriga yozish rejimi?
++ `"a"`
+o `"w"`
+o `"r"`
+o `"x"`
+---
+? `int("abc")` qanday xato beradi?
+o ZeroDivisionError
+o IndentationError
++ ValueError
+o TypeError
+---
+# 🏠 Uyga vazifa
+1. **Parol tekshiruvchi:** 8+ belgi, raqam va katta harf (`isdigit()`, `isupper()`)
+2. **Kundalik:** har ishga tushganda sana va xulosa → `kundalik.txt`
+3. **Tub sonlar** 1–200 → `tub.txt`, har qatorda bittadan
+---
+# ✅ Yodda tuting
+- `if / elif / else:` — `:` va 4 bo'sh joy chekinish
+- `for i in range(boshi, oxiri, qadam):` — oxiri kirmaydi
+- `while shart:`, `break`, `continue`
+- `try: ... except ValueError: ...` — dasturni saqlash
+- `with open("f.txt", "r/w/a", encoding="utf-8") as f:`

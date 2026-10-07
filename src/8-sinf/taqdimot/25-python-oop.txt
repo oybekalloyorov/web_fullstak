@@ -1,0 +1,211 @@
+# Bugun nimani o'rganamiz?
+- **Klass** va **obyekt** nima va nega kerak
+- `__init__`, `self`, atributlar va metodlar
+- OOP'ning uch ustuni: **inkapsulyatsiya, merosxo'rlik, polimorfizm**
+- Kutubxona boshqaruv tizimi (17-loyiha)
+! Django uchun juda muhim: modellar, formalar, view'lar — hammasi klasslar!
+---
+# Nima uchun OOP?
+- Ma'lumot (dict) va funksiyalar alohida — dastur kattalashganda chalkashadi
+= OOP — ma'lumot va unga tegishli amallarni bitta obyektda birlashtiradi
+> **Avtomobil zavodi:** klass — chizma ("rangi bor, yura oladi"). Chizmaning o'zi yurmaydi! Obyekt — chizma asosida yasalgan haqiqiy mashina: qizil Cobalt, oq Malibu...
+---
+# Asosiy tushunchalar
+| Tushuncha | Ma'nosi | Misol |
+|---|---|---|
+| **Klass** | Shablon, chizma | `Oquvchi` |
+| **Obyekt** | Klassdan yaratilgan nusxa | `ali`, `zarina` |
+| **Atribut** | Xususiyat (ma'lumot) | `ism`, `sinf`, `baholar` |
+| **Metod** | Bajara oladigan amal | `baho_qosh()`, `ortacha()` |
+- Siz OOP bilan allaqachon tanishsiz: `"salom".upper()`, `royxat.append(5)` — bular metodlar!
+---
+# Birinchi klass
+```python
+class Oquvchi:                          # PascalCase
+    def __init__(self, ism, sinf):      # konstruktor
+        self.ism = ism                  # atributlar
+        self.sinf = sinf
+        self.baholar = []
+
+    def baho_qosh(self, baho):          # metod
+        self.baholar.append(baho)
+
+    def ortacha(self):
+        if not self.baholar:
+            return 0
+        return round(sum(self.baholar) / len(self.baholar), 2)
+
+ali = Oquvchi("Ali", "8-A")             # obyekt yaratish
+ali.baho_qosh(5)
+ali.baho_qosh(4)
+print(ali.ortacha())                    # 4.5
+```
+---
+# __init__ va self
+- `__init__` — **konstruktor**: `Oquvchi("Ali", "8-A")` yozilganda avtomatik chaqiriladi va atributlarni to'ldiradi
+- `self` — **"shu obyektning o'zi"**: `ali.baho_qosh(5)` da `self` = `ali`, `zarina.baho_qosh(5)` da — `zarina`
+> **self — "men":** har bir o'quvchi "mening ismim", "mening daftarim" deydi. So'z bir xil, lekin har biri uchun boshqa narsa. `self.ism` — "mening ismim".
+! Har metodning birinchi parametri — `self`. Chaqirganda esa `self` berilmaydi — Python o'zi qo'yadi
+---
+# __str__ — obyektni chiroyli chiqarish
+```python
+class Kitob:
+    def __init__(self, nomi, muallif, yil):
+        self.nomi = nomi
+        self.muallif = muallif
+        self.yil = yil
+
+    def __str__(self):                  # print(obyekt) chaqirilganda
+        return f"«{self.nomi}» — {self.muallif} ({self.yil})"
+
+k = Kitob("O'tkan kunlar", "Abdulla Qodiriy", 1926)
+print(k)    # «O'tkan kunlar» — Abdulla Qodiriy (1926)
+```
+- `__str__` siz: `<__main__.Kitob object at 0x7f...>` 😕
+- Django modellarida `__str__` ni **albatta** yozamiz (36-mavzu)
+---
+## OOP'ning uch ustuni
+Inkapsulyatsiya · Merosxo'rlik · Polimorfizm
+---
+# 1. Inkapsulyatsiya — ichki ishlarni yashirish
+```python
+class BankHisobi:
+    def __init__(self, egasi, balans=0):
+        self.egasi = egasi
+        self._balans = balans       # _ — "tashqaridan tegmang"
+
+    def toldirish(self, summa):
+        if summa <= 0:
+            print("❌ Summa musbat bo'lsin")
+            return
+        self._balans += summa
+
+    def yechish(self, summa):
+        if summa > self._balans:
+            print("❌ Mablag' yetarli emas")
+            return
+        self._balans -= summa
+```
+> **Bankomat:** pulni qo'lingiz bilan olmaysiz — faqat tugmalar (metodlar) orqali; bankomat qoidalarni tekshiradi.
+---
+# 2. Merosxo'rlik (inheritance)
+```python
+class Odam:
+    def __init__(self, ism, yosh):
+        self.ism = ism
+        self.yosh = yosh
+    def tanishtir(self):
+        return f"Men {self.ism}, {self.yosh} yoshdaman"
+
+class Oquvchi(Odam):                   # Odam'dan meros
+    def __init__(self, ism, yosh, sinf):
+        super().__init__(ism, yosh)    # ota konstruktori
+        self.sinf = sinf
+    def dars_qil(self):
+        return f"{self.ism} uy vazifasini bajaryapti 📚"
+
+m = Oquvchi("Madina", 14, "8-A")
+m.tanishtir()    # meros olingan metod!
+```
+- Django'da: `class Kitob(models.Model):` — yuzlab imkoniyat "tekinga"
+---
+# 3. Polimorfizm — bir buyruq, turli xatti-harakat
+```python
+class Hayvon:
+    def ovoz(self):
+        return "..."
+
+class Mushuk(Hayvon):
+    def ovoz(self):
+        return "Miyov 🐱"
+
+class It(Hayvon):
+    def ovoz(self):
+        return "Vov-vov 🐶"
+
+for h in [Mushuk(), It()]:
+    print(h.ovoz())       # har biri o'zicha javob beradi
+```
+- Dastur obyektning **aniq turini bilmasa ham** ishlay oladi
+---
+## Amaliy mashg'ulot
+17-loyiha: kutubxona boshqaruv tizimi
+---
+# Amaliyot: Kitob va Azo
+```python
+class Kitob:
+    def __init__(self, isbn, nomi, muallif, nusxa=1):
+        self.isbn, self.nomi, self.muallif = isbn, nomi, muallif
+        self.jami = self.mavjud = nusxa
+    def __str__(self):
+        return f"[{self.isbn}] «{self.nomi}» ({self.mavjud}/{self.jami})"
+
+class Azo:
+    MAKS_KITOB = 3
+    def __init__(self, raqam, ism):
+        self.raqam, self.ism = raqam, ism
+        self.qolida = []
+
+class Kutubxona:
+    def __init__(self, nomi):
+        self.nomi = nomi
+        self.kitoblar = {}           # isbn → Kitob
+        self.azolar = {}             # raqam → Azo
+    def ber(self, isbn, raqam): ...
+    def qaytar(self, isbn, raqam): ...   # kechiksa — jarima
+```
+---
+# Amaliyot: topshiriqlar
+1. Kodni qatorma-qator o'qing — har klassning vazifasini o'z so'zlaringiz bilan yozing
+2. `Azo` dan meros olgan `Oqituvchi`: `MAKS_KITOB = 10`
+3. **Menyu:** qo'shish, qidirish, berish, qaytarish, hisobot
+4. `saqla()` va `yukla()` — JSON fayl bilan
+```output
+✅ «Sariq devni minib» Azizga berildi. Qaytarish: 15.09.2026
+❌ «Sariq devni minib» hozir mavjud emas
+⚠️ 5 kun kechikdi. Jarima: 5,000 so'm
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ Metodda `self` parametri unutilgan
+- ❌ Metod ichida `ism` (`self.ism` o'rniga) → `NameError`
+- ❌ `_init_` — bitta pastki chiziq bilan; to'g'risi `__init__`
+- ❌ Merosxo'r klassda `super().__init__(...)` unutilgan
+- ❌ `ali = Oquvchi` — qavssiz: bu klassning o'zi, obyekt emas
+---
+? Klass va obyekt o'rtasidagi munosabat qaysi?
+o Obyekt — chizma, klass — mahsulot
++ Klass — chizma, obyekt — undan yaratilgan nusxa
+o Ular bir xil narsa
+o Klass — funksiya, obyekt — o'zgaruvchi
+---
+? Obyekt yaratilganda avtomatik chaqiriladigan metod?
+o `__str__`
+o `__main__`
++ `__init__`
+o `create`
+---
+? `class It(Hayvon):` — bu qaysi OOP tamoyili?
+o Inkapsulyatsiya
+o Polimorfizm
+o Abstraksiya
++ Merosxo'rlik
+---
+? `print(obyekt)` qanday matn chiqarishini qaysi metod belgilaydi?
+o `__init__`
++ `__str__`
+o `__print__`
+o `show()`
+---
+# 🏠 Uyga vazifa
+1. **Shakllar:** `Shakl` → `Doira`, `Tortburchak`, `Uchburchak` — `yuza()`, `perimetr()` (polimorfizm)
+2. **Savat:** `Mahsulot` va `Savat` — qo'shish, o'chirish, jami, chegirma
+3. **Sinf jurnali:** `Sinf` ichida `Oquvchi` lar; eng yaxshi o'quvchi, sinf o'rtachasi
+---
+# ✅ Yodda tuting
+- `class Nom:` — chizma; `obj = Nom(...)` — obyekt
+- `__init__(self, ...)` — konstruktor; `self.atribut`; metodlarda birinchi — `self`
+- `__str__` — matn ko'rinishi
+- **Inkapsulyatsiya** — metodlar orqali himoya
+- **Merosxo'rlik** — `class B(A):` + `super().__init__()`
+- **Polimorfizm** — bir xil metod, turli xatti-harakat

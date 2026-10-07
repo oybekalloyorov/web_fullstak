@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>34-mavzu: Django URL va View komponentlari. URL va View yordamida sahifalar yaratish — taqdimot</title>
+<meta name="description" content="So&#x27;rov va javob obyektlari, funksiya asosidagi view&#x27;lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL&#x27;lar, GET parametrlari, 404 va redirect, Class Based View&#x27;lar bilan tanishuv.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#1F7A4D">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🗺️</div><div class="cover-kicker">34-mavzu · IV bob. Python, PostgreSQL va Django</div><h1>Django URL va View komponentlari. URL va View yordamida sahifalar yaratish</h1><p>So&#x27;rov va javob obyektlari, funksiya asosidagi view&#x27;lar, URL marshrutlash, path converterlar (int, slug), ilova urls.py va include, nomlangan URL&#x27;lar, GET parametrlari, 404 va redirect, Class Based View&#x27;lar bilan tanishuv.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><b>View</b> — so&#x27;rovni qabul qilib javob qaytaruvchi funksiya</li><li class="lv0">URL&#x27;larni view&#x27;larga bog&#x27;lash, ilovada alohida <code>urls.py</code></li><li class="lv0">Manzildan qiymat olish: <code>/maqola/5/</code> → <code>id = 5</code></li><li class="lv0">Qidiruv parametrlari, <b>404</b> va <b>redirect</b></li><li class="lv0">Funksiya (<b>FBV</b>) va klass (<b>CBV</b>) asosidagi view&#x27;lar</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>So&#x27;rov va javob</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.http import HttpResponse
+
+def salom(request):
+    print(request.method)          # &quot;GET&quot; yoki &quot;POST&quot;
+    print(request.path)            # &quot;/salom/&quot;
+    return HttpResponse(&quot;Salom!&quot;)  # javob</code></pre></div><div class="s-box analogy"><span class="ico">💡</span><div><b>Pochta oynasi:</b> xat (so&#x27;rov) berasiz — kimdan, qayerga, nima so&#x27;ralgan. Xodim (view) o&#x27;qiydi, ishni bajaradi va javob xatini (response) qaytaradi. Har oyna (URL) — o&#x27;z xizmati.</div></div><table class="s-table"><thead><tr><th><code>request</code> xossasi</th><th>Nima beradi</th></tr></thead><tbody><tr><td><code>request.method</code></td><td>&quot;GET&quot; yoki &quot;POST&quot;</td></tr><tr><td><code>request.GET</code></td><td><code>/qidiruv/?q=python</code> → <code>request.GET.get(&quot;q&quot;)</code></td></tr><tr><td><code>request.POST</code></td><td>Forma ma&#x27;lumotlari (37)</td></tr><tr><td><code>request.user</code></td><td>Tizimga kirgan foydalanuvchi</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ilova uchun alohida urls.py</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">blog/urls.py</div><pre><code class="language-python">from django.urls import path
+from . import views
+
+app_name = &quot;blog&quot;
+urlpatterns = [
+    path(&quot;&quot;, views.bosh_sahifa, name=&quot;bosh&quot;),
+    path(&quot;haqida/&quot;, views.haqida, name=&quot;haqida&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/&quot;, views.maqola, name=&quot;maqola&quot;),
+    path(&quot;kategoriya/&lt;slug:nomi&gt;/&quot;, views.kategoriya, name=&quot;kategoriya&quot;),
+    path(&quot;qidiruv/&quot;, views.qidiruv, name=&quot;qidiruv&quot;),
+]</code></pre></div></div><div class="col"><div class="s-code"><div class="s-code-head">config/urls.py</div><pre><code class="language-python">from django.urls import path, include
+
+urlpatterns = [
+    path(&quot;admin/&quot;, admin.site.urls),
+    path(&quot;&quot;, include(&quot;blog.urls&quot;)),
+]</code></pre></div><ul class="s-list"><li class="lv0">Django ro&#x27;yxatni <b>yuqoridan pastga</b> ko&#x27;radi — birinchi mos kelganini chaqiradi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>So&#x27;rovning yo&#x27;li va converterlar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Matn</div><pre><code class="language-plaintext">/maqola/5/ → config/urls.py (&quot;&quot; → include) → blog/urls.py (&quot;maqola/&lt;int:id&gt;/&quot;) → views.maqola(request, id=5)</code></pre></div><table class="s-table"><thead><tr><th>Converter</th><th>Mos keladi</th><th>URL</th><th>View oladi</th></tr></thead><tbody><tr><td><code>&lt;int:id&gt;</code></td><td>Musbat butun son</td><td><code>/maqola/42/</code></td><td><code>id=42</code> (int)</td></tr><tr><td><code>&lt;str:nom&gt;</code></td><td><code>/</code> dan boshqa matn</td><td><code>/user/ali/</code></td><td><code>nom=&quot;ali&quot;</code></td></tr><tr><td><code>&lt;slug:nomi&gt;</code></td><td>Harf, raqam, <code>-</code>, <code>_</code></td><td><code>/kategoriya/maktab-hayoti/</code></td><td><code>nomi=&quot;maktab-hayoti&quot;</code></td></tr></tbody></table><ul class="s-list"><li class="lv0"><b>Slug</b> — sarlavhaning URL ko&#x27;rinishi: &quot;Maktab hayoti&quot; → <code>maktab-hayoti</code> (SEO uchun foydali)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>View&#x27;lar yozish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import redirect
+
+MAQOLALAR = [   # vaqtinchalik &quot;baza&quot; — 36-mavzuda modelga almashadi
+    {&quot;id&quot;: 1, &quot;sarlavha&quot;: &quot;Bilimlar bellashuvi&quot;, &quot;kategoriya&quot;: &quot;tadbirlar&quot;},
+    {&quot;id&quot;: 2, &quot;sarlavha&quot;: &quot;Yangi kompyuter xonasi&quot;, &quot;kategoriya&quot;: &quot;maktab-hayoti&quot;},
+]
+
+def maqola(request, id):
+    for m in MAQOLALAR:
+        if m[&quot;id&quot;] == id:
+            return HttpResponse(f&quot;&lt;h1&gt;{m[&#x27;sarlavha&#x27;]}&lt;/h1&gt;&quot;)
+    raise Http404(&quot;Maqola topilmadi&quot;)
+
+def kategoriya(request, nomi):
+    topilgan = [m for m in MAQOLALAR if m[&quot;kategoriya&quot;] == nomi]
+    if not topilgan:
+        return redirect(&quot;blog:bosh&quot;)
+    ...
+
+def qidiruv(request):
+    soz = request.GET.get(&quot;q&quot;, &quot;&quot;)
+    ...</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Nomlangan URL&#x27;lar va status kodlar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.urls import reverse
+reverse(&quot;blog:maqola&quot;, args=[5])     # &quot;/maqola/5/&quot;
+redirect(&quot;blog:haqida&quot;)              # /haqida/ ga yo&#x27;naltirish
+# Shablonda: {% url &#x27;blog:maqola&#x27; 5 %}   (35-mavzu)</code></pre></div><ul class="s-list"><li class="lv0">Manzilni o&#x27;zgartirsangiz — faqat <code>urls.py</code> da <b>bitta qator</b>; butun saytdagi havolalar o&#x27;zi yangilanadi</li></ul><table class="s-table"><thead><tr><th>Holat</th><th>Django&#x27;da</th><th>Kod</th></tr></thead><tbody><tr><td>Oddiy javob</td><td><code>HttpResponse(...)</code></td><td>200</td></tr><tr><td>Topilmadi</td><td><code>raise Http404(...)</code></td><td>404</td></tr><tr><td>Yo&#x27;naltirish</td><td><code>redirect(&quot;nom&quot;)</code></td><td>302</td></tr><tr><td>JSON</td><td><code>JsonResponse({...})</code></td><td>200</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Class Based View (CBV)</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.views import View
+from django.views.generic import TemplateView
+
+class SalomView(View):
+    def get(self, request):
+        return HttpResponse(&quot;Salom, GET!&quot;)
+    def post(self, request):
+        return HttpResponse(&quot;Salom, POST!&quot;)
+
+class AloqaView(TemplateView):
+    template_name = &quot;blog/aloqa.html&quot;
+
+# urls.py:  path(&quot;salom/&quot;, views.SalomView.as_view(), name=&quot;salom&quot;)</code></pre></div><table class="s-table"><thead><tr><th></th><th>FBV (funksiya)</th><th>CBV (klass)</th></tr></thead><tbody><tr><td>Yozilishi</td><td>Oddiy, aniq</td><td>Qisqa, &quot;sehr&quot; ko&#x27;p</td></tr><tr><td>GET/POST</td><td><code>if request.method == &quot;POST&quot;</code></td><td>Alohida <code>get()</code>, <code>post()</code></td></tr><tr><td>Qayta ishlatish</td><td>Qiyinroq</td><td>Meros; <code>ListView</code>, <code>DetailView</code>...</td></tr></tbody></table></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><code>blog/urls.py</code> + <code>include</code></div></div><div class="s-step"><span class="n">2</span><div>View&#x27;larni yozing; <code>/maqola/2/</code>, <code>/maqola/99/</code>, <code>/maqola/abc/</code> ni sinang (nega 404?)</div></div><div class="s-step"><span class="n">3</span><div>Havolalarni <code>reverse(&quot;blog:maqola&quot;, args=[m[&quot;id&quot;]])</code> bilan yasang</div></div><div class="s-step"><span class="n">4</span><div>Yangi yo&#x27;llar:</div></div><ul class="s-list"><li class="lv1"><code>/kalkulyator/&lt;int:a&gt;/&lt;int:b&gt;/</code> — yig&#x27;indi, ayirma, ko&#x27;paytma</li><li class="lv1"><code>/salom/&lt;str:ism&gt;/</code> — &quot;Salom, Ali!&quot;</li><li class="lv1"><code>/api/maqolalar/</code> — <code>JsonResponse</code></li><li class="lv1"><code>/tasodifiy/</code> — tasodifiy maqolaga <code>redirect</code></li></ul><div class="s-box warn"><span class="ico">⚠️</span><div>View ichida HTML&#x27;ni satr qilib yozish — faqat o&#x27;rganish uchun; keyingi mavzuda <b>shablonlar</b></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <b>404</b> — yakuniy <code>/</code> yo&#x27;q yoki yo&#x27;l ro&#x27;yxatda yo&#x27;q (Django xato sahifasi barcha yo&#x27;llarni ko&#x27;rsatadi)</li><li class="lv0">❌ <code>unexpected keyword argument &#x27;pk&#x27;</code> — URL&#x27;dagi nom va funksiya parametri mos emas</li><li class="lv0">❌ <code>The view didn&#x27;t return an HttpResponse object</code> — <code>return</code> unutilgan</li><li class="lv0">❌ <code>NoReverseMatch</code> — URL nomi xato yoki <code>app_name</code> yo&#x27;q</li><li class="lv0">❌ CBV&#x27;da <code>.as_view()</code> unutilgan</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Django view&#x27;i nimani qabul qilib, nimani qaytaradi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>HTML qabul qilib, SQL qaytaradi</span></button><button class="opt" data-ok="1"><span class="l">B</span><span>request qabul qilib, response qaytaradi</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>URL qabul qilib, model qaytaradi</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>Hech narsa qabul qilmaydi</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>path(&quot;maqola/&lt;int:id&gt;/&quot;, ...)</code> — <code>/maqola/7/</code> so&#x27;ralganda view nima oladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>id=&quot;7&quot;</code> (matn)</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Hech narsa</span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>id=7</code> (son)</span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>maqola=7</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>/qidiruv/?q=futbol</code> dagi &quot;futbol&quot; ni view&#x27;da qanday olasiz?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>request.POST[&quot;q&quot;]</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>request.q</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>request.path</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>request.GET.get(&quot;q&quot;)</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Class Based View&#x27;ni URL&#x27;ga ulashda nima yoziladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>views.SalomView</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>views.SalomView()</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>views.SalomView.as_view()</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>views.SalomView.get</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><code>pages</code> ilovasi uchun <code>urls.py</code>: <code>/haqida/</code>, <code>/aloqa/</code>, <code>/qoidalar/</code></div></div><div class="s-step"><span class="n">2</span><div><code>/jadval/&lt;int:son&gt;/</code> — ko&#x27;paytirish jadvali (HTML jadval)</div></div><div class="s-step"><span class="n">3</span><div><code>/yosh/&lt;int:yil&gt;/</code> — yoshni hisoblash; kelajakdagi yil → 404</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0"><code>def view(request): return HttpResponse(...)</code></li><li class="lv0">Ilovada <code>urls.py</code> + <code>app_name</code>; asosiyda <code>include(&quot;blog.urls&quot;)</code></li><li class="lv0"><code>&lt;int:id&gt;</code>, <code>&lt;str:nom&gt;</code>, <code>&lt;slug:nomi&gt;</code> → view parametri</li><li class="lv0"><code>request.GET.get(&quot;q&quot;)</code>, <code>Http404</code>, <code>redirect(&quot;app:nom&quot;)</code>, <code>JsonResponse</code>, <code>reverse</code></li><li class="lv0">CBV: <code>class V(View): def get(...)</code> → <code>V.as_view()</code></li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>35. Django Template tizimi va dinamik sahifalar. Template va statik fayllar</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>34-django-url-view.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../34-django-url-view.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/34-django-url-view.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "33-django-kirish.html", "next": "35-django-template-static.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

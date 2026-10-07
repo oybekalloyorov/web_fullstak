@@ -1,0 +1,187 @@
+# Bugun nimani o'rganamiz?
+- Siljitish, kattalashtirish, burish — **transform**
+- Holat o'zgarganda silliq o'tish — **transition**
+- O'zi harakatlanuvchi animatsiya — **@keyframes + animation**
+- Effektlar: "tirik" tugmalar, yuklanish belgisi, paydo bo'luvchi kartalar
+---
+# Transform — shaklni o'zgartirish
+```css
+.t1 { transform: translateX(30px); }           /* o'ngga */
+.t2 { transform: translateY(-20px); }          /* tepaga */
+.t3 { transform: scale(1.3); }                 /* kattalashtirish */
+.t5 { transform: rotate(45deg); }              /* burish */
+.t6 { transform: skew(15deg); }                /* qiyshaytirish */
+.t7 { transform: rotate(-10deg) scale(1.1); }  /* birga */
+```
+| Funksiya | Vazifasi |
+|---|---|
+| `translate(x, y)` | Siljitish |
+| `scale(n)` | 1 = asl o'lcham, 1.1 = 10% katta |
+| `rotate(deg)` | Burish |
+| `skew(deg)` | Qiyshaytirish |
+- Boshqa elementlarga **ta'sir qilmaydi**; `transform-origin` — qaysi nuqtadan
+---
+# Transition — silliq o'tish
+> **Chiroq:** oddiy chiroq bir zumda yonadi; kinoteatr chiroqlari asta-sekin. Siz boshlang'ich va oxirgi holatni berasiz — oradagi "kadrlar"ni brauzer chizadi.
+```css
+.tugma {
+  background: #4f46e5;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.tugma:hover {
+  background: #db2777;
+  transform: scale(1.1);
+}
+```
+---
+# transition sintaksisi
+```css
+transition: background-color 0.3s ease 0s;
+/*          │                │    │    └ kechikish (delay)
+            │                │    └ tezlik egri chizig'i
+            │                └ davomiylik (s, ms)
+            └ qaysi xossa (all — hammasi)          */
+```
+| Egri chiziq | Xatti-harakat |
+|---|---|
+| `linear` | Bir tekis (robotdek) |
+| `ease` | Sekin → tez → sekin (standart, tabiiy) |
+| `ease-in` / `ease-out` | Sekin boshlanadi / sekin tugaydi |
+! `transition` ni **oddiy holatga** yozing, `:hover` ga emas — aks holda qaytishi keskin bo'ladi
+---
+# Animation: 1-qadam — @keyframes "ssenariy"
+```css
+@keyframes sakrash {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+/* Ikki bosqich bo'lsa: */
+@keyframes paydo {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+```
+- `transition` — faqat holat o'zgarganda, A → B
+- `animation` — **o'zi boshlanadi**, ko'p bosqichli, cheksiz takrorlanishi mumkin
+---
+# Animation: 2-qadam — elementga qo'llash
+```css
+.top { animation: sakrash 1s ease-in-out infinite; }
+/* nomi | davomiylik | tezlik | takror */
+```
+| Xossa | Qiymatlar |
+|---|---|
+| `animation-duration` | `2s`, `500ms` |
+| `animation-iteration-count` | `1`, `3`, `infinite` |
+| `animation-direction` | `normal` `reverse` `alternate` |
+| `animation-delay` | `0.5s` |
+| `animation-fill-mode` | `forwards` — oxirgi holatda qolish |
+---
+# Misol: yuklanish belgisi (spinner)
+```css
+.spinner {
+  width: 50px; height: 50px;
+  border: 5px solid #e0e7ff;
+  border-top-color: #4f46e5;   /* faqat tepa qismi rangli */
+  border-radius: 50%;
+  animation: aylan 0.8s linear infinite;
+}
+@keyframes aylan {
+  to { transform: rotate(360deg); }
+}
+```
+---
+# Misol: paydo bo'luvchi kartalar
+```css
+@keyframes paydo {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.karta {
+  animation: paydo 0.6s ease both;
+  transition: transform .25s, box-shadow .25s;
+}
+.karta:nth-child(2) { animation-delay: 0.15s; }
+.karta:nth-child(3) { animation-delay: 0.3s; }
+.karta:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(79,70,229,.25);
+}
+```
+---
+# Misol: porlovchi tugma
+```css
+.porla {
+  background: linear-gradient(90deg, #4f46e5, #db2777, #4f46e5);
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: oqim 3s linear infinite;
+  transition: transform .2s;
+}
+.porla:hover  { transform: scale(1.06); }
+.porla:active { transform: scale(.96); }
+@keyframes oqim { to { background-position: -200% 0; } }
+```
+---
+# Unumdorlik va foydalanuvchilar
+- Eng tez xossalar: **`transform`** va **`opacity`**
+- `width`, `top`, `margin` animatsiyasi sahifani sekinlashtiradi
+- **Me'yorni** saqlang — hamma narsa sakrasa, ko'z charchaydi
+```css
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+```
+- Ba'zi odamlarda harakatdan bosh aylanadi — ularni hurmat qiling
+---
+# Amaliyot: portfolio jonlanadi
+1. Barcha tugma va havolalarga silliq `:hover` (`transition`)
+2. Loyiha kartalari hover'da **8px ko'tarilsin**, soya kuchaysin
+3. Hero sarlavha va tugma pastdan **"paydo"** bo'lsin (kechikish bilan)
+4. Profil rasmiga **"nafas olish"**: `scale(1) → 1.03 → 1`, 4s, cheksiz
+5. ☀️ Ijodiy: faqat CSS bilan **"Quyosh tizimi"** — 2 sayyora turli tezlikda aylanadi
+note: Maslahat: sayyorani o'zidan katta shaffof doira ichiga qo'ying va doirani aylantiring.
+---
+# Ko'p uchraydigan xatolar
+- ❌ Ikkita `transform` qatori — ikkinchisi birinchisini o'chiradi; bittada yozing: `rotate(10deg) scale(1.2)`
+- ❌ `transition: all` hamma joyda — kutilmagan xossalar ham animatsiya bo'ladi
+- ❌ `@keyframes aylanish` va `animation: aylanis` — nomlar mos emas
+- ❌ `display: none` ni animatsiya qilish — `opacity` va `visibility` ishlating
+---
+? Elementni 1.2 barobar kattalashtiruvchi kod?
+o `transform: size(1.2)`
+o `zoom: 120px`
++ `transform: scale(1.2)`
+o `transform: grow(20%)`
+---
+? Hover effekti silliq bo'lishi uchun `transition` qayerga yoziladi?
++ Elementning oddiy holatiga
+o Faqat `:hover` ga
+o `@keyframes` ichiga
+o `body` ga
+---
+? Animatsiyani cheksiz takrorlash uchun qaysi qiymat?
+o repeat
+o loop
+o forever
++ infinite
+---
+? Qaysi xossalarni animatsiya qilish eng tez (unumdor)?
+o `width` va `height`
++ `transform` va `opacity`
+o `margin` va `padding`
+o `top` va `left`
+---
+# 🏠 Uyga vazifa
+1. "Quyosh tizimi"ni yakunlang
+2. 3 xil spinner: aylanuvchi doira, sakrovchi 3 nuqta, to'lib boruvchi chiziq
+3. **Flip card**: kartani 180° aylantirib orqa tomonini ko'rsatish (`rotateY`, `backface-visibility`)
+---
+# ✅ Yodda tuting
+- `transform`: translate, scale, rotate, skew
+- `transition: xossa vaqt tezlik;` — oddiy holatga yoziladi
+- `@keyframes nom { 0% {} 100% {} }` + `animation: nom 2s infinite;`
+- Unumdorlik: `transform` va `opacity`
+- Me'yorni saqlang, `prefers-reduced-motion` ni hurmat qiling

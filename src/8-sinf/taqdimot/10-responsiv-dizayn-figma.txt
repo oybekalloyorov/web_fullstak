@@ -1,0 +1,215 @@
+# Bugun nimani o'rganamiz?
+- Nima uchun sayt **telefon, planshet, kompyuterda** turlicha ko'rinishi kerak
+- `viewport` meta-tegi va moslashuvchan rasmlar
+- **Media query** — ekran o'lchamiga qarab CSS
+- **Mobile-first** va breakpointlar
+- **Figma:** maketdan kodga
+- Responsiv **Landing Page** (4 va 5-loyihalar)
+---
+# Responsiv dizayn nima?
+= Sayt har qanday ekran o'lchamiga o'zi moslashadi
+- Foydalanuvchilarning **60%+** telefondan kiradi
+- 1200px sayt 390px ekranda yo mayda, yo yonga sig'maydi
+> **Suv:** qaysi idishga quyilsa — stakan, choynak, chelak — o'sha shaklni oladi. Responsiv sayt ham har ekranga moslashadi.
+- 3 vosita: **moslashuvchan maket** (%, fr, flex, grid) + **moslashuvchan rasmlar** + **media query**
+note: Kun.uz ni oching va brauzer oynasini asta-sekin toraytiring — menyu, ustunlar qanday o'zgarishini ko'rsating.
+---
+# 1-qadam: viewport meta-tegi
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+- `width=device-width` — sahifa kengligi = qurilma ekran kengligi
+! Bu qator bo'lmasa telefon sahifani "980px kompyuter" deb kichraytiradi va **media query'lar ishlamaydi**
+- VS Code'dagi `!` shabloni uni avtomatik qo'shadi
+---
+# 2-qadam: moslashuvchan o'lchamlar
+```css
+/* ❌ Qattiq — telefonda sig'maydi */
+.konteyner { width: 1100px; }
+
+/* ✅ Moslashuvchan */
+.konteyner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ✅ Rasm hech qachon chiqib ketmasin */
+img { max-width: 100%; height: auto; }
+```
+- `repeat(auto-fill, minmax(220px, 1fr))` — ustunlar soni o'zi o'zgaradi
+---
+# 3-qadam: media so'rovlar
+```css
+@media (max-width: 768px) {
+  /* FAQAT ekran 768px yoki KICHIK bo'lsa */
+  .menyu { flex-direction: column; }
+  h1 { font-size: 1.8rem; }
+}
+
+@media (min-width: 1024px) {
+  /* FAQAT ekran 1024px yoki KATTA bo'lsa */
+  .kartalar { grid-template-columns: repeat(4, 1fr); }
+}
+```
+- `max-width` — "ko'pi bilan", `min-width` — "kamida"
+- Birlashtirish: `@media (min-width: 600px) and (max-width: 900px)`
+---
+# Breakpointlar
+| Qurilma | Kenglik | Odatiy maket |
+|---|---|---|
+| 📱 Telefon | 360–480px | 1 ustun, "burger" menyu |
+| 📱 Katta telefon | 481–768px | 1–2 ustun |
+| 📟 Planshet | 769–1024px | 2–3 ustun |
+| 💻 Kompyuter | 1025px+ | 3–4 ustun, to'liq menyu |
+! Breakpointni dizayn **"buzila boshlagan"** joyda qo'ying, aniq qurilmaga emas
+---
+# Mobile-first yondashuvi
+```css
+/* 1. Standart — telefon: 1 ustun */
+.kartalar { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+/* 2. Planshet */
+@media (min-width: 640px) {
+  .kartalar { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 3. Kompyuter */
+@media (min-width: 1024px) {
+  .kartalar { grid-template-columns: repeat(4, 1fr); }
+}
+```
+- Avval **oddiy** (telefon), keyin `min-width` bilan **murakkab**
+- Eng ko'p foydalanuvchi — telefonda
+---
+# DevTools'da telefon rejimi
+1. Chrome'da sahifani oching, **F12**
+2. **Ctrl+Shift+M** — Toggle device toolbar
+3. Qurilma tanlang: iPhone SE, Pixel 7, iPad...
+4. "Responsive" rejimida chetini sudrab o'lchamni o'zgartiring
+= Gorizontal scroll bo'lmasligi kerak!
+---
+# Responsiv navigatsiya: "burger" menyu
+```css
+#burger, .burger-tugma { display: none; }
+
+@media (max-width: 640px) {
+  .burger-tugma { display: block; cursor: pointer; }
+  .menyu { display: none; flex-direction: column; width: 100%; }
+  #burger:checked ~ .menyu { display: flex; }
+}
+```
+```html
+<input type="checkbox" id="burger">
+<label for="burger" class="burger-tugma">☰</label>
+<nav class="menyu">...</nav>
+```
+- Yashirin checkbox + label = tugma; 19-mavzuda JavaScript bilan
+---
+## Figma
+Dizayndan kodga — professional jamoalar shunday ishlaydi
+---
+# Figma bilan tanishish
+- **figma.com** — brauzerda ishlaydi, o'quvchilarga bepul
+- **Community** → bepul "Landing page" shabloni → Open in Figma
+| Tushuncha | Ma'nosi |
+|---|---|
+| **Frame** | Ekran/sahifa: "Desktop 1440", "iPhone 14" |
+| **Layers** | Elementlar daraxti — HTML'ga o'xshaydi |
+| **Design** paneli | O'lcham, rang, shrift, radius, soya |
+| **Auto layout** | Figma'dagi **Flexbox** |
+| **Dev Mode** (Shift+D) | Tayyor CSS qiymatlar |
+---
+# Figma → CSS
+| Figma'da | CSS'da |
+|---|---|
+| Fill: `#4F46E5` | `background-color: #4f46e5;` |
+| Text: Inter, Bold, 48 | `font-weight: 700; font-size: 48px;` |
+| Corner radius: 12 | `border-radius: 12px;` |
+| Stroke: 1, #E5E7EB | `border: 1px solid #e5e7eb;` |
+| Drop shadow: Y 4, Blur 12, 10% | `box-shadow: 0 4px 12px rgba(0,0,0,.1);` |
+| Auto layout: horizontal, gap 24 | `display:flex; gap:24px;` |
+- Masofani o'lchash: element tanlab **Alt** + boshqa element ustiga
+- Rasm/ikonka: **Export** → PNG/JPG yoki SVG
+---
+# Maketni kodlash tartibi
+1. Dizaynni **bloklarga** bo'ling: header, hero, xizmatlar, sharhlar, footer
+2. Avval faqat **HTML** tuzilmasi
+3. Ranglar va shriftlarni bir joyga yig'ing
+4. Yuqoridan pastga: avval katta maket (flex/grid), keyin detallar
+5. Oxirida **telefon versiyasi** — media query
+---
+## Amaliy mashg'ulot
+4-loyiha: "IT Akademiya" responsiv Landing Page
+---
+# Amaliyot: Landing Page
+```css
+* { box-sizing: border-box; margin: 0; padding: 0; }
+img { max-width: 100%; height: auto; display: block; }
+.konteyner { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+/* MOBILE (standart) */
+.kurslar { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.hero h1 { font-size: 2rem; }
+
+/* PLANSHET */
+@media (min-width: 640px) {
+  .kurslar { grid-template-columns: repeat(2, 1fr); }
+}
+/* KOMPYUTER */
+@media (min-width: 1024px) {
+  .kurslar { grid-template-columns: repeat(4, 1fr); }
+  .hero h1 { font-size: 3.2rem; }
+}
+```
+---
+# Amaliyot: topshiriq
+1. O'z mavzuingiz: kitob do'koni, sport zali, sayohat...
+2. Kamida **5 bo'lim**: header, hero, xizmatlar, raqamlar/sharhlar, footer
+3. 3 o'lchamda tekshiring: **375px**, **768px**, **1280px**
+4. Telefonda **burger** menyu
+5. **5-loyiha:** Figma Community shablonini Dev Mode qiymatlari bilan aniq kodlang
+---
+# Ko'p uchraydigan xatolar
+- ❌ `viewport` meta-tegi unutilgan
+- ❌ `width: 1200px` — gorizontal scroll; `max-width` ishlating
+- ❌ Media query **fayl boshida** — keyingi qoidalar uni bosib ketadi
+- ❌ `@media (max-width: 768)` — `px` unutilgan
+- ❌ Faqat kompyuterda tekshirish — haqiqiy telefonda ham oching
+---
+? `@media (max-width: 600px) { ... }` ichidagi qoidalar qachon ishlaydi?
+o Ekran 600px dan katta bo'lganda
++ Ekran 600px yoki kichik bo'lganda
+o Faqat aynan 600px da
+o Har doim
+---
+? Mobile-first yondashuvida asosan qaysi shart ishlatiladi?
++ `min-width`
+o `max-width`
+o `orientation`
+o `max-height`
+---
+? Rasm konteynerdan chiqib ketmasligi uchun eng to'g'ri CSS?
+o `width: 1000px`
+o `overflow: scroll`
+o `width: 100vw`
++ `max-width: 100%; height: auto;`
+---
+? Figma'dagi "Auto layout" CSS'dagi qaysi texnologiyaga o'xshaydi?
+o `position: absolute`
+o HTML jadval
++ Flexbox
+o Media query
+---
+# 🏠 Uyga vazifa
+1. Portfolio va maktab saytlarini **to'liq responsiv** qiling (3 breakpoint)
+2. Figma'da portfolio maketi: Desktop (1440px) + Mobile (390px) frame, Auto layout bilan
+3. 3 ta saytning mobil versiyasida nima o'zgarganini yozing
+---
+# ✅ Yodda tuting
+- Responsivlik = `viewport` + `%`, `max-width`, `fr` + `img { max-width: 100% }` + media query
+- `@media (min-width: 768px) { ... }` — shartli CSS
+- Mobile-first → `min-width`
+- DevTools: **Ctrl+Shift+M**; gorizontal scroll bo'lmasin
+- Figma: Frame, Layers, Auto layout (= Flexbox), Dev Mode, Export

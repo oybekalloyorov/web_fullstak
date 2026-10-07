@@ -1,0 +1,155 @@
+# Bugun nimani o'rganamiz?
+- **"Semantik"** so'zining ma'nosi
+- Sahifa qismlarini ifodalovchi **HTML5 teglari**
+- `section` va `article`, `div` va `span` farqi
+- Semantika **Google** va **ko'zi ojizlar** uchun nega muhim
+- Vizitka saytini semantik tuzilmaga keltirish
+---
+# "Semantik" nima degani?
+= Semantika — ma'no
+- `<div>` — hech narsa demaydi: "shunchaki quti"
+- `<nav>` — "bu yerda menyu bor"
+- `<footer>` — "bu sahifaning pastki qismi"
+> **Ko'chish qutilari:** hammasiga "quti" deb yozsangiz (div) — har birini ochib ko'rishga to'g'ri keladi. "Kitoblar", "Idishlar" deb yozsangiz (header, article) — hamma darhol tushunadi.
+---
+# Sahifaning semantik tuzilmasi
+```text
+┌──────────────── <header> logo, sarlavha ────────────────┐
+│                 <nav> menyu                              │
+├──────────────────────────────────────┬───────────────────┤
+│ <main>                               │ <aside>           │
+│   <section> bo'lim                   │   yon panel       │
+│     <article> maqola </article>      │                   │
+│     <article> maqola </article>      │                   │
+├──────────────────────────────────────┴───────────────────┤
+│ <footer> mualliflik huquqi, aloqa                        │
+└──────────────────────────────────────────────────────────┘
+```
+---
+# Asosiy semantik teglar
+| Teg | Vazifasi |
+|---|---|
+| `<header>` | Kirish qismi: logo, sayt nomi, menyu |
+| `<nav>` | Asosiy navigatsiya havolalari |
+| `<main>` | Asosiy, noyob mazmun — **faqat bitta** |
+| `<section>` | Mavzu bo'yicha bo'lim (sarlavhali) |
+| `<article>` | Mustaqil mazmun: yangilik, post, kartochka |
+| `<aside>` | Qo'shimcha: yon panel, "O'xshash maqolalar" |
+| `<footer>` | Pastki qism: huquq, aloqa |
+| `<time>` `<address>` `<figure>` | Sana, aloqa, rasm + izoh |
+---
+# section yoki article?
+= "Bu qismni boshqa saytga alohida olib qo'ysam, tushunarli bo'ladimi?"
+- **Ha** → `<article>`: yangilik, mahsulot kartasi, izoh, forum posti
+- **Yo'q** → `<section>`: "Bizning xizmatlar" — faqat shu sayt kontekstida ma'noli
+- Ichma-ich bo'lishi mumkin: "Yangiliklar" section ichida bir nechta article
+---
+# div va span — ma'nosiz konteynerlar
+```html
+<div class="kartochka">
+  <p>Bugun havo <span class="harorat">+28°C</span>, quyoshli.</p>
+</div>
+```
+- `<div>` — **blok** konteyner
+- `<span>` — **qator ichidagi** konteyner
+! Qoida: avval mos semantik teg bormi — o'ylang. Hech biri mos kelmasa, faqat CSS uchun — `div`/`span`.
+---
+# Blok va inline elementlar
+| | Blok | Inline (qator ichida) |
+|---|---|---|
+| Misollar | `div` `p` `h1` `ul` `li` `table` `form` `section` | `span` `a` `strong` `em` `img` `input` `label` |
+| Joylashuvi | Yangi qatordan boshlanadi | Matn bilan bir qatorda |
+| Kengligi | Butun kenglikni egallaydi | Faqat o'z mazmunicha |
+---
+# Semantika nima uchun muhim?
+1. **SEO:** Google roboti sahifani kod orqali o'qiydi — `main`, `article` unga "asosiy mazmun shu yerda" deydi
+2. **Accessibility:** ekran o'quvchi dasturlar "Navigatsiyaga o'tish", "Keyingi maqola" buyruqlarini semantik teglar orqali beradi
+3. **Jamoada ishlash:** `<footer>` ni ko'rgan dasturchi darhol tushunadi
+---
+# "div sho'rva" → semantik kod
+```html ❌ Oldin
+<div id="tepa">
+  <div class="logo">Maktab №5</div>
+  <div class="menu">...</div>
+</div>
+<div class="yangilik">
+  <div class="sarlavha">Bellashuv</div>
+  <div>8-sinflar o'rtasida...</div>
+</div>
+<div id="past">© 2026</div>
+```
+::
+```html ✅ Keyin
+<header>
+  <h1>Maktab №5</h1>
+  <nav>...</nav>
+</header>
+<main>
+  <article>
+    <h2>Bellashuv</h2>
+    <time datetime="2026-10-02">2-oktabr</time>
+    <p>8-sinflar o'rtasida...</p>
+  </article>
+</main>
+<footer>&copy; 2026</footer>
+```
+---
+# SEO uchun head qismi
+```html
+<head>
+  <title>Maktab №5 — Samarqand shahridagi umumta'lim maktabi</title>
+  <meta name="description"
+        content="Maktab №5 yangiliklari, dars jadvali, to'garaklar va aloqa.">
+</head>
+```
+- `<title>` — Google natijasidagi ko'k sarlavha; har sahifada **har xil**
+- `description` — sarlavha ostidagi tavsif (150–160 belgi)
+---
+# Amaliyot: vizitkani semantik qilish
+1. Menyuni `<header>` + `<nav>` ga, asosiy mazmunni `<main>` ga o'rang
+2. "Men haqimda", "Ko'nikmalarim" — alohida `<section>` + `<h2>`
+3. Har bir hobbi — `<article>`; "Qiziqarli fakt" — `<aside>`
+4. `<footer>`: `&copy;` va `<address>`
+5. Mazmunli `title` va `description`
+6. **validator.w3.org** da tekshiring — xatolar 0 bo'lsin
+---
+# Ko'p uchraydigan xatolar
+- ❌ Sahifada bir nechta `<main>`
+- ❌ Har bir havola guruhini `<nav>` qilish — faqat **asosiy** navigatsiya
+- ❌ Sarlavhasiz, faqat dizayn uchun `<section>` — bu `div`
+- ❌ `<header>` va `<head>` ni adashtirish: head — ko'rinmas meta, header — ko'rinadigan tepa qism
+---
+? Sahifaning asosiy, noyob mazmuni qaysi teg ichida bo'ladi?
+o `<section>`
++ `<main>`
+o `<body>`
+o `<header>`
+---
+? Blogdagi alohida post uchun eng mos teg qaysi?
++ `<article>`
+o `<aside>`
+o `<nav>`
+o `<span>`
+---
+? Qaysi element inline (qator ichida)?
+o `<div>`
+o `<p>`
++ `<span>`
+o `<section>`
+---
+? Semantik teglar nima uchun foydali EMAS?
+o Google sahifani yaxshiroq tushunadi
++ Sahifa avtomatik chiroyli bo'lib qoladi
+o Ekran o'quvchilar qulayroq ishlaydi
+o Kod o'qilishi osonlashadi
+---
+# 🏠 Uyga vazifa
+1. Yangiliklar saytini **F12 → Elements** da oching: qaysi semantik teglar bor — yozing
+2. "Sinfimiz gazetasi": `header` + `nav`, `main` da 3 ta `article` (`<time>` bilan), `aside` (tug'ilgan kunlar), `footer`
+---
+# ✅ Yodda tuting
+- Semantik teg — nomi mazmunini aytadigan teg
+- `header` `nav` `main` `section` `article` `aside` `footer`
+- Mustaqil mazmun — `article`, bo'lim — `section`, dizayn uchun — `div`/`span`
+- Semantika: **SEO + accessibility + o'qiluvchanlik**
+- Ko'rinishga ta'sir qilmaydi — dizayn CSS'ning ishi

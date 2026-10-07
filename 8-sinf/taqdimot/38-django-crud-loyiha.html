@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>38-mavzu: CRUD amallarini yaratish. CRUD asosida mini loyiha — taqdimot</title>
+<meta name="description" content="Maktab blogini to&#x27;liq CRUD ilovaga aylantirish: ro&#x27;yxat (sahifalash bilan), batafsil ko&#x27;rish, yaratish, tahrirlash, o&#x27;chirish (tasdiqlash bilan), faqat muallifga ruxsat; xuddi shu ishni Class Based View&#x27;lar (ListView, DetailView, CreateView, UpdateView, DeleteView) bilan qilish; sinovdan o&#x27;tkazish.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#1F7A4D">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">🏁</div><div class="cover-kicker">38-mavzu · IV bob. Python, PostgreSQL va Django</div><h1>CRUD amallarini yaratish. CRUD asosida mini loyiha</h1><p>Maktab blogini to&#x27;liq CRUD ilovaga aylantirish: ro&#x27;yxat (sahifalash bilan), batafsil ko&#x27;rish, yaratish, tahrirlash, o&#x27;chirish (tasdiqlash bilan), faqat muallifga ruxsat; xuddi shu ishni Class Based View&#x27;lar (ListView, DetailView, CreateView, UpdateView, DeleteView) bilan qilish; sinovdan o&#x27;tkazish.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Model, View, Template va Form&#x27;ni <b>bitta to&#x27;liq ilovaga</b> birlashtirish</li><li class="lv0">4 ta CRUD amali — veb-interfeys orqali</li><li class="lv0"><b>Ruxsatlar:</b> faqat muallif tahrirlaydi va o&#x27;chiradi</li><li class="lv0"><b>Sahifalash</b> (pagination)</li><li class="lv0">Xuddi shu ilova — tayyor <b>Class Based View</b>&#x27;lar bilan</li><li class="lv0"><b>Sinov</b> (21-loyiha: Blog veb-ilovasi)</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Reja: CRUD = 5 ta sahifa</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Amal</th><th>URL</th><th>Shablon</th><th>Kim uchun</th></tr></thead><tbody><tr><td>R — ro&#x27;yxat</td><td><code>/</code></td><td><code>maqola_list.html</code></td><td>Hamma</td></tr><tr><td>R — batafsil</td><td><code>/maqola/&lt;id&gt;/</code></td><td><code>maqola_detail.html</code></td><td>Hamma</td></tr><tr><td>C — yaratish</td><td><code>/maqola/yangi/</code></td><td><code>maqola_form.html</code></td><td>Kirganlar</td></tr><tr><td>U — tahrirlash</td><td><code>/maqola/&lt;id&gt;/tahrirlash/</code></td><td><code>maqola_form.html</code> (o&#x27;sha!)</td><td>Muallif</td></tr><tr><td>D — o&#x27;chirish</td><td><code>/maqola/&lt;id&gt;/ochirish/</code></td><td><code>maqola_confirm_delete.html</code></td><td>Muallif</td></tr></tbody></table><div class="s-big">Har qanday CRUD ilovaning &quot;retsepti&quot;: kutubxona, talabalar, mahsulotlar...</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>1. URL&#x27;lar</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/urls.py</div><pre><code class="language-python">urlpatterns = [
+    path(&quot;&quot;, views.maqola_royxat, name=&quot;bosh&quot;),
+    path(&quot;maqola/yangi/&quot;, views.maqola_yaratish, name=&quot;yaratish&quot;),   # &lt;id&gt; dan OLDIN
+    path(&quot;maqola/&lt;int:id&gt;/&quot;, views.maqola_batafsil, name=&quot;maqola&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/tahrirlash/&quot;, views.maqola_tahrirlash, name=&quot;tahrirlash&quot;),
+    path(&quot;maqola/&lt;int:id&gt;/ochirish/&quot;, views.maqola_ochirish, name=&quot;ochirish&quot;),
+]</code></pre></div><ul class="s-list"><li class="lv0">Aniq yo&#x27;l (<code>yangi/</code>) o&#x27;zgaruvchili yo&#x27;ldan <b>oldin</b> yoziladi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>1. Forma</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/forms.py</div><pre><code class="language-python">class MaqolaForm(forms.ModelForm):
+    class Meta:
+        model = Maqola
+        fields = [&quot;sarlavha&quot;, &quot;kategoriya&quot;, &quot;matn&quot;, &quot;chop_etilgan&quot;]
+
+    def clean_sarlavha(self):
+        s = self.cleaned_data[&quot;sarlavha&quot;].strip()
+        if len(s) &lt; 5:
+            raise forms.ValidationError(&quot;Sarlavha kamida 5 belgidan iborat bo&#x27;lsin&quot;)
+        return s</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>2. Read: ro&#x27;yxat (sahifalash) va batafsil</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.core.paginator import Paginator
+
+def maqola_royxat(request):
+    maqolalar = Maqola.objects.filter(chop_etilgan=True).select_related(&quot;kategoriya&quot;, &quot;muallif&quot;)
+    sahifa = Paginator(maqolalar, 6).get_page(request.GET.get(&quot;page&quot;))   # 6 tadan
+    return render(request, &quot;blog/maqola_list.html&quot;, {&quot;sahifa&quot;: sahifa})
+
+def maqola_batafsil(request, id):
+    maqola = get_object_or_404(Maqola, id=id)
+    if not maqola.chop_etilgan and maqola.muallif != request.user:
+        raise Http404                       # qoralama — faqat muallifga
+    return render(request, &quot;blog/maqola_detail.html&quot;, {&quot;maqola&quot;: maqola})</code></pre></div><div class="s-code"><div class="s-code-head">Django shablon</div><pre><code class="language-html">{% if sahifa.has_previous %}&lt;a href=&quot;?page={{ sahifa.previous_page_number }}&quot;&gt;← Oldingi&lt;/a&gt;{% endif %}
+{{ sahifa.number }} / {{ sahifa.paginator.num_pages }}
+{% if sahifa.has_next %}&lt;a href=&quot;?page={{ sahifa.next_page_number }}&quot;&gt;Keyingi →&lt;/a&gt;{% endif %}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>3. Create va Update — bitta forma</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">@login_required
+def maqola_yaratish(request):
+    form = MaqolaForm(request.POST or None)
+    if request.method == &quot;POST&quot; and form.is_valid():
+        maqola = form.save(commit=False)
+        maqola.muallif = request.user
+        maqola.save()
+        messages.success(request, &quot;Maqola chop etildi! 🎉&quot;)
+        return redirect(maqola)
+    return render(request, &quot;blog/maqola_form.html&quot;, {&quot;form&quot;: form, &quot;sarlavha&quot;: &quot;Yangi maqola&quot;})
+
+@login_required
+def maqola_tahrirlash(request, id):
+    maqola = get_object_or_404(Maqola, id=id)
+    if maqola.muallif != request.user:
+        return HttpResponseForbidden(&quot;Bu maqolani tahrirlash huquqingiz yo&#x27;q&quot;)
+    form = MaqolaForm(request.POST or None, instance=maqola)   # ⬅ instance!
+    if request.method == &quot;POST&quot; and form.is_valid():
+        form.save()
+        return redirect(maqola)
+    return render(request, &quot;blog/maqola_form.html&quot;, {&quot;form&quot;: form, &quot;sarlavha&quot;: &quot;Tahrirlash&quot;})</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>4. Delete — tasdiqlash va POST</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">@login_required
+def maqola_ochirish(request, id):
+    maqola = get_object_or_404(Maqola, id=id, muallif=request.user)
+    if request.method == &quot;POST&quot;:
+        maqola.delete()
+        messages.success(request, &quot;Maqola o&#x27;chirildi&quot;)
+        return redirect(&quot;blog:bosh&quot;)
+    return render(request, &quot;blog/maqola_confirm_delete.html&quot;, {&quot;maqola&quot;: maqola})</code></pre></div><div class="s-code"><div class="s-code-head">maqola_confirm_delete.html</div><pre><code class="language-html">&lt;h1&gt;O&#x27;chirishni tasdiqlang&lt;/h1&gt;
+&lt;p&gt;«{{ maqola.sarlavha }}» maqolasini o&#x27;chirmoqchimisiz? Qaytarib bo&#x27;lmaydi.&lt;/p&gt;
+&lt;form method=&quot;post&quot;&gt;
+  {% csrf_token %}
+  &lt;button class=&quot;tugma qizil&quot;&gt;Ha, o&#x27;chirish&lt;/button&gt;
+  &lt;a href=&quot;{{ maqola.get_absolute_url }}&quot;&gt;Yo&#x27;q, ortga&lt;/a&gt;
+&lt;/form&gt;</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Xavfsizlik: ikki qoida</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Ruxsatni serverda tekshiring.</b> Tugmani shablonda yashirish yetmaydi — ayyor foydalanuvchi <code>/maqola/5/tahrirlash/</code> ni qo&#x27;lda yozadi</div></div><div class="s-step"><span class="n">2</span><div><b>O&#x27;chirish — faqat POST.</b> GET bilan o&#x27;chirsak, oddiy havola yoki begona saytdagi <code>&lt;img&gt;</code> maqolani o&#x27;chirib yuboradi</div></div><div class="s-code"><div class="s-code-head">maqola_detail.html</div><pre><code class="language-html">{% if user == maqola.muallif %}       {# tugmalar faqat muallifga ko&#x27;rinadi #}
+  &lt;a href=&quot;{% url &#x27;blog:tahrirlash&#x27; maqola.id %}&quot;&gt;✏️ Tahrirlash&lt;/a&gt;
+  &lt;a href=&quot;{% url &#x27;blog:ochirish&#x27; maqola.id %}&quot;&gt;🗑 O&#x27;chirish&lt;/a&gt;
+{% endif %}</code></pre></div><div class="s-big">Shablon — qulaylik uchun, view — xavfsizlik uchun</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>5. Class Based View&#x27;lar bilan</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+class MaqolaList(ListView):
+    queryset = Maqola.objects.filter(chop_etilgan=True)
+    paginate_by = 6
+
+class MaqolaDetail(DetailView):
+    model = Maqola
+    pk_url_kwarg = &quot;id&quot;</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>5. CBV: yaratish, tahrirlash, o&#x27;chirish</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">Python</div><pre><code class="language-python">class MaqolaCreate(LoginRequiredMixin, CreateView):
+    model = Maqola
+    form_class = MaqolaForm
+    def form_valid(self, form):
+        form.instance.muallif = self.request.user
+        return super().form_valid(form)
+
+class MuallifMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.get_object().muallif == self.request.user
+
+class MaqolaUpdate(LoginRequiredMixin, MuallifMixin, UpdateView):
+    model = Maqola
+    form_class = MaqolaForm
+    pk_url_kwarg = &quot;id&quot;
+
+class MaqolaDelete(LoginRequiredMixin, MuallifMixin, DeleteView):
+    model = Maqola
+    pk_url_kwarg = &quot;id&quot;
+    success_url = reverse_lazy(&quot;blog:bosh&quot;)</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Tayyor CBV&#x27;lar</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Klass</th><th>Nima qiladi</th></tr></thead><tbody><tr><td><code>ListView</code></td><td>Ro&#x27;yxat + sahifalash</td></tr><tr><td><code>DetailView</code></td><td>Bitta obyekt (yo&#x27;q bo&#x27;lsa 404)</td></tr><tr><td><code>CreateView</code></td><td>Bo&#x27;sh forma → tekshirish → yaratish</td></tr><tr><td><code>UpdateView</code></td><td>Eski qiymatlar bilan forma → saqlash</td></tr><tr><td><code>DeleteView</code></td><td>Tasdiqlash + POST bilan o&#x27;chirish</td></tr><tr><td><code>LoginRequiredMixin</code></td><td><code>@login_required</code> ning CBV varianti</td></tr><tr><td><code>UserPassesTestMixin</code></td><td><code>test_func()</code> False → 403</td></tr></tbody></table><ul class="s-list"><li class="lv0">~80 qator view → ~40 qator</li><li class="lv0">Shablon nomlari avtomatik: <code>model_list.html</code>, <code>model_detail.html</code>, <code>model_form.html</code>, <code>model_confirm_delete.html</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>6. Sinovdan o&#x27;tkazish</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>#</th><th>Ssenariy</th><th>Kutilgan natija</th></tr></thead><tbody><tr><td>1</td><td>Mehmon bosh sahifani ochadi</td><td>&quot;Yangi maqola&quot; tugmasi yo&#x27;q</td></tr><tr><td>2</td><td>Mehmon <code>/maqola/yangi/</code> ni ochadi</td><td>Login sahifasiga</td></tr><tr><td>3</td><td>Ali 3 belgili sarlavha bilan yaratadi</td><td>Xato, ma&#x27;lumot yo&#x27;qolmaydi</td></tr><tr><td>4</td><td>Ali to&#x27;g&#x27;ri maqola yaratadi</td><td>Maqola sahifasi + yashil xabar</td></tr><tr><td>5</td><td>Vali Ali&#x27;ning maqolasini ochadi</td><td>Tahrirlash tugmalari yo&#x27;q</td></tr><tr><td>6</td><td>Vali <code>/maqola/ID/tahrirlash/</code> ni qo&#x27;lda ochadi</td><td><b>403 Forbidden</b></td></tr><tr><td>7</td><td>Ali maqolani o&#x27;chiradi</td><td>Tasdiqlash → &quot;Ha&quot; → yo&#x27;q</td></tr><tr><td>8</td><td>15 ta maqola</td><td>3 ta sahifa</td></tr><tr><td>9</td><td><code>/maqola/9999/</code></td><td>404</td></tr></tbody></table><ul class="s-list"><li class="lv0">Ikki brauzerda (biri <b>Inkognito</b>) ikki foydalanuvchi bilan tekshiring</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Avtomatik test</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">blog/tests.py</div><pre><code class="language-python">from django.test import TestCase
+
+class MaqolaTestlari(TestCase):
+    def setUp(self):
+        self.ali = User.objects.create_user(&quot;ali&quot;, password=&quot;parol12345&quot;)
+        self.vali = User.objects.create_user(&quot;vali&quot;, password=&quot;parol12345&quot;)
+        kat = Kategoriya.objects.create(nomi=&quot;Sport&quot;, slug=&quot;sport&quot;)
+        self.m = Maqola.objects.create(sarlavha=&quot;Test maqola&quot;, matn=&quot;...&quot;, kategoriya=kat, muallif=self.ali)
+
+    def test_bosh_sahifa_ochiladi(self):
+        self.assertEqual(self.client.get(reverse(&quot;blog:bosh&quot;)).status_code, 200)
+
+    def test_begona_tahrirlay_olmaydi(self):
+        self.client.login(username=&quot;vali&quot;, password=&quot;parol12345&quot;)
+        javob = self.client.get(reverse(&quot;blog:tahrirlash&quot;, args=[self.m.id]))
+        self.assertEqual(javob.status_code, 403)</code></pre></div><div class="s-code"><div class="s-code-head">Terminal</div><pre><code class="language-bash">python manage.py test blog        # Ran 2 tests ... OK</code></pre></div><ul class="s-list"><li class="lv0">Testlar <b>vaqtinchalik bazada</b> ishlaydi — haqiqiy ma&#x27;lumotga tegmaydi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot (21-loyiha)</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>URL, forma, view va shablonlarni qo&#x27;shing (funksiya variantida)</div></div><div class="s-step"><span class="n">2</span><div><b>9 ta ssenariyni</b> bajaring va belgilang</div></div><div class="s-step"><span class="n">3</span><div>View&#x27;larni <b>CBV</b> variantiga o&#x27;tkazing va qayta tekshiring</div></div><div class="s-step"><span class="n">4</span><div><b>&quot;Mening maqolalarim&quot;</b> — <code>/mening/</code> (qoralamalar bilan)</div></div><div class="s-step"><span class="n">5</span><div>GitHub&#x27;ga push; <b>README</b>: tavsif, texnologiyalar, ishga tushirish, skrinshotlar</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ Aniq yo&#x27;llarni (<code>maqola/yangi/</code>) <code>&lt;str:...&gt;</code> dan <b>keyin</b> yozish</li><li class="lv0">❌ Tahrirlashda <code>instance=</code> unutilgan — yangi nusxa yaratiladi</li><li class="lv0">❌ Ruxsat <b>faqat shablonda</b> tekshirilgan</li><li class="lv0">❌ <b>GET</b> so&#x27;rov bilan o&#x27;chirish</li><li class="lv0">❌ <code>TemplateDoesNotExist: blog/maqola_form.html</code> — CBV standart nomni qidiryapti</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">ModelForm bilan mavjud obyektni tahrirlash uchun formaga nima beriladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>id=</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>object=</code></span></button><button class="opt" data-ok="1"><span class="l">C</span><span><code>instance=</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>update=True</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">&quot;Faqat muallif tahrirlay oladi&quot; tekshiruvi qayerda bo&#x27;lishi SHART?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span>View&#x27;da (serverda)</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>Faqat shablonda</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>CSS&#x27;da</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>JavaScript&#x27;da</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Ro&#x27;yxatni sahifalarga bo&#x27;luvchi Django klassi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>Splitter</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>PageView</span></button><button class="opt" data-ok="0"><span class="l">C</span><span>Limiter</span></button><button class="opt" data-ok="1"><span class="l">D</span><span>Paginator</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">CBV&#x27;da tizimga kirishni talab qiluvchi mixin?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>AuthMixin</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>UserPassesTestMixin</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>LoginRequiredMixin</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>SessionMixin</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 IV bob yakunlovchi loyiha (bittasini tanlang)</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">📚 <b>Kutubxona boshqaruv tizimi</b> (22-loyiha): kitoblar CRUD, &quot;olish/qaytarish&quot;</li><li class="lv0">🎓 <b>Talabalar tizimi</b> (23-loyiha): talabalar, guruhlar, baholar, o&#x27;rtacha</li><li class="lv0">📌 <b>E&#x27;lonlar taxtasi:</b> rasm bilan e&#x27;lonlar, toifa va qidiruv filtri</li><li class="lv0">Talab: model + admin + forma + 5 sahifa + ruxsatlar + sahifalash + 2 ta test</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🎉 IV bob yakunlandi!</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">CRUD = ro&#x27;yxat, batafsil, yaratish, tahrirlash, o&#x27;chirish</li><li class="lv0"><code>ModelForm(request.POST, instance=obj)</code> — bitta forma</li><li class="lv0">Ruxsatlar <b>serverda</b>; o&#x27;chirish — tasdiqlash + POST</li><li class="lv0"><code>Paginator</code>; <code>ListView</code>, <code>DetailView</code>, <code>CreateView</code>, <code>UpdateView</code>, <code>DeleteView</code></li></ul><div class="s-big">Keyingi bob: API qo&#x27;shamiz va saytni internetga chiqaramiz!</div></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>39. Django REST Framework (DRF) ga kirish. Serializerlar va API View&#x27;lar</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>38-django-crud-loyiha.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../38-django-crud-loyiha.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/38-django-crud-loyiha.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "37-django-admin-forms.html", "next": "39-drf-serializer.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

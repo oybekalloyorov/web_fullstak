@@ -1,0 +1,201 @@
+# Bugun nimani o'rganamiz?
+- Bir nechta jadvalni **JOIN** bilan birlashtirish
+- **INNER, LEFT, RIGHT** JOIN farqi
+- Qidiruvni tezlashtiruvchi **indekslar**
+- **Ma'lumotlar yaxlitligi** va cheklovlar
+- Zaxira nusxa: **backup** va **restore**
+---
+# Nima uchun JOIN kerak?
+- Ma'lumotlarni takrorlamaslik uchun ajratdik: o'quvchilar, sinflar, baholar alohida
+- Savol: "Ali qaysi sinfda va **sinf rahbari kim**?" → ikkala jadval kerak
+> **Ikki ro'yxat:** birinchisida "O'quvchi — sinf raqami", ikkinchisida "Sinf raqami — rahbar". Ali'ning raqamini topib, ikkinchi ro'yxatdan qidirasiz. JOIN buni millionlab qator uchun bir zumda qiladi.
+---
+# INNER JOIN
+```sql
+SELECT o.ism, o.familiya, s.nomi AS sinf, s.sinf_rahbari
+FROM oquvchilar AS o
+JOIN sinflar AS s ON o.sinf_id = s.id      -- JOIN = INNER JOIN
+ORDER BY s.nomi, o.familiya;
+```
+```output
+ ism     | familiya  | sinf | sinf_rahbari
+---------+-----------+------+-----------------
+ Zarina  | Karimova  | 8-A  | Karimova Nodira
+ Ali     | Valiyev   | 8-A  | Karimova Nodira
+ Bobur   | Toshmatov | 8-B  | Rasulov Akmal
+```
+- `ON o.sinf_id = s.id` — qaysi ustunlar bo'yicha moslash (odatda **FK = PK**)
+- `o`, `s` — **taxalluslar**; bir xil nomli ustunlarni (`id`) aniq ko'rsatadi
+---
+# JOIN turlari
+| Tur | Natija |
+|---|---|
+| `INNER JOIN` | Faqat **ikkala** jadvalda mos keladiganlar (kesishma) |
+| `LEFT JOIN` | **Chap** jadvalning hammasi + o'ngdan moslar (yo'q bo'lsa NULL) |
+| `RIGHT JOIN` | **O'ng** jadvalning hammasi + chapdan moslar |
+| `FULL JOIN` | Ikkala jadvalning hammasi |
+```sql
+SELECT o.ism, s.nomi FROM oquvchilar o LEFT JOIN sinflar s ON o.sinf_id = s.id;
+-- "Yangi Keldi" ham chiqadi, sinfi — NULL
+```
+= "Mos kelmaganlar ko'rinishi kerakmi?" Yo'q → INNER. Chapning hammasi → LEFT
+---
+# LEFT JOIN bilan "yo'q"larni topish
+```sql
+-- Hali birorta ham baho olmagan o'quvchilar
+SELECT o.ism, o.familiya
+FROM oquvchilar o
+LEFT JOIN baholar b ON b.oquvchi_id = o.id
+WHERE b.id IS NULL;
+```
+- Bahosi yo'q o'quvchida `b` ustunlari **NULL** bo'ladi
+- Amalda `RIGHT JOIN` kam ishlatiladi — jadvallar o'rnini almashtirib `LEFT` yoziladi
+---
+# Uch jadvalni va N:M ni birlashtirish
+```sql
+SELECT o.ism || ' ' || o.familiya AS oquvchi, s.nomi AS sinf, b.fan, b.baho
+FROM baholar b
+JOIN oquvchilar o ON b.oquvchi_id = o.id
+JOIN sinflar s    ON o.sinf_id = s.id
+WHERE b.fan = 'Matematika'
+ORDER BY b.baho DESC;
+
+-- Ko'pga-ko'p: oraliq jadval orqali
+SELECT o.ism, t.nomi AS togarak
+FROM oquvchilar o
+JOIN azoliklar a  ON a.oquvchi_id = o.id
+JOIN togaraklar t ON t.id = a.togarak_id;
+```
+---
+# Indekslar — qidiruvni tezlashtirish
+> **Kitob ko'rsatkichi:** "Fotosintez"ni topish uchun 300 betni varaqlamaysiz — oxiridagi ko'rsatkichga qaraysiz: "47, 112-betlar". Indeks — baza uchun shunday ko'rsatkich.
+```sql
+CREATE INDEX idx_oquvchilar_familiya ON oquvchilar (familiya);
+CREATE INDEX idx_baholar_oquvchi ON baholar (oquvchi_id);   -- FK uchun foydali
+EXPLAIN SELECT * FROM oquvchilar WHERE familiya = 'Karimova';
+DROP INDEX idx_oquvchilar_familiya;
+```
+- `PRIMARY KEY` va `UNIQUE` ga indeks **avtomatik**
+- O'qishni tezlashtiradi, yozishni biroz sekinlashtiradi — faqat **tez-tez qidiriladigan** ustunlarga
+---
+# Ma'lumotlar yaxlitligi (data integrity)
+= Ma'lumot har doim to'g'ri, izchil va ishonchli — buni bazaning o'ziga topshiring
+| Yaxlitlik | Kafolat | Vosita |
+|---|---|---|
+| Obyekt | Har qator noyob | `PRIMARY KEY` |
+| Havola | FK doim mavjud qatorga ishora qiladi | `REFERENCES` |
+| Qiymat | To'g'ri tur va chegara | `NOT NULL`, `UNIQUE`, `CHECK` |
+---
+# FK qatori o'chirilganda
+| Variant | Xatti-harakat | Misol |
+|---|---|---|
+| `RESTRICT` (standart) | O'chirishga ruxsat bermaydi | O'quvchilari bor sinf |
+| `CASCADE` | Bog'liqlar ham o'chadi | O'quvchi → baholari |
+| `SET NULL` | FK NULL bo'ladi | Sinf yopilsa — "sinfsiz" |
+```sql
+DELETE FROM sinflar WHERE id = 1;
+-- ❌ violates foreign key constraint ... is still referenced from table "oquvchilar"
+ALTER TABLE sinflar ADD CONSTRAINT xona_musbat CHECK (xona > 0);
+```
+---
+# Backup va Restore
+= "Tekshirilmagan zaxira — zaxira emas" — tiklashni ham sinab ko'ring
+- **pgAdmin:** baza → o'ng tugma → **Backup...** (Custom) / yangi baza → **Restore...**
+```bash
+pg_dump -U postgres -d maktab -f maktab_backup.sql       # SQL fayl
+pg_dump -U postgres -d maktab -F c -f maktab.backup      # siqilgan
+
+createdb -U postgres maktab_yangi
+psql -U postgres -d maktab_yangi -f maktab_backup.sql     # tiklash
+pg_restore -U postgres -d maktab_yangi maktab.backup
+```
+- `.sql` faylni oching — u `CREATE TABLE` va `INSERT` lardan iborat!
+! Nusxani boshqa joyga ham ko'chiring (fleshka, bulut)
+---
+## Amaliy mashg'ulot
+19-loyiha: mahsulotlar va buyurtmalar bazasi
+---
+# Amaliyot: jadvallar
+```sql
+CREATE TABLE mijozlar (
+    id SERIAL PRIMARY KEY, ism VARCHAR(100) NOT NULL, telefon VARCHAR(20) UNIQUE
+);
+CREATE TABLE mahsulotlar (
+    id SERIAL PRIMARY KEY, nomi VARCHAR(100) NOT NULL,
+    narx NUMERIC(12, 2) NOT NULL CHECK (narx > 0),
+    soni INTEGER NOT NULL DEFAULT 0 CHECK (soni >= 0)
+);
+CREATE TABLE buyurtmalar (
+    id SERIAL PRIMARY KEY,
+    mijoz_id INTEGER NOT NULL REFERENCES mijozlar(id),
+    sana TIMESTAMP DEFAULT NOW(),
+    holat VARCHAR(20) DEFAULT 'yangi'
+);
+CREATE TABLE buyurtma_tarkibi (
+    buyurtma_id INTEGER REFERENCES buyurtmalar(id) ON DELETE CASCADE,
+    mahsulot_id INTEGER REFERENCES mahsulotlar(id),
+    soni INTEGER NOT NULL CHECK (soni > 0),
+    narx NUMERIC(12, 2) NOT NULL,
+    PRIMARY KEY (buyurtma_id, mahsulot_id)
+);
+```
+---
+# Amaliyot: so'rovlar
+```sql
+-- 1. Buyurtma, mijoz, sana, holat
+SELECT b.id, m.ism, b.sana, b.holat
+FROM buyurtmalar b JOIN mijozlar m ON m.id = b.mijoz_id;
+
+-- 2. 1-buyurtma tarkibi va summasi
+SELECT p.nomi, t.soni, t.narx, t.soni * t.narx AS summa
+FROM buyurtma_tarkibi t JOIN mahsulotlar p ON p.id = t.mahsulot_id
+WHERE t.buyurtma_id = 1;
+
+-- 3. Buyurtma bermagan mijozlar
+SELECT m.ism FROM mijozlar m
+LEFT JOIN buyurtmalar b ON b.mijoz_id = m.id
+WHERE b.id IS NULL;
+```
+4. Hech qachon sotilmagan mahsulotlar
+5. **Backup** → qatorni o'chiring → yangi bazaga **restore** → tekshiring
+---
+# Ko'p uchraydigan xatolar
+- ❌ `column reference "id" is ambiguous` — `o.id` yoki `s.id` deb aniq yozing
+- ❌ `ON` shartini unutish yoki `o.id = s.id` kabi noto'g'ri bog'lash
+- ❌ `LEFT JOIN` dan keyin o'ng jadval bo'yicha `WHERE` — INNER'ga aylanib qoladi
+- ❌ Zaxirani o'sha kompyuterda saqlash
+---
+? Faqat ikkala jadvalda ham mos keladigan qatorlarni qaytaruvchi JOIN?
++ INNER JOIN
+o LEFT JOIN
+o RIGHT JOIN
+o FULL JOIN
+---
+? Barcha o'quvchilarni (sinfi yo'qlarini ham) sinf nomi bilan chiqarish uchun?
+o `oquvchilar INNER JOIN sinflar`
+o `sinflar INNER JOIN oquvchilar`
++ `oquvchilar LEFT JOIN sinflar`
+o `oquvchilar RIGHT JOIN sinflar`
+---
+? Indeksning asosiy vazifasi?
+o Ma'lumotlarni shifrlash
++ Qidiruvni tezlashtirish
+o Zaxira nusxa olish
+o Jadvallarni bog'lash
+---
+? PostgreSQL bazasining zaxira nusxasini oluvchi buyruq?
+o pg_backup
++ pg_dump
+o COPY DATABASE
+o SAVE DATABASE
+---
+# 🏠 Uyga vazifa
+1. **Kutubxona:** har bir ijara (kitob, muallif, o'quvchi); qaytarilmaganlar; hech kim olmagan kitoblar
+2. Haftalik avtomatik backup nega muhim va qanday tashkil qilinadi — yozing
+---
+# ✅ Yodda tuting
+- `SELECT ... FROM a JOIN b ON a.fk = b.id`; taxalluslar
+- **INNER** — moslar; **LEFT** — chapning hammasi; "yo'q"lar: `LEFT JOIN + IS NULL`
+- **Indeks** — tez qidiruv; PK/UNIQUE'da avtomatik
+- Yaxlitlik: PK, FK, NOT NULL, UNIQUE, CHECK; `CASCADE / RESTRICT / SET NULL`
+- `pg_dump` / `pg_restore` — tiklashni sinab ko'ring!

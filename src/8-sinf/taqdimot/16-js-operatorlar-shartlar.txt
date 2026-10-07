@@ -1,0 +1,212 @@
+# Bugun nimani o'rganamiz?
+- Arifmetik amallar va **qoldiq** (`%`)
+- Taqqoslash: `==` va `===` farqi
+- Mantiqiy operatorlar: **VA, YOKI, EMAS**
+- Dasturga "qaror qabul qildirish": `if`, `else if`, `else`, `switch`
+- Baho hisoblovchi, kirish tizimi va boshqa dasturlar
+---
+# Arifmetik operatorlar
+```js
+const a = 17, b = 5;
+a + b      // 22
+a - b      // 12
+a * b      // 85
+a / b      // 3.4
+a % b      // 2   ← QOLDIQ: 17 = 5·3 + 2
+a ** 2     // 289 daraja
+(a + b) * 2  // 44 — qavslar avval
+```
+::
+- **`%` juda foydali:**
+- `son % 2 === 0` → juft
+- `son % 3 === 0` → 3 ga bo'linadi
+- `1234 % 10` → 4 (oxirgi raqam)
+- 135 daqiqa → `Math.floor(135/60)` soat, `135 % 60` daqiqa
+---
+# Math obyekti
+```js
+Math.round(4.6)    // 5   yaxlitlash
+Math.floor(4.9)    // 4   pastga
+Math.ceil(4.1)     // 5   yuqoriga
+Math.max(3, 9, 2)  // 9
+Math.sqrt(81)      // 9
+Math.abs(-7)       // 7
+Math.random()      // 0..1 tasodifiy
+Math.floor(Math.random() * 6) + 1   // 🎲 1..6
+```
+---
+# Tayinlash operatorlari
+```js
+let ball = 10;
+ball += 5;   // 15  (ball = ball + 5)
+ball -= 3;   // 12
+ball *= 2;   // 24
+ball /= 4;   // 6
+ball++;      // 7   (+1)
+ball--;      // 6   (-1)
+```
+---
+# Taqqoslash operatorlari
+| Operator | Ma'nosi | Misol | Natija |
+|---|---|---|---|
+| `>` `<` | katta / kichik | `10 > 7` | true |
+| `>=` `<=` | katta-teng / kichik-teng | `18 >= 18` | true |
+| `===` | qat'iy teng (qiymat **va tur**) | `5 === 5` | true |
+| `!==` | qat'iy teng emas | `5 !== 3` | true |
+```js
+5 == "5"    // true  😱 turni o'zicha o'zgartiradi
+5 === "5"   // false ✅
+```
+= Doim === ishlating! Va: = tayinlash, === taqqoslash
+---
+# Mantiqiy operatorlar
+| Operator | Ma'nosi | Qachon true |
+|---|---|---|
+| `&&` | VA | Ikkalasi ham rost |
+| `\|\|` | YOKI | Kamida bittasi rost |
+| `!` | EMAS | Teskarisiga aylantiradi |
+> **VA:** "Kinoga borasan — vazifa bajarilgan **va** xona yig'ilgan bo'lsa". **YOKI:** "Muzqaymoq — a'lo baho **yoki** tug'ilgan kun".
+```js
+const son = 15;
+son >= 10 && son <= 20   // true — oraliqda
+```
+---
+# if / else — dastur qaror qabul qiladi
+```js
+const harorat = 28;
+
+if (harorat > 25) {
+  console.log("Issiq! Kepka kiying 🧢");
+} else {
+  console.log("Havo salqin 🧥");
+}
+```
+- Shart `true` bo'lsa — birinchi blok, `false` bo'lsa — `else` bloki
+---
+# else if — bir nechta variant
+```js
+const ball = 78;
+let baho;
+if (ball >= 86) {
+  baho = 5;
+} else if (ball >= 71) {
+  baho = 4;
+} else if (ball >= 56) {
+  baho = 3;
+} else {
+  baho = 2;
+}
+```
+::
+- Yuqoridan pastga tekshiriladi
+- **Birinchi rost** shart bajariladi — qolganlari tekshirilmaydi
+- 78 ≥ 86? yo'q → 78 ≥ 71? **HA** → baho = 4
+! Tartib muhim! `>= 56` birinchi yozilsa, 95 ball ham "3" bo'ladi
+---
+# Ichma-ich shart va ternary
+```js
+if (login === "admin") {
+  if (parol === "12345") {
+    console.log("✅ Xush kelibsiz!");
+  } else {
+    console.log("❌ Parol noto'g'ri");
+  }
+}
+
+// Ternary: shart ? rost : yolg'on
+const holat = yosh >= 18 ? "katta" : "voyaga yetmagan";
+console.log(`${son} — ${son % 2 === 0 ? "juft" : "toq"}`);
+```
+- Ternary — oddiy ikki variantli tanlov uchun
+---
+# switch — ko'p aniq variant
+```js
+switch (kun) {
+  case 1:
+    kunNomi = "Dushanba";
+    break;
+  case 2:
+    kunNomi = "Seshanba";
+    break;
+  case 6:
+  case 7:
+    kunNomi = "Dam olish kuni 🎉";
+    break;
+  default:
+    kunNomi = "Noto'g'ri kun";
+}
+```
+::
+- Bitta qiymatni ko'p aniq variant bilan solishtirish
+- Qat'iy taqqoslash (`===`)
+- `default` — hech biri mos kelmasa
+! `break` unutilsa — keyingi `case` lar ham bajariladi!
+---
+# Amaliyot: kirish tizimi
+```js
+const TOGRI_LOGIN = "malika";
+const TOGRI_PAROL = "qwerty123";
+const login = prompt("Login:");
+const parol = prompt("Parol:");
+
+if (login === null || parol === null) {
+  alert("Kirish bekor qilindi");
+} else if (login === "" || parol === "") {
+  alert("⚠️ Bo'sh bo'lmasin");
+} else if (login.toLowerCase() === TOGRI_LOGIN && parol === TOGRI_PAROL) {
+  alert(`✅ Xush kelibsiz, ${login}!`);
+} else {
+  alert("❌ Login yoki parol noto'g'ri");
+}
+```
+note: Muhokama: nega loginni toLowerCase() bilan, parolni aynan solishtiramiz?
+---
+# Amaliyot: topshiriqlar
+1. **Juft yoki toq:** juft/toq, musbat/manfiy/nol
+2. **Baho aniqlovchi:** 0–100 tekshiruvi + baho va izoh
+3. **Kabisa yili:** 4 ga bo'linsa va 100 ga bo'linmasa, yoki 400 ga
+4. **Chipta narxi:** yoshga qarab + seshanba 50% chegirma
+5. **Oy nomi (switch):** 1–12 → oy nomi va fasl
+---
+# Ko'p uchraydigan xatolar
+- ❌ `if (ball = 100)` — tayinlash! To'g'risi `===`
+- ❌ `if (10 < son < 20)` — `son > 10 && son < 20` bo'lishi kerak
+- ❌ `"9" > "10"` → true — matnlar alifbo bo'yicha; `Number()`!
+- ❌ `switch` da `break` unutilgan
+- ❌ `{ }` qavslar yopilmagan
+---
+? `17 % 5` natijasi?
+o 3.4
+o 3
++ 2
+o 85
+---
+? `5 === "5"` natijasi?
+o true
++ false
+o Xato
+o undefined
+---
+? `let x = 10; x += 5; x *= 2;` dan keyin `x` nechaga teng?
+o 17
+o 20
+o 25
++ 30
+---
+? Ball 92. `if (ball >= 56) log("3"); else if (ball >= 86) log("5");` nima chiqaradi?
+o 5
++ 3
+o Ikkalasi ham
+o Hech narsa
+---
+# 🏠 Uyga vazifa
+1. **BMI:** vazn / bo'y² va izoh (kam, me'yorda, ortiqcha)
+2. **Uchburchak:** mavjudmi va qanday turda?
+3. **Tosh-qaychi-qog'oz:** kompyuter `Math.random()` bilan tanlaydi
+---
+# ✅ Yodda tuting
+- Arifmetika: `+ - * / % **`; `%` — qoldiq
+- Taqqoslash: `> < >= <= === !==` — doim `===`
+- Mantiq: `&&` ikkalasi, `||` bittasi, `!` teskari
+- `if / else if / else` — birinchi rost shart; tartibga e'tibor!
+- Ternary `shart ? a : b`; `switch` — `break` bilan

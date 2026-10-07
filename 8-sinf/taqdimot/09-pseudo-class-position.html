@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9-mavzu: CSS pseudo-class va pseudo-elementlar. CSS position — taqdimot</title>
+<meta name="description" content=":hover, :focus, :active, :nth-child kabi holat selektorlari; ::before, ::after, ::first-letter pseudo-elementlari; static, relative, absolute, fixed, sticky pozitsiyalari va z-index.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="../../assets/css/slides.css">
+</head>
+<body style="--accent:#E2552B">
+<div class="deck" id="deck">
+<section class="slide cover"><div class="cover-inner"><div class="cover-icon">📍</div><div class="cover-kicker">9-mavzu · I bob. HTML va CSS</div><h1>CSS pseudo-class va pseudo-elementlar. CSS position</h1><p>:hover, :focus, :active, :nth-child kabi holat selektorlari; ::before, ::after, ::first-letter pseudo-elementlari; static, relative, absolute, fixed, sticky pozitsiyalari va z-index.</p><div class="cover-course">8-sinf · Web Full-stack dasturlash</div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Bugun nimani o&#x27;rganamiz?</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Holatga qarab uslub: <b>sichqoncha ustida, bosilganda, tanlanganda</b></li><li class="lv0">Birinchi, oxirgi, juft-toq elementlarni tanlash</li><li class="lv0">HTML&#x27;siz &quot;virtual&quot; elementlar: <code>::before</code>, <code>::after</code></li><li class="lv0">Elementni aniq joyga qo&#x27;yish: <b>position</b></li><li class="lv0">Qatlamlar tartibi: <b>z-index</b></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Pseudo-class — element holati</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Bitta ikki nuqta bilan: <code>a:hover</code></li></ul><div class="s-box analogy"><span class="ico">💡</span><div><b>Svetofor:</b> svetofor bitta, holati o&#x27;zgaradi. Tugma ham bitta: oddiy, ustida (<code>:hover</code>), bosilgan (<code>:active</code>), tanlangan (<code>:focus</code>).</div></div><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.tugma        { background: #4f46e5; cursor: pointer; }
+.tugma:hover  { background: #4338ca; }          /* sichqoncha ustida */
+.tugma:active { transform: scale(0.95); }       /* bosilgan payt */
+.tugma:focus  { outline: 3px solid #fbbf24; }   /* Tab bilan */
+input:focus   { border-color: #4f46e5; }</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Havola holatlari</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">a:link    { color: #2563eb; }   /* bosilmagan */
+a:visited { color: #7c3aed; }   /* ilgari bosilgan */
+a:hover   { color: #dc2626; }   /* ustida */
+a:active  { color: #ea580c; }   /* bosilgan payt */</code></pre></div><div class="s-big">&quot;LoVe HAte&quot; — L → V → H → A tartibida yozing</div><ul class="s-list"><li class="lv0"><code>cursor: pointer</code> — ko&#x27;rsatkich &quot;qo&#x27;l&quot;ga aylanadi: bosiladigan narsalarga qo&#x27;ying</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Tuzilma bo&#x27;yicha tanlash</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Selektor</th><th>Nimani tanlaydi</th></tr></thead><tbody><tr><td><code>:first-child</code> / <code>:last-child</code></td><td>Birinchi / oxirgi farzand</td></tr><tr><td><code>:nth-child(3)</code></td><td>3-farzand</td></tr><tr><td><code>:nth-child(even)</code> / <code>(odd)</code></td><td>Juft / toq — &quot;zebra&quot; jadval</td></tr><tr><td><code>:nth-child(3n)</code></td><td>Har uchinchisi: 3, 6, 9...</td></tr><tr><td><code>:not(.x)</code></td><td><code>.x</code> bo&#x27;lmaganlar</td></tr><tr><td><code>:checked</code></td><td>Belgilangan checkbox/radio</td></tr><tr><td><code>:valid</code> / <code>:invalid</code></td><td>To&#x27;g&#x27;ri / noto&#x27;g&#x27;ri to&#x27;ldirilgan maydon</td></tr></tbody></table><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">tr:nth-child(even) { background: #f1f5f9; }</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Pseudo-element — virtual qism</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Ikki marta ikki nuqta: <code>::before</code>, <code>::after</code></li></ul><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.majburiy::after { content: &quot; *&quot;; color: red; }
+.tel::before     { content: &quot;📞 &quot;; }
+
+h2.chiziqli::after {          /* sarlavha ostida bezak chiziq */
+  content: &quot;&quot;;
+  display: block;
+  width: 60px; height: 4px;
+  background: #4f46e5;
+}
+p::first-letter { font-size: 2.5em; float: left; }
+input::placeholder { color: #94a3b8; }</code></pre></div><div class="s-box warn"><span class="ico">⚠️</span><div><code>content</code> xossasi <b>majburiy</b> (bo&#x27;sh bo&#x27;lsa ham). Faqat bezak uchun — muhim ma&#x27;lumot HTML&#x27;da bo&#x27;lsin.</div></div></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Position</h2><div class="sec-sub"><p>Elementni oqimdan chiqarib, aniq joyga qo&#x27;yish</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>position qiymatlari</h2></header><div class="s-body"><div class="col"><table class="s-table"><thead><tr><th>Qiymat</th><th>Xatti-harakat</th><th>Nimaga nisbatan</th></tr></thead><tbody><tr><td><code>static</code></td><td>Standart, oddiy oqim</td><td>—</td></tr><tr><td><code>relative</code></td><td>Oqimda qoladi</td><td>O&#x27;z asl joyiga; <b>langar</b></td></tr><tr><td><code>absolute</code></td><td>Oqimdan chiqadi</td><td>Eng yaqin positionli ajdodga</td></tr><tr><td><code>fixed</code></td><td>Scrollda qimirlamaydi</td><td>Ekranga</td></tr><tr><td><code>sticky</code></td><td>Chegaraga yetgach yopishadi</td><td>Scroll konteyneriga</td></tr></tbody></table><ul class="s-list"><li class="lv0">Joy: <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code></li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>relative + absolute — eng mashhur juftlik</h2></header><div class="s-body cols"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.karta {
+  position: relative;   /* ⬅ langar */
+}
+.chegirma {
+  position: absolute;   /* ⬅ kartaga nisbatan */
+  top: 12px;
+  left: 12px;
+  background: #ef4444;
+  color: white;
+}
+.sevimli {
+  position: absolute;
+  top: 12px; right: 12px;
+}</code></pre></div></div><div class="col"><div class="s-box analogy"><span class="ico">💡</span><div><b>Muzlatgich magniti:</b> <code>relative</code> karta — muzlatgich eshigi, <code>absolute</code> belgi — magnit. Eshik qayerga borsa, magnit ham birga ketadi.</div></div><div class="s-box warn"><span class="ico">⚠️</span><div>Otada <code>position: relative</code> bo&#x27;lmasa — &quot;magnit&quot; butun sahifa burchagiga uchib ketadi!</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>fixed va sticky</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.menyu {
+  position: sticky;
+  top: 0;               /* tepaga yetganda yopishadi */
+  z-index: 10;
+}
+.yuqoriga {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;          /* doim o&#x27;ng pastki burchakda */
+  border-radius: 50%;
+}</code></pre></div><ul class="s-list"><li class="lv0"><code>sticky</code> — yopishqoq menyu</li><li class="lv0"><code>fixed</code> — &quot;Yuqoriga&quot; yoki chat tugmasi</li></ul></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>z-index — qatlamlar tartibi</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Ustma-ust tushganda <b>kattasi yuqorida</b></li><li class="lv0">Faqat <code>position</code> berilgan (static emas) elementlarda ishlaydi</li></ul><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.a { position: absolute; z-index: 1; }
+.b { position: absolute; z-index: 3; }  /* eng yuqorida */
+.c { position: absolute; z-index: 2; }</code></pre></div></div></div></section>
+<section class="slide section" data-notes=""><div class="sec-inner"><div class="sec-label">Bo'lim</div><h2>Amaliy mashg&#x27;ulot</h2><div class="sec-sub"><p>3-loyiha: maktab sahifasi</p></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: maktab sahifasi</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div><b>Sticky header</b>: logo + menyu, havolalarga <code>:hover</code></div></div><div class="s-step"><span class="n">2</span><div><b>Hero</b>: fonda maktab rasmi, ustida sarlavha</div></div><div class="s-step"><span class="n">3</span><div><b>Yangiliklar</b> kartalari (Grid) — burchakda <code>absolute</code> sana belgisi</div></div><div class="s-step"><span class="n">4</span><div><b>Ustozlar</b>: doira rasmlar, <code>:hover</code> da rangli chegara</div></div><div class="s-step"><span class="n">5</span><div><b>Dars jadvali</b>: <code>nth-child(even)</code> zebra + <code>tr:hover</code></div></div><div class="s-step"><span class="n">6</span><div><b>&quot;Yuqoriga&quot;</b> tugmasi — <code>fixed</code></div></div><div class="s-step"><span class="n">7</span><div>Sarlavhalar ostida <code>::after</code> chiziq</div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Amaliyot: yangilik kartasi</h2></header><div class="s-body"><div class="col"><div class="s-code"><div class="s-code-head">CSS</div><pre><code class="language-css">.yangilik {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  transition: box-shadow .2s;
+}
+.yangilik:hover { box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+.yangilik .sana {
+  position: absolute; top: 12px; left: 12px;
+  background: white; border-radius: 8px;
+  padding: 4px 10px; font-weight: 800; color: #4f46e5;
+}</code></pre></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>Ko&#x27;p uchraydigan xatolar</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">❌ <code>absolute</code> element sahifa burchagiga &quot;uchdi&quot; — otada <code>relative</code> yo&#x27;q</li><li class="lv0">❌ <code>::before</code> ko&#x27;rinmaydi — <code>content</code> yozilmagan</li><li class="lv0">❌ <code>sticky</code> ishlamaydi — <code>top: 0</code> yo&#x27;q yoki otada <code>overflow: hidden</code></li><li class="lv0">❌ <code>z-index: 9999</code> ham yordam bermaydi — elementda <code>position</code> yo&#x27;q</li><li class="lv0">❌ <code>a :hover</code> (bo&#x27;sh joy bilan) — butunlay boshqa selektor</li></ul></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Sichqoncha element ustiga kelganda ishlaydigan pseudo-class qaysi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>:active</code></span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>:hover</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>:focus</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>:over</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Jadvalning faqat juft qatorlarini tanlash uchun?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>tr:even</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>tr:nth(2)</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>tr:first-child</code></span></button><button class="opt" data-ok="1"><span class="l">D</span><span><code>tr:nth-child(even)</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q"><code>::after</code> ishlashi uchun qaysi xossa majburiy?</div><div class="quiz-opts"><button class="opt" data-ok="1"><span class="l">A</span><span><code>content</code></span></button><button class="opt" data-ok="0"><span class="l">B</span><span><code>display</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>position</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>color</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Scrollda ham ekranning bir joyida turadigan tugma uchun qaysi position?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span>relative</span></button><button class="opt" data-ok="0"><span class="l">B</span><span>absolute</span></button><button class="opt" data-ok="1"><span class="l">C</span><span>fixed</span></button><button class="opt" data-ok="0"><span class="l">D</span><span>static</span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide quiz" data-notes=""><header class="s-head"><h2>Savol</h2></header><div class="s-body"><div class="col"><div class="quiz-q">Kartadagi &quot;-20%&quot; belgisi kartaga nisbatan joylashishi uchun <b>kartaga</b> nima beriladi?</div><div class="quiz-opts"><button class="opt" data-ok="0"><span class="l">A</span><span><code>position: absolute</code></span></button><button class="opt" data-ok="1"><span class="l">B</span><span><code>position: relative</code></span></button><button class="opt" data-ok="0"><span class="l">C</span><span><code>position: fixed</code></span></button><button class="opt" data-ok="0"><span class="l">D</span><span><code>z-index: 1</code></span></button></div><div class="quiz-hint">Javobni tanlang — to'g'ri variant yashil bo'ladi</div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>🏠 Uyga vazifa</h2></header><div class="s-body"><div class="col"><div class="s-step"><span class="n">1</span><div>Maktab sahifasini yakunlang: barcha <code>:hover</code>, <code>:focus</code> holatlari</div></div><div class="s-step"><span class="n">2</span><div>5 xil tugma: <code>:hover</code>, <code>:active</code>, <code>:disabled</code> holatlari bilan</div></div><div class="s-step"><span class="n">3</span><div>Faqat CSS bilan <b>tooltip</b>: <code>position: absolute</code> + <code>:hover</code></div></div></div></div></section>
+<section class="slide" data-notes=""><header class="s-head"><h2>✅ Yodda tuting</h2></header><div class="s-body"><div class="col"><ul class="s-list"><li class="lv0">Pseudo-class <code>:</code> — holat: <code>:hover</code> <code>:focus</code> <code>:active</code> <code>:nth-child()</code> <code>:not()</code></li><li class="lv0">Pseudo-element <code>::</code> — <code>::before</code> <code>::after</code> (<code>content</code> majburiy), <code>::first-letter</code></li><li class="lv0"><code>relative</code> — langar; <code>absolute</code> — langarga nisbatan; <code>fixed</code> — ekranga; <code>sticky</code> — yopishqoq</li><li class="lv0"><code>z-index</code> — qatlamlar tartibi (faqat position berilganlarda)</li></ul></div></div></section>
+<section class="slide cover end"><div class="cover-inner"><div class="cover-icon">🙌</div><h1>Savollar bormi?</h1><p>Keyingi mavzu: <b>10. Moslashuvchan (responsiv) dizayn va media so&#x27;rovlar. Figma bilan ishlash</b></p><div class="cover-course">Batafsil matn, misollar va testlar: <b>09-pseudo-class-position.html</b> darsida</div></div></section>
+</div>
+<div class="bar"><div class="bar-fill" id="barFill"></div></div>
+<nav class="controls" id="controls">
+  <a class="ctl" href="index.html" title="Barcha taqdimotlar">☰</a>
+  <a class="ctl" href="../09-pseudo-class-position.html" title="Dars matni">📖</a>
+  <a class="ctl" href="pptx/09-pseudo-class-position.pptx" title="PowerPoint faylini yuklab olish" download>⬇ PPTX</a>
+  <button class="ctl" id="prevBtn" title="Oldingi (←)">‹</button>
+  <span class="counter" id="counter">1 / 1</span>
+  <button class="ctl" id="nextBtn" title="Keyingi (→)">›</button>
+  <button class="ctl" id="notesBtn" title="O'qituvchi izohlari (N)">📝</button>
+  <button class="ctl" id="fsBtn" title="To'liq ekran (F)">⛶</button>
+</nav>
+<aside class="notes" id="notes"><b>O'qituvchi uchun izoh:</b> <span id="notesText"></span></aside>
+<script>window.DECK_NAV = {"prev": "08-box-model-flexbox-grid.html", "next": "10-responsiv-dizayn-figma.html"};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="../../assets/js/slides.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ Qo'llanma saytini yig'uvchi skript (hech qanday tashqi kutubxona kerak emas).
   src/darslar/NN-nom.html     -> darslar/NN-nom.html      ("Full-stack qo'llanma" kursi)
   src/8-sinf/index.html       -> 8-sinf/index.html        (8-sinf kursi bosh sahifasi)
   src/8-sinf/NN-nom.html      -> 8-sinf/NN-nom.html       (8-sinf o'quv dasturi mavzulari)
+  src/8-sinf/taqdimot/NN-nom.txt -> 8-sinf/taqdimot/NN-nom.html (taqdimotlar, slides.py orqali)
 
 Manba fayllarda:
   * Boshida meta-blok:   <!-- title: ... | desc: ... | icon: ... | level: ... | bob: ... -->
@@ -259,6 +260,9 @@ def build_course(course):
         if meta.get("bob"):
             crumb += f' · {html.escape(meta["bob"])}'
         level = f'<div class="hero-level">{html.escape(meta["level"])}</div>' if meta.get("level") else ""
+        if (SRC / course["dir"] / "taqdimot" / f"{l['slug']}.txt").exists():
+            level += (f'<div class="hero-slides"><a class="btn-slides" href="taqdimot/{l["slug"]}.html">🎞️ Taqdimotni ochish</a>'
+                      f'<a class="btn-slides ghost" href="taqdimot/pptx/{l["slug"]}.pptx" download>⬇ PowerPoint (.pptx)</a></div>')
         header = (
             f'<div class="lesson-hero"><div class="hero-icon">{meta.get("icon", "📘")}</div>'
             f'<div><div class="crumb">{crumb}</div>'
@@ -307,6 +311,10 @@ def build():
                sidebar(main, lessons, None, ""), "", "", "home",
                side_title=main["name"], active_dir=None)
     (ROOT / "index.html").write_text(out, encoding="utf-8")
+
+    # Taqdimotlar (HTML). PowerPoint fayllari uchun: python3 slides.py
+    import slides
+    slides.build(pptx=False)
     print("Tayyor: barcha sahifalar yig'ildi.")
 
 

@@ -1,0 +1,150 @@
+# Bugun nimani o'rganamiz?
+- Nega fayllar emas, **ma'lumotlar bazasi** kerak
+- **Jadval, ustun, qator**
+- **Birlamchi kalit** (PK) va **tashqi kalit** (FK)
+- Bog'lanish turlari: **1:1, 1:N, N:M**
+- **SQL** va relyatsion / NoSQL bazalar
+---
+# Nima uchun fayl yetarli emas?
+- 2000 o'quvchi, baholar, davomat, 100 o'qituvchi...
+- 🐢 **Sekinlik:** qidirish uchun butun faylni o'qish kerak
+- 💥 **Bir vaqtda yozish:** ikki o'qituvchi bir-birining yozuvini o'chiradi
+- 🤷 **Tartibsizlik:** "o'n to'rt" va 14, baho 7 — fayl tekshirmaydi
+- 🔁 **Takrorlanish:** manzil har yozuvda qayta yoziladi
+- 🔐 **Xavfsizlik va zaxira** — hammasi qo'lda
+---
+# Ma'lumotlar bazasi va DBMS
+= Ma'lumotlar bazasi — tartibli saqlash, tez qidirish, xavfsiz boshqarish tizimi
+- **DBMS** (MBBT) — bazani boshqaruvchi dastur: **PostgreSQL**, MySQL, SQLite, Oracle
+> **Kutubxona:** fayl — kitoblar uyilgan xona; baza — zamonaviy kutubxona: javonlar (jadvallar), raqamlar (kalitlar), katalog (indeks), kutubxonachi (DBMS) kitobni bir zumda topadi.
+- Telegram xabarlari, Instagram postlari, bank balansi, elektron kundalik — hammasi bazada
+---
+# Jadval, ustun, qator
+| id | ism | familiya | tugilgan_sana | sinf_id |
+|---|---|---|---|---|
+| 1 | Ali | Valiyev | 2012-03-15 | 1 |
+| 2 | Zarina | Karimova | 2012-07-02 | 1 |
+| 3 | Bobur | Toshmatov | 2011-11-20 | 2 |
+- **Jadval** (table) — bir turdagi obyektlar: `oquvchilar`
+- **Ustun** (column) — xususiyat; **har birining turi bor** (matn, sana)
+- **Qator** (row, yozuv) — bitta obyekt haqidagi ma'lumot
+- Excel'ga o'xshaydi, lekin baza **qoidalarni majburiy tekshiradi** va millionlab qator bilan tez ishlaydi
+---
+# Birlamchi kalit — Primary Key
+- Har bir qatorni **noyob** aniqlovchi ustun, odatda `id` (1, 2, 3... avtomatik)
+- Noyob · bo'sh emas (NOT NULL) · o'zgarmaydi
+> **Nega ism yetmaydi?** Maktabda ikkita "Ali Valiyev" bo'lishi mumkin. Lekin pasport raqami har xil. PK — qatorning **"pasport raqami"**.
+---
+# Tashqi kalit — Foreign Key
+```text
+oquvchilar                          sinflar
+┌────────────────┐                  ┌──────────────────┐
+│ id (PK)        │                  │ id (PK)          │
+│ ism            │    sinf_id → id  │ nomi             │
+│ ...            │ ───────────────▶ │ sinf_rahbari     │
+│ sinf_id (FK)   │                  │ xona             │
+└────────────────┘                  └──────────────────┘
+```
+- Ali (`sinf_id = 1`) → 8-A sinfi, rahbari Karimova N., 204-xona
+= Bitta fakt — bitta joyda (normalizatsiya)
+- Rahbar almashsa — 30 ta emas, **bitta** qator tuzatiladi
+- Baza `sinf_id = 99` yozishga ruxsat bermaydi — **ma'lumotlar yaxlitligi**
+---
+# Bog'lanish turlari
+| Tur | Misol | Qanday |
+|---|---|---|
+| **1:1** | O'quvchi ↔ shaxsiy kartochka | FK + noyoblik |
+| **1:N** | Bir sinfda ko'p o'quvchi | "Ko'p" tomonda FK |
+| **N:M** | O'quvchi ↔ to'garaklar | **Oraliq jadval** |
+- N:M misol — oraliq jadval `azoliklar`:
+| azoliklar.oquvchi_id | azoliklar.togarak_id |
+|---|---|
+| 1 (Ali) | 1 (Shaxmat) |
+| 1 (Ali) | 2 (Robototexnika) |
+| 2 (Zarina) | 1 (Shaxmat) |
+---
+# ER-diagramma — bazani loyihalash
+```text
+┌──────────────┐        ┌──────────────────┐        ┌──────────────┐
+│   sinflar    │ 1    N │   oquvchilar     │ 1    N │   baholar    │
+├──────────────┤────────├──────────────────┤────────├──────────────┤
+│ id (PK)      │        │ id (PK)          │        │ id (PK)      │
+│ nomi         │        │ ism, familiya    │        │ oquvchi_id FK│
+│ sinf_rahbari │        │ sinf_id (FK)     │        │ fan, baho    │
+└──────────────┘        └──────────────────┘        └──────────────┘
+```
+1. Mavjudotlar (o'quvchi, sinf, baho)
+2. Har birining xususiyatlari
+3. Kalitlar (PK, FK)
+4. Bog'lanishlar va turi — **dbdiagram.io** da chizish qulay
+---
+# SQL — ma'lumotlar bazasi tili
+```sql
+-- 8-A sinfidagi o'quvchilar, familiya bo'yicha alifbo tartibida
+SELECT ism, familiya
+FROM oquvchilar
+WHERE sinf_id = 1
+ORDER BY familiya;
+```
+- "Qanday qidirish"ni emas, **"nima kerak"**ligini yozasiz
+| Buyruq | Vazifasi | Mavzu |
+|---|---|---|
+| `CREATE TABLE` | Jadval yaratish | 27 |
+| `INSERT SELECT UPDATE DELETE` | CRUD | 28 |
+| `JOIN` | Jadvallarni birlashtirish | 29 |
+| `WHERE GROUP BY COUNT AVG` | Filtr va statistika | 30 |
+---
+# Relyatsion va NoSQL
+| | Relyatsion (SQL) | NoSQL |
+|---|---|---|
+| Misollar | PostgreSQL, MySQL, SQLite | MongoDB, Redis, Firebase |
+| Tuzilma | Qat'iy jadvallar | Moslashuvchan hujjatlar (JSON) |
+| Bog'lanishlar | Kuchli (kalitlar, JOIN) | Cheklangan |
+| Qachon | Maktab, bank, do'kon | Kesh, real vaqt, o'zgaruvchan tuzilma |
+- Kursda: **PostgreSQL** — bepul, ishonchli, Django bilan eng yaxshi ishlaydi
+---
+# Amaliyot: bazani loyihalash
+1. **Kutubxona:** kitoblar, mualliflar, o'quvchilar, ijaralar — ustunlar, PK, FK. Kitob ↔ muallif qanday bog'lanish?
+2. **Internet-do'kon:** mijozlar, mahsulotlar, toifalar, buyurtmalar — qanday oraliq jadval kerak?
+3. **Xatoni toping:**
+| ism | sinf | sinf_rahbari | togaraklar |
+|---|---|---|---|
+| Ali | 8-A | Karimova N. | shaxmat, robototexnika |
+| Zarina | 8-A | Karimova N | shaxmat |
+| Ali | 8-B | Rasulov A. | |
+note: Javob: PK yo'q (ikki Ali); rahbar takrorlanadi va har xil yozilgan — sinflar jadvali kerak; bir katakda bir nechta to'garak — N:M oraliq jadval kerak.
+---
+? Har bir qatorni noyob aniqlovchi ustun nima deyiladi?
+o Tashqi kalit
+o Indeks
++ Birlamchi kalit (Primary Key)
+o Ustun nomi
+---
+? `oquvchilar.sinf_id` ustuni `sinflar.id` ga ishora qiladi. U qanday kalit?
+o Birlamchi kalit
++ Tashqi kalit (Foreign Key)
+o Noyob kalit
+o Parol
+---
+? "O'quvchi ko'p to'garakka, to'garakda ko'p o'quvchi" — qanday bog'lanish?
+o 1:1
+o 1:N
+o N:1
++ N:M
+---
+? Ko'pga-ko'p bog'lanish qanday amalga oshiriladi?
++ Oraliq (bog'lovchi) jadval orqali
+o Bitta katakka vergul bilan yozib
+o Ikki jadvalni bitta qilib
+o Faqat NoSQL'da mumkin
+---
+# 🏠 Uyga vazifa
+1. **Elektron kundalik** ER-diagrammasi: o'quvchilar, sinflar, fanlar, o'qituvchilar, baholar, dars jadvali — PK, FK, bog'lanishlar
+2. Telegram yoki YouTube qanday jadvallarda ma'lumot saqlashi mumkin — taxmin qiling
+---
+# ✅ Yodda tuting
+- Baza — tartibli, tez, xavfsiz saqlash; DBMS — PostgreSQL
+- Jadval → ustun (turi bor) → qator
+- **PK** — noyob identifikator; **FK** — boshqa jadval PK'siga havola
+- **1:1**, **1:N** (FK "ko'p" tomonda), **N:M** (oraliq jadval)
+- "Bitta fakt — bitta joyda"; SQL — bazalar tili

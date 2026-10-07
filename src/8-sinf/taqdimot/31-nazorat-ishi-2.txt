@@ -1,0 +1,174 @@
+# Nazorat ishi qanday o'tadi?
+| Qism | Mazmuni | Ball |
+|---|---|---|
+| 1-qism | 25 ta test × 3 ball (JS — 8, Python — 9, SQL — 8) | 75 |
+| 2-qism | 5 ta ochiq savol / amaliy topshiriq × 5 ball | 25 |
+| **Jami** | Vaqt: 80 daqiqa | **100** |
+- Bugun: takrorlash → namunaviy testlar → amaliy topshiriqlar → baholash
+---
+## Takrorlash
+II va III boblarning eng muhim tushunchalari
+---
+# JavaScript: 15–20-mavzular
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| JS asoslari | `let/const`, turlar, `typeof`, `===`, `if/else`, `switch`, ternary |
+| Sikl, funksiya | `for`, `while`, `break`, `function`, `return`, arrow |
+| Massiv, obyekt | `push/pop`, `map/filter/reduce`, `obj.kalit` |
+| DOM, hodisalar | `querySelector`, `textContent`, `classList`, `addEventListener`, `preventDefault`, `localStorage` |
+---
+# Python va SQL: 21–30-mavzular
+| Mavzu | Bilishingiz kerak |
+|---|---|
+| Python asoslari | `print/input`, `//` `%`, f-satr, `if/elif`, `for + range`, `try/except`, fayllar |
+| Tuzilmalar, OOP | `list/tuple/set/dict`, slicing, `def`, modullar, `json`; `class`, `__init__`, `self`, meros |
+| Ma'lumotlar bazasi | PK/FK, bog'lanishlar, turlar, `CREATE`, CRUD |
+| SQL chuqur | `JOIN`, indeks, `GROUP BY`, `HAVING` |
+---
+## Namunaviy testlar
+Avval o'ylang — keyin javobni ko'ring
+---
+? `"3" === 3` natijasi?
+o true
+o "33"
+o 6
++ false
+---
+? `[5, 10, 15].map(x => x / 5)` natijasi?
+o 30
+o `[5, 10, 15]`
++ `[1, 2, 3]`
+o 6
+---
+? Massivni localStorage'ga saqlashdan oldin nima qilinadi?
+o `Number()`
+o `toString()`
+o Hech narsa
++ `JSON.stringify()`
+---
+? `list(range(1, 5))` natijasi?
+o `[1, 2, 3, 4, 5]`
+o `[0, 1, 2, 3, 4]`
+o `[1, 5]`
++ `[1, 2, 3, 4]`
+---
+? `d = {"a": 1}; print(d.get("b", 0))` natijasi?
+o KeyError
+o None
++ 0
+o 1
+---
+? Pul summasi uchun eng mos tur?
++ `NUMERIC(12, 2)`
+o `REAL`
+o `VARCHAR`
+o `INTEGER`
+---
+? Chap jadvalning barcha qatorlarini qaytaruvchi JOIN?
+o INNER JOIN
+o RIGHT JOIN
++ LEFT JOIN
+o CROSS JOIN
+---
+? Guruhlangan natijani shart bo'yicha filtrlash?
+o WHERE
++ HAVING
+o FILTER
+o IF
+---
+## Amaliy qism
+5 ta topshiriq × 5 ball
+---
+# 1-topshiriq: JavaScript DOM
+- Tugma bosilganda: maydon bo'sh — "Ismingizni kiriting!" (qizil), aks holda — "Salom, [ism]!" (yashil)
+```js
+document.querySelector("#btn").addEventListener("click", () => {
+  const ism = document.querySelector("#ism").value.trim();
+  const javob = document.querySelector("#javob");
+  if (ism === "") {
+    javob.textContent = "Ismingizni kiriting!";
+    javob.style.color = "red";
+  } else {
+    javob.textContent = `Salom, ${ism}!`;
+    javob.style.color = "green";
+  }
+});
+```
+note: Baholash: elementlarni topish — 1; hodisa — 1; bo'sh tekshiruvi (trim) — 1; textContent — 1; ranglar — 1.
+---
+# 2–3-topshiriqlar: Python
+```python 2: statistika
+def statistika(ballar):
+    if not ballar:
+        return None
+    return {
+        "ortacha": round(sum(ballar) / len(ballar), 2),
+        "eng_yuqori": max(ballar),
+        "eng_past": min(ballar),
+        "alo": len([b for b in ballar if b > 86]),
+    }
+```
+::
+```python 3: OOP
+class Tortburchak:
+    def __init__(self, eni, boyi):
+        self.eni = eni
+        self.boyi = boyi
+    def yuza(self):
+        return self.eni * self.boyi
+    def perimetr(self):
+        return 2 * (self.eni + self.boyi)
+    def __str__(self):
+        return f"Tortburchak {self.eni}×{self.boyi}"
+
+class Kvadrat(Tortburchak):
+    def __init__(self, tomon):
+        super().__init__(tomon, tomon)
+```
+---
+# 4-topshiriq: SQL jadval va CRUD
+```sql
+CREATE TABLE kitoblar (
+    id      SERIAL PRIMARY KEY,
+    nomi    VARCHAR(200) NOT NULL,
+    muallif VARCHAR(100),
+    yil     INTEGER CHECK (yil > 1450),
+    narx    NUMERIC(10, 2),
+    mavjud  BOOLEAN DEFAULT TRUE
+);
+INSERT INTO kitoblar (nomi, muallif, yil, narx) VALUES
+    ('O''tkan kunlar', 'Abdulla Qodiriy', 1926, 65000),
+    ('Ufq', 'Said Ahmad', 1976, 48000);
+SELECT nomi, yil, narx FROM kitoblar WHERE yil > 2000 ORDER BY narx DESC;
+UPDATE kitoblar SET narx = narx * 1.1 WHERE id = 1;
+```
+note: Baholash: jadval va turlar — 1; cheklovlar — 1; INSERT (apostrof) — 1; SELECT — 1; UPDATE + WHERE — 1.
+---
+# 5-topshiriq: JOIN va GROUP BY
+- Har sinf: nomi, o'quvchilar soni, o'rtacha baho; faqat o'rtachasi 4 dan yuqorilar
+```sql
+SELECT s.nomi,
+       COUNT(DISTINCT o.id) AS oquvchilar,
+       ROUND(AVG(b.baho), 2) AS ortacha
+FROM sinflar s
+JOIN oquvchilar o ON o.sinf_id = s.id
+JOIN baholar b    ON b.oquvchi_id = o.id
+GROUP BY s.nomi
+HAVING AVG(b.baho) > 4
+ORDER BY ortacha DESC;
+```
+- Nega `COUNT(DISTINCT o.id)`? JOIN'dan keyin o'quvchi har bahosi uchun takrorlanadi!
+---
+# Baholash shkalasi
+| Ball | Natija | Tavsiya |
+|---|---|---|
+| 86–100 | A'lo | IV bob — Django'ga tayyorsiz! |
+| 71–85 | Yaxshi | Xato qilgan mavzular amaliyotini takrorlang |
+| 60–70 | Qoniqarli | OOP (25) va JOIN/GROUP BY (29–30) ni qayta ishlang |
+| 0–59 | Qoniqarsiz | Mentor bilan qo'shimcha mashg'ulot |
+---
+# 🎉 III bob yakunlandi!
+- Ikki dasturlash tili: **JavaScript** va **Python**
+- **OOP** tamoyillari
+- Ma'lumotlar bazasini loyihalash va **SQL** bilan boshqarish
+= Keyingi bob: Python + PostgreSQL + Django = haqiqiy veb-ilova!

@@ -1,0 +1,196 @@
+# Bugun nimani o'rganamiz?
+- **Fon rangi**, fon rasmi va **gradient**
+- Fon rasmini joylashtirish: `cover` va `contain`
+- **Chegaralar** (border) va yumaloq burchaklar
+- **Soyalar** bilan "kartochka" dizayni
+---
+# Fon rangi — background-color
+```css
+body   { background-color: #f1f5f9; }
+.quti  { background-color: #4f46e5; color: white; padding: 20px; }
+.shaff { background-color: rgba(79, 70, 229, 0.2); padding: 20px; }
+```
+- `rgba` — yarim shaffof fon
+- `padding` — matn va chegara orasidagi ichki bo'shliq (keyingi mavzuda batafsil)
+---
+# Fon rasmi — background-image
+```css
+.banner {
+  height: 250px;
+  background-image: url("../rasmlar/tog.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+```
+::
+| Xossa | Qiymatlar |
+|---|---|
+| `background-repeat` | `no-repeat` `repeat-x` |
+| `background-position` | `center` `top right` |
+| `background-size` | `cover` `contain` `200px` |
+| `background-attachment` | `fixed` — parallax |
+---
+# cover va contain
+- `cover` — butun qutini **to'ldiradi**, ortiqchasi kesiladi
+- `contain` — rasm **to'liq** ko'rinadi, bo'sh joy qolishi mumkin
+> **O'xshatish:** `cover` — telefon devor qog'ozi (ekran to'la, chetlari kesiladi); `contain` — rasm ramkada (butun ko'rinadi, atrofida bo'sh joy).
+! `url()` ichidagi yo'l **CSS faylga** nisbatan: `css/style.css` dan `rasmlar/fon.jpg` → `url("../rasmlar/fon.jpg")`
+---
+# Qisqa yozuv (shorthand)
+```css
+/* Uzun yozuv */
+.banner {
+  background-color: #1e293b;
+  background-image: url("fon.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Qisqa yozuv — size "/" dan keyin */
+.banner { background: #1e293b url("fon.jpg") no-repeat center / cover; }
+```
+---
+# Gradientlar
+```css
+.g1 { background: linear-gradient(to right, #4f46e5, #06b6d4); }
+.g2 { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6); }
+.g3 { background: radial-gradient(circle, #fde047, #f97316); }
+
+/* Rasm ustida qoraytiruvchi qatlam — oq matn yaxshi o'qiladi */
+.g4 {
+  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+              url("shahar.jpg") center / cover;
+}
+```
+- Gradient — rangdan rangga silliq o'tish; u **fon rasmi** sifatida ishlaydi
+---
+# Chegaralar — border
+```css
+.b1 { border: 2px solid #4f46e5; }
+.b2 { border: 3px dashed tomato; }
+.b3 { border: 4px dotted green; }
+.b4 { border: 6px double #333; }
+.b6 { border-bottom: 3px solid orange; }
+.b7 { border-left: 6px solid #4f46e5; }
+.b8 { border-width: 1px 4px 8px 12px; }
+```
+::
+- 3 qism: **qalinlik, uslub, rang**
+- Uslublar: `solid` `dashed` `dotted` `double` `groove`
+- Faqat bir tomon: `border-bottom`, `border-left`
+> **Soat strelkasi qoidasi:** 4 qiymat — **tepa → o'ng → past → chap** (margin va padding'da ham)
+---
+# Yumaloq burchaklar — border-radius
+```css
+.r1 { border-radius: 10px; }
+.r3 { border-radius: 50%; }               /* doira */
+.r4 { border-radius: 40px 0 40px 0; }     /* barg */
+.r5 { border-radius: 999px; }             /* "tabletka" tugma */
+
+img.avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+}
+```
+= border-radius: 50% + teng kenglik va balandlik = doira
+---
+# Soyalar — box-shadow
+```css
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/*          │  │   │    └ rang (yarim shaffof)
+            │  │   └ xiralik (blur)
+            │  └ pastga siljish (y)
+            └ o'ngga siljish (x)          */
+
+.s1 { box-shadow: 0 1px 3px rgba(0,0,0,.12); }       /* yengil */
+.s3 { box-shadow: 0 20px 40px rgba(79,70,229,.35); } /* rangli */
+.s4 { box-shadow: inset 0 2px 6px rgba(0,0,0,.2); }  /* ichki */
+```
+! `outline: none` bilan fokus chizig'ini o'chirmang — klaviaturadan foydalanuvchilar adashadi.
+---
+## Amaliy mashg'ulot
+"O'quvchi kartochkasi" — zamonaviy card dizayni
+---
+# Amaliyot: HTML qismi
+```html
+<div class="karta">
+  <div class="karta-fon"></div>
+  <img class="avatar" src="men.jpg" alt="Malika Karimova">
+  <h2>Malika Karimova</h2>
+  <p class="sinf">8-"A" sinf · Frontend yo'nalishi</p>
+  <p class="matn">HTML va CSS bilan chiroyli sahifalar
+     yaratishni yaxshi ko'raman.</p>
+  <a class="tugma" href="#">Portfolioni ko'rish</a>
+</div>
+```
+---
+# Amaliyot: CSS qismi
+```css
+body {
+  background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+  padding: 40px;
+}
+.karta {
+  width: 320px; margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(79, 70, 229, 0.2);
+  text-align: center;
+}
+.karta-fon {
+  height: 110px;
+  background: linear-gradient(to right, #4f46e5, #06b6d4);
+  border-radius: 20px 20px 0 0;
+}
+.avatar { width: 110px; height: 110px; border-radius: 50%;
+          border: 5px solid white; margin-top: -55px; }
+.tugma { background: #4f46e5; color: white; padding: 10px 22px;
+         border-radius: 999px; text-decoration: none; }
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ Fon rasmi ko'rinmaydi — yo'l HTML'ga nisbatan yozilgan yoki element balandligi 0
+- ❌ `border: 2px red;` — uslub (`solid`) unutilgan
+- ❌ Doira emas, oval — `width` va `height` teng emas
+- ❌ Qattiq qora soya `5px 5px 0 black` — yumshoq, shaffof soyalar ishlating
+---
+? Fon rasmi butun maydonni to'ldirishi (ortig'i kesilishi) uchun nima kerak?
+o `background-size: contain`
++ `background-size: cover`
+o `background-repeat: repeat`
+o `background-position: fill`
+---
+? `margin: 10px 20px 30px 40px;` da chap tomon necha piksel?
+o 10px
+o 20px
++ 40px
+o 30px
+---
+? Kvadrat rasmni doiraga aylantirish uchun nima kerak?
++ `border-radius: 50%`
+o `border: circle`
+o `shape: round`
+o `border-radius: 10px`
+---
+? `box-shadow: 0 10px 20px rgba(0,0,0,.2)` da `20px` nima?
+o O'ngga siljish
++ Xiralik (blur)
+o Pastga siljish
+o Soya rangi
+---
+# 🏠 Uyga vazifa
+1. Vizitka bosh sahifasiga **gradient + fon rasmli banner** qo'shing
+2. 3 ta sinfdosh uchun turli rangdagi **o'quvchi kartochkalari**
+3. **cssgradient.io** da o'z gradientingizni yarating
+---
+# ✅ Yodda tuting
+- Fon: `background-color`, `background-image: url()`, `-size: cover/contain`
+- Qisqasi: `background: rang url() no-repeat center / cover`
+- Gradient: `linear-gradient()`, `radial-gradient()`
+- Chegara: `border: qalinlik uslub rang`; tartib — tepa, o'ng, past, chap
+- `border-radius` (50% = doira), `box-shadow` — soya

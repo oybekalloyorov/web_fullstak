@@ -1,0 +1,203 @@
+# Bugun nimani o'rganamiz?
+- Python'ning 4 ta "konteyneri": **list, tuple, set, dict**
+- Qachon qaysi birini tanlash kerak
+- **Kesish** (slicing) va **list comprehension**
+- O'quvchilar ma'lumotlarini boshqarish dasturi (16-loyiha)
+---
+# To'rt tuzilma — bir qarashda
+| Tuzilma | Yozilishi | Tartibli | O'zgaradi | Takror | JS'da |
+|---|---|---|---|---|---|
+| **list** | `[1, 2, 3]` | ✅ | ✅ | ✅ | Array |
+| **tuple** | `(1, 2, 3)` | ✅ | ❌ | ✅ | — |
+| **set** | `{1, 2, 3}` | ❌ | ✅ | ❌ | Set |
+| **dict** | `{"ism": "Ali"}` | ✅ | ✅ | Kalit — ❌ | Object |
+---
+# O'xshatishlar
+> **list** — xarid ro'yxati: tartibi bor, qo'shish-o'chirish mumkin, takror bo'lishi mumkin.
+> **tuple** — tug'ilgan sana (kun, oy, yil): bir marta yoziladi va o'zgarmaydi.
+> **set** — sinfdagi ismlar to'plami: har biri bir marta, tartib ahamiyatsiz.
+> **dict** — lug'at yoki telefon kitobi: so'z (kalit) bo'yicha ma'nosini (qiymat) darhol topasiz.
+---
+# List — ro'yxat
+```python
+fanlar = ["matematika", "fizika", "informatika"]
+fanlar[0]                  # matematika
+fanlar[-1]                 # informatika — oxiridan!
+len(fanlar)                # 3
+
+fanlar.append("tarix")     # oxiriga (JS: push)
+fanlar.insert(1, "kimyo")  # 1-o'ringa
+fanlar.remove("fizika")    # qiymat bo'yicha o'chirish
+fanlar.pop()               # oxirgisini olish
+"kimyo" in fanlar          # True
+```
+---
+# Sonlar ro'yxati bilan ishlash
+```python
+ballar = [78, 95, 62, 88, 95, 71]
+sum(ballar)                   # 489
+max(ballar), min(ballar)      # 95 62
+sum(ballar) / len(ballar)     # 81.5
+ballar.count(95)              # 2
+ballar.sort()                 # o'sish tartibida (asl ro'yxat o'zgaradi)
+ballar.sort(reverse=True)     # kamayish
+sorted(["olma", "anor"])      # YANGI saralangan ro'yxat
+```
+! `x = royxat.sort()` → `x` = `None`! Yangi ro'yxat kerak bo'lsa — `sorted()`
+---
+# Kesish (slicing) — "super kuch"
+```python
+harflar = ["a", "b", "c", "d", "e", "f"]
+#            0    1    2    3    4    5
+
+harflar[1:4]     # ['b', 'c', 'd']  — 4 kirmaydi
+harflar[:3]      # ['a', 'b', 'c']
+harflar[3:]      # ['d', 'e', 'f']
+harflar[-2:]     # ['e', 'f']
+harflar[::2]     # ['a', 'c', 'e']  — har ikkinchisi
+harflar[::-1]    # teskari!
+"Python"[::-1]   # 'nohtyP'
+```
+---
+# Aylanish va list comprehension
+```python
+for i, ism in enumerate(["Ali", "Vali", "Gani"], start=1):
+    print(f"{i}. {ism}")
+
+sonlar = [1, 2, 3, 4, 5, 6]
+kvadratlar = [x * x for x in sonlar]           # [1, 4, 9, 16, 25, 36]
+juftlar = [x for x in sonlar if x % 2 == 0]    # [2, 4, 6]
+kattalar = [i.capitalize() for i in ["ali", "vali"]]
+```
+= [ifoda for x in to'plam if shart]
+- JS'dagi `map` + `filter` ning birlashmasi — bitta qatorda
+---
+# Tuple — o'zgarmas ro'yxat
+```python
+sana = (1, 9, 2026)
+koordinata = (41.31, 69.28)
+sana[2]               # 2026
+# sana[0] = 5         ❌ TypeError
+
+kun, oy, yil = sana   # "ochish" (unpacking)
+a, b = 5, 10
+a, b = b, a           # qiymatlarni almashtirish!
+```
+- Qachon? Ma'lumot **o'zgarmasligi** kerak: sanalar, koordinatalar, RGB `(255, 0, 0)`
+---
+# Set — takrorlanmas to'plam
+```python
+ranglar = {"qizil", "yashil", "qizil", "ko'k"}   # takror o'chadi
+ranglar.add("sariq")
+"qizil" in ranglar           # True — juda tez qidiruv
+list(set([1, 2, 2, 3, 3]))   # [1, 2, 3] — takrorlarni olib tashlash
+
+futbol  = {"Ali", "Vali", "Sardor"}
+shaxmat = {"Vali", "Malika", "Sardor"}
+futbol & shaxmat   # kesishma: {'Vali', 'Sardor'}
+futbol | shaxmat   # birlashma
+futbol - shaxmat   # ayirma: {'Ali'}
+```
+! Bo'sh set — `set()`. `{}` — bu bo'sh **dict**!
+---
+# Dictionary — kalit: qiymat
+```python
+oquvchi = {"ism": "Dilnoza", "yosh": 14, "sinf": "8-A"}
+
+oquvchi["ism"]                    # Dilnoza
+oquvchi.get("telefon")            # None — xato bermaydi
+oquvchi.get("telefon", "yo'q")    # standart qiymat
+oquvchi["yosh"] = 15              # o'zgartirish
+oquvchi["shahar"] = "Andijon"     # qo'shish
+del oquvchi["sinf"]               # o'chirish
+
+for kalit, qiymat in oquvchi.items():
+    print(f"{kalit}: {qiymat}")
+```
+- `oquvchi["telefon"]` — kalit yo'q bo'lsa **KeyError**; ishonchingiz komil bo'lmasa `.get()`
+---
+# Dict bilan sanash va ichma-ich tuzilmalar
+```python
+matn = "olma nok olma uzum nok olma"
+sanoq = {}
+for soz in matn.split():
+    sanoq[soz] = sanoq.get(soz, 0) + 1
+print(sanoq)   # {'olma': 3, 'nok': 2, 'uzum': 1}
+
+sinf = [
+    {"ism": "Ali",    "baholar": {"matematika": 5, "fizika": 4}},
+    {"ism": "Zarina", "baholar": {"matematika": 5, "fizika": 5}},
+]
+sinf[1]["baholar"]["fizika"]   # 5
+```
+- Bu JS'dagi obyektlar massivi va **JSON** formatiga o'xshaydi (39-mavzu)
+---
+# Qaysi birini tanlash kerak?
+| Vazifa | Tanlov |
+|---|---|
+| Tartibli, o'zgaradigan ro'yxat (vazifalar) | **list** |
+| O'zgarmas guruh (sana, koordinata) | **tuple** |
+| Noyob qiymatlar, tez "bormi?" | **set** |
+| Nom bo'yicha qidirish (so'z → tarjima) | **dict** |
+| Ko'p obyekt va xususiyatlari | **list ichida dict** |
+---
+# Amaliyot: o'quvchilar dasturi (16-loyiha)
+```python
+oquvchilar = {
+    "ali":    {"ism": "Ali Valiyev",     "sinf": "8-A", "baholar": [5, 4, 5]},
+    "zarina": {"ism": "Zarina Karimova", "sinf": "8-B", "baholar": [5, 5, 4]},
+}
+
+def ortacha(baholar):
+    return round(sum(baholar) / len(baholar), 2) if baholar else 0
+
+def royxat():
+    for login, o in oquvchilar.items():
+        print(f"{login:8} {o['ism']:18} {o['sinf']:5} {ortacha(o['baholar'])}")
+
+sinflar = {o["sinf"] for o in oquvchilar.values()}   # set
+```
+1. "O'chirish" va "Ism bo'yicha qidirish" bandlarini qo'shing
+2. Ma'lumotni **JSON** faylga saqlang (24-mavzu)
+---
+# Ko'p uchraydigan xatolar
+- ❌ `IndexError: list index out of range` — mavjud bo'lmagan indeks
+- ❌ `KeyError` — dict'da yo'q kalit; `.get()` ishlating
+- ❌ `x = royxat.sort()` — `None` qaytaradi
+- ❌ Bo'sh set uchun `{}` — bu dict
+---
+? Qaysi tuzilmani yaratilgandan keyin o'zgartirib bo'lmaydi?
+o list
++ tuple
+o set
+o dict
+---
+? `a = [10, 20, 30, 40]; print(a[-1])` natijasi?
+o 10
+o Xato
++ 40
+o 30
+---
+? `"Salom"[1:4]` natijasi?
++ "alo"
+o "Sal"
+o "alom"
+o "Salo"
+---
+? `[x * 2 for x in range(4)]` natijasi?
+o `[2, 4, 6, 8]`
+o `[0, 1, 2, 3]`
++ `[0, 2, 4, 6]`
+o `8`
+---
+# 🏠 Uyga vazifa
+1. **Lug'at:** 10 so'zli dict; yo'q so'zning tarjimasini so'rab qo'shsin
+2. **Umumiy do'stlar:** ikki set — umumiy va faqat birinchisiniki
+3. **Harflar statistikasi:** dict bilan sanash, eng ko'p 3 ta harf
+---
+# ✅ Yodda tuting
+- **list** `[]` — `append`, `remove`, `pop`, `sort`, `[a:b]`, `[-1]`
+- **tuple** `()` — o'zgarmas; `a, b = (1, 2)`
+- **set** `{}` — takrorsiz; `& | -`
+- **dict** `{"k": v}` — `d["k"]`, `d.get("k")`, `.items()`
+- `[ifoda for x in to'plam if shart]`

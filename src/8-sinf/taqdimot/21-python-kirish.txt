@@ -1,0 +1,202 @@
+# Bugun nimani o'rganamiz?
+- **Back-end** nima va front-end bilan qanday "gaplashadi"
+- **Algoritm** va **blok-sxema**
+- **Python**'ni o'rnatish, birinchi dastur
+- `print()` va `input()`
+- O'zgaruvchilar, turlar, operatorlar — JavaScript bilan taqqoslab
+---
+# Back-end nima?
+- Instagram'dagi milliardlab rasmlar **qayerda** saqlanadi?
+- Parolingizni **kim** tekshiradi?
+- Do'stingiz xabari sizga **qanday** yetib keladi?
+```text
+🖥️ Front-end  ⇄ so'rov / javob ⇄  ⚙️ Back-end  ⇄  🗄️ Ma'lumotlar bazasi
+HTML, CSS, JS                    Python, Django      PostgreSQL
+(brauzerda)                      (serverda)
+```
+> **Restoran:** front-end — zal va ofitsiant; back-end — **oshxona** (retsept bo'yicha tayyorlaydi, omborga murojaat qiladi). Mijoz oshxonani ko'rmaydi, lekin usiz restoran ishlamaydi.
+---
+# Algoritm va blok-sxema
+= Algoritm — masalani yechish uchun aniq, tartibli qadamlar
+| Shakl | Ma'nosi |
+|---|---|
+| ⬭ Oval | Boshlanish / Tugash |
+| ▱ Parallelogramm | Kiritish / Chiqarish |
+| ▭ To'rtburchak | Amal (hisoblash) |
+| ◇ Romb | Shart (ha / yo'q) |
+- Turlari: **chiziqli**, **tarmoqlanuvchi** (shart), **takrorlanuvchi** (sikl)
+- **Flowgorithm** — blok-sxemani chizib ishga tushiradi va Python kodiga aylantiradi
+---
+# Nima uchun Python?
+- **Sodda sintaksis** — ingliz tiliga yaqin
+- **Universal** — veb (Instagram back-endi Django'da!), sun'iy intellekt, Telegram botlar
+- **Katta jamiyat** — minglab tayyor kutubxonalar
+```js JavaScript
+let ism = "Ali";
+if (ism === "Ali") {
+  console.log("Salom, " + ism);
+}
+```
+::
+```python Python
+ism = "Ali"
+if ism == "Ali":
+    print("Salom, " + ism)
+```
+- `let` yo'q, `;` yo'q, `{ }` o'rniga `:` va **chekinish**
+---
+# Python'ni o'rnatish
+1. **python.org/downloads** — eng so'nggi versiya (3.12+)
+2. ✅ **"Add python.exe to PATH"** — albatta belgilang!
+3. Terminalda tekshiring: `python --version`
+4. VS Code → Extensions → **"Python"** (Microsoft)
+5. `salom.py` fayli → ▶ yoki `python salom.py`
+```python salom.py
+print("Salom, dunyo!")
+print("Men Python o'rganyapman 🐍")
+```
+- Terminalda `python` → `>>>` interaktiv rejim; chiqish: `exit()`
+---
+# Chiqarish: print()
+```python
+print("Salom")                  # matn
+print(2 + 3)                    # 5
+print("Yosh:", 14)              # vergul — orasiga bo'sh joy
+print("A", "B", "C", sep="-")   # A-B-C
+print("Bir", end=" ")           # yangi qatorga o'tmaydi
+print("qatorda")
+print("=" * 20)                 # ====================
+```
+- Izohlar: `# ...`
+---
+# O'zgaruvchilar
+```python
+ism = "Malika"         # kalit so'z kerak emas!
+yosh = 14
+boy = 1.62
+alochi = True
+yosh = yosh + 1
+a, b, c = 1, 2, 3      # bir nechtasini birdan
+```
+- Python uslubi — **snake_case**: `oquvchi_soni`, `umumiy_ball` (JS'da camelCase edi)
+- O'zgarmaslar — KATTA harflar: `PI = 3.14`, `MAKS_BALL = 100`
+- Katta-kichik harf farq qiladi: `ism` ≠ `Ism`
+---
+# Ma'lumot turlari
+| Tur | Nomi | Misol | JavaScript'da |
+|---|---|---|---|
+| `int` | Butun son | `14`, `1_000_000` | number |
+| `float` | Kasr | `3.14` | number |
+| `str` | Matn | `"Salom"` | string |
+| `bool` | Mantiqiy | `True`, `False` (bosh harf katta!) | true/false |
+| `NoneType` | Hech narsa | `None` | null |
+```python
+type(14)      # <class 'int'>
+type("salom") # <class 'str'>
+```
+---
+# Turlarni o'zgartirish
+```python
+int("42") + 8         # 50
+float("3.5") * 2      # 7.0
+str(100) + "%"        # "100%"
+int(7.9)              # 7  — kasr tashlanadi
+round(7.9)            # 8
+round(3.14159, 2)     # 3.14
+
+"Yosh: " + 14         # ❌ TypeError!
+"Yosh: " + str(14)    # ✅
+```
+> JS'da `"5" + 3 = "53"` edi. Python bunday "sehr"ga yo'l qo'ymaydi — xato beradi. Bu yaxshi: xatolar yashirinib qolmaydi!
+---
+# Kiritish va f-satrlar
+```python
+ism = input("Ismingiz nima? ")
+yosh = int(input("Yoshingiz nechada? "))   # input DOIM str!
+print(f"{ism}, 10 yildan keyin {yosh + 10} yoshda bo'lasiz")
+
+ball = 87.456
+print(f"Yaxlitlangan: {ball:.1f}")   # 87.5
+narx = 1250000
+print(f"Narxi: {narx:,} so'm")       # 1,250,000 so'm
+```
+```output
+Ismingiz nima? Dilshod
+Yoshingiz nechada? 14
+Dilshod, 10 yildan keyin 24 yoshda bo'lasiz
+```
+---
+# Operatorlar
+```python
+a, b = 17, 5
+a / b     # 3.4  oddiy bo'lish
+a // b    # 3    BUTUN bo'lish
+a % b     # 2    qoldiq
+a ** 2    # 289
+x += 1    # Python'da x++ YO'Q
+True and False   # False
+not True         # False
+```
+::
+| Amal | JS | Python |
+|---|---|---|
+| Teng | `===` | `==` |
+| VA / YOKI / EMAS | `&& \|\| !` | `and or not` |
+| Butun bo'lish | `Math.floor` | `//` |
+| +1 | `x++` | `x += 1` |
+| Rost | `true` | `True` |
+---
+# Amaliyot
+1. **Anketa:** ism, familiya, yil, shahar → f-satrli "vizitka" (`"*" * 30` ramka)
+2. **Do'kon:** daftar soni va berilgan pul → jami va qaytim
+3. **Vaqt:** 135 daqiqa → "2 soat 15 daqiqa" (`//` va `%`)
+4. **Harorat:** F = C × 9/5 + 32
+5. **Blok-sxema:** uchburchak yuzi — avval chizing, keyin Python'da yozing
+```python
+narx = 5500
+soni = int(input("Nechta daftar? "))
+print(f"Jami: {narx * soni:,} so'm")
+```
+---
+# Ko'p uchraydigan xatolar
+- ❌ `'python' is not recognized` — "Add to PATH" belgilanmagan
+- ❌ `TypeError: can only concatenate str` — matn + son; `str()` yoki f-satr
+- ❌ `int()` siz: `"5" * 3 = "555"`
+- ❌ `true` — Python'da `True`
+- ❌ `Print(...)` — katta P bilan
+---
+? Back-end'ning vazifasi qaysi?
+o Tugma rangini o'zgartirish
++ Ma'lumotlarni serverda saqlash va parolni tekshirish
+o Animatsiya yaratish
+o Shriftni tanlash
+---
+? Blok-sxemada shart (ha/yo'q) qaysi shakl bilan belgilanadi?
+o Oval
+o To'rtburchak
++ Romb
+o Parallelogramm
+---
+? `print(17 // 5)` natijasi?
++ 3
+o 3.4
+o 2
+o 85
+---
+? `input()` funksiyasi qanday turdagi qiymat qaytaradi?
+o int
+o float
+o bool
++ str
+---
+# 🏠 Uyga vazifa
+1. **Kalkulyator:** 2 son → `+ - * / // % **` natijalari jadvalda
+2. **Pul jamg'arish:** necha oyda maqsadga yetiladi
+3. **Uch xonali son** raqamlari yig'indisi: 345 → 12
+---
+# ✅ Yodda tuting
+- Back-end — serverdagi dastur; algoritm — aniq qadamlar; blok-sxema — chizmasi
+- `.py` fayl, `python fayl.py`; o'rnatishda **"Add to PATH"**
+- `print()` — chiqarish, `input()` — kiritish (doim `str`!)
+- Turlar: `int`, `float`, `str`, `bool`, `None`; nomlar — snake_case
+- `// % **`, `and or not`; f-satr: `f"{nom}"`
