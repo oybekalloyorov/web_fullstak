@@ -1,0 +1,6267 @@
+[
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 1,
+    "slug": "8-sinf/01-internet-dns-hosting",
+    "title": "Internet qanday ishlaydi? DNS, hosting, domen",
+    "questions": [
+      {
+        "question": "DNS'ning asosiy vazifasi nima?",
+        "options": [
+          "Saytni chiroyli qilish",
+          "Domen nomini IP-manzilga aylantirish",
+          "Fayllarni saqlash",
+          "Viruslardan himoyalash"
+        ],
+        "correct": 2,
+        "explanation": "DNS — \"telefon kitobi\": kun.uz kabi nomlarni kompyuter tushunadigan IP-manzilga aylantiradi."
+      },
+      {
+        "question": "Saytning fayllari saqlanadigan, doim internetga ulangan server joyi nima deyiladi?",
+        "options": [
+          "Domen",
+          "Brauzer",
+          "Hosting",
+          "Protokol"
+        ],
+        "correct": 3,
+        "explanation": "Hosting — \"uy\", domen — \"manzil\"."
+      },
+      {
+        "question": "Quyidagilardan qaysi biri front-end'ga tegishli?",
+        "options": [
+          "Saytdagi \"Ro'yxatdan o'tish\" tugmasining rangi",
+          "Parolni ma'lumotlar bazasida tekshirish",
+          "Buyurtmani serverda saqlash",
+          "Server IP-manzili"
+        ],
+        "correct": 1,
+        "explanation": "Foydalanuvchi ko'radigan hamma narsa — front-end. Qolganlari serverda bajariladi (back-end)."
+      },
+      {
+        "question": "Server \"404\" status kodini qaytardi. Bu nimani bildiradi?",
+        "options": [
+          "Hammasi yaxshi",
+          "Serverda dastur xatosi",
+          "Sahifa boshqa manzilga ko'chgan",
+          "So'ralgan sahifa topilmadi"
+        ],
+        "correct": 4,
+        "explanation": "404 — \"Not Found\". 200 — muvaffaqiyat, 500 — server xatosi, 301 — ko'chirilgan."
+      },
+      {
+        "question": "https://blog.maktab.uz/maqolalar manzilida subdomen qaysi?",
+        "options": [
+          "https",
+          "blog",
+          "uz",
+          "maqolalar"
+        ],
+        "correct": 2,
+        "explanation": "blog — subdomen, maktab — domen nomi, uz — zona, /maqolalar — yo'l."
+      },
+      {
+        "question": "HTTPS'dagi \"S\" harfi nimani bildiradi?",
+        "options": [
+          "Speed — tezlik",
+          "Server",
+          "Secure — xavfsiz (shifrlangan)",
+          "Simple — oddiy"
+        ],
+        "correct": 3,
+        "explanation": "HTTPS ma'lumotni shifrlab uzatadi — yo'lda uni hech kim o'qiy olmaydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 2,
+    "slug": "8-sinf/02-html-tuzilishi",
+    "title": "HTML hujjatining tuzilishi, asosiy teglar va atributlar",
+    "questions": [
+      {
+        "question": "Foydalanuvchiga ko'rinadigan barcha mazmun qaysi teg ichida yoziladi?",
+        "options": [
+          "<head>",
+          "<title>",
+          "<body>",
+          "<meta>"
+        ],
+        "correct": 3,
+        "explanation": "<head> — ko'rinmaydigan ma'lumotlar, <body> — ko'rinadigan mazmun."
+      },
+      {
+        "question": "<a href=\"https://kun.uz\"> da href nima?",
+        "options": [
+          "Teg",
+          "Atribut",
+          "Element",
+          "Izoh"
+        ],
+        "correct": 2,
+        "explanation": "a — teg, href — atribut, \"https://kun.uz\" — atribut qiymati."
+      },
+      {
+        "question": "Qaysi teg yolg'iz (yopuvchi tegi yo'q)?",
+        "options": [
+          "<p>",
+          "<h1>",
+          "<strong>",
+          "<br>"
+        ],
+        "correct": 4,
+        "explanation": "<br> , <hr> , <img> , <input> , <meta> — yolg'iz teglar."
+      },
+      {
+        "question": "<meta charset=\"UTF-8\"> qatori nima uchun kerak?",
+        "options": [
+          "O'zbekcha harflar, kirill va emoji to'g'ri ko'rinishi uchun",
+          "Sahifani tezlashtirish uchun",
+          "Sahifaga rang berish uchun",
+          "Telefonda ko'rinishi uchun"
+        ],
+        "correct": 1,
+        "explanation": "UTF-8 — dunyodagi deyarli barcha harf va belgilarni qamrab oluvchi kodlash."
+      },
+      {
+        "question": "Kodda 5 ta bo'sh joy yozsangiz, brauzer nechta ko'rsatadi?",
+        "options": [
+          "5 ta",
+          "Hech qancha",
+          "1 ta",
+          "10 ta"
+        ],
+        "correct": 3,
+        "explanation": "HTML ketma-ket bo'sh joy va qator o'tishlarni bitta bo'sh joyga aylantiradi ( <pre> bundan mustasno)."
+      },
+      {
+        "question": "Qaysi kod to'g'ri yozilgan?",
+        "options": [
+          "<p><em>Salom</p></em>",
+          "<p><em>Salom</em></p>",
+          "<p><em>Salom<p></em>",
+          "<em><p>Salom</em></p>"
+        ],
+        "correct": 2,
+        "explanation": "Oxirgi ochilgan ( em ) birinchi yopiladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 3,
+    "slug": "8-sinf/03-jadval-royxat-forma",
+    "title": "Jadval, ro'yxat va forma elementlari",
+    "questions": [
+      {
+        "question": "Retsept qadamlari uchun qaysi ro'yxat mos?",
+        "options": [
+          "<ul>",
+          "<ol>",
+          "<dl>",
+          "<table>"
+        ],
+        "correct": 2,
+        "explanation": "Qadamlar tartibi muhim — shuning uchun tartibli ro'yxat ( ol )."
+      },
+      {
+        "question": "Jadvalda yangi qator qaysi teg bilan boshlanadi?",
+        "options": [
+          "<td>",
+          "<th>",
+          "<tr>",
+          "<row>"
+        ],
+        "correct": 3,
+        "explanation": "tr = table row. Kataklar ( td / th ) uning ichida."
+      },
+      {
+        "question": "Katakni ikki ustun kengligida birlashtirish uchun qaysi atribut kerak?",
+        "options": [
+          "colspan=\"2\"",
+          "rowspan=\"2\"",
+          "span=\"2\"",
+          "width=\"2\""
+        ],
+        "correct": 1,
+        "explanation": "col = ustun (gorizontal), row = qator (vertikal)."
+      },
+      {
+        "question": "\"Jinsingiz\" savoliga faqat bitta javob tanlash uchun qaysi input turi kerak?",
+        "options": [
+          "checkbox",
+          "text",
+          "select multiple",
+          "radio"
+        ],
+        "correct": 4,
+        "explanation": "Radio — bir guruhdan bitta tanlov. Guruhdagi barcha radiolarning name i bir xil bo'lishi kerak."
+      },
+      {
+        "question": "Forma ma'lumoti serverga qaysi atribut nomi bilan boradi?",
+        "options": [
+          "id",
+          "name",
+          "placeholder",
+          "class"
+        ],
+        "correct": 2,
+        "explanation": "Server name=qiymat juftliklarini oladi. id esa label va CSS uchun."
+      },
+      {
+        "question": "Parol yuboradigan forma uchun qaysi method to'g'ri?",
+        "options": [
+          "GET",
+          "SEND",
+          "POST",
+          "PUT"
+        ],
+        "correct": 3,
+        "explanation": "GET'da ma'lumot manzil satrida ochiq ko'rinadi va brauzer tarixida saqlanadi."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 4,
+    "slug": "8-sinf/04-havolalar-rasmlar-media",
+    "title": "Havolalar va navigatsiya. Rasmlar va media elementlari",
+    "questions": [
+      {
+        "question": "Havolani yangi yorliqda ochish uchun qaysi atribut kerak?",
+        "options": [
+          "href=\"_new\"",
+          "open=\"tab\"",
+          "target=\"_blank\"",
+          "rel=\"new\""
+        ],
+        "correct": 3,
+        "explanation": "target=\"_blank\" + xavfsizlik uchun rel=\"noopener\" ."
+      },
+      {
+        "question": "sahifalar/aloqa.html faylidan index.html (bir papka yuqorida) ga to'g'ri havola qaysi?",
+        "options": [
+          "index.html",
+          "../index.html",
+          "/sahifalar/index.html",
+          "sahifalar/index.html"
+        ],
+        "correct": 2,
+        "explanation": "../ — bir papka yuqoriga chiqish."
+      },
+      {
+        "question": "alt atributi nima uchun kerak?",
+        "options": [
+          "Rasm o'lchamini belgilash",
+          "Rasmga havola qo'yish",
+          "Rasmni tezroq yuklash",
+          "Rasm ko'rinmaganda va ko'zi ojizlar uchun uning matnli tavsifi"
+        ],
+        "correct": 4,
+        "explanation": "Shuningdek, Google rasm mazmunini alt orqali tushunadi."
+      },
+      {
+        "question": "Sahifadagi id=\"narxlar\" bo'limiga o'tuvchi havola qaysi?",
+        "options": [
+          "<a href=\"#narxlar\">",
+          "<a href=\"narxlar\">",
+          "<a id=\"#narxlar\">",
+          "<a href=\".narxlar\">"
+        ],
+        "correct": 1,
+        "explanation": "# belgisi — sahifa ichidagi id'ga ishora."
+      },
+      {
+        "question": "Videoda play/pauza tugmalari ko'rinishi uchun qaysi atribut kerak?",
+        "options": [
+          "autoplay",
+          "loop",
+          "controls",
+          "buttons"
+        ],
+        "correct": 3,
+        "explanation": "controls — boshqaruv paneli."
+      },
+      {
+        "question": "Logotip uchun eng mos rasm formati qaysi?",
+        "options": [
+          "JPG",
+          "SVG",
+          "GIF",
+          "BMP"
+        ],
+        "correct": 2,
+        "explanation": "SVG — vektorli format, har qanday o'lchamda tiniq va juda yengil."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 5,
+    "slug": "8-sinf/05-semantik-teglar",
+    "title": "HTML5 semantik teglari va ularning roli",
+    "questions": [
+      {
+        "question": "Sahifaning asosiy, noyob mazmuni qaysi teg ichida bo'ladi?",
+        "options": [
+          "<section>",
+          "<main>",
+          "<body>",
+          "<header>"
+        ],
+        "correct": 2,
+        "explanation": "main — sahifada bitta, asosiy mazmun uchun."
+      },
+      {
+        "question": "Blogdagi alohida post uchun eng mos teg qaysi?",
+        "options": [
+          "<article>",
+          "<aside>",
+          "<nav>",
+          "<span>"
+        ],
+        "correct": 1,
+        "explanation": "Post mustaqil mazmun — uni alohida olib tarqatsa ham tushunarli."
+      },
+      {
+        "question": "\"O'xshash maqolalar\" yon paneli uchun qaysi teg mos?",
+        "options": [
+          "<footer>",
+          "<main>",
+          "<section>",
+          "<aside>"
+        ],
+        "correct": 4,
+        "explanation": "aside — asosiy mazmunga qo'shimcha, yondosh ma'lumot."
+      },
+      {
+        "question": "Qaysi element inline (qator ichida)?",
+        "options": [
+          "<div>",
+          "<p>",
+          "<span>",
+          "<section>"
+        ],
+        "correct": 3,
+        "explanation": "span , a , strong , img — inline; qolganlari blok."
+      },
+      {
+        "question": "Semantik teglar nima uchun foydali EMAS?",
+        "options": [
+          "Google sahifani yaxshiroq tushunadi",
+          "Sahifa avtomatik chiroyli bo'lib qoladi",
+          "Ekran o'quvchi dasturlar qulayroq ishlaydi",
+          "Kod o'qilishi osonlashadi"
+        ],
+        "correct": 2,
+        "explanation": "Semantik teglar ko'rinishni o'zgartirmaydi — dizayn CSS'ning ishi."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 6,
+    "slug": "8-sinf/06-css-ulash-selektorlar-matn",
+    "title": "CSS ulash usullari, selektorlar va sintaksis. Matn va shriftlar",
+    "questions": [
+      {
+        "question": "Butun saytga bitta dizayn berishning eng to'g'ri usuli qaysi?",
+        "options": [
+          "Inline CSS",
+          "Internal CSS",
+          "External CSS (alohida .css fayl)",
+          "Har sahifaga <style>"
+        ],
+        "correct": 3,
+        "explanation": "Bitta fayl — barcha sahifalar. O'zgartirish oson va brauzer faylni keshlaydi."
+      },
+      {
+        "question": "class=\"karta\" bo'lgan elementlarni tanlovchi selektor qaysi?",
+        "options": [
+          "#karta",
+          ".karta",
+          "karta",
+          "*karta"
+        ],
+        "correct": 2,
+        "explanation": "Nuqta — class, panjara — id."
+      },
+      {
+        "question": "<p class=\"a\" id=\"b\"> uchun p {color:red} , .a {color:green} , #b {color:blue} yozilgan. Matn qanday rangda?",
+        "options": [
+          "Qizil",
+          "Yashil",
+          "Qora",
+          "Ko'k"
+        ],
+        "correct": 4,
+        "explanation": "ID selektori class va tegdan kuchliroq."
+      },
+      {
+        "question": "nav a selektori nimani tanlaydi?",
+        "options": [
+          "nav ichidagi barcha havolalarni",
+          "nav va barcha a larni",
+          "Faqat birinchi havolani",
+          "a ichidagi nav ni"
+        ],
+        "correct": 1,
+        "explanation": "Bo'sh joy — \"ichidagi\" (avlod) selektori. Vergul esa \"va\" (guruh) bo'lardi."
+      },
+      {
+        "question": "Matnni markazga tekislovchi xossa qaysi?",
+        "options": [
+          "align: center",
+          "font-align: center",
+          "text-align: center",
+          "center: true"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "font-family: \"Roboto\", Arial, sans-serif; — agar kompyuterda Roboto bo'lmasa?",
+        "options": [
+          "Matn ko'rinmaydi",
+          "Arial ishlatiladi",
+          "Xato chiqadi",
+          "Times New Roman ishlatiladi"
+        ],
+        "correct": 2,
+        "explanation": "Ro'yxat — zaxira shriftlar ketma-ketligi."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 7,
+    "slug": "8-sinf/07-css-background-border",
+    "title": "CSS background va border xossalari",
+    "questions": [
+      {
+        "question": "Fon rasmi butun maydonni to'ldirishi (ortig'i kesilishi) uchun qaysi qiymat kerak?",
+        "options": [
+          "background-size: contain",
+          "background-size: cover",
+          "background-repeat: repeat",
+          "background-position: fill"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "border: 3px ____ blue; — bo'sh joyga nima yozilsa shtrixli chiziq bo'ladi?",
+        "options": [
+          "solid",
+          "dotted",
+          "double",
+          "dashed"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Kvadrat rasmni doiraga aylantirish uchun nima kerak?",
+        "options": [
+          "border-radius: 50%",
+          "border: circle",
+          "shape: round",
+          "border-radius: 10px"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "margin: 10px 20px 30px 40px; da chap tomon necha piksel?",
+        "options": [
+          "10px",
+          "20px",
+          "40px",
+          "30px"
+        ],
+        "correct": 3,
+        "explanation": "Tartib: tepa (10) → o'ng (20) → past (30) → chap (40)."
+      },
+      {
+        "question": "box-shadow: 0 10px 20px rgba(0,0,0,.2) da 20px nima?",
+        "options": [
+          "O'ngga siljish",
+          "Xiralik (blur)",
+          "Pastga siljish",
+          "Soya rangi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 8,
+    "slug": "8-sinf/08-box-model-flexbox-grid",
+    "title": "Box model va o'lcham birliklari. Flexbox va Grid",
+    "questions": [
+      {
+        "question": "Element chegarasi bilan mazmuni orasidagi bo'shliq nima deyiladi?",
+        "options": [
+          "margin",
+          "border",
+          "padding",
+          "gap"
+        ],
+        "correct": 3,
+        "explanation": "padding — ichki, margin — tashqi bo'shliq."
+      },
+      {
+        "question": "width: 200px; padding: 10px; border: 5px solid; + box-sizing: border-box . Elementning to'liq kengligi?",
+        "options": [
+          "230px",
+          "200px",
+          "215px",
+          "210px"
+        ],
+        "correct": 2,
+        "explanation": "border-box'da width padding va border'ni o'z ichiga oladi."
+      },
+      {
+        "question": "Menyuda logotipni chapga, havolalarni o'ngga surish uchun konteynerga nima yoziladi?",
+        "options": [
+          "display:flex; justify-content: space-between",
+          "display:flex; align-items: center",
+          "display:grid; gap: 10px",
+          "text-align: justify"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Root shrift 16px bo'lsa, 2rem necha piksel?",
+        "options": [
+          "2px",
+          "16px",
+          "18px",
+          "32px"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "grid-template-columns: 1fr 3fr; — konteyner 800px bo'lsa (gap yo'q), birinchi ustun necha piksel?",
+        "options": [
+          "400px",
+          "100px",
+          "200px",
+          "267px"
+        ],
+        "correct": 3,
+        "explanation": "Jami 4 ulush: 800/4 = 200px; ikkinchisi 600px."
+      },
+      {
+        "question": "Butun sahifa maketi (header, yon panel, asosiy qism, footer) uchun eng qulay vosita?",
+        "options": [
+          "Faqat Flexbox",
+          "CSS Grid (grid-template-areas)",
+          "HTML jadval",
+          "float"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 9,
+    "slug": "8-sinf/09-pseudo-class-position",
+    "title": "CSS pseudo-class va pseudo-elementlar. CSS position",
+    "questions": [
+      {
+        "question": "Sichqoncha element ustiga kelganda ishlaydigan pseudo-class qaysi?",
+        "options": [
+          ":active",
+          ":hover",
+          ":focus",
+          ":over"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Jadvalning faqat juft qatorlarini tanlash uchun?",
+        "options": [
+          "tr:even",
+          "tr:nth(2)",
+          "tr:first-child",
+          "tr:nth-child(even)"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "::after ishlashi uchun qaysi xossa majburiy?",
+        "options": [
+          "content",
+          "display",
+          "position",
+          "color"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Sahifa aylantirilganda ham ekranning bir joyida qimirlamay turadigan tugma uchun qaysi position?",
+        "options": [
+          "relative",
+          "absolute",
+          "fixed",
+          "static"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Kartaning burchagidagi \"-20%\" belgisi kartaga nisbatan joylashishi uchun kartaga nima beriladi?",
+        "options": [
+          "position: absolute",
+          "position: relative",
+          "position: fixed",
+          "z-index: 1"
+        ],
+        "correct": 2,
+        "explanation": "Ota — relative (langar), belgi — absolute."
+      },
+      {
+        "question": "z-index: 5 va z-index: 2 bo'lgan elementlar ustma-ust tushdi. Qaysi biri ko'rinadi?",
+        "options": [
+          "z-index: 2",
+          "HTML'da birinchi yozilgani",
+          "z-index: 5",
+          "Ikkalasi ham ko'rinmaydi"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 10,
+    "slug": "8-sinf/10-responsiv-dizayn-figma",
+    "title": "Moslashuvchan (responsiv) dizayn va media so'rovlar. Figma bilan ishlash",
+    "questions": [
+      {
+        "question": "@media (max-width: 600px) { ... } ichidagi qoidalar qachon ishlaydi?",
+        "options": [
+          "Ekran 600px dan katta bo'lganda",
+          "Ekran 600px yoki undan kichik bo'lganda",
+          "Faqat aynan 600px da",
+          "Har doim"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Mobile-first yondashuvida asosan qaysi shart ishlatiladi?",
+        "options": [
+          "min-width",
+          "max-width",
+          "orientation",
+          "max-height"
+        ],
+        "correct": 1,
+        "explanation": "Avval telefon uchun yoziladi, keyin \"kamida shuncha keng bo'lsa\" deb katta ekranlar qo'shiladi."
+      },
+      {
+        "question": "Rasm konteynerdan chiqib ketmasligi uchun eng to'g'ri CSS?",
+        "options": [
+          "width: 1000px",
+          "overflow: scroll",
+          "width: 100vw",
+          "max-width: 100%; height: auto;"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Figma'dagi \"Auto layout\" CSS'dagi qaysi texnologiyaga o'xshaydi?",
+        "options": [
+          "position: absolute",
+          "HTML jadval",
+          "Flexbox",
+          "Media query"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "<meta name=\"viewport\"> bo'lmasa telefonda nima bo'ladi?",
+        "options": [
+          "Sayt umuman ochilmaydi",
+          "Sahifa kompyuter kengligida, kichraytirilgan holda ko'rinadi",
+          "Ranglar o'zgaradi",
+          "Hech narsa o'zgarmaydi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 11,
+    "slug": "8-sinf/11-git-github-seo",
+    "title": "Git va GitHub, hosting va SEO bo'yicha umumiy bilimlar",
+    "questions": [
+      {
+        "question": "O'zgarishlarni \"saqlash nuqtasi\" sifatida tarixga yozuvchi buyruq?",
+        "options": [
+          "git add",
+          "git push",
+          "git commit",
+          "git init"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Git va GitHub farqi nimada?",
+        "options": [
+          "Git — kompyuterdagi dastur, GitHub — loyihalarni internetda saqlovchi sayt",
+          "Ular bir xil narsa",
+          "GitHub — dastur, Git — sayt",
+          "Git faqat internetda ishlaydi"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Lokal commit'larni GitHub'ga yuborish buyrug'i?",
+        "options": [
+          "git pull",
+          "git clone",
+          "git status",
+          "git push"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Google natijasida sahifa ostida ko'rinadigan qisqa tavsif qaysi teg bilan beriladi?",
+        "options": [
+          "<title>",
+          "<meta name=\"description\">",
+          "<h1>",
+          "<p class=\"seo\">"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "SEO uchun foydali EMAS narsa qaysi?",
+        "options": [
+          "Rasmlarda alt matni",
+          "Saytning telefonga moslashishi",
+          "Sahifada 5 ta h1 sarlavha",
+          "Tez yuklanish"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 12,
+    "slug": "8-sinf/12-css-animatsiya",
+    "title": "CSS animatsiyalar va transformatsiyalar",
+    "questions": [
+      {
+        "question": "Elementni 1.2 barobar kattalashtiruvchi kod?",
+        "options": [
+          "transform: size(1.2)",
+          "zoom: 120px",
+          "transform: scale(1.2)",
+          "transform: grow(20%)"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Hover effekti silliq bo'lishi uchun transition qayerga yoziladi?",
+        "options": [
+          "Elementning oddiy holatiga",
+          "Faqat :hover ga",
+          "@keyframes ichiga",
+          "body ga"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Animatsiyani cheksiz takrorlash uchun qaysi qiymat?",
+        "options": [
+          "repeat",
+          "loop",
+          "forever",
+          "infinite"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "transition va animation ning asosiy farqi?",
+        "options": [
+          "Farqi yo'q",
+          "transition holat o'zgarganda ishlaydi; animation o'zi boshlanadi va ko'p bosqichli bo'lishi mumkin",
+          "animation faqat ranglar uchun",
+          "transition faqat telefonda ishlaydi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Qaysi xossalarni animatsiya qilish eng tez (unumdor)?",
+        "options": [
+          "width va height",
+          "transform va opacity",
+          "margin va padding",
+          "top va left"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 13,
+    "slug": "8-sinf/13-jamoa-loyiha-deploy",
+    "title": "Jamoa bilan ishlash va loyiha qilish. Netlify va Vercel'ga deploy",
+    "questions": [
+      {
+        "question": "Git'da asosiy koddan alohida, mustaqil ishlash uchun nima yaratiladi?",
+        "options": [
+          "Commit",
+          "Branch",
+          "Clone",
+          "Remote"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "GitHub'da o'z branch'ingizni asosiy kodga qo'shishni so'rash nima deyiladi?",
+        "options": [
+          "Push Request",
+          "Merge Commit",
+          "Issue",
+          "Pull Request"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Konflikt qachon yuzaga keladi?",
+        "options": [
+          "Ikki branch'da bitta faylning bitta qatori turlicha o'zgartirilganda",
+          "Internet uzilganda",
+          "Fayl o'chirilganda",
+          "Juda ko'p commit qilinganda"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Netlify'ga GitHub orqali ulangan saytni yangilash uchun nima qilish kerak?",
+        "options": [
+          "Har safar papkani qayta yuklash",
+          "Netlify'ga xat yozish",
+          "Shunchaki git push qilish — sayt avtomatik yangilanadi",
+          "Saytni o'chirib, qaytadan yaratish"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Kanban doskasining odatiy ustunlari qaysilar?",
+        "options": [
+          "HTML, CSS, JS",
+          "Qilinishi kerak, Jarayonda, Tayyor",
+          "Dushanba, Seshanba, Chorshanba",
+          "Oson, O'rta, Qiyin"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "I bob. HTML va CSS",
+    "topic_number": 14,
+    "slug": "8-sinf/14-nazorat-ishi-1",
+    "title": "Yakuniy nazorat ishi — I bob (HTML va CSS)",
+    "questions": [
+      {
+        "question": "1. Domen nomini IP-manzilga aylantiruvchi tizim qaysi?",
+        "options": [
+          "HTTP",
+          "DNS",
+          "HTML",
+          "Hosting"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "2. Server \"500\" kodini qaytardi. Bu nimani bildiradi?",
+        "options": [
+          "Sahifa topilmadi",
+          "Muvaffaqiyatli",
+          "Sahifa ko'chirilgan",
+          "Serverda ichki xato"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "3. Foydalanuvchiga ko'rinadigan mazmun qaysi teg ichida yoziladi?",
+        "options": [
+          "<body>",
+          "<head>",
+          "<title>",
+          "<meta>"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "4. Qaysi teg yolg'iz (yopuvchi tegi yo'q)?",
+        "options": [
+          "<p>",
+          "<li>",
+          "<img>",
+          "<a>"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "5. Tartibli (raqamlangan) ro'yxat qaysi teg bilan yaratiladi?",
+        "options": [
+          "<ul>",
+          "<ol>",
+          "<dl>",
+          "<list>"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "6. Jadval katagini ikki qator balandligida birlashtiruvchi atribut?",
+        "options": [
+          "colspan=\"2\"",
+          "merge=\"2\"",
+          "height=\"2\"",
+          "rowspan=\"2\""
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "7. Forma maydonidagi ma'lumot serverga qaysi atribut nomi bilan yuboriladi?",
+        "options": [
+          "name",
+          "id",
+          "class",
+          "value"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "8. Bir guruhdan faqat bitta variant tanlash uchun qaysi input turi?",
+        "options": [
+          "checkbox",
+          "select",
+          "radio",
+          "option"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "9. sahifalar/aloqa.html dan rasmlar/logo.png ga to'g'ri yo'l?",
+        "options": [
+          "rasmlar/logo.png",
+          "../rasmlar/logo.png",
+          "/sahifalar/rasmlar/logo.png",
+          "C:/rasmlar/logo.png"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "10. Rasmning matnli tavsifi qaysi atributda yoziladi?",
+        "options": [
+          "title",
+          "src",
+          "desc",
+          "alt"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "11. Mustaqil maqola yoki yangilik uchun eng mos semantik teg?",
+        "options": [
+          "<article>",
+          "<aside>",
+          "<nav>",
+          "<div>"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "12. Butun saytga yagona dizayn berishning eng to'g'ri usuli?",
+        "options": [
+          "Inline CSS",
+          "Har sahifada <style>",
+          "External CSS fayl",
+          "HTML atributlari"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "13. id=\"menyu\" elementni tanlovchi selektor?",
+        "options": [
+          ".menyu",
+          "#menyu",
+          "menyu",
+          "*menyu"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "14. Qaysi selektor eng kuchli (ustuvor)?",
+        "options": [
+          "p",
+          ".matn",
+          "div p",
+          "#asosiy"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "15. Fon rasmi butun maydonni to'ldirishi uchun?",
+        "options": [
+          "background-size: cover",
+          "background-size: contain",
+          "background-repeat: repeat",
+          "background: fill"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "16. Kvadrat elementni doiraga aylantirish uchun?",
+        "options": [
+          "border: round",
+          "radius: 100px",
+          "border-radius: 50%",
+          "shape: circle"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "17. Element chegarasi va mazmuni orasidagi ichki bo'shliq?",
+        "options": [
+          "margin",
+          "padding",
+          "gap",
+          "outline"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "18. box-sizing: border-box nima qiladi?",
+        "options": [
+          "Chegarani yashiradi",
+          "Elementni markazga qo'yadi",
+          "Margin'ni nolga tenglaydi",
+          "width ichiga padding va border'ni ham qo'shadi"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "19. Flex konteynerda elementlarni asosiy o'q bo'yicha markazlash?",
+        "options": [
+          "justify-content: center",
+          "align-items: center",
+          "text-align: center",
+          "flex: center"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "20. 3 ta teng ustunli Grid qaysi?",
+        "options": [
+          "grid-columns: 3",
+          "grid-template-columns: 3fr",
+          "grid-template-columns: repeat(3, 1fr)",
+          "columns: 1fr, 1fr, 1fr"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "21. Ichidagi absolute elementlar unga nisbatan joylashishi uchun ota elementga nima beriladi?",
+        "options": [
+          "position: absolute",
+          "position: relative",
+          "position: static",
+          "display: block"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "22. @media (max-width: 768px) qoidalari qachon ishlaydi?",
+        "options": [
+          "Ekran 768px dan katta bo'lsa",
+          "Faqat planshetda",
+          "Doim",
+          "Ekran 768px yoki undan kichik bo'lsa"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "23. Hover effekti silliq bo'lishi uchun ishlatiladigan xossa?",
+        "options": [
+          "transition",
+          "transform",
+          "animation-name",
+          "@keyframes"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "24. Lokal o'zgarishlarni GitHub'ga yuboruvchi Git buyrug'i?",
+        "options": [
+          "git commit",
+          "git pull",
+          "git push",
+          "git add"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "25. Netlify yoki Vercel nima?",
+        "options": [
+          "Kod muharrirlari",
+          "Saytlarni bepul joylash (hosting) platformalari",
+          "CSS freymvorklari",
+          "Brauzerlar"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 15,
+    "slug": "8-sinf/15-js-ozgaruvchilar",
+    "title": "JavaScript'ga kirish. O'zgaruvchilar va ma'lumot turlari",
+    "questions": [
+      {
+        "question": "Qiymati keyinchalik o'zgarmaydigan o'zgaruvchi qaysi kalit so'z bilan e'lon qilinadi?",
+        "options": [
+          "let",
+          "const",
+          "var",
+          "fix"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Qaysi o'zgaruvchi nomi to'g'ri?",
+        "options": [
+          "2sinf",
+          "umumiy-ball",
+          "sinf rahbari",
+          "oquvchilarSoni"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "console.log(\"7\" + 3) natijasi?",
+        "options": [
+          "10",
+          "4",
+          "\"73\"",
+          "Xato"
+        ],
+        "correct": 3,
+        "explanation": "Matnga son qo'shilsa, son matnga aylanib, ular yopishtiriladi."
+      },
+      {
+        "question": "typeof true nima qaytaradi?",
+        "options": [
+          "\"boolean\"",
+          "\"string\"",
+          "\"true\"",
+          "\"number\""
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "const ism = \"Ali\"; console.log(`Salom, ${ism}!`) nima chiqaradi?",
+        "options": [
+          "Salom, ${ism}!",
+          "Salom, Ali!",
+          "Salom, ism!",
+          "Xato"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "prompt() qanday turdagi qiymat qaytaradi?",
+        "options": [
+          "Doim son",
+          "Boolean",
+          "Matn (string) yoki null",
+          "Massiv"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 16,
+    "slug": "8-sinf/16-js-operatorlar-shartlar",
+    "title": "JavaScript'da operatorlar va ifodalar. Shart operatorlari",
+    "questions": [
+      {
+        "question": "17 % 5 natijasi?",
+        "options": [
+          "3.4",
+          "3",
+          "2",
+          "85"
+        ],
+        "correct": 3,
+        "explanation": "17 = 5 × 3 + 2 . % — qoldiq."
+      },
+      {
+        "question": "5 === \"5\" natijasi?",
+        "options": [
+          "true",
+          "false",
+          "Xato",
+          "undefined"
+        ],
+        "correct": 2,
+        "explanation": "=== turini ham tekshiradi: son va matn har xil."
+      },
+      {
+        "question": "true && false natijasi?",
+        "options": [
+          "false",
+          "true",
+          "null",
+          "Xato"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "let x = 10; x += 5; x *= 2; dan keyin x nechaga teng?",
+        "options": [
+          "17",
+          "20",
+          "25",
+          "30"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Ball 92 bo'lsa, quyidagi kod nima chiqaradi? if (ball >= 56) console.log(\"3\"); else if (ball >= 86) console.log(\"5\");",
+        "options": [
+          "5",
+          "3",
+          "Ikkalasi ham",
+          "Hech narsa"
+        ],
+        "correct": 2,
+        "explanation": "Birinchi rost shart bajariladi. Tartib noto'g'ri yozilgani uchun xato natija chiqdi."
+      },
+      {
+        "question": "const t = 20 > 10 ? \"ha\" : \"yo'q\"; — t ning qiymati?",
+        "options": [
+          "true",
+          "\"yo'q\"",
+          "\"ha\"",
+          "20"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 17,
+    "slug": "8-sinf/17-js-sikllar-funksiyalar",
+    "title": "JavaScript'da takrorlanish operatorlari va funksiyalar",
+    "questions": [
+      {
+        "question": "for (let i = 0; i < 5; i++) sikli necha marta bajariladi?",
+        "options": [
+          "4",
+          "6",
+          "5",
+          "Cheksiz"
+        ],
+        "correct": 3,
+        "explanation": "i = 0, 1, 2, 3, 4 → 5 marta."
+      },
+      {
+        "question": "Siklni darhol to'xtatuvchi kalit so'z?",
+        "options": [
+          "break",
+          "continue",
+          "stop",
+          "return"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Kamida bir marta bajarilishi kafolatlangan sikl qaysi?",
+        "options": [
+          "for",
+          "while",
+          "if",
+          "do...while"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "const f = x => x * 3; console.log(f(4)); natijasi?",
+        "options": [
+          "7",
+          "12",
+          "43",
+          "undefined"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Funksiya natijasini chaqirgan joyga qaytaruvchi kalit so'z?",
+        "options": [
+          "console.log",
+          "break",
+          "return",
+          "output"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Quyidagi kod nima chiqaradi? let s = 0; for (let i = 1; i <= 4; i++) s += i; console.log(s);",
+        "options": [
+          "4",
+          "10",
+          "24",
+          "1234"
+        ],
+        "correct": 2,
+        "explanation": "1 + 2 + 3 + 4 = 10."
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 18,
+    "slug": "8-sinf/18-js-massiv-obyekt",
+    "title": "Arraylar (massivlar) va obyektlar bilan ishlash",
+    "questions": [
+      {
+        "question": "const a = [10, 20, 30]; — a[1] nimaga teng?",
+        "options": [
+          "10",
+          "20",
+          "30",
+          "undefined"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Massiv oxiriga element qo'shuvchi metod?",
+        "options": [
+          "push()",
+          "pop()",
+          "shift()",
+          "add()"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "[1, 2, 3, 4].filter(x => x % 2 === 0) natijasi?",
+        "options": [
+          "[1, 3]",
+          "[2, 4, 6, 8]",
+          "[2, 4]",
+          "2"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "[1, 2, 3].map(x => x * 10) natijasi?",
+        "options": [
+          "60",
+          "[1, 2, 3]",
+          "30",
+          "[10, 20, 30]"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "const k = { ism: \"Ali\", yosh: 14 }; — yoshni o'qishning to'g'ri usuli?",
+        "options": [
+          "k[yosh]",
+          "k.yosh",
+          "k(yosh)",
+          "k->yosh"
+        ],
+        "correct": 2,
+        "explanation": "k[\"yosh\"] ham to'g'ri — qo'shtirnoq bilan."
+      },
+      {
+        "question": "Massivdagi barcha sonlar yig'indisini bitta qiymatga yig'uvchi metod?",
+        "options": [
+          "map",
+          "find",
+          "reduce",
+          "join"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 19,
+    "slug": "8-sinf/19-dom-bom-eventlar",
+    "title": "DOM va BOM bilan ishlash. JavaScript'da eventlar",
+    "questions": [
+      {
+        "question": "class=\"karta\" bo'lgan birinchi elementni topuvchi kod?",
+        "options": [
+          "document.querySelector(\"karta\")",
+          "document.querySelector(\".karta\")",
+          "document.getElementById(\".karta\")",
+          "document.find(\"karta\")"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Element matnini xavfsiz o'zgartiruvchi xossa?",
+        "options": [
+          "innerHTML",
+          "value",
+          "src",
+          "textContent"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Class bor bo'lsa olib tashlaydigan, yo'q bo'lsa qo'shadigan metod?",
+        "options": [
+          "classList.toggle()",
+          "classList.add()",
+          "classList.switch()",
+          "className.change()"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Maydonga har bir belgi kiritilganda sodir bo'ladigan hodisa?",
+        "options": [
+          "click",
+          "submit",
+          "input",
+          "load"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Ma'lumotni brauzer yopilsa ham saqlab qoluvchi BOM vositasi?",
+        "options": [
+          "setTimeout",
+          "localStorage",
+          "console",
+          "location"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Forma yuborilganda sahifa qayta yuklanmasligi uchun nima chaqiriladi?",
+        "options": [
+          "e.stop()",
+          "return false",
+          "form.reset()",
+          "e.preventDefault()"
+        ],
+        "correct": 4,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "II bob. JavaScript asoslari",
+    "topic_number": 20,
+    "slug": "8-sinf/20-js-mini-loyiha",
+    "title": "HTML eventlari va sahifaga interaktivlik. JavaScript mini loyiha",
+    "questions": [
+      {
+        "question": "\"Holat → Chizish\" usulida tugma bosilganda birinchi nima o'zgaradi?",
+        "options": [
+          "Sahifadagi HTML",
+          "CSS fayl",
+          "Ma'lumotlar massivi (holat)",
+          "localStorage"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Massivni localStorage'da saqlash uchun avval nima qilinadi?",
+        "options": [
+          "JSON.stringify() bilan matnga aylantiriladi",
+          "toString() chaqiriladi",
+          "Hech narsa, to'g'ridan-to'g'ri saqlanadi",
+          "Number() bilan songa aylantiriladi"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "<button data-filtr=\"faol\"> dagi qiymatni JS'da qanday o'qiysiz?",
+        "options": [
+          "tugma.filtr",
+          "tugma.data",
+          "tugma.value",
+          "tugma.dataset.filtr"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Vazifani o'chirishning eng qulay usuli (id bo'yicha)?",
+        "options": [
+          "vazifalar.pop(id)",
+          "vazifalar = vazifalar.filter(v => v.id !== id)",
+          "delete vazifalar[id]",
+          "vazifalar.remove(id)"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 21,
+    "slug": "8-sinf/21-python-kirish",
+    "title": "Back-end haqida. Python'ga kirish va o'rnatish. O'zgaruvchilar, turlar, operatorlar, kiritish-chiqarish",
+    "questions": [
+      {
+        "question": "Back-end'ning vazifasi qaysi?",
+        "options": [
+          "Tugma rangini o'zgartirish",
+          "Ma'lumotlarni serverda saqlash va parolni tekshirish",
+          "Animatsiya yaratish",
+          "Sahifa shriftini tanlash"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Blok-sxemada shart (ha/yo'q) qaysi shakl bilan belgilanadi?",
+        "options": [
+          "Oval",
+          "To'rtburchak",
+          "Romb",
+          "Parallelogramm"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "print(17 // 5) natijasi?",
+        "options": [
+          "3",
+          "3.4",
+          "2",
+          "85"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "input() funksiyasi qanday turdagi qiymat qaytaradi?",
+        "options": [
+          "int",
+          "float",
+          "bool",
+          "str"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Python'da VA mantiqiy operatori qanday yoziladi?",
+        "options": [
+          "&&",
+          "and",
+          "AND",
+          "&"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "ism = \"Ali\"; print(f\"Salom, {ism}!\") natijasi?",
+        "options": [
+          "Salom, {ism}!",
+          "f\"Salom, Ali!\"",
+          "Salom, Ali!",
+          "Xato"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 22,
+    "slug": "8-sinf/22-python-shart-sikl-fayl",
+    "title": "Python control flow: shartlar va sikllar. Fayllar bilan ishlash",
+    "questions": [
+      {
+        "question": "JS'dagi else if Python'da qanday yoziladi?",
+        "options": [
+          "else if",
+          "elseif",
+          "elif",
+          "orif"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "list(range(2, 8, 2)) qanday sonlarni beradi?",
+        "options": [
+          "2, 4, 6, 8",
+          "2, 4, 6",
+          "2, 3, 4, 5, 6, 7",
+          "8, 6, 4, 2"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Python kod bloklarini qanday belgilaydi?",
+        "options": [
+          "Jingalak qavslar {}",
+          "begin / end so'zlari",
+          "Nuqta-vergul",
+          "Ikki nuqta va chekinish (bo'sh joylar)"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Fayl mazmunini o'chirmasdan, oxiriga yozish rejimi?",
+        "options": [
+          "\"a\"",
+          "\"w\"",
+          "\"r\"",
+          "\"x\""
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "int(\"abc\") qanday xato beradi?",
+        "options": [
+          "ZeroDivisionError",
+          "IndentationError",
+          "ValueError",
+          "TypeError"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "with open(...) ning afzalligi nimada?",
+        "options": [
+          "Faylni tezroq o'qiydi",
+          "Ish tugagach faylni avtomatik yopadi",
+          "Faylni shifrlaydi",
+          "Faylni o'chiradi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 23,
+    "slug": "8-sinf/23-python-list-tuple-set-dict",
+    "title": "Ma'lumot tuzilmalari: list, tuple, set va dictionary",
+    "questions": [
+      {
+        "question": "Qaysi tuzilmani yaratilgandan keyin o'zgartirib bo'lmaydi?",
+        "options": [
+          "list",
+          "tuple",
+          "set",
+          "dict"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "[1, 2, 2, 3, 3] dan takrorlarni olib tashlashning eng oson usuli?",
+        "options": [
+          "sort()",
+          "tuple()",
+          "pop()",
+          "list(set(...))"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "a = [10, 20, 30, 40]; print(a[-1]) natijasi?",
+        "options": [
+          "10",
+          "Xato",
+          "40",
+          "30"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "\"Salom\"[1:4] natijasi?",
+        "options": [
+          "\"alo\"",
+          "\"Sal\"",
+          "\"alom\"",
+          "\"Salo\""
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Telefon kitobi (ism → raqam) uchun eng mos tuzilma?",
+        "options": [
+          "list",
+          "dict",
+          "tuple",
+          "set"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "[x * 2 for x in range(4)] natijasi?",
+        "options": [
+          "[2, 4, 6, 8]",
+          "[0, 1, 2, 3]",
+          "[0, 2, 4, 6]",
+          "8"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 24,
+    "slug": "8-sinf/24-python-funksiya-modul",
+    "title": "Python funksiyalar, modullar va standart kutubxonalar",
+    "questions": [
+      {
+        "question": "Python'da funksiya qaysi kalit so'z bilan yaratiladi?",
+        "options": [
+          "function",
+          "def",
+          "func",
+          "fn"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "def f(a, b=10): return a + b — f(5) natijasi?",
+        "options": [
+          "5",
+          "Xato",
+          "15",
+          "10"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "1 dan 6 gacha tasodifiy butun son beruvchi kod?",
+        "options": [
+          "random.randint(1, 6)",
+          "random.random(6)",
+          "math.random(1, 6)",
+          "randint(6)"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Python dict'ni JSON faylga yozuvchi funksiya?",
+        "options": [
+          "json.load()",
+          "json.read()",
+          "file.json()",
+          "json.dump()"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Tashqi kutubxonani o'rnatish buyrug'i?",
+        "options": [
+          "python get requests",
+          "pip install requests",
+          "import install requests",
+          "npm install requests"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 25,
+    "slug": "8-sinf/25-python-oop",
+    "title": "Obyektga yo'naltirilgan dasturlash (OOP) asoslari",
+    "questions": [
+      {
+        "question": "Klass va obyekt o'rtasidagi munosabat qaysi?",
+        "options": [
+          "Obyekt — chizma, klass — mahsulot",
+          "Klass — chizma (shablon), obyekt — undan yaratilgan nusxa",
+          "Ular bir xil narsa",
+          "Klass — funksiya, obyekt — o'zgaruvchi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Obyekt yaratilganda avtomatik chaqiriladigan metod?",
+        "options": [
+          "__str__",
+          "__main__",
+          "__init__",
+          "create"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "self nimani bildiradi?",
+        "options": [
+          "Metod chaqirilayotgan obyektning o'zini",
+          "Klass nomini",
+          "Global o'zgaruvchini",
+          "Ota klassni"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "class It(Hayvon): — bu qaysi OOP tamoyili?",
+        "options": [
+          "Inkapsulyatsiya",
+          "Polimorfizm",
+          "Abstraksiya",
+          "Merosxo'rlik"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "print(obyekt) qanday matn chiqarishini qaysi metod belgilaydi?",
+        "options": [
+          "__init__",
+          "__str__",
+          "__print__",
+          "show()"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Turli klasslar bir xil nomli metodni o'zicha bajarishi qanday ataladi?",
+        "options": [
+          "Inkapsulyatsiya",
+          "Merosxo'rlik",
+          "Polimorfizm",
+          "Kompilyatsiya"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 26,
+    "slug": "8-sinf/26-malumotlar-bazasi-kirish",
+    "title": "Ma'lumotlar bazasiga kirish. Relyatsion ma'lumotlar bazasi tushunchasi",
+    "questions": [
+      {
+        "question": "Jadvaldagi har bir qatorni noyob aniqlovchi ustun nima deyiladi?",
+        "options": [
+          "Tashqi kalit",
+          "Indeks",
+          "Birlamchi kalit (Primary Key)",
+          "Ustun nomi"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "oquvchilar.sinf_id ustuni sinflar.id ga ishora qiladi. U qanday kalit?",
+        "options": [
+          "Birlamchi kalit",
+          "Tashqi kalit (Foreign Key)",
+          "Noyob kalit",
+          "Parol"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "\"O'quvchi ko'p to'garakka, to'garakda ko'p o'quvchi\" — bu qanday bog'lanish?",
+        "options": [
+          "1:1",
+          "1:N",
+          "N:1",
+          "N:M (ko'pga-ko'p)"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Ko'pga-ko'p bog'lanish qanday amalga oshiriladi?",
+        "options": [
+          "Oraliq (bog'lovchi) jadval orqali",
+          "Bitta katakka vergul bilan yozib",
+          "Ikki jadvalni bitta qilib",
+          "Faqat NoSQL'da mumkin"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Jadvaldagi bitta yozuv (masalan, bitta o'quvchi haqidagi ma'lumot) nima deyiladi?",
+        "options": [
+          "Ustun",
+          "Kalit",
+          "Qator (row)",
+          "Sxema"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "SQL nima?",
+        "options": [
+          "Ma'lumotlar bazasi dasturi",
+          "Relyatsion bazalar bilan ishlash tili",
+          "Python kutubxonasi",
+          "Hosting turi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 27,
+    "slug": "8-sinf/27-postgresql-jadval",
+    "title": "PostgreSQL bilan tanishish. Jadval yaratish va ma'lumot turlari",
+    "questions": [
+      {
+        "question": "Pul summasini saqlash uchun eng to'g'ri tur?",
+        "options": [
+          "REAL",
+          "VARCHAR",
+          "NUMERIC(12, 2)",
+          "BOOLEAN"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Avtomatik 1, 2, 3... deb o'suvchi id ustuni uchun tur?",
+        "options": [
+          "SERIAL",
+          "AUTO",
+          "COUNTER",
+          "TEXT"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Ustunni majburiy (bo'sh bo'lmaydigan) qiluvchi cheklov?",
+        "options": [
+          "UNIQUE",
+          "DEFAULT",
+          "CHECK",
+          "NOT NULL"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Mavjud jadvalga yangi ustun qo'shuvchi buyruq?",
+        "options": [
+          "UPDATE TABLE ... ADD",
+          "ALTER TABLE ... ADD COLUMN",
+          "INSERT COLUMN",
+          "CREATE COLUMN"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Telefon raqami (+998901234567) uchun eng mos tur?",
+        "options": [
+          "INTEGER",
+          "NUMERIC",
+          "VARCHAR(20)",
+          "DATE"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "SQL'da matn qiymati qanday yoziladi?",
+        "options": [
+          "'Ali'",
+          "\"Ali\"",
+          "`Ali`",
+          "Ali"
+        ],
+        "correct": 1,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 28,
+    "slug": "8-sinf/28-sql-crud",
+    "title": "Ma'lumotlarni qo'shish, ko'rish va saqlash. CRUD operatsiyalari",
+    "questions": [
+      {
+        "question": "CRUD'dagi \"R\" qaysi SQL buyrug'iga mos keladi?",
+        "options": [
+          "INSERT",
+          "SELECT",
+          "UPDATE",
+          "REMOVE"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "DELETE FROM oquvchilar; nima qiladi?",
+        "options": [
+          "Faqat birinchi qatorni o'chiradi",
+          "Jadvalni o'chiradi",
+          "Xato beradi",
+          "Jadvaldagi BARCHA qatorlarni o'chiradi"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Emaili kiritilmagan o'quvchilarni topuvchi to'g'ri shart?",
+        "options": [
+          "WHERE email IS NULL",
+          "WHERE email = NULL",
+          "WHERE email = ''",
+          "WHERE NOT email"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Natijani kamayish tartibida saralash uchun?",
+        "options": [
+          "ORDER BY ... ASC",
+          "SORT BY ... DOWN",
+          "ORDER BY ... DESC",
+          "ORDER DESC BY ..."
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Faqat birinchi 5 ta natijani olish uchun?",
+        "options": [
+          "TOP 5",
+          "LIMIT 5",
+          "FIRST 5",
+          "COUNT 5"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Bir nechta o'zgarishni \"hammasi yoki hech biri\" tarzida bajarish nima deyiladi?",
+        "options": [
+          "Indeks",
+          "JOIN",
+          "Cheklov",
+          "Tranzaksiya"
+        ],
+        "correct": 4,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 29,
+    "slug": "8-sinf/29-sql-join-index-backup",
+    "title": "Jadvallarni bog'lash va JOIN. Index, constraint, data integrity. Backup va restore",
+    "questions": [
+      {
+        "question": "Faqat ikkala jadvalda ham mos keladigan qatorlarni qaytaruvchi JOIN?",
+        "options": [
+          "INNER JOIN",
+          "LEFT JOIN",
+          "RIGHT JOIN",
+          "FULL JOIN"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Barcha o'quvchilarni (sinfi bo'lmaganlarini ham) sinf nomi bilan chiqarish uchun?",
+        "options": [
+          "oquvchilar INNER JOIN sinflar",
+          "sinflar INNER JOIN oquvchilar",
+          "oquvchilar LEFT JOIN sinflar",
+          "oquvchilar RIGHT JOIN sinflar"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Indeksning asosiy vazifasi?",
+        "options": [
+          "Ma'lumotlarni shifrlash",
+          "Qidiruvni tezlashtirish",
+          "Zaxira nusxa olish",
+          "Jadvallarni bog'lash"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "O'quvchi o'chirilganda uning baholari ham avtomatik o'chishi uchun FK'ga nima qo'shiladi?",
+        "options": [
+          "ON DELETE RESTRICT",
+          "ON DELETE SET NULL",
+          "NOT NULL",
+          "ON DELETE CASCADE"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "PostgreSQL bazasining zaxira nusxasini oluvchi buyruq?",
+        "options": [
+          "pg_backup",
+          "pg_dump",
+          "COPY DATABASE",
+          "SAVE DATABASE"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 30,
+    "slug": "8-sinf/30-sql-filtr-aggregatsiya",
+    "title": "Filtrlash va shartlar. Aggregation va grouping",
+    "questions": [
+      {
+        "question": "\"A\" harfi bilan boshlanadigan ismlarni topuvchi shart?",
+        "options": [
+          "ism = 'A%'",
+          "ism LIKE 'A%'",
+          "ism LIKE '%A'",
+          "ism IN 'A'"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Jadvaldagi qatorlar sonini qaytaruvchi funksiya?",
+        "options": [
+          "SUM(*)",
+          "LENGTH(*)",
+          "COUNT(*)",
+          "TOTAL(*)"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "\"Har bir fan bo'yicha o'rtacha baho\" uchun nima kerak?",
+        "options": [
+          "GROUP BY fan + AVG(baho)",
+          "ORDER BY fan",
+          "DISTINCT fan",
+          "WHERE fan = AVG"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Guruhlarni hisob-kitobdan keyin filtrlash uchun qaysi kalit so'z?",
+        "options": [
+          "WHERE",
+          "FILTER",
+          "LIMIT",
+          "HAVING"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "WHERE narx BETWEEN 100 AND 200 — 200 natijaga kiradimi?",
+        "options": [
+          "Yo'q",
+          "Ha, chegaralar kiradi",
+          "Faqat 100 kiradi",
+          "Xato beradi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Takrorlanmas qiymatlarni olish uchun?",
+        "options": [
+          "UNIQUE",
+          "SINGLE",
+          "DISTINCT",
+          "GROUP"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "III bob. Python va ma'lumotlar bazasi",
+    "topic_number": 31,
+    "slug": "8-sinf/31-nazorat-ishi-2",
+    "title": "Yakuniy nazorat ishi — II–III boblar (JavaScript, Python, SQL)",
+    "questions": [
+      {
+        "question": "1. Qiymatini o'zgartirib bo'lmaydigan o'zgaruvchi?",
+        "options": [
+          "let",
+          "var",
+          "const",
+          "static"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "2. console.log(10 % 4) natijasi?",
+        "options": [
+          "2.5",
+          "2",
+          "40",
+          "6"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "3. \"3\" === 3 natijasi?",
+        "options": [
+          "true",
+          "\"33\"",
+          "6",
+          "false"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "4. for (let i = 1; i <= 3; i++) sikli necha marta bajariladi?",
+        "options": [
+          "3",
+          "2",
+          "4",
+          "Cheksiz"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "5. [5, 10, 15].map(x => x / 5) natijasi?",
+        "options": [
+          "30",
+          "[5, 10, 15]",
+          "[1, 2, 3]",
+          "6"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "6. const k = { ism: \"Ali\" }; — ismni o'qish?",
+        "options": [
+          "k(ism)",
+          "k.ism",
+          "k->ism",
+          "k[ism]"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "7. Tugma bosilishiga javob beruvchi to'g'ri kod?",
+        "options": [
+          "btn.addEventListener(\"click\", fn)",
+          "btn.on(\"press\", fn)",
+          "btn.click = fn()",
+          "addEvent(btn, fn)"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "8. Massivni localStorage'ga saqlashdan oldin nima qilinadi?",
+        "options": [
+          "Number()",
+          "toString()",
+          "Hech narsa",
+          "JSON.stringify()"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "9. print(17 // 5) natijasi?",
+        "options": [
+          "3.4",
+          "3",
+          "2",
+          "85"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "10. input() qaytaradigan qiymat turi?",
+        "options": [
+          "int",
+          "float",
+          "str",
+          "bool"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "11. JS'dagi else if ning Python'dagi ko'rinishi?",
+        "options": [
+          "elif",
+          "else if",
+          "elsif",
+          "orif"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "12. list(range(1, 5)) natijasi?",
+        "options": [
+          "[1, 2, 3, 4, 5]",
+          "[0, 1, 2, 3, 4]",
+          "[1, 5]",
+          "[1, 2, 3, 4]"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "13. Qaysi tuzilma o'zgartirilmaydi (immutable)?",
+        "options": [
+          "list",
+          "tuple",
+          "dict",
+          "set"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "14. d = {\"a\": 1}; print(d.get(\"b\", 0)) natijasi?",
+        "options": [
+          "KeyError",
+          "None",
+          "0",
+          "1"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "15. int(\"abc\") qanday xato beradi?",
+        "options": [
+          "ValueError",
+          "TypeError",
+          "NameError",
+          "IndexError"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "16. Obyekt yaratilganda avtomatik chaqiriladigan metod?",
+        "options": [
+          "__str__",
+          "__new__",
+          "start()",
+          "__init__"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "17. class It(Hayvon): — bu OOP'ning qaysi tamoyili?",
+        "options": [
+          "Inkapsulyatsiya",
+          "Merosxo'rlik",
+          "Polimorfizm",
+          "Abstraksiya"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "18. Har bir qatorni noyob aniqlovchi ustun?",
+        "options": [
+          "Tashqi kalit",
+          "Indeks",
+          "Birlamchi kalit (PK)",
+          "NOT NULL"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "19. Pul summasi uchun eng mos tur?",
+        "options": [
+          "NUMERIC(12, 2)",
+          "REAL",
+          "VARCHAR",
+          "INTEGER"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "20. CRUD'dagi \"C\" ga mos SQL buyrug'i?",
+        "options": [
+          "CREATE",
+          "SELECT",
+          "UPDATE",
+          "INSERT"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "21. WHERE siz DELETE FROM oquvchilar; nima qiladi?",
+        "options": [
+          "Xato beradi",
+          "Barcha qatorlarni o'chiradi",
+          "Birinchi qatorni o'chiradi",
+          "Jadvalni o'chiradi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "22. Chap jadvalning barcha qatorlarini qaytaruvchi JOIN?",
+        "options": [
+          "INNER JOIN",
+          "RIGHT JOIN",
+          "LEFT JOIN",
+          "CROSS JOIN"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "23. Emaili kiritilmaganlarni topuvchi shart?",
+        "options": [
+          "email IS NULL",
+          "email = NULL",
+          "email == ''",
+          "NOT email"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "24. \"Har bir sinfdagi o'quvchilar soni\" uchun nima kerak?",
+        "options": [
+          "ORDER BY",
+          "DISTINCT",
+          "LIMIT",
+          "GROUP BY + COUNT"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "25. Guruhlangan natijani shart bo'yicha filtrlash?",
+        "options": [
+          "WHERE",
+          "HAVING",
+          "FILTER",
+          "IF"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 32,
+    "slug": "8-sinf/32-python-postgresql",
+    "title": "Python dasturlash tilini PostgreSQL ma'lumotlar bazasiga bog'lash",
+    "questions": [
+      {
+        "question": "Python'dan PostgreSQL bilan ishlash uchun ishlatiladigan kutubxona?",
+        "options": [
+          "requests",
+          "psycopg",
+          "pygame",
+          "flask"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "INSERT dan keyin o'zgarishni bazada saqlash uchun nima chaqiriladi?",
+        "options": [
+          "cur.save()",
+          "conn.close()",
+          "cur.fetchone()",
+          "conn.commit()"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "SQL injection'dan himoyalangan to'g'ri kod?",
+        "options": [
+          "cur.execute(\"... WHERE ism = %s\", (ism,))",
+          "cur.execute(f\"... WHERE ism = '{ism}'\")",
+          "cur.execute(\"... WHERE ism = '\" + ism + \"'\")",
+          "cur.execute(\"... WHERE ism = {}\".format(ism))"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "So'rovning barcha natija qatorlarini oluvchi metod?",
+        "options": [
+          "fetchone()",
+          "getall()",
+          "fetchall()",
+          "readall()"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Parol kabi maxfiy sozlamalarni qayerda saqlash to'g'ri?",
+        "options": [
+          "Kod ichida, izoh bilan",
+          ".env faylida (GitHub'ga yuklanmaydi)",
+          "README faylida",
+          "Ma'lumotlar bazasi nomida"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 33,
+    "slug": "8-sinf/33-django-kirish",
+    "title": "Django frameworkiga kirish. Arxitektura, loyiha va ilova (App) yaratish",
+    "questions": [
+      {
+        "question": "Django'ning arxitekturasi qanday ataladi?",
+        "options": [
+          "MVC",
+          "REST",
+          "MVT (Model–View–Template)",
+          "CRUD"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Ma'lumotlar tuzilmasi va baza bilan ishlash Django'ning qaysi qismida?",
+        "options": [
+          "View",
+          "Model",
+          "Template",
+          "URL"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Yangi ilova yaratish buyrug'i?",
+        "options": [
+          "python manage.py startapp blog",
+          "django-admin newapp blog",
+          "python manage.py createapp blog",
+          "pip install blog"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Yaratilgan ilovani loyihaga qayerda ro'yxatdan o'tkazamiz?",
+        "options": [
+          "urls.py",
+          "views.py",
+          "manage.py",
+          "settings.py → INSTALLED_APPS"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Internetdagi (production) saytda DEBUG qiymati qanday bo'lishi kerak?",
+        "options": [
+          "True",
+          "False",
+          "Ahamiyati yo'q",
+          "None"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Django'ning ishlab chiqish serverini ishga tushiruvchi buyruq?",
+        "options": [
+          "python manage.py start",
+          "django run",
+          "python manage.py runserver",
+          "python server.py"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 34,
+    "slug": "8-sinf/34-django-url-view",
+    "title": "Django URL va View komponentlari. URL va View yordamida sahifalar yaratish",
+    "questions": [
+      {
+        "question": "Django view'i nimani qabul qilib, nimani qaytaradi?",
+        "options": [
+          "HTML qabul qilib, SQL qaytaradi",
+          "request (so'rov) qabul qilib, response (javob) qaytaradi",
+          "URL qabul qilib, model qaytaradi",
+          "Hech narsa qabul qilmaydi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "path(\"maqola/<int:id>/\", views.maqola) — /maqola/7/ so'ralganda view nima oladi?",
+        "options": [
+          "id=\"7\" (matn)",
+          "Hech narsa",
+          "id=7 (son)",
+          "maqola=7"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Ilova URL'larini asosiy urls.py ga ulash uchun?",
+        "options": [
+          "include(\"blog.urls\")",
+          "import blog",
+          "connect(\"blog\")",
+          "urls.add(blog)"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "/qidiruv/?q=futbol dagi \"futbol\" ni view'da qanday olasiz?",
+        "options": [
+          "request.POST[\"q\"]",
+          "request.q",
+          "request.path",
+          "request.GET.get(\"q\")"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Boshqa sahifaga qayta yo'naltiruvchi funksiya?",
+        "options": [
+          "HttpResponse()",
+          "redirect()",
+          "Http404()",
+          "goto()"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Class Based View'ni URL'ga ulashda nima yoziladi?",
+        "options": [
+          "views.SalomView",
+          "views.SalomView()",
+          "views.SalomView.as_view()",
+          "views.SalomView.get"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 35,
+    "slug": "8-sinf/35-django-template-static",
+    "title": "Django Template tizimi va dinamik sahifalar. Template va statik fayllar",
+    "questions": [
+      {
+        "question": "Shablonda o'zgaruvchi qiymatini chiqarish sintaksisi?",
+        "options": [
+          "{% ism %}",
+          "{{ ism }}",
+          "${ism}",
+          "<?= ism ?>"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "View'dan shablonga ma'lumot qanday uzatiladi?",
+        "options": [
+          "Global o'zgaruvchi orqali",
+          "URL orqali",
+          "render(request, \"shablon.html\", kontekst_dict)",
+          "localStorage orqali"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Umumiy skeletdan meros olish uchun qaysi teg?",
+        "options": [
+          "{% extends \"base.html\" %}",
+          "{% include \"base.html\" %}",
+          "{% import base %}",
+          "{% inherit base %}"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Shablonda CSS faylni to'g'ri ulash?",
+        "options": [
+          "href=\"style.css\"",
+          "href=\"/blog/style.css\"",
+          "href=\"{{ static.css }}\"",
+          "href=\"{% static 'blog/css/style.css' %}\""
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "{{ matn|truncatewords:10 }} nima qiladi?",
+        "options": [
+          "Matnni 10 marta takrorlaydi",
+          "Matnning birinchi 10 so'zini ko'rsatadi",
+          "10 ta belgini o'chiradi",
+          "Matnni 10 ga bo'ladi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Sikl ichida ro'yxat bo'sh bo'lgandagi holat uchun qaysi teg?",
+        "options": [
+          "{% else %}",
+          "{% none %}",
+          "{% empty %}",
+          "{% null %}"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 36,
+    "slug": "8-sinf/36-django-model-orm",
+    "title": "Django Models va ORM texnologiyasi. Model yaratish va migratsiyalar",
+    "questions": [
+      {
+        "question": "ORM nima?",
+        "options": [
+          "Ma'lumotlar bazasi turi",
+          "Jadvallar bilan Python klass va obyektlari orqali ishlash texnologiyasi",
+          "HTML shablon tili",
+          "Server dasturi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Modelni o'zgartirgandan keyin bajariladigan ikki buyruq?",
+        "options": [
+          "runserver va shell",
+          "startapp va migrate",
+          "makemigrations va migrate",
+          "createsuperuser va collectstatic"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Uzun maqola matni uchun eng mos maydon?",
+        "options": [
+          "TextField",
+          "CharField(max_length=50)",
+          "SlugField",
+          "IntegerField"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Sarlavhasida \"olimpiada\" so'zi bor maqolalar (katta-kichik harfga qaramay)?",
+        "options": [
+          "Maqola.objects.get(sarlavha=\"olimpiada\")",
+          "Maqola.objects.all(\"olimpiada\")",
+          "Maqola.objects.filter(sarlavha=\"%olimpiada%\")",
+          "Maqola.objects.filter(sarlavha__icontains=\"olimpiada\")"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Obyekt topilmasa avtomatik 404 qaytaruvchi funksiya?",
+        "options": [
+          "Maqola.objects.get()",
+          "get_object_or_404()",
+          "find_or_404()",
+          "Http404()"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "\"Har bir maqolaning bitta kategoriyasi, kategoriyada ko'p maqola\" — qaysi maydon?",
+        "options": [
+          "ManyToManyField",
+          "OneToOneField",
+          "ForeignKey (Maqola modelida)",
+          "CharField"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 37,
+    "slug": "8-sinf/37-django-admin-forms",
+    "title": "Django Admin panel bilan ishlash. Django Forms yordamida ma'lumotlarni qabul qilish",
+    "questions": [
+      {
+        "question": "Modelni admin panelda ko'rsatish uchun nima qilinadi?",
+        "options": [
+          "settings.py ga qo'shiladi",
+          "admin.py da admin.site.register(Model)",
+          "Migratsiya qilinadi",
+          "Shablon yaratiladi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Admin ro'yxatida qaysi ustunlar ko'rinishini belgilovchi sozlama?",
+        "options": [
+          "fields",
+          "list_filter",
+          "search_fields",
+          "list_display"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "POST formada majburiy bo'lgan xavfsizlik tegi?",
+        "options": [
+          "{% csrf_token %}",
+          "{% secure %}",
+          "{% load form %}",
+          "{% token %}"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Forma ma'lumotlari to'g'riligini tekshiruvchi metod?",
+        "options": [
+          "form.save()",
+          "form.check()",
+          "form.is_valid()",
+          "form.validate()"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Model asosida avtomatik forma yaratuvchi klass?",
+        "options": [
+          "forms.Form",
+          "forms.ModelForm",
+          "admin.ModelAdmin",
+          "models.Form"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "View'ni faqat tizimga kirgan foydalanuvchilar uchun ochiq qiluvchi dekorator?",
+        "options": [
+          "@admin_only",
+          "@csrf_exempt",
+          "@staff",
+          "@login_required"
+        ],
+        "correct": 4,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "IV bob. Python, PostgreSQL va Django",
+    "topic_number": 38,
+    "slug": "8-sinf/38-django-crud-loyiha",
+    "title": "CRUD amallarini yaratish. CRUD asosida mini loyiha",
+    "questions": [
+      {
+        "question": "ModelForm bilan mavjud obyektni tahrirlash uchun formaga nima beriladi?",
+        "options": [
+          "id=",
+          "object=",
+          "instance=",
+          "update=True"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Nima uchun o'chirish faqat POST so'rov bilan bo'lishi kerak?",
+        "options": [
+          "POST tezroq ishlaydi",
+          "Oddiy havola yoki begona sayt tasodifan/ataylab o'chirib yubormasligi uchun (CSRF himoyasi bilan)",
+          "GET so'rovda id bo'lmaydi",
+          "Django GET'ni qo'llab-quvvatlamaydi"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "\"Faqat muallif tahrirlay oladi\" tekshiruvi qayerda bo'lishi SHART?",
+        "options": [
+          "View'da (serverda)",
+          "Faqat shablonda",
+          "CSS'da",
+          "JavaScript'da"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Ro'yxatni sahifalarga bo'luvchi Django klassi?",
+        "options": [
+          "Splitter",
+          "PageView",
+          "Limiter",
+          "Paginator"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Yangi obyekt yaratuvchi tayyor CBV?",
+        "options": [
+          "ListView",
+          "CreateView",
+          "NewView",
+          "FormView"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "CBV'da tizimga kirishni talab qiluvchi aralashma (mixin)?",
+        "options": [
+          "AuthMixin",
+          "UserPassesTestMixin",
+          "LoginRequiredMixin",
+          "SessionMixin"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "V bob. DRF va deploy",
+    "topic_number": 39,
+    "slug": "8-sinf/39-drf-serializer",
+    "title": "Django REST Framework (DRF) ga kirish. Serializerlar va API View'lar",
+    "questions": [
+      {
+        "question": "REST API'da yangi resurs yaratish uchun qaysi HTTP metod ishlatiladi?",
+        "options": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Muvaffaqiyatli yaratilgan resurs uchun qaytariladigan status kod?",
+        "options": [
+          "200 OK",
+          "204 No Content",
+          "201 Created",
+          "302 Found"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Serializer'ning vazifasi?",
+        "options": [
+          "Model obyektlarini JSON'ga va JSON'ni tekshirilgan obyektlarga aylantirish",
+          "Bazaga ulanish",
+          "HTML shablon yaratish",
+          "URL'larni sozlash"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Qaysi URL REST qoidalariga mos?",
+        "options": [
+          "/api/getAllMaqolalar/",
+          "/api/maqola/ochirish/5/",
+          "/api/maqolaYarat/",
+          "/api/maqolalar/5/"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Bir nechta obyektni serializatsiya qilish uchun qaysi parametr kerak?",
+        "options": [
+          "all=True",
+          "many=True",
+          "list=True",
+          "multiple=True"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "DRF view'ida kelgan JSON ma'lumot qayerda?",
+        "options": [
+          "request.POST",
+          "request.GET",
+          "request.data",
+          "request.json"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "V bob. DRF va deploy",
+    "topic_number": 40,
+    "slug": "8-sinf/40-drf-crud-api",
+    "title": "DRF yordamida REST API yaratish. CRUD API ishlab chiqish",
+    "questions": [
+      {
+        "question": "Bitta klassda list, create, retrieve, update, destroy amallarini beruvchi DRF klassi?",
+        "options": [
+          "APIView",
+          "ListAPIView",
+          "ModelViewSet",
+          "Serializer"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "ViewSet uchun URL'larni avtomatik yaratuvchi vosita?",
+        "options": [
+          "Router ( DefaultRouter )",
+          "path()",
+          "Paginator",
+          "Middleware"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "SAFE_METHODS qaysi metodlarni o'z ichiga oladi?",
+        "options": [
+          "POST, PUT",
+          "DELETE",
+          "Hammasi",
+          "GET, HEAD, OPTIONS"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Netlify'dagi JS sayt Django API'ga so'rov yuborganda \"CORS\" xatosi chiqdi. Nima qilish kerak?",
+        "options": [
+          "JavaScript kodini o'chirish",
+          "Django'da django-cors-headers ni sozlab, front-end manzilini ruxsat etilganlarga qo'shish",
+          "Brauzerni almashtirish",
+          "API'ni HTML'ga aylantirish"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "API'da qidiruv uchun DRF'ning qaysi vositasi ishlatiladi?",
+        "options": [
+          "Paginator",
+          "OrderingFilter",
+          "SearchFilter + search_fields",
+          "Router"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "V bob. DRF va deploy",
+    "topic_number": 41,
+    "slug": "8-sinf/41-django-deploy",
+    "title": "Django loyihasini serverga joylash (Deploy)",
+    "questions": [
+      {
+        "question": "Production serverda DEBUG qanday bo'lishi kerak va nima uchun?",
+        "options": [
+          "True — xatolarni ko'rish uchun",
+          "False — xato sahifalari maxfiy ma'lumotlarni oshkor qilmasligi uchun",
+          "Ahamiyati yo'q",
+          "None"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Production'da runserver o'rniga ishlatiladigan server dasturi?",
+        "options": [
+          "whitenoise",
+          "pip",
+          "psql",
+          "gunicorn"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "Barcha statik fayllarni bitta papkaga yig'uvchi buyruq?",
+        "options": [
+          "python manage.py collectstatic",
+          "python manage.py migrate",
+          "python manage.py static",
+          "pip install static"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "Saytingiz DisallowedHost xatosini berdi. Sababi?",
+        "options": [
+          "Baza ulanmagan",
+          "CSS topilmadi",
+          "Domen ALLOWED_HOSTS da yo'q",
+          "Parol noto'g'ri"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "Maxfiy kalitlar (SECRET_KEY, baza paroli) production'da qayerda saqlanadi?",
+        "options": [
+          "settings.py ichida",
+          "Hosting'ning muhit o'zgaruvchilarida (environment variables)",
+          "GitHub README'da",
+          "HTML shablonda"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "Render'ga ulangan loyihani yangilash uchun nima qilinadi?",
+        "options": [
+          "Serverga qayta ro'yxatdan o'tish",
+          "Loyihani o'chirib, qayta yaratish",
+          "O'zgarishlarni GitHub'ga git push qilish",
+          "Hech narsa — yangilab bo'lmaydi"
+        ],
+        "correct": 3,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "8-sinf",
+    "course_name": "8-sinf: Web Full-stack kursi",
+    "chapter": "V bob. DRF va deploy",
+    "topic_number": 42,
+    "slug": "8-sinf/42-nazorat-ishi-3",
+    "title": "Yakuniy nazorat ishi — IV–V boblar (Django, DRF, Deploy) va yakuniy loyiha",
+    "questions": [
+      {
+        "question": "1. SQL injection'dan himoyalangan so'rov qaysi?",
+        "options": [
+          "cur.execute(f\"SELECT * FROM t WHERE ism='{ism}'\")",
+          "cur.execute(\"SELECT * FROM t WHERE ism=%s\", (ism,))",
+          "cur.execute(\"SELECT * FROM t WHERE ism='\" + ism + \"'\")",
+          "Hammasi xavfsiz"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "2. psycopg'da INSERT dan keyin o'zgarishni saqlash?",
+        "options": [
+          "cur.save()",
+          "cur.fetchall()",
+          "conn.close()",
+          "conn.commit() (yoki with blokining muvaffaqiyatli tugashi)"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "3. Loyiha kutubxonalarini alohida saqlash uchun nima yaratiladi?",
+        "options": [
+          "Virtual muhit (venv)",
+          "Yangi baza",
+          "Git branch",
+          "Docker"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "4. Django arxitekturasidagi \"T\" nima?",
+        "options": [
+          "Table",
+          "Test",
+          "Template",
+          "Token"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "5. Yangi ilova yaratilgandan keyin uni qayerga qo'shish kerak?",
+        "options": [
+          "urls.py",
+          "settings.py → INSTALLED_APPS",
+          "models.py",
+          "manage.py"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "6. path(\"kitob/<int:pk>/\", views.kitob) — view qanday e'lon qilinadi?",
+        "options": [
+          "def kitob(request):",
+          "def kitob(pk):",
+          "def kitob(request, id):",
+          "def kitob(request, pk):"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "7. Ilova URL'larini asosiy faylga ulash?",
+        "options": [
+          "path(\"\", include(\"blog.urls\"))",
+          "import blog.urls",
+          "urls.append(blog)",
+          "path(\"\", blog)"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "8. Shablonda o'zgaruvchi chiqarish?",
+        "options": [
+          "{% ism %}",
+          "[[ ism ]]",
+          "{{ ism }}",
+          "${ ism }"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "9. Umumiy skeletdan meros olish tegi?",
+        "options": [
+          "{% include %}",
+          "{% extends %}",
+          "{% block %}",
+          "{% load %}"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "10. Shablonda CSS ulash uchun avval nima yoziladi?",
+        "options": [
+          "{% css %}",
+          "{% import static %}",
+          "{% url 'static' %}",
+          "{% load static %}"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "11. Model o'zgargandan keyin bajariladigan buyruqlar ketma-ketligi?",
+        "options": [
+          "makemigrations → migrate",
+          "migrate → makemigrations",
+          "runserver → migrate",
+          "collectstatic"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "12. \"Har bir kitobning bitta muallifi, muallifning ko'p kitobi\" — Kitob modelida qaysi maydon?",
+        "options": [
+          "ManyToManyField(Muallif)",
+          "CharField",
+          "ForeignKey(Muallif, on_delete=...)",
+          "OneToOneField"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "13. Narxi 50 000 dan kichik kitoblar?",
+        "options": [
+          "Kitob.objects.get(narx<50000)",
+          "Kitob.objects.filter(narx__lt=50000)",
+          "Kitob.objects.all(narx=50000)",
+          "Kitob.filter(\"narx < 50000\")"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "14. Obyekt topilmasa avtomatik 404 qaytaruvchi funksiya?",
+        "options": [
+          "Model.objects.get()",
+          "Http404()",
+          "find()",
+          "get_object_or_404()"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "15. Admin ro'yxatidagi ustunlarni belgilovchi sozlama?",
+        "options": [
+          "list_display",
+          "fields",
+          "columns",
+          "search_fields"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "16. POST formada majburiy xavfsizlik tegi?",
+        "options": [
+          "{% secure %}",
+          "{% load csrf %}",
+          "{% csrf_token %}",
+          "{% token %}"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "17. Mavjud obyektni ModelForm bilan tahrirlash?",
+        "options": [
+          "Form(request.POST, id=5)",
+          "Form(request.POST, instance=obj)",
+          "Form.update(obj)",
+          "obj.form()"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "18. Faqat tizimga kirganlar uchun ochiq view (funksiya)?",
+        "options": [
+          "@admin_required",
+          "@csrf_exempt",
+          "@api_view",
+          "@login_required"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "19. REST API'da resursni o'chirish metodi va javob kodi?",
+        "options": [
+          "GET, 200",
+          "POST, 201",
+          "DELETE, 204",
+          "PUT, 404"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "20. Model ↔ JSON aylantiruvchi DRF klassi?",
+        "options": [
+          "ModelSerializer",
+          "ModelForm",
+          "ModelAdmin",
+          "JsonResponse"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "21. Bir nechta obyektni serializatsiya qilish?",
+        "options": [
+          "Serializer(qs, all=True)",
+          "Serializer(qs, many=True)",
+          "Serializer.list(qs)",
+          "Serializer(qs)"
+        ],
+        "correct": 2,
+        "explanation": ""
+      },
+      {
+        "question": "22. To'liq CRUD API'ni bitta klassda beruvchi DRF klassi va URL'larni avtomatik yaratuvchi vosita?",
+        "options": [
+          "APIView + path",
+          "Serializer + include",
+          "ListView + Paginator",
+          "ModelViewSet + DefaultRouter"
+        ],
+        "correct": 4,
+        "explanation": ""
+      },
+      {
+        "question": "23. Boshqa domendagi JS sayt API'ga murojaat qila olishi uchun Django'da nima sozlanadi?",
+        "options": [
+          "CSRF",
+          "ALLOWED_HOSTS",
+          "CORS ( django-cors-headers )",
+          "WhiteNoise"
+        ],
+        "correct": 3,
+        "explanation": ""
+      },
+      {
+        "question": "24. Production'da Django ilovasini ishga tushiruvchi server dasturi?",
+        "options": [
+          "gunicorn",
+          "runserver",
+          "pip",
+          "psql"
+        ],
+        "correct": 1,
+        "explanation": ""
+      },
+      {
+        "question": "25. Internetdagi saytda qaysi sozlama noto'g'ri?",
+        "options": [
+          "DEBUG = False",
+          "DEBUG = True",
+          "ALLOWED_HOSTS = [\"sayt.onrender.com\"]",
+          "SECRET_KEY muhit o'zgaruvchisida"
+        ],
+        "correct": 2,
+        "explanation": ""
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 1,
+    "slug": "cs/01-kompyuter-arxitekturasi",
+    "title": "Zamonaviy kompyuterlar va ularning arxitekturasi",
+    "questions": [
+      {
+        "question": "Kompyuterning \"miyasi\" deb qaysi qurilmaga aytiladi?",
+        "options": [
+          "Monitor",
+          "Protsessor (CPU)",
+          "Klaviatura",
+          "Quvvat bloki"
+        ],
+        "correct": 2,
+        "explanation": "CPU barcha hisob-kitoblarni bajaradi va qurilmalarni boshqaradi."
+      },
+      {
+        "question": "Kompyuter o'chirilganda qaysi xotiradagi ma'lumot yo'qoladi?",
+        "options": [
+          "SSD",
+          "HDD",
+          "RAM",
+          "Fleshka"
+        ],
+        "correct": 3,
+        "explanation": "RAM — uchuvchan xotira, faqat tok bor paytda ma'lumot saqlaydi."
+      },
+      {
+        "question": "Kompyuter ishining to'g'ri tartibi qaysi?",
+        "options": [
+          "Kiritish → qayta ishlash → chiqarish",
+          "Chiqarish → kiritish → qayta ishlash",
+          "Qayta ishlash → kiritish → chiqarish",
+          "Saqlash → chiqarish → kiritish"
+        ],
+        "correct": 1,
+        "explanation": "Avval ma'lumot kiritiladi, protsessor uni qayta ishlaydi, natija chiqariladi (va kerak bo'lsa saqlanadi)."
+      },
+      {
+        "question": "SSD'ning HDD'dan asosiy afzalligi nima?",
+        "options": [
+          "Har doim arzonroq",
+          "Hajmi har doim kattaroq",
+          "Aylanuvchi disklari bor",
+          "Ancha tez va zarbaga chidamli"
+        ],
+        "correct": 4,
+        "explanation": "SSD'da harakatlanuvchi qism yo'q — shuning uchun tez va mustahkam."
+      },
+      {
+        "question": "\"3,6 GHz\" yozuvi protsessorning qaysi ko'rsatkichi?",
+        "options": [
+          "Xotira hajmi",
+          "Takt chastotasi",
+          "Yadrolar soni",
+          "Ekran o'lchami"
+        ],
+        "correct": 2,
+        "explanation": "GHz — bir soniyadagi milliard takt."
+      },
+      {
+        "question": "Kompyuter yoqilganda qurilmalarni tekshiruvchi dastur qanday ataladi?",
+        "options": [
+          "Antivirus",
+          "Brauzer",
+          "POST (BIOS ichida)",
+          "Excel"
+        ],
+        "correct": 3,
+        "explanation": "BIOS/UEFI yoqilganda POST — o'z-o'zini tekshirish dasturini ishga tushiradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 2,
+    "slug": "cs/02-operatsion-tizimlar-windows",
+    "title": "Operatsion tizimlar va Windows muhitida ishlash",
+    "questions": [
+      {
+        "question": "Operatsion tizimning asosiy vazifasi nima?",
+        "options": [
+          "Faqat o'yin o'ynash",
+          "Kompyuter resurslarini boshqarish va dasturlar uchun muhit yaratish",
+          "Internetga ulanish",
+          "Matn yozish"
+        ],
+        "correct": 2,
+        "explanation": "OT — dasturlar va apparat qismi o'rtasidagi \"direktor\"."
+      },
+      {
+        "question": "Quyidagilardan qaysi biri ochiq kodli operatsion tizim?",
+        "options": [
+          "Windows",
+          "macOS",
+          "iOS",
+          "Linux"
+        ],
+        "correct": 4,
+        "explanation": "Linux'ning kodi ochiq va bepul tarqatiladi."
+      },
+      {
+        "question": "Ochiq oynalar orasida tez o'tish uchun qaysi tugmalar ishlatiladi?",
+        "options": [
+          "Alt + Tab",
+          "Ctrl + C",
+          "Win + L",
+          "Alt + F4"
+        ],
+        "correct": 1,
+        "explanation": "Alt+Tab — oynalar almashinuvi; Win+L — qulflash; Alt+F4 — yopish."
+      },
+      {
+        "question": "Qurilma (printer) bilan ishlash uchun OTga kerak bo'ladigan kichik dastur?",
+        "options": [
+          "Brauzer",
+          "Antivirus",
+          "Drayver",
+          "Arxivator"
+        ],
+        "correct": 3,
+        "explanation": "Drayver OTga qurilma bilan qanday ishlashni \"o'rgatadi\"."
+      },
+      {
+        "question": "Dasturni to'g'ri o'chirish usuli qaysi?",
+        "options": [
+          "Ish stolidagi yorlig'ini o'chirish",
+          "Sozlamalar → Ilovalar → O'chirish",
+          "Papkasini savatga tashlash",
+          "Kompyuterni qayta yoqish"
+        ],
+        "correct": 2,
+        "explanation": "Shunda dastur barcha fayllari va sozlamalari bilan to'g'ri o'chiriladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 3,
+    "slug": "cs/03-axborot-birliklari-fayllar",
+    "title": "Axborot o'lchov birliklari, fayl turlari va papkalar. Tezkor tugmalar",
+    "questions": [
+      {
+        "question": "1 bayt necha bitga teng?",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "1024"
+        ],
+        "correct": 3,
+        "explanation": "1 bayt = 8 bit; 1 KB = 1024 bayt."
+      },
+      {
+        "question": "4 GB necha MB?",
+        "options": [
+          "400",
+          "4096",
+          "4000 000",
+          "0,004"
+        ],
+        "correct": 2,
+        "explanation": "4 × 1024 = 4096 MB."
+      },
+      {
+        "question": "Ikkilik son 1010 o'nlik sanoqda nechaga teng?",
+        "options": [
+          "4",
+          "8",
+          "12",
+          "10"
+        ],
+        "correct": 4,
+        "explanation": "8 + 0 + 2 + 0 = 10."
+      },
+      {
+        "question": "Fayl nomini o'zgartirish uchun qaysi tugma bosiladi?",
+        "options": [
+          "F2",
+          "F5",
+          "Ctrl + N",
+          "Delete"
+        ],
+        "correct": 1,
+        "explanation": "F2 — nomini o'zgartirish (rename)."
+      },
+      {
+        "question": "Faylni ko'chirish (asl joyidan olib o'tish) uchun qaysi tugmalar ketma-ketligi to'g'ri?",
+        "options": [
+          "Ctrl+C → Ctrl+V",
+          "Ctrl+Z → Ctrl+Y",
+          "Ctrl+X → Ctrl+V",
+          "Ctrl+A → Delete"
+        ],
+        "correct": 3,
+        "explanation": "Ctrl+X — qirqib olish, Ctrl+V — joylashtirish."
+      },
+      {
+        "question": "dars.py faylidagi .py nima?",
+        "options": [
+          "Papka nomi",
+          "Kengaytma — fayl turi (Python kodi)",
+          "Fayl hajmi",
+          "Disk nomi"
+        ],
+        "correct": 2,
+        "explanation": "Kengaytma fayl turini va qaysi dastur bilan ochilishini bildiradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 4,
+    "slug": "cs/04-kompyuter-qurilmalari",
+    "title": "Kompyuterning asosiy va qo'shimcha qurilmalari",
+    "questions": [
+      {
+        "question": "Quyidagilardan qaysi biri chiqarish qurilmasi?",
+        "options": [
+          "Skaner",
+          "Proyektor",
+          "Mikrofon",
+          "Klaviatura"
+        ],
+        "correct": 2,
+        "explanation": "Proyektor tasvirni chiqaradi; qolganlari — kiritish qurilmalari."
+      },
+      {
+        "question": "Barcha qismlarni bir-biriga bog'lovchi asosiy plata qanday ataladi?",
+        "options": [
+          "Videokarta",
+          "Quvvat bloki",
+          "Kuler",
+          "Ona plata"
+        ],
+        "correct": 4,
+        "explanation": "Ona plata (motherboard) — kompyuterning \"asab tizimi\"."
+      },
+      {
+        "question": "Monitor yoki proyektorni ulash uchun eng keng tarqalgan port?",
+        "options": [
+          "HDMI",
+          "RJ-45",
+          "3,5 mm jak",
+          "Bluetooth"
+        ],
+        "correct": 1,
+        "explanation": "HDMI tasvir va ovozni birga uzatadi."
+      },
+      {
+        "question": "Ham kiritish, ham chiqarish qurilmasi bo'la oladigani?",
+        "options": [
+          "Printer",
+          "Sichqoncha",
+          "Sensorli ekran",
+          "Kolonka"
+        ],
+        "correct": 3,
+        "explanation": "Sensorli ekran bosishni qabul qiladi (kiritish) va tasvir ko'rsatadi (chiqarish)."
+      },
+      {
+        "question": "Ko'p hujjatni tez va arzon bosish uchun qaysi printer mos?",
+        "options": [
+          "3D printer",
+          "Lazerli printer",
+          "Plotter",
+          "Purkagichli printer"
+        ],
+        "correct": 2,
+        "explanation": "Lazerli printer ofis va maktab uchun tejamkor."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 5,
+    "slug": "cs/05-internet-brauzer-pochta",
+    "title": "Internet, brauzerlar va elektron pochta bilan ishlash",
+    "questions": [
+      {
+        "question": "Brauzer nima?",
+        "options": [
+          "Qidiruv tizimi",
+          "Internetning o'zi",
+          "Veb-sahifalarni ochib ko'rsatuvchi dastur",
+          "Pochta xizmati"
+        ],
+        "correct": 3,
+        "explanation": "Chrome, Edge, Firefox — brauzerlar; Google — qidiruv tizimi."
+      },
+      {
+        "question": "Faqat bitta saytdan qidirish uchun qaysi operator ishlatiladi?",
+        "options": [
+          "filetype:",
+          "site:",
+          "Qo'shtirnoq",
+          "Minus belgisi"
+        ],
+        "correct": 2,
+        "explanation": "site:uz.wikipedia.org so'z — faqat shu saytdan."
+      },
+      {
+        "question": "Boshqa qabul qiluvchilar ko'rmasligi kerak bo'lgan manzil qaysi maydonga yoziladi?",
+        "options": [
+          "Kimga",
+          "Nusxa (Cc)",
+          "Mavzu",
+          "Yashirin nusxa (Bcc)"
+        ],
+        "correct": 4,
+        "explanation": "Bcc — yashirin nusxa."
+      },
+      {
+        "question": "Yopilgan yorliqni qayta ochish tugmalari?",
+        "options": [
+          "Ctrl + Shift + T",
+          "Ctrl + T",
+          "Ctrl + W",
+          "Ctrl + D"
+        ],
+        "correct": 1,
+        "explanation": "Ctrl+T — yangi yorliq, Ctrl+W — yopish, Ctrl+D — xatcho'p."
+      },
+      {
+        "question": "\"Akkauntingiz bloklanadi, darhol shu havolaga kiring!\" degan xat kelsa, nima qilish kerak?",
+        "options": [
+          "Darhol havolaga bosish",
+          "Parolni javob xatida yuborish",
+          "Havolaga bosmasdan, rasmiy sayt orqali tekshirish va xatni spam deb belgilash",
+          "Do'stlarga uzatish"
+        ],
+        "correct": 3,
+        "explanation": "Bu odatiy fishing xati."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "I bob. Kompyuter savodxonligi va arxitekturasi",
+    "topic_number": 6,
+    "slug": "cs/06-kompyuter-xavfsizligi",
+    "title": "Kompyuter xavfsizligi va antivirus dasturlari",
+    "questions": [
+      {
+        "question": "Foydali dastur qiyofasida kelib, ichida zararli kod olib kiruvchi dastur?",
+        "options": [
+          "Qurt",
+          "Adware",
+          "Troyan",
+          "Antivirus"
+        ],
+        "correct": 3,
+        "explanation": "Troyan — Troya oti kabi \"sovg'a\" ichida keladi."
+      },
+      {
+        "question": "Fayllarni shifrlab, ochish uchun pul talab qiluvchi dastur?",
+        "options": [
+          "Ransomware",
+          "Spyware",
+          "Keylogger",
+          "Brauzer"
+        ],
+        "correct": 1,
+        "explanation": "Ransomware'dan eng yaxshi himoya — muntazam zaxira nusxa va yangilanishlar."
+      },
+      {
+        "question": "Qaysi parol eng kuchli?",
+        "options": [
+          "123456789",
+          "Ali2012",
+          "qwerty",
+          "Tog'_Daryo!Kitob42"
+        ],
+        "correct": 4,
+        "explanation": "Uzun, aralash belgili va shaxsiy ma'lumotsiz parol."
+      },
+      {
+        "question": "2FA nima?",
+        "options": [
+          "Ikkita antivirus",
+          "Paroldan tashqari ikkinchi tasdiqlash (SMS-kod, ilova)",
+          "Ikki marta parol yozish",
+          "Ikkita brauzer"
+        ],
+        "correct": 2,
+        "explanation": "2FA — parol o'g'irlansa ham akkauntni himoya qiladi."
+      },
+      {
+        "question": "Antivirus bazasini nega muntazam yangilash kerak?",
+        "options": [
+          "Kompyuter tezlashadi",
+          "Reklama yo'qoladi",
+          "Har kuni yangi viruslar paydo bo'ladi va ularning \"imzolari\" bazaga qo'shiladi",
+          "Shart emas"
+        ],
+        "correct": 3,
+        "explanation": "Eski baza yangi viruslarni tanimaydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 7,
+    "slug": "cs/07-klaviaturada-tez-yozish",
+    "title": "Klaviaturada tez va to'g'ri yozish ko'nikmalari",
+    "questions": [
+      {
+        "question": "Uy qatorida chap ko'rsatkich barmoq qaysi tugmada turadi?",
+        "options": [
+          "A",
+          "F",
+          "J",
+          "G"
+        ],
+        "correct": 2,
+        "explanation": "Chap ko'rsatkich — F, o'ng ko'rsatkich — J (ikkalasida bo'rtiq bor)."
+      },
+      {
+        "question": "WPM nimani bildiradi?",
+        "options": [
+          "Xatolar soni",
+          "Klaviatura turi",
+          "Daqiqadagi so'zlar soni (1 so'z = 5 belgi)",
+          "Monitor o'lchami"
+        ],
+        "correct": 3,
+        "explanation": "Words Per Minute — yozish tezligi o'lchovi."
+      },
+      {
+        "question": "Kursordan chapdagi belgini qaysi tugma o'chiradi?",
+        "options": [
+          "Backspace",
+          "Delete",
+          "Insert",
+          "Esc"
+        ],
+        "correct": 1,
+        "explanation": "Delete esa o'ngdagi belgini o'chiradi."
+      },
+      {
+        "question": "Butun so'zni bir harakatda o'chirish uchun?",
+        "options": [
+          "Ctrl + Z",
+          "Shift + Delete",
+          "Alt + F4",
+          "Ctrl + Backspace"
+        ],
+        "correct": 4,
+        "explanation": "Ctrl+Backspace — kursordan chapdagi butun so'z."
+      },
+      {
+        "question": "Touch typing o'rganishda eng to'g'ri strategiya qaysi?",
+        "options": [
+          "Darhol maksimal tezlikda yozish",
+          "Avval aniqlik, keyin tezlik; har kuni qisqa mashq",
+          "Faqat ikki barmoq bilan",
+          "Klaviaturaga qarab yozish"
+        ],
+        "correct": 2,
+        "explanation": "To'g'ri harakat avtomatlashgach, tezlik o'zi oshadi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 8,
+    "slug": "cs/08-raqamli-savodxonlik",
+    "title": "Raqamli savodxonlik va raqamli madaniyat",
+    "questions": [
+      {
+        "question": "Raqamli iz nima?",
+        "options": [
+          "Klaviaturadagi barmoq izi",
+          "Kompyuterdagi chang",
+          "Internetda siz haqingizda qoladigan barcha ma'lumotlar",
+          "Fleshkadagi fayllar"
+        ],
+        "correct": 3,
+        "explanation": "Postlar, izohlar, qidiruvlar, joylashuv — hammasi raqamli iz."
+      },
+      {
+        "question": "Kiberbullingga duch kelsangiz, birinchi navbatda nima qilish kerak?",
+        "options": [
+          "Javob bermaslik, dalillarni saqlash, bloklash va kattalarga aytish",
+          "Xuddi shunday javob qaytarish",
+          "Hammaga tarqatish",
+          "Hech kimga aytmaslik"
+        ],
+        "correct": 1,
+        "explanation": "Javob qaytarish vaziyatni yomonlashtiradi."
+      },
+      {
+        "question": "Xabar feyk ekanini ko'rsatuvchi belgi qaysi?",
+        "options": [
+          "Rasmiy saytda e'lon qilingan",
+          "Bir nechta ishonchli manbada bor",
+          "Muallifi va sanasi ko'rsatilgan",
+          "\"SHOK!!! Darhol tarqating!\" kabi hissiy sarlavha va manbasi yo'q"
+        ],
+        "correct": 4,
+        "explanation": "Hissiy bosim va manbasizlik — feykning odatiy belgilari."
+      },
+      {
+        "question": "Qaysi ma'lumotni ochiq tarmoqda ulashish xavfsiz?",
+        "options": [
+          "Uy manzili",
+          "Sevimli kitobingiz nomi",
+          "SMS-kod",
+          "Karta raqami"
+        ],
+        "correct": 2,
+        "explanation": "Shaxsiy va moliyaviy ma'lumotlarni hech qachon ulashmang."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 9,
+    "slug": "cs/09-raqamli-transformatsiya",
+    "title": "Raqamli transformatsiya tushunchasi",
+    "questions": [
+      {
+        "question": "Raqamli transformatsiya nima?",
+        "options": [
+          "Qog'ozni skanerlash",
+          "Xizmat va jarayonlarni texnologiya asosida tubdan qayta qurish",
+          "Kompyuter sotib olish",
+          "Internet tezligini oshirish"
+        ],
+        "correct": 2,
+        "explanation": "Skanerlash — faqat raqamlashtirish; transformatsiya xizmatning o'zini o'zgartiradi."
+      },
+      {
+        "question": "Hujjatni qog'ozsiz imzolash imkonini beruvchi vosita?",
+        "options": [
+          "Printer",
+          "Skaner",
+          "Fleshka",
+          "Elektron raqamli imzo (ERI)"
+        ],
+        "correct": 4,
+        "explanation": "ERI elektron hujjatning haqiqiyligini tasdiqlaydi."
+      },
+      {
+        "question": "Raqamli transformatsiyaning xavfi qaysi?",
+        "options": [
+          "Kiberhujum va ma'lumotlar sizib chiqishi",
+          "Xizmatning tezlashishi",
+          "Navbatlarning kamayishi",
+          "Qog'oz tejalishi"
+        ],
+        "correct": 1,
+        "explanation": "Shuning uchun xavfsizlik transformatsiyaning ajralmas qismi."
+      },
+      {
+        "question": "\"Internetga ulangan datchik va qurilmalar\" qanday ataladi?",
+        "options": [
+          "Bulut",
+          "Blokcheyn",
+          "Narsalar interneti (IoT)",
+          "Brauzer"
+        ],
+        "correct": 3,
+        "explanation": "IoT — Internet of Things."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 10,
+    "slug": "cs/10-internet-qanday-ishlaydi",
+    "title": "Internet qanday ishlaydi? IP, hosting, domen, DNS, brauzer, HTTP/HTTPS",
+    "questions": [
+      {
+        "question": "DNS'ning vazifasi nima?",
+        "options": [
+          "Saytni chiroyli qilish",
+          "Domen nomini IP-manzilga aylantirish",
+          "Fayllarni saqlash",
+          "Viruslardan himoyalash"
+        ],
+        "correct": 2,
+        "explanation": "DNS — internetning \"telefon kitobi\"."
+      },
+      {
+        "question": "Paketlarni manzilga yaqinroq yo'nalishga jo'natuvchi qurilma?",
+        "options": [
+          "Monitor",
+          "Printer",
+          "Router",
+          "Skaner"
+        ],
+        "correct": 3,
+        "explanation": "Router — tarmoq \"chorrahalari\"ni boshqaradi."
+      },
+      {
+        "question": "Server 404 qaytardi. Bu nima?",
+        "options": [
+          "Muvaffaqiyat",
+          "Server xatosi",
+          "Sahifa ko'chgan",
+          "Sahifa topilmadi"
+        ],
+        "correct": 4,
+        "explanation": "4xx — mijoz tomonidagi xato; 404 — Not Found."
+      },
+      {
+        "question": "HTTPS'dagi \"S\" va uning ma'nosi?",
+        "options": [
+          "Secure — ma'lumot TLS bilan shifrlanadi",
+          "Speed — tezroq",
+          "Server — kuchliroq server",
+          "Simple — oddiyroq"
+        ],
+        "correct": 1,
+        "explanation": "HTTPS = HTTP + TLS shifrlash."
+      },
+      {
+        "question": "https://blog.maktab.uz/maqolalar da domen zonasi (TLD) qaysi?",
+        "options": [
+          "blog",
+          "uz",
+          "maktab",
+          "maqolalar"
+        ],
+        "correct": 2,
+        "explanation": "blog — subdomen, maktab — domen nomi, uz — zona, /maqolalar — yo'l."
+      },
+      {
+        "question": "IPv4 manzil qaysi ko'rinishda bo'ladi?",
+        "options": [
+          "kun.uz",
+          "ali@gmail.com",
+          "192.168.1.10",
+          "https://"
+        ],
+        "correct": 3,
+        "explanation": "To'rtta son, har biri 0–255."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 11,
+    "slug": "cs/11-bulutli-xizmatlar",
+    "title": "Bulutli xizmatlar: Google Drive, OneDrive, Dropbox, onlayn ofis va vazifa boshqaruvi",
+    "questions": [
+      {
+        "question": "Bulutli saqlashning asosiy afzalligi?",
+        "options": [
+          "Internetsiz ishlaydi",
+          "Cheksiz bepul joy",
+          "Fayllarga istalgan qurilmadan kirish va birgalikda ishlash",
+          "Faqat bitta kompyuterda ochiladi"
+        ],
+        "correct": 3,
+        "explanation": "Fayllar serverda saqlangani uchun istalgan qurilmadan ochiladi."
+      },
+      {
+        "question": "O'qituvchi hujjatni o'zgartirmasdan, faqat fikr yozishi kerak. Qaysi rol?",
+        "options": [
+          "Muharrir",
+          "Izoh qoldiruvchi",
+          "Ko'ruvchi",
+          "Egasi"
+        ],
+        "correct": 2,
+        "explanation": "Commenter — ko'radi va izoh yozadi, lekin matnni o'zgartirmaydi."
+      },
+      {
+        "question": "Google Drive'da o'chirilgan fayl qancha vaqt \"Savat\"da turadi?",
+        "options": [
+          "1 kun",
+          "7 kun",
+          "1 yil",
+          "30 kun"
+        ],
+        "correct": 4,
+        "explanation": "30 kun ichida tiklash mumkin."
+      },
+      {
+        "question": "Trello qaysi usulda ishlaydi?",
+        "options": [
+          "Kanban — kartochkalar ustunlar bo'ylab suriladi",
+          "Elektron jadval",
+          "Matn muharriri",
+          "Video qo'ng'iroq"
+        ],
+        "correct": 1,
+        "explanation": "Qilinadigan → Jarayonda → Bajarildi."
+      },
+      {
+        "question": "Gmail, Google Docs, Trello — bulut xizmatining qaysi turi?",
+        "options": [
+          "IaaS",
+          "PaaS",
+          "SaaS",
+          "Hech qaysi"
+        ],
+        "correct": 3,
+        "explanation": "Software as a Service — tayyor dastur brauzer orqali."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 12,
+    "slug": "cs/12-git-github",
+    "title": "Git va GitHub bilan tanishuv: repository, commit, branch, README",
+    "questions": [
+      {
+        "question": "Git va GitHub farqi?",
+        "options": [
+          "Ular bir xil narsa",
+          "Git — kompyuterdagi dastur, GitHub — repo'larni saqlovchi internet xizmati",
+          "GitHub — dastur, Git — sayt",
+          "Git faqat rasmlar uchun"
+        ],
+        "correct": 2,
+        "explanation": "Git lokal ishlaydi, GitHub — bulutdagi \"uy\"."
+      },
+      {
+        "question": "To'g'ri tartib qaysi?",
+        "options": [
+          "commit → add → push",
+          "push → add → commit",
+          "add → commit → push",
+          "add → push → commit"
+        ],
+        "correct": 3,
+        "explanation": "Konvertga solish → muhr bosish → pochtaga topshirish."
+      },
+      {
+        "question": "GitHub'dagi repo'ni kompyuterga birinchi marta yuklab olish buyrug'i?",
+        "options": [
+          "git clone",
+          "git init",
+          "git push",
+          "git log"
+        ],
+        "correct": 1,
+        "explanation": "clone — butun repo va tarixini nusxalaydi; keyingi yangilanishlar — pull."
+      },
+      {
+        "question": "Asosiy versiyani buzmasdan yangi g'oyani sinash uchun nima ochiladi?",
+        "options": [
+          "Commit",
+          "README",
+          "Remote",
+          "Branch"
+        ],
+        "correct": 4,
+        "explanation": "Branch — alohida ish yo'nalishi; tayyor bo'lsa merge qilinadi."
+      },
+      {
+        "question": "git status nima qiladi?",
+        "options": [
+          "GitHub'ga yuboradi",
+          "Fayllar holatini ko'rsatadi: o'zgargan, tayyor, kuzatilmagan",
+          "Commit yaratadi",
+          "Repo'ni o'chiradi"
+        ],
+        "correct": 2,
+        "explanation": "Eng ko'p ishlatiladigan \"nima bo'lyapti?\" buyrug'i."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 13,
+    "slug": "cs/13-zamonaviy-it-yonalishlari",
+    "title": "Zamonaviy IT yo'nalishlari: Web, Mobile, Data Science, AI, DevOps, Cybersecurity",
+    "questions": [
+      {
+        "question": "Saytning foydalanuvchi ko'rmaydigan, ma'lumotlar bazasi bilan ishlaydigan qismi?",
+        "options": [
+          "Frontend",
+          "Backend",
+          "Dizayn",
+          "Brauzer"
+        ],
+        "correct": 2,
+        "explanation": "Backend — restoranning \"oshxonasi\"."
+      },
+      {
+        "question": "Machine Learning'ning asosiy g'oyasi?",
+        "options": [
+          "Dasturchi barcha qoidalarni qo'lda yozadi",
+          "Kompyuter internetni o'chiradi",
+          "Model ko'plab misollardan qonuniyatni o'zi topadi",
+          "Faqat rasm chizadi"
+        ],
+        "correct": 3,
+        "explanation": "Ma'lumot + javoblar → model."
+      },
+      {
+        "question": "Kodni avtomatik test qilib serverga chiqarish (CI/CD) qaysi yo'nalish ishi?",
+        "options": [
+          "DevOps",
+          "Mobile",
+          "Data Science",
+          "UI dizayn"
+        ],
+        "correct": 1,
+        "explanation": "DevOps — dasturlash va ekspluatatsiya ko'prigi."
+      },
+      {
+        "question": "Flutter bilan nima yaratiladi?",
+        "options": [
+          "Ma'lumotlar bazasi",
+          "Antivirus",
+          "Operatsion tizim",
+          "Android va iOS uchun bitta koddan mobil ilova"
+        ],
+        "correct": 4,
+        "explanation": "Kross-platforma framework."
+      },
+      {
+        "question": "Ruxsat bilan tizimga \"hujum qilib\" zaifliklarni topuvchi mutaxassis?",
+        "options": [
+          "Data scientist",
+          "Pentester",
+          "Frontend dasturchi",
+          "Kopirayter"
+        ],
+        "correct": 2,
+        "explanation": "\"Oq xaker\" — qonuniy, shartnoma asosida ishlaydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "II bob. Zamonaviy IT yo'nalishlari va raqamli infratuzilma",
+    "topic_number": 14,
+    "slug": "cs/14-kiberxavfsizlik",
+    "title": "Kiberxavfsizlik va shaxsiy ma'lumotlarni himoya qilish asoslari",
+    "questions": [
+      {
+        "question": "Eng kuchli parol qaysi?",
+        "options": [
+          "Ali2010",
+          "qwerty123",
+          "Chinor-Kompas-Lola-58!",
+          "P@ss"
+        ],
+        "correct": 3,
+        "explanation": "Uzun parol-ibora — variantlar soni astronomik."
+      },
+      {
+        "question": "\"Do'stingiz\" yozdi: \"Raqamingga kod keldi, aytib yuborgin\". Nima qilasiz?",
+        "options": [
+          "Darhol aytaman — do'stim-ku",
+          "Aytmayman; bu mening akkauntimni o'g'irlash usuli, do'stga qo'ng'iroq qilib tekshiraman",
+          "Kodni stories'ga qo'yaman",
+          "Yarmini aytaman"
+        ],
+        "correct": 2,
+        "explanation": "Kod sizning akkauntingiz uchun keladi. Do'stning akkaunti allaqachon buzilgan bo'lishi mumkin."
+      },
+      {
+        "question": "2FA nima uchun foydali?",
+        "options": [
+          "Parol o'g'irlansa ham, ikkinchi kalitsiz (telefon) kirib bo'lmaydi",
+          "Internetni tezlashtiradi",
+          "Parolni esdan chiqarmaslikka yordam beradi",
+          "Virusni o'chiradi"
+        ],
+        "correct": 1,
+        "explanation": "Bilgan narsa + sizdagi narsa."
+      },
+      {
+        "question": "Qaysi biri phishing belgisi EMAS?",
+        "options": [
+          "Shoshiltirish",
+          "G'alati yuboruvchi domeni",
+          "Parol so'rash",
+          "Xatda ismingiz to'g'ri yozilgani va hech narsa so'ralmagani"
+        ],
+        "correct": 4,
+        "explanation": "Qolgan uchtasi — klassik qizil bayroqlar."
+      },
+      {
+        "question": "CIA triadasidagi \"I\" — Integrity nimani anglatadi?",
+        "options": [
+          "Internet",
+          "Ma'lumot ruxsatsiz o'zgartirilmasligi (butunlik)",
+          "Interfeys",
+          "Tezlik"
+        ],
+        "correct": 2,
+        "explanation": "Confidentiality, Integrity, Availability."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 15,
+    "slug": "cs/15-algoritm-tushunchasi",
+    "title": "Algoritm tushunchasi va algoritmik fikrlash",
+    "questions": [
+      {
+        "question": "\"Algoritm\" so'zi kimning nomidan kelib chiqqan?",
+        "options": [
+          "Ibn Sino",
+          "Al-Xorazmiy",
+          "Mirzo Ulug'bek",
+          "Beruniy"
+        ],
+        "correct": 2,
+        "explanation": "Muhammad ibn Muso al-Xorazmiy — \"Algoritmi\" lotincha shakli."
+      },
+      {
+        "question": "\"Choyga ozroq shakar sol\" qaysi xossani buzadi?",
+        "options": [
+          "Ommaviylik",
+          "Natijaviylik",
+          "Aniqlik",
+          "Ketma-ketlik"
+        ],
+        "correct": 3,
+        "explanation": "\"Ozroq\" — har kim har xil tushunadi."
+      },
+      {
+        "question": "Hech qachon tugamaydigan ko'rsatmalar qaysi xossani buzadi?",
+        "options": [
+          "Natijaviylik",
+          "Tushunarlilik",
+          "Aniqlik",
+          "Diskretlik"
+        ],
+        "correct": 1,
+        "explanation": "Algoritm chekli qadamda natija berishi kerak."
+      },
+      {
+        "question": "Katta masalani kichik qismlarga ajratish nima deyiladi?",
+        "options": [
+          "Abstraksiya",
+          "Kompilyatsiya",
+          "Sikl",
+          "Dekompozitsiya"
+        ],
+        "correct": 4,
+        "explanation": "Dekompozitsiya — algoritmik fikrlashning birinchi qadami."
+      },
+      {
+        "question": "\"Svetofor yashil bo'lsa o't, aks holda kut\" — qaysi tur algoritm?",
+        "options": [
+          "Chiziqli",
+          "Tarmoqlanuvchi",
+          "Takrorlanuvchi",
+          "Algoritm emas"
+        ],
+        "correct": 2,
+        "explanation": "Shartga qarab ikki yo'ldan biri tanlanadi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 16,
+    "slug": "cs/16-flowgorithm-interfeysi",
+    "title": "Flowgorithm interfeysi va blok-sxema elementlari",
+    "questions": [
+      {
+        "question": "Foydalanuvchidan ma'lumot olish qaysi blok bilan?",
+        "options": [
+          "Output",
+          "Assign",
+          "Input",
+          "Declare"
+        ],
+        "correct": 3,
+        "explanation": "Input — kiritish (parallelogramm)."
+      },
+      {
+        "question": "Flowgorithm'da shart tekshiruvchi blok (Decision)?",
+        "options": [
+          "If",
+          "Output",
+          "Main",
+          "Comment"
+        ],
+        "correct": 1,
+        "explanation": "If — True va False yo'llari."
+      },
+      {
+        "question": "Flowgorithm fayllari kengaytmasi?",
+        "options": [
+          ".docx",
+          ".fprg",
+          ".py",
+          ".exe"
+        ],
+        "correct": 2,
+        "explanation": ".fprg — Flowgorithm program."
+      },
+      {
+        "question": "Dastur ishlayapti, lekin 5+3 ga 2 chiqaryapti. Bu qanday xato?",
+        "options": [
+          "Sintaktik",
+          "Kompyuter buzilgan",
+          "Internet xatosi",
+          "Mantiqiy"
+        ],
+        "correct": 4,
+        "explanation": "Formulada - yozilgan. Test bilan topiladi."
+      },
+      {
+        "question": "Process (hisoblash) bloki Flowgorithm'da qanday ataladi?",
+        "options": [
+          "Input",
+          "Call",
+          "Assign",
+          "End"
+        ],
+        "correct": 3,
+        "explanation": "Assign — o'zgaruvchiga qiymat yoki hisoblash natijasini yozish."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 17,
+    "slug": "cs/17-dastur-buyruq-kod-mantiq",
+    "title": "Dasturlash tushunchalari: dastur, buyruq, kod va mantiq",
+    "questions": [
+      {
+        "question": "IPO modelida \"P\" nimani bildiradi?",
+        "options": [
+          "Print",
+          "Process — qayta ishlash",
+          "Program",
+          "Password"
+        ],
+        "correct": 2,
+        "explanation": "Input → Process → Output."
+      },
+      {
+        "question": "Dasturni qatorma-qator o'qib, darhol bajaradigan tarjimon?",
+        "options": [
+          "Kompilyator",
+          "Protsessor",
+          "Brauzer",
+          "Interpretator"
+        ],
+        "correct": 4,
+        "explanation": "Python, JavaScript, Flowgorithm — interpretatsiya qilinadi."
+      },
+      {
+        "question": "Protsessor bevosita qaysi tilni tushunadi?",
+        "options": [
+          "Mashina kodi (0 va 1)",
+          "Python",
+          "O'zbek tili",
+          "Flowgorithm"
+        ],
+        "correct": 1,
+        "explanation": "Qolganlari tarjima qilinadi."
+      },
+      {
+        "question": "t = x; x = y; y = t ketma-ketligi nima qiladi?",
+        "options": [
+          "Qo'shadi",
+          "Ikkalasini nolga tenglaydi",
+          "x va y qiymatlarini almashtiradi",
+          "Xato beradi"
+        ],
+        "correct": 3,
+        "explanation": "Klassik \"swap\" algoritmi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 18,
+    "slug": "cs/18-ozgaruvchilar-turlar",
+    "title": "Flowgorithm'da o'zgaruvchilar va ma'lumot turlari",
+    "questions": [
+      {
+        "question": "O'quvchining bo'yi (1.62 m) uchun qaysi tur?",
+        "options": [
+          "Integer",
+          "Real",
+          "String",
+          "Boolean"
+        ],
+        "correct": 2,
+        "explanation": "Kasr qismi bor — Real."
+      },
+      {
+        "question": "23 % 5 nechaga teng?",
+        "options": [
+          "4",
+          "4.6",
+          "3",
+          "5"
+        ],
+        "correct": 3,
+        "explanation": "23 = 5 × 4 + 3 → qoldiq 3."
+      },
+      {
+        "question": "Qaysi o'zgaruvchi nomi to'g'ri?",
+        "options": [
+          "umumiy_ball",
+          "2ball",
+          "umumiy ball",
+          "ball%"
+        ],
+        "correct": 1,
+        "explanation": "Harf bilan boshlanadi, bo'sh joy va maxsus belgilar yo'q."
+      },
+      {
+        "question": "2 + 3 * 2 ^ 2 = ?",
+        "options": [
+          "100",
+          "20",
+          "36",
+          "14"
+        ],
+        "correct": 4,
+        "explanation": "Daraja: 2^2=4 → ko'paytma: 3×4=12 → 2+12=14."
+      },
+      {
+        "question": "Random(6) qaysi qiymatlarni qaytaradi?",
+        "options": [
+          "1..6",
+          "0..5",
+          "0..6",
+          "Faqat 6"
+        ],
+        "correct": 2,
+        "explanation": "0 dan n−1 gacha. Zar uchun +1 qo'shiladi."
+      },
+      {
+        "question": "i = i + 1 nima qiladi?",
+        "options": [
+          "Xato — tenglama yechimsiz",
+          "i ni 1 ga tenglaydi",
+          "i ning qiymatini 1 ga oshiradi",
+          "Hech narsa"
+        ],
+        "correct": 3,
+        "explanation": "O'ng tomon hisoblanib, chapga yoziladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 19,
+    "slug": "cs/19-chiziqli-algoritmlar",
+    "title": "Flowgorithm'da chiziqli algoritmlar",
+    "questions": [
+      {
+        "question": "Chiziqli algoritmning asosiy belgisi?",
+        "options": [
+          "Shartlar ko'p",
+          "Ba'zi qadamlar takrorlanadi",
+          "Barcha qadamlar ketma-ket, bir martadan bajariladi",
+          "Bloklar tasodifiy tartibda"
+        ],
+        "correct": 3,
+        "explanation": "Shartsiz va takrorsiz — konveyer kabi."
+      },
+      {
+        "question": "300 000 so'mlik kurtkaga 25% chegirma. Yangi narx formulasi?",
+        "options": [
+          "narx * (1 - 25 / 100)",
+          "narx - 25",
+          "narx * 25",
+          "narx / 25"
+        ],
+        "correct": 1,
+        "explanation": "300 000 × 0.75 = 225 000."
+      },
+      {
+        "question": "Uch son o'rtachasi uchun to'g'ri ifoda?",
+        "options": [
+          "a + b + c / 3",
+          "a + b + c * 3",
+          "(a + b + c) * 3",
+          "(a + b + c) / 3"
+        ],
+        "correct": 4,
+        "explanation": "Avval yig'indi (qavs), keyin bo'lish."
+      },
+      {
+        "question": "Doira yuzasi uchun Flowgorithm ifodasi?",
+        "options": [
+          "2 * 3.14 * r",
+          "3.14 * r ^ 2",
+          "3.14 + r ^ 2",
+          "r / 3.14"
+        ],
+        "correct": 2,
+        "explanation": "S = πr²."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 20,
+    "slug": "cs/20-tarmoqlanuvchi-algoritmlar",
+    "title": "Flowgorithm'da tarmoqlanuvchi algoritmlar va shartlar",
+    "questions": [
+      {
+        "question": "x = 15 bo'lsa, x > 10 and x < 15 natijasi?",
+        "options": [
+          "true",
+          "false",
+          "15",
+          "Xato"
+        ],
+        "correct": 2,
+        "explanation": "15 < 15 yolg'on → AND ham yolg'on."
+      },
+      {
+        "question": "Son 3 ga ham, 5 ga ham bo'linishini tekshiruvchi shart?",
+        "options": [
+          "n % 3 == 0 or n % 5 == 0",
+          "n / 15",
+          "n % 3 == 5",
+          "n % 3 == 0 and n % 5 == 0"
+        ],
+        "correct": 4,
+        "explanation": "\"Ham ... ham\" — AND."
+      },
+      {
+        "question": "4 ta holatni ajratish uchun kamida nechta If kerak?",
+        "options": [
+          "3",
+          "4",
+          "2",
+          "1"
+        ],
+        "correct": 1,
+        "explanation": "N holat — N−1 ta If."
+      },
+      {
+        "question": "not (5 > 3) = ?",
+        "options": [
+          "true",
+          "5",
+          "false",
+          "3"
+        ],
+        "correct": 3,
+        "explanation": "5 > 3 rost, NOT uni yolg'onga aylantiradi."
+      },
+      {
+        "question": "Baho zinapoyasida birinchi qaysi shart tekshirilishi kerak?",
+        "options": [
+          "f >= 56",
+          "f >= 86",
+          "f >= 71",
+          "f < 56"
+        ],
+        "correct": 2,
+        "explanation": "Eng qattiq shartdan boshlanadi, aks holda 95 ham \"3\" oladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 21,
+    "slug": "cs/21-takrorlanuvchi-algoritmlar",
+    "title": "Flowgorithm'da takrorlanuvchi algoritmlar va sikllar",
+    "questions": [
+      {
+        "question": "Qaysi sikl tanasi kamida bir marta albatta bajariladi?",
+        "options": [
+          "For",
+          "While",
+          "Do",
+          "Hech qaysi"
+        ],
+        "correct": 3,
+        "explanation": "Do'da shart tanadan keyin tekshiriladi."
+      },
+      {
+        "question": "s = 0; For i = 1 to 4: s = s + i . Natija?",
+        "options": [
+          "4",
+          "10",
+          "24",
+          "0"
+        ],
+        "correct": 2,
+        "explanation": "1+2+3+4 = 10."
+      },
+      {
+        "question": "Faktorial uchun yig'uvchining boshlang'ich qiymati?",
+        "options": [
+          "1",
+          "0",
+          "n",
+          "-1"
+        ],
+        "correct": 1,
+        "explanation": "0 ga ko'paytirilgan hamma narsa 0."
+      },
+      {
+        "question": "i = 1; While i <= 5: Output i (boshqa blok yo'q). Nima bo'ladi?",
+        "options": [
+          "1..5 chiqadi",
+          "Hech narsa chiqmaydi",
+          "Xato",
+          "Cheksiz sikl — 1 to'xtovsiz chiqadi"
+        ],
+        "correct": 4,
+        "explanation": "i o'zgarmaydi — shart doim rost."
+      },
+      {
+        "question": "For i = 10 to 1, Decreasing, Step 3 qaysi qiymatlarni beradi?",
+        "options": [
+          "10 9 8 ... 1",
+          "1 4 7 10",
+          "10 7 4 1",
+          "10 7 4"
+        ],
+        "correct": 3,
+        "explanation": "10 → 7 → 4 → 1 (1 ham kiradi)."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 22,
+    "slug": "cs/22-loyiha-kalkulyator",
+    "title": "Loyiha: Flowgorithm'da \"Kalkulyator\"",
+    "questions": [
+      {
+        "question": "Nolga bo'lish tekshiruvi qayerda turishi kerak?",
+        "options": [
+          "Dastur oxirida",
+          "Input'dan oldin",
+          "Bo'lish amalidan oldin",
+          "Kerak emas"
+        ],
+        "correct": 3,
+        "explanation": "Xato sodir bo'lishidan oldin tekshiramiz."
+      },
+      {
+        "question": "Kalkulyatorni qayta-qayta ishlatish uchun qaysi sikl qulay?",
+        "options": [
+          "For 1 to 10",
+          "Do … While javob == \"ha\"",
+          "Sikl kerak emas",
+          "For 10 to 1"
+        ],
+        "correct": 2,
+        "explanation": "Kamida bir marta hisoblash kerak, keyin foydalanuvchi qaror qiladi."
+      },
+      {
+        "question": "0 / 5 nima beradi?",
+        "options": [
+          "Xato",
+          "5",
+          "Cheksizlik",
+          "0"
+        ],
+        "correct": 4,
+        "explanation": "Nolni bo'lish mumkin; nolga bo'lish mumkin emas."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 23,
+    "slug": "cs/23-loyiha-talaba-baholash",
+    "title": "Loyiha: Flowgorithm'da \"Talaba baholash tizimi\"",
+    "questions": [
+      {
+        "question": "Test bali 0–40 oralig'ida bo'lishi uchun Do sikli sharti qanday?",
+        "options": [
+          "test >= 0 and test <= 40",
+          "test < 0 or test > 40",
+          "test == 40",
+          "test != 0"
+        ],
+        "correct": 2,
+        "explanation": "Do \"noto'g'ri ekan\" takrorlanadi."
+      },
+      {
+        "question": "Jami 120, maksimal 160. Foiz?",
+        "options": [
+          "120%",
+          "60%",
+          "75%",
+          "40%"
+        ],
+        "correct": 3,
+        "explanation": "120 / 160 × 100 = 75."
+      },
+      {
+        "question": "\"Garbage In — Garbage Out\" nimani anglatadi?",
+        "options": [
+          "Noto'g'ri kiritilgan ma'lumot noto'g'ri natija beradi",
+          "Dastur axlatni o'chiradi",
+          "Kompyuter tozalash kerak",
+          "Fayllarni savatga tashlash"
+        ],
+        "correct": 1,
+        "explanation": "Shuning uchun validatsiya kerak."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 24,
+    "slug": "cs/24-loyiha-mini-bankomat",
+    "title": "Loyiha: Flowgorithm'da \"Mini bankomat tizimi\"",
+    "questions": [
+      {
+        "question": "Balans o'zgaruvchisi qayerda boshlang'ich qiymat olishi kerak?",
+        "options": [
+          "Menyu sikli ichida",
+          "Menyu siklidan oldin",
+          "Pul yechish blokida",
+          "Chiqishda"
+        ],
+        "correct": 2,
+        "explanation": "Holat butun dastur davomida saqlanishi kerak."
+      },
+      {
+        "question": "Balans 300 000. Qaysi summani yechib bo'ladi?",
+        "options": [
+          "350 000",
+          "-50 000",
+          "120 500",
+          "300 000"
+        ],
+        "correct": 4,
+        "explanation": "Musbat, 1000 ga karrali va balansdan oshmaydi."
+      },
+      {
+        "question": "Menyu foydalanuvchi \"4\" ni tanlaguncha takrorlanishi uchun shart?",
+        "options": [
+          "While tanlov != 4",
+          "While tanlov == 4",
+          "For tanlov = 1 to 4",
+          "If tanlov == 4"
+        ],
+        "correct": 1,
+        "explanation": "\"4 emas ekan — davom et\"."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 25,
+    "slug": "cs/25-loyiha-login-parol",
+    "title": "Loyiha: Flowgorithm'da \"Login va parol tekshirish tizimi\"",
+    "questions": [
+      {
+        "question": "Login va parol ikkalasi ham to'g'ri bo'lishini tekshirish uchun qaysi operator?",
+        "options": [
+          "or",
+          "not",
+          "and",
+          "&"
+        ],
+        "correct": 3,
+        "explanation": "AND — ikkala shart ham rost bo'lishi kerak."
+      },
+      {
+        "question": "urinish = 2 , kirdi = false . urinish < 3 and not kirdi = ?",
+        "options": [
+          "true — yana bir urinish bor",
+          "false",
+          "2",
+          "Xato"
+        ],
+        "correct": 1,
+        "explanation": "2 < 3 rost, not false = true → true AND true."
+      },
+      {
+        "question": "Urinishlar limitining asosiy maqsadi?",
+        "options": [
+          "Dasturni tezlashtirish",
+          "Xotirani tejash",
+          "Chiroyli ko'rinish",
+          "Parolni ko'r-ko'rona terib topishdan (brute force) himoya"
+        ],
+        "correct": 4,
+        "explanation": "Limitsiz har bir variantni sinab ko'rish mumkin bo'lardi."
+      }
+    ]
+  },
+  {
+    "course_dir": "cs",
+    "course_name": "8-sinf: Computer Science Foundation",
+    "chapter": "III bob. Algoritmlash, Flowgorithm va dasturlash asoslari",
+    "topic_number": 26,
+    "slug": "cs/26-yakuniy-nazorat",
+    "title": "Yakuniy nazorat: tayyorgarlik, 25 ta test, 5 ta amaliy topshiriq va yakuniy loyiha",
+    "questions": [
+      {
+        "question": "1. Kompyuterning \"miyasi\" — barcha hisob-kitoblarni bajaruvchi qurilma?",
+        "options": [
+          "RAM",
+          "Protsessor (CPU)",
+          "Qattiq disk",
+          "Monitor"
+        ],
+        "correct": 2,
+        "explanation": "CPU buyruqlarni bajaradi; RAM — ishchi xotira."
+      },
+      {
+        "question": "2. Kompyuter o'chirilganda ma'lumot o'chib ketadigan xotira?",
+        "options": [
+          "SSD",
+          "Fleshka",
+          "RAM",
+          "ROM"
+        ],
+        "correct": 3,
+        "explanation": "RAM — energiyaga bog'liq (vaqtinchalik) xotira."
+      },
+      {
+        "question": "3. 1 bayt necha bitga teng?",
+        "options": [
+          "8",
+          "10",
+          "1024",
+          "2"
+        ],
+        "correct": 1,
+        "explanation": "1 bayt = 8 bit."
+      },
+      {
+        "question": "4. 2 GB necha MB?",
+        "options": [
+          "2000",
+          "200",
+          "1024",
+          "2048"
+        ],
+        "correct": 4,
+        "explanation": "1 GB = 1024 MB → 2 × 1024 = 2048."
+      },
+      {
+        "question": "5. Qaysi qurilma faqat kiritish qurilmasi?",
+        "options": [
+          "Printer",
+          "Klaviatura",
+          "Karnay",
+          "Proyektor"
+        ],
+        "correct": 2,
+        "explanation": "Qolganlari — chiqarish qurilmalari."
+      },
+      {
+        "question": "6. .pdf , .docx , .png — bular nima?",
+        "options": [
+          "Papkalar",
+          "Dasturlar",
+          "Fayl kengaytmalari (turlari)",
+          "Viruslar"
+        ],
+        "correct": 3,
+        "explanation": "Kengaytma fayl turini va qaysi dastur ochishini bildiradi."
+      },
+      {
+        "question": "7. Rasmiy xatda qaysi bo'lim albatta to'ldiriladi?",
+        "options": [
+          "Mavzu (Subject)",
+          "BCC",
+          "Smayliklar",
+          "Hech qaysi"
+        ],
+        "correct": 1,
+        "explanation": "Mavzu xatning mazmunini qisqa bildiradi."
+      },
+      {
+        "question": "8. Tez yozishda ko'rsatkich barmoqlar qaysi tugmalarda turadi?",
+        "options": [
+          "A va ;",
+          "Q va P",
+          "Z va M",
+          "F va J"
+        ],
+        "correct": 4,
+        "explanation": "F va J da bo'rtiqcha bor — uy qatori."
+      },
+      {
+        "question": "9. \"Raqamli iz\" nima?",
+        "options": [
+          "Kompyuterdagi chang",
+          "Internetda qoldirgan barcha ma'lumotlaringiz izi",
+          "Sichqoncha izi",
+          "Ekrandagi barmoq izi"
+        ],
+        "correct": 2,
+        "explanation": "Postlar, izohlar, qidiruvlar — uzoq saqlanadi."
+      },
+      {
+        "question": "10. DNS'ning vazifasi?",
+        "options": [
+          "Saytni yaratish",
+          "Viruslarni o'chirish",
+          "Domen nomini IP-manzilga aylantirish",
+          "Fayllarni siqish"
+        ],
+        "correct": 3,
+        "explanation": "DNS — internetning \"telefon kitobi\"."
+      },
+      {
+        "question": "11. HTTPS'ning HTTP'dan asosiy farqi?",
+        "options": [
+          "Ma'lumot shifrlanadi",
+          "Tezroq",
+          "Rangliroq",
+          "Faqat telefonda ishlaydi"
+        ],
+        "correct": 1,
+        "explanation": "S — Secure, TLS shifrlash."
+      },
+      {
+        "question": "12. O'qituvchi hujjatni o'zgartirmay, faqat fikr yozishi uchun qaysi ruxsat?",
+        "options": [
+          "Muharrir",
+          "Izoh qoldiruvchi",
+          "Egasi",
+          "Ruxsat kerak emas"
+        ],
+        "correct": 2,
+        "explanation": "Commenter."
+      },
+      {
+        "question": "13. O'zgarishlarni GitHub'ga yuborish buyrug'i?",
+        "options": [
+          "git init",
+          "git clone",
+          "git status",
+          "git push"
+        ],
+        "correct": 4,
+        "explanation": "add → commit → push."
+      },
+      {
+        "question": "14. Model ko'plab misollardan qonuniyatni o'zi topadigan yo'nalish?",
+        "options": [
+          "DevOps",
+          "Frontend",
+          "Machine Learning",
+          "Hosting"
+        ],
+        "correct": 3,
+        "explanation": "ML — mashinani o'rgatish."
+      },
+      {
+        "question": "15. 2FA nima?",
+        "options": [
+          "Parol + ikkinchi tasdiq (kod, ilova)",
+          "Ikkita bir xil parol",
+          "Ikki marta kirish",
+          "Ikki kishilik akkaunt"
+        ],
+        "correct": 1,
+        "explanation": "Bilgan narsa + sizdagi narsa."
+      },
+      {
+        "question": "16. Qaysi biri phishing belgisi?",
+        "options": [
+          "Xatda ismingiz to'g'ri yozilgan",
+          "\"24 soatda bloklanadi! SMS-kodni yuboring\"",
+          "Rasmiy domendan kelgan xabar",
+          "Hech narsa so'ralmagan"
+        ],
+        "correct": 2,
+        "explanation": "Shoshiltirish + maxfiy kod so'rash."
+      },
+      {
+        "question": "17. \"Algoritm chekli qadamdan keyin natija berishi kerak\" — qaysi xossa?",
+        "options": [
+          "Aniqlik",
+          "Ommaviylik",
+          "Natijaviylik",
+          "Diskretlik"
+        ],
+        "correct": 3,
+        "explanation": "Natijaviylik — algoritm albatta tugaydi."
+      },
+      {
+        "question": "18. Flowgorithm'da foydalanuvchidan ma'lumot oluvchi blok?",
+        "options": [
+          "Output",
+          "Assign",
+          "Declare",
+          "Input"
+        ],
+        "correct": 4,
+        "explanation": "Input — parallelogramm."
+      },
+      {
+        "question": "19. O'rtacha baho (4.33) uchun qaysi tur?",
+        "options": [
+          "Integer",
+          "Real",
+          "String",
+          "Boolean"
+        ],
+        "correct": 2,
+        "explanation": "Kasr son — Real."
+      },
+      {
+        "question": "20. 17 % 5 = ?",
+        "options": [
+          "2",
+          "3",
+          "3.4",
+          "12"
+        ],
+        "correct": 1,
+        "explanation": "17 = 5 × 3 + 2."
+      },
+      {
+        "question": "21. (4 + 6) / 2 * 3 = ?",
+        "options": [
+          "5",
+          "11",
+          "15",
+          "1.67"
+        ],
+        "correct": 3,
+        "explanation": "10 / 2 = 5; 5 × 3 = 15."
+      },
+      {
+        "question": "22. Son juftligini tekshiruvchi shart?",
+        "options": [
+          "son / 2 == 0",
+          "son == 2",
+          "son % 2 == 1",
+          "son % 2 == 0"
+        ],
+        "correct": 4,
+        "explanation": "2 ga bo'lgandagi qoldiq 0."
+      },
+      {
+        "question": "23. a = 5 , b = 12 . a > 3 and b < 10 = ?",
+        "options": [
+          "true",
+          "false",
+          "5",
+          "Xato"
+        ],
+        "correct": 2,
+        "explanation": "b < 10 yolg'on → AND yolg'on."
+      },
+      {
+        "question": "24. Takrorlash soni oldindan ma'lum bo'lsa, qaysi sikl qulay?",
+        "options": [
+          "For",
+          "Do",
+          "If",
+          "Declare"
+        ],
+        "correct": 1,
+        "explanation": "For i = 1 to n."
+      },
+      {
+        "question": "25. s = 0; For i = 1 to 5: s = s + i . Natija?",
+        "options": [
+          "5",
+          "10",
+          "15",
+          "120"
+        ],
+        "correct": 3,
+        "explanation": "1+2+3+4+5 = 15. (120 — 5!, ko'paytma.)"
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Boshlang'ich · ~60 daqiqa",
+    "topic_number": 1,
+    "slug": "darslar/01-web-qanday-ishlaydi",
+    "title": "Web qanday ishlaydi",
+    "questions": [
+      {
+        "question": "DNS serverining asosiy vazifasi nima?",
+        "options": [
+          "Sahifa dizaynini chizish",
+          "Domen nomini IP-manzilga aylantirish",
+          "Ma'lumotlar bazasini shifrlash",
+          "JavaScript kodini ishga tushirish"
+        ],
+        "correct": 2,
+        "explanation": "DNS domen nomini (masalan, kun.uz) serverning IP-manziliga aylantirib beradi."
+      },
+      {
+        "question": "HTTP 201 status kodi nimani anglatadi?",
+        "options": [
+          "Sahifa topilmadi",
+          "Serverda yangi resurs muvaffaqiyatli yaratildi (Created)",
+          "Avtorizatsiya xatosi",
+          "Boshqa manzilga yo'naltirildi"
+        ],
+        "correct": 2,
+        "explanation": "201 Created — POST so'rov orqali yangi ma'lumot yaratilganda qaytadi."
+      },
+      {
+        "question": "Brauzer sahifani chizishda (rendering) birinchi bo'lib nimani quradi?",
+        "options": [
+          "DOM daraxtini",
+          "SQL jadvalini",
+          "TLS sertifikatini",
+          "DNS keshini"
+        ],
+        "correct": 1,
+        "explanation": "Brauzer HTML kodni o'qib, avval DOM (Document Object Model) daraxtini hosil qiladi."
+      },
+      {
+        "question": "Qaysi HTTP metodi ma'lumotni serverdan faqat o'qib olish uchun ishlatiladi?",
+        "options": [
+          "POST",
+          "DELETE",
+          "GET",
+          "PATCH"
+        ],
+        "correct": 3,
+        "explanation": "GET so'rovi ma'lumotni o'zgartirmasdan serverdan olish uchun xizmat qiladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Boshlang'ich · ~90 daqiqa",
+    "topic_number": 2,
+    "slug": "darslar/02-html",
+    "title": "HTML — sahifa tuzilishi",
+    "questions": [
+      {
+        "question": "Qidiruv tizimlari (SEO) va ekran o'quvchi dasturlar uchun asosiy maqola mazmunini qaysi semantik teg ichiga yozish to'g'ri?",
+        "options": [
+          "<div>",
+          "<main>",
+          "<span>",
+          "<b>"
+        ],
+        "correct": 2,
+        "explanation": "<main> tegi sahifaning asosiy, takrorlanmaydigan mazmunini bildiradi."
+      },
+      {
+        "question": "Forma maydonini majburiy to'ldiriladigan qilish uchun qaysi atribut qo'shiladi?",
+        "options": [
+          "readonly",
+          "disabled",
+          "required",
+          "placeholder"
+        ],
+        "correct": 3,
+        "explanation": "required atributi forma yuborilishidan oldin maydon to'ldirilganini tekshiradi."
+      },
+      {
+        "question": "Rasmlarda alt atributining vazifasi nima?",
+        "options": [
+          "Rasm o'lchamini o'zgartirish",
+          "Rasm yuklanmaganda yoki ekran o'quvchi uchun muqobil matn ko'rsatish",
+          "Rasmga ramka berish",
+          "Rasmni havola qilish"
+        ],
+        "correct": 2,
+        "explanation": "alt atributi accessibility va SEO uchun rasm tavsifini beradi."
+      },
+      {
+        "question": "Jadvalda ustun sarlavhasini belgilash uchun qaysi teg ishlatiladi?",
+        "options": [
+          "<td>",
+          "<tr>",
+          "<th>",
+          "<caption>"
+        ],
+        "correct": 3,
+        "explanation": "<th> (table header) ustun yoki qator sarlavhasini ifodalaydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Boshlang'ich · ~120 daqiqa",
+    "topic_number": 3,
+    "slug": "darslar/03-css",
+    "title": "CSS — dizayn va maket",
+    "questions": [
+      {
+        "question": "CSS spetsifikligida (specificity) qaysi selektor eng yuqori ustuvorlikka ega?",
+        "options": [
+          "Element selektori (p)",
+          "Klass selektori (.card)",
+          "ID selektori (#header)",
+          "Universal selektor (*)"
+        ],
+        "correct": 3,
+        "explanation": "ID selektori (#id) klass va teg selektorlaridan ustun turadi."
+      },
+      {
+        "question": "Elementning padding va border o'lchamlari uning umumiy width qiymati ichiga kirishi uchun qaysi xossa beriladi?",
+        "options": [
+          "box-sizing: border-box",
+          "display: flex",
+          "overflow: hidden",
+          "position: relative"
+        ],
+        "correct": 1,
+        "explanation": "box-sizing: border-box element kengligini padding va border bilan birga hisoblaydi."
+      },
+      {
+        "question": "Flexbox konteynerida elementlarni asosiy o'q bo'ylab tekislash xossasi qaysi?",
+        "options": [
+          "align-items",
+          "justify-content",
+          "flex-wrap",
+          "gap"
+        ],
+        "correct": 2,
+        "explanation": "justify-content asosiy o'q (main axis), align-items esa kesishuvchi o'q bo'ylab tekislaydi."
+      },
+      {
+        "question": "CSS o'zgaruvchisi (custom property) qanday e'lon qilinadi va chaqiriladi?",
+        "options": [
+          "$rang va @rang",
+          "--asosiy-rang: #333 va var(--asosiy-rang)",
+          "let rang = #333",
+          "@property rang"
+        ],
+        "correct": 2,
+        "explanation": "CSS o'zgaruvchilari -- bilan boshlanadi va var() funksiyasi orqali olinadi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Boshlang'ich–O'rta · ~150 daqiqa",
+    "topic_number": 4,
+    "slug": "darslar/04-javascript-asoslari",
+    "title": "JavaScript asoslari",
+    "questions": [
+      {
+        "question": "JavaScript'da === operatori == operatoridan nimasi bilan farq qiladi?",
+        "options": [
+          "Farqi yo'q",
+          "Qiymatni ham, ma'lumot turini ham qat'iy solishtiradi",
+          "Faqat sonlarni solishtiradi",
+          "O'zgaruvchiga qiymat beradi"
+        ],
+        "correct": 2,
+        "explanation": "=== (strict equality) tur konvertatsiyasini bajarmasdan tur va qiymatni tekshiradi."
+      },
+      {
+        "question": "Massivning har bir elementini o'zgartirib, yangi massiv qaytaruvchi metod qaysi?",
+        "options": [
+          "forEach()",
+          "map()",
+          "find()",
+          "includes()"
+        ],
+        "correct": 2,
+        "explanation": "map() har bir elementga funksiya qo'llab, yangi massiv qaytaradi."
+      },
+      {
+        "question": "Closure (yopiqlik) nima?",
+        "options": [
+          "Tsiklni to'xtatish operatori",
+          "Ichki funksiyaning tashqi funksiya o'zgaruvchilarini eslab qolish xususiyati",
+          "Xatolarni ushlash bloki",
+          "Obyektni muzlatish"
+        ],
+        "correct": 2,
+        "explanation": "Closure tufayli funksiya o'zi yaratilgan leksik muhitdagi o'zgaruvchilarga murojaat qila oladi."
+      },
+      {
+        "question": "const bilan e'lon qilingan o'zgaruvchiga nisbatan qaysi fikr to'g'ri?",
+        "options": [
+          "Unga qayta yangi qiymat tayinlab bo'lmaydi",
+          "Faqat global scope'da ishlaydi",
+          "Faqat matn saqlaydi",
+          "Hoisting paytida undefined bo'ladi"
+        ],
+        "correct": 1,
+        "explanation": "const o'zgaruvchisiga qayta = bilan yangi havola tayinlab bo'lmaydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~120 daqiqa",
+    "topic_number": 5,
+    "slug": "darslar/05-dom-va-hodisalar",
+    "title": "DOM va hodisalar",
+    "questions": [
+      {
+        "question": "Forma yuborilganda sahifa qayta yuklanib ketishini to'xtatish uchun qaysi metod chaqiriladi?",
+        "options": [
+          "event.stopPropagation()",
+          "event.preventDefault()",
+          "window.stop()",
+          "form.reset()"
+        ],
+        "correct": 2,
+        "explanation": "event.preventDefault() brauzerning standart xatti-harakatini bekor qiladi."
+      },
+      {
+        "question": "Event delegation (hodisalarni vakillash) qanday ishlaydi?",
+        "options": [
+          "Har bir tugmaga alohida listener qo'yish",
+          "Hodisani ota elementda tutib, event.target orqali qaysi bola element bosilganini aniqlash",
+          "Hodisalarni o'chirish",
+          "Faqat klaviatura hodisalarini eshitish"
+        ],
+        "correct": 2,
+        "explanation": "Event bubbling hisobiga ota elementga bitta listener qo'yib, barcha dinamik bola elementlarni boshqarish mumkin."
+      },
+      {
+        "question": "XSS (Cross-Site Scripting) xavfini oldini olish uchun foydalanuvchi matnini DOM'ga qaysi xossa bilan yozish xavfsiz?",
+        "options": [
+          "innerHTML",
+          "outerHTML",
+          "textContent",
+          "document.write"
+        ],
+        "correct": 3,
+        "explanation": "textContent HTML teglarni kod sifatida ishga tushirmaydi, oddiy matn sifatida chiqaradi."
+      },
+      {
+        "question": "localStorage'da obyekt saqlash uchun qaysi metoddan foydalaniladi?",
+        "options": [
+          "JSON.stringify()",
+          "JSON.parse()",
+          "Object.keys()",
+          "String.raw()"
+        ],
+        "correct": 1,
+        "explanation": "localStorage faqat satr (string) saqlagani uchun obyekt JSON.stringify() bilan satrga o'giriladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~120 daqiqa",
+    "topic_number": 6,
+    "slug": "darslar/06-asinxron-javascript",
+    "title": "Asinxron JavaScript va Fetch API",
+    "questions": [
+      {
+        "question": "async funksiya har doim nima qaytaradi?",
+        "options": [
+          "Oddiy son",
+          "Promise",
+          "Callback",
+          "DOM element"
+        ],
+        "correct": 2,
+        "explanation": "async kalit so'zi bilan yozilgan har qanday funksiya Promise qaytaradi."
+      },
+      {
+        "question": "Bir nechta mustaqil Promise'larni parallel ishga tushirib, barchasi tugashini kutish uchun nima ishlatiladi?",
+        "options": [
+          "Promise.all()",
+          "Promise.race()",
+          "setTimeout()",
+          "JSON.parse()"
+        ],
+        "correct": 1,
+        "explanation": "Promise.all([...]) barcha va'dalar bajarilganda natijalar massivini qaytaradi."
+      },
+      {
+        "question": "fetch() so'rovini belgilangan vaqtdan keyin bekor qilish uchun qaysi API ishlatiladi?",
+        "options": [
+          "AbortController",
+          "XMLHttpRequest",
+          "EventLoop",
+          "MutationObserver"
+        ],
+        "correct": 1,
+        "explanation": "AbortController va uning signal xossasi fetch so'rovini bekor qilish imkonini beradi."
+      },
+      {
+        "question": "fetch() qachon avtomatik reject (xato) beradi?",
+        "options": [
+          "Status 404 bo'lganda",
+          "Status 500 bo'lganda",
+          "Tarmoq uzilganda (network error); 404/500 da esa res.ok false bo'ladi",
+          "Har doim"
+        ],
+        "correct": 3,
+        "explanation": "fetch HTTP 4xx/5xx statuslarda reject qilmaydi, shuning uchun if (!res.ok) tekshiriladi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Boshlang'ich–O'rta · ~90 daqiqa",
+    "topic_number": 7,
+    "slug": "darslar/07-git-va-github",
+    "title": "Git va GitHub",
+    "questions": [
+      {
+        "question": "Yangi branch yaratib, darhol unga o'tish buyrug'i qaysi?",
+        "options": [
+          "git switch -c yangi-branch",
+          "git merge yangi-branch",
+          "git init yangi-branch",
+          "git pull yangi-branch"
+        ],
+        "correct": 1,
+        "explanation": "git switch -c (yoki git checkout -b) yangi shoxobcha ochadi va unga o'tadi."
+      },
+      {
+        "question": ".gitignore faylining vazifasi nima?",
+        "options": [
+          "Git foydalanuvchilarini bloklash",
+          "node_modules va .env kabi fayllarni Git kuzatuviga qo'shmaslik",
+          "Eski commitlarni o'chirish",
+          "Repozitoriyni yopiq qilish"
+        ],
+        "correct": 2,
+        "explanation": ".gitignore ichiga yozilgan fayl va papkalar commit qilinmaydi."
+      },
+      {
+        "question": "Boshqa dasturchining o'zgarishlarini ko'rib chiqib asosiy branchga qo'shish so'rovi GitHub'da nima deyiladi?",
+        "options": [
+          "Git Clone",
+          "Pull Request (PR)",
+          "Git Stash",
+          "Fork"
+        ],
+        "correct": 2,
+        "explanation": "Pull Request kodni ko'rikdan o'tkazish (code review) va asosiy shoxga birlashtirish uchun ochiladi."
+      },
+      {
+        "question": "Merge conflict qachon yuz beradi?",
+        "options": [
+          "Internet sekin ishlaganda",
+          "Ikki branchda bitta faylning aynan bir xil qatorlari turlicha o'zgartirilganda",
+          "Yangi fayl qo'shilganda",
+          "git status yozilganda"
+        ],
+        "correct": 2,
+        "explanation": "Git bir xil joydagi ikki xil o'zgarishdan qaysi birini olishni bilmaganda konflikt chiqaradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~100 daqiqa",
+    "topic_number": 8,
+    "slug": "darslar/08-nodejs",
+    "title": "Node.js va npm",
+    "questions": [
+      {
+        "question": "Node.js'da maxfiy kalitlar va baza parollarini qayerda saqlash tavsiya etiladi?",
+        "options": [
+          "index.html ichida",
+          ".env faylida (va process.env orqali o'qish)",
+          "README.md faylida",
+          "package.json ichida"
+        ],
+        "correct": 2,
+        "explanation": "Maxfiy sozlamalar .env faylida saqlanadi va Git'ga yuklanmaydi."
+      },
+      {
+        "question": "Katta hajmdagi fayllarni tezkor xotirani (RAM) to'ldirib yubormasdan bo'laklab o'qish uchun nima ishlatiladi?",
+        "options": [
+          "fs.readFileSync()",
+          "Stream (oqimlar - fs.createReadStream)",
+          "JSON.parse()",
+          "console.log()"
+        ],
+        "correct": 2,
+        "explanation": "Stream faylni kichik bo'laklarda (chunk) uzluksiz qayta ishlaydi."
+      },
+      {
+        "question": "package-lock.json faylining ahamiyati nimada?",
+        "options": [
+          "Faqat bezak uchun",
+          "Barcha o'rnatilgan kutubxonalarning aniq versiyasini qayd etib, hamma kompyuterda bir xil ishlashini ta'minlaydi",
+          "Kodlarni shifrlaydi",
+          "Serverni ishga tushiradi"
+        ],
+        "correct": 2,
+        "explanation": "package-lock.json bog'liqliklarning aniq daraxtini va versiyalarini saqlaydi."
+      },
+      {
+        "question": "Fayl yo'llarini barcha operatsion tizimlarga mos ravishda birlashtirish uchun qaysi modul ishlatiladi?",
+        "options": [
+          "path.join()",
+          "http.createServer()",
+          "os.cpus()",
+          "events.EventEmitter"
+        ],
+        "correct": 1,
+        "explanation": "path.join() Windows (\\) va Linux/macOS (/) ajratuvchilarini to'g'ri birlashtiradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~140 daqiqa",
+    "topic_number": 9,
+    "slug": "darslar/09-express-rest-api",
+    "title": "Express.js va REST API",
+    "questions": [
+      {
+        "question": "Express.js'da kelayotgan JSON so'rov tanasini (req.body) o'qish uchun qaysi middleware yoqiladi?",
+        "options": [
+          "app.use(express.json())",
+          "app.use(express.static())",
+          "app.get()",
+          "res.send()"
+        ],
+        "correct": 1,
+        "explanation": "express.json() middleware JSON formatdagi so'rov tanasini req.body obyektiga aylantiradi."
+      },
+      {
+        "question": "Express middleware funksiyasida navbatdagi bosqichga o'tish uchun nima chaqiriladi?",
+        "options": [
+          "return true",
+          "next()",
+          "res.end()",
+          "req.next()"
+        ],
+        "correct": 2,
+        "explanation": "next() funksiyasi boshqaruvni keyingi middleware yoki route handlerga uzatadi."
+      },
+      {
+        "question": "REST API'da /api/books/:id manzilidagi :id qiymati Express'da qayerdan olinadi?",
+        "options": [
+          "req.query.id",
+          "req.params.id",
+          "req.body.id",
+          "req.headers.id"
+        ],
+        "correct": 2,
+        "explanation": "Marshrut bo'lagidagi dinamik parametrlar req.params obyektida bo'ladi."
+      },
+      {
+        "question": "Markazlashgan xato ushlovchi (error-handling) middleware nechta argument qabul qiladi?",
+        "options": [
+          "2 ta (req, res)",
+          "3 ta (req, res, next)",
+          "4 ta (err, req, res, next)",
+          "1 ta (err)"
+        ],
+        "correct": 3,
+        "explanation": "Express xato middleware'ni aynan 4 ta parametri (err, req, res, next) orqali taniydi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~150 daqiqa",
+    "topic_number": 10,
+    "slug": "darslar/10-malumotlar-bazasi",
+    "title": "Ma'lumotlar bazasi: SQL va PostgreSQL",
+    "questions": [
+      {
+        "question": "SQL Injection hujumidan himoyalanishning eng ishonchli usuli nima?",
+        "options": [
+          "Foydalanuvchi kiritgan matnni + bilan SQL satriga ulash",
+          "Parametrlangan so'rovlar (Prepared Statements: $1, $2 yoki %s) ishlatish",
+          "Jadval nomini yashirish",
+          "Faqat GET so'rov ishlatish"
+        ],
+        "correct": 2,
+        "explanation": "Parametrlangan so'rovlarda ma'lumot SQL buyrug'i sifatida emas, xavfsiz qiymat sifatida uzatiladi."
+      },
+      {
+        "question": "Tranzaksiyada barcha amallar muvaffaqiyatli tugagach o'zgarishlarni tasdiqlash buyrug'i qaysi?",
+        "options": [
+          "ROLLBACK",
+          "COMMIT",
+          "TRUNCATE",
+          "DROP"
+        ],
+        "correct": 2,
+        "explanation": "COMMIT tranzaksiyani saqlaydi, xato bo'lsa ROLLBACK barcha o'zgarishlarni orqaga qaytaradi."
+      },
+      {
+        "question": "GROUP BY bilan hosil qilingan guruhlarni agregat natija (masalan COUNT(*) > 5) bo'yicha filtrlash uchun nima ishlatiladi?",
+        "options": [
+          "WHERE",
+          "HAVING",
+          "ORDER BY",
+          "LIMIT"
+        ],
+        "correct": 2,
+        "explanation": "WHERE guruhlashdan oldin qatorlarni, HAVING esa GROUP BY dan keyin guruhlarni filtrlaydi."
+      },
+      {
+        "question": "Jadvaldagi qidiruvni tezlashtirish uchun ustunga nima qo'shiladi?",
+        "options": [
+          "INDEX",
+          "DEFAULT",
+          "CHECK",
+          "VIEW"
+        ],
+        "correct": 1,
+        "explanation": "B-Tree indeks katta jadvallarda qidiruvni (WHERE / JOIN) bir necha barobar tezlashtiradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta–Yuqori · ~130 daqiqa",
+    "topic_number": 11,
+    "slug": "darslar/11-autentifikatsiya",
+    "title": "Autentifikatsiya va avtorizatsiya",
+    "questions": [
+      {
+        "question": "Foydalanuvchi parollarini ma'lumotlar bazasida qanday saqlash shart?",
+        "options": [
+          "Ochiq matn ko'rinishida",
+          "Base64 ga o'girib",
+          "bcrypt yoki argon2 yordamida salt qo'shib xeshlangan holda",
+          "MD5 bilan"
+        ],
+        "correct": 3,
+        "explanation": "bcrypt va argon2 maxsus sekinlashtirilgan va salt'li kriptografik xeshlash algoritmlaridir."
+      },
+      {
+        "question": "Autentifikatsiya (Authentication) va Avtorizatsiya (Authorization) farqi nima?",
+        "options": [
+          "Ikkalasi bir xil",
+          "Autentifikatsiya — 'Sen kimsan?' (login), Avtorizatsiya — 'Senga nimaga ruxsat bor?' (huquqlar)",
+          "Avtorizatsiya oldin bajariladi",
+          "Faqat adminlar uchun"
+        ],
+        "correct": 2,
+        "explanation": "Autentifikatsiya shaxsni tasdiqlaydi (401), avtorizatsiya esa huquqni tekshiradi (403)."
+      },
+      {
+        "question": "Cookie'ga HttpOnly bayrog'i qo'yilsa nima bo'ladi?",
+        "options": [
+          "Cookie faqat HTTP da ishlaydi",
+          "Brauzerdagi JavaScript (document.cookie) orqali tokenni o'g'irlab bo'lmaydi (XSS himoyasi)",
+          "Cookie 1 kunda o'chadi",
+          "Parol kerak bo'lmaydi"
+        ],
+        "correct": 2,
+        "explanation": "HttpOnly cookie'ni zararli JS skriptlardan himoya qiladi."
+      },
+      {
+        "question": "IDOR (Insecure Direct Object Reference) xatosi nima?",
+        "options": [
+          "Server porti yopiqligi",
+          "Foydalanuvchi URL'dagi ID'ni o'zgartirib, egasi tekshirilmagani sabab boshqa birovning ma'lumotini ko'ra olishi",
+          "CSS yuklanmasligi",
+          "Parol qisqaligi"
+        ],
+        "correct": 2,
+        "explanation": "Har bir so'rovda resurs aynan joriy foydalanuvchiga tegishli ekanini bazada tekshirish shart."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "O'rta · ~150 daqiqa",
+    "topic_number": 12,
+    "slug": "darslar/12-react",
+    "title": "React asoslari",
+    "questions": [
+      {
+        "question": "React'da komponent holatini (state) saqlash va yangilash uchun qaysi hook ishlatiladi?",
+        "options": [
+          "useEffect",
+          "useState",
+          "useRef",
+          "useMemo"
+        ],
+        "correct": 2,
+        "explanation": "useState holat qiymatini va uni yangilab qayta render qiluvchi funksiyani qaytaradi."
+      },
+      {
+        "question": "React ro'yxatlarini (.map) chizishda key propiga nima berish eng to'g'ri?",
+        "options": [
+          "Math.random()",
+          "Elementning bazadagi noyob va o'zgarmas ID'si",
+          "Doim 0",
+          "Massiv uzunligi"
+        ],
+        "correct": 2,
+        "explanation": "Barqaror va noyob ID React'ga qaysi element o'zgarganini aniq bilish imkonini beradi."
+      },
+      {
+        "question": "useEffect(fn, []) da ikkinchi argument sifatida bo'sh massiv [] berilsa, effekt qachon ishlaydi?",
+        "options": [
+          "Har bir renderda",
+          "Komponent ekranga ilk bor chiqqanda (mount) faqat 1 marta",
+          "Hech qachon",
+          "Faqat tugma bosilganda"
+        ],
+        "correct": 2,
+        "explanation": "Bo'sh bog'liqliklar massivi effekt faqat mount vaqtida bir marta ishlashini bildiradi."
+      },
+      {
+        "question": "Props haqida qaysi tasdiq to'g'ri?",
+        "options": [
+          "Bola komponent props'ni bevosita o'zgartira oladi",
+          "Props ota komponentdan bolaga uzatiladi va faqat o'qish uchun (read-only) mo'ljallangan",
+          "Props faqat raqam bo'ladi",
+          "Props bazada saqlanadi"
+        ],
+        "correct": 2,
+        "explanation": "React'da ma'lumot yuqoridan pastga oqadi va props immutable (o'zgarmas) hisoblanadi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Yuqori · ~4–6 soat amaliyot",
+    "topic_number": 13,
+    "slug": "darslar/13-fullstack-loyiha",
+    "title": "Yakuniy loyiha: full-stack \"Eslatmalar\" ilovasi",
+    "questions": [
+      {
+        "question": "Frontend va Backend boshqa-boshqa portlarda (masalan 5173 va 3000) ishlaganda brauzer so'rovga ruxsat berishi uchun serverda nima sozlanadi?",
+        "options": [
+          "CORS (Cross-Origin Resource Sharing)",
+          "DNS",
+          "FTP",
+          "SSH"
+        ],
+        "correct": 1,
+        "explanation": "CORS sarlavhalari qaysi domenlardan API'ga so'rov yuborish mumkinligini belgilaydi."
+      },
+      {
+        "question": "Full-stack loyihada foydalanuvchi kiritgan ma'lumotlarni qayerda validatsiya qilish (tekshirish) kerak?",
+        "options": [
+          "Faqat frontendda",
+          "Ham frontendda (qulaylik uchun), ham backendda (xavfsizlik uchun majburiy)",
+          "Faqat CSS da",
+          "Tekshirish shart emas"
+        ],
+        "correct": 2,
+        "explanation": "Frontend validatsiyani aylanib o'tish oson, shuning uchun backendda doim qayta tekshiriladi."
+      },
+      {
+        "question": "PostgreSQL'da foydalanuvchi o'chirilganda unga tegishli eslatmalar ham avtomatik o'chishi uchun tashqi kalitga nima yoziladi?",
+        "options": [
+          "ON DELETE CASCADE",
+          "ON UPDATE NULL",
+          "PRIMARY KEY",
+          "UNIQUE"
+        ],
+        "correct": 1,
+        "explanation": "ON DELETE CASCADE bog'langan yozuvlarni avtomatik tozalaydi."
+      },
+      {
+        "question": "React ilovasida tizimga kirgan foydalanuvchi ma'lumotini barcha sahifalarda prop-drilling'siz ulashish uchun nima qulay?",
+        "options": [
+          "AuthContext (Context API)",
+          "Inline CSS",
+          " robots.txt",
+          "iframe"
+        ],
+        "correct": 1,
+        "explanation": "Context API global ma'lumotlarni (user, theme) daraxt bo'ylab uzatish imkonini beradi."
+      }
+    ]
+  },
+  {
+    "course_dir": "darslar",
+    "course_name": "Full-stack qo'llanma",
+    "chapter": "Yuqori · ~150 daqiqa",
+    "topic_number": 14,
+    "slug": "darslar/14-deploy-xavfsizlik-test",
+    "title": "Deploy, xavfsizlik va testlash",
+    "questions": [
+      {
+        "question": "Docker konteynerini yig'ish (build) qoidalari qaysi faylda yoziladi?",
+        "options": [
+          "Dockerfile",
+          "package.json",
+          "nginx.conf",
+          ".gitignore"
+        ],
+        "correct": 1,
+        "explanation": "Dockerfile ichida bazaviy obraz, fayllarni nusxalash va ishga tushirish buyruqlari yoziladi."
+      },
+      {
+        "question": "Bir nechta konteynerlarni (masalan, app + PostgreSQL + Nginx) bitta faylda bog'lab ishga tushirish vositasi qaysi?",
+        "options": [
+          "Docker Compose (docker-compose.yml)",
+          "Git Bash",
+          "npm init",
+          "curl"
+        ],
+        "correct": 1,
+        "explanation": "docker compose up orqali barcha xizmatlar va ularning tarmog'i birga ko'tariladi."
+      },
+      {
+        "question": "Brute-force (parolni minglab marta terib ko'rish) hujumini cheklash uchun API'ga nima o'rnatiladi?",
+        "options": [
+          "Rate Limiter (so'rovlar sonini cheklash)",
+          "Rasm siqish",
+          "HTML minifikatsiya",
+          "Font yuklash"
+        ],
+        "correct": 1,
+        "explanation": "Rate limiting ma'lum vaqt ichida bitta IP'dan keladigan urinishlar sonini cheklaydi."
+      },
+      {
+        "question": "Nginx reverse proxy sifatida nima vazifa bajaradi?",
+        "options": [
+          "SQL jadvallarni saqlaydi",
+          "Tashqi HTTP/HTTPS so'rovlarni qabul qilib, ichki Node.js/Django serverga yo'naltiradi va statik fayllarni tez uzatadi",
+          "Python kodni kompilyatsiya qiladi",
+          "Test yozadi"
+        ],
+        "correct": 2,
+        "explanation": "Nginx SSL/TLS, statik fayllar va so'rovlarni ichki portga yo'naltirishni samarali bajaradi."
+      }
+    ]
+  }
+]
