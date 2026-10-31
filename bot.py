@@ -227,7 +227,8 @@ async def show_active_exams(message: Message):
             f"📚 <b>Kiritilgan mavzular ({ex['topic_count']} ta):</b>\n<i>{topics_str}</i>\n\n"
             f"❓ Savollar soni: <b>{ex['question_count']} ta</b>\n"
             f"🏆 Maksimal ball: <b>{max_pts} ball</b> (har bir savol {ex['points_per_question']} ball)\n"
-            f"🔄 Urinishlar: <b>{used} / {max_att}</b>"
+            f"🔄 Urinishlar: <b>{used} / {max_att}</b>\n"
+            f"👥 Guruh: <b>{html.escape(ex.get('target_groups', 'Barcha guruhlar'))}</b>"
         )
         if ex["best_score"] is not None:
             text += f"\n⭐️ Sizning natijangiz: <b>{ex['best_score']} ball</b>"

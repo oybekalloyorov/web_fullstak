@@ -115,6 +115,13 @@ CREATE TABLE IF NOT EXISTS exam_topics (
     PRIMARY KEY (exam_id, topic_id)
 );
 
+CREATE TABLE IF NOT EXISTS exam_groups (
+    exam_id INT NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+    group_name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (exam_id, group_name)
+);
+CREATE INDEX IF NOT EXISTS idx_exam_groups_name ON exam_groups(group_name);
+
 CREATE TABLE IF NOT EXISTS exam_attempts (
     id SERIAL PRIMARY KEY,
     exam_id INT NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
@@ -559,6 +566,7 @@ def create_exam(
     points_per_question: float = 5.0,
     max_attempts: int = 1,
     description: str = "",
+    groups: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     O'qituvchi qaysi va nechta mavzular bo'yicha test bo'lishini hamda
@@ -594,6 +602,15 @@ def create_exam(
                     "INSERT INTO exam_topics (exam_id, topic_id) VALUES (%s, %s) ON CONFLICT DO NOTHING;",
                     (exam["id"], int(tid)),
                 )
+
+            if groups:
+                clean_groups = {g.strip() for g in groups if g.strip() and g.strip().upper() != "ALL"}
+                for g in clean_groups:
+                    cur.execute(
+                        "INSERT INTO exam_groups (exam_id, group_name) VALUES (%s, %s) ON CONFLICT DO NOTHING;",
+                        (exam["id"], g),
+                    )
+
             return exam
 
 
@@ -609,6 +626,14 @@ def list_exams() -> List[Dict[str, Any]]:
                            STRING_AGG(DISTINCT (t.course_dir || '/' || LPAD(t.topic_number::text, 2, '0') || ': ' || t.title), ' • '),
                            ''
                        ) AS topics_summary,
+                       COALESCE(
+                           (SELECT STRING_AGG(eg.group_name, ', ' ORDER BY eg.group_name) FROM exam_groups eg WHERE eg.exam_id = e.id),
+                           'Barcha guruhlar'
+                       ) AS target_groups,
+                       COALESCE(
+                           (SELECT ARRAY_AGG(eg.group_name ORDER BY eg.group_name) FROM exam_groups eg WHERE eg.exam_id = e.id),
+                           ARRAY[]::varchar[]
+                       ) AS assigned_groups,
                        (
                            SELECT COUNT(*) FROM exam_attempts a
                            WHERE a.exam_id = e.id AND a.status = 'completed'
@@ -633,6 +658,29 @@ def toggle_exam_status(exam_id: int) -> None:
             )
 
 
+def set_exam_active_status(
+    exam_id: int,
+    is_active: bool,
+    groups: Optional[List[str]] = None,
+) -> None:
+    """Testni yoqish yoki to'xtatish hamda tanlangan guruhlarni biriktirish."""
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE exams SET is_active = %s WHERE id = %s;",
+                (is_active, exam_id),
+            )
+            if is_active:
+                cur.execute("DELETE FROM exam_groups WHERE exam_id = %s;", (exam_id,))
+                if groups:
+                    clean_groups = {g.strip() for g in groups if g.strip() and g.strip().upper() != "ALL"}
+                    for g in clean_groups:
+                        cur.execute(
+                            "INSERT INTO exam_groups (exam_id, group_name) VALUES (%s, %s) ON CONFLICT DO NOTHING;",
+                            (exam_id, g),
+                        )
+
+
 def delete_exam(exam_id: int) -> None:
     """Testni o'chirish."""
     with get_conn() as conn:
@@ -649,6 +697,14 @@ def get_active_exams_for_student(student_id: int) -> List[Dict[str, Any]]:
                 SELECT e.*,
                        COUNT(DISTINCT et.topic_id) AS topic_count,
                        STRING_AGG(DISTINCT t.title, ', ') AS topic_titles,
+                       COALESCE(
+                           (SELECT STRING_AGG(eg.group_name, ', ' ORDER BY eg.group_name) FROM exam_groups eg WHERE eg.exam_id = e.id),
+                           'Barcha guruhlar'
+                       ) AS target_groups,
+                       COALESCE(
+                           (SELECT ARRAY_AGG(eg.group_name ORDER BY eg.group_name) FROM exam_groups eg WHERE eg.exam_id = e.id),
+                           ARRAY[]::varchar[]
+                       ) AS assigned_groups,
                        (
                            SELECT COUNT(*) FROM exam_attempts a
                            WHERE a.exam_id = e.id AND a.student_id = %s AND a.status = 'completed'
@@ -660,11 +716,16 @@ def get_active_exams_for_student(student_id: int) -> List[Dict[str, Any]]:
                 FROM exams e
                 JOIN exam_topics et ON et.exam_id = e.id
                 JOIN topics t ON t.id = et.topic_id
+                JOIN students s ON s.id = %s
                 WHERE e.is_active = TRUE
+                  AND (
+                      NOT EXISTS (SELECT 1 FROM exam_groups eg WHERE eg.exam_id = e.id)
+                      OR EXISTS (SELECT 1 FROM exam_groups eg WHERE eg.exam_id = e.id AND eg.group_name = s.class_name)
+                  )
                 GROUP BY e.id
                 ORDER BY e.created_at DESC;
                 """,
-                (student_id, student_id),
+                (student_id, student_id, student_id),
             )
             return [dict(r) for r in cur.fetchall()]
 
@@ -686,6 +747,23 @@ def start_or_resume_attempt(student_id: int, exam_id: int) -> Dict[str, Any]:
             exam = cur.fetchone()
             if not exam:
                 return {"ok": False, "error": "⚠️ Bu test hozirda faol emas yoki yopilgan."}
+
+            # Guruh tekshiruvi:
+            cur.execute("SELECT class_name FROM students WHERE id = %s;", (student_id,))
+            st_info = cur.fetchone()
+            if st_info:
+                st_class = st_info["class_name"]
+                cur.execute("SELECT 1 FROM exam_groups WHERE exam_id = %s;", (exam_id,))
+                if cur.fetchone():
+                    cur.execute(
+                        "SELECT 1 FROM exam_groups WHERE exam_id = %s AND group_name = %s;",
+                        (exam_id, st_class),
+                    )
+                    if not cur.fetchone():
+                        return {
+                            "ok": False,
+                            "error": f"⛔ Ushbu test sizning guruhingiz ({st_class}) uchun mo'ljallanmagan.",
+                        }
 
             # Tugallanmagan urinish bormi?
             cur.execute(
@@ -1037,6 +1115,300 @@ def get_dashboard_stats() -> Dict[str, Any]:
                 "completed_attempts_count": completed_attempts_cnt,
                 "classes": classes,
             }
+
+
+
+
+def authenticate_student_web(login: str, password: str) -> Dict[str, Any]:
+    """
+    O'quvchi web sahifadan login va parol bilan kirganda tekshirish.
+    """
+    login_clean = login.strip().lower()
+    pwd_hash = hash_password(password)
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT * FROM students WHERE login = %s AND password_hash = %s;",
+                (login_clean, pwd_hash),
+            )
+            student = cur.fetchone()
+            if not student:
+                return {"ok": False, "error": "Login yoki parol noto'g'ri! Qaytadan tekshirib kiriting."}
+            if not student["is_active"]:
+                return {"ok": False, "error": "Sizning akkauntingiz o'qituvchi tomonidan vaqtincha bloklangan."}
+            return {"ok": True, "student": dict(student)}
+
+
+def get_student_by_id(student_id: int) -> Optional[Dict[str, Any]]:
+    """ID bo'yicha o'quvchi ma'lumotlarini olish."""
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM students WHERE id = %s;", (student_id,))
+            row = cur.fetchone()
+            return dict(row) if row else None
+
+
+def change_student_password(student_id: int, old_password: str, new_password: str) -> Dict[str, Any]:
+    """
+    O'quvchi o'z profilida faqat parolini o'zgartira oladi.
+    Eski parol to'g'riligi tekshiriladi, yangi parol kamida 4 belgidan iborat bo'lishi kerak.
+    """
+    new_pwd = new_password.strip()
+    if len(new_pwd) < 4:
+        return {"ok": False, "error": "Yangi parol kamida 4 ta belgidan iborat bo'lishi kerak!"}
+
+    old_hash = hash_password(old_password)
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT id FROM students WHERE id = %s AND password_hash = %s;",
+                (student_id, old_hash),
+            )
+            if not cur.fetchone():
+                return {"ok": False, "error": "Joriy (eski) parol noto'g'ri kiritildi!"}
+
+            new_hash = hash_password(new_pwd)
+            cur.execute(
+                """
+                UPDATE students
+                SET plain_password = %s,
+                    password_hash = %s
+                WHERE id = %s;
+                """,
+                (new_pwd, new_hash, student_id),
+            )
+            return {"ok": True}
+
+
+def get_attempt_for_web(attempt_id: int) -> Optional[Dict[str, Any]]:
+    """
+    Web interfeys orqali test ishlash uchun urinish ma'lumotlari,
+    barcha savollar, o'quvchi javoblari va joriy statistika.
+    """
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT ea.*, e.title AS exam_title, e.points_per_question, e.description AS exam_desc,
+                       s.full_name, s.class_name, s.login
+                FROM exam_attempts ea
+                JOIN exams e ON e.id = ea.exam_id
+                JOIN students s ON s.id = ea.student_id
+                WHERE ea.id = %s;
+                """,
+                (attempt_id,),
+            )
+            attempt = cur.fetchone()
+            if not attempt:
+                return None
+
+            cur.execute(
+                """
+                SELECT aa.id AS answer_row_id,
+                       aa.question_order,
+                       aa.selected_option,
+                       aa.is_correct,
+                       aa.answered_at,
+                       q.id AS question_id,
+                       q.question_text,
+                       q.option_a,
+                       q.option_b,
+                       q.option_c,
+                       q.option_d,
+                       q.correct_option,
+                       q.explanation,
+                       t.title AS topic_title,
+                       t.course_name
+                FROM attempt_answers aa
+                JOIN questions q ON q.id = aa.question_id
+                JOIN topics t ON t.id = q.topic_id
+                WHERE aa.attempt_id = %s
+                ORDER BY aa.question_order ASC;
+                """,
+                (attempt_id,),
+            )
+            questions = [dict(r) for r in cur.fetchall()]
+            res = dict(attempt)
+            res["questions"] = questions
+            res["answered_count"] = sum(1 for q in questions if q["selected_option"] is not None)
+            return res
+
+
+def finish_attempt_force(attempt_id: int) -> Dict[str, Any]:
+    """
+    O'quvchi 'Testni yakunlash' tugmasini bosganda testni darhol baholash va yakunlash.
+    """
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT COUNT(*) FILTER (WHERE is_correct = TRUE) AS correct_cnt,
+                       COUNT(*) AS total_cnt
+                FROM attempt_answers
+                WHERE attempt_id = %s;
+                """,
+                (attempt_id,),
+            )
+            counts = cur.fetchone()
+            correct_cnt = int(counts["correct_cnt"])
+            total_cnt = int(counts["total_cnt"])
+
+            cur.execute(
+                """
+                SELECT e.points_per_question, e.title AS exam_title
+                FROM exam_attempts ea
+                JOIN exams e ON e.id = ea.exam_id
+                WHERE ea.id = %s;
+                """,
+                (attempt_id,),
+            )
+            exam_info = cur.fetchone()
+            pts_per_q = float(exam_info["points_per_question"])
+            score_pts = round(correct_cnt * pts_per_q, 2)
+            max_pts = round(total_cnt * pts_per_q, 2)
+            pct = round((correct_cnt / total_cnt) * 100, 2) if total_cnt > 0 else 0.0
+
+            cur.execute(
+                """
+                UPDATE exam_attempts
+                SET correct_answers = %s,
+                    score_points = %s,
+                    max_points = %s,
+                    percentage = %s,
+                    status = 'completed',
+                    finished_at = CURRENT_TIMESTAMP
+                WHERE id = %s
+                RETURNING *;
+                """,
+                (correct_cnt, score_pts, max_pts, pct, attempt_id),
+            )
+            finished = dict(cur.fetchone())
+            finished["exam_title"] = exam_info["exam_title"]
+            return {"ok": True, "result": finished}
+
+
+
+
+def get_all_student_groups() -> List[str]:
+    """Tizimda mavjud barcha guruhlar (sinflar) ro'yxati."""
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT DISTINCT class_name FROM students WHERE class_name <> '' ORDER BY class_name;")
+            return [r["class_name"] for r in cur.fetchall()]
+
+
+def bulk_import_students(raw_text: str) -> Dict[str, Any]:
+    """
+    O'qituvchi tomonidan vergul, nuqta-vergul yoki tab bilan ajratilgan
+    o'quvchilar ro'yxatini avtomatik bazaga qo'shish.
+    Format: Guruh, F.I.Sh, [Login], [Parol]
+
+    DIQQAT: Tizimdagi mavjud o'quvchilar hech qachon yangilanmaydi yoki o'chirilmaydi!
+    Agar kiritilgan login oldinroq boshqa o'quvchi tomonidan band qilingan bo'lsa,
+    yangi o'quvchining loginiga avtomatik tarzda uning familiyasi yoki guruhi qo'shilib,
+    u yangi alohida o'quvchi sifatida bazaga qo'shiladi.
+    """
+    import random
+
+    lines = raw_text.strip().splitlines()
+    added = 0
+    errors = []
+    processed = []
+    adjusted = []
+
+    def make_login(name: str) -> str:
+        base = re.sub(r"[^a-z0-9]+", "_", name.lower().strip()).strip("_") or "oquvchi"
+        return f"{base}_{random.randint(100, 999)}"
+
+    def make_password() -> str:
+        chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"
+        return "".join(random.choice(chars) for _ in range(6))
+
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            for line_no, raw_line in enumerate(lines, 1):
+                line = raw_line.strip()
+                if not line or line.startswith("#"):
+                    continue
+
+                if "\t" in line:
+                    parts = [p.strip() for p in line.split("\t")]
+                elif ";" in line:
+                    parts = [p.strip() for p in line.split(";")]
+                else:
+                    parts = [p.strip() for p in line.split(",")]
+
+                if len(parts) < 2:
+                    errors.append(f"{line_no}-qator: Kamida Guruh va F.I.Sh kiritilishi kerak ('{line}')")
+                    continue
+
+                # Sarlavha qatori (header) bo'lsa o'tkazib yuboramiz
+                if parts[0].lower() in ["guruh", "sinf", "class", "group"] and parts[1].lower() in ["fish", "f.i.sh", "ism", "name"]:
+                    continue
+
+                class_name = parts[0]
+                full_name = parts[1]
+                desired_login = parts[2].lower() if len(parts) >= 3 and parts[2] else make_login(full_name)
+                password = parts[3] if len(parts) >= 4 and parts[3] else make_password()
+
+                # Unikal login tanlash (mavjud o'quvchini aslo yangilamaymiz!)
+                candidate_login = desired_login
+                counter = 1
+                words = [re.sub(r"[^a-z0-9]+", "", w.lower().strip()) for w in full_name.split() if w.strip()]
+                surname = words[0] if words else ""
+                grp_slug = re.sub(r"[^a-z0-9]+", "_", class_name.lower().strip()).strip("_")
+
+                while True:
+                    cur.execute("SELECT id FROM students WHERE login = %s;", (candidate_login,))
+                    if not cur.fetchone():
+                        break
+                    # Login band bo'lsa, ketma-ketlik bo'yicha unikal nom beramiz:
+                    if counter == 1 and surname and surname != desired_login:
+                        candidate_login = f"{desired_login}_{surname}"
+                    elif counter == 2 and grp_slug:
+                        candidate_login = f"{desired_login}_{grp_slug}"
+                    elif counter == 3 and surname:
+                        candidate_login = f"{surname}_{desired_login}"
+                    else:
+                        candidate_login = f"{desired_login}_{counter}"
+                    counter += 1
+
+                if candidate_login != desired_login:
+                    adjusted.append({
+                        "full_name": full_name,
+                        "class_name": class_name,
+                        "original_login": desired_login,
+                        "login": candidate_login,
+                    })
+
+                login = candidate_login
+                pwd_hash = hash_password(password)
+
+                # Har doim YANGI o'quvchi sifatida qo'shamiz
+                cur.execute(
+                    """
+                    INSERT INTO students (full_name, class_name, login, plain_password, password_hash)
+                    VALUES (%s, %s, %s, %s, %s);
+                    """,
+                    (full_name, class_name, login, password, pwd_hash),
+                )
+                added += 1
+
+                processed.append({
+                    "class_name": class_name,
+                    "full_name": full_name,
+                    "login": login,
+                    "password": password,
+                    "adjusted": (candidate_login != desired_login),
+                })
+
+    return {
+        "total": len(processed),
+        "added": added,
+        "adjusted": adjusted,
+        "errors": errors,
+        "students": processed,
+    }
 
 
 if __name__ == "__main__":
