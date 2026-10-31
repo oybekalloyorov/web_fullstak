@@ -2051,8 +2051,8 @@ def sync_html_route():
 
 if __name__ == "__main__":
     db.seed_topics_and_questions()
-    port = int(os.getenv("ADMIN_PORT", "5000"))
-    print(f"🚀 web_fullstak Test Tizimi ishga tushdi: http://localhost:{port}")
-    print(f"   - O'quvchilar web portali: http://localhost:{port}/student/login")
-    print(f"   - O'qituvchi Admin Paneli: http://localhost:{port}/admin/login (Login: {ADMIN_USERNAME} / Parol: {ADMIN_PASSWORD})")
-    app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.getenv("PORT", os.getenv("ADMIN_PORT", "5000")))
+    print(f"🚀 web_fullstak Test Tizimi ishga tushdi: port {port}")
+    print(f"   - O'quvchilar web portali: /student/login")
+    print(f"   - O'qituvchi Admin Paneli: /admin/login (Login: {ADMIN_USERNAME} / Parol: {ADMIN_PASSWORD})")
+    app.run(host="0.0.0.0", port=port, debug=False)
